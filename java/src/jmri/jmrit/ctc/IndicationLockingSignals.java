@@ -18,9 +18,9 @@ public class IndicationLockingSignals {
     private final Turnout turnout;
     private final OtherData.SIGNAL_SYSTEM_TYPE signalType;
 
-    public IndicationLockingSignals(String userIdentifier, ArrayList<NBHSignal> signals, String turnoutName,
+    public IndicationLockingSignals(String userIdentifier, ArrayList<NBHSignal> signals, NBHTurnout nbhTurnout,
             OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
-        turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
+        turnout = nbhTurnout.getBean();
         signalType = signalSystemType;
         _mListOfSignals = signals;
     }

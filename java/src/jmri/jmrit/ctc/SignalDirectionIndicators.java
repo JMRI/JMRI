@@ -15,6 +15,7 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
@@ -63,9 +64,9 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
 //  private final CopyOnWriteArrayList<TrafficDirection> _mTimeLockingChangeObservers = new CopyOnWriteArrayList<>();
 
     public SignalDirectionIndicators(   String userIdentifier,
-                                        String leftSensor,
-                                        String normalSensor,
-                                        String rightSensor,
+                                        NBHSensor leftSensor,
+                                        NBHSensor normalSensor,
+                                        NBHSensor rightSensor,
                                         int codingTimeInMilliseconds,
                                         int timeLockingTimeInMilliseconds,
                                         ArrayList<NBHSignal> signalListLeftRight,
@@ -81,9 +82,9 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         _mCodingTimeTimer = new Timer(codingTimeInMilliseconds, _mCodingTimeTimerActionListener);
         _mCodingTimeTimer.setRepeats(false);
         try {
-            _mLeftSensor = new NBHSensor("SignalDirectionIndicators",  userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsLeftSensor"), leftSensor, true);         // NOI18N
-            _mNormalSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsNormalSensor"), normalSensor, false);   // NOI18N
-            _mRightSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsRightSensor"), rightSensor, true);       // NOI18N
+            _mLeftSensor = leftSensor;
+            _mNormalSensor = normalSensor;
+            _mRightSensor = rightSensor;
 //  Partially plagerized from GUI code:
             boolean leftInternalSensorPresent = _mLeftSensor.valid();
             boolean entriesInLeftRightTrafficSignalsList = !signalListLeftRight.isEmpty();

@@ -146,32 +146,32 @@ at the top for "automatic" JMRI object verification.
 //  Version of this file for supporting upgrade paths from prior versions:
     public int                  _mFileVersion;
 //  Data used by the runtime (JMRI) and Editor systems:
-    public String               _mCodeButtonInternalSensor;
-    public String               _mOSSectionOccupiedExternalSensor;              // Required
-    public String               _mOSSectionOccupiedExternalSensor2;             // Optional
+    public NBHSensor            _mCodeButtonInternalSensor;
+    public NBHSensor            _mOSSectionOccupiedExternalSensor;              // Required
+    public NBHSensor            _mOSSectionOccupiedExternalSensor2;             // Optional
     public int                  _mOSSectionSwitchSlavedToUniqueID;
     public int                  _mGUIColumnNumber;
     public boolean              _mGUIGeneratedAtLeastOnceAlready;
     public int                  _mCodeButtonDelayTime;
 //  Signal Direction Indicators:
     public boolean              _mSIDI_Enabled;
-    public String               _mSIDI_LeftInternalSensor;
-    public String               _mSIDI_NormalInternalSensor;
-    public String               _mSIDI_RightInternalSensor;
+    public NBHSensor            _mSIDI_LeftInternalSensor;
+    public NBHSensor            _mSIDI_NormalInternalSensor;
+    public NBHSensor            _mSIDI_RightInternalSensor;
     public int                  _mSIDI_CodingTimeInMilliseconds;
     public int                  _mSIDI_TimeLockingTimeInMilliseconds;
     public ArrayList<NBHSignal> _mSIDI_LeftRightTrafficSignals = new ArrayList<>();
     public ArrayList<NBHSignal> _mSIDI_RightLeftTrafficSignals = new ArrayList<>();
 //  Signal Direction Lever:
     public boolean              _mSIDL_Enabled;
-    public String               _mSIDL_LeftInternalSensor;
-    public String               _mSIDL_NormalInternalSensor;
-    public String               _mSIDL_RightInternalSensor;
+    public NBHSensor            _mSIDL_LeftInternalSensor;
+    public NBHSensor            _mSIDL_NormalInternalSensor;
+    public NBHSensor            _mSIDL_RightInternalSensor;
 //  Switch Direction Indicators:
     public boolean              _mSWDI_Enabled;
-    public String               _mSWDI_NormalInternalSensor;
-    public String               _mSWDI_ReversedInternalSensor;
-    public String               _mSWDI_ExternalTurnout;
+    public NBHSensor            _mSWDI_NormalInternalSensor;
+    public NBHSensor            _mSWDI_ReversedInternalSensor;
+    public NBHTurnout           _mSWDI_ExternalTurnout;
     public int                  _mSWDI_CodingTimeInMilliseconds;
     public boolean              _mSWDI_FeedbackDifferent;
     public TURNOUT_TYPE         _mSWDI_GUITurnoutType;
@@ -179,10 +179,10 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mSWDI_GUICrossoverLeftHand;
 //  Switch Direction Lever:
     public boolean              _mSWDL_Enabled;
-    public String               _mSWDL_InternalSensor;
+    public NBHSensor            _mSWDL_InternalSensor;
 //  Call On:
     public boolean              _mCO_Enabled;
-    public String               _mCO_CallOnToggleInternalSensor;
+    public NBHSensor            _mCO_CallOnToggleInternalSensor;
     public ArrayList<CallOnData> _mCO_GroupingsList = new ArrayList<>();
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
@@ -190,32 +190,32 @@ at the top for "automatic" JMRI object verification.
     public ArrayList<TrafficLockingData> _mTRL_RightTrafficLockingRules = new ArrayList<>();
 //  Turnout Locking:
     public boolean              _mTUL_Enabled;
-    public String               _mTUL_DispatcherInternalSensorLockToggle;
-    public String               _mTUL_ExternalTurnout;
+    public NBHSensor            _mTUL_DispatcherInternalSensorLockToggle;
+    public NBHTurnout           _mTUL_ExternalTurnout;
     public boolean              _mTUL_ExternalTurnoutFeedbackDifferent;
-    public String               _mTUL_DispatcherInternalSensorUnlockedIndicator;
+    public NBHSensor            _mTUL_DispatcherInternalSensorUnlockedIndicator;
     public boolean              _mTUL_NoDispatcherControlOfSwitch;
     public boolean              _mTUL_ndcos_WhenLockedSwitchStateIsClosed;
     public LOCK_IMPLEMENTATION  _mTUL_LockImplementation;
-    public String               _mTUL_AdditionalExternalTurnout1;
+    public NBHTurnout           _mTUL_AdditionalExternalTurnout1;
     public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;
-    public String               _mTUL_AdditionalExternalTurnout2;
+    public NBHTurnout           _mTUL_AdditionalExternalTurnout2;
     public boolean              _mTUL_AdditionalExternalTurnout2FeedbackDifferent;
-    public String               _mTUL_AdditionalExternalTurnout3;
+    public NBHTurnout           _mTUL_AdditionalExternalTurnout3;
     public boolean              _mTUL_AdditionalExternalTurnout3FeedbackDifferent;
 //  Indication Locking (Signals):
     public boolean              _mIL_Enabled;
     public ArrayList<NBHSignal>      _mIL_Signals = new ArrayList<>();
 
-    public static class AdditionalTurnout {
-        public String _mTUL_AdditionalExternalTurnout;
-        public boolean _mTUL_AdditionalExternalTurnoutFeedbackDifferent;
-
-        public AdditionalTurnout(String turnout, boolean feedback) {
-            _mTUL_AdditionalExternalTurnout = turnout;
-            _mTUL_AdditionalExternalTurnoutFeedbackDifferent = feedback;
-        }
-    }
+//     public static class AdditionalTurnout {
+//         public NBHTurnout _mTUL_AdditionalExternalTurnout;
+//         public boolean _mTUL_AdditionalExternalTurnoutFeedbackDifferent;
+//
+//         public AdditionalTurnout(String turnout, boolean feedback) {
+//             _mTUL_AdditionalExternalTurnout = turnout;
+//             _mTUL_AdditionalExternalTurnoutFeedbackDifferent = feedback;
+//         }
+//     }
 
     public void upgradeSelf() {
         for (int oldVersion = _mFileVersion; oldVersion < FILE_VERSION; oldVersion++) {

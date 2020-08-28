@@ -45,7 +45,7 @@ public class FrmCO extends javax.swing.JFrame {
     private ArrayList<CallOnData> _mDefaultListModelOrig = new ArrayList<> ();
 
     private void initOrig() {
-        _mCO_CallOnToggleInternalSensorOrig = _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor;
+        _mCO_CallOnToggleInternalSensorOrig = _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName();
         int defaultListModelSize = _mDefaultListModel.getSize();
         for (int index = 0; index < defaultListModelSize; index++) {
             _mDefaultListModelOrig.add(_mDefaultListModel.get(index));
@@ -83,7 +83,7 @@ public class FrmCO extends javax.swing.JFrame {
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         _mSignalHeadSelected = signalHeadSelected;
-        _mCO_CallOnToggleInternalSensor.setText(_mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor);
+        _mCO_CallOnToggleInternalSensor.setText(_mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName());
         _mDefaultListModel = new DefaultListModel<>();
         _mGroupingsList.setModel(_mDefaultListModel);
 //  Once you specify a model, then functions like JList.setListData may update the screen, but the model
@@ -117,7 +117,7 @@ public class FrmCO extends javax.swing.JFrame {
      public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
          if (!codeButtonHandlerData._mCO_Enabled) return true;  // Not enabled, can be no error!
  //  Checks:
-         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor)) return false;
+         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName())) return false;
          for (CallOnData callOnDataRow : codeButtonHandlerData._mCO_GroupingsList) {
              if (!checkJMRIObject.validClass(callOnDataRow)) return false;
          }
@@ -474,7 +474,13 @@ public class FrmCO extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = _mCO_CallOnToggleInternalSensor.getText();
+//         _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = _mCO_CallOnToggleInternalSensor.getText();
+        String sensorName = _mCO_CallOnToggleInternalSensor.getText();
+        NBHSensor sensor = new NBHSensor("FrmCO", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = sensor;
+        }
+
         int size = _mDefaultListModel.getSize();
         _mCodeButtonHandlerData._mCO_GroupingsList.clear();
         for (int index = 0; index < size; index++) {
@@ -629,7 +635,7 @@ public class FrmCO extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CallOn(_mProgramProperties, temp);
-        _mCO_CallOnToggleInternalSensor.setText(temp._mCO_CallOnToggleInternalSensor);
+        _mCO_CallOnToggleInternalSensor.setText(temp._mCO_CallOnToggleInternalSensor.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mGroupingsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mGroupingsListValueChanged

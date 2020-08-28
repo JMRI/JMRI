@@ -47,18 +47,18 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             cbhdElement.addContent(storeInt("GUIColumnNumber", cbhd._mGUIColumnNumber));
 
             // Code section
-            cbhdElement.addContent(storeString("CodeButtonInternalSensor", cbhd._mCodeButtonInternalSensor));
-            cbhdElement.addContent(storeString("OSSectionOccupiedExternalSensor", cbhd._mOSSectionOccupiedExternalSensor));
-            cbhdElement.addContent(storeString("OSSectionOccupiedExternalSensor2", cbhd._mOSSectionOccupiedExternalSensor2));
+            cbhdElement.addContent(storeSensor("CodeButtonInternalSensor", cbhd._mCodeButtonInternalSensor));
+            cbhdElement.addContent(storeSensor("OSSectionOccupiedExternalSensor", cbhd._mOSSectionOccupiedExternalSensor));
+            cbhdElement.addContent(storeSensor("OSSectionOccupiedExternalSensor2", cbhd._mOSSectionOccupiedExternalSensor2));
             cbhdElement.addContent(storeInt("OSSectionSwitchSlavedToUniqueID", cbhd._mOSSectionSwitchSlavedToUniqueID));
             cbhdElement.addContent(storeBoolean("GUIGeneratedAtLeastOnceAlready", cbhd._mGUIGeneratedAtLeastOnceAlready));
             cbhdElement.addContent(storeInt("CodeButtonDelayTime", cbhd._mCodeButtonDelayTime));
 
             // SIDI section
             cbhdElement.addContent(storeBoolean("SIDI_Enabled", cbhd._mSIDI_Enabled));
-            cbhdElement.addContent(storeString("SIDI_LeftInternalSensor", cbhd._mSIDI_LeftInternalSensor));
-            cbhdElement.addContent(storeString("SIDI_NormalInternalSensor", cbhd._mSIDI_NormalInternalSensor));
-            cbhdElement.addContent(storeString("SIDI_RightInternalSensor", cbhd._mSIDI_RightInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDI_LeftInternalSensor", cbhd._mSIDI_LeftInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDI_NormalInternalSensor", cbhd._mSIDI_NormalInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDI_RightInternalSensor", cbhd._mSIDI_RightInternalSensor));
             cbhdElement.addContent(storeInt("SIDI_CodingTimeInMilliseconds", cbhd._mSIDI_CodingTimeInMilliseconds));
             cbhdElement.addContent(storeInt("SIDI_TimeLockingTimeInMilliseconds", cbhd._mSIDI_TimeLockingTimeInMilliseconds));
             cbhdElement.addContent(storeSignalList("SIDI_LeftRightTrafficSignals", cbhd._mSIDI_LeftRightTrafficSignals));
@@ -66,15 +66,15 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
             // SIDL section
             cbhdElement.addContent(storeBoolean("SIDL_Enabled", cbhd._mSIDL_Enabled));
-            cbhdElement.addContent(storeString("SIDL_LeftInternalSensor", cbhd._mSIDL_LeftInternalSensor));
-            cbhdElement.addContent(storeString("SIDL_NormalInternalSensor", cbhd._mSIDL_NormalInternalSensor));
-            cbhdElement.addContent(storeString("SIDL_RightInternalSensor", cbhd._mSIDL_RightInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDL_LeftInternalSensor", cbhd._mSIDL_LeftInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDL_NormalInternalSensor", cbhd._mSIDL_NormalInternalSensor));
+            cbhdElement.addContent(storeSensor("SIDL_RightInternalSensor", cbhd._mSIDL_RightInternalSensor));
 
             // SWDI section
             cbhdElement.addContent(storeBoolean("SWDI_Enabled", cbhd._mSWDI_Enabled));
-            cbhdElement.addContent(storeString("SWDI_NormalInternalSensor", cbhd._mSWDI_NormalInternalSensor));
-            cbhdElement.addContent(storeString("SWDI_ReversedInternalSensor", cbhd._mSWDI_ReversedInternalSensor));
-            cbhdElement.addContent(storeString("SWDI_ExternalTurnout", cbhd._mSWDI_ExternalTurnout));
+            cbhdElement.addContent(storeSensor("SWDI_NormalInternalSensor", cbhd._mSWDI_NormalInternalSensor));
+            cbhdElement.addContent(storeSensor("SWDI_ReversedInternalSensor", cbhd._mSWDI_ReversedInternalSensor));
+            cbhdElement.addContent(storeTurnout("SWDI_ExternalTurnout", cbhd._mSWDI_ExternalTurnout));
             cbhdElement.addContent(storeInt("SWDI_CodingTimeInMilliseconds", cbhd._mSWDI_CodingTimeInMilliseconds));
             cbhdElement.addContent(storeBoolean("SWDI_FeedbackDifferent", cbhd._mSWDI_FeedbackDifferent));
             cbhdElement.addContent(storeInt("SWDI_GUITurnoutType", cbhd._mSWDI_GUITurnoutType.getInt()));
@@ -83,11 +83,11 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
             // SWDL section
             cbhdElement.addContent(storeBoolean("SWDL_Enabled", cbhd._mSWDL_Enabled));
-            cbhdElement.addContent(storeString("SWDL_InternalSensor", cbhd._mSWDL_InternalSensor));
+            cbhdElement.addContent(storeSensor("SWDL_InternalSensor", cbhd._mSWDL_InternalSensor));
 
             // CO section
             cbhdElement.addContent(storeBoolean("CO_Enabled", cbhd._mCO_Enabled));
-            cbhdElement.addContent(storeString("CO_CallOnToggleInternalSensor", cbhd._mCO_CallOnToggleInternalSensor));
+            cbhdElement.addContent(storeSensor("CO_CallOnToggleInternalSensor", cbhd._mCO_CallOnToggleInternalSensor));
             cbhdElement.addContent(storeCallOnList("CO_GroupingsList", cbhd._mCO_GroupingsList));
 
             // TRL section
@@ -97,10 +97,10 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
             // TUL section
             cbhdElement.addContent(storeBoolean("TUL_Enabled", cbhd._mTUL_Enabled));
-            cbhdElement.addContent(storeString("TUL_DispatcherInternalSensorLockToggle", cbhd._mTUL_DispatcherInternalSensorLockToggle));
-            cbhdElement.addContent(storeString("TUL_ExternalTurnout", cbhd._mTUL_ExternalTurnout));
+            cbhdElement.addContent(storeSensor("TUL_DispatcherInternalSensorLockToggle", cbhd._mTUL_DispatcherInternalSensorLockToggle));
+            cbhdElement.addContent(storeTurnout("TUL_ExternalTurnout", cbhd._mTUL_ExternalTurnout));
             cbhdElement.addContent(storeBoolean("TUL_ExternalTurnoutFeedbackDifferent", cbhd._mTUL_ExternalTurnoutFeedbackDifferent));
-            cbhdElement.addContent(storeString("TUL_DispatcherInternalSensorUnlockedIndicator", cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator));
+            cbhdElement.addContent(storeSensor("TUL_DispatcherInternalSensorUnlockedIndicator", cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator));
             cbhdElement.addContent(storeBoolean("TUL_NoDispatcherControlOfSwitch", cbhd._mTUL_NoDispatcherControlOfSwitch));
             cbhdElement.addContent(storeBoolean("TUL_ndcos_WhenLockedSwitchStateIsClosed", cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed));
             cbhdElement.addContent(storeInt("TUL_LockImplementation", cbhd._mTUL_LockImplementation.getInt()));
@@ -216,8 +216,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
     Element storeSensor(String elementName, NBHSensor sensor) {
         Element element = new Element(elementName);
         if (sensor != null) {
-            NamedBeanHandle handle = sensor.getBeanHandle();
-            element.setText(handle.getName());
+            element.setText(sensor.getHandleName());
         }
         return element;
     }
@@ -226,10 +225,19 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         Element element = new Element(elementName);
         if (signal != null) {
             NamedBeanHandle handle = (NamedBeanHandle) signal.getBeanHandle();
-            element.setText(handle.getName());
+            element.setText(signal.getHandleName());
         }
         return element;
     }
+
+    Element storeTurnout(String elementName, NBHTurnout turnout) {
+        Element element = new Element(elementName);
+        if (turnout != null) {
+            element.setText(turnout.getHandleName());
+        }
+        return element;
+    }
+
 
     Element storeBlock(String elementName, NamedBeanHandle<Block> block) {
         Element element = new Element(elementName);
@@ -303,20 +311,22 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
     Element storeTULAdditionalTurnouts(String elementName, CodeButtonHandlerData cbhd) {
         Element element = new Element(elementName);
+
         Element elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout1, cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
         if (elementRow != null) element.addContent(elementRow);
         elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout2, cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent);
         if (elementRow != null) element.addContent(elementRow);
         elementRow = createAdditionalTurnoutEntry(cbhd._mTUL_AdditionalExternalTurnout3, cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
         if (elementRow != null) element.addContent(elementRow);
+
         return element;
     }
 
-    Element createAdditionalTurnoutEntry(String turnoutName, boolean turnoutFeedback) {
+    Element createAdditionalTurnoutEntry(NBHTurnout turnout, boolean turnoutFeedback) {
         Element element = null;
-        if (!(turnoutName == null || turnoutName.isEmpty())) {
+        if (turnout.valid()) {
             element = new Element("TUL_AdditionalExternalTurnoutEntry");
-            element.addContent(storeString("TUL_AdditionalExternalTurnout", turnoutName));
+            element.addContent(storeTurnout("TUL_AdditionalExternalTurnout", turnout));
             element.addContent(storeBoolean("TUL_AdditionalExternalTurnoutFeedbackDifferent", turnoutFeedback));
         }
         return element;
@@ -360,18 +370,18 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
 
                 // Code section
-                cbhd._mCodeButtonInternalSensor = loadString(lvl1.getChild("CodeButtonInternalSensor"));
-                cbhd._mOSSectionOccupiedExternalSensor = loadString(lvl1.getChild("OSSectionOccupiedExternalSensor"));
-                cbhd._mOSSectionOccupiedExternalSensor2 = loadString(lvl1.getChild("OSSectionOccupiedExternalSensor2"));
+                cbhd._mCodeButtonInternalSensor = loadSensor(lvl1.getChild("CodeButtonInternalSensor"));
+                cbhd._mOSSectionOccupiedExternalSensor = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor"));
+                cbhd._mOSSectionOccupiedExternalSensor2 = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor2"));
                 cbhd._mOSSectionSwitchSlavedToUniqueID = loadInt(lvl1.getChild("OSSectionSwitchSlavedToUniqueID"));
                 cbhd._mGUIGeneratedAtLeastOnceAlready = loadBoolean(lvl1.getChild("GUIGeneratedAtLeastOnceAlready"));
                 cbhd._mCodeButtonDelayTime = loadInt(lvl1.getChild("CodeButtonDelayTime"));
 
                 // SIDI section
                 cbhd._mSIDI_Enabled = loadBoolean(lvl1.getChild("SIDI_Enabled"));
-                cbhd._mSIDI_LeftInternalSensor = loadString(lvl1.getChild("SIDI_LeftInternalSensor"));
-                cbhd._mSIDI_NormalInternalSensor = loadString(lvl1.getChild("SIDI_NormalInternalSensor"));
-                cbhd._mSIDI_RightInternalSensor = loadString(lvl1.getChild("SIDI_RightInternalSensor"));
+                cbhd._mSIDI_LeftInternalSensor = loadSensor(lvl1.getChild("SIDI_LeftInternalSensor"));
+                cbhd._mSIDI_NormalInternalSensor = loadSensor(lvl1.getChild("SIDI_NormalInternalSensor"));
+                cbhd._mSIDI_RightInternalSensor = loadSensor(lvl1.getChild("SIDI_RightInternalSensor"));
                 cbhd._mSIDI_CodingTimeInMilliseconds = loadInt(lvl1.getChild("SIDI_CodingTimeInMilliseconds"));
                 cbhd._mSIDI_TimeLockingTimeInMilliseconds = loadInt(lvl1.getChild("SIDI_TimeLockingTimeInMilliseconds"));
                 cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(lvl1.getChild("SIDI_LeftRightTrafficSignals"));
@@ -379,15 +389,15 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
                 // SIDL section
                 cbhd._mSIDL_Enabled = loadBoolean(lvl1.getChild("SIDL_Enabled"));
-                cbhd._mSIDL_LeftInternalSensor = loadString(lvl1.getChild("SIDL_LeftInternalSensor"));
-                cbhd._mSIDL_NormalInternalSensor = loadString(lvl1.getChild("SIDL_NormalInternalSensor"));
-                cbhd._mSIDL_RightInternalSensor = loadString(lvl1.getChild("SIDL_RightInternalSensor"));
+                cbhd._mSIDL_LeftInternalSensor = loadSensor(lvl1.getChild("SIDL_LeftInternalSensor"));
+                cbhd._mSIDL_NormalInternalSensor = loadSensor(lvl1.getChild("SIDL_NormalInternalSensor"));
+                cbhd._mSIDL_RightInternalSensor = loadSensor(lvl1.getChild("SIDL_RightInternalSensor"));
 
                 // SWDI section
                 cbhd._mSWDI_Enabled = loadBoolean(lvl1.getChild("SWDI_Enabled"));
-                cbhd._mSWDI_NormalInternalSensor = loadString(lvl1.getChild("SWDI_NormalInternalSensor"));
-                cbhd._mSWDI_ReversedInternalSensor = loadString(lvl1.getChild("SWDI_ReversedInternalSensor"));
-                cbhd._mSWDI_ExternalTurnout = loadString(lvl1.getChild("SWDI_ExternalTurnout"));
+                cbhd._mSWDI_NormalInternalSensor = loadSensor(lvl1.getChild("SWDI_NormalInternalSensor"));
+                cbhd._mSWDI_ReversedInternalSensor = loadSensor(lvl1.getChild("SWDI_ReversedInternalSensor"));
+                cbhd._mSWDI_ExternalTurnout = loadTurnout(lvl1.getChild("SWDI_ExternalTurnout"));
                 cbhd._mSWDI_CodingTimeInMilliseconds = loadInt(lvl1.getChild("SWDI_CodingTimeInMilliseconds"));
                 cbhd._mSWDI_FeedbackDifferent = loadBoolean(lvl1.getChild("SWDI_FeedbackDifferent"));
                 cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(loadInt(lvl1.getChild("SWDI_GUITurnoutType")));
@@ -396,11 +406,11 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
                 // SWDL section
                 cbhd._mSWDL_Enabled = loadBoolean(lvl1.getChild("SWDL_Enabled"));
-                cbhd._mSWDL_InternalSensor = loadString(lvl1.getChild("SWDL_InternalSensor"));
+                cbhd._mSWDL_InternalSensor = loadSensor(lvl1.getChild("SWDL_InternalSensor"));
 
                 // CO section
                 cbhd._mCO_Enabled = loadBoolean(lvl1.getChild("CO_Enabled"));
-                cbhd._mCO_CallOnToggleInternalSensor = loadString(lvl1.getChild("CO_CallOnToggleInternalSensor"));
+                cbhd._mCO_CallOnToggleInternalSensor = loadSensor(lvl1.getChild("CO_CallOnToggleInternalSensor"));
                 cbhd._mCO_GroupingsList = getCallOnList(lvl1.getChild("CO_GroupingsList"));
 
                 // TRL section
@@ -410,10 +420,10 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
                 // TUL section
                 cbhd._mTUL_Enabled = loadBoolean(lvl1.getChild("TUL_Enabled"));
-                cbhd._mTUL_DispatcherInternalSensorLockToggle = loadString(lvl1.getChild("TUL_DispatcherInternalSensorLockToggle"));
-                cbhd._mTUL_ExternalTurnout = loadString(lvl1.getChild("TUL_ExternalTurnout"));
+                cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorLockToggle"));
+                cbhd._mTUL_ExternalTurnout = loadTurnout(lvl1.getChild("TUL_ExternalTurnout"));
                 cbhd._mTUL_ExternalTurnoutFeedbackDifferent = loadBoolean(lvl1.getChild("TUL_ExternalTurnoutFeedbackDifferent"));
-                cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadString(lvl1.getChild("TUL_DispatcherInternalSensorUnlockedIndicator"));
+                cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorUnlockedIndicator"));
                 cbhd._mTUL_NoDispatcherControlOfSwitch = loadBoolean(lvl1.getChild("TUL_NoDispatcherControlOfSwitch"));
                 cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(lvl1.getChild("TUL_ndcos_WhenLockedSwitchStateIsClosed"));
                 cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(lvl1.getChild("TUL_LockImplementation")));
@@ -567,6 +577,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         NBHSensor sensor = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
             sensor = new NBHSensor("CtcManagerXml", "", element.getValue(), element.getValue(), false);
+        } else {
+            sensor = new NBHSensor("CtcManagerXml", "", "Empty NBHSensor", "", true);
         }
         return sensor;
     }
@@ -575,6 +587,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         NBHSignal signal = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
             signal = new NBHSignal(element.getValue());
+        } else {
+            signal = new NBHSignal("");
         }
         return signal;
     }
@@ -583,6 +597,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         NBHTurnout turnout = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
             turnout = new NBHTurnout("CtcManagerXml", "", element.getValue(), element.getValue(), false);
+        } else {
+            turnout = new NBHTurnout("CtcManagerXml", "", "Empty NBHTurnout", "", false);
         }
         return turnout;
     }
@@ -684,9 +700,9 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             int rowNumber = 0;
             for (Element elTurnout : element.getChildren()) {
                 rowNumber++;
-                String turnout = loadString(elTurnout.getChild("TUL_AdditionalExternalTurnout"));
+                NBHTurnout turnout = loadTurnout(elTurnout.getChild("TUL_AdditionalExternalTurnout"));
                 boolean feedback = loadBoolean(elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
-                if (turnout != null && !turnout.isEmpty()) {
+                if (turnout.valid()) {
                     if (rowNumber == 1) {
                         cbhd._mTUL_AdditionalExternalTurnout1 = turnout;
                         cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;

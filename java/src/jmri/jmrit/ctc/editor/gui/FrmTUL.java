@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 
 import jmri.InstanceManager;
 import jmri.TurnoutManager;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.*;
 
 /**
@@ -66,18 +68,18 @@ public class FrmTUL extends javax.swing.JFrame {
     private boolean _mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig;
 
     private void initOrig() {
-        _mTUL_DispatcherInternalSensorLockToggleOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle;
-        _mTUL_ExternalTurnoutOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnout;
+        _mTUL_DispatcherInternalSensorLockToggleOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName();
+        _mTUL_ExternalTurnoutOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnout.getHandleName();
         _mTUL_ExternalTurnoutFeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent;
-        _mTUL_DispatcherInternalSensorUnlockedIndicatorOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator;
+        _mTUL_DispatcherInternalSensorUnlockedIndicatorOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName();
         _mTUL_NoDispatcherControlOfSwitchOrig = _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch;
         _mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig = _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed;
         _mTUL_LockImplementationOrig = _mCodeButtonHandlerData._mTUL_LockImplementation;
-        _mTUL_AdditionalExternalTurnout1Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1;
+        _mTUL_AdditionalExternalTurnout1Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1.getHandleName();
         _mTUL_AdditionalExternalTurnout1FeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent;
-        _mTUL_AdditionalExternalTurnout2Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2;
+        _mTUL_AdditionalExternalTurnout2Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2.getHandleName();
         _mTUL_AdditionalExternalTurnout2FeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2FeedbackDifferent;
-        _mTUL_AdditionalExternalTurnout3Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3;
+        _mTUL_AdditionalExternalTurnout3Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3.getHandleName();
         _mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent;
     }
     private boolean dataChanged() {
@@ -111,9 +113,9 @@ public class FrmTUL extends javax.swing.JFrame {
         _mCheckJMRIObject = checkJMRIObject;
         CommonSubs.numberButtonGroup(_mTUL_LockImplementation);
         CommonSubs.setButtonSelected(_mTUL_LockImplementation, _mCodeButtonHandlerData._mTUL_LockImplementation.getInt());
-        _mTUL_DispatcherInternalSensorLockToggle.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle);
+        _mTUL_DispatcherInternalSensorLockToggle.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName());
         _mTUL_ExternalTurnoutFeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent);
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator);
+        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName());
         _mTUL_NoDispatcherControlOfSwitch.setSelected(_mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch);
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setSelected(_mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed);
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
@@ -128,7 +130,7 @@ public class FrmTUL extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mTUL_Enabled) return true; // Not enabled, can be no error!
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_ExternalTurnout)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_ExternalTurnout.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
 
@@ -390,18 +392,55 @@ public class FrmTUL extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle = _mTUL_DispatcherInternalSensorLockToggle.getText();
-        _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle = _mTUL_DispatcherInternalSensorLockToggle.getText();
+        String sensorName = _mTUL_DispatcherInternalSensorLockToggle.getText();
+        NBHSensor sensor = new NBHSensor("FrmTUL", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle = sensor;
+        }
+
+//         _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
+        String turnoutName = (String) _mTUL_ExternalTurnout.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_ExternalTurnout = turnout;
+        }
+
         _mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent = _mTUL_ExternalTurnoutFeedbackDifferent.isSelected();
-        _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator = _mTUL_DispatcherInternalSensorUnlockedIndicator.getText();
+//         _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator = _mTUL_DispatcherInternalSensorUnlockedIndicator.getText();
+        sensorName = _mTUL_DispatcherInternalSensorUnlockedIndicator.getText();
+        sensor = new NBHSensor("FrmTUL", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator = sensor;
+        }
+
         _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch = _mTUL_NoDispatcherControlOfSwitch.isSelected();
         _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed = _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected();
         _mCodeButtonHandlerData._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation);
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+
+        turnoutName = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+        turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = turnout;
+        }
+
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent = _mTUL_AdditionalExternalTurnout1FeedbackDifferent.isSelected();
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+        turnoutName = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+        turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = turnout;
+        }
+
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2FeedbackDifferent = _mTUL_AdditionalExternalTurnout2FeedbackDifferent.isSelected();
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+        turnoutName = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+        turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = turnout;
+        }
+
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent = _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected();
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
@@ -416,8 +455,8 @@ public class FrmTUL extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_TUL(_mProgramProperties, temp);
-        _mTUL_DispatcherInternalSensorLockToggle.setText(temp._mTUL_DispatcherInternalSensorLockToggle);
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(temp._mTUL_DispatcherInternalSensorUnlockedIndicator);
+        _mTUL_DispatcherInternalSensorLockToggle.setText(temp._mTUL_DispatcherInternalSensorLockToggle.getHandleName());
+        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(temp._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -426,22 +465,42 @@ public class FrmTUL extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void _mTUL_ExternalTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_ExternalTurnoutActionPerformed
-        _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
+        String turnoutName = (String) _mTUL_ExternalTurnout.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_ExternalTurnout = turnout;
+        }
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_ExternalTurnoutActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout1ActionPerformed
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+        String turnoutName = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = turnout;
+        }
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout1ActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout2ActionPerformed
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+        String turnoutName = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = turnout;
+        }
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout2ActionPerformed
 
     private void _mTUL_AdditionalExternalTurnout3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_AdditionalExternalTurnout3ActionPerformed
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+//         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+        String turnoutName = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmTUL", "", turnoutName, turnoutName, true);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = turnout;
+        }
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout3ActionPerformed
 
@@ -451,14 +510,14 @@ public class FrmTUL extends javax.swing.JFrame {
         InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().forEach((t) -> { _mStartingHashSetOfTurnouts.add(t.getDisplayName()); });
         _mStartingHashSetOfTurnouts.removeAll(hashSetOfExistingLockedTurnoutsExcludingThisOne);
         _mArrayListOfThisRecordsUsedLockedTurnouts.clear();
-        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_ExternalTurnout);
-        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1);
-        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2);
-        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3);
-        update1LockedTurnoutJComboBox(_mTUL_ExternalTurnout, 0, _mCodeButtonHandlerData._mTUL_ExternalTurnout);
-        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout1, 1, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1);
-        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout2, 2, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2);
-        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout3, 3, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3);
+        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_ExternalTurnout.getHandleName());
+        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1.getHandleName());
+        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2.getHandleName());
+        _mArrayListOfThisRecordsUsedLockedTurnouts.add(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3.getHandleName());
+        update1LockedTurnoutJComboBox(_mTUL_ExternalTurnout, 0, _mCodeButtonHandlerData._mTUL_ExternalTurnout.getHandleName());
+        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout1, 1, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1.getHandleName());
+        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout2, 2, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2.getHandleName());
+        update1LockedTurnoutJComboBox(_mTUL_AdditionalExternalTurnout3, 3, _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3.getHandleName());
     }
 
     private void update1LockedTurnoutJComboBox(JComboBox<String> jComboBox, int index, String currentSelection) {

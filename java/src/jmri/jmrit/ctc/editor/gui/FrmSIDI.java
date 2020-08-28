@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -40,9 +41,9 @@ public class FrmSIDI extends javax.swing.JFrame {
     private ArrayList<String> _mLeftRightTrafficSignalsArrayListOrig = new ArrayList<>();
     private ArrayList<String> _mRightLeftTrafficSignalsArrayListOrig = new ArrayList<>();
     private void initOrig(ArrayList<String> signalArrayList1, ArrayList<String> signalArrayList2) {
-        _mSIDI_LeftInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_LeftInternalSensor;
-        _mSIDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_NormalInternalSensor;
-        _mSIDI_RightInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_RightInternalSensor;
+        _mSIDI_LeftInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName();
+        _mSIDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName();
+        _mSIDI_RightInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName();
         _mSIDI_CodingAndResponseTimeOrig = _mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds;
         _mSIDI_TimeLockingIntervalOrig = _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds;
         for (int index = 0; index < signalArrayList1.size(); index++) {
@@ -88,9 +89,9 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mSignalHeadSelected = signalHeadSelected;
         CommonSubs.setMillisecondsEdit(_mSIDI_CodingAndResponseTime);
         CommonSubs.setMillisecondsEdit(_mSIDI_TimeLockingInterval);
-        _mSIDI_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_LeftInternalSensor);
-        _mSIDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_NormalInternalSensor);
-        _mSIDI_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_RightInternalSensor);
+        _mSIDI_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName());
+        _mSIDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName());
+        _mSIDI_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName());
         _mSIDI_CodingAndResponseTime.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds));
         _mSIDI_TimeLockingInterval.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds));
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mSIDI_TableOfLeftToRightTrafficExternalSignalNames.getModel();
@@ -130,12 +131,12 @@ public class FrmSIDI extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSIDI_Enabled) return true; // Not enabled, can be no error!
 //  For interrelationship(s) checks:
-        boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor);
+        boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName());
         boolean entriesInLeftRightTrafficSignals = !codeButtonHandlerData._mSIDI_LeftRightTrafficSignals.isEmpty();
-        boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor);
+        boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName());
         boolean entriesInRightLeftTrafficSignals = !codeButtonHandlerData._mSIDI_RightLeftTrafficSignals.isEmpty();
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName())) return false;
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
         if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignals) return false;
         if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignals) return false;
@@ -616,9 +617,27 @@ public class FrmSIDI extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mSIDI_LeftInternalSensor = _mSIDI_LeftInternalSensor.getText();
-        _mCodeButtonHandlerData._mSIDI_NormalInternalSensor = _mSIDI_NormalInternalSensor.getText();
-        _mCodeButtonHandlerData._mSIDI_RightInternalSensor = _mSIDI_RightInternalSensor.getText();
+//         _mCodeButtonHandlerData._mSIDI_LeftInternalSensor = _mSIDI_LeftInternalSensor.getText();
+        String sensorName = _mSIDI_LeftInternalSensor.getText();
+        NBHSensor sensor = new NBHSensor("FrmSIDI", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSIDI_LeftInternalSensor = sensor;
+        }
+
+//         _mCodeButtonHandlerData._mSIDI_NormalInternalSensor = _mSIDI_NormalInternalSensor.getText();
+        sensorName = _mSIDI_NormalInternalSensor.getText();
+        sensor = new NBHSensor("FrmSIDI", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSIDI_NormalInternalSensor = sensor;
+        }
+
+//         _mCodeButtonHandlerData._mSIDI_RightInternalSensor = _mSIDI_RightInternalSensor.getText();
+        sensorName = _mSIDI_RightInternalSensor.getText();
+        sensor = new NBHSensor("FrmSIDI", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSIDI_RightInternalSensor = sensor;
+        }
+
         _mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingAndResponseTime);
         _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_TimeLockingInterval);
         _mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignals = ProjectsCommonSubs.getArrayListOfSignals(CommonSubs.getStringArrayFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel));
@@ -641,9 +660,9 @@ public class FrmSIDI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SIDI(_mProgramProperties, temp);
-        _mSIDI_LeftInternalSensor.setText(temp._mSIDI_LeftInternalSensor);
-        _mSIDI_NormalInternalSensor.setText(temp._mSIDI_NormalInternalSensor);
-        _mSIDI_RightInternalSensor.setText(temp._mSIDI_RightInternalSensor);
+        _mSIDI_LeftInternalSensor.setText(temp._mSIDI_LeftInternalSensor.getHandleName());
+        _mSIDI_NormalInternalSensor.setText(temp._mSIDI_NormalInternalSensor.getHandleName());
+        _mSIDI_RightInternalSensor.setText(temp._mSIDI_RightInternalSensor.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

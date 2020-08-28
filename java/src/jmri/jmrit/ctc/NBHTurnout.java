@@ -111,7 +111,7 @@ public class NBHTurnout {
      * @return The turnout's handle name.
      */
     public String getHandleName() {
-        return _mNamedBeanHandleTurnout.getName();
+        return valid() ? _mNamedBeanHandleTurnout.getName() : "";
     }
 
     /**

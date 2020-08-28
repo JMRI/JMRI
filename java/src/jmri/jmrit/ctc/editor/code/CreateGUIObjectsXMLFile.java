@@ -114,43 +114,43 @@ public class CreateGUIObjectsXMLFile {
                 else if (generateSwitch && !generateSignal) filename = "Panel-switch";  // NOI18N
                 generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, filename, printWriter);
 //  CB:
-                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor)) { // Always exists, but for safety:
+                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor.getHandleName())) { // Always exists, but for safety:
                     if (codeButtonHandlerData._mCodeButtonDelayTime == 0) { // Only if real one is supposed to be present:
-                        generatePushButton(thisObjectHorizontalPosition + 21, adjustCodeButtonYBySize(632, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCodeButtonInternalSensor, printWriter);
+                        generatePushButton(thisObjectHorizontalPosition + 21, adjustCodeButtonYBySize(632, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCodeButtonInternalSensor.getHandleName(), printWriter);
                     }
                 }
 //  O.S. occupancy sensor:
-                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) {
-                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 78, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);    // NOI18N
+                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName())) {
+                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 78, codeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName(), "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);    // NOI18N
                 }
-                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor2)) {
-                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 108, codeButtonHandlerData._mOSSectionOccupiedExternalSensor2, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);  // NOI18N
+                if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor2.getHandleName())) {
+                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 108, codeButtonHandlerData._mOSSectionOccupiedExternalSensor2.getHandleName(), "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);  // NOI18N
                 }
 //  SWDI:
                 if (codeButtonHandlerData._mSWDI_Enabled) { // Switch Indicators:
                     int y = adjustSwitchItemsYBySize(340, otherData._mGUIDesign_VerticalSize);
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSWDI_NormalInternalSensor, "green", false, printWriter);   // NOI18N
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName())) {
+                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName(), "green", false, printWriter);   // NOI18N
                     }
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSWDI_ReversedInternalSensor, "amber", false, printWriter);    // NOI18N
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName())) {
+                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName(), "amber", false, printWriter);    // NOI18N
                     }
                     if (otherData._mGUIDesign_TurnoutsOnPanel) {
-                        if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout)) {
+                        if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName())) {
                             switch (codeButtonHandlerData._mSWDI_GUITurnoutType) {
                                 case TURNOUT:
-                                    generateTurnoutIcon(thisObjectHorizontalPosition + 9, 80, codeButtonHandlerData._mSWDI_ExternalTurnout, codeButtonHandlerData._mSWDI_GUITurnoutLeftHand, printWriter);
+                                    generateTurnoutIcon(thisObjectHorizontalPosition + 9, 80, codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), codeButtonHandlerData._mSWDI_GUITurnoutLeftHand, printWriter);
                                     break;
                                 case CROSSOVER:
                                     if (codeButtonHandlerData._mSWDI_GUITurnoutLeftHand == codeButtonHandlerData._mSWDI_GUICrossoverLeftHand) {
-                                        generateTurnoutCrossoverIcon(thisObjectHorizontalPosition + 20, 40, codeButtonHandlerData._mSWDI_ExternalTurnout, false, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
+                                        generateTurnoutCrossoverIcon(thisObjectHorizontalPosition + 20, 40, codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), false, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
                                     } else {
-                                        generateTurnoutIcon(thisObjectHorizontalPosition + 9, 80, codeButtonHandlerData._mSWDI_ExternalTurnout, codeButtonHandlerData._mSWDI_GUITurnoutLeftHand, printWriter);
-                                        generateTurnoutIcon(thisObjectHorizontalPosition + 9, 135, codeButtonHandlerData._mSWDI_ExternalTurnout, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
+                                        generateTurnoutIcon(thisObjectHorizontalPosition + 9, 80, codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), codeButtonHandlerData._mSWDI_GUITurnoutLeftHand, printWriter);
+                                        generateTurnoutIcon(thisObjectHorizontalPosition + 9, 135, codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
                                     }
                                     break;
                                 case DOUBLE_CROSSOVER:
-                                    generateTurnoutCrossoverIcon(thisObjectHorizontalPosition + 20, 80, codeButtonHandlerData._mSWDI_ExternalTurnout, true, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
+                                    generateTurnoutCrossoverIcon(thisObjectHorizontalPosition + 20, 80, codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), true, codeButtonHandlerData._mSWDI_GUICrossoverLeftHand, printWriter);
                                     break;
                                 default:
                                     break;
@@ -160,22 +160,22 @@ public class CreateGUIObjectsXMLFile {
                 }
 //  SWDL:
                 if (codeButtonHandlerData._mSWDL_Enabled) { // Switch Lever:
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor)) {
-                        generateTurnoutLever(thisObjectHorizontalPosition + 8, adjustSwitchItemsYBySize(379, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSWDL_InternalSensor, printWriter);
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor.getHandleName())) {
+                        generateTurnoutLever(thisObjectHorizontalPosition + 8, adjustSwitchItemsYBySize(379, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSWDL_InternalSensor.getHandleName(), printWriter);
                         generateTextPositionableLabelCentered(thisObjectHorizontalPosition + 32, adjustSwitchItemsYBySize(356, otherData._mGUIDesign_VerticalSize), Integer.toString(codeButtonHandlerData._mSwitchNumber), printWriter);
                     }
                 }
 //  SIDI:
                 if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                     int y = adjustSignalItemsYBySize(454, otherData._mGUIDesign_VerticalSize);
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSIDI_LeftInternalSensor, "green", false, printWriter); // NOI18N
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName())) {
+                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(), "green", false, printWriter); // NOI18N
                     }
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor)) { // Should always be present, but for safety:
-                        generateSensorIndicator(thisObjectHorizontalPosition + 22, adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDI_NormalInternalSensor, "red", false, printWriter);
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName())) { // Should always be present, but for safety:
+                        generateSensorIndicator(thisObjectHorizontalPosition + 22, adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName(), "red", false, printWriter);
                     }
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor, "green", false, printWriter);   // NOI18N
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName())) {
+                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(), "green", false, printWriter);   // NOI18N
                     }
                     if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
                         ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
@@ -216,27 +216,27 @@ public class CreateGUIObjectsXMLFile {
                 }
 //  SIDL:
                 if (codeButtonHandlerData._mSIDL_Enabled) { // Signal Lever:
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor)) {
-                        generateSignalLever(thisObjectHorizontalPosition + 8, adjustSignalItemsYBySize(492, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDL_LeftInternalSensor, codeButtonHandlerData._mSIDL_NormalInternalSensor, codeButtonHandlerData._mSIDL_RightInternalSensor, printWriter);
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName())) {
+                        generateSignalLever(thisObjectHorizontalPosition + 8, adjustSignalItemsYBySize(492, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName(), codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName(), codeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName(), printWriter);
                         generateTextPositionableLabelCentered(thisObjectHorizontalPosition + 32, adjustSignalItemsYBySize(470, otherData._mGUIDesign_VerticalSize), Integer.toString(codeButtonHandlerData._mSignalEtcNumber), printWriter);
                     }
                 }
 //  CO:
                 if (codeButtonHandlerData._mCO_Enabled) { // Call On:
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor)) {
-                        generateToggle(thisObjectHorizontalPosition + 21, adjustCallOnItemsYBySize(582, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCO_CallOnToggleInternalSensor, printWriter);
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName())) {
+                        generateToggle(thisObjectHorizontalPosition + 21, adjustCallOnItemsYBySize(582, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName(), printWriter);
                         generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustCallOnItemsYBySize(590, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileCallOn"), printWriter);   // NOI18N
                     }
                 }
 //  TUL:
                 if (codeButtonHandlerData._mTUL_Enabled) { // Turnout Locking:
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle)) {
-                        generateToggle(thisObjectHorizontalPosition + 21, adjustLockedItemsYBySize(541, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle, printWriter);
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName())) {
+                        generateToggle(thisObjectHorizontalPosition + 21, adjustLockedItemsYBySize(541, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName(), printWriter);
                         generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(536, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileLocal"), printWriter);    // NOI18N
                         generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(560, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileLocked"), printWriter);   // NOI18N
                     }
-                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 22, 200, codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator, "red", false, printWriter);  // NOI18N
+                    if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName())) {
+                        generateSensorIndicator(thisObjectHorizontalPosition + 22, 200, codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName(), "red", false, printWriter);  // NOI18N
                         generateTextPositionableLabel(thisObjectHorizontalPosition + 9, 230, Bundle.getMessage("CreateGUIObjectsXMLFileUnlocked"), printWriter);    // NOI18N
                     }
                 }

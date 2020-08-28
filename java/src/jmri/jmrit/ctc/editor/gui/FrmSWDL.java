@@ -6,6 +6,7 @@ import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -29,7 +30,7 @@ public class FrmSWDL extends javax.swing.JFrame {
 
     private String _mSWDL_InternalSensorOrig;
     private void initOrig() {
-        _mSWDL_InternalSensorOrig = _mCodeButtonHandlerData._mSWDL_InternalSensor;
+        _mSWDL_InternalSensorOrig = _mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName();
     }
     private boolean dataChanged() {
         if (!_mSWDL_InternalSensorOrig.equals(_mSWDL_InternalSensor.getText())) return true;
@@ -45,7 +46,7 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
         _mCheckJMRIObject = checkJMRIObject;
-        _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor);
+        _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName());
         initOrig();
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
@@ -54,7 +55,7 @@ public class FrmSWDL extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSWDL_Enabled) return true; // Not enabled, can be no error!
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
 
@@ -148,7 +149,13 @@ public class FrmSWDL extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mSWDL_InternalSensor = _mSWDL_InternalSensor.getText();
+//         _mCodeButtonHandlerData._mSWDL_InternalSensor = _mSWDL_InternalSensor.getText();
+        String sensorName = _mSWDL_InternalSensor.getText();
+        NBHSensor sensor = new NBHSensor("FrmSWDL", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSWDL_InternalSensor = sensor;
+        }
+
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -162,7 +169,7 @@ public class FrmSWDL extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDL(_mProgramProperties, temp);
-        _mSWDL_InternalSensor.setText(temp._mSWDL_InternalSensor);
+        _mSWDL_InternalSensor.setText(temp._mSWDL_InternalSensor.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

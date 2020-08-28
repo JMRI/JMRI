@@ -85,10 +85,10 @@ public class CallOn {
     private final NBHSensor _mCallOnToggleSensor;
     private final ArrayList<GroupingData> _mGroupingDataArrayList = new ArrayList<>();
 
-    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, ArrayList<CallOnData> groupingsList, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
+    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, NBHSensor callOnToggleSensor, ArrayList<CallOnData> groupingsList, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
         _mLockedRoutesManager = lockedRoutesManager;
         _mSignalHeadSelected = (signalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
-        _mCallOnToggleSensor = new NBHSensor("CallOn", userIdentifier, "callOnToggleSensor", callOnToggleSensor, false);    // NOI18N
+        _mCallOnToggleSensor = callOnToggleSensor;
         for (CallOnData callOnData : groupingsList) {
             try {
                 NBHSignal signal = callOnData._mExternalSignal;

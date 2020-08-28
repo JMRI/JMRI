@@ -6,6 +6,8 @@ import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -34,9 +36,9 @@ public class FrmSWDI extends javax.swing.JFrame {
     private boolean _mSWDI_GUICrossoverLeftHandOrig;
 
     private void initOrig() {
-        _mSWDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_NormalInternalSensor;
-        _mSWDI_ReversedInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor;
-        _mSWDI_ExternalTurnoutOrig = _mCodeButtonHandlerData._mSWDI_ExternalTurnout;
+        _mSWDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName();
+        _mSWDI_ReversedInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName();
+        _mSWDI_ExternalTurnoutOrig = _mCodeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName();
         _mSWDI_CodingTimeInMillisecondsOrig = _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds;
         _mSWDI_FeedbackDifferentOrig = _mCodeButtonHandlerData._mSWDI_FeedbackDifferent;
         _mSWDI_GUITurnoutTypeOrig = _mCodeButtonHandlerData._mSWDI_GUITurnoutType;
@@ -67,9 +69,9 @@ public class FrmSWDI extends javax.swing.JFrame {
         CommonSubs.numberButtonGroup(_mSWDI_GUITurnoutType);
         CommonSubs.setButtonSelected(_mSWDI_GUITurnoutType, _mCodeButtonHandlerData._mSWDI_GUITurnoutType.getInt());
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
-        _mSWDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_NormalInternalSensor);
-        _mSWDI_ReversedInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_ReversedInternalSensor);
-        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout, true);
+        _mSWDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName());
+        _mSWDI_ReversedInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName(), true);
         _mSWDI_CodingTimeInMilliseconds.setText(Integer.toString(_mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds));
         _mSWDI_FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mSWDI_FeedbackDifferent);
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);
@@ -82,9 +84,9 @@ public class FrmSWDI extends javax.swing.JFrame {
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSWDI_Enabled) return true; // Not enabled, can be no error!
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor)) return false;
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor)) return false;
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName())) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName())) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
 
@@ -293,9 +295,27 @@ public class FrmSWDI extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = _mSWDI_NormalInternalSensor.getText();
-        _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = _mSWDI_ReversedInternalSensor.getText();
-        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = (String) _mSWDI_ExternalTurnout.getSelectedItem();
+//         _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = _mSWDI_NormalInternalSensor.getText();
+        String sensorName = _mSWDI_NormalInternalSensor.getText();
+        NBHSensor sensor = new NBHSensor("FrmSWDI", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = sensor;
+        }
+
+//         _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = _mSWDI_ReversedInternalSensor.getText();
+        sensorName = _mSWDI_ReversedInternalSensor.getText();
+        sensor = new NBHSensor("FrmSWDI", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = sensor;
+        }
+
+//         _mCodeButtonHandlerData._mSWDI_ExternalTurnout = (String) _mSWDI_ExternalTurnout.getSelectedItem();
+        String turnoutName = (String) _mSWDI_ExternalTurnout.getSelectedItem();
+        NBHTurnout turnout = new NBHTurnout("FrmSWDI", "", turnoutName, turnoutName, false);
+        if (turnout.valid()) {
+            _mCodeButtonHandlerData._mSWDI_ExternalTurnout = turnout;
+        }
+
         _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds);
         _mCodeButtonHandlerData._mSWDI_FeedbackDifferent = _mSWDI_FeedbackDifferent.isSelected();
         _mCodeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(_mSWDI_GUITurnoutType);
@@ -314,8 +334,8 @@ public class FrmSWDI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDI(_mProgramProperties, temp);
-        _mSWDI_NormalInternalSensor.setText(temp._mSWDI_NormalInternalSensor);
-        _mSWDI_ReversedInternalSensor.setText(temp._mSWDI_ReversedInternalSensor);
+        _mSWDI_NormalInternalSensor.setText(temp._mSWDI_NormalInternalSensor.getHandleName());
+        _mSWDI_ReversedInternalSensor.setText(temp._mSWDI_ReversedInternalSensor.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTurnoutActionPerformed

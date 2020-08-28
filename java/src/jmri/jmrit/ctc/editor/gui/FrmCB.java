@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
@@ -36,9 +37,9 @@ public class FrmCB extends javax.swing.JFrame {
     private int _mOSSectionSwitchSlavedToUniqueIDIndexOrig;
     private int _mCodeButtonDelayTimeOrig;
     private void initOrig() {
-        _mCodeButtonInternalSensorOrig = _mCodeButtonHandlerData._mCodeButtonInternalSensor;
-        _mOSSectionOccupiedExternalSensorOrig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor;
-        _mOSSectionOccupiedExternalSensor2Orig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2;
+        _mCodeButtonInternalSensorOrig = _mCodeButtonHandlerData._mCodeButtonInternalSensor.getHandleName();
+        _mOSSectionOccupiedExternalSensorOrig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName();
+        _mOSSectionOccupiedExternalSensor2Orig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2.getHandleName();
         _mOSSectionSwitchSlavedToUniqueIDIndexOrig = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         _mCodeButtonDelayTimeOrig = _mCodeButtonHandlerData._mCodeButtonDelayTime;
     }
@@ -62,9 +63,9 @@ public class FrmCB extends javax.swing.JFrame {
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         _mArrayListOfSelectableOSSectionUniqueIDs = CommonSubs.getArrayListOfSelectableOSSectionUniqueIDs(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
-        _mCodeButtonInternalSensor.setText(_mCodeButtonHandlerData._mCodeButtonInternalSensor);
-        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor, true);   // NOI18N
-        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor2, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2, true);  // NOI18N
+        _mCodeButtonInternalSensor.setText(_mCodeButtonHandlerData._mCodeButtonInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName(), true);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor2, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2.getHandleName(), true);  // NOI18N
         CommonSubs.populateJComboBoxWithColumnDescriptionsAndSelectViaUniqueID(_mOSSectionSwitchSlavedToUniqueID, _mCTCSerialData, _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);
         _mCodeButtonDelayTime.setText(Integer.toString(_mCodeButtonHandlerData._mCodeButtonDelayTime));
@@ -75,8 +76,8 @@ public class FrmCB extends javax.swing.JFrame {
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor)) return false;
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor.getHandleName())) return false;
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
 
@@ -283,9 +284,24 @@ public class FrmCB extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        _mCodeButtonHandlerData._mCodeButtonInternalSensor = _mCodeButtonInternalSensor.getText();
-        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = (String) _mOSSectionOccupiedExternalSensor.getSelectedItem();
-        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = (String) _mOSSectionOccupiedExternalSensor2.getSelectedItem();
+        String sensorName = _mCodeButtonInternalSensor.getText();
+        NBHSensor sensor = new NBHSensor("FrmCB", "", sensorName, sensorName);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mCodeButtonInternalSensor = sensor;
+        }
+
+        sensorName = (String) _mOSSectionOccupiedExternalSensor.getSelectedItem();
+        sensor = new NBHSensor("FrmCB", "", sensorName, sensorName, false);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = sensor;
+        }
+
+        sensorName = (String) _mOSSectionOccupiedExternalSensor2.getSelectedItem();
+        sensor = new NBHSensor("FrmCB", "", sensorName, sensorName, true);
+        if (sensor.valid()) {
+            _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = sensor;
+        }
+
         int selectedIndex = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         if (selectedIndex > 0) { // None and skip blank entry
             _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID = _mArrayListOfSelectableOSSectionUniqueIDs.get(selectedIndex - 1);  // Correct for blank entry
@@ -306,7 +322,7 @@ public class FrmCB extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CodeButton(_mProgramProperties, temp);
-        _mCodeButtonInternalSensor.setText(temp._mCodeButtonInternalSensor);
+        _mCodeButtonInternalSensor.setText(temp._mCodeButtonInternalSensor.getHandleName());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mOSSectionSwitchSlavedToUniqueIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mOSSectionSwitchSlavedToUniqueIDActionPerformed

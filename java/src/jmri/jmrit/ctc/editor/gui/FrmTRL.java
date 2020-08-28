@@ -66,13 +66,13 @@ public class FrmTRL extends javax.swing.JFrame {
     private ArrayList<String> getListOfExternalSensorsSlaved(   CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                 ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
         ArrayList<String> returnValue = new ArrayList<>();
-        returnValue.add(currentCodeButtonHandlerData._mOSSectionOccupiedExternalSensor);    // Put ours in there at least.
+        returnValue.add(currentCodeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName());    // Put ours in there at least.
         int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (currentCodeButtonHandlerData != codeButtonHandlerData    // Don't check ourselves, we've already put us in the list.
             && codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID != CodeButtonHandlerData.SWITCH_NOT_SLAVED   // It's referencing someone else:
             && currentUniqueID == codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID) {  // And it's referening "us"/
-                returnValue.add(codeButtonHandlerData._mOSSectionOccupiedExternalSensor);
+                returnValue.add(codeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName());
             }
         }
         return returnValue;
