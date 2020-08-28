@@ -1296,8 +1296,7 @@ public class AutoActiveTrain implements ThrottleListener {
     /**
      * When the stopping sensor we are waiting on goes active
      * stop the train or set a new speed and destroy itself
-     * @param sensor
-     * @param state
+     * @param e  - the property change event
      */
     private synchronized void handleStopSensorChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int) e.getNewValue() == Sensor.ACTIVE) {
