@@ -217,10 +217,10 @@ public class CTCMain {
             _mCBHashMap.put(codeButtonHandlerData._mUniqueID, codeButtonHandler);
         });
 
-        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebugSystemReloadInternalSensor", otherData._mCTCDebugSystemReloadInternalSensor, true);  // NOI18N
+        _mCTCDebugSystemReloadInternalSensor = otherData._mCTCDebugSystemReloadInternalSensor;
         _mCTCDebugSystemReloadInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebugSystemReloadInternalSensor.addPropertyChangeListener(_mCTCDebugSystemReloadInternalSensorPropertyChangeListener);
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, true); // NOI18N
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor;
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 

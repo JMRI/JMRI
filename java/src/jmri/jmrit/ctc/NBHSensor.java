@@ -112,6 +112,19 @@ public class NBHSensor {
         }
     }
 
+    public NBHSensor(String module, String userIdentifier, String parameter, String sensorName) {
+        _mUserIdentifier = userIdentifier;
+        _mParameter = parameter;
+        _mOptional = false;
+
+        Sensor tempSensor = getSafeInternalSensor(module, userIdentifier, parameter, sensorName);
+        if (tempSensor != null) {
+            _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, tempSensor);
+        } else {
+            _mNamedBeanHandleSensor = null;
+        }
+    }
+
 //????
 //  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
@@ -133,6 +146,11 @@ public class NBHSensor {
         return null;
     }
 
+    private static Sensor getSafeInternalSensor(String module, String userIdentifier, String parameter, String sensor) {
+        try { return getInternalSensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
+        return null;
+    }
+
 //  sensor is NOT optional and cannot be null.  Raises Exception in ALL error cases.
     private static Sensor getExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
@@ -148,6 +166,16 @@ public class NBHSensor {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
             Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor);
+            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
+            return returnValue;
+        } else { return null; }
+    }
+
+// Special case for CTC internal sensors.  These are not always predefined so the provide() method is used.
+    private static Sensor getInternalSensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
+        if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).provide(sensor);
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { return null; }

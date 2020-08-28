@@ -161,7 +161,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         otherData.addContent(storeInt("FileVersion", od._mFileVersion));
 
 //  Fleeting:
-        otherData.addContent(storeString("FleetingToggleInternalSensor", od._mFleetingToggleInternalSensor));
+        otherData.addContent(storeSensor("FleetingToggleInternalSensor", od._mFleetingToggleInternalSensor));
         otherData.addContent(storeBoolean("DefaultFleetingEnabled", od._mDefaultFleetingEnabled));
 
 //  Global startup:
@@ -173,8 +173,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         otherData.addContent(storeInt("NextUniqueNumber", od._mNextUniqueNumber));
 
 //  CTC Debugging:
-        otherData.addContent(storeString("CTCDebugSystemReloadInternalSensor", od._mCTCDebugSystemReloadInternalSensor));
-        otherData.addContent(storeString("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor));
+        otherData.addContent(storeSensor("CTCDebugSystemReloadInternalSensor", od._mCTCDebugSystemReloadInternalSensor));
+        otherData.addContent(storeSensor("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor));
 
 //  GUI design:
         otherData.addContent(storeInt("GUIDesign_NumberOfEmptyColumnsAtEnd", od._mGUIDesign_NumberOfEmptyColumnsAtEnd));
@@ -491,7 +491,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         od._mFileVersion = loadInt(el.getChild("FileVersion"));
 
 //  Fleeting:
-        od._mFleetingToggleInternalSensor = loadString(el.getChild("FleetingToggleInternalSensor"));
+        od._mFleetingToggleInternalSensor = loadSensor(el.getChild("FleetingToggleInternalSensor"));
         od._mDefaultFleetingEnabled = loadBoolean(el.getChild("DefaultFleetingEnabled"));
 
 //  Global startup:
@@ -503,8 +503,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         od._mNextUniqueNumber = loadInt(el.getChild("NextUniqueNumber"));
 
 //  CTC Debugging:
-        od._mCTCDebugSystemReloadInternalSensor = loadString(el.getChild("CTCDebugSystemReloadInternalSensor"));
-        od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadString(el.getChild("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor"));
+        od._mCTCDebugSystemReloadInternalSensor = loadSensor(el.getChild("CTCDebugSystemReloadInternalSensor"));
+        od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadSensor(el.getChild("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor"));
 
 //  GUI design:
         od._mGUIDesign_NumberOfEmptyColumnsAtEnd = loadInt(el.getChild("GUIDesign_NumberOfEmptyColumnsAtEnd"));

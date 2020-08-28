@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import javax.swing.ButtonGroup;
+import jmri.jmrit.ctc.NBHSensor;
 
 /**
  *
@@ -94,7 +95,7 @@ variable name and declared as type String.
 //  Version of this file for supporting upgrade paths from prior versions:
     public int      _mFileVersion;
 //  Fleeting:
-    public String   _mFleetingToggleInternalSensor;
+    public NBHSensor   _mFleetingToggleInternalSensor;
     public boolean  _mDefaultFleetingEnabled;
 //  Global startup:
     public boolean  _mTUL_EnabledAtStartup = true;
@@ -103,8 +104,8 @@ variable name and declared as type String.
 //  Next unique # for each created Column:
     public int      _mNextUniqueNumber = 0;
 //  CTC Debugging:
-    public String   _mCTCDebugSystemReloadInternalSensor;
-    public String   _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor;
+    public NBHSensor   _mCTCDebugSystemReloadInternalSensor;
+    public NBHSensor   _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor;
 //  GUI design:
     public int      _mGUIDesign_NumberOfEmptyColumnsAtEnd;
     public CTC_PANEL_TYPE   _mGUIDesign_CTCPanelType;
@@ -120,11 +121,11 @@ variable name and declared as type String.
     public boolean  _mGUIDesign_TurnoutsOnPanel;
 
     public OtherData() {
-        _mFleetingToggleInternalSensor = "IS:FLEETING";                                 // NOI18N
+        _mFleetingToggleInternalSensor = new NBHSensor("OtherData", "fleeting", "IS:FLEETING", "IS:FLEETING");  // NOI18N
         _mDefaultFleetingEnabled = false;
         _mSignalSystemType = SIGNAL_SYSTEM_TYPE.SIGNALMAST;
-        _mCTCDebugSystemReloadInternalSensor = "IS:RELOADCTC";                          // NOI18N
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = "IS:DEBUGCTC";    // NOI18N
+        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("OtherData", "reload", "IS:RELOADCTC", "IS:RELOADCTC");  // NOI18N
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("OtherData", "debug", "IS:DEBUGCTC", "IS:DEBUGCTC");  // NOI18N
         _mGUIDesign_NumberOfEmptyColumnsAtEnd = 0;
         _mGUIDesign_CTCPanelType = CTC_PANEL_TYPE.USS;
         _mGUIDesign_BuilderPlate = false;

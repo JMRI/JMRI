@@ -72,20 +72,20 @@ public class CreateGUIObjectsXMLFile {
             generateTextPositionableLabel(87, oneOfItemsBottomEdge - 244, Bundle.getMessage("CreateGUIObjectsXMLFileClockOn"), printWriter);    // NOI18N
         }
         if (otherData._mGUIDesign_FleetingToggleSwitch) {
-            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mFleetingToggleInternalSensor)) {
-                generateToggle(226, oneOfItemsBottomEdge - 36, otherData._mFleetingToggleInternalSensor, printWriter);
+            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mFleetingToggleInternalSensor.getHandleName())) {
+                generateToggle(226, oneOfItemsBottomEdge - 36, otherData._mFleetingToggleInternalSensor.getHandleName(), printWriter);
                 generateTextPositionableLabel(215, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileFleetingOn"), printWriter); // NOI18N
             }
         }
         if (otherData._mGUIDesign_ReloadCTCSystemButton) {
-            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebugSystemReloadInternalSensor)) {
-                generatePushButton(291, oneOfItemsBottomEdge - 36, otherData._mCTCDebugSystemReloadInternalSensor, printWriter);
+            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebugSystemReloadInternalSensor.getHandleName())) {
+                generatePushButton(291, oneOfItemsBottomEdge - 36, otherData._mCTCDebugSystemReloadInternalSensor.getHandleName(), printWriter);
                 generateTextPositionableLabel(277, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileReloadCTC"), printWriter);  // NOI18N
             }
         }
         if (otherData._mGUIDesign_CTCDebugOnToggle) {
-            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor)) {
-                generateToggle(358, oneOfItemsBottomEdge - 36, otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, printWriter);
+            if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getHandleName())) {
+                generateToggle(358, oneOfItemsBottomEdge - 36, otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getHandleName(), printWriter);
                 generateTextPositionableLabel(339, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileCTCDebugOn"), printWriter); // NOI18N
             }
         }
