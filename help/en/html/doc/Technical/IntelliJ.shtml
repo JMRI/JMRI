@@ -719,7 +719,7 @@
       <p>To make a PR from within IntelliJ IDEA, select "Create
       Pull Request" from the "VCS" -&gt; "Git" menu (it's the one but
       last item, supported by the Git plugin).<br>
-      Note: Be sure to select your own repository <code>origon</code>if you see
+      Note: Be sure to select your own repository <code>origin:</code> if you see
       multiple options to choose from in this submenu:<br>
       <img src="images/IntelliJ/IjGitPRViaOwnRepo.png" width="664" height="100" alt="IntelliJ Git Menu"></p>
       <p>Fill in a title and comment for your PR:<br>
