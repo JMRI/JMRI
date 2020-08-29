@@ -117,7 +117,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Memory has been invoked.
      *
      * @param systemName Memory system name
      * @param userName   Memory user name
