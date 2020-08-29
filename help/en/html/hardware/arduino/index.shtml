@@ -158,7 +158,7 @@
     <li>
     Be sure to set the communication speed (baud rate) the same in your arduino sketch and in
     the JMRI <a href="../cmri/CMRI.shtml#L215">CMRI system connection</a>.  The baud rate will only 
-    be seen on the JMRI Preferences->Connections window if you check the box for "additional 
+    be visible on the JMRI Preferences->Connections window if you check the box for "Additional
     Connection Settings."
     </li>
     <li>
@@ -264,7 +264,7 @@
     
     <ul>
     <li>Block occupancy detectors: Connect an arduino to several block occupancy detectors and define JMRI sensors to report whether blocks are occupied.
-    layut panels will show tracks changing color as blocks go fromunoccuied to occupied and back again.</li>
+    layut panels will show tracks changing color as blocks go from unoccuied to occupied and back again.</li>
     <li>Location detectors: Connect an arduino to a "point" sensor such as a photooptical module, infrared module, Hall effect reader, RFID reader,
     etc.  Define a JMRI sensor that goes active when the physical sensor is active and use this to control routes,
     Logix, or other JMRI "triggered" action.</li>
