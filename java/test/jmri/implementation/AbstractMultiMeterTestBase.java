@@ -2,6 +2,8 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 
+import jmri.JmriException;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -53,34 +55,34 @@ public abstract class AbstractMultiMeterTestBase {
     }
 
     @Test
-    public void testUpdateAndGetCurrent(){
-        Assume.assumeTrue(mm.hasCurrent());
-        mm.setCurrent(0.5f);
-        Assert.assertEquals("current after set",0.5f,mm.getCurrent(),0.0001);
+    public void testUpdateAndGetCurrent() throws JmriException{
+        Assume.assumeNotNull(mm.getMeterByName(MeterGroup.CurrentMeter));
+        mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(0.5f);
+        Assert.assertEquals("current after set",0.5f,mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue(),0.0001);
     }
 
     @Test
-    public void testUpdateAndGetVoltage(){
-        Assume.assumeTrue(mm.hasVoltage());
-        mm.setVoltage(0.5f);
-        Assert.assertEquals("current after set",0.5f,mm.getVoltage(),0.0001);
+    public void testUpdateAndGetVoltage() throws JmriException{
+        Assume.assumeNotNull(mm.getMeterByName(MeterGroup.VoltageMeter));
+        mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().setCommandedAnalogValue(0.5f);
+        Assert.assertEquals("current after set",0.5f,mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue(),0.0001);
     }
 
     @Test
-    public void testAddListener() {
+    public void testAddListener() throws JmriException {
         Listen ln = new Listen();
         mm.addPropertyChangeListener(ln);
-        mm.setCurrent(0.5f);
+        mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(0.5f);
         jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
         Assert.assertTrue("listener invoked by setCurrent", ln.eventSeen());
     }
 
     @Test
-    public void testRemoveListener() {
+    public void testRemoveListener() throws JmriException {
         Listen ln = new Listen();
         mm.addPropertyChangeListener(ln);
         mm.removePropertyChangeListener(ln);
-        mm.setCurrent(0.5f);
+        mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(0.5f);
         // this should just timeout;
         Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));
         Assert.assertFalse("listener invoked by setCurrent, but not listening", ln.eventSeen());

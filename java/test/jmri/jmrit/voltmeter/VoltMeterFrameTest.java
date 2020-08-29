@@ -2,6 +2,8 @@ package jmri.jmrit.voltmeter;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.JmriException;
+import jmri.MeterGroup;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
@@ -18,36 +20,44 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     public void testVoltageChange1Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThreadingUtil.runOnLayout(() -> {
+        runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(2.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+                    .getMeterByName(MeterGroup.VoltageMeter)
+                    .getMeter().setCommandedAnalogValue(2.1f);
         });
     }
 
     @Test
     public void testVoltageChange2Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThreadingUtil.runOnLayout(() -> {
+        runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(32.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+                    .getMeterByName(MeterGroup.VoltageMeter)
+                    .getMeter().setCommandedAnalogValue(32.1f);
         });
     }
 
     @Test
     public void testVoltageChange3Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThreadingUtil.runOnLayout(() -> {
+        runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(432.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+                    .getMeterByName(MeterGroup.VoltageMeter)
+                    .getMeter().setCommandedAnalogValue(432.1f);
         });
     }
 
     @Test
     public void testVoltageChange4Digit() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ThreadingUtil.runOnLayout(() -> {
+        runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class).setVoltage(5432.1f);
+            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+                    .getMeterByName(MeterGroup.VoltageMeter)
+                    .getMeter().setCommandedAnalogValue(5432.1f);
         });
     }
 
@@ -67,13 +77,23 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         super.tearDown();
     }
+    
+    private void runOnLayout(RunnableWithException r) {
+        ThreadingUtil.runOnLayout(() -> {
+            try {
+                r.run();
+            } catch (JmriException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
 
     private class TestMeter extends jmri.implementation.DefaultMeterGroup {
 
         public TestMeter() {
-            super(0);
+            super("IVTestMeter");
         }
-
+/*
         @Override
         public void initializeHardwareMeter() {
         }
@@ -113,7 +133,12 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         @Override
         public void disable() {
         }
+*/
     }
 
+    private interface RunnableWithException {
+        public void run() throws JmriException;
+    }
+    
     // private final static Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 }

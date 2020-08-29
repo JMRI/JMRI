@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.InstanceManager;
+import jmri.MeterGroupManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -38,7 +40,7 @@ public class CbusConfigurationManagerTest {
         Assert.assertNull( t.getReporterManager() );
         Assert.assertNull( t.getLightManager() );
         Assert.assertNull( t.getCommandStation() );
-        Assert.assertNull( t.getMultiMeter() );
+//        Assert.assertNull( t.getMultiMeter() );
         Assert.assertNull( t.getCbusPreferences() );
         Assert.assertNull( t.getCabSignalManager() );
         
@@ -113,14 +115,17 @@ public class CbusConfigurationManagerTest {
         CbusCommandStation cs = t.getCommandStation();
         Assert.assertTrue("CommandStation",cs == t.get(jmri.CommandStation.class) );        
         
-        CbusMultiMeter cbmm = t.getMultiMeter();
-        Assert.assertTrue("MultiMeter",cbmm == t.get(jmri.MeterGroup.class) );
+//        CbusMultiMeter cbmm = t.getMultiMeter();
+//        Assert.assertTrue("MultiMeter",cbmm == t.get(jmri.MeterGroup.class) );
         
         CbusPreferences cbpref = t.getCbusPreferences();
         Assert.assertTrue("CbusPreferences",cbpref == t.get(CbusPreferences.class) );
         
         CbusCabSignalManager csm = t.getCabSignalManager();
         Assert.assertTrue("CbusCabSignalManager",csm == t.get(jmri.CabSignalManager.class) );
+        
+        CbusMultiMeter cbmm = (CbusMultiMeter)InstanceManager.getDefault(MeterGroupManager.class).getBySystemName("CBUSMultiMeter");
+        Assert.assertTrue("MultiMeter",cbmm == t.get(jmri.MeterGroup.class) );
         
     }
         

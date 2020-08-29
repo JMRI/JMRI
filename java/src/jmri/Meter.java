@@ -29,8 +29,14 @@ public interface Meter extends AnalogIO {
     
     public Unit getUnit();
 
+    /**
+     * Enable this meter
+     */
     public void enable();
 
+    /**
+     * Disable this meter
+     */
     public void disable();
     
 /*

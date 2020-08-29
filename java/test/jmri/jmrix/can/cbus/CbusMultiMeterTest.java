@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Meter;
+import jmri.MeterGroup;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -245,9 +247,9 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         mm = new CbusMultiMeter(memo);
         
         ((CbusMultiMeter)mm).requestUpdateFromLayout();
-        mm.initializeHardwareMeter();
-        Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
-        Assert.assertEquals("ma units", jmri.MeterGroup.CurrentUnits.CURRENT_UNITS_MILLIAMPS, mm.getCurrentUnits() );
+//        mm.initializeHardwareMeter();
+//        Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
+        Assert.assertEquals("ma units", mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.Milli);
         
         
     }

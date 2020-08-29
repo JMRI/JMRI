@@ -80,6 +80,22 @@ public class DefaultMeterGroup extends AbstractNamedBean implements MeterGroup {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void enable() {
+        for (MeterInfo mi : _meters.values()) {
+            mi.getMeter().enable();
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void disable() {
+        for (MeterInfo mi : _meters.values()) {
+            mi.getMeter().disable();
+        }
+    }
+
     @Override
     public void setState(int s) throws JmriException {
         throw new UnsupportedOperationException("Not supported.");
@@ -95,6 +111,14 @@ public class DefaultMeterGroup extends AbstractNamedBean implements MeterGroup {
         return Bundle.getMessage("BeanNameMultiMeter");
     }
     
+    /**
+     * Request an update from the layout.
+     */
+    public void requestUpdateFromLayout() {
+        for (MeterInfo mi : _meters.values()) {
+            mi.getMeter().disable();
+        }
+    }
     
     
 /*    

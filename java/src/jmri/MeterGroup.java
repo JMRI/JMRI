@@ -86,11 +86,52 @@ public interface MeterGroup extends NamedBean {
      * @param meter the meter
      */
     public void removeMeter(Meter meter);
+
+    /**
+     * Enable all meters in this group
+     */
+    public void enable();
+
+    /**
+     * Disable all meters in this group
+     */
+    public void disable();
     
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
      */
+    @Override
     public void dispose();
+    
+    @Deprecated
+    public default boolean hasCurrent() {
+        return getMeterByName(MeterGroup.CurrentMeter) != null;
+    }
+    
+    @Deprecated
+    public default boolean hasVoltage() {
+        return getMeterByName(MeterGroup.VoltageMeter) != null;
+    }
+    
+    @Deprecated
+    public default double getCurrent() {
+        return getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
+    }
+    
+    @Deprecated
+    public default double getVoltage() {
+        return getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue();
+    }
+    
+    @Deprecated
+    public default void setCurrent(double value) throws JmriException {
+        getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(value);
+    }
+    
+    @Deprecated
+    public default void setVoltage(double value) throws JmriException {
+        getMeterByName(MeterGroup.VoltageMeter).getMeter().setCommandedAnalogValue(value);
+    }
     
 }

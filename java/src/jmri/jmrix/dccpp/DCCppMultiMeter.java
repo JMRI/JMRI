@@ -1,5 +1,9 @@
 package jmri.jmrix.dccpp;
 
+import jmri.*;
+import jmri.implementation.DefaultMeter;
+import jmri.implementation.MeterUpdateTask;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,14 +12,25 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood (C) 2015
  */
-public class DCCppMultiMeter {
-// public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
-/*
+public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
+
     private DCCppTrafficController tc = null;
+    private final MeterUpdateTask updateTask;
+    private final Meter currentMeter;
 
     public DCCppMultiMeter(DCCppSystemConnectionMemo memo) {
-        super(DCCppConstants.METER_INTERVAL_MS);
+        super("DVBaseStation");
+//        super(DCCppConstants.METER_INTERVAL_MS);
+        
         tc = memo.getDCCppTrafficController();
+
+        updateTask = new MeterUpdateTask(10000, 0, this::requestUpdateFromLayout);
+        
+        currentMeter = new DefaultMeter("DVBaseStationCurrent", Meter.Unit.Percent, 0, 100.0, 1.0, updateTask);
+        
+        InstanceManager.getDefault(MeterManager.class).register(currentMeter);
+        
+        addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
 
         // TODO: For now this is OK since the traffic controller
         // ignores filters and sends out all updates, but
@@ -23,10 +38,9 @@ public class DCCppMultiMeter {
         tc.addDCCppListener(DCCppInterface.THROTTLE, this);
 
         //is_enabled = false;
-        initTimer();
+        updateTask.initTimer();
 
         log.debug("DCCppMultiMeter constructor called");
-
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
@@ -37,9 +51,12 @@ public class DCCppMultiMeter {
     public void message(DCCppReply r) {
         log.debug("DCCppMultiMeter received reply: {}", r.toString());
         if (r.isCurrentReply()) {
-            setCurrent(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
+            try {
+                setCurrent(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
+            } catch (JmriException e) {
+                log.error("exception thrown by setCurrent", e);
+            }
         }
-
     }
 
     @Override
@@ -47,10 +64,10 @@ public class DCCppMultiMeter {
     }
 
     @Override
-    protected void requestUpdateFromLayout() {
+    public void requestUpdateFromLayout() {
         tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), this);
     }
-
+/*
     @Override
     // Handle a timeout notification
     public String getHardwareMeterName() {
@@ -71,7 +88,7 @@ public class DCCppMultiMeter {
     public CurrentUnits getCurrentUnits() {
         return  CurrentUnits.CURRENT_UNITS_PERCENTAGE;
     }
-
+*/
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
@@ -79,5 +96,5 @@ public class DCCppMultiMeter {
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeter.class);
-*/
+
 }

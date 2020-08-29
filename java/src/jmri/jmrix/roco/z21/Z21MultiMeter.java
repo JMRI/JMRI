@@ -9,14 +9,18 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood (C) 2015
  * @author Paul Bender (C) 2017
  */
-public class Z21MultiMeter {
-//public class Z21MultiMeter extends jmri.implementation.DefaultMeterGroup implements Z21Listener {
+// public class Z21MultiMeter {
+public class Z21MultiMeter extends jmri.implementation.DefaultMeterGroup {
+// public class Z21MultiMeter extends jmri.implementation.DefaultMeterGroup implements Z21Listener {
 /*
     private Z21TrafficController tc;
     private Z21SystemConnectionMemo _memo;
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
-
+*/
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
+        super("XVCommandStation");
+    }
+/*
         super(-1); // no timer, since we already poll for this information. 
         _memo = memo;
         tc = _memo.getTrafficController();

@@ -14,10 +14,10 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
     private Z21InterfaceScaffold tc;
     private Z21SystemConnectionMemo memo;
 
-    @Test
-    public void testMethods() {
-        Assert.assertEquals("Z21", mm.getHardwareMeterName());
-    }
+//    @Test
+//    public void testMethods() {
+//        Assert.assertEquals("Z21", mm.getHardwareMeterName());
+//    }
 
     @Override
     @BeforeEach

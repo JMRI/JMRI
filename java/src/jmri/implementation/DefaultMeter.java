@@ -101,6 +101,14 @@ public class DefaultMeter extends AbstractNamedBean implements Meter {
         return _unit == Unit.Percent ? AbsoluteOrRelative.RELATIVE : AbsoluteOrRelative.ABSOLUTE;
     }
     
+    /**
+     * Request an update from the layout.
+     */
+    @Override
+    public void requestUpdateFromLayout() {
+        if (_updateTask != null) _updateTask.doRequestUpdateFromLayout();
+    }
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMeter.class);
 
     

@@ -16,10 +16,13 @@ public class MeterUpdateTask {
     boolean _enabled = false;
     private UpdateTask _intervalTask = null;
     private final int _sleepInterval;
+    private final int _minTimeBetweenUpdates;
+    private long _lastUpdateRequestTime = 0;
     private final Runnable _requestUpdateFromLayout;
     
-    public MeterUpdateTask(int interval, Runnable requestUpdateFromLayout) {
+    public MeterUpdateTask(int interval, int minTimeBetweenUpdates, Runnable requestUpdateFromLayout) {
        _sleepInterval = interval;
+       _minTimeBetweenUpdates = minTimeBetweenUpdates;
        _requestUpdateFromLayout = requestUpdateFromLayout;
     }
     
@@ -31,6 +34,10 @@ public class MeterUpdateTask {
         meters.remove(m);
     }
     
+    protected void enable() {
+        // Start timer
+    }
+    
     public void enable(Meter m) {
         if (!meters.containsKey(m)) {
             throw new IllegalArgumentException("Meter is not registered");
@@ -40,9 +47,13 @@ public class MeterUpdateTask {
             meters.put(m, true);
             if (!_enabled) {
                 _enabled = true;
-                // Start timer
+                enable();
             }
         }
+    }
+    
+    protected void disable() {
+        // Stop timer
     }
     
     public void disable(Meter m) {
@@ -60,18 +71,18 @@ public class MeterUpdateTask {
                 }
                 if (! found) {
                     _enabled = false;
-                    // Stop timer
+                    disable();
                 }
             }
         }
     }
     
-    protected void initTimer() {
+    public void initTimer() {
         if(_intervalTask!=null) {
            _intervalTask.cancel();
            _intervalTask = null;
         }
-        if(_sleepInterval <0){
+        if(_sleepInterval < 0){
            return; // don't start or restart the timer.
         }
         _intervalTask = new UpdateTask();
@@ -80,7 +91,17 @@ public class MeterUpdateTask {
         jmri.util.TimerUtil.scheduleAtFixedRate(_intervalTask,
                 _sleepInterval, _sleepInterval);
     }
-
+    
+    /**
+     * Request an update from the layout.
+     */
+    public final void doRequestUpdateFromLayout() {
+        if ((_lastUpdateRequestTime + _minTimeBetweenUpdates) < System.currentTimeMillis()) {
+            _requestUpdateFromLayout.run();
+            _lastUpdateRequestTime = System.currentTimeMillis();
+        }
+    }
+    
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.

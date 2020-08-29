@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.Meter;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -18,7 +19,7 @@ public class LnMultiMeterTest {
         Assert.assertNotNull("exists",lm);
         Assert.assertTrue(lm.hasCurrent());
         Assert.assertTrue(lm.hasVoltage());
-        Assert.assertEquals("Reports in Amps", lm.getCurrentUnits(),MeterGroup.CurrentUnits.CURRENT_UNITS_AMPS);
+        Assert.assertEquals("Reports in Amps", lm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.NoPrefix);
         lm.requestUpdateFromLayout();
         // expect one messages
         Assert.assertEquals("sent", 1, lnis.outbound.size());

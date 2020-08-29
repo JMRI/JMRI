@@ -11,10 +11,10 @@ import org.junit.jupiter.api.*;
  */
 public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase {
 
-    @Test
-    public void testMethods() {
-        Assert.assertEquals("DCC++", mm.getHardwareMeterName());
-    }
+//    @Test
+//    public void testMethods() {
+//        Assert.assertEquals("DCC++", mm.getHardwareMeterName());
+//    }
 
     @Test
     public void testCurrentReply() {
