@@ -81,7 +81,7 @@
         selecting your MQTT connection's preference
         pane, checking the "Additional Connection Settings" box,
         and then entering the desired value in the "MQTT channel"
-        selection box.  
+        selection box.<br>
         You then must 
         save your changes and restart the program; the program
         won't continue to operate normally after changing the base prefix
