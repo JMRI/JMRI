@@ -26,7 +26,7 @@
     <div id="mainContent">
 
       <h1>Hardware Support: MERG CBUS - Connection Details</h1>
-        <ul class="snav">
+       <ul class="snav">
         <li><a href="#canid">CBUS CAN Network ID</a></li>
         <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
         <li><a href="#c2">CAN via MERG Network Interface</a></li>
@@ -43,7 +43,7 @@
       <h2>CAN Adapters</h2>
 
       <img align="right" src="images/connection/merg-system-connection-400x290.png" 
-      width="400" height="290"  alt="JMRI MERG Connections">
+      width="400" height="290" alt="JMRI MERG Connections">
 
       <p>JMRI's general approach is to support as
       many hardware combinations as possible. By supporting as many
@@ -57,17 +57,17 @@
       </p>
       
       <ul>
-      <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
-      <li><a href="#c2">CAN via MERG Network Interface</a></li>
-      <li><a href="#c3">CAN via GridConnect adapter</a></li>
-      <li><a href="#c4">CAN via GridConnect Network Interface</a></li>
-      <li><a href="#c5">CAN via Lawicell CANUSB</a></li>
-      <li><a href="#c6">CAN Simulation</a></li>
-      <li><a href="#c7">Direct Serial Connection</a></li>
+        <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
+        <li><a href="#c2">CAN via MERG Network Interface</a></li>
+        <li><a href="#c3">CAN via GridConnect adapter</a></li>
+        <li><a href="#c4">CAN via GridConnect Network Interface</a></li>
+        <li><a href="#c5">CAN via Lawicell CANUSB</a></li>
+        <li><a href="#c6">CAN Simulation</a></li>
+        <li><a href="#c7">Direct Serial Connection</a></li>
       </ul>
 
       <p>Where USB interfaces are used, the Baud rate is irrelevant.</p>
-      
+
       <h2><a name="canid" id="canid">MERG CBUS CAN Network ID</a></h2>
       
         <p>All MERG CBUS modules need a CAN ID, and JMRI is no exception.</p>
@@ -90,10 +90,10 @@
 
       <p>If you have multiple copies of JMRI attached to a MERGCBUS network,
       be sure to give these unique CAN ID's.</p>
-      
+
       <h3><a name="c1" id="c1">CAN via MERG CAN-RS or CAN-USB</a></h3>
       
-        <img src="images/connection/merg-connection-canrs-canusb-350x250.jpg"
+      <img src="images/connection/merg-connection-canrs-canusb-350x250.jpg"
       width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align="right">
 
         <p>A CANUSB4 should not normally require special drivers to be installed, it should just work.</p>
@@ -149,7 +149,7 @@
         <em>Additional Connection Settings shown when box checked</em>
         <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
         <p>Gateway : Pass All ( Filtering also selectable )</p>
- 
+
       <h3><a name="c3" id="c3">CAN via GridConnect adapter</a></h3>
       <img src="images/connection/merg-connection-gridconnect-adapter-300x215.png"
       width="300" height="215" alt="JMRI MERG GridConnect Adapter" align="right">
@@ -173,7 +173,7 @@
         <p>Output Interval : 250 ms</p>
 
       <h3><a name="c4" id="c4">CAN via GridConnect Network Interface</a></h3>
-        <img src="images/connection/merg-connection-gridconnect-network-interface-300x267.png"
+      <img src="images/connection/merg-connection-gridconnect-network-interface-300x267.png"
       width="300" height="267" alt="JMRI MERG GridConnect Network Interface" align="right">
         <p>IP Address / Host Name : (none) - enter an IP address for fully manual configuration.  Optional hostname for ZeroConf / mDNS configuration. </p>
         <p>TCP / UDP Port : 0 - Port address setting of the TCP connection</p>
@@ -185,8 +185,8 @@
         <p>Output Interval : 250 ms</p>
 
       <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h3>
-      <img src="images/connection/merg-connection-lawicell-300x200.png"
-      width="300" height="200" alt="JMRI MERG Lawicell USB Connection" align="right">
+      <img src="images/connection/merg-connection-lawicell.png"
+      width="294" height="211" alt="JMRI MERG Lawicell USB Connection" align="right">
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
@@ -202,7 +202,7 @@
         <li>500,000</li>
         </ul>
         
-        <p>Connection Protocol: "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
+        <p>Connection Protocol : "MERG CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not use")</p>
         <p>Output Interval : 250 ms</p>
 
       <h3><a name="c6" id="c6">CAN Simulation</a></h3>
@@ -223,7 +223,7 @@
 
       <h3><a name="c7" id="c7">Direct Serial Connection</a></h3>
       
-        <img src="images/connection/merg-connection-direct-serial-330x288.png"
+      <img src="images/connection/merg-connection-direct-serial-330x288.png"
       width="330" height="288" alt="JMRI MERG Direct Serial Connection RfID" align="right">
       
         <p>Serial Port - Choose the serial or USB port that your CAN interface is plugged in to.</p>
