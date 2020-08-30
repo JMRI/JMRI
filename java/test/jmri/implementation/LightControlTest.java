@@ -537,7 +537,7 @@ public class LightControlTest {
     @Test
     public void testTimedSensorFollowing() throws jmri.JmriException {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
-        
+
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 
         int startListeners = s.getPropertyChangeListeners().length;
@@ -835,10 +835,10 @@ public class LightControlTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
-        
+
         l.deactivateLight();
         l.dispose();
-        
+
         l = null;
         lc = null;
     }

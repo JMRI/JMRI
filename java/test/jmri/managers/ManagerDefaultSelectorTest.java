@@ -98,7 +98,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -150,7 +150,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -216,7 +216,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet.getPropertyChangeListeners().length;
+            return 2 == loconet.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 
@@ -225,7 +225,7 @@ public class ManagerDefaultSelectorTest {
 
         // wait for notifications
         JUnitUtil.waitFor(() -> {
-            return 1 == loconet2.getPropertyChangeListeners().length;
+            return 2 == loconet2.getPropertyChangeListeners().length; // 1 in ManagerDefaultSelector + 1 in AbstractTurnoutManager
         }, "Registration Complete");
         new org.netbeans.jemmy.QueueTool().waitEmpty(20);
 

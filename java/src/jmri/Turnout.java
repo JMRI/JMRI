@@ -299,7 +299,7 @@ public interface Turnout extends DigitalIO {
                 throw new IllegalArgumentException("Turnouts have no more than two sensors");
         }
     }
-    
+
     public void provideFirstFeedbackSensor(@CheckForNull String pName) throws JmriException;
 
     public void provideSecondFeedbackSensor(@CheckForNull String pName) throws JmriException;
@@ -523,7 +523,7 @@ public interface Turnout extends DigitalIO {
 
     /**
      * Check if this Turnout can follow the state of another Turnout.
-     * 
+     *
      * @return true if this Turnout is capable of following; false otherwise
      */
     // Note: not `canFollow()` to allow JavaBeans introspection to find
@@ -532,7 +532,7 @@ public interface Turnout extends DigitalIO {
 
     /**
      * Get the Turnout this Turnout is following.
-     * 
+     *
      * @return the leading Turnout or null if none; null if
      *         {@link #isCanFollow()} is false
      */
@@ -600,4 +600,18 @@ public interface Turnout extends DigitalIO {
      *                  only have non-commanded states match
      */
     public void setFollowingCommandedState(boolean following);
+
+    /**
+     * Before setting commanded state, if required by manager, apply wait interval until
+     * outputIntervalEnds() to put less pressure on the connection.
+     * <p>
+     * Used to insert a delay before calling {@link #setCommandedState(int)} to spread out a series of
+     * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])} and
+     * {@link jmri.implementation.DefaultRoute} class SetRouteThread#run().
+     * Interval value is kept in the Memo per hardware connection, default = 0
+     *
+     * @param s turnout state to forward
+     */
+    public void setCommandedStateAtInterval(int s);
+
 }

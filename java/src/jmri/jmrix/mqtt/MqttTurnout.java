@@ -8,6 +8,7 @@ import jmri.implementation.AbstractTurnout;
  * Implementation of the Turnout interface for MQTT layouts.
  *
  * @author Lionel Jeanson Copyright (c) 2017
+ * @author Bob Jacobsen   Copyright (c) 2020
  */
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
@@ -38,10 +39,11 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
         
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-        private final static String closedText = "CLOSED";
-        private final static String thrownText = "THROWN";
-        private final static String unknownText = "UNKNOWN";
-        private final static String inconsistentText = "INCONSISTENT";
+        // public for scripting
+        public final static String closedText = "CLOSED";
+        public final static String thrownText = "THROWN";
+        public final static String unknownText = "UNKNOWN";
+        public final static String inconsistentText = "INCONSISTENT";
 
         int stateFromString(String payload) {
             switch (payload) {
@@ -90,33 +92,28 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         }
         
         @Override
-        public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState){
-            // sort out states
-            if ((newState & Turnout.CLOSED) != 0 ^ getInverted()) {
-                // first look for the double case, which we can't handle
-                if ((newState & Turnout.THROWN ) != 0 ^ getInverted()) {
-                    // this is the disaster case!
-                    log.error("Cannot command both CLOSED and THROWN: {}", newState);
-                    throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
-                } else {
-                    // send a CLOSED command
-                    return closedText;
-                }
-            } else {
-                // send a THROWN command
-                return thrownText;
+        public @Nonnull String payloadFromBean(@Nonnull Turnout bean, int newState) {
+            // calls jmri.implementation.AbstractTurnout#stateChangeCheck(int)
+            String text = "";
+            try {
+                text = (stateChangeCheck(newState) ? closedText : thrownText);
+            } catch (IllegalArgumentException ex) {
+                log.error("new state invalid, Turnout not set");
             }
+            return text;
         }
     };
-    
 
-    // Turnouts do support inversion
+    // MQTT Turnouts do support inversion
     @Override
     public boolean canInvert() {
         return true;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     * Sends an MQTT payload command
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states

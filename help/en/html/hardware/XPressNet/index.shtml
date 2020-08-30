@@ -275,7 +275,7 @@
         users, connection via the USB port will be identical to the
         previous version of the LI-USB. For Linux users, the device
         will appear as a /dev/ttyACMx device (where x is replaced
-        with a number). For Mac OS X users, the device name will be
+        with a number). For MacOS users, the device name will be
         /dev/tty.usbmodemXXX (where XXX is replaced with a 3 digit
         number)<br>
         The protocol used to connect to the device via USB is
@@ -356,7 +356,7 @@
         "http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, and
         consists of a small print (available as kit or built
         module) with 2 XpressNet connectors, a serial interface
-        (9600baud at the moment), and a S88 connection (both
+        (9,600baud at the moment), and a S88 connection (both
         traditional and S88-N connectors).</li>
 
         <li>The OpenDCC project has two interfaces for use with
@@ -586,8 +586,9 @@
             using the XPA, regardless of which system you have.</p>
           </dd>
         </dl>
-      </div><a name="connecting" id="connecting"></a>
+      </div>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Wiring</h3>
@@ -596,13 +597,13 @@
       the same commands over the XpressNet connection, they do not
       all use the same hardware connectors. It may be necessary to
       build an adapter to plug an XpressNet accessory into a
-      Command Station from another manufacturer.</p><a name=
-      "connectLi100" id="connectLi100"></a>
+      Command Station from another manufacturer.</p>
 
+      <a name="connectLi100" id="connectLi100"></a>
       <h3>Connecting using a Lenz LI100, LI101F, or LI101F</h3>
 
       <ol>
-        <li>Connect your Lenz LI100, LI100F, or LI101F to your DCC
+        <li>Connect your Lenz LI100, LI100F or LI101F to your DCC
         Command station via their XpressNet connections. Then
         connect the LI100/LI100F/LI101F to the computer's serial
         port using a 9-pin serial cable.</li>
@@ -611,33 +612,30 @@
         program. This opens automatically the first time a program
         is run, or you can select it from the "Edit" menu.</li>
 
-        <li>Select your Lenz interface (LI100,LI100F, or LI101F)
+        <li>Select your Lenz interface (LI100, LI100F or LI101F)
         from the top selection box. You can then select the proper
         serial port in the second selection box.</li>
 
-        <li>The baud rate selection box should be set to match your
+        <li>The Baud rate selection box should be set to match your
         LI100, or LI100F, or LI101F. From the factory, the LI100
-        and LI100F are set to 9600 baud. The LI101F is set to
+        and LI100F are set to 9,600 baud. The LI101F is set to
         19,200 baud.</li>
 
-        <li>The fourth box should be left on "hardware flow
-        control" unless you later consistently get a message about
-        the LI100 control leads being improperly set up, in which
-        case you might want to try to bypass that by selecting "no
-        flow control".</li>
+        <li>The box "Lxx Connection Uses" should be left
+        on "hardware flow control (recommended)" unless you later
+        consistently get a message about the LI100 control leads
+        being improperly set up, in which case you might want to
+        try to bypass that by selecting "no flow control".</li>
 
-        <li><b>This option has been removed starting in version
-        2.9.5</b> Check Buffer Status When Sending? Defaults to
-        "yes" on Windows and Linux, and "no" on MacOS 8/9 and Mac
-        OS X. Except when debugging problems, you should leave this
-        at the default.</li>
+        <li>Output Interval : 250 ms</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectLiusb" id="connectLiusb"></a>
+      </ol>
 
+      <a name="connectLiusb" id="connectLiusb"></a>
       <h3>Connecting using a Lenz LI-USB</h3>
 
       <ol>
@@ -719,19 +717,15 @@
           </ol>
         </li>
 
-        <li><b>This option has been removed starting in JMRI
-        version 2.9.5</b> Check Buffer Status When Sending?
-        Defaults to "Yes" on Windows and Linux, and "No" on MacOS
-        8/9 and Mac OS X. Except when debugging problems, you
-        should leave this at the default.</li>
+        <li>Output Interval : 250 ms</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectLiusbServer" id=
-      "connectLiusbServer"></a>
+      </ol>
 
+      <a name="connectLiusbServer" id="connectLiusbServer"></a>
       <h3>Connecting using a Lenz LI-USB and the Lenz LI-USB Server
       (Windows Only)</h3><b>Note: The first JMRI release supporting
       the Lenz LI-USB Server connection is 2.7.2</b>
@@ -768,17 +762,19 @@
         There are no additional configuration steps required to use
         the LI-Server.</li>
 
+        <li>Output Interval : 250 ms</li>
+
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectLiusbEthernet" id=
-      "connectLiusbEthernet"></a>
+      </ol>
 
+      <a name="connectLiusbEthernet" id="connectLiusbEthernet"></a>
       <h3>Connecting using a Lenz LI-USB Ethernet (Lenz Part Number
-      23151) via the Ethernet connection</h3><b>Note: The first
-      JMRI release supporting the Lenz LI-USB Ethernet connection
-      was v 2.13.7.</b>
+      23151) via the Ethernet connection</h3>
+      <b>Note: The first JMRI release supporting the Lenz LI-USB
+      Ethernet connection was v 2.13.7.</b>
 
       <ol>
         <li>To connect your computer to one of these XpressNet
@@ -857,7 +853,6 @@
       </ol>
       
       <a name="connectLzv200" id="connectLzv200"></a>
-
       <h3>Connecting using a Lenz LZV200</h3>
 
       <ol>
@@ -903,11 +898,13 @@
         then select the proper serial port in the second selection
         box.</li>
 
-        <li>The baud rate selection box should be set to 57,600
-        baud.</li>
+        <li>The Baud rate selection box is fixed to 57,600 baud.</li>
 
         <li>The fourth box should be set to "no flow control" (the 
-        LZV200 does not support flow control).</li>
+        LZV200 does not support flow control, but check the model
+        numbers).</li>
+
+        <li>Output Interval : 250 ms</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
@@ -916,7 +913,6 @@
       </ol>
       
       <a name="connectSim" id="connectSim"></a>
-
       <h3>Connecting to the XpressNet Simulator</h3>
       
       Use the XpressNet Simulator connection when 
@@ -1001,8 +997,9 @@
         program to quit; click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectElite" id="connectElite"></a>
+      </ol>
 
+      <a name="connectElite" id="connectElite"></a>
       <h3>Connecting using the Hornby Elite's built in USB
       connection</h3><b>Note: The first JMRI release supporting the
       Hornby Elite's built-in USB connection is 2.1.2</b>
@@ -1034,8 +1031,10 @@
         first time a program is run, or you can select it from the
         "Edit" menu.</li>
 
-        <li>Select "Hornby Elite USB port" from the top selection
-        box. You can then select the proper serial port in the
+        <li>Select "Hornby" as Manufacturer, and "Hornby Elite USB
+        port" from the System Connection drop down.</li>
+
+        <li>You can then select the proper serial port in the
         second selection box.</li>
 
         <li>The baud rate selection box should be set to 19,200
@@ -1044,18 +1043,15 @@
         <li>The fourth box should be left on "no flow
         control".</li>
 
-        <li><b>This option has been removed starting in version
-        2.9.5</b> Check Buffer Status When Sending? Defaults to
-        "yes" on Windows and Linux, and "no" on MacOS 8/9 and Mac
-        OS X. Except when debugging problems, you should leave this
-        at the default.</li>
+        <li>Output Interval : 250 ms</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="connectXntcp" id="connectXntcp"></a>
+      </ol>
 
+      <a name="connectXntcp" id="connectXntcp"></a>
       <h3>Connecting via an XnTcp adapter</h3>
 
       <p><b>Note: The first JMRI release supporting the XnTcp
@@ -1074,8 +1070,9 @@
       name, which can then be selected. The preferences store the
       NetBios name of the interface, rather than the storing the IP
       address digits, since the IP address can change due to DHCP
-      addressing. <a name="connectXpa" id="connectXpa"></a></p>
+      addressing.</p>
 
+      <a name="connectXpa" id="connectXpa"></a>
       <h3>Connecting using the XPA and a modem</h3>
 
       <p>We have developed an alternative method for connecting to
@@ -1103,22 +1100,25 @@
         program. This opens automatically the first time a program
         is run, or you can select it from the "Edit" menu.</li>
 
-        <li>Select "XPA-Modem" from the top selection box. You can
-        then select the proper serial port in the second selection
-        box.</li>
+        <li>Select "Lenz" from the Manufacturer and "XPA-Modem" as
+        the System Connection. You can then select the proper serial
+        port in the second selection box.</li>
 
-        <li>The baud rate selection box should default to 9600
-        baud. At this point in time, this can not be changed.</li>
+        <li>The Baud rate selection box defaults to 9,600
+        baud and can not be changed.</li>
+
+        <li>Output Interval : 250 ms</li>
 
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="tools" id="tools"></a>
+      </ol>
 
-      <h2>JMRI XpressNet Tools</h2><img src=
-      "images/XpressNetMenu.png" width="236" height="224" align=
-      "right" alt="Menu">
+      <a name="tools" id="tools"></a>
+      <h2>JMRI XpressNet Tools</h2>
+      <img src="images/XpressNetMenu.png" width="236" height="224"
+      align="right" alt="Menu">
 
       <p>The following tools are available from the XpressNet menu
       when this connection is active (click on the name to read
@@ -1151,8 +1151,9 @@
         and Power Station</li>
 
         <li>LV102 Configuration Manager</li>
-      </ul><a name="documentation" id="documentation"></a>
+      </ul>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
@@ -1188,6 +1189,7 @@
 
       <p>Thanks to Paul Bender and others for implementing
       XpressNet</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

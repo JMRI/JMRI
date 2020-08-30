@@ -7,9 +7,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * DCCppThrottleTest.java
- *
- * Test for the jmri.jmrix.dccpp.DCCppTurnout class
+ * Tests for the jmri.jmrix.dccpp.DCCppTurnout class
  *
  * @author Paul Bender
  * @author Mark Underwood

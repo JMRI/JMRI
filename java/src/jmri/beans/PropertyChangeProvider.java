@@ -54,8 +54,8 @@ public interface PropertyChangeProvider {
      * Get all {@link java.beans.PropertyChangeListener}s currently listening to
      * changes to the specified property.
      *
-     * @param propertyName The name of the property of interest
-     * @return An array of PropertyChangeListeners.
+     * @param propertyName the name of the property of interest
+     * @return an array of PropertyChangeListeners
      */
     @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);

@@ -271,7 +271,7 @@ public class JUnitUtil {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
             if (duration > checkTestDurationMax) {
                 // test too long, log that
-                System.err.println("Test in "+getTestClassName()+" duration "+duration+" msec exceeded limit "+checkTestDurationMax);
+                System.err.println("Test in "+getTestClassName()+" duration "+duration+" ms exceeded limit "+checkTestDurationMax);
             }
         }
         // Log and/or check the use of setUp and tearDown
@@ -464,7 +464,7 @@ public class JUnitUtil {
      * this will have to do.
      * <p>
      *
-     * @param time Delay in msec
+     * @param time Delay in milliseconds
      */
     static public void waitFor(int time) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {

@@ -68,7 +68,7 @@ mergeable: # see https://github.com/mergeability/mergeable
           title: 'PR too young'
           summary: "Waiting for the PR to be one day old."
   - when: pull_request.*, pull_request_review.*
-    name: 'Approval received, no changes requested'
+    name: 'Approved after last commit, no changes requested'
     validate:
       - do: approvals
         min:

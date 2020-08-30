@@ -34,7 +34,7 @@ public class OlcbLightManager extends AbstractLightManager {
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
-    
+
     @Override
     @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {

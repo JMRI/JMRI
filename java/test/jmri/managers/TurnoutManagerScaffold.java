@@ -2,6 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import jmri.JmriException;
 import jmri.Turnout;
@@ -283,5 +285,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public SystemConnectionMemo getMemo() {
         return new InternalSystemConnectionMemo("J", "Juliet");
     }
+
+    @Override
+    public int getOutputInterval() {
+        return 0;
+    }
+
+    @Override
+    public void setOutputInterval(int newInterval) {}
+
+    @Override
+    @Nonnull
+    public LocalDateTime outputIntervalEnds() { return LocalDateTime.now(); }
 
 }
