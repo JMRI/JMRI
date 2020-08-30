@@ -42,10 +42,10 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
         public void beanFromPayload(@Nonnull Sensor bean, @Nonnull String payload, @Nonnull String topic) {
             switch (payload) {
                 case inactiveText:                
-                    setOwnState(INACTIVE);
+                    setOwnState(! _inverted ? INACTIVE : ACTIVE);
                     break;
                 case activeText:
-                    setOwnState(ACTIVE);
+                    setOwnState(! _inverted ? ACTIVE : INACTIVE);
                     break;
                 default:
                     log.warn("Unknown state : {}", payload);
