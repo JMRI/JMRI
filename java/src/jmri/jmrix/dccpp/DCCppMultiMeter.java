@@ -57,9 +57,14 @@ public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup imple
         log.debug("DCCppMultiMeter received reply: {}", r.toString());
         if (r.isCurrentReply()) {
             try {
-                setCurrent(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
+                MeterInfo mi = getMeterByName(MeterGroup.CurrentMeter);
+                if (mi != null) {
+                    mi.getMeter().setCommandedAnalogValue(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
+                } else {
+                    log.error("The current meter does not exists");
+                }
             } catch (JmriException e) {
-                log.error("exception thrown by setCurrent", e);
+                log.error("exception thrown when set current", e);
             }
         }
     }

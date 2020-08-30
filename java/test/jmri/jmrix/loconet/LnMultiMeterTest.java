@@ -17,8 +17,8 @@ public class LnMultiMeterTest {
     public void testLnMeter() {
         LnMultiMeter lm = new LnMultiMeter(memo);
         Assert.assertNotNull("exists",lm);
-        Assert.assertTrue(lm.hasCurrent());
-        Assert.assertTrue(lm.hasVoltage());
+        Assert.assertNotNull(lm.getMeterByName(MeterGroup.CurrentMeter));
+        Assert.assertNotNull(lm.getMeterByName(MeterGroup.VoltageMeter));
         Assert.assertEquals("Reports in Amps", lm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.NoPrefix);
         lm.requestUpdateFromLayout();
         // expect one messages
@@ -29,7 +29,11 @@ public class LnMultiMeterTest {
                 0x33, 0x00, 0x00, 0x00, 0x1C, 0x7F, 0x68, 0x03, 0x38 };
         LocoNetMessage msg = new LocoNetMessage(ia);
         lm.message(msg);
-        Assert.assertEquals(0.5f,lm.getCurrent(),0); // 0.5AMps
+        Assert.assertEquals(0.5f,getCurrent(lm),0); // 0.5AMps
+    }
+
+    public double getCurrent(LnMultiMeter lm) {
+        return lm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
     }
 
     @BeforeEach

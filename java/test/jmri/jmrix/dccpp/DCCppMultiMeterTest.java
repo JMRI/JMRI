@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.MeterGroup;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -19,7 +20,11 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     @Test
     public void testCurrentReply() {
         ((DCCppMultiMeter) mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
-        Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, mm.getCurrent(), 0.05);
+        Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, getCurrent(), 0.05);
+    }
+
+    public double getCurrent() {
+        return mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
     }
 
     @Override

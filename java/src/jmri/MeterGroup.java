@@ -103,7 +103,7 @@ public interface MeterGroup extends NamedBean {
      */
     @Override
     public void dispose();
-    
+/*    
     @Deprecated
     public default boolean hasCurrent() {
         return getMeterByName(MeterGroup.CurrentMeter) != null;
@@ -133,5 +133,5 @@ public interface MeterGroup extends NamedBean {
     public default void setVoltage(double value) throws JmriException {
         getMeterByName(MeterGroup.VoltageMeter).getMeter().setCommandedAnalogValue(value);
     }
-    
+*/    
 }

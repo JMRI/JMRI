@@ -76,6 +76,24 @@ public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implemen
         }
     }
 
+    private void setCurrent(double value) throws JmriException {
+        MeterInfo mi = getMeterByName(MeterGroup.CurrentMeter);
+        if (mi != null) {
+            mi.getMeter().setCommandedAnalogValue(value);
+        } else {
+            log.error("The current meter does not exists");
+        }
+    }
+
+    private void setVoltage(double value) throws JmriException {
+        MeterInfo mi = getMeterByName(MeterGroup.VoltageMeter);
+        if (mi != null) {
+            mi.getMeter().setCommandedAnalogValue(value);
+        } else {
+            log.error("The voltage meter does not exists");
+        }
+    }
+
     @Override
     public void requestUpdateFromLayout() {
         sm.sendReadSlot(249);

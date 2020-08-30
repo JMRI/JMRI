@@ -33,7 +33,7 @@ public abstract class MeterUpdateTask {
     }
     
     protected void enable() {
-        // Start timer
+        _intervalTask.enable();
     }
     
     public void enable(Meter m) {
@@ -51,7 +51,7 @@ public abstract class MeterUpdateTask {
     }
     
     protected void disable() {
-        // Stop timer
+        _intervalTask.disable();
     }
     
     public void disable(Meter m) {
@@ -138,7 +138,6 @@ public abstract class MeterUpdateTask {
             if (_isEnabled) {
                 log.debug("Timer Pop");
                 requestUpdateFromLayout();
-//                _requestUpdateFromLayout.run();
             }
         }
     }

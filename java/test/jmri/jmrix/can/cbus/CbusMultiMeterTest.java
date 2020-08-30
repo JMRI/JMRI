@@ -48,6 +48,14 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         JUnitUtil.tearDown();
     }
     
+    public double getCurrent() {
+        return mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
+    }
+    
+    public double getVoltage() {
+        return mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue();
+    }
+
     @Test
     public void testEnableDisable(){
         
@@ -102,21 +110,21 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(6, 0x08); // 8mA
         ((CbusMultiMeter)mm).reply(r);
         
-        Assert.assertEquals(0,mm.getCurrent(),0.001 ); // wrong opc
+        Assert.assertEquals(0,getCurrent(),0.001 ); // wrong opc
         
         r.setElement(0, CbusConstants.CBUS_ACON2);
         ((CbusMultiMeter)mm).reply(r);
         
-        Assert.assertEquals(0,mm.getCurrent(),0.001 ); // wrong node
+        Assert.assertEquals(0,getCurrent(),0.001 ); // wrong node
         
         r.setElement(2, 0x31); // nn 54321
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(8,mm.getCurrent(),0.001 );
+        Assert.assertEquals(8,getCurrent(),0.001 );
         
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(4807,mm.getCurrent(),0.001 );
+        Assert.assertEquals(4807,getCurrent(),0.001 );
         
         CanMessage m = new CanMessage(tcis.getCanid());
         m.setNumDataElements(7);
@@ -129,7 +137,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         m.setElement(6, 0x00); // 0mA
         
         ((CbusMultiMeter)mm).message(m);
-        Assert.assertEquals(4807,mm.getCurrent(),0.001 ); // CanMessage Ignored
+        Assert.assertEquals(4807,getCurrent(),0.001 ); // CanMessage Ignored
         
         r = new CanReply(tcis.getCanid());
         r.setNumDataElements(7);
@@ -142,7 +150,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(6, 0x00); // 0mA
         
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(0,mm.getCurrent(),0.001 );
+        Assert.assertEquals(0,getCurrent(),0.001 );
         
         // wrong event num
         r = new CanReply(tcis.getCanid());
@@ -156,22 +164,22 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(6, 0xc7); // 4807mA
         
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals("Wrong event",0,mm.getCurrent(),0.001 );
+        Assert.assertEquals("Wrong event",0,getCurrent(),0.001 );
         r.setElement(4, 0x01); // en1
         r.setRtr(true);
         
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(0,mm.getCurrent(),0.001 );
+        Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(true);
         r.setRtr(false);
         
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(0,mm.getCurrent(),0.001 );
+        Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(false);
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(4807,mm.getCurrent(),0.001 );
+        Assert.assertEquals(4807,getCurrent(),0.001 );
         
         mm.disable();
         
@@ -201,7 +209,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x00); // 12.9V
         r.setElement(6, 0x81); // 12.9V
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(12.9,mm.getVoltage(),0.001 );
+        Assert.assertEquals(12.9,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
         r.setNumDataElements(7);
@@ -213,7 +221,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x01); // 25.6V
         r.setElement(6, 0x00); // 25.6V
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(25.6,mm.getVoltage(),0.001 );
+        Assert.assertEquals(25.6,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
         r.setNumDataElements(7);
@@ -225,7 +233,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x00); // 0V
         r.setElement(6, 0x00); // 0V
         ((CbusMultiMeter)mm).reply(r);
-        Assert.assertEquals(0,mm.getCurrent(),0.001 );
+        Assert.assertEquals(0,getCurrent(),0.001 );
         
         mm.disable();
         
