@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood (C) 2015
  */
-public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
+public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
 
     private DCCppTrafficController tc = null;
     private final MeterUpdateTask updateTask;
     private final Meter currentMeter;
 
-    public DCCppMultiMeter(DCCppSystemConnectionMemo memo) {
+    public DCCppMeterGroup(DCCppSystemConnectionMemo memo) {
         super("DVBaseStation");
 //        super(DCCppConstants.METER_INTERVAL_MS);
         
@@ -105,6 +105,6 @@ public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup imple
         log.debug("Notified of timeout on message {}, {} retries available.", msg.toString(), msg.getRetries());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeter.class);
+    private final static Logger log = LoggerFactory.getLogger(DCCppMeterGroup.class);
 
 }

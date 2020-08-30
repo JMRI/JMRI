@@ -10,16 +10,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase {
-
-//    @Test
-//    public void testMethods() {
-//        Assert.assertEquals("DCC++", mm.getHardwareMeterName());
-//    }
+public class DCCppMeterGroupTest extends jmri.implementation.AbstractMeterGroupTestBase {
 
     @Test
     public void testCurrentReply() {
-        ((DCCppMultiMeter) mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
+        ((DCCppMeterGroup) mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
         Assert.assertEquals("current level percentage 100.0 - 0.0", (10.0 / DCCppConstants.MAX_CURRENT) * 100, getCurrent(), 0.05);
     }
 
@@ -35,7 +30,7 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
-        mm = new DCCppMultiMeter(memo);
+        mm = new DCCppMeterGroup(memo);
     }
 
     @Override
@@ -45,5 +40,5 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(DCCppMeterGroupTest.class);
 }

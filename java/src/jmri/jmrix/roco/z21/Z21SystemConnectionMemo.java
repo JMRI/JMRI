@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.implementation.MeterUpdateTask;
 import jmri.implementation.DefaultMeter.DefaultVoltageMeter;
 import jmri.implementation.DefaultMeter.DefaultCurrentMeter;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
@@ -251,8 +252,15 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
     public MeterGroup createMeterGroup() {
         MeterGroup mg = InstanceManager.getDefault(MeterGroupManager.class).provide("XVCommandStation");
         
-        VoltageMeter vm = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1);
-        CurrentMeter cm = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1);
+        MeterUpdateTask mu = new MeterUpdateTask(-1, 0) {
+            @Override
+            public void requestUpdateFromLayout() {
+                // Do nothing
+            }
+        };
+        
+        VoltageMeter vm = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
+        CurrentMeter cm = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
         
         mg.addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, vm);
         mg.addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, cm);

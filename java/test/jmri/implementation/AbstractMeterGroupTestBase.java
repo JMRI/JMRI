@@ -18,7 +18,7 @@ import org.junit.Assume;
  * @author Bob Jacobsen 2002, 2004, 2005, 2007, 2008
  * @author  Paul Bender Copyright (C) 2017
  */
-public abstract class AbstractMultiMeterTestBase {
+public abstract class AbstractMeterGroupTestBase {
 
     @BeforeEach
     abstract public void setUp(); // load mm with actual object; create scaffolds as needed

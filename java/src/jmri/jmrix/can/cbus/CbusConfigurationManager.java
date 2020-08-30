@@ -67,7 +67,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
         
-        createMultiMeter();
+        getMeterGroup();
         
         InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
@@ -142,6 +142,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getReporterManager();
         } else if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
+        } else if (T.equals(jmri.MeterGroupManager.class)) {
+            return (T) getMeterGroup();
         } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         } else if (T.equals(CbusPreferences.class)) {
@@ -268,17 +270,17 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return commandStation;
     }
     
-    protected CbusMultiMeter multiMeter;
+    protected CbusMeterGroup meterGroup;
     
-    public CbusMultiMeter createMultiMeter() {
+    public CbusMeterGroup getMeterGroup() {
         if (adapterMemo.getDisabled()) {
             return null;
         }
-        if (multiMeter == null) {
-//DANIEL            multiMeter = new CbusMultiMeter(adapterMemo);
-//            InstanceManager.store( multiMeter, jmri.MeterGroup.class );
+        if (meterGroup == null) {
+            meterGroup = new CbusMeterGroup(adapterMemo);
+            InstanceManager.store(meterGroup, jmri.MeterGroup.class );
         }
-        return multiMeter;
+        return meterGroup;
     }
     
     private CbusPreferences cbusPreferences = null;
@@ -339,8 +341,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (commandStation != null) {
             InstanceManager.deregister(commandStation, jmri.CommandStation.class);
         }
-        if (multiMeter != null) {
-//DANIEL            InstanceManager.deregister(multiMeter, jmri.MeterGroup.class);
+        if (meterGroup != null) {
+            InstanceManager.deregister(meterGroup, jmri.MeterGroup.class);
         }
         if (cbusPreferences != null) {
             InstanceManager.deregister(cbusPreferences, jmri.jmrix.can.cbus.CbusPreferences.class);

@@ -8,15 +8,10 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+public class Z21MeterGroupTest extends jmri.implementation.AbstractMeterGroupTestBase{
 
     private Z21InterfaceScaffold tc;
     private Z21SystemConnectionMemo memo;
-
-//    @Test
-//    public void testMethods() {
-//        Assert.assertEquals("Z21", mm.getHardwareMeterName());
-//    }
 
     @Override
     @BeforeEach
@@ -27,7 +22,7 @@ public class Z21MultiMeterTest extends jmri.implementation.AbstractMultiMeterTes
         memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(tc);  
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
-        mm = new Z21MultiMeter(memo);
+        mm = new Z21MeterGroup(memo);
     }
 
     @Override

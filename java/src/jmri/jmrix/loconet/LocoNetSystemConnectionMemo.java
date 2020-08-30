@@ -285,12 +285,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
-    public LnMultiMeter getMultiMeter() {
+    public LnMeterGroup getMultiMeter() {
         if (getDisabled()) {
             return null;
         }
         return null;
-//DANIEL        return (LnMultiMeter) classObjectMap.computeIfAbsent(MeterGroup.class,(Class c) -> new LnMultiMeter(this));
+//DANIEL        return (LnMeterGroup) classObjectMap.computeIfAbsent(MeterGroup.class,(Class c) -> new LnMeterGroup(this));
     }
 
     @Override

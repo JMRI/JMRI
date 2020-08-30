@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland 2020
  * Added voltage capability to use with new jmrit.voltmeter class
  */
-public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implements CanListener {
+public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implements CanListener {
 
     private final TrafficController tc;
     private int _nodeToListen;
@@ -33,15 +33,21 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
     private final Meter currentMeter;
     private final Meter voltageMeter;
     
-    public CbusMultiMeter(CanSystemConnectionMemo memo) {
-        super("CBUSMultiMeter");  // no internal timer, since the command station controls the report frequency
+    public CbusMeterGroup(CanSystemConnectionMemo memo) {
+        super(memo.getSystemPrefix() + "V" + "CBUSMeterGroup");   // no internal timer, since the command station controls the report frequency
+        
         tc = memo.getTrafficController();
         _memo = memo;
         
         updateTask = new UpdateTask(-1, 0);
         
-        currentMeter = new DefaultMeter("CBUSVoltageMeter", Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
-        voltageMeter = new DefaultMeter("CBUSCurrentMeter", Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
+        currentMeter = new DefaultMeter(
+                memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
+                Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
+        
+        voltageMeter = new DefaultMeter(
+                memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
+                Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
@@ -49,9 +55,11 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
         addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
         addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
         
+        InstanceManager.getDefault(MeterGroupManager.class).register(this);
+        
         log.debug("CbusMultiMeter constructor called");
     }
-
+    
     /*.*
      * CBUS does have Amperage reporting
      * 
@@ -145,7 +153,7 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
         return ("CBUS");
     }
 */
-    private final static Logger log = LoggerFactory.getLogger(CbusMultiMeter.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusMeterGroup.class);
 
     
     private class UpdateTask extends MeterUpdateTask {
@@ -173,7 +181,7 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
             } else {
                 log.info("Unable to fetch Master Command Station from Node Manager");
             }
-            tc.addCanListener(CbusMultiMeter.this);
+            tc.addCanListener(CbusMeterGroup.this);
             log.info("Enabled meter Long Ex2Data {} {}", 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrent), 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage));
@@ -186,7 +194,7 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
          */
         @Override
         public void disable() {
-            tc.removeCanListener(CbusMultiMeter.this);
+            tc.removeCanListener(CbusMeterGroup.this);
             log.info("Disabled meter.");
         }
         

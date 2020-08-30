@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
  * Provide access to current meter from the Digitrax Evolution Base Station
  *
  */
-// public class LnMultiMeter {
-// public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup {
-public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implements LocoNetListener {
+// public class LnMeterGroup {
+// public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup {
+public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implements LocoNetListener {
 
     private SlotManager sm = null;
     private LnTrafficController tc = null;
@@ -26,7 +26,7 @@ public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implemen
      *
      * @param scm  connection memo
      */
-    public LnMultiMeter(LocoNetSystemConnectionMemo scm) {
+    public LnMeterGroup(LocoNetSystemConnectionMemo scm) {
         super("LVCommandStation");
 //        super(LnConstants.METER_INTERVAL_MS);
         this.sm = scm.getSlotManager();
@@ -120,6 +120,6 @@ public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implemen
         return  CurrentUnits.CURRENT_UNITS_AMPS;
     }
 */
-    private final static Logger log = LoggerFactory.getLogger(LnMultiMeter.class);
+    private final static Logger log = LoggerFactory.getLogger(LnMeterGroup.class);
 
 }

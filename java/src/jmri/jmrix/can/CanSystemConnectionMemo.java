@@ -163,6 +163,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      * Configure the common managers for Can connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         if (manager != null) {
             manager.configureManagers();

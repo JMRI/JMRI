@@ -17,17 +17,9 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
     @Nonnull private final MeterUpdateTask _updateTask;
     @Nonnull private final Unit _unit;
-//    private double _value = 0.0;
     private final double _min;
     private final double _max;
     private final double _resolution;
-    
-    public DefaultMeter(
-            @Nonnull String sys,
-            @Nonnull Unit unit,
-            double min, double max, double resolution) {
-        this(sys, unit, min, max, resolution, null);
-    }
     
     public DefaultMeter(
             @Nonnull String sys,
@@ -158,10 +150,6 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
     public static class DefaultVoltageMeter extends DefaultMeter implements VoltageMeter
     {
-        public DefaultVoltageMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution) {
-            super(sys, unit, min, max, resolution, null);
-        }
-
         public DefaultVoltageMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution, MeterUpdateTask updateTask) {
             super(sys, unit, min, max, resolution, updateTask);
         }
@@ -170,10 +158,6 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
     public static class DefaultCurrentMeter extends DefaultMeter implements CurrentMeter
     {
-        public DefaultCurrentMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution) {
-            super(sys, unit, min, max, resolution, null);
-        }
-
         public DefaultCurrentMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution, MeterUpdateTask updateTask) {
             super(sys, unit, min, max, resolution, updateTask);
         }

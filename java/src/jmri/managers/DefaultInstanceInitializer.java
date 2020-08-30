@@ -80,6 +80,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultMeterManager(memo);
         }
 
+        if (type == MeterGroupManager.class) {
+            return new DefaultMeterGroupManager(memo);
+        }
+
         if (type == RailComManager.class) {
             return new DefaultRailComManager();
         }
@@ -158,6 +162,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LogixManager.class,
                 MemoryManager.class,
                 MeterManager.class,
+                MeterGroupManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,

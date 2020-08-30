@@ -7,7 +7,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.MeterGroup;
-public class LnMultiMeterTest {
+
+public class LnMeterGroupTest {
 
     LocoNetInterfaceScaffold lnis;
     SlotManager slotmanager;
@@ -15,7 +16,7 @@ public class LnMultiMeterTest {
 
     @Test
     public void testLnMeter() {
-        LnMultiMeter lm = new LnMultiMeter(memo);
+        LnMeterGroup lm = new LnMeterGroup(memo);
         Assert.assertNotNull("exists",lm);
         Assert.assertNotNull(lm.getMeterByName(MeterGroup.CurrentMeter));
         Assert.assertNotNull(lm.getMeterByName(MeterGroup.VoltageMeter));
@@ -32,7 +33,7 @@ public class LnMultiMeterTest {
         Assert.assertEquals(0.5f,getCurrent(lm),0); // 0.5AMps
     }
 
-    public double getCurrent(LnMultiMeter lm) {
+    public double getCurrent(LnMeterGroup lm) {
         return lm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
     }
 

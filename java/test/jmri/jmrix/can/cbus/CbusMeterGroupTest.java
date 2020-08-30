@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase {
+public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTestBase {
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
@@ -34,7 +34,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        mm = new CbusMultiMeter(memo);
+        mm = new CbusMeterGroup(memo);
     }
     
     @AfterEach
@@ -108,22 +108,22 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(4, 0x01); // en 1
         r.setElement(5, 0x00); // 8mA
         r.setElement(6, 0x08); // 8mA
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         
         Assert.assertEquals(0,getCurrent(),0.001 ); // wrong opc
         
         r.setElement(0, CbusConstants.CBUS_ACON2);
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         
         Assert.assertEquals(0,getCurrent(),0.001 ); // wrong node
         
         r.setElement(2, 0x31); // nn 54321
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(8,getCurrent(),0.001 );
         
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(4807,getCurrent(),0.001 );
         
         CanMessage m = new CanMessage(tcis.getCanid());
@@ -136,7 +136,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         m.setElement(5, 0x00); // 0mA
         m.setElement(6, 0x00); // 0mA
         
-        ((CbusMultiMeter)mm).message(m);
+        ((CbusMeterGroup)mm).message(m);
         Assert.assertEquals(4807,getCurrent(),0.001 ); // CanMessage Ignored
         
         r = new CanReply(tcis.getCanid());
@@ -149,7 +149,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x00); // 0mA
         r.setElement(6, 0x00); // 0mA
         
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         // wrong event num
@@ -163,22 +163,22 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
         
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals("Wrong event",0,getCurrent(),0.001 );
         r.setElement(4, 0x01); // en1
         r.setRtr(true);
         
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(true);
         r.setRtr(false);
         
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(false);
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(4807,getCurrent(),0.001 );
         
         mm.disable();
@@ -208,7 +208,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(4, 0x02); // en 2
         r.setElement(5, 0x00); // 12.9V
         r.setElement(6, 0x81); // 12.9V
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(12.9,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
@@ -220,7 +220,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(4, 0x02); // en 2
         r.setElement(5, 0x01); // 25.6V
         r.setElement(6, 0x00); // 25.6V
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(25.6,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
@@ -232,7 +232,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         r.setElement(4, 0x01); // en2
         r.setElement(5, 0x00); // 0V
         r.setElement(6, 0x00); // 0V
-        ((CbusMultiMeter)mm).reply(r);
+        ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         mm.disable();
@@ -245,7 +245,7 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     @Test
     public void testSmallFuncs(){
         
-        ((CbusMultiMeter)mm).requestUpdateFromLayout();
+        ((CbusMeterGroup)mm).requestUpdateFromLayout();
 //        mm.initializeHardwareMeter();
 //        Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
         Assert.assertEquals("ma units", mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.Milli);
@@ -253,6 +253,6 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusMultiMeterTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusMeterGroupTest.class);
 
 }
