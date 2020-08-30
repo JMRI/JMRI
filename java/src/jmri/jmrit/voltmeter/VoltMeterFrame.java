@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.voltmeter.Bundle;
 import jmri.util.JmriJFrame;
 
 /**

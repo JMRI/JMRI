@@ -6,7 +6,6 @@ import java.util.SortedSet;
 import javax.swing.AbstractAction;
 
 import jmri.*;
-import jmri.jmrit.voltmeter.Bundle;
 
 /**
  * Swing action to create and register a AmpMeterFrame object.
