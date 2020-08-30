@@ -11,7 +11,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
-import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,12 +38,13 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
         tc = memo.getTrafficController();
         _memo = memo;
         
-        updateTask = new MeterUpdateTask(10000, 100, this::requestUpdateFromLayout);
+        updateTask = new UpdateTask(-1, 0);
         
-        currentMeter = new DefaultMeter("CBUSVoltageMeter", Meter.Unit.Milli, 0, 3000.0, 100, updateTask);
-        voltageMeter = new DefaultMeter("CBUSCurrentMeter", Meter.Unit.Milli, 0, 30.0, 0.5, updateTask);
+        currentMeter = new DefaultMeter("CBUSVoltageMeter", Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
+        voltageMeter = new DefaultMeter("CBUSCurrentMeter", Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
         
         addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
         addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
@@ -140,8 +140,8 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
     
     private class UpdateTask extends MeterUpdateTask {
     
-        public UpdateTask() {
-            super(-1, 0, null);
+        public UpdateTask(int interval, int minTimeBetweenUpdates) {
+            super(interval, minTimeBetweenUpdates);
         }
     
         /**
@@ -178,6 +178,16 @@ public class CbusMultiMeter extends jmri.implementation.DefaultMeterGroup implem
         public void disable() {
             tc.removeCanListener(CbusMultiMeter.this);
             log.info("Disabled meter.");
+        }
+        
+        /**
+         * Adjust CBUS Command station settings to change frequency of updates
+         * No local action performed
+         *
+         * {@inheritDoc}
+         */
+        @Override
+        public void requestUpdateFromLayout() {
         }
     }
     

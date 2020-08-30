@@ -27,6 +27,9 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
@@ -79,8 +82,6 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     
     @Test
     public void testMultiMCanReply(){
-        
-        mm = new CbusMultiMeter(memo);
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
@@ -182,8 +183,6 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
     @Test
     public void testMultiMVoltCanReply(){
         
-        mm = new CbusMultiMeter(memo);
-        
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
         
@@ -235,16 +234,8 @@ public class CbusMultiMeterTest extends jmri.implementation.AbstractMultiMeterTe
         
     }
     
-//    @Test
-//    @Override
-//    public void testUpdateAndGetVoltage(){
-//        Assert.assertEquals("no voltage", false, mm.hasVoltage() );
-//    }
-    
     @Test
     public void testSmallFuncs(){
-        
-        mm = new CbusMultiMeter(memo);
         
         ((CbusMultiMeter)mm).requestUpdateFromLayout();
 //        mm.initializeHardwareMeter();

@@ -13,28 +13,37 @@ import jmri.VoltageMeter;
  * @author Mark Underwood    (C) 2015
  * @author Daniel Bergqvist  (C) 2020
  */
-public class DefaultMeter extends AbstractNamedBean implements Meter {
+public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
-    private final MeterUpdateTask _updateTask;
-    private final Unit _unit;
-    private double _value = 0.0;
+    @Nonnull private final MeterUpdateTask _updateTask;
+    @Nonnull private final Unit _unit;
+//    private double _value = 0.0;
     private final double _min;
     private final double _max;
     private final double _resolution;
     
-    public DefaultMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution) {
+    public DefaultMeter(
+            @Nonnull String sys,
+            @Nonnull Unit unit,
+            double min, double max, double resolution) {
         this(sys, unit, min, max, resolution, null);
     }
     
-    public DefaultMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution, MeterUpdateTask updateTask) {
-        super(sys);
+    public DefaultMeter(
+            @Nonnull String sys,
+            @Nonnull Unit unit,
+            double min, double max, double resolution,
+            @Nonnull MeterUpdateTask updateTask) {
+        super(sys, true);
         this._unit = unit;
         this._updateTask = updateTask;
         this._min = min;
         this._max = max;
         this._resolution = resolution;
+        _updateTask.addMeter(this);
     }
     
+    /** {@inheritDoc} */
     @Override
     public void enable() {
         if (_updateTask != null) {
@@ -43,6 +52,7 @@ public class DefaultMeter extends AbstractNamedBean implements Meter {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void disable() {
         if (_updateTask != null) {
@@ -51,54 +61,87 @@ public class DefaultMeter extends AbstractNamedBean implements Meter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Override this if the meter can send value to the layout.
+     */
+    @Override
+    protected void sendValueToLayout(double value) throws JmriException {
+        // Do nothing
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    protected boolean cutOutOfBoundsValues() {
+        return true;
+    }
+    
+    /** {@inheritDoc} */
     @Override
     public void setState(int s) throws JmriException {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getState() {
         throw new UnsupportedOperationException("Not supported.");
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameMeter");
     }
 
+    /** {@inheritDoc} */
     @Override
     public Unit getUnit() {
         return _unit;
     }
 
+    /*.* {@inheritDoc} *./
     @Override
     public void setCommandedAnalogValue(double v) {
         _value = v;
     }
 
+    /.** {@inheritDoc} *./
     @Override
     public double getCommandedAnalogValue() {
         return _value;
     }
-
+*/
+    /** {@inheritDoc} */
     @Override
     public double getMin() {
         return _min;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getMax() {
         return _max;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getResolution() {
         return _resolution;
     }
 
+    /** {@inheritDoc} */
     @Override
     public AbsoluteOrRelative getAbsoluteOrRelative() {
         return _unit == Unit.Percent ? AbsoluteOrRelative.RELATIVE : AbsoluteOrRelative.ABSOLUTE;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void dispose() {
+        _updateTask.removeMeter(this);
+        super.dispose();
     }
     
     /**

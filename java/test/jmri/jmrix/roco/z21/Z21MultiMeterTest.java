@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**

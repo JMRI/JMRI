@@ -24,7 +24,12 @@ public class DCCppMultiMeter extends jmri.implementation.DefaultMeterGroup imple
         
         tc = memo.getDCCppTrafficController();
 
-        updateTask = new MeterUpdateTask(10000, 0, this::requestUpdateFromLayout);
+        updateTask = new MeterUpdateTask(10000, 0) {
+            @Override
+            public void requestUpdateFromLayout() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
         
         currentMeter = new DefaultMeter("DVBaseStationCurrent", Meter.Unit.Percent, 0, 100.0, 1.0, updateTask);
         

@@ -32,7 +32,12 @@ public class LnMultiMeter extends jmri.implementation.DefaultMeterGroup implemen
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
         
-        updateTask = new MeterUpdateTask(10000, 100, this::requestUpdateFromLayout);
+        updateTask = new MeterUpdateTask(10000, 100) {
+            @Override
+            public void requestUpdateFromLayout() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        };
         
         currentMeter = new DefaultMeter("LVCommandStationCurrent", Meter.Unit.NoPrefix, 0, 5.0, 0.1, updateTask);
         voltageMeter = new DefaultMeter("LVCommandStationVoltage", Meter.Unit.NoPrefix, 0, 30.0, 0.5, updateTask);

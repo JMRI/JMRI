@@ -10,7 +10,7 @@ import jmri.Meter;
  * @author Mark Underwood    (C) 2015
  * @author Daniel Bergqvist  (C) 2020
  */
-public class MeterUpdateTask {
+public abstract class MeterUpdateTask {
     
     Map<Meter, Boolean> meters = new HashMap<>();
     boolean _enabled = false;
@@ -18,12 +18,10 @@ public class MeterUpdateTask {
     private final int _sleepInterval;
     private final int _minTimeBetweenUpdates;
     private long _lastUpdateRequestTime = 0;
-    private final Runnable _requestUpdateFromLayout;
     
-    public MeterUpdateTask(int interval, int minTimeBetweenUpdates, Runnable requestUpdateFromLayout) {
+    public MeterUpdateTask(int interval, int minTimeBetweenUpdates) {
        _sleepInterval = interval;
        _minTimeBetweenUpdates = minTimeBetweenUpdates;
-       _requestUpdateFromLayout = requestUpdateFromLayout;
     }
     
     public void addMeter(Meter m) {
@@ -97,10 +95,12 @@ public class MeterUpdateTask {
      */
     public final void doRequestUpdateFromLayout() {
         if ((_lastUpdateRequestTime + _minTimeBetweenUpdates) < System.currentTimeMillis()) {
-            _requestUpdateFromLayout.run();
+            requestUpdateFromLayout();
             _lastUpdateRequestTime = System.currentTimeMillis();
         }
     }
+    
+    public abstract void requestUpdateFromLayout();
     
     /**
      * Remove references to and from this object, so that it can eventually be
@@ -137,7 +137,8 @@ public class MeterUpdateTask {
         public void run() {
             if (_isEnabled) {
                 log.debug("Timer Pop");
-                _requestUpdateFromLayout.run();
+                requestUpdateFromLayout();
+//                _requestUpdateFromLayout.run();
             }
         }
     }

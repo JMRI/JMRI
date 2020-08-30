@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.*;
 
@@ -115,9 +116,7 @@ public class DefaultMeterGroup extends AbstractNamedBean implements MeterGroup {
      * Request an update from the layout.
      */
     public void requestUpdateFromLayout() {
-        for (MeterInfo mi : _meters.values()) {
-            mi.getMeter().disable();
-        }
+        // Do nothing
     }
     
     

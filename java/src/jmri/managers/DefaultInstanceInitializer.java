@@ -2,37 +2,15 @@ package jmri.managers;
 
 import java.util.Arrays;
 import java.util.Set;
-import jmri.AnalogIOManager;
-import jmri.AudioManager;
-import jmri.ClockControl;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.IdTagManager;
-import jmri.InstanceInitializer;
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.MemoryManager;
-import jmri.RailComManager;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.SensorManager;
-import jmri.SignalGroupManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.SignalSystemManager;
-import jmri.StringIOManager;
-import jmri.Timebase;
-import jmri.TurnoutManager;
-import jmri.VariableLightManager;
+
+import jmri.*;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -96,6 +74,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == MemoryManager.class) {
             return new DefaultMemoryManager(memo);
+        }
+
+        if (type == MeterManager.class) {
+            return new DefaultMeterManager(memo);
         }
 
         if (type == RailComManager.class) {
@@ -175,6 +157,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 LightManager.class,
                 LogixManager.class,
                 MemoryManager.class,
+                MeterManager.class,
                 RailComManager.class,
                 ReporterManager.class,
                 RouteManager.class,

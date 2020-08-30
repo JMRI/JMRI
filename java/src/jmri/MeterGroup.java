@@ -15,10 +15,10 @@ public interface MeterGroup extends NamedBean {
     public static final String PROPERTY_METERS_REMOVED = "Meter removed";
     
     public static final String VoltageMeter = "Voltage";
-    public static final String VoltageMeterDescr = Bundle.getMessage(VoltageMeter);
+    public static final String VoltageMeterDescr = Bundle.getMessage("VoltageMeter");
     
     public static final String CurrentMeter = "Current";
-    public static final String CurrentMeterDescr = Bundle.getMessage(CurrentMeter);
+    public static final String CurrentMeterDescr = Bundle.getMessage("CurrentMeter");
     
     
     /**

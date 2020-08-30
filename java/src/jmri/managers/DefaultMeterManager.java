@@ -12,7 +12,7 @@ import jmri.SystemConnectionMemo;
  * @author Dave Duchamp      Copyright (C) 2004
  * @author Daniel Bergqvist  Copyright (C) 2020
  */
-public abstract class DefaultMeterManager extends AbstractManager<Meter>
+public class DefaultMeterManager extends AbstractManager<Meter>
         implements MeterManager {
 
     /**

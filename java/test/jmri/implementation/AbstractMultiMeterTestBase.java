@@ -3,12 +3,12 @@ package jmri.implementation;
 import java.beans.PropertyChangeListener;
 
 import jmri.JmriException;
+import jmri.Meter;
+import jmri.MeterGroup;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-
-import jmri.MeterGroup;
 
 /**
  * Abstract Base Class for MultiMeter tests in specific jmrix packages. This is 
@@ -65,27 +65,57 @@ public abstract class AbstractMultiMeterTestBase {
     public void testUpdateAndGetVoltage() throws JmriException{
         Assume.assumeNotNull(mm.getMeterByName(MeterGroup.VoltageMeter));
         mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().setCommandedAnalogValue(0.5f);
-        Assert.assertEquals("current after set",0.5f,mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue(),0.0001);
+        Assert.assertEquals("voltage after set",0.5f,mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue(),0.0001);
     }
 
     @Test
     public void testAddListener() throws JmriException {
         Listen ln = new Listen();
-        mm.addPropertyChangeListener(ln);
-        mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(0.5f);
-        jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
-        Assert.assertTrue("listener invoked by setCurrent", ln.eventSeen());
+        
+        MeterGroup.MeterInfo meterInfo = mm.getMeterByName(MeterGroup.CurrentMeter);
+        if (meterInfo != null) {
+            Meter meter = meterInfo.getMeter();
+            meter.addPropertyChangeListener(ln);
+            meter.setCommandedAnalogValue(0.5f);
+            jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
+            Assert.assertTrue("listener invoked by setCurrent", ln.eventSeen());
+        }
+        
+        meterInfo = mm.getMeterByName(MeterGroup.VoltageMeter);
+        if (meterInfo != null) {
+            Meter meter = meterInfo.getMeter();
+            meter.addPropertyChangeListener(ln);
+            meter.setCommandedAnalogValue(0.5f);
+            jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
+            Assert.assertTrue("listener invoked by setVoltage", ln.eventSeen());
+        }
     }
 
     @Test
     public void testRemoveListener() throws JmriException {
         Listen ln = new Listen();
-        mm.addPropertyChangeListener(ln);
-        mm.removePropertyChangeListener(ln);
-        mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(0.5f);
-        // this should just timeout;
-        Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));
-        Assert.assertFalse("listener invoked by setCurrent, but not listening", ln.eventSeen());
+        
+        MeterGroup.MeterInfo meterInfo = mm.getMeterByName(MeterGroup.CurrentMeter);
+        if (meterInfo != null) {
+            Meter meter = meterInfo.getMeter();
+            meter.addPropertyChangeListener(ln);
+            meter.removePropertyChangeListener(ln);
+            meter.setCommandedAnalogValue(0.5f);
+            // this should just timeout;
+            Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));
+            Assert.assertFalse("listener invoked by setCurrent, but not listening", ln.eventSeen());
+        }
+        
+        meterInfo = mm.getMeterByName(MeterGroup.VoltageMeter);
+        if (meterInfo != null) {
+            Meter meter = meterInfo.getMeter();
+            meter.addPropertyChangeListener(ln);
+            meter.removePropertyChangeListener(ln);
+            meter.setCommandedAnalogValue(0.5f);
+            // this should just timeout;
+            Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));
+            Assert.assertFalse("listener invoked by setCurrent, but not listening", ln.eventSeen());
+        }
     }
 
 }
