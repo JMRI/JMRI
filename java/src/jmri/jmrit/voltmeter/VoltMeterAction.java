@@ -20,7 +20,7 @@ import jmri.*;
 public class VoltMeterAction extends AbstractAction {
 
     public VoltMeterAction() {
-        this(Bundle.getMessage("MenuItemAmpMeter"));
+        this(Bundle.getMessage("MenuItemVoltMeter"));
     }
 
     public VoltMeterAction(String s) {
