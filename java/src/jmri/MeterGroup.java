@@ -8,11 +8,12 @@ import javax.annotation.CheckForNull;
  * Interface for displaying (and controlling where appropriate) Current,
  * Voltage, and other status data from the layout.
  *
+ * @author Daniel Bergqvist Copyright (C) 2020
  */
 public interface MeterGroup extends NamedBean {
 
-    public static final String PROPERTY_METERS_ADDED = "Meter added";
-    public static final String PROPERTY_METERS_REMOVED = "Meter removed";
+    public static final String PROPERTY_METER_ADDED = "Meter added";
+    public static final String PROPERTY_METER_REMOVED = "Meter removed";
     
     public static final String VoltageMeter = "Voltage";
     public static final String VoltageMeterDescr = Bundle.getMessage("VoltageMeter");
@@ -25,8 +26,6 @@ public interface MeterGroup extends NamedBean {
      * An interface with info about a meter
      */
     public interface MeterInfo {
-        
-//        public MeterInfo(String name, String descr, Meter meter);
         
         /**
          * The name of the meter.
@@ -103,35 +102,5 @@ public interface MeterGroup extends NamedBean {
      */
     @Override
     public void dispose();
-/*    
-    @Deprecated
-    public default boolean hasCurrent() {
-        return getMeterByName(MeterGroup.CurrentMeter) != null;
-    }
     
-    @Deprecated
-    public default boolean hasVoltage() {
-        return getMeterByName(MeterGroup.VoltageMeter) != null;
-    }
-    
-    @Deprecated
-    public default double getCurrent() {
-        return getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
-    }
-    
-    @Deprecated
-    public default double getVoltage() {
-        return getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue();
-    }
-    
-    @Deprecated
-    public default void setCurrent(double value) throws JmriException {
-        getMeterByName(MeterGroup.CurrentMeter).getMeter().setCommandedAnalogValue(value);
-    }
-    
-    @Deprecated
-    public default void setVoltage(double value) throws JmriException {
-        getMeterByName(MeterGroup.VoltageMeter).getMeter().setCommandedAnalogValue(value);
-    }
-*/    
 }

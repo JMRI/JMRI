@@ -245,13 +245,8 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
     
     @Test
     public void testSmallFuncs(){
-        
         ((CbusMeterGroup)mm).requestUpdateFromLayout();
-//        mm.initializeHardwareMeter();
-//        Assert.assertEquals("name", "CBUS", mm.getHardwareMeterName() );
         Assert.assertEquals("ma units", mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.Milli);
-        
-        
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusMeterGroupTest.class);

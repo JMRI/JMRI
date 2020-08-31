@@ -109,47 +109,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
             
             addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltMeter);
         }
-/*
-        @Override
-        public void initializeHardwareMeter() {
-        }
-
-        @Override
-        public void requestUpdateFromLayout() {
-        }
-
-        @Override
-        public void dispose() {
-        }
-
-        @Override
-        public boolean hasCurrent() {
-            return false;
-        }
-
-        @Override
-        public boolean hasVoltage() {
-            return true;
-        }
-
-        @Override
-        public CurrentUnits getCurrentUnits() {
-            return CurrentUnits.CURRENT_UNITS_PERCENTAGE;
-        }
-
-        @Override
-        public String getHardwareMeterName() {
-            return "test";
-        }
-
-        @Override
-        public void enable() {
-        }
-
-        @Override
-        public void disable() {
-        }
-*/
+        
     }
 
     private interface RunnableWithException {

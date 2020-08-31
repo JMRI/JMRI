@@ -1,12 +1,11 @@
 package jmri.jmrix.loconet;
 
 import jmri.Meter;
+import jmri.MeterGroup;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import jmri.MeterGroup;
 
 public class LnMeterGroupTest {
 

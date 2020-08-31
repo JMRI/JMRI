@@ -168,6 +168,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * Configure the common managers for LocoNet connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
@@ -212,7 +213,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         InstanceManager.setDefault(ClockControl.class, cc);
 
-//DANIEL        jmri.InstanceManager.store(getMultiMeter(), jmri.MeterGroup.class);
+        getMeterGroup();
 
         getIdTagManager();
 
@@ -285,12 +286,13 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
-    public LnMeterGroup getMultiMeter() {
+    public LnMeterGroup getMeterGroup() {
         if (getDisabled()) {
             return null;
         }
-        return null;
-//DANIEL        return (LnMeterGroup) classObjectMap.computeIfAbsent(MeterGroup.class,(Class c) -> new LnMeterGroup(this));
+        LnMeterGroup meterGroup = new LnMeterGroup(this);
+        InstanceManager.getDefault(MeterGroupManager.class).register(meterGroup);
+        return meterGroup;
     }
 
     @Override

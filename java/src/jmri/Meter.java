@@ -4,6 +4,7 @@ package jmri;
  * Interface for displaying (and controlling where appropriate) Current,
  * Voltage, and other status data from the layout.
  *
+ * @author Daniel Bergqvist Copyright (C) 2020
  */
 public interface Meter extends AnalogIO {
     
@@ -39,11 +40,6 @@ public interface Meter extends AnalogIO {
      */
     public void disable();
     
-/*
-    public void initializeHardwareMeter();
-
-    public String getHardwareMeterName();
-*/
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.

@@ -106,47 +106,7 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
             
             addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, ampMeter);
         }
-/*
-        @Override
-        public void initializeHardwareMeter() {
-        }
-
-        @Override
-        public void requestUpdateFromLayout() {
-        }
-
-        @Override
-        public void dispose() {
-        }
-
-        @Override
-        public boolean hasCurrent() {
-            return true;
-        }
-
-        @Override
-        public boolean hasVoltage() {
-            return false;
-        }
-/*
-        @Override
-        public CurrentUnits getCurrentUnits() {
-            return CurrentUnits.CURRENT_UNITS_PERCENTAGE;
-        }
-
-        @Override
-        public String getHardwareMeterName() {
-            return "test";
-        }
-
-        @Override
-        public void enable() {
-        }
-
-        @Override
-        public void disable() {
-        }
-*/
+        
     }
 
     private interface RunnableWithException {

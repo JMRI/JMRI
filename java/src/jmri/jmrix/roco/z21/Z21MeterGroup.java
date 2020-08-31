@@ -4,9 +4,6 @@ import jmri.*;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Provide access to voltage and current readings from the Roco Z21 
  *
@@ -24,7 +21,7 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
 
     public Z21MeterGroup(Z21SystemConnectionMemo memo) {
         super("XVCommandStation");
-//        super(-1); // no timer, since we already poll for this information. 
+        
         _memo = memo;
         tc = _memo.getTrafficController();
         
@@ -47,28 +44,6 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         tc = controller;
     }
 
-/*
-    @Override
-    // Handle a timeout notification
-    public String getHardwareMeterName() {
-        return (_memo.getUserName());
-    }
-
-    @Override
-    public boolean hasCurrent() {
-        return true;
-    }
-
-    @Override
-    public boolean hasVoltage() {
-        return true;
-    }
-
-    @Override
-    public CurrentUnits getCurrentUnits() {
-        return  CurrentUnits.CURRENT_UNITS_MILLIAMPS;
-    }
-*/
 
     private class UpdateTask extends MeterUpdateTask implements Z21Listener {
     
@@ -136,6 +111,6 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Z21MeterGroup.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21MeterGroup.class);
 
 }

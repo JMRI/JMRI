@@ -20,7 +20,6 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
 
     public DCCppMeterGroup(DCCppSystemConnectionMemo memo) {
         super("DVBaseStation");
-//        super(DCCppConstants.METER_INTERVAL_MS);
         
         tc = memo.getDCCppTrafficController();
 
@@ -77,28 +76,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
     public void requestUpdateFromLayout() {
         tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), this);
     }
-/*
-    @Override
-    // Handle a timeout notification
-    public String getHardwareMeterName() {
-        return ("DCC++");
-    }
 
-    @Override
-    public boolean hasCurrent() {
-        return true;
-    }
-
-    @Override
-    public boolean hasVoltage() {
-        return false;
-    }
-
-    @Override
-    public CurrentUnits getCurrentUnits() {
-        return  CurrentUnits.CURRENT_UNITS_PERCENTAGE;
-    }
-*/
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {

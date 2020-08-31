@@ -94,9 +94,7 @@ public interface AnalogIO extends NamedBean {
      * @throws JmriException general error when setting the state fails
      */
     @InvokeOnLayoutThread
-    public default void setState(double value) throws JmriException {
-        setCommandedAnalogValue(value);
-    }
+    public void setState(double value) throws JmriException;
 
     /**
      * Provide generic access to internal state.
@@ -110,9 +108,7 @@ public interface AnalogIO extends NamedBean {
      * @return the state
      */
     @CheckReturnValue
-    public default double getState(double v) {
-        return getCommandedAnalogValue();
-    }
+    public double getState(double v);
 
     /**
      * Get the minimum value of this AnalogIO.

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.*;
 
@@ -19,9 +18,6 @@ import jmri.*;
  */
 public class DefaultMeterGroup extends AbstractNamedBean implements MeterGroup {
 
-//    protected float current_float = 0.0f;
-//    protected float voltage_float = 0.0f;
-    
     private final Map<String, MeterInfo> _meters = new HashMap<>();
 
     public DefaultMeterGroup(@Nonnull String sys) throws NamedBean.BadSystemNameException {
@@ -119,37 +115,6 @@ public class DefaultMeterGroup extends AbstractNamedBean implements MeterGroup {
         // Do nothing
     }
     
-    
-/*    
-    @Override
-    public void setCurrent(float c) {
-        float old = current_float;
-        current_float = c;
-        this.firePropertyChange(CURRENT, old, c);
-    }
-
-    @Override
-    public float getCurrent() {
-        return current_float;
-    }
-
-    @Override
-    public CurrentUnits getCurrentUnits() {
-        return currentUnits;
-    }
-
-    @Override
-    public void setVoltage(float v) {
-        float old = voltage_float;
-        voltage_float = v;
-        this.firePropertyChange(VOLTAGE, old, v);
-    }
-
-    @Override
-    public float getVoltage() {
-        return voltage_float;
-    }
-*/
     /**
      * {@inheritDoc}
      */

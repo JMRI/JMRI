@@ -11,9 +11,6 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Provide access to current meter from a MERG CBUS Command Station
  *
@@ -60,33 +57,6 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         log.debug("CbusMultiMeter constructor called");
     }
     
-    /*.*
-     * CBUS does have Amperage reporting
-     * 
-     * {@inheritDoc}
-     *./
-    @Override
-    public boolean hasCurrent() {
-        return true;
-    }
-
-    /.**
-     * CBUS might have Voltage reporting
-     *
-     * {@inheritDoc}
-     *./
-    @Override
-    public boolean hasVoltage() {
-        return true;
-    }
-
-
-    @Override
-    public CurrentUnits getCurrentUnits() {
-        return  CurrentUnits.CURRENT_UNITS_MILLIAMPS;
-    }
-*/
-
     /**
      * Listen for CAN Frames sent by Command Station 0
      * Typically sent every 4-5 seconds.
@@ -135,26 +105,6 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
     public void message(CanMessage m) {
     }
     
-    /*.*
-     * Adjust CBUS Command station settings to change frequency of updates
-     * No local action performed
-     *
-     * {@inheritDoc}
-     *./
-    @Override
-    protected void requestUpdateFromLayout() {
-    }
-    
-    /.**
-     * {@inheritDoc}
-     *./
-    @Override
-    public String getHardwareMeterName() {
-        return ("CBUS");
-    }
-*/
-    private final static Logger log = LoggerFactory.getLogger(CbusMeterGroup.class);
-
     
     private class UpdateTask extends MeterUpdateTask {
     
@@ -209,4 +159,6 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         }
     }
     
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusMeterGroup.class);
 }

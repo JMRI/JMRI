@@ -93,18 +93,6 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
         return _unit;
     }
 
-    /*.* {@inheritDoc} *./
-    @Override
-    public void setCommandedAnalogValue(double v) {
-        _value = v;
-    }
-
-    /.** {@inheritDoc} *./
-    @Override
-    public double getCommandedAnalogValue() {
-        return _value;
-    }
-*/
     /** {@inheritDoc} */
     @Override
     public double getMin() {
@@ -144,10 +132,10 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
         if (_updateTask != null) _updateTask.doRequestUpdateFromLayout();
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMeter.class);
-
     
-    
+    /**
+     * Default implementation of a voltage meter.
+     */
     public static class DefaultVoltageMeter extends DefaultMeter implements VoltageMeter
     {
         public DefaultVoltageMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution, MeterUpdateTask updateTask) {
@@ -156,6 +144,9 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     }
     
     
+    /**
+     * Default implementation of a current meter.
+     */
     public static class DefaultCurrentMeter extends DefaultMeter implements CurrentMeter
     {
         public DefaultCurrentMeter(@Nonnull String sys, Unit unit, double min, double max, double resolution, MeterUpdateTask updateTask) {
@@ -164,4 +155,5 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     }
     
     
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultMeter.class);
 }
