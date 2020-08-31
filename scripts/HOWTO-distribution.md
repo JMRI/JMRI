@@ -333,7 +333,7 @@ https://builds.jmri.org/jenkins/job/testreleases/job/4.21.1/
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
-Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do more checking of the development releases leading up to the test release build)
+Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to better functional checking of the development releases leading up to the test release build)
 
 ```
 
