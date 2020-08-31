@@ -22,14 +22,6 @@ import jmri
 from javax.swing import JButton, JFrame,JPanel,BoxLayout,Box,JScrollPane, JOptionPane, AbstractAction
 #import javax.swing.AbstractAction
 
-
-
-
-
-
-
-
-
 class Update_Signal_Logic():
 
     loglevel = 0
@@ -215,22 +207,47 @@ class Update_Signal_Logic():
                     if self.loglevel > 0:  print "autoblocks", [a.getUserName() for a in autoblocks], autoblocks
                     signal_mast_dict[autoblocks] = (sm_source.getUserName(), sm_dest.getUserName(), sml, autoblocks_orig)
         if self.loglevel > 0:  print "!!!!!!!"
-                    
-        # find route corresponding to autoblocks
-        for turnout in turnout_dict.keys():
+        
+        # number_autoblocks = 0
+        # for autoblocks in signal_mast_dict.keys():
+            # number_autoblocks += 1
             
-            #if self.loglevel > 0:  print "*****************"
-            #if self.loglevel > 0:  print turnout
-            td = turnout_dict[turnout]
-            if self.loglevel > 0:  print td
-            y = [ [x.getUserName() for x in t]   for t in td]
-            routes = turnout_dict[turnout]
-            if self.loglevel > 0:  print "routes", routes
-            for autoblocks in signal_mast_dict.keys():
-                ab_names = [b.getUserName() for b in autoblocks]
-                sm = signal_mast_dict[autoblocks]
-                sm_source, sm_dest, sml, autoblocks_orig = sm
-                routes_in_autoblocks = []
+        # progress = 0
+        # final = 30
+        # interval_percent = int(10)
+        # print "interval" , interval_percent, "progress", progress, "number_autoblocks", number_autoblocks
+        # divisor = (final - progress) / interval_percent       
+        # interval_count = int(number_autoblocks/divisor)
+        # interval_count_total = interval_count
+
+        # dpg=DisplayProgress_global()
+        # dpg.Update(str(progress)+ "% complete")                  
+        # find route corresponding to autoblocks
+
+        # i = 0    
+        for autoblocks in signal_mast_dict.keys():  #go through all the signal mast paths
+            # i += 1
+            # if  i > interval_count_total:
+                # interval_count_total = interval_count_total + interval_count
+                # progress = int(progress + interval_percent)
+                # print progress, i
+                # p = int(min(progress, 100))
+                # print "p" , p
+                # dpg.Update(str(progress)+ "% complete")
+        
+            ab_names = [b.getUserName() for b in autoblocks]
+            sm = signal_mast_dict[autoblocks]
+            sm_source, sm_dest, sml, autoblocks_orig = sm
+            routes_in_autoblocks = []
+            route_names_is_subset = False
+            for turnout in turnout_dict.keys():  #
+                #if self.loglevel > 0:  print "*****************"
+                #if self.loglevel > 0:  print turnout
+                td = turnout_dict[turnout]
+                if self.loglevel > 0:  print td
+                y = [ [x.getUserName() for x in t]   for t in td]
+                routes = turnout_dict[turnout]
+                if self.loglevel > 0:  print "routes", routes
                 for route in routes:
                     route_names = [r.getUserName() for r in route]
                     # if self.loglevel > 0:  print "qwerty"
@@ -245,8 +262,12 @@ class Update_Signal_Logic():
                         if self.loglevel > 0:  print "route",[str(x.getUserName()) for x in route]
                         if self.loglevel > 0:  print "autoblocks",[str(x.getUserName()) for x in autoblocks],str(sm_source), str(sm_dest)
                         routes_in_autoblocks.append(route)
-            self.update_signal_logic(sm, routes_in_autoblocks)        
-        
+                        route_names_is_subset = True
+            #if any of the turnouts ar on the signal mast path we have stored the appropriate route in routes_in_autoblocks            
+            if route_names_is_subset == True:
+                self.update_signal_logic(sm, routes_in_autoblocks)
+                
+        #dpg.killLabel()
         msg = "Logic replaced"
         JOptionPane.showMessageDialog(None, msg, 'information', JOptionPane.INFORMATION_MESSAGE)
         
@@ -285,7 +306,7 @@ class Update_Signal_Logic():
         return None                      
                         
     def update_signal_logic(self, signal_masts, routes_in_autoblocks):
-    
+        print "in update signal logic"
         #preliminary
         sm_source_name, sm_dest_name, sml, autoblocks = signal_masts
         SignalMastManager = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
