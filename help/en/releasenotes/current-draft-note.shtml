@@ -452,9 +452,7 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li>A common (minimum) interval for all outputs on the same connection can be configured (set
-                it in Preferences &gt; Connection &gt; Additional Connection Settings. Default this is set to 250
-                Milliseconds.</li>
+                <li></li>
             </ul>
             
     	<h4>Signal Groups</h4>
@@ -464,7 +462,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li>Better set row height in table.</li>
+                <li></li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>

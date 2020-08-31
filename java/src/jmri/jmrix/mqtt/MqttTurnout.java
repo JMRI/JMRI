@@ -8,6 +8,7 @@ import jmri.implementation.AbstractTurnout;
  * Implementation of the Turnout interface for MQTT layouts.
  *
  * @author Lionel Jeanson Copyright (c) 2017
+ * @author Bob Jacobsen   Copyright (c) 2020
  */
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
@@ -38,10 +39,11 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     }
         
     MqttContentParser<Turnout> parser = new MqttContentParser<Turnout>() {
-        private final static String closedText = "CLOSED";
-        private final static String thrownText = "THROWN";
-        private final static String unknownText = "UNKNOWN";
-        private final static String inconsistentText = "INCONSISTENT";
+        // public for scripting
+        public final static String closedText = "CLOSED";
+        public final static String thrownText = "THROWN";
+        public final static String unknownText = "UNKNOWN";
+        public final static String inconsistentText = "INCONSISTENT";
 
         int stateFromString(String payload) {
             switch (payload) {
