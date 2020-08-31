@@ -27,7 +27,7 @@ public class DefaultMeterManager extends AbstractManager<Meter>
     /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
-        return Manager.ANALOGIOS;
+        return Manager.METERS;
     }
 
     /**
