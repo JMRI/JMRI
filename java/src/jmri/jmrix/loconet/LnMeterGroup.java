@@ -33,7 +33,7 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         updateTask = new MeterUpdateTask(10000, 100) {
             @Override
             public void requestUpdateFromLayout() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                sm.sendReadSlot(249);
             }
         };
         
