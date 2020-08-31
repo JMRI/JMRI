@@ -42,11 +42,11 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         updateTask = new UpdateTask(-1, 0);
         
         currentMeter = new DefaultMeter(
-                memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
+                memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
                 Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
         
         voltageMeter = new DefaultMeter(
-                memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
+                memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
                 Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
@@ -114,7 +114,7 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
             } else {
                 // Voltage from the command station is scaled by a factor of 10 to allow one decimal place
                 int voltageInt = ( r.getElement(5) * 256 ) + r.getElement(6);
-                MeterInfo mi = getMeterByName(MeterGroup.CurrentMeter);
+                MeterInfo mi = getMeterByName(MeterGroup.VoltageMeter);
                 if (mi != null) {
                     mi.getMeter().setCommandedAnalogValue(voltageInt / 10.0f ); // V value, min 0, max 6553.5, NOT percentage
                 } else {

@@ -33,7 +33,9 @@ public abstract class MeterUpdateTask {
     }
     
     protected void enable() {
-        _intervalTask.enable();
+        if(_intervalTask != null) {
+            _intervalTask.enable();
+        }
     }
     
     public void enable(Meter m) {
@@ -51,7 +53,9 @@ public abstract class MeterUpdateTask {
     }
     
     protected void disable() {
-        _intervalTask.disable();
+        if(_intervalTask != null) {
+            _intervalTask.disable();
+        }
     }
     
     public void disable(Meter m) {
@@ -76,7 +80,7 @@ public abstract class MeterUpdateTask {
     }
     
     public void initTimer() {
-        if(_intervalTask!=null) {
+        if(_intervalTask != null) {
            _intervalTask.cancel();
            _intervalTask = null;
         }

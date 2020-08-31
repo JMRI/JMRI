@@ -57,7 +57,9 @@ public class DefaultMeterGroupManager extends AbstractManager<MeterGroup>
     /** {@inheritDoc} */
     @Override
     public MeterGroup provide(@Nonnull String name) throws IllegalArgumentException {
-        return new DefaultMeterGroup(name);
+        MeterGroup mg = new DefaultMeterGroup(name);
+        register(mg);
+        return mg;
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(AbstractAnalogIOManager.class);

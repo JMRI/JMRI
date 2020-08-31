@@ -50,10 +50,10 @@ public class VoltMeterFrame extends JmriJFrame {
         // If no current meter exists, AmpMeterAction should be disabled,
         // so we shouldn't be here.
         MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
-        if (m == null) throw new RuntimeException("No multimeter exists");
+        if (m == null) throw new RuntimeException("No meter group exists");
         SortedSet<MeterGroup> set = m.getNamedBeanSet();
-        MeterGroup.MeterInfo meterInfo = set.first().getMeterByName(MeterGroup.CurrentMeter);
-        if (meterInfo == null) throw new RuntimeException("No current meter exists");
+        MeterGroup.MeterInfo meterInfo = set.first().getMeterByName(MeterGroup.VoltageMeter);
+        if (meterInfo == null) throw new RuntimeException("No voltage meter exists");
         meter = meterInfo.getMeter();
     }
 

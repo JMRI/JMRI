@@ -2,8 +2,9 @@ package jmri.jmrit.ampmeter;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.JmriException;
-import jmri.MeterGroup;
+import jmri.*;
+import jmri.implementation.DefaultMeter;
+import jmri.implementation.MeterUpdateTask;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
@@ -21,7 +22,8 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+                    .getNamedBeanSet().first()
                     .getMeterByName(MeterGroup.CurrentMeter)
                     .getMeter().setCommandedAnalogValue(2.1f);
         });
@@ -32,7 +34,8 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+                    .getNamedBeanSet().first()
                     .getMeterByName(MeterGroup.CurrentMeter)
                     .getMeter().setCommandedAnalogValue(32.1f);
         });
@@ -43,7 +46,8 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+                    .getNamedBeanSet().first()
                     .getMeterByName(MeterGroup.CurrentMeter)
                     .getMeter().setCommandedAnalogValue(432.1f);
         });
@@ -54,7 +58,8 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroup.class)
+            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+                    .getNamedBeanSet().first()
                     .getMeterByName(MeterGroup.CurrentMeter)
                     .getMeter().setCommandedAnalogValue(5432.1f);
         });
@@ -65,7 +70,7 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.InstanceManager.setDefault(jmri.MeterGroup.class, new TestMeter());
+        jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class).register(new TestMeter());
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new AmpMeterFrame();
         }
@@ -91,6 +96,15 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
 
         public TestMeter() {
             super("IVTestMeterGroup");
+            
+            Meter ampMeter = new DefaultMeter.DefaultVoltageMeter("IVAmpMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1, 0) {
+                @Override
+                public void requestUpdateFromLayout() {
+                    // Do nothing
+                }
+            });
+            
+            addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, ampMeter);
         }
 /*
         @Override

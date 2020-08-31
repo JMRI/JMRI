@@ -161,6 +161,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * Configure the common managers for z21 connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         log.debug("Called Configure Managers");
 
@@ -259,14 +260,16 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             }
         };
         
-        VoltageMeter vm = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
-        CurrentMeter cm = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
+        VoltageMeter voltageMeter = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
+        CurrentMeter currentMeter = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
         
-        mg.addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, vm);
-        mg.addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, cm);
+        InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
+        InstanceManager.getDefault(MeterManager.class).register(currentMeter);
+        
+        mg.addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
+        mg.addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
         
         return mg;
-//        return (MeterGroup) classObjectMap.computeIfAbsent(MeterGroup.class, (Class c) -> { return new Z21MultiMeter(this); });
     }
 
     /**

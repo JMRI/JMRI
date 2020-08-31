@@ -208,6 +208,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(4, 0x02); // en 2
         r.setElement(5, 0x00); // 12.9V
         r.setElement(6, 0x81); // 12.9V
+        System.out.format("testMultiMVoltCanReply: reply(12.9) volt%n");
         ((CbusMeterGroup)mm).reply(r);
         Assert.assertEquals(12.9,getVoltage(),0.001 );
         
