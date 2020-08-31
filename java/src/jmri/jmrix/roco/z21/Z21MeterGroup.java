@@ -20,22 +20,29 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MeterGroup(Z21SystemConnectionMemo memo) {
-        super("XVCommandStation");
+        super(memo.getSystemPrefix() + "V" + "CommandStation");
         
         _memo = memo;
         tc = _memo.getTrafficController();
         
         updateTask = new UpdateTask(-1, 0);
         
-        currentMeter = new DefaultMeter("CBUSVoltageMeter", Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
-        voltageMeter = new DefaultMeter("CBUSCurrentMeter", Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
+        currentMeter = new DefaultMeter(
+                memo.getSystemPrefix() + "V" + "CommandStationCurrent",
+                Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
+        
+        voltageMeter = new DefaultMeter(
+                memo.getSystemPrefix() + "V" + "CommandStationVoltage",
+                Meter.Unit.Milli, 0, 50000.0, 500, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
         
         addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
         addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
-
+        
+        InstanceManager.getDefault(MeterGroupManager.class).register(this);
+        
         log.debug("Z21MultiMeter constructor called");
 
     }

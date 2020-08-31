@@ -25,7 +25,7 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
      * @param scm  connection memo
      */
     public LnMeterGroup(LocoNetSystemConnectionMemo scm) {
-        super("LVCommandStation");
+        super(scm.getSystemPrefix() + "V" + "CommandStation");
         
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
@@ -37,8 +37,13 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
             }
         };
         
-        currentMeter = new DefaultMeter("LVCommandStationCurrent", Meter.Unit.NoPrefix, 0, 5.0, 0.1, updateTask);
-        voltageMeter = new DefaultMeter("LVCommandStationVoltage", Meter.Unit.NoPrefix, 0, 30.0, 0.5, updateTask);
+        currentMeter = new DefaultMeter(
+                scm.getSystemPrefix() + "V" + "CommandStationCurrent",
+                Meter.Unit.NoPrefix, 0, 5.0, 0.1, updateTask);
+        
+        voltageMeter = new DefaultMeter(
+                scm.getSystemPrefix() + "V" + "CommandStationVoltage",
+                Meter.Unit.NoPrefix, 0, 30.0, 0.5, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         

@@ -243,6 +243,8 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         store(c,RocoZ21CommandStation.class);
     }
 
+    protected Z21MeterGroup meterGroup;
+    
     /**
      * Provide access to the Roco Z21 MultiMeter for this particular
      * connection.
@@ -251,25 +253,14 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
      * @return MeterGroup, creates new if null.
      */
     public MeterGroup createMeterGroup() {
-        MeterGroup mg = InstanceManager.getDefault(MeterGroupManager.class).provide("XVCommandStation");
-        
-        MeterUpdateTask mu = new MeterUpdateTask(-1, 0) {
-            @Override
-            public void requestUpdateFromLayout() {
-                // Do nothing
-            }
-        };
-        
-        VoltageMeter voltageMeter = new DefaultVoltageMeter("XVCommandStationVoltage", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
-        CurrentMeter currentMeter = new DefaultCurrentMeter("XVCommandStationCurrent", Meter.Unit.Milli, 0.0, 1.0, 0.1, mu);
-        
-        InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
-        InstanceManager.getDefault(MeterManager.class).register(currentMeter);
-        
-        mg.addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
-        mg.addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
-        
-        return mg;
+        if (getDisabled()) {
+            return null;
+        }
+        if (meterGroup == null) {
+            meterGroup = new Z21MeterGroup(this);
+            InstanceManager.store(meterGroup, jmri.MeterGroup.class );
+        }
+        return meterGroup;
     }
 
     /**

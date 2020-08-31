@@ -49,7 +49,7 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     public void testGetMultiMeter() {
         Assert.assertNotNull("Get MeterGroup",
                 InstanceManager.getDefault(jmri.MeterGroupManager.class)
-                        .getBySystemName("XVCommandStation"));
+                        .getBySystemName("ZVCommandStation"));
     }
 
     @Override

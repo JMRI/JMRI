@@ -19,7 +19,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
     private final Meter currentMeter;
 
     public DCCppMeterGroup(DCCppSystemConnectionMemo memo) {
-        super("DVBaseStation");
+        super(memo.getSystemPrefix() + "V" + "BaseStation");
         
         tc = memo.getDCCppTrafficController();
 
@@ -30,7 +30,9 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
             }
         };
         
-        currentMeter = new DefaultMeter("DVBaseStationCurrent", Meter.Unit.Percent, 0, 100.0, 1.0, updateTask);
+        currentMeter = new DefaultMeter(
+                memo.getSystemPrefix() + "V" + "BaseStationCurrent",
+                Meter.Unit.Percent, 0, 100.0, 1.0, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         

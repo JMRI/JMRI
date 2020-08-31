@@ -286,12 +286,16 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
+    protected LnMeterGroup meterGroup;
+
     public LnMeterGroup getMeterGroup() {
         if (getDisabled()) {
             return null;
         }
-        LnMeterGroup meterGroup = new LnMeterGroup(this);
-        InstanceManager.getDefault(MeterGroupManager.class).register(meterGroup);
+        if (meterGroup == null) {
+            meterGroup = new LnMeterGroup(this);
+            InstanceManager.getDefault(MeterGroupManager.class).register(meterGroup);
+        }
         return meterGroup;
     }
 
