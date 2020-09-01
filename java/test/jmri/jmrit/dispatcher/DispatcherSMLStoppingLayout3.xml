@@ -445,7 +445,7 @@
     </transit>
   </transits>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
-    <logicDelay>100</logicDelay>
+    <logicDelay>500</logicDelay>
     <signalmastlogic source="East-North">
       <sourceSignalMast>East-North</sourceSignalMast>
       <destinationMast destination="North-West">
