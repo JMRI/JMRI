@@ -1385,7 +1385,7 @@ public class AutoActiveTrain implements ThrottleListener {
             float throttleSetting = (speed / mls);
             return applyMaxThrottleAndFactor(throttleSetting);
         } else {
-            return applyMaxThrottleAndFactor(speed);
+            return applyMaxThrottleAndFactor(speed/100.0f);
         }
     }
 
