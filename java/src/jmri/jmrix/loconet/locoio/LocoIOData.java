@@ -132,7 +132,7 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * TODO: LocoIO Board level configuration.
+     * No LocoIO Board level configuration.
      * <pre>
      * Bit 0: 0 = default, 1 = Port Refresh
      * Bit 1: 0 = Fixed code PBs, 1 = Alternated code PBs
@@ -140,7 +140,7 @@ public class LocoIOData extends PropertyChangeSupport
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
      *
-     * If possibe add/support the additional config options for HDL boards
+     * If possible add/support the additional config options for HDL boards > Work moved to xml decoder definition
      * </pre>
      * @param portRefresh port refresh value, bit 0.
      * @param altCodePBs alternated code PBs, bit 1.
@@ -429,7 +429,7 @@ public class LocoIOData extends PropertyChangeSupport
                             } else if (type == 1) {     // v1
                                 setV1(channel, data);
                                 setMode(channel, "<none>"); // NOI18N
-                            } else if (type == 0) {       // cv
+                            } else if (type == 0) {     // cv
                                 setSV(channel, data);
                                 // Now that we have all the pieces, recalculate mode
                                 LocoIOMode lim = validmodes.getLocoIOModeFor(getSV(channel), getV1(channel), getV2(channel));
@@ -441,12 +441,15 @@ public class LocoIOData extends PropertyChangeSupport
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})", Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)), Integer.toHexString(getV2(channel)), getAddr(channel), Integer.toHexString(getAddr(channel))); // NOI18N
+                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})",
+                                        Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)),
+                                        Integer.toHexString(getV2(channel)), getAddr(channel),
+                                        Integer.toHexString(getAddr(channel))); // NOI18N
                             } else {
                                 log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }
-                        } else {
-                            // log.error("last CV recorded is invalid: "+lastOpCv);
+                        // } else {
+                            // log.error("last CV recorded is invalid: {}", lastOpCv);
                         }
                     }  // end of read processing
 
@@ -541,7 +544,6 @@ public class LocoIOData extends PropertyChangeSupport
             default:
                 log.error("Pin {} unexpected write state, can't advance {}", currentPin, writeState[currentPin]); // NOI18N
                 writeState[currentPin] = NONE;
-                return;
         }
     }
 

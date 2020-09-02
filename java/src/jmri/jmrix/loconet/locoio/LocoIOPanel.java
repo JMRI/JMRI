@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Panel to display and program a LocoIO configuration.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Egbert Broerse 2018

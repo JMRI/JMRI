@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Configurer for LocoIO hardware.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  * <p>
  * This code derives the SV values from the user-selected mode and address; this
  * is different from earlier versions where the user was expected to do the
@@ -66,7 +67,7 @@ public class LocoIOTableModel
      */
     private JTextField status = null;
 
-    /**
+    /*
      * Reference to JLabel for firmware version.
      */
     //private JLabel     firmware = null;
