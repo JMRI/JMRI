@@ -10,6 +10,8 @@ import jmri.jmrit.ctc.*;
  * This describes a single line of Call On data.  The list of call on rules
  * for each OS section are in the _mCO_GroupingsList variable in {@link CodeButtonHandlerData}.
  *
+ * During panel loading, the switch indicator names are saved as strings.  Once all of the
+ * data is loaded, the NBHSensors are copied from the related CodeButtonHandlerData.
  * @author Dave Sand Copyright (C) 2020
  */
 public class CallOnData {
@@ -19,6 +21,7 @@ public class CallOnData {
     public NBHSensor _mCalledOnExternalSensor;
     public NamedBeanHandle<Block> _mExternalBlock;
     public ArrayList<NBHSensor> _mSwitchIndicators;      // Up to 6 entries
+    public ArrayList<String> _mSwitchIndicatorNames;     // Temporary names during XML loading
 
     public CallOnData() {
     }

@@ -121,11 +121,17 @@ public class FrmSIDL extends javax.swing.JFrame {
         _mSIDL_LeftInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_LeftInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLLeft"));
 
+        _mSIDL_LeftInternalSensor.setEnabled(false);
+
         _mSIDL_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLNormal"));
 
+        _mSIDL_NormalInternalSensor.setEnabled(false);
+
         _mSIDL_RightInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_RightInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLRight"));
+
+        _mSIDL_RightInternalSensor.setEnabled(false);
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -192,27 +198,6 @@ public class FrmSIDL extends javax.swing.JFrame {
             return; // Do not allow exit or transfer of data.
         }
         _mClosedNormally = true;
-//         _mCodeButtonHandlerData._mSIDL_LeftInternalSensor = _mSIDL_LeftInternalSensor.getText();
-        String sensorName = _mSIDL_LeftInternalSensor.getText();
-        NBHSensor sensor = new NBHSensor("FrmSIDL", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSIDL_LeftInternalSensor = sensor;
-        }
-
-//         _mCodeButtonHandlerData._mSIDL_NormalInternalSensor = _mSIDL_NormalInternalSensor.getText();
-        sensorName = _mSIDL_NormalInternalSensor.getText();
-        sensor = new NBHSensor("FrmSIDL", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSIDL_NormalInternalSensor = sensor;
-        }
-
-//         _mCodeButtonHandlerData._mSIDL_RightInternalSensor = _mSIDL_RightInternalSensor.getText();
-        sensorName = _mSIDL_RightInternalSensor.getText();
-        sensor = new NBHSensor("FrmSIDL", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSIDL_RightInternalSensor = sensor;
-        }
-
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }//GEN-LAST:event__mSaveAndCloseActionPerformed

@@ -50,6 +50,7 @@ public class NBHSignal {
                     if (temp == null) temp = "Stop"; // NOI18N // Safety
                     _mDangerAppearance = temp;
                     _mNamedBeanHandleSignalHead = null;
+                    if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSignal(signal, this);
                     return;
                 }
             } else {
@@ -59,6 +60,7 @@ public class NBHSignal {
                     _mNamedBeanHandleSignalHead = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalHead);
                     _mDangerAppearance = "Stop";            // NOI18N // Never used, just required for "final"
                     _mNamedBeanHandleSignalMast = null;
+                    if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSignal(signal, this);
                     return;
                 }
             }

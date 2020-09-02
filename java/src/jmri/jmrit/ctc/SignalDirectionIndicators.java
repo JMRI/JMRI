@@ -16,6 +16,7 @@ import jmri.SignalHead;
 import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
 import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
@@ -69,6 +70,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
                                         NBHSensor rightSensor,
                                         int codingTimeInMilliseconds,
                                         int timeLockingTimeInMilliseconds,
+                                        CodeButtonHandlerData.TRAFFIC_DIRECTION trafficDirection,
                                         ArrayList<NBHSignal> signalListLeftRight,
                                         ArrayList<NBHSignal> signalListRightLeft,
                                         Fleeting fleetingObject) {
@@ -86,15 +88,16 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             _mNormalSensor = normalSensor;
             _mRightSensor = rightSensor;
 //  Partially plagerized from GUI code:
-            boolean leftInternalSensorPresent = _mLeftSensor.valid();
+            boolean leftTrafficDirection = trafficDirection != CodeButtonHandlerData.TRAFFIC_DIRECTION.RIGHT;
+            boolean rightTrafficDirection = trafficDirection != CodeButtonHandlerData.TRAFFIC_DIRECTION.LEFT;
+
             boolean entriesInLeftRightTrafficSignalsList = !signalListLeftRight.isEmpty();
-            boolean rightInternalSensorPresent = _mRightSensor.valid();
             boolean entriesInRightLeftTrafficSignalsList = !signalListRightLeft.isEmpty();
-            if (!leftInternalSensorPresent && !rightInternalSensorPresent) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsMustHaveOne"), Bundle.getMessage("SignalDirectionIndicatorsError1")); }                        // NOI18N
-            if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError2")); }     // NOI18N
-            if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError3")); }    // NOI18N
-            if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError4")); }      // NOI18N
-            if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError5")); }    // NOI18N
+
+            if (leftTrafficDirection && !entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError2")); }     // NOI18N
+            if (rightTrafficDirection && !entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError3")); }    // NOI18N
+            if (!leftTrafficDirection && entriesInRightLeftTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError4")); }      // NOI18N
+            if (!rightTrafficDirection && entriesInLeftRightTrafficSignalsList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError5")); }    // NOI18N
 
             for (NBHSignal signal : signalListLeftRight) {
                 new SignalHeadPropertyChangeListenerMaintainer(signal); // Lazy, constructor does EVERYTHING and leaves a bread crumb trail to this object.

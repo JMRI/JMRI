@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Sand Copyright (c) 2020
  */
 public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+    CtcManager cm = InstanceManager.getDefault(CtcManager.class);
 
     public CtcManagerXml() {
     }
@@ -31,7 +32,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
      */
     @Override
     public Element store(Object o) {
-        CtcManager cm = InstanceManager.getDefault(CtcManager.class);
         Element ctcdata = new Element("ctcdata");
         setStoreElementClass(ctcdata);
 
@@ -61,6 +61,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             cbhdElement.addContent(storeSensor("SIDI_RightInternalSensor", cbhd._mSIDI_RightInternalSensor));
             cbhdElement.addContent(storeInt("SIDI_CodingTimeInMilliseconds", cbhd._mSIDI_CodingTimeInMilliseconds));
             cbhdElement.addContent(storeInt("SIDI_TimeLockingTimeInMilliseconds", cbhd._mSIDI_TimeLockingTimeInMilliseconds));
+            cbhdElement.addContent(storeString("SIDI_TrafficDirection", cbhd._mSIDI_TrafficDirection.toString()));
             cbhdElement.addContent(storeSignalList("SIDI_LeftRightTrafficSignals", cbhd._mSIDI_LeftRightTrafficSignals));
             cbhdElement.addContent(storeSignalList("SIDI_RightLeftTrafficSignals", cbhd._mSIDI_RightLeftTrafficSignals));
 
@@ -346,7 +347,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
      */
     @Override
     public boolean load(Element sharedCtcData, Element perNodeCtcData) {
-        CtcManager cm = InstanceManager.getDefault(CtcManager.class);
         List<Element> ctcList = sharedCtcData.getChildren();
 
         for (Element lvl1 : ctcList) {
@@ -360,75 +360,88 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             }
             if (lvl1.getName().equals("ctcCodeButtonData")) {
                 // Create basic CodeButtonHandlerData
+    log.info("------------- CBHD ------------");
                 int _mUniqueID = loadInt(lvl1.getChild("UniqueID"));
                 int _mSwitchNumber = loadInt(lvl1.getChild("SwitchNumber"));
                 int _mSignalEtcNumber = loadInt(lvl1.getChild("SignalEtcNumber"));
                 int _mGUIColumnNumber = loadInt(lvl1.getChild("GUIColumnNumber"));
                 int _mFileVersion = loadInt(lvl1.getChild("FileVersion"));
 
-                CodeButtonHandlerData cbhd = new CodeButtonHandlerData(_mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber);
+                // Create a new CodeButtonHandlerData via CodeButtonHandlerDataRoutines which sets default values and empty NBH... objects
+                CodeButtonHandlerData cbhd = CodeButtonHandlerDataRoutines.createNewCodeButtonHandlerData(
+                        _mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber, cm.getProgramProperties());
                 cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
+    log.info("------------- Code ------------");
 
                 // Code section
-                cbhd._mCodeButtonInternalSensor = loadSensor(lvl1.getChild("CodeButtonInternalSensor"));
-                cbhd._mOSSectionOccupiedExternalSensor = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor"));
-                cbhd._mOSSectionOccupiedExternalSensor2 = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor2"));
+                cbhd._mCodeButtonInternalSensor = loadSensor(lvl1.getChild("CodeButtonInternalSensor"), true);
+                cbhd._mOSSectionOccupiedExternalSensor = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor"), false);
+                cbhd._mOSSectionOccupiedExternalSensor2 = loadSensor(lvl1.getChild("OSSectionOccupiedExternalSensor2"), false);
                 cbhd._mOSSectionSwitchSlavedToUniqueID = loadInt(lvl1.getChild("OSSectionSwitchSlavedToUniqueID"));
                 cbhd._mGUIGeneratedAtLeastOnceAlready = loadBoolean(lvl1.getChild("GUIGeneratedAtLeastOnceAlready"));
                 cbhd._mCodeButtonDelayTime = loadInt(lvl1.getChild("CodeButtonDelayTime"));
+    log.info("------------- SIDI ------------");
 
                 // SIDI section
                 cbhd._mSIDI_Enabled = loadBoolean(lvl1.getChild("SIDI_Enabled"));
-                cbhd._mSIDI_LeftInternalSensor = loadSensor(lvl1.getChild("SIDI_LeftInternalSensor"));
-                cbhd._mSIDI_NormalInternalSensor = loadSensor(lvl1.getChild("SIDI_NormalInternalSensor"));
-                cbhd._mSIDI_RightInternalSensor = loadSensor(lvl1.getChild("SIDI_RightInternalSensor"));
+                cbhd._mSIDI_LeftInternalSensor = loadSensor(lvl1.getChild("SIDI_LeftInternalSensor"), true);
+                cbhd._mSIDI_NormalInternalSensor = loadSensor(lvl1.getChild("SIDI_NormalInternalSensor"), true);
+                cbhd._mSIDI_RightInternalSensor = loadSensor(lvl1.getChild("SIDI_RightInternalSensor"), true);
                 cbhd._mSIDI_CodingTimeInMilliseconds = loadInt(lvl1.getChild("SIDI_CodingTimeInMilliseconds"));
                 cbhd._mSIDI_TimeLockingTimeInMilliseconds = loadInt(lvl1.getChild("SIDI_TimeLockingTimeInMilliseconds"));
+                cbhd._mSIDI_TrafficDirection = CodeButtonHandlerData.TRAFFIC_DIRECTION.valueOf(loadString(lvl1.getChild("SIDI_TrafficDirection")));
                 cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(lvl1.getChild("SIDI_LeftRightTrafficSignals"));
                 cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(lvl1.getChild("SIDI_RightLeftTrafficSignals"));
 
+    log.info("------------- SIDL ------------");
                 // SIDL section
                 cbhd._mSIDL_Enabled = loadBoolean(lvl1.getChild("SIDL_Enabled"));
-                cbhd._mSIDL_LeftInternalSensor = loadSensor(lvl1.getChild("SIDL_LeftInternalSensor"));
-                cbhd._mSIDL_NormalInternalSensor = loadSensor(lvl1.getChild("SIDL_NormalInternalSensor"));
-                cbhd._mSIDL_RightInternalSensor = loadSensor(lvl1.getChild("SIDL_RightInternalSensor"));
+                cbhd._mSIDL_LeftInternalSensor = loadSensor(lvl1.getChild("SIDL_LeftInternalSensor"), true);
+                cbhd._mSIDL_NormalInternalSensor = loadSensor(lvl1.getChild("SIDL_NormalInternalSensor"), true);
+                cbhd._mSIDL_RightInternalSensor = loadSensor(lvl1.getChild("SIDL_RightInternalSensor"), true);
 
+    log.info("------------- SWDI ------------");
                 // SWDI section
                 cbhd._mSWDI_Enabled = loadBoolean(lvl1.getChild("SWDI_Enabled"));
-                cbhd._mSWDI_NormalInternalSensor = loadSensor(lvl1.getChild("SWDI_NormalInternalSensor"));
-                cbhd._mSWDI_ReversedInternalSensor = loadSensor(lvl1.getChild("SWDI_ReversedInternalSensor"));
-                cbhd._mSWDI_ExternalTurnout = loadTurnout(lvl1.getChild("SWDI_ExternalTurnout"));
+                cbhd._mSWDI_NormalInternalSensor = loadSensor(lvl1.getChild("SWDI_NormalInternalSensor"), true);
+                cbhd._mSWDI_ReversedInternalSensor = loadSensor(lvl1.getChild("SWDI_ReversedInternalSensor"), true);
+                cbhd._mSWDI_ExternalTurnout = loadTurnout(lvl1.getChild("SWDI_ExternalTurnout"), lvl1.getChild("SWDI_FeedbackDifferent"));
                 cbhd._mSWDI_CodingTimeInMilliseconds = loadInt(lvl1.getChild("SWDI_CodingTimeInMilliseconds"));
                 cbhd._mSWDI_FeedbackDifferent = loadBoolean(lvl1.getChild("SWDI_FeedbackDifferent"));
                 cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(loadInt(lvl1.getChild("SWDI_GUITurnoutType")));
                 cbhd._mSWDI_GUITurnoutLeftHand = loadBoolean(lvl1.getChild("SWDI_GUITurnoutLeftHand"));
                 cbhd._mSWDI_GUICrossoverLeftHand = loadBoolean(lvl1.getChild("SWDI_GUICrossoverLeftHand"));
 
+    log.info("------------- SWDL ------------");
                 // SWDL section
                 cbhd._mSWDL_Enabled = loadBoolean(lvl1.getChild("SWDL_Enabled"));
-                cbhd._mSWDL_InternalSensor = loadSensor(lvl1.getChild("SWDL_InternalSensor"));
+                cbhd._mSWDL_InternalSensor = loadSensor(lvl1.getChild("SWDL_InternalSensor"), true);
 
+    log.info("-------------  CO  ------------");
                 // CO section
                 cbhd._mCO_Enabled = loadBoolean(lvl1.getChild("CO_Enabled"));
-                cbhd._mCO_CallOnToggleInternalSensor = loadSensor(lvl1.getChild("CO_CallOnToggleInternalSensor"));
+                cbhd._mCO_CallOnToggleInternalSensor = loadSensor(lvl1.getChild("CO_CallOnToggleInternalSensor"), true);
                 cbhd._mCO_GroupingsList = getCallOnList(lvl1.getChild("CO_GroupingsList"));
 
+    log.info("------------- TRL  ------------");
                 // TRL section
                 cbhd._mTRL_Enabled = loadBoolean(lvl1.getChild("TRL_Enabled"));
                 cbhd._mTRL_LeftTrafficLockingRules = getTrafficLocking(lvl1.getChild("TRL_LeftRules"));
                 cbhd._mTRL_RightTrafficLockingRules = getTrafficLocking(lvl1.getChild("TRL_RightRules"));
 
+    log.info("------------- TUL  ------------");
                 // TUL section
                 cbhd._mTUL_Enabled = loadBoolean(lvl1.getChild("TUL_Enabled"));
-                cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorLockToggle"));
-                cbhd._mTUL_ExternalTurnout = loadTurnout(lvl1.getChild("TUL_ExternalTurnout"));
+                cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorLockToggle"), true);
+                cbhd._mTUL_ExternalTurnout = loadTurnout(lvl1.getChild("TUL_ExternalTurnout"), lvl1.getChild("TUL_ExternalTurnoutFeedbackDifferent"));
                 cbhd._mTUL_ExternalTurnoutFeedbackDifferent = loadBoolean(lvl1.getChild("TUL_ExternalTurnoutFeedbackDifferent"));
-                cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorUnlockedIndicator"));
+                cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorUnlockedIndicator"), true);
                 cbhd._mTUL_NoDispatcherControlOfSwitch = loadBoolean(lvl1.getChild("TUL_NoDispatcherControlOfSwitch"));
                 cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(lvl1.getChild("TUL_ndcos_WhenLockedSwitchStateIsClosed"));
                 cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(lvl1.getChild("TUL_LockImplementation")));
                 loadAdditionalTurnouts(lvl1.getChild("TUL_AdditionalExternalTurnouts"), cbhd);
 
+    log.info("-------------  IL  ------------");
                 // IL section
                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
                 cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_Signals"));
@@ -446,7 +459,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 }
             }
         }
-        CommonSubs.verifyInternalSensors();
+        convertCallOnSensorNamesToNBHSensors(cm);
         return true;
     }
 
@@ -501,7 +514,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         od._mFileVersion = loadInt(el.getChild("FileVersion"));
 
 //  Fleeting:
-        od._mFleetingToggleInternalSensor = loadSensor(el.getChild("FleetingToggleInternalSensor"));
+        od._mFleetingToggleInternalSensor = loadSensor(el.getChild("FleetingToggleInternalSensor"), true);
         od._mDefaultFleetingEnabled = loadBoolean(el.getChild("DefaultFleetingEnabled"));
 
 //  Global startup:
@@ -513,8 +526,8 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         od._mNextUniqueNumber = loadInt(el.getChild("NextUniqueNumber"));
 
 //  CTC Debugging:
-        od._mCTCDebugSystemReloadInternalSensor = loadSensor(el.getChild("CTCDebugSystemReloadInternalSensor"));
-        od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadSensor(el.getChild("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor"));
+        od._mCTCDebugSystemReloadInternalSensor = loadSensor(el.getChild("CTCDebugSystemReloadInternalSensor"), true);
+        od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadSensor(el.getChild("CTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor"), true);
 
 //  GUI design:
         od._mGUIDesign_NumberOfEmptyColumnsAtEnd = loadInt(el.getChild("GUIDesign_NumberOfEmptyColumnsAtEnd"));
@@ -573,10 +586,18 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return newBoolean;
     }
 
-    NBHSensor loadSensor(Element element) {
+    NBHSensor loadSensor(Element element, boolean isInternal) {
         NBHSensor sensor = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
-            sensor = new NBHSensor("CtcManagerXml", "", element.getValue(), element.getValue(), false);
+            String sensorName = element.getValue();
+            sensor = cm.getNBHSensor(sensorName);
+            if (sensor == null) {
+                if (isInternal) {
+                    sensor = new NBHSensor("CtcManagerXml", "create internal = ", sensorName, sensorName);
+                } else {
+                    sensor = new NBHSensor("CtcManagerXml", "create standard = ", sensorName, sensorName, false);
+                }
+            }
         } else {
             sensor = new NBHSensor("CtcManagerXml", "", "Empty NBHSensor", "", true);
         }
@@ -586,17 +607,27 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
     NBHSignal loadSignal(Element element) {
         NBHSignal signal = null;
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
-            signal = new NBHSignal(element.getValue());
+            String signalName  = element.getValue();
+            signal = cm.getNBHSignal(signalName);
+            if (signal == null) {
+                signal = new NBHSignal(element.getValue());
+            }
         } else {
             signal = new NBHSignal("");
         }
         return signal;
     }
 
-    NBHTurnout loadTurnout(Element element) {
+    NBHTurnout loadTurnout(Element element, Element feedback) {
         NBHTurnout turnout = null;
+        boolean feedBack = loadBoolean(feedback);
         if (element != null && element.getValue() != null && !element.getValue().isEmpty()) {
-            turnout = new NBHTurnout("CtcManagerXml", "", element.getValue(), element.getValue(), false);
+            String turnoutName = element.getValue();
+
+            turnout = cm.getNBHTurnout(turnoutName);
+            if (turnout == null) {
+                turnout = new NBHTurnout("CtcManagerXml", "", element.getValue(), element.getValue(), feedBack);
+            }
         } else {
             turnout = new NBHTurnout("CtcManagerXml", "", "Empty NBHTurnout", "", false);
         }
@@ -620,7 +651,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         ArrayList<NBHSensor> sensorList = new ArrayList<>();
         if (element != null) {
             for (Element el : element.getChildren()) {
-                NBHSensor sensor = loadSensor(el);
+                NBHSensor sensor = loadSensor(el, false);
                 if (sensor != null) {
                     sensorList.add(sensor);
                 }
@@ -650,13 +681,50 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cod._mExternalSignal = loadSignal(elCallOn.getChild("ExternalSignal"));
                 cod._mSignalFacingDirection = loadString(elCallOn.getChild("SignalFacingDirection"));
                 cod._mSignalAspectToDisplay = loadString(elCallOn.getChild("SignalAspectToDisplay"));
-                cod._mCalledOnExternalSensor = loadSensor(elCallOn.getChild("CalledOnExternalSensor"));
+                cod._mCalledOnExternalSensor = loadSensor(elCallOn.getChild("CalledOnExternalSensor"), false);
                 cod._mExternalBlock = loadBlock(elCallOn.getChild("ExternalBlock"));
-                cod._mSwitchIndicators = getSensorList(elCallOn.getChild("SwitchIndicators"));
+                cod._mSwitchIndicators = new ArrayList<>();
+                cod._mSwitchIndicatorNames = getCallOnSensorNames(elCallOn.getChild("SwitchIndicators"));
                 callOnList.add(cod);
             }
         }
         return callOnList;
+    }
+
+    ArrayList<String> getCallOnSensorNames(Element element) {
+        ArrayList<String> sensorList = new ArrayList<>();
+        if (element != null) {
+            for (Element el : element.getChildren()) {
+                sensorList.add(el.getValue());
+            }
+        }
+        return sensorList;
+    }
+
+    public static ArrayList<String> getArrayListOfSelectableSwitchDirectionIndicators(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
+        ArrayList<String> returnValue = new ArrayList<>();
+        for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
+            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName());
+            }
+            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName());
+            }
+        }
+        return returnValue;
+    }
+
+    void convertCallOnSensorNamesToNBHSensors(CtcManager cm) {
+        for (CodeButtonHandlerData cbhd : cm.getCTCSerialData().getCodeButtonHandlerDataArrayList()) {
+            for (CallOnData cod : cbhd._mCO_GroupingsList) {
+                for (String sensorName : cod._mSwitchIndicatorNames) {
+                    NBHSensor sensor = cm.getNBHSensor(sensorName);
+                    if (sensor != null) {
+                        cod._mSwitchIndicators.add(sensor);
+                    }
+                }
+            }
+        }
     }
 
     ArrayList<TrafficLockingData> getTrafficLocking(Element element) {
@@ -695,14 +763,15 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return trlSwitches;
     }
 
-    void loadAdditionalTurnouts(Element element, CodeButtonHandlerData cbhd) {
+    void loadAdditionalTurnouts(Element element, CodeButtonHandlerData cbhd) {      // TUL_AdditionalExternalTurnouts
         if (element != null) {
             int rowNumber = 0;
-            for (Element elTurnout : element.getChildren()) {
+            for (Element elTurnout : element.getChildren()) {       // TUL_AdditionalExternalTurnoutEntry
                 rowNumber++;
-                NBHTurnout turnout = loadTurnout(elTurnout.getChild("TUL_AdditionalExternalTurnout"));
+                NBHTurnout turnout = loadTurnout(elTurnout.getChild("TUL_AdditionalExternalTurnout"), elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
                 boolean feedback = loadBoolean(elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
-                if (turnout.valid()) {
+
+                if (turnout != null) {
                     if (rowNumber == 1) {
                         cbhd._mTUL_AdditionalExternalTurnout1 = turnout;
                         cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;

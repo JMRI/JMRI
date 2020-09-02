@@ -111,6 +111,7 @@ public class CTCMain {
                                                 codeButtonHandlerData._mSIDI_RightInternalSensor,
                                                 codeButtonHandlerData._mSIDI_CodingTimeInMilliseconds,
                                                 codeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds,
+                                                codeButtonHandlerData._mSIDI_TrafficDirection,
                                                 codeButtonHandlerData._mSIDI_LeftRightTrafficSignals,
                                                 codeButtonHandlerData._mSIDI_RightLeftTrafficSignals,
                                                 fleeting)

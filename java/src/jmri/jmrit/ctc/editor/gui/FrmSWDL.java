@@ -101,6 +101,8 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mSWDL_InternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDL_InternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSWDLLever"));
 
+        _mSWDL_InternalSensor.setEnabled(false);
+
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -148,12 +150,6 @@ public class FrmSWDL extends javax.swing.JFrame {
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
-        }
-//         _mCodeButtonHandlerData._mSWDL_InternalSensor = _mSWDL_InternalSensor.getText();
-        String sensorName = _mSWDL_InternalSensor.getText();
-        NBHSensor sensor = new NBHSensor("FrmSWDL", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSWDL_InternalSensor = sensor;
         }
 
         _mClosedNormally = true;

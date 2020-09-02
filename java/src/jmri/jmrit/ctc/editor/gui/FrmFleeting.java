@@ -139,11 +139,10 @@ public class FrmFleeting extends javax.swing.JFrame {
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         if (dataChanged()) {
-            String fleeting = _mFleetingToggleInternalSensor.getText();
-            NBHSensor fleetingSensor = new NBHSensor("FrmFleeting", "fleeting", fleeting, fleeting);
-            if (fleetingSensor.valid()) {
-                _mOtherData._mFleetingToggleInternalSensor = fleetingSensor;
-            }
+
+            NBHSensor newSensor = CommonSubs.getNBHSensor(_mFleetingToggleInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mFleetingToggleInternalSensor = newSensor;
+
             _mOtherData._mDefaultFleetingEnabled = _mDefaultFleetingEnabled.isSelected();
         }
         _mClosedNormally = true;

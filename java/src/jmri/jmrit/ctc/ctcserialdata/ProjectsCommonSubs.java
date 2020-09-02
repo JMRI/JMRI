@@ -43,9 +43,13 @@ public class ProjectsCommonSubs {
     }
 
     static public ArrayList<NBHSignal> getArrayListOfSignals(ArrayList<String> signalNames) {
+        CtcManager cm = InstanceManager.getDefault(CtcManager.class);
         ArrayList<NBHSignal> newList = new ArrayList<>();
         signalNames.forEach(name -> {
-            NBHSignal newSignal = new NBHSignal(name);
+            NBHSignal newSignal = cm.getNBHSignal(name);
+            if (newSignal == null) {
+                newSignal = new NBHSignal(name);
+            }
             if (newSignal.valid()) {
                 newList.add(newSignal);
             }

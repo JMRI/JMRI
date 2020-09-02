@@ -154,6 +154,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSWDI_NormalInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSWDI_ReversedInternalSensorPrompt">
       <Properties>
@@ -164,6 +167,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSWDI_ReversedInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSWDI_ActualTurnoutPrompt">
       <Properties>

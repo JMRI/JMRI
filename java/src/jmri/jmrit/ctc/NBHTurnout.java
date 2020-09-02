@@ -47,7 +47,18 @@ public class NBHTurnout {
         } else {
             _mNamedBeanHandleTurnout = null;
         }
+        if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHTurnout(turnout, this);
     }
+
+// Special constructor to create a NBHTurnout with a null NamedBeanHandle.  Used to initialize turnout fields.
+    public NBHTurnout(String module, String userIdentifier, String parameter) {
+        _mUserIdentifier = userIdentifier;
+        _mParameter = parameter;
+        _mFeedbackDifferent = false;
+        _mNamedBeanHandleTurnout = null;
+        if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHTurnout("dummy", this);
+    }
+
     public boolean valid() { return _mNamedBeanHandleTurnout != null; }  // For those that want to know the internal state.
 
     public Turnout getBean() {

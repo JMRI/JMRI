@@ -110,6 +110,7 @@ public class NBHSensor {
         } else {
             _mNamedBeanHandleSensor = null;
         }
+        registerSensor(sensor);
     }
 
     public NBHSensor(String module, String userIdentifier, String parameter, String sensorName) {
@@ -123,8 +124,12 @@ public class NBHSensor {
         } else {
             _mNamedBeanHandleSensor = null;
         }
+        registerSensor(sensorName);
     }
 
+    void registerSensor(String sensorName) {
+        if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSensor(sensorName, this);
+    }
 //????
 //  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
@@ -220,8 +225,9 @@ public class NBHSensor {
      * required to support the name change.
      *
      * @param newName The new name of the object to use.
+     * @param isInternalSensor True if an internal sensor which will create the sensor if necessary.
      */
-    public void setHandleName(String newName) {
+    public void setHandleName(String newName, boolean isInternalSensor) {
         if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
 
 //  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:
@@ -230,9 +236,19 @@ public class NBHSensor {
             }
 
 //  Allocate and replace the existing sensor (away with thee old sensor!)
-            Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName) : getSafeExistingJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
+            Sensor tempSensor = null;
+            if (isInternalSensor) {
+                try {
+                    tempSensor = getInternalSensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
+                } catch (CTCException ex) {
+                    log.debug("CTCException in setHandleName: {}", ex.getMessage());
+                }
+            } else {
+                tempSensor = _mOptional ? getSafeOptionalJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName) : getSafeExistingJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
+            }
             if (tempSensor != null) {
                 _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempSensor);
+                registerSensor(newName);
             } else {
                 _mNamedBeanHandleSensor = null;
             }
@@ -253,4 +269,6 @@ public class NBHSensor {
     public int testingGetCountOfPropertyChangeListenersRegistered() {
         return _mArrayListOfPropertyChangeListeners.size();
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensor.class);
 }

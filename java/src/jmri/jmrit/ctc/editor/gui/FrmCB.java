@@ -131,6 +131,8 @@ public class FrmCB extends javax.swing.JFrame {
 
         _mCodeButtonInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCBSensor"));
 
+        _mCodeButtonInternalSensor.setEnabled(false);
+
         _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -284,23 +286,12 @@ public class FrmCB extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-        String sensorName = _mCodeButtonInternalSensor.getText();
-        NBHSensor sensor = new NBHSensor("FrmCB", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mCodeButtonInternalSensor = sensor;
-        }
 
-        sensorName = (String) _mOSSectionOccupiedExternalSensor.getSelectedItem();
-        sensor = new NBHSensor("FrmCB", "", sensorName, sensorName, false);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = sensor;
-        }
+        NBHSensor newSensor = CommonSubs.getNBHSensor((String) _mOSSectionOccupiedExternalSensor.getSelectedItem(), false);
+        if (newSensor != null) _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = newSensor;
 
-        sensorName = (String) _mOSSectionOccupiedExternalSensor2.getSelectedItem();
-        sensor = new NBHSensor("FrmCB", "", sensorName, sensorName, true);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = sensor;
-        }
+        newSensor = CommonSubs.getNBHSensor((String) _mOSSectionOccupiedExternalSensor2.getSelectedItem(), false);
+        if (newSensor != null) _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = newSensor;
 
         int selectedIndex = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         if (selectedIndex > 0) { // None and skip blank entry

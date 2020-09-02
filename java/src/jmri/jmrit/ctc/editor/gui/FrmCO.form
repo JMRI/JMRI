@@ -245,6 +245,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mCO_CallOnToggleInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mGroupingsListPrompt">
       <Properties>

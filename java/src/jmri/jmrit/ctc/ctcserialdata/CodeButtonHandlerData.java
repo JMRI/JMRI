@@ -57,6 +57,12 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
 
+    public enum TRAFFIC_DIRECTION {
+        LEFT,
+        BOTH,
+        RIGHT;
+    }
+
     @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
     @Override
     public int compareTo(CodeButtonHandlerData codeButtonHandlerData) {
@@ -160,6 +166,7 @@ at the top for "automatic" JMRI object verification.
     public NBHSensor            _mSIDI_RightInternalSensor;
     public int                  _mSIDI_CodingTimeInMilliseconds;
     public int                  _mSIDI_TimeLockingTimeInMilliseconds;
+    public TRAFFIC_DIRECTION    _mSIDI_TrafficDirection;
     public ArrayList<NBHSignal> _mSIDI_LeftRightTrafficSignals = new ArrayList<>();
     public ArrayList<NBHSignal> _mSIDI_RightLeftTrafficSignals = new ArrayList<>();
 //  Signal Direction Lever:

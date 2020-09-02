@@ -121,11 +121,11 @@ variable name and declared as type String.
     public boolean  _mGUIDesign_TurnoutsOnPanel;
 
     public OtherData() {
-        _mFleetingToggleInternalSensor = new NBHSensor("OtherData", "fleeting", "IS:FLEETING", "IS:FLEETING");  // NOI18N
+        _mFleetingToggleInternalSensor = new NBHSensor("OtherData", "fleeting = ", "IS:FLEETING", "IS:FLEETING");  // NOI18N
         _mDefaultFleetingEnabled = false;
         _mSignalSystemType = SIGNAL_SYSTEM_TYPE.SIGNALMAST;
-        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("OtherData", "reload", "IS:RELOADCTC", "IS:RELOADCTC");  // NOI18N
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("OtherData", "debug", "IS:DEBUGCTC", "IS:DEBUGCTC");  // NOI18N
+        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("OtherData", "reload = ", "IS:RELOADCTC", "IS:RELOADCTC");  // NOI18N
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("OtherData", "debug = ", "IS:DEBUGCTC", "IS:DEBUGCTC");  // NOI18N
         _mGUIDesign_NumberOfEmptyColumnsAtEnd = 0;
         _mGUIDesign_CTCPanelType = CTC_PANEL_TYPE.USS;
         _mGUIDesign_BuilderPlate = false;

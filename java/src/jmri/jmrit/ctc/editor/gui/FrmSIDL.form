@@ -107,6 +107,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSIDL_LeftInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSIDL_NormalInternalSensorPrompt">
       <Properties>
@@ -117,6 +120,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSIDL_NormalInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mSIDL_RightInternalSensorPrompt">
       <Properties>
@@ -127,6 +133,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSIDL_RightInternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>

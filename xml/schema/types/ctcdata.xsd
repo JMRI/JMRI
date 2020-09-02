@@ -103,6 +103,7 @@
               <xs:element type="xs:string" name="SIDI_RightInternalSensor"/>
               <xs:element type="xs:integer" name="SIDI_CodingTimeInMilliseconds"/>
               <xs:element type="xs:integer" name="SIDI_TimeLockingTimeInMilliseconds"/>
+              <xs:element type="xs:string" name="SIDI_TrafficDirection"/>
               <xs:element name="SIDI_LeftRightTrafficSignals">
                 <xs:complexType>
                   <xs:sequence>

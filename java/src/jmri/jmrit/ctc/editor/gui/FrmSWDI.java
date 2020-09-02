@@ -149,8 +149,12 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDI_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDINormal"));
 
+        _mSWDI_NormalInternalSensor.setEnabled(false);
+
         _mSWDI_ReversedInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDI_ReversedInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDIReverse"));
+
+        _mSWDI_ReversedInternalSensor.setEnabled(false);
 
         _mSWDI_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelSWDIToName"));
 
@@ -295,26 +299,9 @@ public class FrmSWDI extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-//         _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = _mSWDI_NormalInternalSensor.getText();
-        String sensorName = _mSWDI_NormalInternalSensor.getText();
-        NBHSensor sensor = new NBHSensor("FrmSWDI", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = sensor;
-        }
 
-//         _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = _mSWDI_ReversedInternalSensor.getText();
-        sensorName = _mSWDI_ReversedInternalSensor.getText();
-        sensor = new NBHSensor("FrmSWDI", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = sensor;
-        }
-
-//         _mCodeButtonHandlerData._mSWDI_ExternalTurnout = (String) _mSWDI_ExternalTurnout.getSelectedItem();
-        String turnoutName = (String) _mSWDI_ExternalTurnout.getSelectedItem();
-        NBHTurnout turnout = new NBHTurnout("FrmSWDI", "", turnoutName, turnoutName, false);
-        if (turnout.valid()) {
-            _mCodeButtonHandlerData._mSWDI_ExternalTurnout = turnout;
-        }
+        NBHTurnout newTurnout = CommonSubs.getNBHTurnout((String) _mSWDI_ExternalTurnout.getSelectedItem(), _mSWDI_FeedbackDifferent.isSelected());
+        if (newTurnout != null) _mCodeButtonHandlerData._mSWDI_ExternalTurnout = newTurnout;
 
         _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds);
         _mCodeButtonHandlerData._mSWDI_FeedbackDifferent = _mSWDI_FeedbackDifferent.isSelected();

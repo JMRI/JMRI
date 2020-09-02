@@ -87,6 +87,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mSWDL_InternalSensor">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>

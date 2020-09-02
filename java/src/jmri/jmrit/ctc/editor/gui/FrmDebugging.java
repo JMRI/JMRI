@@ -153,17 +153,12 @@ public class FrmDebugging extends javax.swing.JFrame {
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         if (dataChanged()) {
-            String reload = _mCTCSystemReloadInternalSensor.getText();
-            NBHSensor reloadSensor = new NBHSensor("FrmDebugging", "reload", reload, reload);
-            if (reloadSensor.valid()) {
-                _mOtherData._mCTCDebugSystemReloadInternalSensor = reloadSensor;
-            }
 
-            String debug = _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getText();
-            NBHSensor debugSensor = new NBHSensor("FrmDebugging", "debug", debug, debug);
-            if (debugSensor.valid()) {
-                _mOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = debugSensor;
-            }
+            NBHSensor newSensor = CommonSubs.getNBHSensor(_mCTCSystemReloadInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mCTCDebugSystemReloadInternalSensor = newSensor;
+
+            newSensor = CommonSubs.getNBHSensor(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getText(), true);
+            if (newSensor != null) _mOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = newSensor;
         }
 
         _mClosedNormally = true;

@@ -201,6 +201,8 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mCO_CallOnToggleInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCOToggleSensor"));
 
+        _mCO_CallOnToggleInternalSensor.setEnabled(false);
+
         _mGroupingsListPrompt.setText(Bundle.getMessage("LabelDlgCOGroupingList"));
 
         jLabel5.setText(Bundle.getMessage("InfoDlgCORow1"));

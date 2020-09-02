@@ -190,6 +190,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mTUL_DispatcherInternalSensorLockToggle">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="_mTUL_ExternalTurnoutFeedbackDifferent">
       <Properties>
@@ -211,6 +214,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="_mTUL_DispatcherInternalSensorUnlockedIndicator">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>

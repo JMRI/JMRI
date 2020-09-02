@@ -27,6 +27,8 @@ import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.ctc.CtcManager;
+import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;
@@ -145,11 +147,11 @@ public class CommonSubs {
     public static ArrayList<String> getArrayListOfSelectableSwitchDirectionIndicators(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
         ArrayList<String> returnValue = new ArrayList<>();
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
-            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.isEmpty()) {
-                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor);
+            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName());
             }
-            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.isEmpty()) {
-                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor);
+            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName().isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName());
             }
         }
 //      Collections.sort(returnValue);
@@ -350,6 +352,35 @@ public class CommonSubs {
         String parent = file.getParent();   // Returns "null" if no parent.
         if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
         return file.getParent() + File.separator;
+    }
+
+    /**
+     * Rename an existing NBHSensor which results in it mapping to a different sensor bean.
+     * @param nbhSensor The NBHSensor to have a new NamedBeanHandle assigned.
+     * @param newName The new name to be applied.  The change only occurs if the existng name is different.
+     * @param isInternal True if an internal sensor is being changed.  Internal will create the sensor if necessary using provide(String).
+     */
+    public static void renameNBHSensor(NBHSensor nbhSensor, String newName, boolean isInternal) {
+        if (nbhSensor != null) {
+            String oldName = nbhSensor.getHandleName();
+            if (!ProjectsCommonSubs.isNullOrEmptyString(newName) && !newName.equals(oldName)) {
+                nbhSensor.setHandleName(newName, isInternal);
+            }
+        }
+    }
+
+    /**
+     * Rename an existing NBHTurnout which results in it mapping to a different turnout bean.
+     * @param nbhTurnout The NBHTurnout to have a new NamedBeanHandle assigned.
+     * @param newName The new name to be applied.  The change only occurs if the existng name is different.
+     */
+    public static void renameNBHTurnout(NBHTurnout nbhTurnout, String newName) {
+        if (nbhTurnout != null) {
+            String oldName = nbhTurnout.getHandleName();
+            if (!ProjectsCommonSubs.isNullOrEmptyString(newName) && !newName.equals(oldName)) {
+                nbhTurnout.setHandleName(newName);
+            }
+        }
     }
 
     /**
