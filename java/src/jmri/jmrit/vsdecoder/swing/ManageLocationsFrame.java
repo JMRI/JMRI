@@ -32,7 +32,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-import jmri.jmrit.vsdecoder.swing.ManageLocationsTableModel;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
