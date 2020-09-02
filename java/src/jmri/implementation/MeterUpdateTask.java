@@ -16,12 +16,13 @@ public abstract class MeterUpdateTask {
     boolean _enabled = false;
     private UpdateTask _intervalTask = null;
     private final int _sleepInterval;
-    private final int _minTimeBetweenUpdates;
-    private long _lastUpdateRequestTime = 0;
     
-    public MeterUpdateTask(int interval, int minTimeBetweenUpdates) {
+    public MeterUpdateTask() {
+       _sleepInterval = 10000;
+    }
+    
+    public MeterUpdateTask(int interval) {
        _sleepInterval = interval;
-       _minTimeBetweenUpdates = minTimeBetweenUpdates;
     }
     
     public void addMeter(Meter m) {
@@ -92,16 +93,6 @@ public abstract class MeterUpdateTask {
         log.debug("Starting Meter Timer");
         jmri.util.TimerUtil.scheduleAtFixedRate(_intervalTask,
                 _sleepInterval, _sleepInterval);
-    }
-    
-    /**
-     * Request an update from the layout.
-     */
-    public final void doRequestUpdateFromLayout() {
-        if ((_lastUpdateRequestTime + _minTimeBetweenUpdates) < System.currentTimeMillis()) {
-            requestUpdateFromLayout();
-            _lastUpdateRequestTime = System.currentTimeMillis();
-        }
     }
     
     public abstract void requestUpdateFromLayout();

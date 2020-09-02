@@ -25,7 +25,7 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         _memo = memo;
         tc = _memo.getTrafficController();
         
-        updateTask = new UpdateTask(-1, 0);
+        updateTask = new UpdateTask(-1);
         
         currentMeter = new DefaultMeter(
                 memo.getSystemPrefix() + "V" + "CommandStationCurrent",
@@ -54,8 +54,8 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
 
     private class UpdateTask extends MeterUpdateTask implements Z21Listener {
     
-        public UpdateTask(int interval, int minTimeBetweenUpdates) {
-            super(interval, minTimeBetweenUpdates);
+        public UpdateTask(int interval) {
+            super(interval);
             tc.addz21Listener(this);
         }
     

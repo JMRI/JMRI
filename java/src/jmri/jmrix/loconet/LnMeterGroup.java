@@ -20,7 +20,7 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
     private final Meter voltageMeter;
 
     /**
-     * Create a ClockControl object for a LocoNet clock
+     * Create a MeterGroup object
      *
      * @param scm  connection memo
      */
@@ -30,7 +30,7 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
         
-        updateTask = new MeterUpdateTask(10000, 100) {
+        updateTask = new MeterUpdateTask(LnConstants.METER_INTERVAL_MS) {
             @Override
             public void requestUpdateFromLayout() {
                 sm.sendReadSlot(249);
@@ -51,7 +51,7 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
         
         tc.addLocoNetListener(~0, this);
-
+        
         updateTask.initTimer();
     }
 

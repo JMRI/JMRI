@@ -36,7 +36,7 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         tc = memo.getTrafficController();
         _memo = memo;
         
-        updateTask = new UpdateTask(-1, 0);
+        updateTask = new UpdateTask(-1);
         
         currentMeter = new DefaultMeter(
                 memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
@@ -108,8 +108,8 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
     
     private class UpdateTask extends MeterUpdateTask {
     
-        public UpdateTask(int interval, int minTimeBetweenUpdates) {
-            super(interval, minTimeBetweenUpdates);
+        public UpdateTask(int interval) {
+            super(interval);
         }
     
         /**

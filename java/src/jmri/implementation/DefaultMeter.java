@@ -129,7 +129,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
      */
     @Override
     public void requestUpdateFromLayout() {
-        if (_updateTask != null) _updateTask.doRequestUpdateFromLayout();
+        if (_updateTask != null) _updateTask.requestUpdateFromLayout();
     }
     
     

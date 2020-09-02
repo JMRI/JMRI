@@ -23,7 +23,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
         
         tc = memo.getDCCppTrafficController();
 
-        updateTask = new MeterUpdateTask(10000, 0) {
+        updateTask = new MeterUpdateTask() {
             @Override
             public void requestUpdateFromLayout() {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

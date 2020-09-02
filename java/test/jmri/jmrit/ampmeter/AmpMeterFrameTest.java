@@ -97,7 +97,7 @@ public class AmpMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         public TestMeter() {
             super("IVTestMeterGroup");
             
-            Meter ampMeter = new DefaultMeter.DefaultVoltageMeter("IVAmpMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1, 0) {
+            Meter ampMeter = new DefaultMeter.DefaultVoltageMeter("IVAmpMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
                 @Override
                 public void requestUpdateFromLayout() {
                     // Do nothing
