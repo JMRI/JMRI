@@ -32,6 +32,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
+import jmri.jmrit.vsdecoder.swing.ManageLocationsTableModel;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
@@ -81,10 +82,10 @@ public class ManageLocationsFrame extends JmriJFrame {
     private Object[][] opsData;       // positions of Operations Locations
     private Object[][] locData;       // positions of Listener Locations
     private Object[][] blockData;     // positions of Blocks
-    private ManageLocationsAction.ReporterBlockTableModel reporterModel;
-    private ManageLocationsAction.LocationTableModel opsModel;
-    private ManageLocationsAction.ListenerTableModel locModel;
-    private ManageLocationsAction.ReporterBlockTableModel blockModel;
+    private ManageLocationsTableModel.ReporterBlockTableModel reporterModel;
+    private ManageLocationsTableModel.LocationTableModel opsModel;
+    private ManageLocationsTableModel.ListenerTableModel locModel;
+    private ManageLocationsTableModel.ReporterBlockTableModel blockModel;
     private ListeningSpot listenerLoc;
 
     private HashMap<String, PhysicalLocation> data;
@@ -148,13 +149,13 @@ public class ManageLocationsFrame extends JmriJFrame {
 
         // Build Listener Locations Table
         locData = new Object[1][7];
-        locData[0][ManageLocationsAction.NAMECOL] = listenerLoc.getName();
-        locData[0][ManageLocationsAction.USECOL] = true;
-        locData[0][ManageLocationsAction.XCOL] = listenerLoc.getLocation().x;
-        locData[0][ManageLocationsAction.YCOL] = listenerLoc.getLocation().y;
-        locData[0][ManageLocationsAction.ZCOL] = listenerLoc.getLocation().z;
-        locData[0][ManageLocationsAction.BEARINGCOL] = listenerLoc.getBearing();
-        locData[0][ManageLocationsAction.AZIMUTHCOL] = listenerLoc.getAzimuth();
+        locData[0][ManageLocationsTableModel.NAMECOL] = listenerLoc.getName();
+        locData[0][ManageLocationsTableModel.USECOL] = true;
+        locData[0][ManageLocationsTableModel.XCOL] = listenerLoc.getLocation().x;
+        locData[0][ManageLocationsTableModel.YCOL] = listenerLoc.getLocation().y;
+        locData[0][ManageLocationsTableModel.ZCOL] = listenerLoc.getLocation().z;
+        locData[0][ManageLocationsTableModel.BEARINGCOL] = listenerLoc.getBearing();
+        locData[0][ManageLocationsTableModel.AZIMUTHCOL] = listenerLoc.getAzimuth();
 
         log.debug("Listener: {}", listenerLoc.toString());
         log.debug("locData:");
@@ -165,7 +166,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         JPanel locPanel = new JPanel();
         locPanel.setLayout(new BoxLayout(locPanel, BoxLayout.LINE_AXIS));
         JScrollPane locScrollPanel = new JScrollPane();
-        locModel = new ManageLocationsAction.ListenerTableModel(locData);
+        locModel = new ManageLocationsTableModel.ListenerTableModel(locData);
         JTable locTable = new JTable(locModel);
         locTable.setFillsViewportHeight(true);
         locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
@@ -177,7 +178,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         reporterPanel = new JPanel();
         reporterPanel.setLayout(new GridBagLayout());
         JScrollPane reporterScrollPanel = new JScrollPane();
-        reporterModel = new ManageLocationsAction.ReporterBlockTableModel(reporterData);
+        reporterModel = new ManageLocationsTableModel.ReporterBlockTableModel(reporterData);
         JTable reporterTable = new JTable(reporterModel);
         reporterTable.setFillsViewportHeight(true);
         reporterTable.setPreferredScrollableViewportSize(new Dimension(540, 200));
@@ -186,7 +187,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         blockPanel = new JPanel();
         blockPanel.setLayout(new GridBagLayout());
         JScrollPane blockScrollPanel = new JScrollPane();
-        blockModel = new ManageLocationsAction.ReporterBlockTableModel(blockData);
+        blockModel = new ManageLocationsTableModel.ReporterBlockTableModel(blockData);
         JTable blockTable = new JTable(blockModel);
         blockTable.setFillsViewportHeight(true);
         blockTable.setPreferredScrollableViewportSize(new Dimension(540, 200));
@@ -196,7 +197,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         opsPanel.setLayout(new GridBagLayout());
         opsPanel.revalidate();
         JScrollPane opsScrollPanel = new JScrollPane();
-        opsModel = new ManageLocationsAction.LocationTableModel(opsData);
+        opsModel = new ManageLocationsTableModel.LocationTableModel(opsData);
         JTable opsTable = new JTable(opsModel);
         opsTable.setFillsViewportHeight(true);
         opsTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
@@ -274,18 +275,18 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
-        if ((Boolean) locModel.getValueAt(0, ManageLocationsAction.USECOL)) {
+        if ((Boolean) locModel.getValueAt(0, ManageLocationsTableModel.USECOL)) {
             // Don't accept Azimuth value 90 or -90 (they are not in the domain of definition)
-            if ((Double) locModel.getValueAt(0, ManageLocationsAction.AZIMUTHCOL) != null 
-                    && ((Double) locModel.getValueAt(0, ManageLocationsAction.AZIMUTHCOL) == 90.0d
-                    || (Double) locModel.getValueAt(0, ManageLocationsAction.AZIMUTHCOL) == -90.0d)) {
+            if ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) != null 
+                    && ((Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == 90.0d
+                    || (Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL) == -90.0d)) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("FieldTableAzimuthInvalidValue"));
             } else {
-                listenerLoc.setLocation((Double) locModel.getValueAt(0, ManageLocationsAction.XCOL),
-                        (Double) locModel.getValueAt(0, ManageLocationsAction.YCOL),
-                        (Double) locModel.getValueAt(0, ManageLocationsAction.ZCOL));
-                listenerLoc.setOrientation((Double) locModel.getValueAt(0, ManageLocationsAction.BEARINGCOL),
-                        (Double) locModel.getValueAt(0, ManageLocationsAction.AZIMUTHCOL));
+                listenerLoc.setLocation((Double) locModel.getValueAt(0, ManageLocationsTableModel.XCOL),
+                        (Double) locModel.getValueAt(0, ManageLocationsTableModel.YCOL),
+                        (Double) locModel.getValueAt(0, ManageLocationsTableModel.ZCOL));
+                listenerLoc.setOrientation((Double) locModel.getValueAt(0, ManageLocationsTableModel.BEARINGCOL),
+                        (Double) locModel.getValueAt(0, ManageLocationsTableModel.AZIMUTHCOL));
                 VSDecoderManager.instance().getVSDecoderPreferences().save();
                 VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
             }
