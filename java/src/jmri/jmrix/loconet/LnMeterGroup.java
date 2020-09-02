@@ -39,11 +39,11 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         
         currentMeter = new DefaultMeter(
                 scm.getSystemPrefix() + "V" + "CommandStationCurrent",
-                Meter.Unit.NoPrefix, 0, 5.0, 0.1, updateTask);
+                Meter.Unit.NoPrefix, 0, 12.7, 0.1, updateTask);
         
         voltageMeter = new DefaultMeter(
                 scm.getSystemPrefix() + "V" + "CommandStationVoltage",
-                Meter.Unit.NoPrefix, 0, 30.0, 0.5, updateTask);
+                Meter.Unit.NoPrefix, 0, 25.4, 0.2, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         
