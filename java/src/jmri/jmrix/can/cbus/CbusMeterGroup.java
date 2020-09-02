@@ -40,11 +40,11 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         
         currentMeter = new DefaultMeter(
                 memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
-                Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
+                Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
         
         voltageMeter = new DefaultMeter(
                 memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
-                Meter.Unit.Milli, 0, 50.0, 0.5, updateTask);
+                Meter.Unit.NoPrefix, 0, 6553.5, 0.1, updateTask);
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
