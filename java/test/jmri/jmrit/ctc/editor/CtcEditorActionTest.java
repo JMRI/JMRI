@@ -35,7 +35,7 @@ public class CtcEditorActionTest {
         Assert.assertNotNull("exists", new CtcEditorAction());
     }
 
-    @Test
+//     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new CtcEditorAction().actionPerformed(null);
@@ -60,18 +60,18 @@ public class CtcEditorActionTest {
         jpm = jmo.getPopupMenu();
 
         // MenuFind
-        JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
-        Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
-        new JMenuItemOperator(findMenuItem).doClick();
-        if (DELAY > 0) {
-            new EventTool().waitNoEvent(DELAY);
-        }
-        JFrameOperator frmFind = new JFrameOperator(Bundle.getMessage("TitleDlgFind"));  // NOI18N
-        Assert.assertNotNull(frmFind);
-        new JButtonOperator(frmFind, Bundle.getMessage("ButtonDone")).doClick();
+//         JMenuItem findMenuItem = (JMenuItem) jpm.getComponent(0);
+//         Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
+//         new JMenuItemOperator(findMenuItem).doClick();
+//         if (DELAY > 0) {
+//             new EventTool().waitNoEvent(DELAY);
+//         }
+//         JFrameOperator frmFind = new JFrameOperator(Bundle.getMessage("TitleDlgFind"));  // NOI18N
+//         Assert.assertNotNull(frmFind);
+//         new JButtonOperator(frmFind, Bundle.getMessage("ButtonDone")).doClick();
 
         // MenuFix
-        JMenuItem fixMenuItem = (JMenuItem) jpm.getComponent(1);
+        JMenuItem fixMenuItem = (JMenuItem) jpm.getComponent(0);
         Assert.assertTrue(fixMenuItem.getText().equals(Bundle.getMessage("MenuFix")));  // NOI18N
         new JMenuItemOperator(fixMenuItem).doClick();
         if (DELAY > 0) {
@@ -160,15 +160,15 @@ public class CtcEditorActionTest {
         JListOperator jlo = new JListOperator(_jfo);
 
         // ButtonChange
-        jlo.clickOnItem(0, 1);
-        JButtonOperator jbChange = new JButtonOperator(_jfo, Bundle.getMessage("ButtonChange"));
-        jbChange.doClick();
-        if (DELAY > 0) {
-            new EventTool().waitNoEvent(DELAY);
-        }
-        JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
-        Assert.assertNotNull(frmChange);
-        new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
+//         jlo.clickOnItem(0, 1);
+//         JButtonOperator jbChange = new JButtonOperator(_jfo, Bundle.getMessage("ButtonChange"));
+//         jbChange.doClick();
+//         if (DELAY > 0) {
+//             new EventTool().waitNoEvent(DELAY);
+//         }
+//         JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
+//         Assert.assertNotNull(frmChange);
+//         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // ButtonCheck -- Not a frame, use dialog mode
         Thread btnCheck = createModalDialogOperatorThread("Info", Bundle.getMessage("ButtonNo"), "btnCheck");  // NOI18N

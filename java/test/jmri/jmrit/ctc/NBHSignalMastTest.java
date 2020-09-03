@@ -19,18 +19,18 @@ public class NBHSignalMastTest {
 
     @Test
     public void testGetsAndSets() {
-        NBHSignalMast mast = new NBHSignalMast("No Mast");
+        NBHSignal mast = new NBHSignal("No Mast");
         Assert.assertNotNull(mast);
         nullBean(mast);
         jmri.SignalMast virtMast = new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($0001)", "Good Mast");
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).register(virtMast);
         virtMast.setAspect("Stop");
-        mast = new NBHSignalMast("Good Mast");
+        mast = new NBHSignal("Good Mast");
         Assert.assertNotNull(mast);
         realBean(mast);
     }
 
-    public void nullBean(NBHSignalMast mast) {
+    public void nullBean(NBHSignal mast) {
         SignalMast sigMast = (SignalMast) mast.getBean();
         Assert.assertNull(sigMast);
 
@@ -51,7 +51,7 @@ public class NBHSignalMastTest {
         mast.removePropertyChangeListener(_testListener);
     }
 
-    public void realBean(NBHSignalMast mast) {
+    public void realBean(NBHSignal mast) {
         SignalMast sigMast = (SignalMast) mast.getBean();
         Assert.assertNotNull(sigMast);
 
