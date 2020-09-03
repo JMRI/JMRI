@@ -8,8 +8,6 @@ package jmri;
  */
 public interface Meter extends AnalogIO {
     
-    public static final String VALUE = "MeterValue";
-    
     public enum Unit {
         
         /**

@@ -89,13 +89,10 @@ public class VoltMeterFrame extends JmriJFrame {
 
         // request callback to update time
         // Again, adding updates.
-        java.beans.PropertyChangeListener du_listener = new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                update();
-            }
+        java.beans.PropertyChangeListener du_listener = (java.beans.PropertyChangeEvent e) -> {
+            update();
         };
-        meter.addPropertyChangeListener(Meter.VALUE, du_listener);
+        meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, du_listener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(

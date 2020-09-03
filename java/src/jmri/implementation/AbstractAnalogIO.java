@@ -63,7 +63,7 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
     protected void setValue(double newValue) {
         Object _old = this._knownValue;
         this._knownValue = newValue;
-        firePropertyChange("State", _old, _knownValue); //NOI18N
+        firePropertyChange(PROPERTY_STATE, _old, _knownValue); //NOI18N
     }
 
     /** {@inheritDoc} */

@@ -58,7 +58,10 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
     @Override
     public void message(LocoNetMessage msg) {
         try {
-            if (msg.getOpCode() != LnConstants.OPC_EXP_RD_SL_DATA || msg.getElement(1) != 21 || msg.getElement(2) == 249) {
+            if (msg.getOpCode() != LnConstants.OPC_EXP_RD_SL_DATA
+                    || msg.getElement(1) != 21
+                    || msg.getElement(2) != 1
+                    || msg.getElement(3) != 0x79) {
                 return;
             }
             log.debug("Found slot 249");
