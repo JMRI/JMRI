@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.jmrit.ctc.*;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.gui.FrmTRL_Rules;
 import jmri.jmrit.ctc.topology.TopologyInfo;
 
@@ -75,8 +76,8 @@ public class TrafficLockingData {
         _mOccupancyExternalSensors = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             String sensorName = topologyInfo.getSensorDisplayName(i);
-            NBHSensor sensor = new NBHSensor("TrafficLockingData", "", sensorName, sensorName, true);
-            if (sensor.valid()) {
+            NBHSensor sensor = CommonSubs.getNBHSensor(sensorName, false);
+            if (sensor != null && sensor.valid()) {
                 _mOccupancyExternalSensors.add(sensor);
             }
         }

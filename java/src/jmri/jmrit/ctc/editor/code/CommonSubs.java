@@ -355,73 +355,45 @@ public class CommonSubs {
     }
 
     /**
-     * Rename an existing NBHSensor which results in it mapping to a different sensor bean.
-     * @param nbhSensor The NBHSensor to have a new NamedBeanHandle assigned.
-     * @param newName The new name to be applied.  The change only occurs if the existng name is different.
-     * @param isInternal True if an internal sensor is being changed.  Internal will create the sensor if necessary using provide(String).
+     * Get a NBHSensor from the CtcManager NBHSensor map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @param isInternal True if an internal sensor is being requested.  Internal will create the sensor if necessary using provide(String).
+     * @return a NBHSensor or null.
      */
-    public static void renameNBHSensor(NBHSensor nbhSensor, String newName, boolean isInternal) {
-        if (nbhSensor != null) {
-            String oldName = nbhSensor.getHandleName();
-            if (!ProjectsCommonSubs.isNullOrEmptyString(newName) && !newName.equals(oldName)) {
-                nbhSensor.setHandleName(newName, isInternal);
+    public static NBHSensor getNBHSensor(String newName, boolean isInternal) {
+        NBHSensor sensor = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            sensor = InstanceManager.getDefault(CtcManager.class).getNBHSensor(newName);
+            if (sensor == null) {
+                if (isInternal) {
+                    sensor = new NBHSensor("CommonSubs", "new sensor = ", newName, newName);
+                } else {
+                    sensor = new NBHSensor("CommonSubs", "new sensor = ", newName, newName, false);
+                }
             }
         }
+        return sensor;
     }
 
     /**
-     * Rename an existing NBHTurnout which results in it mapping to a different turnout bean.
-     * @param nbhTurnout The NBHTurnout to have a new NamedBeanHandle assigned.
-     * @param newName The new name to be applied.  The change only occurs if the existng name is different.
+     * Get a NBHTurnout from the CtcManager NBHTurnout map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @return a valid NBHTurnout or an empty NBHTurnout.
      */
-    public static void renameNBHTurnout(NBHTurnout nbhTurnout, String newName) {
-        if (nbhTurnout != null) {
-            String oldName = nbhTurnout.getHandleName();
-            if (!ProjectsCommonSubs.isNullOrEmptyString(newName) && !newName.equals(oldName)) {
-                nbhTurnout.setHandleName(newName);
+    public static NBHTurnout getNBHTurnout(String newName, boolean feedbackDifferent) {
+        NBHTurnout turnout = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            turnout = InstanceManager.getDefault(CtcManager.class).getNBHTurnout(newName);
+            if (turnout == null) {
+                turnout = new NBHTurnout("CommonSubs", "new turnout = ", newName, newName, feedbackDifferent);
             }
         }
-    }
-
-    /**
-     * Verify that the CTC control sensors have been created.
-     */
-    public static void verifyInternalSensors() {
-        CtcManager ctcmgr = InstanceManager.getDefault(CtcManager.class);
-        CTCSerialData ctcserialdata = ctcmgr.getCTCSerialData();
-        OtherData otherData = ctcmgr.getOtherData();
-
-        ArrayList<Field> internalSensorStringFields = OtherData.getAllInternalSensorStringFields();
-        for (Field field : internalSensorStringFields) {
-            try {
-                String content = (String)field.get(otherData);
-                CommonSubs.createSensorIfNeeded(content);
-            } catch (IllegalAccessException e) {
-                log.debug("verifyInternalSensors other data exception");
-            } // Should never happen, print nothing for this entry if so.
+        if (turnout == null) {
+            // Create a dummy NBHTurnout
+            turnout = new NBHTurnout("CommonSubs", "Empty turnout", "");
         }
-
-        internalSensorStringFields = CodeButtonHandlerData.getAllInternalSensorStringFields();
-        for (CodeButtonHandlerData codeButtonHandlerData : ctcserialdata.getCodeButtonHandlerDataArrayList()) {
-            for (Field field : internalSensorStringFields) {
-                try {
-                    String content = (String)field.get(codeButtonHandlerData);
-                    CommonSubs.createSensorIfNeeded(content);
-                } catch (IllegalAccessException e) {
-                    log.debug("verifyInternalSensors code button handler data exception");
-                } // Should never happen, print nothing for this entry if so.
-            }
-        }
-    }
-
-    public static void createSensorIfNeeded(String sensorName) {
-        if (InstanceManager.getDefault(SensorManager.class).getSensor(sensorName) == null) {
-            log.info("createSensorIfNeeded: name = {}", sensorName);
-            Sensor sensor = InstanceManager.getDefault(SensorManager.class).newSensor(sensorName, null);
-            log.debug("createSensorIfNeeded: new sensor = {}", sensor);
-        }
+        return turnout;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonSubs.class);
-
 }

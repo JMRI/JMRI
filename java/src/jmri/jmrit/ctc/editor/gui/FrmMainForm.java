@@ -23,7 +23,6 @@ import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.CreateGUIObjectsXMLFile;
 import jmri.jmrit.ctc.editor.code.CreateXMLFiles;
-import jmri.jmrit.ctc.editor.code.InternalSensorManager;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -646,14 +645,12 @@ public class FrmMainForm extends JFrame {
 //  Pre-scan and find the highest switch number used so far, and highest column number:
         int highestSwitchNumber = _mCTCSerialData.findHighestSwitchNumberUsedSoFar();
         int highestColumnNumber = _mCTCSerialData.findHighestColumnNumberUsedSoFar();
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmAddModifyCTCColumn dialog = new FrmAddModifyCTCColumn(_mAwtWindowProperties, _mColumns, false, highestSwitchNumber + 2, highestColumnNumber + 1, false);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
                     _mCTCSerialData.addCodeButtonHandlerData(CodeButtonHandlerDataRoutines.createNewCodeButtonHandlerData(_mCTCSerialData.getUniqueNumber(), dialog._mNewSwitchNumber, dialog._mNewSignalEtcNumber, dialog._mNewGUIColumnNumber, _mProgramProperties));
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -735,14 +732,12 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_SIDIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SIDIActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSIDI dialog = new FrmSIDI(    _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject,
                                          _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -754,13 +749,11 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_SIDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SIDLActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSIDL dialog = new FrmSIDL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -772,13 +765,11 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_SWDIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SWDIActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSWDI dialog = new FrmSWDI(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -790,13 +781,11 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_SWDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SWDLActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSWDL dialog = new FrmSWDL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -808,7 +797,6 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_COActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_COActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmCO dialog = new FrmCO(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(),
                                     _mProgramProperties, _mCTCSerialData, _mCheckJMRIObject,
                                      _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
@@ -816,7 +804,6 @@ public class FrmMainForm extends JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -828,13 +815,11 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_TULActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_TULActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mCTCSerialData, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -846,7 +831,6 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_ILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_ILActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmIL dialog = new FrmIL(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mCheckJMRIObject,
                                     _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD,
                                     _mCTCSerialData);
@@ -854,7 +838,6 @@ public class FrmMainForm extends JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -869,7 +852,6 @@ public class FrmMainForm extends JFrame {
             int index = _mColumns.getEntrySelectedIndex();
             CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(index);
             codeButtonHandlerData = CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
-            _mCTCSerialData.setCodeButtonHandlerData(index, codeButtonHandlerData);
         }
     }//GEN-LAST:event_reapplyPatternsButtonActionPerformed
 
@@ -881,14 +863,12 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         CodeButtonHandlerData codeButtonHandlerDataSelected = _mColumns.getSelectedCodeButtonHandlerData();
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmTRL dialog = new FrmTRL( _mAwtWindowProperties, codeButtonHandlerDataSelected,
                                     _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -900,14 +880,12 @@ public class FrmMainForm extends JFrame {
     private void _mEdit_CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_CBActionPerformed
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmCB dialog = new FrmCB(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(),
                                     _mProgramProperties, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -920,14 +898,16 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         CodeButtonHandlerData temp = _mColumns.getSelectedCodeButtonHandlerData();
-        InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmAddModifyCTCColumn dialog = new FrmAddModifyCTCColumn(_mAwtWindowProperties, _mColumns, true, temp._mSwitchNumber, temp._mGUIColumnNumber, temp._mGUIGeneratedAtLeastOnceAlready);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
                 if (dialog.closedNormally()) {
                     _mCTCSerialData.updateSwitchAndSignalEtcNumbersEverywhere(_mColumns.getEntrySelectedIndex(), dialog._mNewSwitchNumber, dialog._mNewSignalEtcNumber, dialog._mNewGUIColumnNumber, dialog._mNewGUIGeneratedAtLeastOnceAlready);
-                    internalSensorManager.checkForChanges(_mCTCSerialData);
+
+                    CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(_mColumns.getEntrySelectedIndex());
+                    codeButtonHandlerData = CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
+
                     _mColumns.updateFrame();
                 }
                 _mAnySubFormOpen = false;
@@ -983,7 +963,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmFleeting dialog = new FrmFleeting(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -996,7 +976,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmPatterns dialog = new FrmPatterns(_mAwtWindowProperties, _mProgramProperties);
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -1009,7 +989,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmDefaults dialog = new FrmDefaults(_mAwtWindowProperties, _mProgramProperties,  _mCTCSerialData.getOtherData());
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -1022,7 +1002,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmDebugging dialog = new FrmDebugging(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -1035,7 +1015,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmGUIDesign dialog = new FrmGUIDesign(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -1068,7 +1048,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmFixErrors dialog = new FrmFixErrors(_mAwtWindowProperties, _mColumns);
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
@@ -1081,7 +1061,7 @@ public class FrmMainForm extends JFrame {
         if (_mAnySubFormOpen) return;
         _mAnySubFormOpen = true;
         FrmAbout dialog = new FrmAbout(_mAwtWindowProperties);
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);    // Technically don't modify anything, but for consistency
+        dialog.setVisible(true);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {

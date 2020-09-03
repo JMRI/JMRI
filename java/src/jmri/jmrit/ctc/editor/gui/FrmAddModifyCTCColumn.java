@@ -27,7 +27,12 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
 
-    public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
+    public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties,
+            Columns columns,
+            boolean isModify,
+            int existingSwitchNumber,
+            int existingGUIColumnNumber,
+            boolean existingGUIGeneratedAtLeastOnceAlready) {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_osList", true);  // NOI18N

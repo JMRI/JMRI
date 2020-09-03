@@ -97,6 +97,12 @@ public class CreateGUIObjectsXMLFile {
             int thisObjectHorizontalPosition = START_OFFSET;
             for (int cbhdID : cbhdMap.values()) {
                 CodeButtonHandlerData codeButtonHandlerData = ctcSerialData.getCodeButtonHandlerDataViaUniqueID(cbhdID);
+
+                boolean directionLeft = true;
+                boolean directionRight = true;
+                if (codeButtonHandlerData._mSIDI_TrafficDirection == CodeButtonHandlerData.TRAFFIC_DIRECTION.LEFT) directionRight = false;
+                if (codeButtonHandlerData._mSIDI_TrafficDirection == CodeButtonHandlerData.TRAFFIC_DIRECTION.RIGHT) directionLeft = false;
+
                 thisObjectHorizontalPosition = (codeButtonHandlerData._mGUIColumnNumber - 1) * GIF_HORIZONTAL_SIZE + START_OFFSET;
 //  Put in possible blank panels between where we left off last and the next one:
                 for ( ; lastHorizontalPosition < thisObjectHorizontalPosition; lastHorizontalPosition += GIF_HORIZONTAL_SIZE) {
@@ -169,13 +175,31 @@ public class CreateGUIObjectsXMLFile {
                 if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                     int y = adjustSignalItemsYBySize(454, otherData._mGUIDesign_VerticalSize);
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName())) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(), "green", false, printWriter); // NOI18N
+                        generateSensorIndicator(
+                                thisObjectHorizontalPosition + 4,
+                                y,
+                                codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(),
+                                "green",
+                                false,
+                                printWriter); // NOI18N
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName())) { // Should always be present, but for safety:
-                        generateSensorIndicator(thisObjectHorizontalPosition + 22, adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName(), "red", false, printWriter);
+                        generateSensorIndicator(
+                                thisObjectHorizontalPosition + 22,
+                                adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize),
+                                codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName(),
+                                "red",
+                                false,
+                                printWriter);
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName())) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(), "green", false, printWriter);   // NOI18N
+                        generateSensorIndicator(
+                                thisObjectHorizontalPosition + 38,
+                                y,
+                                codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(),
+                                "green",
+                                false,
+                                printWriter);   // NOI18N
                     }
                     if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
                         ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
@@ -217,7 +241,13 @@ public class CreateGUIObjectsXMLFile {
 //  SIDL:
                 if (codeButtonHandlerData._mSIDL_Enabled) { // Signal Lever:
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName())) {
-                        generateSignalLever(thisObjectHorizontalPosition + 8, adjustSignalItemsYBySize(492, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName(), codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName(), codeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName(), printWriter);
+                        generateSignalLever(
+                                thisObjectHorizontalPosition + 8,
+                                adjustSignalItemsYBySize(492, otherData._mGUIDesign_VerticalSize),
+                                directionLeft ? codeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName() : "",
+                                codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName(),
+                                directionRight ? codeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName() : "",
+                                printWriter);
                         generateTextPositionableLabelCentered(thisObjectHorizontalPosition + 32, adjustSignalItemsYBySize(470, otherData._mGUIDesign_VerticalSize), Integer.toString(codeButtonHandlerData._mSignalEtcNumber), printWriter);
                     }
                 }

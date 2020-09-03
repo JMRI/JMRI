@@ -16,6 +16,8 @@ import java.util.HashSet;
 
 import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
+import jmri.jmrit.ctc.NBHTurnout;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,7 @@ public class CTCSerialData {
             _mUniqueID = uniqueID;
         }
     }
-    
+
     public CTCSerialData() {
         _mOtherData = new OtherData();
         _mCodeButtonHandlerDataArrayList = new ArrayList<>();
@@ -121,10 +123,15 @@ public class CTCSerialData {
         }    // Do NOTHING in this case!  Technically should never happen, since buttons aren't enabled for such possibilities
     }
 
-//  In addition, variable "_mTRL_LeftTrafficLockingRulesSSVList" and "_mTRL_RightTrafficLockingRulesSSVList"
-//  have buried within them text strings for user viewing of the "CodeButtonHandlerData.myShortStringNoComma()"
-//  value.  That occurs at TRL_USERTEXT_TERMINATING_INDEX in all possible records, with TRL_UNIQUEID_TERMINATING_INDEX containing the
-//  textual representation of the UniqueID that we should look up and fix with.
+    /**
+     * Change the identifying attributes with the exception of the uniqueID.  The potential
+     * primary changes are the switch and signal numbers.
+     * @param index The row being changed.
+     * @param newSwitchNumber The new switch number which is always odd.
+     * @param newSignalEtcNumber The new signal number which is always one more than the switch number.
+     * @param newGUIColumnNumber The location on the panel.  Used by the GUI export process.
+     * @param newGUIGeneratedAtLeastOnceAlready A flag to indicate whether the GUI export should include this column.
+     */
     public void updateSwitchAndSignalEtcNumbersEverywhere(int index, int newSwitchNumber, int newSignalEtcNumber, int newGUIColumnNumber, boolean newGUIGeneratedAtLeastOnceAlready) {
         CodeButtonHandlerData codeButtonHandlerData = _mCodeButtonHandlerDataArrayList.get(index);
         codeButtonHandlerData._mSwitchNumber = newSwitchNumber;
@@ -134,54 +141,28 @@ public class CTCSerialData {
         int UniqueIDBeingModified = codeButtonHandlerData._mUniqueID;
         String replacementString = codeButtonHandlerData.myShortStringNoComma();
         for (CodeButtonHandlerData temp : _mCodeButtonHandlerDataArrayList) {
-            if (temp != codeButtonHandlerData) { // Not us, check:
-                temp._mTRL_LeftTrafficLockingRulesSSVList = commonCode1(temp._mTRL_LeftTrafficLockingRulesSSVList, UniqueIDBeingModified, replacementString);
-                temp._mTRL_RightTrafficLockingRulesSSVList = commonCode1(temp._mTRL_RightTrafficLockingRulesSSVList, UniqueIDBeingModified, replacementString);
-            }
+            updateTrlUserText(temp._mTRL_LeftTrafficLockingRules, UniqueIDBeingModified, replacementString);
+            updateTrlUserText(temp._mTRL_RightTrafficLockingRules, UniqueIDBeingModified, replacementString);
         }
     }
 
-    private String commonCode1(String stringToFix, int uniqueIDBeingModified, String replacementString) {
-        ArrayList<String> ssvArrayList = ProjectsCommonSubs.getArrayListFromSSV(stringToFix);
+    /**
+     * Update the text description of entries in the traffic locking rules located in TrafficLockingData.
+     * Each alignment entry in each rule is checked for match on uniqueID.  If so, the text is replaced.
+     * @param rulesToFix An array of TrafficLockingData entries.  Each entry is a rule.
+     * @param uniqueIDBeingModified The uniqueID being checked.
+     * @param replacementString The new sw/sig string.
+     */
+    private void updateTrlUserText(ArrayList<TrafficLockingData> rulesToFix, int uniqueIDBeingModified, String replacementString) {
         boolean anyModified = false;
-        String returnString;
-        for (int ssvArrayIndex = 0; ssvArrayIndex < ssvArrayList.size(); ssvArrayIndex++) {
-            TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(ssvArrayList.get(ssvArrayIndex));
-            boolean loopAnyModified = false;
-            if ((returnString = lazy1(uniqueIDBeingModified, replacementString, trafficLockingEntry._mUniqueID1)) != null) {
-                loopAnyModified = true;
-                trafficLockingEntry._mUniqueID1 = returnString;
-            }
-            if ((returnString = lazy1(uniqueIDBeingModified, replacementString, trafficLockingEntry._mUniqueID2)) != null) {
-                loopAnyModified = true;
-                trafficLockingEntry._mUniqueID2 = returnString;
-            }
-            if ((returnString = lazy1(uniqueIDBeingModified, replacementString, trafficLockingEntry._mUniqueID3)) != null) {
-                loopAnyModified = true;
-                trafficLockingEntry._mUniqueID3 = returnString;
-            }
-            if ((returnString = lazy1(uniqueIDBeingModified, replacementString, trafficLockingEntry._mUniqueID4)) != null) {
-                loopAnyModified = true;
-                trafficLockingEntry._mUniqueID4 = returnString;
-            }
-            if ((returnString = lazy1(uniqueIDBeingModified, replacementString, trafficLockingEntry._mUniqueID5)) != null) {
-                loopAnyModified = true;
-                trafficLockingEntry._mUniqueID5 = returnString;
-            }
-            anyModified |= loopAnyModified;
-            if (loopAnyModified) {
-                ssvArrayList.set(ssvArrayIndex, trafficLockingEntry.toCSVString());
-            }
-        }
-        return anyModified ? ProjectsCommonSubs.constructSSVStringFromArrayList(ssvArrayList) : stringToFix;
-    }
-
-    private String lazy1(int uniqueIDBeingModified, String replacementString, String stringValueToCheck) {
-        int uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(stringValueToCheck, -1);
-        if (uniqueID == uniqueIDBeingModified) { // Fix it:
-            return replacementString;
-        }
-        return null;
+        ArrayList<TrafficLockingData> modifiedRules = new ArrayList<>();
+        rulesToFix.forEach(rule -> {
+            rule._mSwitchAlignments.forEach(alignment -> {
+                if (uniqueIDBeingModified == alignment._mUniqueID) {
+                    alignment._mUserText = replacementString;
+                }
+            });
+        });
     }
 
     public void setCodeButtonHandlerData(int index, CodeButtonHandlerData codeButtonHandlerData) {
@@ -218,52 +199,45 @@ public class CTCSerialData {
         }
         return returnValue;
     }
-    
+
     /**
      * Routine to search our _mCodeButtonHandlerDataArrayList for the O.S. section
      * that contains the passed turnout.
-     * 
+     *
      * @param turnout   The turnout to search for in our table.
      * @return          CTCTurnoutData, else if turnout not found, null.
      */
     public CTCTurnoutData getCTCTurnoutData(Turnout turnout) {
-        String turnoutUserName = turnout.getDisplayName();  // Same routime as called in CommonSubs/populateJComboBoxWithBeans
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData._mSWDI_Enabled) { // Only if it has one:
-                if (codeButtonHandlerData._mSWDI_ExternalTurnout.equals(turnoutUserName)) { // Ah match, this is us:
+                if (codeButtonHandlerData._mSWDI_ExternalTurnout.getBean().equals(turnout)) { // Ah match, this is us:
                     return new CTCTurnoutData(codeButtonHandlerData.myShortStringNoComma(), codeButtonHandlerData._mUniqueID);
                 }
             }
         }
         return null;
     }
-    
+
     /**
      * This routine is used to support FrmTUL.java.  It generates a HashSet (which
      * prevents duplicate strings) of all such locked turnouts, EXCLUDING the
      * passed "excludedOne", since that one will be handled locally in the calling
      * code.
-     * 
+     *
      * @param excludedOne The one to NOT include in the returned information.
      * @return All locked turnouts NOT INCLUDING excludedOne.
      */
-    
     public HashSet<String> getHashSetOfAllLockedTurnoutsExcludingPassedOne(CodeButtonHandlerData excludedOne) {
         HashSet<String> lockedTurnouts = new HashSet<>();
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData != excludedOne) { // Process this one:
-                if (shouldAdd(codeButtonHandlerData._mTUL_ExternalTurnout)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_ExternalTurnout); }
-                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1); }
-                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2); }
-                if (shouldAdd(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3)) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3); }
+                if (codeButtonHandlerData._mTUL_ExternalTurnout.valid()) { lockedTurnouts.add(codeButtonHandlerData._mTUL_ExternalTurnout.getHandleName()); }
+                if (codeButtonHandlerData._mTUL_AdditionalExternalTurnout1.valid()) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout1.getHandleName()); }
+                if (codeButtonHandlerData._mTUL_AdditionalExternalTurnout2.valid()) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout2.getHandleName()); }
+                if (codeButtonHandlerData._mTUL_AdditionalExternalTurnout3.valid()) { lockedTurnouts.add(codeButtonHandlerData._mTUL_AdditionalExternalTurnout3.getHandleName()); }
             }
         }
         return lockedTurnouts;
-    }
-
-//  Quick and dirty routine for above:
-    private boolean shouldAdd(String aString) {
-        return null != aString && !aString.isEmpty();
     }
 
     @SuppressWarnings("unchecked") // See below comments:

@@ -123,7 +123,7 @@ public class CodeButtonHandlerDataRoutines {
      */
     public static NBHSensor createInternalNBHSensor(int number, String pattern) {
         String sensorName = substituteValueForPoundSigns(number, pattern);
-        NBHSensor sensor = new NBHSensor("CodeButtonHandlerDataRoutines", "Sensor = ", sensorName, sensorName);  // NOI18N
+        NBHSensor sensor = CommonSubs.getNBHSensor(sensorName, true);
         return sensor;
     }
 
