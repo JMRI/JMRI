@@ -133,13 +133,6 @@ public class FrmSIDI extends javax.swing.JFrame {
                 break;
         }
 
-//  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
-//  I searched the entire Oracle Web sites that publishes documentation on Java, and NOWHERE
-//  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
-//  And WHY would the default be the other way?  Why don't they just admit they are poor programmers!
-//  Where is a list of properties available and their corresponding functions?
-        _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
-        _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList1, signalsArrayList2);
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);

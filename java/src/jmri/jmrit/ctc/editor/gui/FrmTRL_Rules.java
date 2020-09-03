@@ -581,39 +581,25 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         trafficLockingData._mRuleEnabled = _mRuleEnabled.isSelected() ? Bundle.getMessage("TLE_RuleEnabled") : Bundle.getMessage("TLE_RuleDisabled");  // NOI18N
         trafficLockingData._mDestinationSignalOrComment = _mDestinationSignalOrComment.getText();
 
-        NBHSensor sensor;
-
         ArrayList<NBHSensor> occupancySensors = new ArrayList<>();
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor1.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor2.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor3.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor4.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor5.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor6.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor7.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor8.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOccupancyExternalSensor9.getSelectedItem(), true);
-        if (sensor.valid()) occupancySensors.add(sensor);
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor1.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor2.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor3.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor4.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor5.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor6.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor7.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor8.getSelectedItem());
+        CommonSubs.addSensorToSensorList(occupancySensors, (String)_mOccupancyExternalSensor9.getSelectedItem());
         trafficLockingData._mOccupancyExternalSensors = occupancySensors;
 
         ArrayList<NBHSensor> optionalSensors = new ArrayList<>();
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOptionalExternalSensor1.getSelectedItem(), true);
-        if (sensor.valid()) optionalSensors.add(sensor);
-        sensor = new NBHSensor("FrmTRL_Rules", "", "", (String)_mOptionalExternalSensor2.getSelectedItem(), true);
-        if (sensor.valid()) optionalSensors.add(sensor);
+        CommonSubs.addSensorToSensorList(optionalSensors, (String)_mOptionalExternalSensor1.getSelectedItem());
+        CommonSubs.addSensorToSensorList(optionalSensors, (String)_mOptionalExternalSensor2.getSelectedItem());
         trafficLockingData._mOptionalExternalSensors = optionalSensors;
 
         TrafficLockingData.TRLSwitch trlSwitch;
         ArrayList<TrafficLockingData.TRLSwitch> switchAlignments = new ArrayList<>();
-
         trlSwitch = getSwitchAllignment(_mOS_NumberEntry1, _mSwitchAlignment1);
         if (trlSwitch != null) switchAlignments.add(trlSwitch);
         trlSwitch = getSwitchAllignment(_mOS_NumberEntry2, _mSwitchAlignment2);
@@ -624,7 +610,6 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
         if (trlSwitch != null) switchAlignments.add(trlSwitch);
         trlSwitch = getSwitchAllignment(_mOS_NumberEntry5, _mSwitchAlignment5);
         if (trlSwitch != null) switchAlignments.add(trlSwitch);
-
         trafficLockingData._mSwitchAlignments = switchAlignments;
 
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(trafficLockingData);

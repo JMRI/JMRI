@@ -65,12 +65,7 @@ public class FrmIL extends javax.swing.JFrame {
         ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListOfSignalNames(_mCodeButtonHandlerData._mIL_Signals);
         loadUpSignalTable(signalsArrayList);
         initOrig(signalsArrayList);
-//  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
-//  I searched the entire Oracle Web sites that publishes documentation on Java, and NOWHERE
-//  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
-//  And WHY would the default be the other way?  Why don't they just admit they are poor programmers!
-//  Where is a list of properties available and their corresponding functions?
-        _mIL_TableOfExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
+
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
 

@@ -180,9 +180,7 @@ public class NBHSensor {
     private static Sensor getInternalSensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).provide(sensor);
-            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
-            return returnValue;
+            return InstanceManager.getDefault(SensorManager.class).provide(sensor);
         } else { return null; }
     }
 

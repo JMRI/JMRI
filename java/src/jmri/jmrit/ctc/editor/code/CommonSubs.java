@@ -28,6 +28,7 @@ import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.NBHSensor;
+import jmri.jmrit.ctc.NBHSignal;
 import jmri.jmrit.ctc.NBHTurnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
@@ -378,6 +379,7 @@ public class CommonSubs {
     /**
      * Get a NBHTurnout from the CtcManager NBHTurnout map or create a new one.
      * @param newName The new name to be retrieved from the map or created.
+     * @param feedbackDifferent The feedback different state.
      * @return a valid NBHTurnout or an empty NBHTurnout.
      */
     public static NBHTurnout getNBHTurnout(String newName, boolean feedbackDifferent) {
@@ -393,6 +395,33 @@ public class CommonSubs {
             turnout = new NBHTurnout("CommonSubs", "Empty turnout", "");
         }
         return turnout;
+    }
+
+    /**
+     * Get a NBHSignal from the CtcManager NBHSignal map or create a new one.
+     * @param newName The new name to be retrieved from the map or created.
+     * @return a valid NBHSignal or null.
+     */
+    public static NBHSignal getNBHSignal(String newName) {
+        NBHSignal signal = null;
+        if (!ProjectsCommonSubs.isNullOrEmptyString(newName)) {
+            signal = InstanceManager.getDefault(CtcManager.class).getNBHSignal(newName);
+            if (signal == null) {
+                signal = new NBHSignal(newName);
+            }
+        }
+        return signal;
+    }
+
+    /**
+     * Add a valid NBHSensor entry to an ArrayList.  The sensor name has to match an existing
+     * sensor in the JMRI sensor table.
+     * @param list The NBHSensor array list.
+     * @param sensorName The proposed sensor name.
+     */
+    public static void addSensorToSensorList(ArrayList<NBHSensor> list, String sensorName) {
+        NBHSensor sensor = getNBHSensor(sensorName, false);
+        if (sensor != null && sensor.valid()) list.add(sensor);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonSubs.class);

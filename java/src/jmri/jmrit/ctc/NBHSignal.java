@@ -14,9 +14,7 @@ import jmri.jmrit.ctc.ctcserialdata.*;
  * Provide access to both signal masts and signal heads for the CTC system.
  * <p>
  * This class combines the NBHAbstractSignalCommon, NBHSignalMast and NBHSignalHead
- * classes.  OtherData->_mSignalSystemType determines whether masts or heads are enabled.
- * <p>
- *
+ * classes.  OtherData _mSignalSystemType determines whether masts or heads are enabled.
  * @author Dave Sand Copyright (C) 2020
  */
 public class NBHSignal {

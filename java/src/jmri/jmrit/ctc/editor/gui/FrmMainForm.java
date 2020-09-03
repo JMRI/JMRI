@@ -851,7 +851,7 @@ public class FrmMainForm extends JFrame {
                 Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {  // NOI18N
             int index = _mColumns.getEntrySelectedIndex();
             CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(index);
-            codeButtonHandlerData = CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
+            CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
         }
     }//GEN-LAST:event_reapplyPatternsButtonActionPerformed
 
@@ -906,7 +906,7 @@ public class FrmMainForm extends JFrame {
                     _mCTCSerialData.updateSwitchAndSignalEtcNumbersEverywhere(_mColumns.getEntrySelectedIndex(), dialog._mNewSwitchNumber, dialog._mNewSignalEtcNumber, dialog._mNewGUIColumnNumber, dialog._mNewGUIGeneratedAtLeastOnceAlready);
 
                     CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(_mColumns.getEntrySelectedIndex());
-                    codeButtonHandlerData = CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
+                    CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
 
                     _mColumns.updateFrame();
                 }

@@ -225,7 +225,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
     Element storeSignal(String elementName, NBHSignal signal) {
         Element element = new Element(elementName);
         if (signal != null) {
-            NamedBeanHandle handle = (NamedBeanHandle) signal.getBeanHandle();
             element.setText(signal.getHandleName());
         }
         return element;
@@ -446,17 +445,16 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
                 cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_Signals"));
 
-                if (log.isDebugEnabled()) {
-                    log.info("CodeButtonHandlerData, {}/{}:", _mSwitchNumber, _mSignalEtcNumber);
-                    List<Field> fields = Arrays.asList(CodeButtonHandlerData.class.getFields());
-                    fields.forEach(field -> {
-                        try {
-                            log.info("    CBHD: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(cbhd));
-                        } catch (Exception ex) {
-                            log.info("    CBHD list exception: {}", ex.getMessage());
-                        }
-                    });
-                }
+// Debugging aid -- not active due to SpotBugs
+//                 log.info("CodeButtonHandlerData, {}/{}:", _mSwitchNumber, _mSignalEtcNumber);
+//                 List<Field> fields = Arrays.asList(CodeButtonHandlerData.class.getFields());
+//                 fields.forEach(field -> {
+//                     try {
+//                         log.info("    CBHD: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(cbhd));
+//                     } catch (Exception ex) {
+//                         log.info("    CBHD list exception: {}", ex.getMessage());
+//                     }
+//                 });
             }
         }
         convertCallOnSensorNamesToNBHSensors(cm);
@@ -490,17 +488,16 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         pp._mCodeButtonDelayTime = loadInt(el.getChild("CodeButtonDelayTime"));
         pp._mNoMoreReservedCharactersWarning = loadBoolean(el.getChild("NoMoreReservedCharactersWarning"));
 
-        if (log.isDebugEnabled()) {
-            log.debug("ProgramProperties:");
-            List<Field> fields = Arrays.asList(ProgramProperties.class.getFields());
-            fields.forEach(field -> {
-                try {
-                    log.info("    ProgramProperties: fld = {}, val = {}", field.getName(), field.get(pp));
-                } catch (Exception ex) {
-                    log.info("    ProgramProperties list exception: {}", ex.getMessage());
-                }
-            });
-        }
+// Debugging aid -- not active due to SpotBugs
+//             log.debug("ProgramProperties:");
+//             List<Field> fields = Arrays.asList(ProgramProperties.class.getFields());
+//             fields.forEach(field -> {
+//                 try {
+//                     log.info("    ProgramProperties: fld = {}, val = {}", field.getName(), field.get(pp));
+//                 } catch (Exception ex) {
+//                     log.info("    ProgramProperties list exception: {}", ex.getMessage());
+//                 }
+//             });
     }
 
     /**
@@ -543,17 +540,16 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         od._mGUIDesign_OSSectionUnknownInconsistentRedBlink = loadBoolean(el.getChild("GUIDesign_OSSectionUnknownInconsistentRedBlink"));
         od._mGUIDesign_TurnoutsOnPanel = loadBoolean(el.getChild("GUIDesign_TurnoutsOnPanel"));
 
-        if (log.isDebugEnabled()) {
-            log.info("OtherData:");
-            List<Field> fields = Arrays.asList(OtherData.class.getFields());
-            fields.forEach(field -> {
-                try {
-                    log.info("    OtherData: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(od));
-                } catch (Exception ex) {
-                    log.info("    OtherData list exception: {}", ex.getMessage());
-                }
-            });
-        }
+// Debugging aid -- not active due to SpotBugs
+//         log.info("OtherData:");
+//         List<Field> fields = Arrays.asList(OtherData.class.getFields());
+//         fields.forEach(field -> {
+//             try {
+//                 log.info("    OtherData: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(od));
+//             } catch (Exception ex) {
+//                 log.info("    OtherData list exception: {}", ex.getMessage());
+//             }
+//         });
     }
 
     // **** Load simple objects ****
@@ -629,7 +625,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 turnout = new NBHTurnout("CtcManagerXml", "", element.getValue(), element.getValue(), feedBack);
             }
         } else {
-            turnout = new NBHTurnout("CtcManagerXml", "", "Empty NBHTurnout", "", false);
+            turnout = new NBHTurnout("CtcManagerXml", "Empty NBHTurnout", "");
         }
         return turnout;
     }
@@ -652,9 +648,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         if (element != null) {
             for (Element el : element.getChildren()) {
                 NBHSensor sensor = loadSensor(el, false);
-                if (sensor != null) {
-                    sensorList.add(sensor);
-                }
+                sensorList.add(sensor);
             }
         }
         return sensorList;
@@ -665,9 +659,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         if (element != null) {
             for (Element el : element.getChildren()) {
                 NBHSignal signal = loadSignal(el);
-                if (signal != null) {
-                    signalList.add(signal);
-                }
+                signalList.add(signal);
             }
         }
         return signalList;
@@ -771,19 +763,17 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 NBHTurnout turnout = loadTurnout(elTurnout.getChild("TUL_AdditionalExternalTurnout"), elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
                 boolean feedback = loadBoolean(elTurnout.getChild("TUL_AdditionalExternalTurnoutFeedbackDifferent"));
 
-                if (turnout != null) {
-                    if (rowNumber == 1) {
-                        cbhd._mTUL_AdditionalExternalTurnout1 = turnout;
-                        cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;
-                    }
-                    if (rowNumber == 2) {
-                        cbhd._mTUL_AdditionalExternalTurnout2 = turnout;
-                        cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent = feedback;
-                    }
-                    if (rowNumber == 3) {
-                        cbhd._mTUL_AdditionalExternalTurnout3 = turnout;
-                        cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = feedback;
-                    }
+                if (rowNumber == 1) {
+                    cbhd._mTUL_AdditionalExternalTurnout1 = turnout;
+                    cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;
+                }
+                if (rowNumber == 2) {
+                    cbhd._mTUL_AdditionalExternalTurnout2 = turnout;
+                    cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent = feedback;
+                }
+                if (rowNumber == 3) {
+                    cbhd._mTUL_AdditionalExternalTurnout3 = turnout;
+                    cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = feedback;
                 }
             }
         }

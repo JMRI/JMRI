@@ -301,7 +301,7 @@ public class FrmSWDI extends javax.swing.JFrame {
         }
 
         NBHTurnout newTurnout = CommonSubs.getNBHTurnout((String) _mSWDI_ExternalTurnout.getSelectedItem(), _mSWDI_FeedbackDifferent.isSelected());
-        if (newTurnout != null) _mCodeButtonHandlerData._mSWDI_ExternalTurnout = newTurnout;
+        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = newTurnout;
 
         _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds);
         _mCodeButtonHandlerData._mSWDI_FeedbackDifferent = _mSWDI_FeedbackDifferent.isSelected();

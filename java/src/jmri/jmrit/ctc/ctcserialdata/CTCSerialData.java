@@ -155,7 +155,6 @@ public class CTCSerialData {
      */
     private void updateTrlUserText(ArrayList<TrafficLockingData> rulesToFix, int uniqueIDBeingModified, String replacementString) {
         boolean anyModified = false;
-        ArrayList<TrafficLockingData> modifiedRules = new ArrayList<>();
         rulesToFix.forEach(rule -> {
             rule._mSwitchAlignments.forEach(alignment -> {
                 if (uniqueIDBeingModified == alignment._mUniqueID) {

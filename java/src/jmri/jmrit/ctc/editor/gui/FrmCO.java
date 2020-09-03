@@ -476,12 +476,6 @@ public class FrmCO extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
-//         _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = _mCO_CallOnToggleInternalSensor.getText();
-        String sensorName = _mCO_CallOnToggleInternalSensor.getText();
-        NBHSensor sensor = new NBHSensor("FrmCO", "", sensorName, sensorName);
-        if (sensor.valid()) {
-            _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = sensor;
-        }
 
         int size = _mDefaultListModel.getSize();
         _mCodeButtonHandlerData._mCO_GroupingsList.clear();
@@ -580,11 +574,11 @@ public class FrmCO extends javax.swing.JFrame {
 
         CallOnData newCallOnData = new CallOnData();
 
-        newCallOnData._mExternalSignal = new NBHSignal((String) _mExternalSignal.getSelectedItem());
+        newCallOnData._mExternalSignal = CommonSubs.getNBHSignal((String) _mExternalSignal.getSelectedItem());
         newCallOnData._mSignalFacingDirection = (_mSignalFacingDirection.getSelectedItem() == null ? null : _mSignalFacingDirection.getSelectedItem().toString());
         newCallOnData._mSignalAspectToDisplay = (_mSignalAspectToDisplay.getSelectedItem() == null ? null : _mSignalAspectToDisplay.getSelectedItem().toString());
-        newCallOnData._mCalledOnExternalSensor = new NBHSensor("FrmCO", "", "Add/Update sensor", (String) _mCalledOnExternalSensor.getSelectedItem(), true);
-        if (!newCallOnData._mCalledOnExternalSensor.valid()) newCallOnData._mCalledOnExternalSensor = null;
+        newCallOnData._mCalledOnExternalSensor = CommonSubs.getNBHSensor((String) _mCalledOnExternalSensor.getSelectedItem(), false);
+        if (newCallOnData._mCalledOnExternalSensor != null && !newCallOnData._mCalledOnExternalSensor.valid()) newCallOnData._mCalledOnExternalSensor = null;
 
         NamedBeanHandle<Block> blockHandle = null;
         String blockName = (String) _mExternalBlock.getSelectedItem();
@@ -595,21 +589,13 @@ public class FrmCO extends javax.swing.JFrame {
         newCallOnData._mExternalBlock = blockHandle;
 
         ArrayList<NBHSensor> indcators = new ArrayList<>();
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator1.getSelectedItem(), true));
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator2.getSelectedItem(), true));
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator3.getSelectedItem(), true));
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator4.getSelectedItem(), true));
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator5.getSelectedItem(), true));
-        indcators.add(new NBHSensor("FrmCO", "", "Add/Update row", (String)_mSwitchIndicator6.getSelectedItem(), true));
-
-        ArrayList<NBHSensor> indicatorList = new ArrayList<>();
-        for (NBHSensor sensor : indcators) {
-            // Skip null entries
-            if (sensor.valid()) {
-                indicatorList.add(sensor);
-            }
-        }
-        newCallOnData._mSwitchIndicators = indicatorList;
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator1.getSelectedItem());
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator2.getSelectedItem());
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator3.getSelectedItem());
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator4.getSelectedItem());
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator5.getSelectedItem());
+        CommonSubs.addSensorToSensorList(indcators, (String)_mSwitchIndicator6.getSelectedItem());
+        newCallOnData._mSwitchIndicators = indcators;
 
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(newCallOnData);
         if (verifyClassReturnValue != null) { // Error:

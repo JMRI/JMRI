@@ -11,7 +11,6 @@ import jmri.jmrit.ctc.editor.code.*;
 
 /**
  * Start the CtcManager and register with the instance and configuration managers.
- * <p>
  * <ul>
  *   <li>Create/provide the ProgramProperties instance</li>
  *   <li>Create/provide the CTCSerialData instance</li>
