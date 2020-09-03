@@ -8,14 +8,7 @@
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content=
   "Digitrax DCS Command Station Meters">
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-  <!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -35,7 +28,7 @@
           <li><a href="#Limitations">Limitations</a>
         </ul>
       </div>
-      <h1><a id="Introcudtion" name="Introduction">
+      <h1><a id="Introduction" name="Introduction">
       Introduction to JMRI Volt and Current Meters with Digitrax Hardware</a></h1>
 
       <p>Under certain configurations, JMRI provides tools under the "Tools" menu
