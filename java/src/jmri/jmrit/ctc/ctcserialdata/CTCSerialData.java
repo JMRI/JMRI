@@ -154,7 +154,6 @@ public class CTCSerialData {
      * @param replacementString The new sw/sig string.
      */
     private void updateTrlUserText(ArrayList<TrafficLockingData> rulesToFix, int uniqueIDBeingModified, String replacementString) {
-        boolean anyModified = false;
         rulesToFix.forEach(rule -> {
             rule._mSwitchAlignments.forEach(alignment -> {
                 if (uniqueIDBeingModified == alignment._mUniqueID) {

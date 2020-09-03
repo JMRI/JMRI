@@ -401,6 +401,4 @@ public class Columns {
         if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
         return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
     }
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Columns.class);
 }

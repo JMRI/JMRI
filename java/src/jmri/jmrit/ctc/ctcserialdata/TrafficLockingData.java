@@ -143,6 +143,7 @@ public class TrafficLockingData {
         return alignmentList;
     }
 
+    @Override
     public String toString() {
         String formattedString = String.format("%s,%s,%s",
                 _mUserRuleNumber != null ? _mUserRuleNumber : "",

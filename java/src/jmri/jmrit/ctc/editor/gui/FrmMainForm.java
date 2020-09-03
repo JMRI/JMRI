@@ -1125,6 +1125,4 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton reapplyPatternsButton;
     // End of variables declaration//GEN-END:variables
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrmMainForm.class);
 }

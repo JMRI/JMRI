@@ -364,12 +364,13 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 int _mSwitchNumber = loadInt(lvl1.getChild("SwitchNumber"));
                 int _mSignalEtcNumber = loadInt(lvl1.getChild("SignalEtcNumber"));
                 int _mGUIColumnNumber = loadInt(lvl1.getChild("GUIColumnNumber"));
-                int _mFileVersion = loadInt(lvl1.getChild("FileVersion"));
 
                 // Create a new CodeButtonHandlerData via CodeButtonHandlerDataRoutines which sets default values and empty NBH... objects
                 CodeButtonHandlerData cbhd = CodeButtonHandlerDataRoutines.createNewCodeButtonHandlerData(
                         _mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber, cm.getProgramProperties());
                 cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
+                cbhd._mFileVersion = loadInt(lvl1.getChild("FileVersion"));
+
     log.info("------------- Code ------------");
 
                 // Code section

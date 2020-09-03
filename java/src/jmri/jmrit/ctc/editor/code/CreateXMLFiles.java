@@ -15,12 +15,7 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  */
 public class CreateXMLFiles {
 
-    private final OtherData _mOtherData;
-    private final ArrayList <CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
-
     public CreateXMLFiles(OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-        _mOtherData = otherData;
-        _mCodeButtonHandlerDataArrayList = codeButtonHandlerDataArrayList;  // Reference copy, not a NEW deep copy!
     }
 
     public void createTextFiles(String directoryToCreateThemIn) {

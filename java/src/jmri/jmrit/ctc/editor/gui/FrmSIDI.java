@@ -548,6 +548,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                 java.lang.String.class
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -689,6 +690,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                 java.lang.String.class
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }

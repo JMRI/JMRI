@@ -710,6 +710,4 @@ public class FrmCO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrmCO.class);
 }
