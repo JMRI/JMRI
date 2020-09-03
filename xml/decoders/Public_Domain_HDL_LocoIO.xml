@@ -468,6 +468,7 @@
           </compositeChoice>
 
         </compositeVal>
+        <!--Mode: label not shown at beginning of row unless var placed in row on pane, bug we hide/show 2 of these-->
         <label>Mode:</label>
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
@@ -493,9 +494,9 @@
             <compositeSetting label="Port1 Value2" value="0"/>
           </compositeChoice>
         </compositeVal>
-        <label>Mode:</label>
-        <label xml:lang="de">Typ:</label>
-        <label xml:lang="nl">Type:</label>
+<!--        <label>Mode:</label>-->
+<!--        <label xml:lang="de">Typ:</label>-->
+<!--        <label xml:lang="nl">Type:</label>-->
       </variable>
 
       <!--Port1 Opcode1-->
@@ -3181,7 +3182,7 @@
       <variable item="Port6 Speed" CV="106" default="1" include="101,102,103,104,105,106">
         <decVal min="1" max="7"/>
         <label>Speed:</label>
-        <tooltip>Servo speed (1 fast - 7 slow, 4-5 = continuous)</tooltip>
+        <tooltip>Servo speed (1 fast - 7 slow, 4-5 = continuous). Keep same as Port5 speed on 4-pos servo</tooltip>
       </variable>
 
       <!-- Port 7 -->
@@ -4165,7 +4166,7 @@
       <variable item="Port8 Speed" CV="115" default="1" include="101,102,103,104,105,106">
         <decVal min="1" max="7"/>
         <label>Speed:</label>
-        <tooltip>Servo speed (1 fast - 7 slow, 4-5 = continuous)</tooltip>
+        <tooltip>Servo speed (1 fast - 7 slow, 4-5 = continuous. Keep same as Port7 speed on 4-pos servo)</tooltip>
       </variable>
 
       <!-- TODO add ports 9-16 variables here (remove used CVs from litst below)-->
@@ -4477,7 +4478,9 @@
                 <relation>eq</relation>
                 <value>0</value>
               </qualifier>
-              <display item="Port1 Type"/>
+              <row>
+                <display item="Port1 Type"/>
+              </row>
               <row>
                 <display item="Port1 Address"/>
                 <display item="Port1 HiAddress"/>
@@ -4491,12 +4494,12 @@
                 <relation>eq</relation>
                 <value>1</value>
               </qualifier>
-              <label>
-                <text>Address N/A                           Opcode N/A</text>
-              </label>
               <row>
                 <display item="Port1 Special"/>
               </row>
+              <label>
+                <text>Address N/A                           Opcode N/A</text>
+              </label>
             </group>
 
             <row>
@@ -4548,11 +4551,13 @@
                   <value>0</value>
                 </qualifier>
                 <row>
+                  <display item="Port2 Type"/>
+                </row>
+                <row>
                   <display item="Port2 Address"/>
                   <display item="Port2 HiAddress"/>
                   <display item="Port2 LowAddress"/>
                 </row>
-                <display item="Port2 Type"/>
               </group>
 
             <group>
@@ -4561,12 +4566,12 @@
                   <relation>eq</relation>
                   <value>1</value>
               </qualifier>
-              <label>
-                  <text>Address N/A                           Opcode N/A</text>
-              </label>
               <row>
-                  <display item="Port2 Special"/>
+                <display item="Port2 Special"/>
               </row>
+              <label>
+                <text>Address N/A                           Opcode N/A</text>
+              </label>
             </group>
 
             <row>
@@ -4614,11 +4619,13 @@
                 <value>0</value>
               </qualifier>
               <row>
+                <display item="Port3 Type"/>
+              </row>
+              <row>
                 <display item="Port3 Address"/>
                 <display item="Port3 HiAddress"/>
                 <display item="Port3 LowAddress"/>
               </row>
-              <display item="Port3 Type"/>
             </group>
 
             <group>
@@ -4627,12 +4634,12 @@
                 <relation>eq</relation>
                 <value>1</value>
               </qualifier>
-              <label>
-                  <text>Address N/A                           Opcode N/A</text>
-              </label>
               <row>
-                  <display item="Port3 Special"/>
+                <display item="Port3 Special"/>
               </row>
+              <label>
+                <text>Address N/A                           Opcode N/A</text>
+              </label>
             </group>
 
             <row>
@@ -4680,11 +4687,13 @@
                 <value>0</value>
               </qualifier>
               <row>
+                <display item="Port4 Type"/>
+              </row>
+              <row>
                 <display item="Port4 Address"/>
                 <display item="Port4 HiAddress"/>
                 <display item="Port4 LowAddress"/>
               </row>
-            <display item="Port4 Type"/>
             </group>
             <group>
               <qualifier>
@@ -4692,12 +4701,12 @@
                 <relation>eq</relation>
                 <value>1</value>
               </qualifier>
-              <label>
-                <text>Address N/A                           Opcode N/A</text>
-              </label>
               <row>
                 <display item="Port4 Special"/>
               </row>
+              <label>
+                <text>Address N/A                           Opcode N/A</text>
+              </label>
             </group>
 
             <row>
@@ -4738,12 +4747,12 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 5&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 5&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
+            <display item="Port5 Type"/>
             <row>
               <display item="Port5 Address"/>
               <display item="Port5 HiAddress"/>
               <display item="Port5 LowAddress"/>
             </row>
-            <display item="Port5 Type"/>
             <row>
               <display item="Port5 Config"/>
               <display item="Port5 Value2"/>
@@ -4791,12 +4800,12 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 6&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 6&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
+            <display item="Port6 Type"/>
             <row>
               <display item="Port6 Address"/>
               <display item="Port6 HiAddress"/>
               <display item="Port6 LowAddress"/>
             </row>
-            <display item="Port6 Type"/>
             <row>
               <display item="Port6 Config"/>
               <display item="Port6 Value2"/>
@@ -4807,11 +4816,51 @@
           <column>
             <!-- Port6  Servo2 -->
             <row>
-              <display item="Port6 Pos1" layout="left" format="hslider"/>
+              <group><!--hide/see pos1/pos3 label-->
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>2</value>
+                </qualifier>
+                <label>
+                  <text> Pos1:</text>
+                </label>
+              </group>
+              <group>
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>3</value>
+                </qualifier>
+                <label>
+                  <text> Pos3:</text>
+                </label>
+              </group>
+              <display item="Port6 Pos1" layout="left" format="hslider" label=""/>
               <display item="Port6 Pos1" layout="left" label=""/>
             </row>
             <row>
-              <display item="Port6 Pos2" layout="left" format="hslider"/>
+              <group><!--hide/see pos2/pos4 label-->
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>2</value>
+                </qualifier>
+                <label>
+                  <text> Pos2:</text>
+                </label>
+              </group>
+              <group>
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>3</value>
+                </qualifier>
+                <label>
+                  <text> Pos4:</text>
+                </label>
+              </group>
+              <display item="Port6 Pos2" layout="left" format="hslider" label=""/>
               <display item="Port6 Pos2" layout="left" label=""/>
             </row>
             <row>
@@ -4844,12 +4893,12 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 7&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 7&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
+            <display item="Port7 Type"/>
             <row>
               <display item="Port7 Address"/>
               <display item="Port7 HiAddress"/>
               <display item="Port7 LowAddress"/>
             </row>
-            <display item="Port7 Type"/>
             <row>
               <display item="Port7 Config"/>
               <display item="Port7 Value2"/>
@@ -4897,12 +4946,12 @@
               <text>&lt;html&gt;&lt;strong&gt;Port 8&lt;/strong&gt;&lt;/html&gt;</text>
               <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Poort 8&lt;/strong&gt;&lt;/html&gt;</text>
             </label>
+            <display item="Port8 Type"/>
             <row>
               <display item="Port8 Address"/>
               <display item="Port8 HiAddress"/>
               <display item="Port8 LowAddress"/>
             </row>
-            <display item="Port8 Type"/>
             <row>
               <display item="Port8 Config"/>
               <display item="Port8 Value2"/>
@@ -4913,11 +4962,51 @@
           <column>
             <!-- Port8  Servo4 -->
             <row>
-              <display item="Port8 Pos1" layout="left" format="hslider"/>
+              <group><!--hide/see pos1/pos3 label-->
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>2</value>
+                </qualifier>
+                <label>
+                  <text> Pos1:</text>
+                </label>
+              </group>
+              <group>
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>3</value>
+                </qualifier>
+                <label>
+                  <text> Pos3:</text>
+                </label>
+              </group>
+              <display item="Port8 Pos1" layout="left" format="hslider" label=""/>
               <display item="Port8 Pos1" layout="left" label=""/>
             </row>
             <row>
-              <display item="Port8 Pos2" layout="left" format="hslider"/>
+              <group><!--hide/see pos2/pos4 label-->
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>2</value>
+                </qualifier>
+                <label>
+                  <text> Pos2:</text>
+                </label>
+              </group>
+              <group>
+                <qualifier>
+                  <variableref>Action Mode</variableref>
+                  <relation>eq</relation>
+                  <value>3</value>
+                </qualifier>
+                <label>
+                  <text> Pos4:</text>
+                </label>
+              </group>
+              <display item="Port8 Pos2" layout="left" format="hslider" label=""/>
               <display item="Port8 Pos2" layout="left" label=""/>
             </row>
             <row>
