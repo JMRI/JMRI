@@ -333,7 +333,7 @@ https://builds.jmri.org/jenkins/job/testreleases/job/4.21.1/
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
-Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do more checking of the development releases leading up to the test release build)
+Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to better functional checking of the development releases leading up to the test release build)
 
 ```
 
@@ -363,6 +363,10 @@ If somebody has merged their change into master (or it's branched from master la
 - Merge master into the release-4.21.1 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
 
 - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
+
+- Make sure that the 4.21.1 milestone is on the original PR
+
+- If the PR has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 4.21.1 release note.  Merge these as needed to the release-4.21.1 and master branches
 
 ====================================================================================
 ## Create zipped .properties (experimental)

@@ -65,11 +65,6 @@ public class TrainCommon {
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
-    // for manifests
-    protected int cars = 0; // number of cars in train at a RouteLocation
-    protected int emptyCars = 0; // number of empty cars in train at a
-                                 // RouteLocation
-
     // for switch lists
     protected boolean pickupCars; // true when there are pickups
     protected boolean dropCars; // true when there are set outs
@@ -290,10 +285,10 @@ public class TrainCommon {
                             pickUpCar(file, car, isManifest);
                         }
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                     }
                 }
                 if (isOnlyPassenger) {
@@ -353,11 +348,11 @@ public class TrainCommon {
                         dropCar(file, car, isManifest);
                     }
                     dropCars = true;
-                    cars--;
-                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName())
-                            .equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                        emptyCars--;
-                    }
+//                    cars--;
+//                    if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName())
+//                            .equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                        emptyCars--;
+//                    }
                 }
             }
             if (!Setup.isSortByTrackNameEnabled()) {
@@ -413,10 +408,10 @@ public class TrainCommon {
                             continue;
                         }
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                         String s;
                         if (car.isUtility()) {
                             s = pickupUtilityCars(carList, car, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -513,10 +508,10 @@ public class TrainCommon {
                         }
                         trackNames.add(trackName); // use a track name once
                         pickupCars = true;
-                        cars++;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
+//                        cars++;
+//                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//                            emptyCars++;
+//                        }
                         String s;
                         if (car.isUtility()) {
                             s = pickupUtilityCars(carList, car, isManifest, IS_TWO_COLUMN_TRACK);
@@ -646,10 +641,10 @@ public class TrainCommon {
     private String appendSetoutString(String s, List<Car> carList, RouteLocation rl, Car car, boolean isManifest,
             boolean isTwoColumnTrack) {
         dropCars = true;
-        cars--;
-        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-            emptyCars--;
-        }
+//        cars--;
+//        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+//            emptyCars--;
+//        }
 
         String dropText;
 

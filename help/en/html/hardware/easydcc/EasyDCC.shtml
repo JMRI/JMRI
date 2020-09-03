@@ -104,7 +104,7 @@
         <li>Accept the suggested Connection Prefix and Name,
         or replace it with a more fitting one. Make sure it is unique.</li>
         <li>Under Additional Connection Settings, the baud rate box
-        will be fixed at 9,600 baud.</li>
+        will be fixed at 9,600 bps.</li>
         <li>Click "Save". You'll be asked if it's OK for the
         program to quit; click "Yes".</li>
       </ul>
