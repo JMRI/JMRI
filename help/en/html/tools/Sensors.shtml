@@ -21,7 +21,7 @@
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
-s
+
       <h1>JMRI: Sensors Documentation</h1>
 
         <h2>What are Sensors?</h2>
