@@ -12,7 +12,7 @@
   "sensor model railroad JMRI decoderpro panelpro">
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -21,7 +21,7 @@
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
-
+s
       <h1>JMRI: Sensors Documentation</h1>
 
         <h2>What are Sensors?</h2>
@@ -87,7 +87,8 @@
         <h3>The Sensor Table</h3>Sensors can be viewed and
         configured using the <a href=
         "../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
-        Table</a>. It contains the following columns:
+        Table</a>. The following columns are displayed by default (additional
+        columns may be seen by right-clicking in the column header):
 
         <ul>
           <li>System Name</li>
