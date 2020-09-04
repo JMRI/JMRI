@@ -17,7 +17,6 @@ import java.util.HashSet;
 import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.NBHTurnout;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

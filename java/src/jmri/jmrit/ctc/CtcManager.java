@@ -5,7 +5,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.Manager;
-import jmri.jmrit.ctc.*;
 import jmri.jmrit.ctc.ctcserialdata.*;
 import jmri.jmrit.ctc.editor.code.*;
 

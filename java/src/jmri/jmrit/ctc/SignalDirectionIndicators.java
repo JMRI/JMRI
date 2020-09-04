@@ -15,7 +15,6 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
-import jmri.jmrit.ctc.NBHSensor;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 

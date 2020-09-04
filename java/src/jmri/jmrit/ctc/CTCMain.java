@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 import jmri.*;
-import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.OtherData;

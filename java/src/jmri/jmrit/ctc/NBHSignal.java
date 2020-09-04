@@ -7,7 +7,6 @@ import jmri.NamedBeanHandleManager;
 import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalHead;
-import jmri.jmrit.ctc.*;
 import jmri.jmrit.ctc.ctcserialdata.*;
 
 /**
