@@ -24,7 +24,6 @@ import jmri.util.JmriJFrame;
 public class VoltMeterFrame extends JmriJFrame {
 
     // GUI member declarations
-    private JMenuBar menuBar;
     ArrayList<JLabel> digitIcons;
     JLabel decimal;
     JLabel volt;
@@ -136,17 +135,6 @@ public class VoltMeterFrame extends JmriJFrame {
 
         pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
-        
-        // Create a menu bar
-        menuBar = new JMenuBar();
-        JMenu toolsMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        menuBar.add(toolsMenu);
-        toolsMenu.add(new SelectMeterAction(Bundle.getMessage("MenuSelectMeter"),
-                jmri.VoltageMeter.class,
-                (Meter m) -> {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }));
-        setJMenuBar(menuBar);
         
         meterPane = new JPanel();
         meterPane.setBorder(BorderFactory.createTitledBorder(
