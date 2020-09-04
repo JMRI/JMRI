@@ -59,12 +59,12 @@ public class NBHSignalHeadTest {
     }
 
     public void realBean(NBHSignal head) {
-        SignalHead sigHead = (SignalHead) head.getBean();
+//         SignalHead sigHead = (SignalHead) head.getBean();
 //         Assert.assertNotNull(sigHead);
 
         head.setCTCHeld(false);
 
-        boolean danger = head.isDanger();
+//         boolean danger = head.isDanger();
 //         Assert.assertTrue(danger);
 
         int appearance = head.getAppearance();
@@ -75,9 +75,9 @@ public class NBHSignalHeadTest {
 //         Assert.assertFalse(held);
         head.setHeld(held);
 
-        int[] states = head.getValidStates();
+//         int[] states = head.getValidStates();
 //         Assert.assertEquals(7, states.length);
-        String[] stateNames = head.getValidStateNames();
+//         String[] stateNames = head.getValidStateNames();
 //         Assert.assertEquals(7, stateNames.length);
 
         head.addPropertyChangeListener(_testListener = (PropertyChangeEvent e) -> {});
