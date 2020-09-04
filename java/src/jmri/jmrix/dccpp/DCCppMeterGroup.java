@@ -26,7 +26,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
         updateTask = new MeterUpdateTask() {
             @Override
             public void requestUpdateFromLayout() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppMeterGroup.this);
             }
         };
         
@@ -58,12 +58,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
         log.debug("DCCppMultiMeter received reply: {}", r.toString());
         if (r.isCurrentReply()) {
             try {
-                MeterInfo mi = getMeterByName(MeterGroup.CurrentMeter);
-                if (mi != null) {
-                    mi.getMeter().setCommandedAnalogValue(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
-                } else {
-                    log.error("The current meter does not exists");
-                }
+                currentMeter.setCommandedAnalogValue(((r.getCurrentInt() * 1.0f) / (DCCppConstants.MAX_CURRENT * 1.0f)) * 100.0f );  // return as percentage.
             } catch (JmriException e) {
                 log.error("exception thrown when set current", e);
             }
@@ -72,11 +67,12 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
 
     @Override
     public void message(DCCppMessage m) {
+        // Do nothing
     }
 
     @Override
     public void requestUpdateFromLayout() {
-        tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), this);
+        updateTask.requestUpdateFromLayout();
     }
 
     // Handle a timeout notification

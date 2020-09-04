@@ -75,21 +75,11 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         try {
             if (CbusMessage.getEvent(r) == _eventToListenCurrent) {
                 int currentInt = ( r.getElement(5) * 256 ) + r.getElement(6);
-                MeterInfo mi = getMeterByName(MeterGroup.CurrentMeter);
-                if (mi != null) {
-                    mi.getMeter().setCommandedAnalogValue(currentInt * 1.0f );  // mA value, min 0, max 65535, NOT percentage
-                } else {
-                    log.error("The current meter does not exists");
-                }
+                currentMeter.setCommandedAnalogValue(currentInt * 1.0f );  // mA value, min 0, max 65535, NOT percentage
             } else {
                 // Voltage from the command station is scaled by a factor of 10 to allow one decimal place
                 int voltageInt = ( r.getElement(5) * 256 ) + r.getElement(6);
-                MeterInfo mi = getMeterByName(MeterGroup.VoltageMeter);
-                if (mi != null) {
-                    mi.getMeter().setCommandedAnalogValue(voltageInt / 10.0f ); // V value, min 0, max 6553.5, NOT percentage
-                } else {
-                    log.error("The voltage meter does not exists");
-                }
+                voltageMeter.setCommandedAnalogValue(voltageInt / 10.0f ); // V value, min 0, max 6553.5, NOT percentage
             }
         } catch (JmriException e) {
             log.error("exception thrown by setCurrent or setVoltage", e);
