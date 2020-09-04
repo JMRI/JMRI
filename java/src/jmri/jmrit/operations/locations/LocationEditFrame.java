@@ -152,9 +152,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 stageRadioButton.setSelected(true);
             }
             setTrainDirectionBoxes();
-            if (Setup.isRfidEnabled() && readerSelector != null) {
-                readerSelector.setSelectedItem(_location.getReporter());
-            }
         } else {
             enableButtons(false);
             spurRadioButton.setSelected(true);
@@ -224,6 +221,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
             addItem(readerPanel, readerSelector, 0, 0);
             readerPanel.setVisible(true);
+            if (_location != null) {
+                readerSelector.setSelectedItem(_location.getReporter());
+            }
         }
 
         // row 12
