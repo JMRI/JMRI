@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+
+<html lang="en">
+<head>
+  <title>JMRI Hardware Support - Digitrax "Meters"</title>
+  <meta name="author" content="B. Milhaupt">
+  <meta name="keywords" content=
+  "Digitrax DCS Command Station Meters">
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+      <h1>Hardware Support: Digitrax "Meters"</h1>
+      <table>
+          <tr><td><img src="images/TrackVoltageMeter.png"/></td><td><img src="images/CurrentMeter.png"/></td></tr>
+      </table>
+      <div class="toc">
+        <ul>
+          <li><a href="#Introduction">Introduction to JMRI Volt and Current Meters with Digitrax Hardware</a>
+          <li><a href="#SupportedHardware">Hardware which supports Digitrax "Meters"</a>
+          <li><a href="#Limitations">Limitations</a>
+        </ul>
+      </div>
+      <h1><a id="Introduction" name="Introduction">
+      Introduction to JMRI Volt and Current Meters with Digitrax Hardware</a></h1>
+
+      <p>Under certain configurations, JMRI provides tools under the "Tools" menu
+          item which may display "Track Voltage" and "Track Current" tools.  When
+          a LocoNet connection is defined and that connection is defined to use
+          any of certain Digitrax command stations, JMRI provides those tools.  When
+          a LocoNet connection is defined without a command station, or with 
+          any of the un-supported command stations, those tools will not be 
+          available. Those tools may also be available when a non-LocoNet connection
+          is defined and that connection type supports reporting of voltage and/or
+          current.</p>
+      <p>Note that "Track Current" is not necessarily a correct description of the
+          information that Digitrax command stations can provide.  See <a href="#Limitations_Current">Limitations</a>,
+          below.</p>
+      
+      <h1><a id="SupportedHardware" name="SupportedHardware">Hardware which supports Digitrax "Meters"</a></h1>
+      <p>The JMRI's LocoNet functionality supports the voltage and current reporting
+          from the following Digitrax command stations:</p>
+      <ul><li>DCS240</li><li>DCS210</li><li>DCS52</li></ul>
+      <p>Other Digitrax devices may be added to this list as the appropriate 
+          capabilities become available, both in hardware and in JMRI capabilities.</p>
+      <h1><a id="Limitations" name="Limitations">Limitations</a></h1>
+      <p>The LocoNet implementation which supports reporting of voltage and 
+          current has the following limitations:
+      <ul>
+          <li>The JMRI implementation of voltage and current measurement capabilities
+              applies only to the DCS240, DCS210, and DCS52.</li>
+          <li>Proper reporting of voltage and current measurements may only be 
+              available with certain command station firmware versions.  Be sure 
+              to update your command station firmware to help ensure proper 
+              measurement reporting.</li>
+          <li>When displaying LocoNet-reported Voltage and/or Current values, the
+              tools will generally receive new data about every 30 seconds.</li>
+          <li>If multiple DCS240s, DCS210s, and/or DCS52s are connected to the
+              connection's LocoNet, they will all reply to the LocoNet query for 
+              updated information.  The last one of these to report its measurements
+              will be reflected on the display.</li>
+          <li><a id="Limitations_Current" name="Limitations_Current">While the tool 
+              linked in the "Tools" menu calls one tool "Track Current"</a>, 
+              the LocoNet implementation does not report DCC track current exactly.  
+              Instead, the LocoNet implementation reports the "input power's current 
+              consumption".  This will generally be the DCC track current plus some 
+              "overhead" current which is consumed by the command station circuitry.</li>
+          <li>The LocoNet implementation relies upon the information reported by 
+              the "Query Mode" reporting of "Vtrk" (for the data used by the "Track 
+              Voltage" tool) and "Query Mode" reporting of "Iin" (for the data used
+              by the "Track Current" tool).</li>
+          <li>While other devices, including some Digitrax booster models, are able to provide
+              "Query Mode" data, the LocoNet implementation which provides 
+              information to the "Track Voltage" and "Track Current" tools ignores 
+              those responses.  This is because those tools do not have any 
+              provisions for handling multiple sources of voltage and current data.</li>
+      </ul>
+      <p>LocoNet&reg; is a registered trademark of <a href=
+      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
