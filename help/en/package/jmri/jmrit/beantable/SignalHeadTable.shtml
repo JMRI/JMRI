@@ -12,7 +12,7 @@
   <meta name="author" content=
   "Bob Jacobsen, Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help Signal Head Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

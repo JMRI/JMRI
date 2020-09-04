@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -78,6 +78,6 @@ Signal Mast definitions:
 <ul>
 With the exception of single head masts plates are only shown on the masts where they modify the meaning of the aspect. If you are using a plated mast be sure to disable any aspects which should not be shown, I have left some in on the 'L' and 'DV' plated masts which I suspect should not be there. The 'L' plate elevates medium speed to limited speed for a given aspect, and 'DV' similarly elevates slow speed to diverging speed.
     
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>
