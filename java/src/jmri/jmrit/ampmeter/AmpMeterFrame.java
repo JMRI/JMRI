@@ -2,18 +2,15 @@ package jmri.jmrit.ampmeter;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
+import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a simple LCD-based display of track current.
@@ -31,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * last saved window size and re-validates on each scaling (found to be necessary
  * on Raspberry Pis.
  */
-public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
+public class AmpMeterFrame extends JmriJFrame {
 
     // GUI member declarations
     ArrayList<JLabel> digitIcons;
@@ -39,6 +36,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     JLabel decimal;
     JLabel milliAmp;
     JLabel amp;
+
+    private PropertyChangeListener du_listener;
 
     private int displayLength;
     private boolean displayDP;
@@ -76,9 +75,6 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
         milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
-
-        // listen for changes to the meter parameters
-        meter.addPropertyChangeListener(this);
 
         // mA current readings are displayed as integers. An extra, non-displayed
         // decimal place is included to match amp and percentage displays.
@@ -123,7 +119,7 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
         // request callback to update time
         // Again, adding updates.
-        java.beans.PropertyChangeListener du_listener = (java.beans.PropertyChangeEvent e) -> {
+        du_listener = (java.beans.PropertyChangeEvent e) -> {
             update();
         };
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, du_listener);
@@ -237,25 +233,10 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     @Override
     public void dispose() {
         meter.disable();
-        meter.removePropertyChangeListener(this);
+        meter.removePropertyChangeListener(du_listener);
         super.dispose();
     }
 
-    /**
-     * Handle a change to clock properties
-     */
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        /*
-        boolean now = clock.getRun();
-        if (now) {
-            b.setText("Stop");
-        } else {
-            b.setText("Run");
-        }
-         */
-    }
-
-    private final static Logger LOG = LoggerFactory.getLogger(AmpMeterFrame.class);
+    private final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(AmpMeterFrame.class);
     
 }

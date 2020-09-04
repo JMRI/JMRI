@@ -2,6 +2,7 @@ package jmri.jmrit.voltmeter;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
@@ -27,6 +28,8 @@ public class VoltMeterFrame extends JmriJFrame {
     ArrayList<JLabel> digitIcons;
     JLabel decimal;
     JLabel volt;
+
+    private PropertyChangeListener propertyChangeListener;
 
     private int displayLength;
     private boolean displayDP;
@@ -89,10 +92,10 @@ public class VoltMeterFrame extends JmriJFrame {
 
         // request callback to update time
         // Again, adding updates.
-        java.beans.PropertyChangeListener du_listener = (java.beans.PropertyChangeEvent e) -> {
+        propertyChangeListener = (java.beans.PropertyChangeEvent e) -> {
             update();
         };
-        meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, du_listener);
+        meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -218,6 +221,7 @@ public class VoltMeterFrame extends JmriJFrame {
     @Override
     public void dispose() {
         meter.disable();
+        meter.removePropertyChangeListener(propertyChangeListener);
         super.dispose();
     }
 
