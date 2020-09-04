@@ -128,7 +128,7 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
 
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
-        if (!receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic)) {
+        if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
             log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
             return;
         }        
