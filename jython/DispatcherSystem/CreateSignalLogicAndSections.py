@@ -420,7 +420,4 @@ class Update_Signal_Logic():
         frame.setVisible(True)
         btn.doClick
         frame.dispose()
-                
-
-#usl= Update_Signal_Logic()  
-                 
+          
