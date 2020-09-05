@@ -132,10 +132,17 @@ public class NBHSignal {
         if (isSignalMast) {
             if (_mNamedBeanHandleSignalMast == null) return;
             _mNamedBeanHandleSignalMast.getBean().setHeld(newHeld);
+            if (newHeld) {
+                _mNamedBeanHandleSignalMast.getBean().setPermissiveSmlDisabled(true);
+            }
         } else {
             if (_mNamedBeanHandleSignalHead == null) return;
             _mNamedBeanHandleSignalHead.getBean().setHeld(newHeld);
         }
+    }
+
+    public void allowPermissiveSML() {
+        _mNamedBeanHandleSignalMast.getBean().setPermissiveSmlDisabled(false);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {

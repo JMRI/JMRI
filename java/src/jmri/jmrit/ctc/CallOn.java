@@ -186,6 +186,7 @@ NOTE:
             returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
             foundGroupingData._mSignal.setHeld(false);
+            foundGroupingData._mSignal.allowPermissiveSML();
         }
 
         signalDirectionIndicatorsObject.setRequestedDirection(signalDirectionLever);
