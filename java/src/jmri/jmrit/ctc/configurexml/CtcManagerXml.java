@@ -43,7 +43,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             cbhdElement.addContent(storeInt("UniqueID", cbhd._mUniqueID));
             cbhdElement.addContent(storeInt("SwitchNumber", cbhd._mSwitchNumber));
             cbhdElement.addContent(storeInt("SignalEtcNumber", cbhd._mSignalEtcNumber));
-            cbhdElement.addContent(storeInt("FileVersion", cbhd._mFileVersion));
             cbhdElement.addContent(storeInt("GUIColumnNumber", cbhd._mGUIColumnNumber));
 
             // Code section
@@ -159,7 +158,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
 
         Element otherData = new Element("ctcOtherData");
 
-        otherData.addContent(storeInt("FileVersion", od._mFileVersion));
+        otherData.addContent(storeString("CtcVersion", OtherData.CTC_VERSION));
 
 //  Fleeting:
         otherData.addContent(storeSensor("FleetingToggleInternalSensor", od._mFleetingToggleInternalSensor));
@@ -369,7 +368,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 CodeButtonHandlerData cbhd = CodeButtonHandlerDataRoutines.createNewCodeButtonHandlerData(
                         _mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber, cm.getProgramProperties());
                 cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
-                cbhd._mFileVersion = loadInt(lvl1.getChild("FileVersion"));
 
     log.info("------------- Code ------------");
 
@@ -509,7 +507,11 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
     void loadOtherData(CtcManager cm, Element el) {
         OtherData od = cm.getOtherData();
 
-        od._mFileVersion = loadInt(el.getChild("FileVersion"));
+        String xmlVersion = loadString(el.getChild("CtcVersion"));
+        xmlVersion = xmlVersion == null ? "v2.0" : xmlVersion;   // v2.0 is the initial version
+        if (!xmlVersion.equals(OtherData.CTC_VERSION)) {
+            log.warn("Update from version {} to version {} required", xmlVersion, OtherData.CTC_VERSION);
+        }
 
 //  Fleeting:
         od._mFleetingToggleInternalSensor = loadSensor(el.getChild("FleetingToggleInternalSensor"), true);

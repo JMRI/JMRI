@@ -19,7 +19,7 @@ import jmri.jmrit.ctc.NBHSensor;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class OtherData implements Serializable {
-    private final static int FILE_VERSION = 0;
+    public final static String CTC_VERSION = "v2.0";
 
     public enum CTC_PANEL_TYPE {
 // The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
@@ -92,8 +92,6 @@ create should have "InternalSensor" (case sensitive) as ANY PART of their
 variable name and declared as type String.
 */
     private static final String INTERNAL_SENSOR = "InternalSensor";             // NOI18N
-//  Version of this file for supporting upgrade paths from prior versions:
-    public int      _mFileVersion;
 //  Fleeting:
     public NBHSensor   _mFleetingToggleInternalSensor;
     public boolean  _mDefaultFleetingEnabled;
@@ -139,20 +137,9 @@ variable name and declared as type String.
         _mGUIDesign_OSSectionUnknownInconsistentRedBlink = false;
         _mGUIDesign_TurnoutsOnPanel = true;
     }
+
     public int getNextUniqueNumber() { return _mNextUniqueNumber++; }
+
     public void possiblySetToHighest(int value) { if (value + 1 > _mNextUniqueNumber) _mNextUniqueNumber = value + 1; }
 
-//  Figure out if we need to convert from prior verion(s) (As of 2/20/19, no):
-    public void upgradeSelf() {
-        if (_mFileVersion == FILE_VERSION) { _mFileVersion = FILE_VERSION; }    // Get around complaints by Travis.
-//  I had to get rid of this stub, because SpotBugs complained:
-/*
-        for (int oldVersion = _mFileVersion; oldVersion < FILE_VERSION; oldVersion++) {
-            switch(oldVersion) {
-                case 0:
-                    break;
-            }
-        }
-*/
-    }
 }

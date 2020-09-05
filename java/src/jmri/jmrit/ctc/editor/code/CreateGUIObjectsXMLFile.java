@@ -175,31 +175,45 @@ public class CreateGUIObjectsXMLFile {
                 if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                     int y = adjustSignalItemsYBySize(454, otherData._mGUIDesign_VerticalSize);
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName())) {
-                        generateSensorIndicator(
-                                thisObjectHorizontalPosition + 4,
-                                y,
-                                codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(),
-                                "green",
-                                false,
-                                printWriter); // NOI18N
+                        if (directionLeft) {
+                            generateSensorIndicator(
+                                    thisObjectHorizontalPosition + 4,
+                                    y,
+                                    codeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(),
+                                    "green", // NOI18N
+                                    false,
+                                    printWriter);
+                        } else {
+                            generateKnockout(
+                                    thisObjectHorizontalPosition + 4,
+                                    y,
+                                    printWriter);
+                        }
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName())) { // Should always be present, but for safety:
                         generateSensorIndicator(
                                 thisObjectHorizontalPosition + 22,
                                 adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize),
                                 codeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName(),
-                                "red",
+                                "red", // NOI18N
                                 false,
                                 printWriter);
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName())) {
-                        generateSensorIndicator(
-                                thisObjectHorizontalPosition + 38,
-                                y,
-                                codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(),
-                                "green",
-                                false,
-                                printWriter);   // NOI18N
+                        if (directionRight) {
+                            generateSensorIndicator(
+                                    thisObjectHorizontalPosition + 38,
+                                    y,
+                                    codeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(),
+                                    "green", // NOI18N
+                                    false,
+                                    printWriter);
+                        } else {
+                            generateKnockout(
+                                    thisObjectHorizontalPosition + 38,
+                                    y,
+                                    printWriter);
+                        }
                     }
                     if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
                         ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListOfSignalNames(codeButtonHandlerData._mSIDI_LeftRightTrafficSignals);
@@ -392,6 +406,21 @@ public class CreateGUIObjectsXMLFile {
         printWriter.println("      </inconsistent>");   // NOI18N
         printWriter.println("      <iconmaps />");  // NOI18N
         printWriter.println("    </sensoricon>");   // NOI18N
+    }
+
+/*
+    <positionablelabel x="18" y="240" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/USSpanels/Panels/knockout.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+*/
+    private static void generateKnockout(int x, int y, PrintWriter printWriter) {
+        printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"3\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">"); // NOI18N
+        printWriter.println("      <icon url=\"program:resources/icons/USSpanels/Panels/knockout.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");   // NOI18N
+        printWriter.println("      </icon>");   // NOI18N
+        printWriter.println("    </positionablelabel>");   // NOI18N
     }
 
 /*  As of 4.13.4ish:

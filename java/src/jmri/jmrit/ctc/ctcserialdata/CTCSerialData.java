@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  */
 public class CTCSerialData {
 
-    public final static String CTCVersion = "V1.05";
     private OtherData _mOtherData;
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
@@ -239,7 +238,7 @@ public class CTCSerialData {
 
     @SuppressWarnings("unchecked") // See below comments:
     public boolean readDataFromXMLFile(String filename) {
-        CodeButtonHandlerData.preprocessingUpgradeSelf(filename);   // WHOLE FILE operations FIRST.
+//         CodeButtonHandlerData.preprocessingUpgradeSelf(filename);   // WHOLE FILE operations FIRST.
         boolean returnValue = false;    // Assume error
         try {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)))) {
@@ -272,10 +271,10 @@ public class CTCSerialData {
             }
         }
 //  Finally, give each object a chance to upgrade itself BEFORE anything uses it:
-        _mOtherData.upgradeSelf();
-        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-            codeButtonHandlerData.upgradeSelf();
-        }
+//         _mOtherData.upgradeSelf();
+//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+//             codeButtonHandlerData.upgradeSelf();
+//         }
         return returnValue;
     }
 

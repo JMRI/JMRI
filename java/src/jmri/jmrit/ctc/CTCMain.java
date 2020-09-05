@@ -258,7 +258,7 @@ public class CTCMain {
             }
             JOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
         }
-        log.info("CTC {} {}", CTCSerialData.CTCVersion, Bundle.getMessage("CTCMainStarted"));   // NOI18N
+        log.info("CTC {} {}", OtherData.CTC_VERSION, Bundle.getMessage("CTCMainStarted"));   // NOI18N
     }
 
 //  One shot routine:
