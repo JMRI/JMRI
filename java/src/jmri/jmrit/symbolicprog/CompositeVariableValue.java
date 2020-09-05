@@ -271,7 +271,7 @@ public class CompositeVariableValue extends EnumVariableValue {
     protected void selectValue(int value) {
         log.debug("selectValue({})", value);
         if (value > _value.getItemCount() - 1) {
-            log.error("Saw unreasonable internal value: {}", value);
+            log.error("Saw unreasonable internal value for pane combo box: {}", value);
             return;
         }
 
