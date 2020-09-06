@@ -13,7 +13,7 @@
   <meta name="author" content="B. Milhaupt">
   <meta name="Date.Modified" content="20200107">
   <meta name="keywords" content="JMRI help Signal Mast Repeater">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

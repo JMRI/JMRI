@@ -1,8 +1,14 @@
+###########################################################################
+# Dispatcher System
+###########################################################################
+
 import java
 from java.awt import Dimension
 from javax.swing import JButton, JFrame,JPanel,BoxLayout,Box
 from javax.swing import JLabel, JMenu, JMenuItem, JMenuBar
 from javax.swing import JFileChooser,JTextField, BorderFactory
+from javax.swing import SwingWorker, SwingUtilities
+from javax.swing import WindowConstants
 from java.awt import Color, Font
 import jmri
 
@@ -20,6 +26,8 @@ from org.jgrapht.graph import DirectedMultigraph
 import threading
 import time
 import webbrowser
+
+
 
 start_file = ""
 run_file = ""
@@ -42,33 +50,10 @@ panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
 frame.add(panel)
 
 #*****Menu*******
-
-# def OnClick(event):
-#
-#     help_path = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/help/Dispatcher System.chm')
-#     help_command = 'hh.exe "'+ help_path + '"'
-#     subprocess.Popen(help_command)
-#     label_panel_location.text = event.getActionCommand()
-#
-# file = JMenu("Help (only on windows)")
-#
-#
-# newfile = JMenuItem("Window Help",actionPerformed = OnClick)
-# newfile1 = JMenuItem("Window Help1",actionPerformed = OnClick1)
-#openfile = JMenuItem("Open",actionPerformed = OnClick)
-#savefile = JMenuItem("Save",actionPerformed = OnClick)
-# file.add(newfile)
-# file.add(newfile1)
 bar = JMenuBar()
-# help_path = "package.jmri.jmrit.dispatcher.DispatcherSystem"
-
 jmri.util.HelpUtil.helpMenu(bar, 'html.apps.DispatcherSystem.DispatcherSystem' , True)
-# jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcherSystem.DispatcherSystem' , False)    # does not work
-# jmri.util.HelpUtil.helpMenu(bar, 'package.jmri.jmrit.dispatcher.Dispatcher-OLD' , False)    # does not work
-# bar.add(file)
 frame.setJMenuBar(bar)
 #
-
 
 
 ###info
@@ -416,13 +401,26 @@ robot = java.awt.Robot()
 KeyEvent = java.awt.event.KeyEvent
 
 
-def CreateTransits_action(event):
 
+def CreateTransits_action(event):
+    #print "in create_transits"
     global g
     global le
+    global DisplayProgress_global
+    
+    #the displayProgress is in CreateTransits
+    CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
+    exec(open (CreateTransits).read())
+    DisplayProgress_global = DisplayProgress
+    progress = 0
+    dpg=DisplayProgress_global()
+    dpg.Update("creating signal mast logic")
+    
+    
     initialPanelFilename = icons_file
     finalPanelFilename = run_file
-    print "Setting up Graph"
+
+    #print "Setting up Graph"
     my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
     import sys
     sys.path.append(my_path_to_jars) # add the jar to your path
@@ -430,15 +428,36 @@ def CreateTransits_action(event):
     exec(open (CreateGraph).read())
     le = LabelledEdge
     g = StationGraph()
+    
+    progress = 10
+    dpg.Update(str(progress)+ "% complete")
+    
+    print "updating logic"
+    CreateSignalLogic = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateSignalLogicAndSections.py')
+    exec(open (CreateSignalLogic).read())
+    usl = Update_Signal_Logic()
+    
+    #print "updating logic stage1"
+    usl.create_autologic_and_sections()
+    
+    #print "updating logic stage2"
+    usl.update_logic(run_file)
+    print "updated logic"
+    
+    progress = 15
+    dpg.Update(str(progress)+ "% complete")
 
-    print "Creating Transits"
+    #print "Creating Transits"
     CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
     exec(open (CreateTransits).read())
-    print "about to run CreateTransits"
-    t = CreateTransits(icons_file, run_file)
-    print "ran CreateTransits"
 
+    #print "about to run CreateTransits"
+    ct = CreateTransits()
+    
+    ct.run_transits(icons_file, run_file)
+    #print "ran CreateTransits"
 
+    dpg.killLabel()
 
 def show_options_message(msg):
     JOptionPane.showMessageDialog(None, msg);
@@ -581,3 +600,5 @@ panel.add(leftJustify(row3))
 
 
 frame.setVisible(True)
+
+
