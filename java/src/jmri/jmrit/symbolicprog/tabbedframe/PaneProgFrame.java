@@ -810,10 +810,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                     this,
                     Bundle.getMessage("ErrorCannotSetMode", desiredModes.toString()),
                     Bundle.getMessage("ErrorCannotSetModeTitle"),
-                    JOptionPane.OK_OPTION);
+                    JOptionPane.ERROR_MESSAGE);
             log.warn("No acceptable mode found, leave as found");
         }
-
     }
 
     /**

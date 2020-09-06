@@ -1311,12 +1311,11 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
+                        Bundle.getMessage("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
-
         }
     }
 
@@ -1352,15 +1351,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("error during locomotive file output", e);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")
-                        + "\n"
+                        Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
+                        Bundle.getMessage("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
-
         }
     }
 
