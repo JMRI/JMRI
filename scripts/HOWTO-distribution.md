@@ -364,6 +364,10 @@ If somebody has merged their change into master (or it's branched from master la
 
 - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
 
+- Make sure that the 4.21.1 milestone is on the original PR
+
+- If the PR has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 4.21.1 release note.  Merge these as needed to the release-4.21.1 and master branches
+
 ====================================================================================
 ## Create zipped .properties (experimental)
  

@@ -49,13 +49,13 @@
     </HEAD>
     
     <BODY>
-    <xsl:comment>#include virtual="/Header" </xsl:comment>
+    <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="indexheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
     
-    <xsl:comment>#include virtual="/Footer" </xsl:comment>
+    <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
     </BODY>
     </HTML>
 </xsl:template>
@@ -109,13 +109,13 @@
     </HEAD>
     
     <BODY>
-    <xsl:comment>#include virtual="/Header" </xsl:comment>
+    <xsl:comment>#include virtual="/Header.shtml" </xsl:comment>
     <xsl:comment>#include virtual="tocheader" </xsl:comment>
     <ul>
         <xsl:apply-templates/>
     </ul>
     
-    <xsl:comment>#include virtual="/Footer" </xsl:comment>
+    <xsl:comment>#include virtual="/Footer.shtml" </xsl:comment>
     </BODY>
     </HTML>
 </xsl:template>
