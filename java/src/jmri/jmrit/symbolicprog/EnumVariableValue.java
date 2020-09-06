@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent a enumerated variable.
+ * Extends VariableValue to represent an enumerated variable.
+ * @see VariableValue
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
- *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener {
 
@@ -198,17 +198,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
 
             // notify  (this used to be before setting the values)
-            if (log.isDebugEnabled()) {
-                log.debug("{} about to firePropertyChange", label());
-            }
+            log.debug("{} about to firePropertyChange", label());
             prop.firePropertyChange("Value", null, oldVal);
-            if (log.isDebugEnabled()) {
-                log.debug("{} returned to from firePropertyChange", label());
-            }
+            log.debug("{} returned to from firePropertyChange", label());
         }
-        if (log.isDebugEnabled()) {
-            log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
-        }
+        log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
@@ -574,7 +568,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
         // remove connection to graphical representation
         disposeReps();
-
     }
 
     void disposeReps() {

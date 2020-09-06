@@ -57,18 +57,18 @@
     </revision>
     <revision>
       <revnumber>4</revnumber>
-      <date>2020-08-23</date>
+      <date>2020-09-06</date>
       <authorinitials>EB</authorinitials>
-      <revremark>Changed address field labels hi/lo
-        Use compositeVal type values (ports 1-8), add LocoBooster,
-        Opcode1 and Opcode2 for ports 1-8
+      <revremark>Changed address field labels hi/lo to function like 81/1 entry
+        Use compositeVal type values (ports 1-12), add LocoBooster,
+        Opcode1 and Opcode2 for ports 1-12
       </revremark>
     </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
-  <version author="Egbert Broerse" version="4" lastUpdated="20200823"/>
+  <version author="Egbert Broerse" version="4" lastUpdated="20200906"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -276,7 +276,9 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port1 Config" value="15"/>
-            <compositeSetting label="Port1 Old Block" value="1"/> <!-- special case: set Value1 bit 7=1 -->
+            <compositeSetting label="Port1 Value2" value="0"/>
+            <compositeSetting label="Port1 Old Block" value="1"/> <!-- special case: set SV4 bit 7 to 1-->
+            <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -570,13 +572,6 @@
 
         <compositeVal>
         <!--Opcode1 Output types, limited set of options-->
-          <compositeChoice choice="Opcode1 Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Inaktiv</choice>
-            <choice xml:lang="nl">Uit</choice>
-            <compositeSetting label="Port1 Opcode1 Config" value="0"/>
-            <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
-          </compositeChoice>
 
           <compositeChoice choice="Contact1 Direct">
             <choice>Contact1 Direct</choice>
@@ -600,6 +595,14 @@
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port1 Opcode1 Config" value="177"/>
             <compositeSetting label="Port1 Opcode1 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Opcode1 Off">
+            <choice>Off</choice>
+            <choice xml:lang="de">Inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode1 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode1 Value2" value="0"/>
           </compositeChoice>
 
         </compositeVal>
@@ -674,13 +677,6 @@
 
         <compositeVal>
           <!--Opcode2 Output types, limited set of options-->
-          <compositeChoice choice="Opcode2 Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Inaktiv</choice>
-            <choice xml:lang="nl">Uit</choice>
-            <compositeSetting label="Port1 Opcode2 Config" value="0"/>
-            <compositeSetting label="Port1 Opcode2 Value2" value="0"/>
-          </compositeChoice>
 
           <compositeChoice choice="Contact1 Direct">
             <choice>Contact1 Direct</choice>
@@ -704,6 +700,14 @@
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port1 Opcode2 Config" value="177"/>
             <compositeSetting label="Port1 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Opcode2 Off">
+            <choice>Off</choice>
+            <choice xml:lang="de">Inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port1 Opcode2 Config" value="0"/>
+            <compositeSetting label="Port1 Opcode2 Value2" value="0"/>
           </compositeChoice>
 
         </compositeVal>
@@ -762,6 +766,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port2 Config" value="15"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -1158,13 +1163,6 @@
 
         <compositeVal>
           <!--Opcode2 Output types, limited set of options-->
-          <compositeChoice choice="Opcode2 Off">
-            <choice>Off</choice>
-            <choice xml:lang="de">Inaktiv</choice>
-            <choice xml:lang="nl">Uit</choice>
-            <compositeSetting label="Port2 Opcode2 Config" value="0"/>
-            <compositeSetting label="Port2 Opcode2 Value2" value="0"/>
-          </compositeChoice>
 
           <compositeChoice choice="Contact1 Direct">
             <choice>Contact1 Direct</choice>
@@ -1188,6 +1186,14 @@
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port2 Opcode2 Config" value="177"/>
             <compositeSetting label="Port2 Opcode2 Value2" value="3"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Opcode2 Off">
+            <choice>Off</choice>
+            <choice xml:lang="de">Inaktiv</choice>
+            <choice xml:lang="nl">Uit</choice>
+            <compositeSetting label="Port2 Opcode2 Config" value="0"/>
+            <compositeSetting label="Port2 Opcode2 Value2" value="0"/>
           </compositeChoice>
 
         </compositeVal>
@@ -1246,6 +1252,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port3 Config" value="15"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -1641,13 +1648,6 @@
         </qualifier>
           <compositeVal>
             <!--Opcode2 Output types, limited set of options-->
-            <compositeChoice choice="Opcode2 Off">
-              <choice>Off</choice>
-              <choice xml:lang="de">Inaktiv</choice>
-              <choice xml:lang="nl">Uit</choice>
-              <compositeSetting label="Port3 Opcode2 Config" value="0"/>
-              <compositeSetting label="Port3 Opcode2 Value2" value="0"/>
-            </compositeChoice>
 
             <compositeChoice choice="Contact1 Direct">
               <choice>Contact1 Direct</choice>
@@ -1671,6 +1671,14 @@
               <choice>Contact2 Indirect</choice>
               <compositeSetting label="Port3 Opcode2 Config" value="177"/>
               <compositeSetting label="Port3 Opcode2 Value2" value="3"/>
+            </compositeChoice>
+
+            <compositeChoice choice="Opcode2 Off">
+              <choice>Off</choice>
+              <choice xml:lang="de">Inaktiv</choice>
+              <choice xml:lang="nl">Uit</choice>
+              <compositeSetting label="Port3 Opcode2 Config" value="0"/>
+              <compositeSetting label="Port3 Opcode2 Value2" value="0"/>
             </compositeChoice>
 
           </compositeVal>
@@ -1729,6 +1737,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port4 Config" value="15"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -2214,6 +2223,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port5 Config" value="15"/>
+            <compositeSetting label="Port5 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -2547,8 +2557,8 @@
 
           <compositeChoice choice="Contact1 Indirect">
             <choice>Contact1 Indirect</choice>
-            <compositeSetting label="Port3 Opcode1 Config" value="177"/>
-            <compositeSetting label="Port3 Opcode1 Value2" value="1"/>
+            <compositeSetting label="Port5 Opcode1 Config" value="177"/>
+            <compositeSetting label="Port5 Opcode1 Value2" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Contact2 Direct">
@@ -2741,6 +2751,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port6 Config" value="15"/>
+            <compositeSetting label="Port6 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -3268,6 +3279,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port7 Config" value="15"/>
+            <compositeSetting label="Port7 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -3790,6 +3802,7 @@
             <compositeChoice choice="Input Occu" include="135,139,140">
               <choice>Input: Occupancy</choice>
               <compositeSetting label="Port8 Config" value="15"/>
+              <compositeSetting label="Port8 Value2" value="0"/>
             </compositeChoice>
             <compositeChoice choice="Input Occu Low" exclude="135,139,140">
               <choice>Input: Occupancy - active Low</choice>
@@ -4292,6 +4305,7 @@
             <compositeChoice choice="Input Occu" include="135,139,140">
               <choice>Input: Occupancy</choice>
               <compositeSetting label="Port9 Config" value="15"/>
+              <compositeSetting label="Port9 Value2" value="0"/>
             </compositeChoice>
             <compositeChoice choice="Input Occu Low" exclude="135,139,140">
               <choice>Input: Occupancy - active Low</choice>
@@ -4794,6 +4808,7 @@
             <compositeChoice choice="Input Occu" include="135,139,140">
               <choice>Input: Occupancy</choice>
               <compositeSetting label="Port10 Config" value="15"/>
+              <compositeSetting label="Port10 Value2" value="0"/>
             </compositeChoice>
             <compositeChoice choice="Input Occu Low" exclude="135,139,140">
               <choice>Input: Occupancy - active Low</choice>
@@ -5296,6 +5311,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port11 Config" value="15"/>
+            <compositeSetting label="Port11 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -5798,6 +5814,7 @@
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port12 Config" value="15"/>
+            <compositeSetting label="Port12 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
@@ -6371,7 +6388,7 @@
       <name>LocoIO</name>
     <column>
       <label>
-        <text>LocoIO Board Settings</text>
+        <text>&lt;html&gt;&lt;strong&gt;LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
       </label>
       <display item="Decoder Version"/>
 
