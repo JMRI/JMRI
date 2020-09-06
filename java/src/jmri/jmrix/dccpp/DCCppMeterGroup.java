@@ -30,7 +30,7 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
             }
         };
         
-        currentMeter = new DefaultMeter(
+        currentMeter = new DefaultMeter.DefaultCurrentMeter(
                 memo.getSystemPrefix() + "V" + "BaseStationCurrent",
                 Meter.Unit.Percent, 0, 100.0, 1.0, updateTask);
         

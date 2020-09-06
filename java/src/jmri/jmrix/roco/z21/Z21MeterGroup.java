@@ -27,11 +27,11 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         
         updateTask = new UpdateTask(-1);
         
-        currentMeter = new DefaultMeter(
+        currentMeter = new DefaultMeter.DefaultCurrentMeter(
                 memo.getSystemPrefix() + "V" + "CommandStationCurrent",
                 Meter.Unit.Milli, 0, 10000.0, 100, updateTask);
         
-        voltageMeter = new DefaultMeter(
+        voltageMeter = new DefaultMeter.DefaultVoltageMeter(
                 memo.getSystemPrefix() + "V" + "CommandStationVoltage",
                 Meter.Unit.Milli, 0, 50000.0, 500, updateTask);
         
@@ -65,10 +65,12 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
             RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
             cs.setSystemStatusMessagesFlag(true);
             tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
+            super.enable();
         }
 
         @Override 
         public void disable(){
+            super.disable();
             enabled = false;
             RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
             cs.setSystemStatusMessagesFlag(false);

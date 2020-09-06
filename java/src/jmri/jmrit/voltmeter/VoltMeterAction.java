@@ -33,13 +33,14 @@ public class VoltMeterAction extends AbstractAction {
     }
     
     private boolean hasVoltageMeter() {
-        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
-        if (m == null) return false;
+        MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
+        if (mm == null) return false;
         
-        SortedSet<MeterGroup> set = m.getNamedBeanSet();
-        if (set.isEmpty()) return false;
-        
-        return set.first().getMeterByName(MeterGroup.VoltageMeter) != null;
+        for (Meter m : mm.getNamedBeanSet()) {
+            if ((m != null) && (m instanceof VoltageMeter)) return true;
+            if ((m != null) && (m instanceof CurrentMeter)) return true;
+        }
+        return false;
     }
 
     @Override

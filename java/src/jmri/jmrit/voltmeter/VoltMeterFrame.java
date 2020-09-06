@@ -1,10 +1,9 @@
 package jmri.jmrit.voltmeter;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.SortedSet;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -23,23 +22,36 @@ import jmri.util.JmriJFrame;
  */
 public class VoltMeterFrame extends JmriJFrame {
 
+    private final List<Meter> voltageMeters = new ArrayList<>();
+    private final List<Meter> currentMeters = new ArrayList<>();
+    
     // GUI member declarations
+    private JMenuBar menuBar;
     ArrayList<JLabel> digitIcons;
     JLabel decimal;
+    JLabel milliVolt;
     JLabel volt;
+    JLabel milliAmp;
+    JLabel amp;
+    JLabel percent;
+    
+    int iconWidth;
+    int iconHeight;
 
     private PropertyChangeListener propertyChangeListener;
 
     private int displayLength;
     private boolean displayDP;
-    private int startWidth;
-    private int startHeight;
 
-    Meter meter;
+    private Meter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
     NamedIcon decimalIcon;
+    NamedIcon milliVoltIcon;
     NamedIcon voltIcon;
+    NamedIcon milliAmpIcon;
+    NamedIcon ampIcon;
+    NamedIcon percentIcon;
 
     JPanel pane1;
     JPanel meterPane;
@@ -47,14 +59,22 @@ public class VoltMeterFrame extends JmriJFrame {
     public VoltMeterFrame() {
         super(Bundle.getMessage("TrackVoltageMeterTitle"));
 
-        // If no current meter exists, AmpMeterAction should be disabled,
-        // so we shouldn't be here.
-        MeterGroupManager m = InstanceManager.getNullableDefault(MeterGroupManager.class);
-        if (m == null) throw new RuntimeException("No meter group exists");
-        SortedSet<MeterGroup> set = m.getNamedBeanSet();
-        MeterGroup.MeterInfo meterInfo = set.first().getMeterByName(MeterGroup.VoltageMeter);
-        if (meterInfo == null) throw new RuntimeException("No voltage meter exists");
-        meter = meterInfo.getMeter();
+        MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
+        if (mm == null) throw new RuntimeException("No meter manager exists");
+        
+        for (Meter m : mm.getNamedBeanSet()) {
+            if ((m != null) && (m instanceof VoltageMeter)) voltageMeters.add(m);
+            if ((m != null) && (m instanceof CurrentMeter)) currentMeters.add(m);
+        }
+        if (voltageMeters.isEmpty() && currentMeters.isEmpty()) throw new RuntimeException("No volt meter or amp meter exists");
+        
+        if (!voltageMeters.isEmpty()) {
+            meter = voltageMeters.get(0);
+            setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", meter.getDisplayName()));
+        } else {
+            meter = currentMeters.get(0);
+            setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", meter.getDisplayName()));
+        }
     }
 
     @Override
@@ -64,24 +84,30 @@ public class VoltMeterFrame extends JmriJFrame {
             digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
+        milliVoltIcon = new NamedIcon("resources/icons/misc/LCD/millivoltb.gif", "resources/icons/misc/LCD/millivoltb.gif");
         voltIcon = new NamedIcon("resources/icons/misc/LCD/voltb.gif", "resources/icons/misc/LCD/voltb.gif");
+        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
+        ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
+        percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
+        
+        iconWidth = digits[0].getIconWidth();
+        iconHeight = digits[0].getIconHeight();
 
         // Voltage readings are displayed as 3 digits with one decimal place
         displayLength = 3;
         displayDP = true;
         
         // init GUI
-        digitIcons = new ArrayList<JLabel>(displayLength); // 1 decimal place precision.
-        for(int i = 0;i<displayLength;i++) {
-           digitIcons.add(i,new JLabel(digits[0]));
-        }
+        percent = new JLabel(percentIcon);
         decimal = new JLabel(decimalIcon);
+        milliVolt = new JLabel(milliVoltIcon);
         volt = new JLabel(voltIcon);
-
+        milliAmp = new JLabel(milliAmpIcon);
+        amp = new JLabel(ampIcon);
+        
         buildContents();
 
         // Initially we want to scale the icons to fit the previously saved window size
-        getStartDimensions();
         scaleImage();
         buildContents();
         
@@ -114,16 +140,19 @@ public class VoltMeterFrame extends JmriJFrame {
                 - meterPane.getInsets().top - meterPane.getInsets().bottom;
         int frameWidth = this.getContentPane().getWidth()
                 - meterPane.getInsets().left - meterPane.getInsets().right;
-
-        double hscale = ((double)frameHeight)/((double)startHeight);
-        double wscale = ((double)frameWidth)/((double)startWidth);
+        
+        double hscale = ((double)frameHeight)/((double)iconHeight);
+        double wscale = ((double)frameWidth)/((double)(iconWidth * digitIcons.size()));
         double scale = hscale < wscale? hscale:wscale;
 
         for (int i = 0; i < 10; i++) {
             digits[i].scale(scale,this);
         }
         decimalIcon.scale(scale,this);
+        milliVoltIcon.scale(scale,this);
         voltIcon.scale(scale,this);
+        milliAmpIcon.scale(scale,this);
+        ampIcon.scale(scale, this);
 
         meterPane.revalidate();
         this.getContentPane().revalidate();
@@ -136,19 +165,64 @@ public class VoltMeterFrame extends JmriJFrame {
         pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
         
+        // Create menu bar
+        menuBar = new JMenuBar();
+        JMenu voltageMetersMenu = new JMenu(Bundle.getMessage("MenuVoltageMeters"));
+        menuBar.add(voltageMetersMenu);
+        for (Meter m : voltageMeters) {
+            voltageMetersMenu.add(new SelectMeterAction(m.getDisplayName(), m));
+        }
+
+        JMenu currentMetersMenu = new JMenu(Bundle.getMessage("MenuCurrentMeters"));
+        menuBar.add(currentMetersMenu);
+        for (Meter m : currentMeters) {
+            currentMetersMenu.add(new SelectMeterAction(m.getDisplayName(), m));
+        }
+        setJMenuBar(menuBar);
+
         meterPane = new JPanel();
         meterPane.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), Bundle.getMessage("TrackVoltage")));
+            BorderFactory.createEtchedBorder()));
+//        meterPane.setBorder(BorderFactory.createTitledBorder(
+//            BorderFactory.createEtchedBorder(), Bundle.getMessage("TrackVoltage")));
 
         // build the actual multimeter display.
         meterPane.setLayout(new BoxLayout(meterPane, BoxLayout.X_AXIS));
 
+        boolean isVoltage = (meter instanceof VoltageMeter);
+        
+        if (digitIcons == null) {
+            digitIcons = new ArrayList<>(displayLength); // 1 decimal place precision.
+            for(int i = 0;i<displayLength;i++) {
+               digitIcons.add(i,new JLabel(digits[0]));
+            }
+        }
+        
         for(int i=0;i<digitIcons.size()-1;i++){
             meterPane.add(digitIcons.get(i));
         }
-        meterPane.add(decimal);
-        meterPane.add(digitIcons.get(digitIcons.size()-1));
-        meterPane.add(volt);
+        switch (meter.getUnit()) {
+            case Milli:
+                if (isVoltage) meterPane.add(milliVolt);
+                else meterPane.add(milliAmp);
+                break;
+            case NoPrefix:
+                meterPane.add(decimal);
+                meterPane.add(digitIcons.get(digitIcons.size()-1));
+                
+                if (isVoltage) meterPane.add(this.volt);
+                else meterPane.add(amp);
+                break;
+            case Percent:
+            default:
+                meterPane.add(decimal);
+                meterPane.add(digitIcons.get(digitIcons.size()-1));
+                meterPane.add(percent);
+                break;
+        }
+//        meterPane.add(decimal);
+//        meterPane.add(digitIcons.get(digitIcons.size()-1));
+//        meterPane.add(volt);
 
         pane1.add(meterPane);
         getContentPane().add(pane1);
@@ -166,23 +240,19 @@ public class VoltMeterFrame extends JmriJFrame {
     synchronized void update() {
         double val = meter.getKnownAnalogValue();
         int value = (int)Math.floor(val *10); // keep one decimal place.
+        
+        String valStr;
+        if (displayDP) valStr = String.format("%1.1f", val);
+        else valStr = String.format("%1f", val);
+        
         boolean scaleChanged = false;
-        // autoscale the array of labels.
-        if (displayDP == true) {
-            while( (value) > (Math.pow(10,digitIcons.size())-1)) {
-               digitIcons.add(0,new JLabel(digits[0]));
-               scaleChanged = true;
-            }
-        } else {
-            while( (value) > ((Math.pow(10,digitIcons.size()-1))-1)) {
-               digitIcons.add(0,new JLabel(digits[0]));
-               scaleChanged = true;
-            }
+        while ((digitIcons.size()+1) < valStr.length()) {
+           digitIcons.add(0,new JLabel(digits[0]));
+           scaleChanged = true;
         }
-
+        
         if (scaleChanged){
             // clear the content pane and rebuild it.
-            getStartDimensions();
             scaleImage();
             buildContents();
         }
@@ -193,24 +263,48 @@ public class VoltMeterFrame extends JmriJFrame {
         }
     }
 
-    /**
-     * Get the starting dimensions based on the size required by the display
-     */
-    void getStartDimensions() {
-        startHeight = digits[0].getIconHeight();
-        startWidth = digits[0].getIconWidth() * (displayLength + 1);
-        if (displayDP) {
-            startWidth += decimalIcon.getIconWidth();
-        } else {
-            startWidth -= digits[0].getIconWidth(); // non-displayed digit
-        }
-    }
-    
     @Override
     public void dispose() {
         meter.disable();
         meter.removePropertyChangeListener(propertyChangeListener);
         super.dispose();
+    }
+
+
+
+    public class SelectMeterAction extends AbstractAction {
+
+        private final Meter m;
+
+        public SelectMeterAction(String actionName, Meter meter) {
+            super(actionName);
+            this.m = meter;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            meter.disable();
+            meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+            
+            meter = m;
+            meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+            meter.enable();
+            
+            // Update the display
+            digitIcons = null;
+            
+            buildContents();
+
+            // Initially we want to scale the icons to fit the previously saved window size
+            scaleImage();
+            buildContents();
+            
+            if (meter instanceof VoltageMeter) {
+                VoltMeterFrame.this.setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
+            } else {
+                VoltMeterFrame.this.setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
+            }
+        }
     }
 
 }

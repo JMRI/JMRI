@@ -38,11 +38,11 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
         
         updateTask = new UpdateTask(-1);
         
-        currentMeter = new DefaultMeter(
+        currentMeter = new DefaultMeter.DefaultCurrentMeter(
                 memo.getSystemPrefix() + "V" + "CBUSCurrentMeter",
                 Meter.Unit.Milli, 0, 65535.0, 1.0, updateTask);
         
-        voltageMeter = new DefaultMeter(
+        voltageMeter = new DefaultMeter.DefaultVoltageMeter(
                 memo.getSystemPrefix() + "V" + "CBUSVoltageMeter",
                 Meter.Unit.NoPrefix, 0, 6553.5, 0.1, updateTask);
         
@@ -125,6 +125,8 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
             log.info("Enabled meter Long Ex2Data {} {}", 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenCurrent), 
                 new CbusNameService(_memo).getEventNodeString(_nodeToListen,_eventToListenVoltage));
+            
+            super.enable();
         }
 
         /**
@@ -134,6 +136,7 @@ public class CbusMeterGroup extends jmri.implementation.DefaultMeterGroup implem
          */
         @Override
         public void disable() {
+            super.disable();
             tc.removeCanListener(CbusMeterGroup.this);
             log.info("Disabled meter.");
         }
