@@ -43,7 +43,7 @@ public class SprogCbusMenu extends JMenu {
         add(new jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusModeSwitcherAction(Bundle.getMessage("MenuItemSPROGModeSwitcher"), memo));
         // Added tools that can normally only be found in PanelPro tools menu so that they are available from DP3
         add(new javax.swing.JSeparator());
-        add(new jmri.jmrit.swing.meter.MeterAction(Bundle.getMessage("MenuItemMeter")));
+        add(new jmri.jmrit.swing.meter.MeterAction());
 
     }
 
