@@ -104,7 +104,7 @@ public class NBHSensor {
         _mUserIdentifier = userIdentifier;
         _mParameter = parameter;
         _mOptional = optional;
-        Sensor tempSensor = optional ? getSafeOptionalJMRISensor(module, userIdentifier, parameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, parameter, sensor);
+        Sensor tempSensor = _mOptional ? getSafeOptionalJMRISensor(module, userIdentifier, _mParameter, sensor) : getSafeExistingJMRISensor(module, userIdentifier, _mParameter, sensor);
         if (tempSensor != null) {
             _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor, tempSensor);
         } else {
