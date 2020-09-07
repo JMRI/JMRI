@@ -12,7 +12,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI help Logix Conditional Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

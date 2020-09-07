@@ -103,7 +103,7 @@
             
         <li><p>Panel clock - you can also embed a clock in a panel
         from the panel editor.<br>
-        Alalog clocks can be embedded into Layout Editor panels (instead of a separate window) via 
+        Analog clocks can be embedded into Layout Editor panels (instead of a separate window) via 
         Panel Window > Options > Add > Add Fast Clock</p>
         <a href="images/analog-clock-in-le-panel-211x252.png"><img 
         src="images/analog-clock-in-le-panel-211x252.png" width="211" height="252"

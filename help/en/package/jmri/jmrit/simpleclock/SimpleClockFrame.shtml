@@ -58,7 +58,8 @@
       </ul>
       <p>When the fast clock is resumed after having been paused,
       the fast clock time continues where it left off.</p>
-
+      <p>The current fast time is displayed at the top of the screen, the tooltip of 
+      which displays the full date, time and timezone.</p>
 
 
     <h2>Setting Fast Clock Time and Fast Clock Rate</h2>

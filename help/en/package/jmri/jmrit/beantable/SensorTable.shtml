@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -11,7 +10,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Sensor Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -25,25 +24,34 @@
       for this Panel.</p>
 
       <h2>Sensor Table Columns</h2>
-      (You may change the order of the columns by dragging their titles,
-      and sort the rows by clicking one of the sort triangles next to a column title)
+
+      <p class="im">
+      <img src="images/SensorTableColumnList.jpg" alt="Sensor Table Columns (Rel 4.20)" align="right" height="260" width="180">
+      Contents of the Sensor Table are displayed by selecting it under <strong>Tools&rArr;Tables</strong>.
+      As with all JMRI tool tables, you can add or remove columns from the display by right-clicking anywhere
+      in the column header and selecting or deselecting the desired columns from the menu that appears (see picture at right).
+      You can change the order of the columns by dragging their titles, change the width of columns by dragging the vertical line
+      between columns, and sort the rows by clicking the column title (a triangle will appear indicating the direction of the sort).
+      
+      <br>
+      <img src="images/SensorTableGraphic.png" height="187" width="307" align="right" alt="Graphic Sensor state column">
+       </p>
+       
       <dl>
-        <dt>User Name</dt>
+        <dt><strong>User Name</strong></dt>
 
-        <dd>You can directly enter or change the "User Name" for an
-        existing Sensor (double click in the cell).</dd>
-
-        <dt>State</dt>
-
-        <dd>Pushing the "State" button/icon will change the
-        state of an existing Sensor.
-        <img src="images/SensorTableGraphic.png" height="187" width="307"
-        align="right" alt="Graphic Sensor state column">
-        Choose between textual and graphic display of the Sensor state
-        in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        <dd>
+        You can directly enter or change the "User Name" for an existing Sensor (double click in the cell).
         </dd>
 
-        <dt>Delete</dt>
+        <dt><strong>State</strong></dt>
+
+        <dd>
+        Pushing the "State" button/icon will change the state of an existing Sensor. Choose between textual and graphic
+        display of the Sensor state in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+        </dd>
+
+        <dt><strong>Delete</strong></dt>
 
         <dd>
           Pushing the "Delete" button will remove the Sensor from
@@ -56,14 +64,14 @@
           any files that contain this Sensor.
         </dd>
 
-        <dt>Inverted</dt>
+        <dt><strong>Inverted</strong></dt>
 
         <dd>When checked, the Sensor command and status is
         inverted. For example, an inverted Sensor means that when
         the layout sends an "Active" Sensor command, the Sensor
         becomes "Inactive" to JMRI.</dd>
 
-        <dt>Use Global Delays</dt>
+        <dt><strong>Use Global Delays</strong></dt>
 
         <dd>
           When checked, the Sensor will use the system values
@@ -73,16 +81,15 @@
           <br>See <a href="#Debounce">Sensor Debounce Delay</a> below.
         </dd>
 
-        <dt>Delay to Active/to Inactive</dt>
+        <dt><strong>Delay to Active/to Inactive</strong></dt>
 
         <dd>
           Specify the amount of time in milliseconds that the
           system waits before registering the state change of a
-          Sensor to either state.
-          <br>See <a href="#Debounce">Sensor Debounce Delay</a> below.</br>
+          Sensor to either state.  See <a href="#Debounce">Sensor Debounce Delay</a> below.
         </dd>
       </dl>
-
+      
       <h2>Sensor Table Controls</h2>
       <p>Along the bottom of the Sensor Table pane are buttons and checkboxes
       that control its operation.</p>

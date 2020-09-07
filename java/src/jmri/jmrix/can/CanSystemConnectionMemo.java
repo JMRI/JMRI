@@ -248,6 +248,15 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     public boolean isRestartRequired() {
         return super.isRestartRequired() || protocolOptionsChanged;
     }
+    
+    /**
+     * Custom interval of 100ms.
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefaultOutputInterval(){
+        return 100;
+    }
 
     /**
      * {@inheritDoc }

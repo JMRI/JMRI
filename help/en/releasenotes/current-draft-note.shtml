@@ -66,12 +66,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Default Output Interval reduced to 100ms.</li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug that caused an erroneous ERROR message on operating MQTT Lights</li>
             </ul>
 
         <h4>MRC</h4>
@@ -91,7 +91,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li></li>
+                <li>Default Output Interval reduced to 100ms.</li>
             </ul>
 
         <h4>RFID</h4>
