@@ -383,16 +383,17 @@ public class CbusNodeConstants {
         result.put(53, "CANBIP_OUT"); // NOI18N
         result.put(54, "CANASTOP"); // NOI18N
         result.put(55, "CANCSB"); // NOI18N
-        result.put(56, "CANMAGOT"); // NOI18N
+        result.put(56, "CANMAG"); // NOI18N
         result.put(57, "CANACE16CMIO"); // NOI18N
         result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "CANDISP"); // NOI18N
         result.put(60, "CANCOMPUTE"); // NOI18N
-        result.put(61, "CANRFC522"); // NOI18N
+        result.put(61, "CANRC522"); // NOI18N
         result.put(62, "CANINP"); // NOI18N
         result.put(63, "CANOUT"); // NOI18N
         result.put(64, "CANEMIO"); // NOI18N
         result.put(65, "CANCABDC"); // NOI18N
+        result.put(66, "CANRCOM"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -542,11 +543,12 @@ public class CbusNodeConstants {
         result.put(58, "CBUS module based on Raspberry Pi");
         result.put(59, "25K80 version of CANLED64");
         result.put(60, "Compute Event processing engine");
-        result.put(61, "Read/Write from/to RFC522 RFID tags");
+        result.put(61, "Read/Write from/to RC522 RFID tags");
         result.put(62, "8 inputs module (2g version of CANACE8c)");
         result.put(63, "8 outputs module (2g version of CANACC8)");
         result.put(64, "Extended CANMIO (24 I/O ports)");
         result.put(65, "DC cab");
+        result.put(66, "DCC Railcom detector/reader");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -696,7 +698,7 @@ public class CbusNodeConstants {
         result.put(63, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:canout"); // NOI18N
         // result.put(64, "CANEMIO"); // NOI18N
         result.put(65, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:cancabdc"); // NOI18N
-        
+        result.put(66, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:canrcom"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N
