@@ -408,16 +408,16 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setOutputInterval(int)
         outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
-        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip",
+                adapter.getSystemConnectionMemo().getDefaultOutputInterval(),adapter.getManufacturer()));
         JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
         field.setColumns(6);
         outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
         outputIntervalReset.addActionListener((ActionEvent event) -> {
-            int defaultInterval = 250; // 250 was previously hard coded for Routes interval
-            outputIntervalSpinner.setValue(defaultInterval);
-            adapter.getSystemConnectionMemo().setOutputInterval(defaultInterval);
+            outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
+            adapter.getSystemConnectionMemo().setOutputInterval(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
         });
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));

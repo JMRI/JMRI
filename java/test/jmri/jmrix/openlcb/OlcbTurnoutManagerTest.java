@@ -55,6 +55,18 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         Assert.assertNotNull("real object returned ", t);
         Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
     }
+    
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 100, l.getOutputInterval());
+        l.getMemo().setOutputInterval(21);
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
+        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
+    }
 
     @Override
     @BeforeEach
