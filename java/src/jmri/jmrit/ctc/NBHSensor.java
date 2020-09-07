@@ -226,5 +226,5 @@ public class NBHSensor {
         return _mArrayListOfPropertyChangeListeners.size();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensor.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSensor.class);
 }
