@@ -151,6 +151,13 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      * @return the output interval time in ms
      */
     int getOutputInterval();
+    
+    /**
+     * Get the Default connection specific OutputInterval to wait between/before commands
+     * are sent.
+     * @return the default output interval time in ms.
+     */
+    int getDefaultOutputInterval();
 
     void setOutputInterval(int newInterval);
 
