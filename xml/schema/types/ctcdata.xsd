@@ -90,7 +90,7 @@
               <xs:element type="xs:integer" name="UniqueID"/>
               <xs:element type="xs:integer" name="SwitchNumber"/>
               <xs:element type="xs:integer" name="SignalEtcNumber"/>
-              <xs:element type="xs:integer" name="FileVersion"/>
+              <xs:element type="xs:integer" name="FileVersion" minOccurs="0"/>
               <xs:element type="xs:integer" name="GUIColumnNumber"/>
               <xs:element type="xs:string" name="CodeButtonInternalSensor"/>
               <xs:element type="xs:string" name="OSSectionOccupiedExternalSensor"/>

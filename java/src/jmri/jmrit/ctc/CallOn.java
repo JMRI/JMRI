@@ -172,9 +172,9 @@ NOTE:
 
             foundGroupingData._mSignal.setHeld(false);    // Original order in .py code
             foundGroupingData._mSignal.setAppearance(foundGroupingData._mCallOnAspect);
-        } else {
+        } else {    // Signal mast
 //  We get this EVERY time (we don't cache this in "foundGroupingData._mCalledOnExternalSensor") because this property of Block
-//  can be changed DYNAMICALLY at runtime (I believe) via the Block Editor:
+//  can be changed DYNAMICALLY at runtime via the Block Editor:
             NBHSensor sensor = new NBHSensor(foundGroupingData._mNamedBeanHandleBlock.getBean().getNamedSensor());
             if (Sensor.ACTIVE != sensor.getKnownState()) return returnValue;       // Has to be active EXACTLY, pretend we did it, but we didn't!
             if (sensor.valid()) {
@@ -185,8 +185,8 @@ NOTE:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
             returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber, signalDirectionLever == CTCConstants.RIGHTTRAFFIC);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
-            foundGroupingData._mSignal.setHeld(false);
             foundGroupingData._mSignal.allowPermissiveSML();
+            foundGroupingData._mSignal.setHeld(false);
         }
 
         signalDirectionIndicatorsObject.setRequestedDirection(signalDirectionLever);

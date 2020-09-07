@@ -130,8 +130,8 @@ public class NBHSensor {
     void registerSensor(String sensorName) {
         if (valid()) InstanceManager.getDefault(CtcManager.class).putNBHSensor(sensorName, this);
     }
-//????
-//  Use when something else has the thing we help with:
+
+//  Used by CallOn to create a temporary NBHSensor for the current sensor for a block.
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
         _mUserIdentifier = Bundle.getMessage("Unknown");    // NOI18N
         _mParameter = _mUserIdentifier;
@@ -219,51 +219,9 @@ public class NBHSensor {
     }
 
     /**
-     * Set the new sensor name to use.  IF (and only if) the name changes, then we do EVERYTHING
-     * required to support the name change.
-     *
-     * @param newName The new name of the object to use.
-     * @param isInternalSensor True if an internal sensor which will create the sensor if necessary.
-     */
-    public void setHandleName(String newName, boolean isInternalSensor) {
-        if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
-
-//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleSensor.getBean().removePropertyChangeListener(propertyChangeListener);
-            }
-
-//  Allocate and replace the existing sensor (away with thee old sensor!)
-            Sensor tempSensor = null;
-            if (isInternalSensor) {
-                try {
-                    tempSensor = getInternalSensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
-                } catch (CTCException ex) {
-                    log.debug("CTCException in setHandleName: {}", ex.getMessage());
-                }
-            } else {
-                tempSensor = _mOptional ? getSafeOptionalJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName) : getSafeExistingJMRISensor("NBHSensor", _mUserIdentifier, _mParameter, newName); // NOI18N
-            }
-            if (tempSensor != null) {
-                _mNamedBeanHandleSensor = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempSensor);
-                registerSensor(newName);
-            } else {
-                _mNamedBeanHandleSensor = null;
-            }
-
-//  Relink OUR registered propertyChangeListeners to the NEW sensor:
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleSensor.getBean().addPropertyChangeListener(propertyChangeListener);
-            }
-        }
-    }
-
-
-    /**
      * For Unit testing only.
      * @return Returns the present number of property change listeners registered with us so far.
      */
-
     public int testingGetCountOfPropertyChangeListenersRegistered() {
         return _mArrayListOfPropertyChangeListeners.size();
     }

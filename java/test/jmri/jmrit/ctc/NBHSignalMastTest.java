@@ -95,6 +95,7 @@ public class NBHSignalMastTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.util.JUnitUtil.tearDown();
     }
 }

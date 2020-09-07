@@ -41,10 +41,8 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         _mIsModify = isModify;
         if (!isModify) {    // Add:
             this.setTitle(Bundle.getMessage("TitleDlgAddModAdd"));  // NOI18N
-            _mInfo.setVisible(false);
         } else {    // Modify:
             this.setTitle(Bundle.getMessage("TitleDlgAddModChg"));  // NOI18N
-            _mInfo.setVisible(true);
         }
         _mGUIColumnNumber.setModel(new SpinnerNumberModel(existingGUIColumnNumber, 0, 32767, 1));
         _mGUISwitchNumber.setModel(new SpinnerNumberModel(existingSwitchNumber, 1, 32767, 2));
@@ -64,7 +62,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         _mSaveAndClose = new javax.swing.JButton();
-        _mInfo = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         _mGUIColumnNumber = new javax.swing.JSpinner();
@@ -92,13 +89,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
             }
         });
 
-        _mInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        _mInfo.setText(Bundle.getMessage("InfoDlgAddModNote")
-        );
-        _mInfo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        _mInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        _mInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
         jLabel4.setText(Bundle.getMessage("LabelDlgAddModColumn"));
 
         jLabel5.setText(Bundle.getMessage("InfoDlgAddModGen"));
@@ -116,10 +106,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(_mInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,8 +148,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
                 .addComponent(_mGUIGeneratedAtLeastOnceAlready)
                 .addGap(32, 32, 32)
                 .addComponent(_mSaveAndClose)
-                .addGap(18, 18, 18)
-                .addComponent(_mInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -198,7 +182,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
     private javax.swing.JSpinner _mGUIColumnNumber;
     private javax.swing.JCheckBox _mGUIGeneratedAtLeastOnceAlready;
     private javax.swing.JSpinner _mGUISwitchNumber;
-    private javax.swing.JLabel _mInfo;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

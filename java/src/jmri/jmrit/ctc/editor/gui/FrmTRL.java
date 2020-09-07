@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingData;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
@@ -57,7 +58,8 @@ public class FrmTRL extends javax.swing.JFrame {
         this.setTitle(Bundle.getMessage("TitleDlgTRL") + " " + codeButtonHandlerData.myShortStringNoComma());   // NOI18N
         ArrayList<String> listOfOSSectionOccupiedExternalSensors = getListOfExternalSensorsSlaved(codeButtonHandlerData, _mCTCSerialData.getCodeButtonHandlerDataArrayList());
         _mTopology = new Topology(_mCTCSerialData, listOfOSSectionOccupiedExternalSensors, Bundle.getMessage("TLE_Normal"), Bundle.getMessage("TLE_Reverse"));  // NOI18N
-        boolean topologyAvailable = _mTopology.isTopologyAvailable();
+        boolean isMastSignalType = _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALMAST;
+        boolean topologyAvailable = _mTopology.isTopologyAvailable() && isMastSignalType;
         _mAutoGenerate.setVisible(topologyAvailable);
         _mReverseLeftRight.setVisible(topologyAvailable);
         _mAutoGenerateWarning.setVisible(topologyAvailable);

@@ -38,10 +38,10 @@ public class NBHTurnoutTest {
 //         JUnitAppender.suppressErrorMessage("expected Sensor 1 not defined - IT93");
 //         JUnitAppender.suppressErrorMessage("expected Sensor 2 not defined - IT93");
     }
-    
+
     @Test
     public void testHandleNameModification() {
-        
+
 /*  Next, test in NBHTurnout the ability to dynmaically change the underlying turnout used
     WITHOUT affecting registered PropertyChangeListeners....
 */
@@ -54,35 +54,31 @@ public class NBHTurnoutTest {
         NBHTurnout turnoutNBH = new NBHTurnout("Module", "UserId", "Parameter", "TURNOUT", false);
         Assert.assertEquals(0, turnoutNBH.testingGetCountOfPropertyChangeListenersRegistered());     // Verify nothing registered yet.
 
-//  Setup for the test:        
+//  Setup for the test:
         PropertyChangeListener propertyChangeListener;
         AtomicInteger booleanContainer = new AtomicInteger(0);
         turnoutNBH.setCommandedState(Turnout.CLOSED);
-        
+
 //  NOTE: When setCommandedState is called, TWO PropertyChangeEvent's occur:
 //        CommandedState and KnownState BOTH change!
-        
+
         turnoutNBH.addPropertyChangeListener(propertyChangeListener = (PropertyChangeEvent e) -> { booleanContainer.incrementAndGet(); });
         Assert.assertEquals(1, turnoutNBH.testingGetCountOfPropertyChangeListenersRegistered());
         turnoutNBH.setCommandedState(Turnout.THROWN);
         Assert.assertEquals(2, booleanContainer.get());     // Make sure it works so far.
-        
-//  Simulate the user changing the turnout contained in the NBHTurnout to something else:        
-        turnoutNBH.setHandleName("TURNOUT2");
-        Assert.assertEquals(1, turnoutNBH.testingGetCountOfPropertyChangeListenersRegistered()); // We BETTER still be registered!
 
 // Simulate as if SOMETHING OTHER THAN OUR CODE changed the state of turnout FLEETING2:
         turnout2.setCommandedState(Turnout.THROWN);
-        
+
 //  Did our PropertyChangeEvent happen?
-//  This is what all this led up to, the REAL test!:        
-        Assert.assertEquals(4, booleanContainer.get());
-        
+//  This is what all this led up to, the REAL test!:
+        Assert.assertEquals(2, booleanContainer.get());
+
 //  Clean up, and make sure our bookkeeping worked fine:
         turnoutNBH.removePropertyChangeListener(propertyChangeListener);
         Assert.assertEquals(0, turnoutNBH.testingGetCountOfPropertyChangeListenersRegistered());
     }
-    
+
 
 // WARN  - expected Sensor 1 not defined - IT93 [main] jmri.implementation.AbstractTurnout.setInitialKnownStateFromFeedback()
 // WARN  - expected Sensor 2 not defined - IT93 [main] jmri.implementation.AbstractTurnout.setInitialKnownStateFromFeedback()
@@ -131,6 +127,7 @@ public class NBHTurnoutTest {
     public void tearDown() {
         // stop any BlockBossLogic threads created
         JUnitUtil.clearBlockBossLogic();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
 
         jmri.util.JUnitUtil.tearDown();
     }

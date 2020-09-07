@@ -103,6 +103,7 @@ public class CtcRunActionTest {
 
         // stop any BlockBossLogic threads created
         JUnitUtil.clearBlockBossLogic();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
 
         JUnitUtil.tearDown();
     }

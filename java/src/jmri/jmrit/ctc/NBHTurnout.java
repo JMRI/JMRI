@@ -126,36 +126,6 @@ public class NBHTurnout {
     }
 
     /**
-     * Set the new turnout name to use.  IF (and only if) the name changes, then we do EVERYTHING
-     * required to support the name change.
-     *
-     * @param newName The new name of the object to use.
-     */
-    public void setHandleName(String newName) {
-        if (getHandleName().compareTo(newName) != 0) { // User changed their minds about which Sensor to use (NOT a rename!):
-
-//  Save and unlink OUR propertyChangeListeners ONLY from the old Sensor:
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleTurnout.getBean().removePropertyChangeListener(propertyChangeListener);
-            }
-
-//  Allocate and replace the existing turnout (away with thee old turnout!)
-            Turnout tempTurnout = getSafeExistingJMRITurnout("NBHTurnout", _mUserIdentifier, _mParameter, newName); // NOI18N
-            if (tempTurnout != null) {
-                _mNamedBeanHandleTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(newName, tempTurnout);
-            } else {
-                _mNamedBeanHandleTurnout = null;
-            }
-
-//  Relink OUR registered propertyChangeListeners to the NEW turnout:
-            for (PropertyChangeListener propertyChangeListener : _mArrayListOfPropertyChangeListeners) {
-                _mNamedBeanHandleTurnout.getBean().addPropertyChangeListener(propertyChangeListener);
-            }
-        }
-    }
-
-
-    /**
      * For Unit testing only.
      * @return Returns the present number of property change listeners registered with us so far.
      */

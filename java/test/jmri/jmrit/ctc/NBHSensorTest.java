@@ -128,6 +128,7 @@ public class NBHSensorTest {
     public void tearDown() {
         // stop any BlockBossLogic threads created
         JUnitUtil.clearBlockBossLogic();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
 
         jmri.util.JUnitUtil.tearDown();
     }

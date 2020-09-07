@@ -1,5 +1,7 @@
 package jmri.jmrit.ctc;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -21,6 +23,7 @@ public class CTCMainTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         jmri.util.JUnitUtil.tearDown();
     }
 }
