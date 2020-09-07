@@ -41,7 +41,7 @@ public class NBHTurnout {
         _mUserIdentifier = userIdentifier;
         _mParameter = parameter;
         _mFeedbackDifferent = FeedbackDifferent;
-        Turnout tempTurnout = getSafeExistingJMRITurnout(module, userIdentifier, parameter, turnout);
+        Turnout tempTurnout = getSafeExistingJMRITurnout(module, _mUserIdentifier, _mParameter, turnout);
         if (tempTurnout != null) {
             _mNamedBeanHandleTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout, tempTurnout);
         } else {
