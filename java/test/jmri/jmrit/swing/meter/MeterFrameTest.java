@@ -1,9 +1,11 @@
-package jmri.jmrit.voltmeter;
+package jmri.jmrit.swing.meter;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Meter;
+import jmri.MeterManager;
 import jmri.MeterGroup;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
@@ -18,7 +20,7 @@ import org.junit.jupiter.api.*;
  * Copied from ampmeter
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
+public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Test
     public void testVoltageChange1Digit() {
@@ -75,7 +77,7 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         JUnitUtil.resetProfileManager();
         jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class).register(new TestMeter());
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new VoltMeterFrame();
+            frame = new MeterFrame();
         }
     }
 
@@ -100,14 +102,16 @@ public class VoltMeterFrameTest extends jmri.util.JmriJFrameTestBase {
         public TestMeter() {
             super("IVTestMeter");
             
-            Meter voltMeter = new DefaultMeter.DefaultVoltageMeter("IVVoltMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
+            Meter voltageMeter = new DefaultMeter.DefaultVoltageMeter("IVVoltageMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
                 @Override
                 public void requestUpdateFromLayout() {
                     // Do nothing
                 }
             });
             
-            addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltMeter);
+            addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
+            
+            InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
         }
         
     }

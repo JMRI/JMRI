@@ -1,8 +1,6 @@
-package jmri.jmrit.voltmeter;
+package jmri.jmrit.swing.meter;
 
 import java.awt.event.ActionEvent;
-import java.util.SortedSet;
-
 import javax.swing.AbstractAction;
 
 import jmri.*;
@@ -17,13 +15,13 @@ import jmri.*;
  * which was a direct steal from the Nixie clock code, ver 1.5. 
  * Thank you Bob Jacobsen and Ken Cameron.
  */
-public class VoltMeterAction extends AbstractAction {
+public class MeterAction extends AbstractAction {
 
-    public VoltMeterAction() {
-        this(Bundle.getMessage("MenuItemVoltMeter"));
+    public MeterAction() {
+        this(Bundle.getMessage("MenuItemMeter"));
     }
 
-    public VoltMeterAction(String s) {
+    public MeterAction(String s) {
         super(s);
         
         // disable ourself if no MeterGroup available
@@ -46,7 +44,7 @@ public class VoltMeterAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        VoltMeterFrame f = new VoltMeterFrame();
+        MeterFrame f = new MeterFrame();
         f.initComponents();
         f.setVisible(true);
     }

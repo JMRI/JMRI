@@ -1,19 +1,20 @@
-package jmri.jmrit.ampmeter;
+package jmri.jmrit.swing.meter;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.*;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017
+ * copied from ampmeter
+ * @author Andrew Crosland Copyright (C) 2020
  */
-public class AmpMeterActionTest {
+public class MeterActionTest {
 
     @Test
     public void testCTor() {
-        AmpMeterAction t = new AmpMeterAction();
+        MeterAction t = new MeterAction();
         Assert.assertNotNull("exists",t);
         // there is no Meter registered, make sure the action is
         // disabled.

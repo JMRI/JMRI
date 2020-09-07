@@ -1,4 +1,4 @@
-package jmri.jmrit.voltmeter;
+package jmri.jmrit.swing.meter;
 
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
@@ -14,13 +14,14 @@ import jmri.util.JmriJFrame;
 /**
  * Frame providing a simple LCD-based display of track voltage.
  * <p>
- * @author Ken Cameron Copyright (C) 2007
- * @author Mark Underwood Copyright (C) 2007
- * @author Andrew Crosland Copyright (C) 2020
+ * @author Ken Cameron        Copyright (C) 2007
+ * @author Mark Underwood     Copyright (C) 2007
+ * @author Andrew Crosland    Copyright (C) 2020
+ * @author Daniel Bergqvist   Copyright (C) 2020
  *
- * Adapted from ampmeter to display voltage.
+ * Adapted from ampmeter to display voltage and current.
  */
-public class VoltMeterFrame extends JmriJFrame {
+public class MeterFrame extends JmriJFrame {
 
     private final List<Meter> voltageMeters = new ArrayList<>();
     private final List<Meter> currentMeters = new ArrayList<>();
@@ -56,7 +57,7 @@ public class VoltMeterFrame extends JmriJFrame {
     JPanel pane1;
     JPanel meterPane;
     
-    public VoltMeterFrame() {
+    public MeterFrame() {
         super(Bundle.getMessage("TrackVoltageMeterTitle"));
 
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
@@ -300,9 +301,9 @@ public class VoltMeterFrame extends JmriJFrame {
             buildContents();
             
             if (meter instanceof VoltageMeter) {
-                VoltMeterFrame.this.setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
+                MeterFrame.this.setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
             } else {
-                VoltMeterFrame.this.setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
+                MeterFrame.this.setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
             }
         }
     }
