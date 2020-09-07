@@ -311,7 +311,7 @@
                 <br>
                 <a id="prefs" name="prefs">( Ceci est la page
                 d'aide de jmri.jmrit.vsdecoder.VSDecoderFrame ) 
-                <!--#include virtual="/Footer"--></a>
+                <!--#include virtual="/Footer.shtml"--></a>
               </div>
             </div>
           </dd>
