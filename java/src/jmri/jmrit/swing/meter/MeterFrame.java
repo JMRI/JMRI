@@ -36,6 +36,8 @@ public class MeterFrame extends JmriJFrame {
     JLabel amp;
     JLabel percent;
     
+    JMenuItem lastSelectedMenuItem;
+    
     int iconWidth;
     int iconHeight;
 
@@ -80,6 +82,32 @@ public class MeterFrame extends JmriJFrame {
 
     @Override
     public void initComponents() {
+        // Create menu bar
+        menuBar = new JMenuBar();
+        JMenu voltageMetersMenu = new JMenu(Bundle.getMessage("MenuVoltageMeters"));
+        menuBar.add(voltageMetersMenu);
+        for (Meter m : voltageMeters) {
+            voltageMetersMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m)));
+        }
+        
+        JMenu currentMetersMenu = new JMenu(Bundle.getMessage("MenuCurrentMeters"));
+        menuBar.add(currentMetersMenu);
+        for (Meter m : currentMeters) {
+            currentMetersMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m)));
+        }
+        
+        JMenu meterGroupsMenu = new JMenu(Bundle.getMessage("MenuMeterGroups"));
+        menuBar.add(meterGroupsMenu);
+        for (MeterGroup mg : InstanceManager.getDefault(MeterGroupManager.class).getNamedBeanSet()) {
+            JMenu meterMenu = new JMenu(mg.getDisplayName());
+            meterGroupsMenu.add(meterMenu);
+            for (MeterGroup.MeterInfo mi : mg.getMeters()) {
+                meterMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(mi.getMeter().getDisplayName(), mi.getMeter())));
+            }
+        }
+        
+        setJMenuBar(menuBar);
+
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
             digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
@@ -166,21 +194,6 @@ public class MeterFrame extends JmriJFrame {
         pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
         
-        // Create menu bar
-        menuBar = new JMenuBar();
-        JMenu voltageMetersMenu = new JMenu(Bundle.getMessage("MenuVoltageMeters"));
-        menuBar.add(voltageMetersMenu);
-        for (Meter m : voltageMeters) {
-            voltageMetersMenu.add(new SelectMeterAction(m.getDisplayName(), m));
-        }
-
-        JMenu currentMetersMenu = new JMenu(Bundle.getMessage("MenuCurrentMeters"));
-        menuBar.add(currentMetersMenu);
-        for (Meter m : currentMeters) {
-            currentMetersMenu.add(new SelectMeterAction(m.getDisplayName(), m));
-        }
-        setJMenuBar(menuBar);
-
         meterPane = new JPanel();
         meterPane.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder()));
@@ -284,6 +297,8 @@ public class MeterFrame extends JmriJFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (lastSelectedMenuItem != null) lastSelectedMenuItem.setSelected(false);
+            
             meter.disable();
             meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
             
@@ -305,6 +320,10 @@ public class MeterFrame extends JmriJFrame {
             } else {
                 MeterFrame.this.setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
             }
+            
+            JMenuItem selectedItem = (JMenuItem) e.getSource();
+            selectedItem.setSelected(true);
+            lastSelectedMenuItem = selectedItem;
         }
     }
 
