@@ -63,6 +63,7 @@
         <li><a href="tools/signaling//SignalingSetup.shtml">Signaling Quick Start</a>
         <li><a href="tools/consisttool/ConsistTool.shtml">Consist Basics</a>
         <li><a href="tools/scripting/HowTo.shtml">Scripting "How To"</a>
+        <li><a href="../package/jmri/jmrit/logix/Warrant.shtml">Getting Started with Warrants</a>
       </ul>      
            
       </div>
