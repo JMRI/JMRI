@@ -111,6 +111,10 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
         CvValue cv = _cvMap.get(getCvNum());
+        if (cv == null) {
+            log.error("no CV defined in enumVal {}, skipping setState", getCvName());
+            return;
+        }
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
     }
@@ -190,7 +194,10 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
-        // compute new cv value by combining old and request
+        if (cv == null) {
+            log.error("no CV defined in enumVal {}, skipping setValue", _cvMap.get(getCvName()));
+            return;
+        }
         int oldCv = cv.getValue();
         int newVal = getIntValue();
         int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal-1);
@@ -559,13 +566,14 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     // clean up connections when done
     @Override
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove connection to CV
-        _cvMap.get(getCvNum()).removePropertyChangeListener(this);
-
+        if (_cvMap.get(getCvNum()) == null) {
+            log.error("no CV defined for variable {}, no listeners to remove", getCvNum());
+        } else {
+            _cvMap.get(getCvNum()).removePropertyChangeListener(this);
+        }
         // remove connection to graphical representation
         disposeReps();
     }

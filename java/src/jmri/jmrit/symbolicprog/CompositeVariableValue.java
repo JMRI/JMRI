@@ -99,19 +99,31 @@ public class CompositeVariableValue extends EnumVariableValue {
         Setting(String varName, VariableValue variable, String value) {
             this.varName = varName;
             this.variable = variable;
-            this.value = Integer.parseInt(value);
+            try {
+                this.value = Integer.parseInt(value);
+            } catch (NullPointerException e) {
+                log.error("Null value received for CompositeVariable {}. Not set", varName);
+                return;
+            }
             log.debug("    cTor Setting {} = {}", varName, value);
-
         }
 
         void setValue() {
             log.debug("    Setting.setValue of {} to {}", varName, value);
+            if (variable == null) {
+                log.error("Variable {} not (yet) created. Verify correct compositeSetting", varName);
+                return;
+            }
             variable.setIntValue(value);
         }
 
         boolean match() {
             if (log.isDebugEnabled()) {
                 log.debug("         Match checks {} == {}", variable.getIntValue(), value);
+            }
+            if (variable == null) {
+                log.error("Variable {} not (yet) created. Verify correct compositeSetting", varName);
+                return false;
             }
             return (variable.getIntValue() == value);
         }

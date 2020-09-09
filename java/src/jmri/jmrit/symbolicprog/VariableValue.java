@@ -226,15 +226,18 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     /**
      * Default implementation for subclasses to tell if a CV meets a common
      * definition of "changed". This implementation will only consider a
-     * variable to be changed if the underlying CV(s) state is EDITTED, e.g. if
-     * the CV(s) has been manually editted.
+     * variable to be changed if the underlying CV(s) state is EDITED, e.g. if
+     * the CV(s) has been manually edited.
      *
      * @param c CV to be examined
      * @return true if to be considered changed
      */
     public static boolean considerChanged(CvValue c) {
+        if (c == null) {
+            return false; // if no CV was assigned to a decoder variable
+        }
         int state = c.getState();
-        return state == CvValue.EDITED || state == CvValue.UNKNOWN;
+        return (state == CvValue.EDITED || state == CvValue.UNKNOWN);
     }
 
     // handle incoming parameter notification
@@ -497,6 +500,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             // avoid method calls unless debugging
             log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
+        if (getCvNum() == null) {
+            log.debug("no CV defined for value {}. setToRead skipped", _item);
+            return;
+        }
         _cvMap.get(getCvNum()).setToRead(newState);
     }
 
@@ -535,9 +542,17 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
         if (log.isDebugEnabled()) {
             // avoid method calls unless debugging
-            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
+            log.debug("setToRead({}) with overrides {},{},{} sets {}",
+                    state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
-        _cvMap.get(getCvNum()).setToWrite(newState);
+        CvValue CvOld; // null check in case decoder variable has no CV defined (yet)
+        try {
+            CvOld = _cvMap.get(getCvNum());
+        } catch (NullPointerException e) {
+            log.error("no CV defined for value {}. setToWrite skipped. Verify variable was defined", _item);
+            return;
+        }
+        CvOld.setToWrite(newState);
     }
 
     /**

@@ -386,6 +386,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // set to default value if specified (CV load may later override this)
         if (setDefaultValue(e, v)) {
+            if (_cvModel.getCvByNumber(CV) == null) {
+                log.error("null cv found in cvModel {}, skipping setState", CV);
+                return;
+            }
             _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
     }
