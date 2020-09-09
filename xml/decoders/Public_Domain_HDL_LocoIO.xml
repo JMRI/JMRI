@@ -192,9 +192,9 @@
         <tooltip>How servo ports 5-12 on this board should operate</tooltip>
       </variable>
 
-      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="2" include="210,211">
+      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0" include="210,211">
         <enumVal>
-          <enumChoice choice="2" value="2">
+          <enumChoice choice="0" value="0">
             <choice>LocoView display</choice>
             <choice xml:lang="de">LocoView Anzeige</choice>
             <choice xml:lang="nl">LocoView-scherm</choice>
@@ -275,7 +275,7 @@
 
       <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
         <!-- CV4 ignores bit 8 in port address -->
-        <splitVal highCV="5" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="5" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -589,7 +589,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="53" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -672,7 +672,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port1 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port1 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port1 Opcode1 Address" value="1"/>
             <compositeSetting label="Port1 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port1 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -718,7 +718,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="127" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -801,7 +801,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port1 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port1 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port1 Opcode2 Address" value="1"/>
             <compositeSetting label="Port1 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port1 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -838,7 +838,7 @@
       <!-- Port 2 -->
       <variable item="Port2 Address" CV="7" mask="XVVVVVVV">
         <!-- CV7 ignores bit 8 in port address -->
-        <splitVal highCV="8" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="8" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1126,7 +1126,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="56" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="56" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1209,7 +1209,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port2 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port2 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port2 Opcode1 Address" value="1"/>
             <compositeSetting label="Port2 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port2 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -1255,7 +1255,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="130" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="130" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1338,7 +1338,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port2 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port2 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port2 Opcode2 Address" value="1"/>
             <compositeSetting label="Port2 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port2 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -1374,7 +1374,7 @@
       <!--Port 3 -->
       <variable item="Port3 Address" CV="10" mask="XVVVVVVV">
         <!-- CV10 ignores bit 8 in port address -->
-        <splitVal highCV="11" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="11"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1678,7 +1678,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="59" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="59"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1761,7 +1761,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port3 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port3 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port3 Opcode1 Address" value="1"/>
             <compositeSetting label="Port3 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port3 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -1807,7 +1807,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="133" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="133"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -1831,7 +1831,7 @@
         <tooltip>Port 3 Opcode2 OPC, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port3 Opcode2 Arg1" CV="126" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
+      <variable item="Port3 Opcode2 Arg1" CV="132" default="1" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -1848,7 +1848,7 @@
         <tooltip>Port 3 Opcode2 ARG1, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port3 Opcode2 Arg2sub" CV="127" mask="XXVVXXXX" default="0">
+      <variable item="Port3 Opcode2 Arg2sub" CV="133" mask="XXVVXXXX" default="0">
         <!--Contact 1 or 2-->
         <decVal/>
       </variable>
@@ -1889,7 +1889,7 @@
               <choice xml:lang="de">Inaktiv</choice>
               <choice xml:lang="nl">Uit</choice>
               <compositeSetting label="Port3 Opcode2 Opc" value="0"/>
-              <compositeSetting label="Port3 Opcode2 Address" value="0"/>
+              <compositeSetting label="Port3 Opcode2 Address" value="1"/>
               <compositeSetting label="Port3 Opcode2 Arg1" value="0"/>
               <compositeSetting label="Port3 Opcode2 Arg2" value="0"/>
             </compositeChoice>
@@ -1925,7 +1925,7 @@
       <!-- Port 4 -->
       <variable item="Port4 Address" CV="13" mask="XVVVVVVV">
         <!-- CV13 ignores bit 8 in port address -->
-        <splitVal highCV="14" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="14"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -2213,7 +2213,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="62" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="62"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -2296,7 +2296,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port4 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port4 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port4 Opcode1 Address" value="1"/>
             <compositeSetting label="Port4 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port4 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -2342,7 +2342,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="136" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="136"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -2425,9 +2425,9 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port4 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port4 Opcode5 Address" value="0"/>
-            <compositeSetting label="Port4 Opcode5 Arg1" value="0"/>
-            <compositeSetting label="Port4 Opcode5 Arg2" value="0"/>
+            <compositeSetting label="Port4 Opcode2 Address" value="1"/>
+            <compositeSetting label="Port4 Opcode2 Arg1" value="0"/>
+            <compositeSetting label="Port4 Opcode2 Arg2" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Contact1 Direct">
@@ -2461,7 +2461,7 @@
       <!-- Port 5 -->
       <variable item="Port5 Address" CV="16" mask="XVVVVVVV">
         <!-- CV16 ignores bit 8 in port address -->
-        <splitVal highCV="17" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="17"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -2791,7 +2791,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="65" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="65"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -2874,7 +2874,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port5 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port5 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port5 Opcode1 Address" value="1"/>
             <compositeSetting label="Port5 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port5 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -2920,7 +2920,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="139" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="139"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -3003,7 +3003,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port5 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port5 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port5 Opcode2 Address" value="1"/>
             <compositeSetting label="Port5 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port5 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -3058,7 +3058,7 @@
       <!-- Port 6 -->
       <variable item="Port6 Address" CV="19" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="20" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="20"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -3374,7 +3374,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="68" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="68"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -3457,7 +3457,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port6 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port6 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port6 Opcode1 Address" value="1"/>
             <compositeSetting label="Port6 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port6 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -3503,7 +3503,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="142" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="142"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -3586,7 +3586,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port6 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port6 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port6 Opcode2 Address" value="1"/>
             <compositeSetting label="Port6 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port6 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -3641,7 +3641,7 @@
       <!-- Port 7 -->
       <variable item="Port7 Address" CV="22" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="23" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="23"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -3950,7 +3950,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="71" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="71"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -4033,7 +4033,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port7 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port7 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port7 Opcode1 Address" value="1"/>
             <compositeSetting label="Port7 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port7 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -4079,7 +4079,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="148" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="148"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -4162,7 +4162,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port7 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port7 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port7 Opcode2 Address" value="1"/>
             <compositeSetting label="Port7 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port7 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -4217,7 +4217,7 @@
       <!-- Port 8 -->
       <variable item="Port8 Address" CV="25" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="26" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="26"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -4507,7 +4507,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="74" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="74"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -4590,7 +4590,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port8 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port8 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port8 Opcode1 Address" value="1"/>
             <compositeSetting label="Port8 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port8 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -4636,7 +4636,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="151" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="151"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -4719,7 +4719,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port8 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port8 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port8 Opcode2 Address" value="1"/>
             <compositeSetting label="Port8 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port8 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -4774,7 +4774,7 @@
       <!-- Port 9 -->
       <variable item="Port9 Address" CV="28" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="29" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="29"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5063,7 +5063,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="77" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="77"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5146,7 +5146,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port9 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port9 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port9 Opcode1 Address" value="1"/>
             <compositeSetting label="Port9 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port9 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -5192,7 +5192,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="154" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="154"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5275,7 +5275,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port9 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port9 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port9 Opcode2 Address" value="1"/>
             <compositeSetting label="Port9 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port9 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -5330,7 +5330,7 @@
       <!-- Port 10 -->
       <variable item="Port10 Address" CV="31" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="32" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="32"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5620,7 +5620,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="80" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="80"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5703,7 +5703,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port10 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port10 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port10 Opcode1 Address" value="1"/>
             <compositeSetting label="Port10 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port10 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -5749,7 +5749,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="154" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="154"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -5832,7 +5832,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port10 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port10 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port10 Opcode2 Address" value="1"/>
             <compositeSetting label="Port10 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port10 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -5887,7 +5887,7 @@
       <!-- Port 11 -->
       <variable item="Port11 Address" CV="34" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="35" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="35"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6176,7 +6176,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="83" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="83"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6259,7 +6259,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port11 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port11 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port11 Opcode1 Address" value="1"/>
             <compositeSetting label="Port11 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port11 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -6305,7 +6305,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="160" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="160"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6388,7 +6388,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port11 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port11 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port11 Opcode2 Address" value="1"/>
             <compositeSetting label="Port11 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port11 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -6443,7 +6443,7 @@
       <!-- Port 12 -->
       <variable item="Port12 Address" CV="37" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="38" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="38"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6733,7 +6733,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="86" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="86"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6816,7 +6816,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port12 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port12 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port12 Opcode1 Address" value="1"/>
             <compositeSetting label="Port12 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port12 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -6862,7 +6862,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="163" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="163"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -6945,7 +6945,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port12 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port12 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port12 Opcode2 Address" value="1"/>
             <compositeSetting label="Port12 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port12 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -7000,7 +7000,7 @@
       <!-- Port 13 -->
       <variable item="Port13 Address" CV="40" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="41" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="41"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7267,7 +7267,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="89" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="89"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7350,9 +7350,10 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port13 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port13 Opcode1 Arg2sub" value="0"/>            <compositeSetting label="Port1 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port13 Opcode1 Address" value="1"/>
             <compositeSetting label="Port13 Opcode1 Arg1" value="0"/>
-            <compositeSetting label="Port13 Opcode1 Arg2" value="0"/>          </compositeChoice>
+            <compositeSetting label="Port13 Opcode1 Arg2" value="0"/>
+          </compositeChoice>
 
           <compositeChoice choice="Contact1 Direct">
             <choice>Contact1 Direct</choice>
@@ -7395,7 +7396,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="166" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="166"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7478,7 +7479,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port13 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port13 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port13 Opcode2 Address" value="1"/>
             <compositeSetting label="Port13 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port13 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -7514,7 +7515,7 @@
       <!-- Port 14 -->
       <variable item="Port14 Address" CV="43" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="44" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="44"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7781,7 +7782,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="92" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="92"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7864,7 +7865,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port14 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port14 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port14 Opcode1 Address" value="1"/>
             <compositeSetting label="Port14 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port14 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -7910,7 +7911,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="169" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="169"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -7993,7 +7994,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port14 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port14 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port14 Opcode2 Address" value="1"/>
             <compositeSetting label="Port14 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port14 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -8029,7 +8030,7 @@
       <!-- Port 15 -->
       <variable item="Port15 Address" CV="46" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="47" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="47"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -8295,7 +8296,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="95" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="95"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -8378,7 +8379,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port15 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port15 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port15 Opcode1 Address" value="1"/>
             <compositeSetting label="Port15 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port15 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -8424,7 +8425,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="172" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="172"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -8507,7 +8508,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port15 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port15 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port15 Opcode2 Address" value="1"/>
             <compositeSetting label="Port15 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port15 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -8543,7 +8544,7 @@
       <!-- Port 16 -->
       <variable item="Port16 Address" CV="49" mask="XVVVVVVV">
         <!-- CV19 ignores bit 8 in port address -->
-        <splitVal highCV="50" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="50"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -8810,7 +8811,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="98" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="98"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -8893,7 +8894,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port16 Opcode1 Opc" value="0"/>
-            <compositeSetting label="Port16 Opcode1 Address" value="0"/>
+            <compositeSetting label="Port16 Opcode1 Address" value="1"/>
             <compositeSetting label="Port16 Opcode1 Arg1" value="0"/>
             <compositeSetting label="Port16 Opcode1 Arg2" value="0"/>
           </compositeChoice>
@@ -8939,7 +8940,7 @@
           <relation>gt</relation>
           <value>0</value>
         </qualifier>
-        <splitVal highCV="175" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048"/>
+        <splitVal highCV="175"  factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -9022,7 +9023,7 @@
             <choice xml:lang="de">Inaktiv</choice>
             <choice xml:lang="nl">Uit</choice>
             <compositeSetting label="Port16 Opcode2 Opc" value="0"/>
-            <compositeSetting label="Port16 Opcode2 Address" value="0"/>
+            <compositeSetting label="Port16 Opcode2 Address" value="1"/>
             <compositeSetting label="Port16 Opcode2 Arg1" value="0"/>
             <compositeSetting label="Port16 Opcode2 Arg2" value="0"/>
           </compositeChoice>
@@ -9488,9 +9489,9 @@
             <compositeSetting label="Port15 Type" value="1"/>
           </compositeChoice>
         </compositeVal>>
-        <label>Ports to use:</label>
-        <label xml:lang="de">Aktive Ausgänge:</label>
-        <label xml:lang="nl">Actieve poorten:</label>
+        <label>Port Pair to use:</label>
+        <label xml:lang="de">Aktives Ausgängenpaar:</label>
+        <label xml:lang="nl">Actieve poortenset:</label>
         <tooltip>Select a unique 2-port set between all boards that share one RCD2 Board address</tooltip>
       </variable>
 
