@@ -101,8 +101,8 @@ public class CompositeVariableValue extends EnumVariableValue {
             this.variable = variable;
             try {
                 this.value = Integer.parseInt(value);
-            } catch (NullPointerException e) {
-                log.error("Null value received for CompositeVariable {}. Not set", varName);
+            } catch (NullPointerException | NumberFormatException e) {
+                log.error("Illegal value received for CompositeVariable {}. Should be int but was {}", varName, value);
                 return;
             }
             log.debug("    cTor Setting {} = {}", varName, value);

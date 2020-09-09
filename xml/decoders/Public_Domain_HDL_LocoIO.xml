@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019 All rights reserved    -->
+<!-- Copyright (C) JMRI 2002, 2004, 2007, 2018, 2019, 2020 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -57,18 +57,19 @@
     </revision>
     <revision>
       <revnumber>4</revnumber>
-      <date>2020-09-06</date>
+      <date>2020-09-10</date>
       <authorinitials>EB</authorinitials>
       <revremark>Changed address field labels hi/lo to function like 81/1 entry
-        Use compositeVal type values (ports 1-12), add LocoBooster,
-        Opcode1 and Opcode2 for ports 1-12, tested on actual hardware (read only)
+        Use compositeVal type values (ports 1-16), add LocoBooster,
+        Opcode1 and Opcode2 for ports 1-16, tested on actual hardware (read only)
+        LocoRCD(2) experimental
       </revremark>
     </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
-  <version author="Egbert Broerse" version="4" lastUpdated="20200906"/>
+  <version author="Egbert Broerse" version="4" lastUpdated="20200910"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -9072,7 +9073,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9082,14 +9083,14 @@
             <compositeSetting label="Port2 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2" value="16"/>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2" value="48"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" value="2" exclude="210">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="210">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2" value="16"/>
@@ -9104,46 +9105,11 @@
         <tooltip>Select a set of active ports on tab LocoIO</tooltip>
       </variable>
 
-      <variable item="Port1 Type" tooltip="Port 1+2 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
-        <!--TODO check values per choice-->
-        <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
-            <choice>Ports Not In Use</choice>
-            <choice xml:lang="de">Anschluss nicht benutzt</choice>
-            <choice xml:lang="nl">Poort niet in gebruik</choice>
-            <compositeSetting label="Port1 Config" value="0"/>
-            <compositeSetting label="Port1 Value2" value="0"/>
-            <compositeSetting label="Port2 Config" value="0"/>
-            <compositeSetting label="Port2 Value2" value="0"/>
-          </compositeChoice>
-
-          <compositeChoice choice="Input Occu Low" value="1">
-            <choice>Input: Occupancy - active Low</choice>
-            <compositeSetting label="Port1 Config" value="31"/>
-            <compositeSetting label="Port1 Value2" value="16"/>
-            <compositeSetting label="Port2 Config" value="27"/>
-            <compositeSetting label="Port2 Value2" value="48"/>
-          </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" value="2" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed</choice>
-            <compositeSetting label="Port1 Config" value="27"/>
-            <compositeSetting label="Port1 Value2" value="16"/>
-            <compositeSetting label="Port2 Config" value="27"/>
-            <compositeSetting label="Port2 Value2" value="48"/>
-          </compositeChoice>
-        </compositeVal>
-        <label>Mode:</label>
-        <label xml:lang="de">Typ:</label>
-        <label xml:lang="nl">Type:</label>
-        <tooltip>Also configures port 2</tooltip>
-      </variable>
-
       <variable item="Port3 Type" tooltip="Port 3+4 Config and Value2 for RCD/RCD2 connection" include="210,211">
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9153,7 +9119,7 @@
             <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2" value="16"/>
@@ -9178,7 +9144,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9188,7 +9154,7 @@
             <compositeSetting label="Port6 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2" value="16"/>
@@ -9213,7 +9179,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9223,7 +9189,7 @@
             <compositeSetting label="Port8 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2" value="16"/>
@@ -9248,7 +9214,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9258,7 +9224,7 @@
             <compositeSetting label="Port10 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2" value="16"/>
@@ -9283,7 +9249,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9293,7 +9259,7 @@
             <compositeSetting label="Port12 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2" value="16"/>
@@ -9318,7 +9284,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9328,7 +9294,7 @@
             <compositeSetting label="Port14 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2" value="16"/>
@@ -9353,7 +9319,7 @@
         <!--only available on LocoRCD(2)-->
         <!--TODO check values per choice-->
         <compositeVal>
-          <compositeChoice choice="Ports Not In Use" value="0">
+          <compositeChoice choice="Ports Not In Use">
             <choice>Ports Not In Use</choice>
             <choice xml:lang="de">Anschluss nicht benutzt</choice>
             <choice xml:lang="nl">Poort niet in gebruik</choice>
@@ -9363,7 +9329,7 @@
             <compositeSetting label="Port16 Value2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Input Occu Low" value="1">
+          <compositeChoice choice="Input Occu Low">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2" value="16"/>
@@ -9387,11 +9353,20 @@
       <!--Central selector for LocoRCD 2-port set-->
       <variable item="RCD Port Setter" comment="For RCD2 UI only" include="210,211">
         <compositeVal>
-          <compositeChoice choice="Off">
+          <compositeChoice>
             <choice>Select...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
+            <comment>No action</comment>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
           </compositeChoice>
-          <compositeChoice choice="1-2">
+          <compositeChoice>
             <choice>Ports 1-2</choice>
             <choice xml:lang="nl">Poorten 1-2</choice>
             <!--Even Ports 2, 4, ... don't exist on LocoRCD2 pane-->
@@ -9488,9 +9463,9 @@
             <compositeSetting label="Port13 Type" value="0"/>
             <compositeSetting label="Port15 Type" value="1"/>
           </compositeChoice>
-        </compositeVal>>
+        </compositeVal>
         <label>Port Pair to use:</label>
-        <label xml:lang="de">Aktives Ausgängenpaar:</label>
+        <label xml:lang="de">Aktives Ausgängepaar:</label>
         <label xml:lang="nl">Actieve poortenset:</label>
         <tooltip>Select a unique 2-port set between all boards that share one RCD2 Board address</tooltip>
       </variable>
