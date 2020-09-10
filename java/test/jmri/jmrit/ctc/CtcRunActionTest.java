@@ -1,110 +1,115 @@
 package jmri.jmrit.ctc;
 
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalHeadManager;
+import jmri.SignalMastManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
-import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the CtcRunAction Class.
  *
- * @author Dave Sand Copyright (C) 2019
+ * @author Dave Sand Copyright (C) 2020
  */
 public class CtcRunActionTest {
 
     @Test
-    public void testAction() {
-        // Load the CTC run time
+    public void testAction() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        // Load the test panel and initialize Logix and advanced block routing
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
+        InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
+        JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
+
+       // Load the CTC run time
         new CtcRunAction().actionPerformed(null);
+        JUnitUtil.waitFor(1000);     // Wait for CTC run time to finish its setup
 
         // ** Run time test scenarios **
-        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        SignalHeadManager hm = InstanceManager.getDefault(SignalHeadManager.class);
 
         // Clear Left turnout right on main.
-        try {
-            sm.getSensor("IS1:SN").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS2:NL").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS2:RL").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS2:CB").setKnownState(Sensor.INACTIVE);
-        } catch (JmriException ex) {
-            log.error("sensor exceptions: ", ex);
-        }
-        new EventTool().waitNoEvent(1000);
-        jmri.SignalHead sh = hm.getSignalHead("Left-U");
-        Assert.assertFalse(sh.getHeld());  // NOI18N
+        sm.getSensor("IS2:LDGL").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("IS2:NGL").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("IS2:RDGL").setKnownState(Sensor.ACTIVE);
+        sm.getSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
+
+        JUnitUtil.waitFor(()->{return sm.getSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal right indicator not active");
+        Assert.assertTrue(sm.getSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE);
+        Assert.assertFalse(smm.getSignalMast("SM-Alpha-Left-A").getHeld());
+
+//         JUnitUtil.waitFor(2000);
 
         // Clear Right turnout left on siding using Call On.
-        try {
-            sm.getSensor("B-Side").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS5:LEVER").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
-            new EventTool().waitNoEvent(1000);
-            sm.getSensor("IS5:SN").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS5:SR").setKnownState(Sensor.ACTIVE);
+        sm.getSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return sm.getSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE;},"3/4 turnout thrown indicator not active");
+        Assert.assertTrue(sm.getSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE);
 
-            sm.getSensor("IS6:CALLON").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS6:NL").setKnownState(Sensor.INACTIVE);
-            sm.getSensor("IS6:LL").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
-            sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
-        } catch (JmriException ex) {
-            log.error("sensor exceptions: ", ex);
-        }
-        new EventTool().waitNoEvent(1000);
-        sh = hm.getSignalHead("Right-L");
-        Assert.assertFalse(sh.getHeld());  // NOI18N
+//         JUnitUtil.waitFor(2000);
 
-//         log.warn("Test SHM = {}", hm);
-//         log.warn("DEBUG = {}", sm.getSensor("IS:DEBUGCTC").getKnownState());
-//         log.warn("SN = {}", sm.getSensor("IS3:SN").getKnownState());
-//         log.warn("SR = {}", sm.getSensor("IS3:SR").getKnownState());
-//         log.warn("LL = {}", sm.getSensor("IS4:LL").getKnownState());
-//         log.warn("NL = {}", sm.getSensor("IS4:NL").getKnownState());
-//         log.warn("RL = {}", sm.getSensor("IS4:RL").getKnownState());
-//         log.warn("LK = {}", sm.getSensor("IS4:LK").getKnownState());
-//         log.warn("NK = {}", sm.getSensor("IS4:NK").getKnownState());
-//         log.warn("RK = {}", sm.getSensor("IS4:RK").getKnownState());
-//         sh = hm.getSignalHead("Right-U");
-//         log.warn("Right-U = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Right-L");
-//         log.warn("Right-L = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Right-M");
-//         log.warn("Right-M = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Right-S");
-//         log.warn("Right-S = {} - {}", sh.getHeld(), sh.getAppearanceName());
+        // Set block occupied, move signal lever to left traffic, set Call-On lever
+        sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("S-Alpha-Side").setKnownState(Sensor.ACTIVE);
+        sm.getSensor("IS4:NGL").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("IS4:LDGL").setKnownState(Sensor.ACTIVE);
+        sm.getSensor("IS4:CALLON").setKnownState(Sensor.ACTIVE);
+        sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
+
+//         JUnitUtil.waitFor(2000);
+
+        JUnitUtil.waitFor(()->{return sm.getSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE;},"3/4 signal left indicator not active");
+        Assert.assertTrue(sm.getSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE);
+        Assert.assertFalse(smm.getSignalMast("SM-Alpha-Right-A").getHeld());
+
+//         JUnitUtil.waitFor(2000);
+
+        // Simulate left to right train
+        sm.getSensor("S-Alpha-Left").setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(()->{return sm.getSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE;},"1/2 signal normal indicator not active");
+        Assert.assertTrue(sm.getSensor("IS2:NGK").getKnownState() == Sensor.ACTIVE);
+        Assert.assertTrue(smm.getSignalMast("SM-Alpha-Left-A").getHeld());
+
+        // Cancel left to right call on
+        sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+        sm.getSensor("S-Alpha-Side").setKnownState(Sensor.INACTIVE);
+
+//         JUnitUtil.waitFor(10000);        // Delay to see screen
+
     }
 
     @BeforeEach
-    public void setUp(@TempDir File folder) throws IOException {
+    public void setUp(@TempDir File folder) throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
-
-        jmri.jmrit.ctc.setup.CreateTestObjects.createTestObjects();
-        jmri.jmrit.ctc.setup.CreateTestObjects.createTestFiles();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @AfterEach
     public void tearDown() {
-
-        // stop any BlockBossLogic threads created
-        JUnitUtil.clearBlockBossLogic();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.deregisterBlockManagerShutdownTask();
-
         JUnitUtil.tearDown();
     }
 
