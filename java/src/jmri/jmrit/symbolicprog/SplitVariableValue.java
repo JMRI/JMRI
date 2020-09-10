@@ -504,10 +504,10 @@ public class SplitVariableValue extends VariableValue
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
             actionPerformed(null);
         }
-        // PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
+        // TODO PENDING: the code used to fire value * mFactor + mOffset, which is a text representation;
         // but 'oldValue' was converted back using mOffset / mFactor making those two (new / old)
         // using different scales. Probably a bug, but it has been there from well before
-        // the extended spltVal. Because of the risk of breaking existing
+        // the extended splitVal. Because of the risk of breaking existing
         // behaviour somewhere, deferring correction until at least the next test release.
         prop.firePropertyChange("Value", oldVal, value * mFactor + mOffset);
         log.debug("Variable={}; exit setLongValue old={} new={}", _name, oldVal, value);

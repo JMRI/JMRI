@@ -860,7 +860,7 @@ selects the different algorithm needed here.
       <ul>
           <li>
               A <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">splitVal</a>
-              type. This handles a numeric value stored across up to at least 8 CVs.
+              type. This handles a numeric value stored across up to 8 CVs.
               <ul>
                   <li>
                       For examples, see <a href= "#splitvalExample">splitVal example</a> below and this

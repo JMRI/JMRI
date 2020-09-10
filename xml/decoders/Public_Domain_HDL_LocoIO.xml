@@ -129,7 +129,7 @@
           <label xml:lang="nl">PIC-versie: </label>
       </variable>
 
-      <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139,140,210,211">
+      <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139,140,200,210,211">
           <decVal min="0" max="15"/>
           <label>Blink Rate:</label>
           <label xml:lang="de">Blinkgeschw.:</label>
@@ -137,22 +137,21 @@
           <tooltip>Choose from 0=none to 15=fast</tooltip>
       </variable>
 
-      <variable CV="0" mask="VVVVXXXX" comment="Board Detection Delay" item="Detection Delay" default="15" include="210,211">
-        <!--TODO max 32, use more bits?-->
-        <decVal min="0" max="15"/>
-        <label>Detection Delay:</label>
+      <variable CV="126" comment="Board Detection Off Delay" item="Detection Delay" default="32" include="210,211">
+        <!--max 32, TODO check SV126, same as Port1 Opcode2 Address?-->
+        <decVal min="0" max="126"/>
+        <label>Detection Off Delay:</label>
         <label xml:lang="de">Abmeldungsverzögerung:</label>
         <label xml:lang="nl">Blokdetectievertraging:</label>
-        <tooltip>Choose from 0=none to 32=fast, 50ms per step</tooltip>
+        <tooltip>Choose from 0=none to 126 (~6,3 sec), 50ms per step</tooltip>
       </variable>
 
-      <variable CV="0" mask="XXXXXXXX" comment="Display Light Intensity" item="Light Intensity" default="7" include="210,211">
-        <!--TODO assign SV/mask-->
-        <decVal min="0" max="15"/>
+      <variable CV="0" mask="VVVVXXXX" comment="Display Light Intensity" item="Light Intensity" default="7" include="200,210,211">
+        <decVal min="0" max="14"/>
         <label>Light Intensity:</label>
         <label xml:lang="de">Helligkeit:</label>
         <label xml:lang="nl">Lichtintensiteit:</label>
-        <tooltip>Choose from 0=dim to 15=bright</tooltip>
+        <tooltip>Choose from 0=dim to 14=bright</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXVXXXX" item="Board Active High" default="0" include="135,139,140">
@@ -193,7 +192,7 @@
         <tooltip>How servo ports 5-12 on this board should operate</tooltip>
       </variable>
 
-      <variable CV="0" mask="XXXXVVXX" comment="bits 3-2" item="Action Mode" default="0" include="210,211">
+      <variable CV="127" mask="XXXVXXXX" comment="bit 4" item="Action Mode" default="0" include="210,211">
         <enumVal>
           <enumChoice choice="0" value="0">
             <choice>LocoView display</choice>
@@ -276,11 +275,20 @@
 
       <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
         <!-- CV4 ignores bit 8 in port address -->
-        <splitVal highCV="5" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
+        <splitVal highCV="5" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="4096" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 1 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 1 DCC Address (decimal, 1-4096)</tooltip>
+      </variable>
+
+      <variable item="Port1 Address2" CV="5" mask="XXXVXXXX">
+        <!-- Detector In/Outputs calculate low address differently: half in Value2 -->
+        <splitVal highCV="4" factor="1" offset="1" upperMask="XXXXVVVV" min="1" max="2048" default="1"/>
+        <label>Address:</label>
+        <label xml:lang="de">Adresse:</label>
+        <label xml:lang="nl">Adres:</label>
+        <tooltip>Port 1 DCC Sensor Address (decimal, 1-2048)</tooltip>
       </variable>
 
       <variable item="Port1 Config" CV="3" default="0">
@@ -289,7 +297,13 @@
         <tooltip>Port 1 Config, filled by ComboBox</tooltip>
       </variable>
 
-      <variable item="Port1 Value2" CV="5" mask="VVVVXXXX" default="0">
+      <variable item="Port1 Value1" CV="4">
+        <decVal/>
+        <label> Value 1:</label>
+        <tooltip>Port 1 Value1, filled by ComboBox</tooltip>
+      </variable>
+
+      <variable item="Port1 Value2" CV="5">
         <decVal/>
         <label> Value 2:</label>
         <tooltip>Port 1 Value2, filled by ComboBox</tooltip>
@@ -306,26 +320,10 @@
         <tooltip>Port 1 Value1 = (Address MINUS 1) &amp; 127</tooltip>
       </variable>
 
-      <variable item="Port1 HiAddress" mask="XXXXVVVV" CV="5">
+      <variable item="Port1 HiAddress" CV="5" mask="XXXXVVVV">
         <decVal/>
         <label>Hi:</label>
         <tooltip>Port 1 Value2 = (Address MINUS 1) MOD 128</tooltip>
-      </variable>
-
-      <!--port 1+2 options for RCD2 only-->
-      <!--TODO assign the correct SVs/mask-->
-      <variable CV="4" mask="VXXXXXXX" item="Port1 Train Control" default="0" include="210,211">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Train Control:</label>
-        <label xml:lang="nl">Treinbeïnvloeding:</label>
-        <tooltip>Occupied will trigger train control, default: unselected = off</tooltip>
-      </variable>
-
-      <variable CV="4" mask="VXXXXXXX" item="Port1 Train Reverse" default="0" include="210,211">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Reverse Direction:</label>
-        <label xml:lang="nl">Trein rijrichting omkeren:</label>
-        <tooltip>Occupied will trigger train reversing, default: unselected = off</tooltip>
       </variable>
 
       <variable item="Port1 Type" tooltip="Port 1 Config and Value2" exclude="200,210,211">
@@ -553,6 +551,34 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <variable item="Port1 Type" tooltip="Port 1 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port1 Config" value="0"/>
+            <compositeSetting label="Port1 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port1 Config" value="31"/>
+            <compositeSetting label="Port1 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port1 Config" value="27"/>
+            <compositeSetting label="Port1 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+      
       <!--RCD2 Port1 Type variable created later in this definition file-->
 
       <!-- displayed while "special ports" = 1: on ports 1-4-->
@@ -562,8 +588,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port1 Config" value="44"/>
-            <compositeSetting label="Port1 Value2" value="1"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port1 Config" value="0"/>
+            <compositeSetting label="Port1 Value2" value="0"/><!--different value2 to make selectable after change-->
           </compositeChoice>
           <compositeChoice choice="Special Idle">
             <choice>Special Input: Idle</choice>
@@ -575,6 +601,36 @@
         <label>Mode:</label>
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
+      </variable>
+
+      <!--port 1+2 options for RCD2 only-->
+      <!--TODO assign the correct SVs/mask-->
+      <variable CV="101" mask="XXXXXXXV" item="Port1 Train Control" default="0" include="210,211">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Train Control:</label>
+        <label xml:lang="nl">Treinbeïnvloeding:</label>
+        <tooltip>Occupied will trigger train control, default: unselected = off</tooltip>
+      </variable>
+
+      <variable CV="101" mask="XXXXXXVX" item="Port1 Train Reverse" default="0" include="210,211">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>  Reverse:</label>
+        <label xml:lang="nl">Richting omkeren:</label>
+        <tooltip>Occupied will trigger train reversing direction, default: unselected = off</tooltip>
+      </variable>
+
+      <variable CV="102" item="Port1 Train Slow Down" default="1" include="210,211">
+        <decVal min="1" max="255"/>
+        <label>Slow Down:</label>
+        <label xml:lang="nl">Trein vertragingstijd:</label>
+        <tooltip>Port1 Train Slow Down Delay (1-255)</tooltip>
+      </variable>
+
+      <variable CV="103" item="Port1 Train Wait" default="2" include="210,211">
+        <decVal min="1" max="255"/>
+        <label>  Wait Time:</label>
+        <label xml:lang="nl">  Trein wachttijd:</label>
+        <tooltip>Port 1 Train Wait Time (1-255)</tooltip>
       </variable>
 
       <!--Port1 Opcode1-->
@@ -707,6 +763,7 @@
       </variable>
 
       <!--Port1 Opcode2-->
+      <!--TODO copy/hide starting at SV128 for RCD(2)-->
       <variable item="Port1 Opcode2 Address" CV="126" mask="XVVVVVVV" exclude="003,101,102,135,139,140,141,142,144,145,146,148,149">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
@@ -843,7 +900,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 2 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 2 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port2 Config" CV="6" default="0">
@@ -1092,6 +1149,36 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <variable item="Port2 Type" tooltip="Port 2 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port2 Config" value="0"/>
+            <compositeSetting label="Port2 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port2 Config" value="31"/>
+            <compositeSetting label="Port2 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port2 Config" value="27"/>
+            <compositeSetting label="Port2 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port2 Type variable created later in this definition file-->
+
       <!-- displayed while "special ports" = 1: on ports 1-4-->
       <variable item="Port2 Special" tooltip="Port 1-4 set as Special Type - GO">
         <compositeVal>
@@ -1099,8 +1186,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port2 Config" value="45"/>
-            <compositeSetting label="Port2 Value2" value="1"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port2 Config" value="0"/>
+            <compositeSetting label="Port2 Value2" value="0"/><!--different value2 to make selectable after change-->
           </compositeChoice>
           <compositeChoice choice="Special Go">
             <choice>Special Input: Go</choice>
@@ -1379,7 +1466,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 3 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 3 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port3 Config" CV="9" default="0">
@@ -1417,12 +1504,12 @@
 
       <variable CV="10" mask="VXXXXXXX" item="Port3 Train Reverse" default="0" include="210,211">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Reverse Direction:</label>
-        <label xml:lang="nl">Trein rijrichting omkeren:</label>
-        <tooltip>Occupied will trigger train reversing, default: unselected = off</tooltip>
+        <label>  Reverse:</label>
+        <label xml:lang="nl">Trein Omkeren:</label>
+        <tooltip>Occupied will trigger train reversing direction, default: unselected = off</tooltip>
       </variable>
 
-      <variable item="Port3 Type" tooltip="Port 3 Config and Value2" exclude="210,211">
+      <variable item="Port3 Type" tooltip="Port 3 Config and Value2" exclude="200,210,211">
         <compositeVal>
           <!--Input types-->
           <compositeChoice choice="Input Toggle switch">
@@ -1644,6 +1731,36 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <variable item="Port3 Type" tooltip="Port 3 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port3 Config" value="0"/>
+            <compositeSetting label="Port3 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port3 Config" value="31"/>
+            <compositeSetting label="Port3 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port3 Config" value="27"/>
+            <compositeSetting label="Port3 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port3 Type variable created later in this definition file-->
+
       <!-- displayed while "special ports" = 1: on ports 1-4-->
       <variable item="Port3 Special" tooltip="Port 1-4 set as Special Type - STOP">
         <compositeVal>
@@ -1651,8 +1768,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port3 Config" value="46"/>
-            <compositeSetting label="Port3 Value2" value="1"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port3 Config" value="0"/>
+            <compositeSetting label="Port3 Value2" value="0"/><!--different value2 to make selectable after change-->
           </compositeChoice>
           <compositeChoice choice="Special Stop">
             <choice>Special Input: Stop</choice>
@@ -1930,7 +2047,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 4 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 4 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port4 Config" CV="12" default="0">
@@ -2179,6 +2296,36 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <variable item="Port4 Type" tooltip="Port 4 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port4 Config" value="0"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port4 Config" value="31"/>
+            <compositeSetting label="Port4 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port4 Config" value="27"/>
+            <compositeSetting label="Port4 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port4 Type variable created later in this definition file-->
+
       <!-- displayed while "special ports" = 1: on ports 1-4-->
       <variable item="Port4 Special" tooltip="Port 1-4 set as Special Type - GO/STOP">
         <compositeVal>
@@ -2186,8 +2333,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port4 Config" value="194"/>
-            <compositeSetting label="Port4 Value2" value="1"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port4 Config" value="0"/>
+            <compositeSetting label="Port4 Value2" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Special Status">
             <choice>Special Output: Go/Stop Status</choice>
@@ -2466,7 +2613,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 5 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 5 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port5 Config" CV="15" default="0">
@@ -2509,7 +2656,7 @@
         <tooltip>Occupied will trigger train reversing, default: unselected = off</tooltip>
       </variable>
 
-      <variable item="Port5 Type" tooltip="Port 5 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port5 Type" tooltip="Port 5 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <compositeVal>
           <!--inputs and most output types not available on LocoServo boards ports 5-12 and LocoBooster ports 5-6-->
           <!--Input types-->
@@ -2746,8 +2893,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port5 Config" value="31"/>
-            <compositeSetting label="Port5 Value2" value="0"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port5 Config" value="0"/>
+            <compositeSetting label="Port5 Value2" value="0"/>
           </compositeChoice>
         </compositeVal>
         <label>Mode:</label>
@@ -2755,13 +2902,43 @@
         <label xml:lang="nl">Type:</label>
       </variable>
 
+      <variable item="Port5 Type" tooltip="Port 5 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port5 Config" value="0"/>
+            <compositeSetting label="Port5 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port5 Config" value="31"/>
+            <compositeSetting label="Port5 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port5 Config" value="27"/>
+            <compositeSetting label="Port5 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port5 Type variable created later in this definition file-->
+
       <!-- displayed on LocoServo Port5 options predefined -->
       <variable item="Port5 Type" tooltip="Port 5 Config and Value2 for servo connection" include="101,102,103,104,105,106">
         <compositeVal>
           <!--next output type only available on ports 5-12 on LocoServo-->
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 1 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 1 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port5 Config" value="128"/>
             <compositeSetting label="Port5 Value2" value="1"/>
@@ -3063,7 +3240,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 6 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 6 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port6 Config" CV="18" default="0"><!--TODO fix value out of bound for LocoBooster-->
@@ -3090,8 +3267,8 @@
         <tooltip>Port 6 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port6 Type" tooltip="Port 6 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
-        <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port3 Type combo-->
+      <variable item="Port6 Type" tooltip="Port 6 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+        <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port5 Type combo-->
         <compositeVal>
           <!--inputs and most output types not available on LocoServo boards ports 5-12 and LocoBooster ports 5-6-->
           <!--Input types-->
@@ -3329,8 +3506,8 @@
             <choice>Select...</choice>
             <choice xml:lang="de">Auswählen...</choice>
             <choice xml:lang="nl">Selecteer...</choice>
-            <compositeSetting label="Port6 Config" value="31"/>
-            <compositeSetting label="Port6 Value2" value="0"/><!--different value2 to make selectable after change-->
+            <compositeSetting label="Port6 Config" value="0"/>
+            <compositeSetting label="Port6 Value2" value="0"/>
           </compositeChoice>
         </compositeVal>
         <label>Mode:</label>
@@ -3344,7 +3521,7 @@
           <!--next output type only available on ports 5-12 on LocoServo-->
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 2 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 2 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port6 Config" value="128"/>
             <compositeSetting label="Port6 Value2" value="1"/>
@@ -3361,6 +3538,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port6 Type" tooltip="Port 6 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port6 Config" value="0"/>
+            <compositeSetting label="Port6 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port6 Config" value="31"/>
+            <compositeSetting label="Port6 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port6 Config" value="27"/>
+            <compositeSetting label="Port6 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port6 Type variable created later in this definition file-->
 
       <!--Port6 Opcode1-->
       <variable item="Port6 Opcode1 Address" CV="67" mask="XVVVVVVV">
@@ -3646,7 +3853,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 7 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 7 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port7 Config" CV="21" default="0">
@@ -3673,7 +3880,7 @@
         <tooltip>Port 7 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port7 Type" tooltip="Port 7 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port7 Type" tooltip="Port 7 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <compositeVal>
           <!--Input types-->
           <compositeChoice choice="Input Toggle switch">
@@ -3920,7 +4127,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 3 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 3 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port7 Config" value="128"/>
             <compositeSetting label="Port7 Value2" value="1"/>
@@ -3937,6 +4144,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port7 Type" tooltip="Port 7 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port7 Config" value="0"/>
+            <compositeSetting label="Port7 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port7 Config" value="31"/>
+            <compositeSetting label="Port7 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port7 Config" value="27"/>
+            <compositeSetting label="Port7 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port7 Type variable created later in this definition file-->
 
       <!--Port7 Opcode1-->
       <variable item="Port7 Opcode1 Address" CV="70" mask="XVVVVVVV">
@@ -4222,7 +4459,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 8 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 8 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port8 Config" CV="24">
@@ -4249,7 +4486,7 @@
         <tooltip>Port 8 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port8 Type" tooltip="Port 8 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port8 Type" tooltip="Port 8 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port7 Type combo-->
         <compositeVal>
             <!--Input types-->
@@ -4477,7 +4714,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 4 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 4 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port8 Config" value="128"/>
             <compositeSetting label="Port8 Value2" value="1"/>
@@ -4494,6 +4731,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port8 Type" tooltip="Port 8 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port8 Config" value="0"/>
+            <compositeSetting label="Port8 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port8 Config" value="31"/>
+            <compositeSetting label="Port8 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port8 Config" value="27"/>
+            <compositeSetting label="Port8 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port8 Type variable created later in this definition file-->
 
       <!--Port8 Opcode1-->
       <variable item="Port8 Opcode1 Address" CV="73" mask="XVVVVVVV">
@@ -4779,7 +5046,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 9 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 9 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port9 Config" CV="27">
@@ -4806,7 +5073,7 @@
         <tooltip>Port 9 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port9 Type" tooltip="Port 9 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port9 Type" tooltip="Port 9 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <compositeVal>
             <!--Input types-->
             <compositeChoice choice="Input Toggle switch">
@@ -5033,7 +5300,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 5 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 5 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port9 Config" value="128"/>
             <compositeSetting label="Port9 Value2" value="1"/>
@@ -5050,6 +5317,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port9 Type" tooltip="Port 9 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port9 Config" value="0"/>
+            <compositeSetting label="Port9 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port9 Config" value="31"/>
+            <compositeSetting label="Port9 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port9 Config" value="27"/>
+            <compositeSetting label="Port9 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port9 Type variable created later in this definition file-->
 
       <!--Port9 Opcode1-->
       <variable item="Port9 Opcode1 Address" CV="76" mask="XVVVVVVV">
@@ -5335,7 +5632,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 10 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 10 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port10 Config" CV="30" default="0">
@@ -5362,7 +5659,7 @@
         <tooltip>Port 10 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port10 Type" tooltip="Port 10 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port10 Type" tooltip="Port 10 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port9 Type combo-->
         <compositeVal>
             <!--Input types-->
@@ -5590,7 +5887,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 6 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 6 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port10 Config" value="128"/>
             <compositeSetting label="Port10 Value2" value="1"/>
@@ -5607,6 +5904,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port10 Type" tooltip="Port 10 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port10 Config" value="0"/>
+            <compositeSetting label="Port10 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port10 Config" value="31"/>
+            <compositeSetting label="Port10 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port10 Config" value="27"/>
+            <compositeSetting label="Port10 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port10 Type variable created later in this definition file-->
 
       <!--Port10 Opcode1-->
       <variable item="Port10 Opcode1 Address" CV="79" mask="XVVVVVVV">
@@ -5892,7 +6219,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 11 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 11 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port11 Config" CV="33">
@@ -5919,7 +6246,7 @@
         <tooltip>Port 11 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port11 Type" tooltip="Port 11 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port11 Type" tooltip="Port 11 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <compositeVal>
           <!--Input types-->
           <compositeChoice choice="Input Toggle switch">
@@ -6146,7 +6473,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 5 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 5 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port11 Config" value="128"/>
             <compositeSetting label="Port11 Value2" value="1"/>
@@ -6163,6 +6490,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port11 Type" tooltip="Port 11 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port11 Config" value="0"/>
+            <compositeSetting label="Port11 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port11 Config" value="31"/>
+            <compositeSetting label="Port11 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port11 Config" value="27"/>
+            <compositeSetting label="Port11 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port11 Type variable created later in this definition file-->
 
       <!--Port11 Opcode1-->
       <variable item="Port11 Opcode1 Address" CV="82" mask="XVVVVVVV">
@@ -6448,7 +6805,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 12 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 12 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port12 Config" CV="36" default="0">
@@ -6475,7 +6832,7 @@
         <tooltip>Port 12 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port12 Type" tooltip="Port 12 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,210,211">
+      <variable item="Port12 Type" tooltip="Port 12 Config and Value2" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port11 Type combo-->
         <compositeVal>
           <!--Input types-->
@@ -6703,7 +7060,7 @@
         <compositeVal>
           <compositeChoice choice="Output Servo">
             <!-- Servo values are identical to Output Fixed 1 Off, differentiated by PIC version -->
-            <choice>Output: Servo 6 (2/4 pos on tab LocoIO)</choice>
+            <choice>Output: Servo 6 (2/4 pos on tab Loco...)</choice>
             <choice xml:lang="nl">Uitgang: Servo (2/4 pos. op tab LocoIO)</choice>
             <compositeSetting label="Port12 Config" value="128"/>
             <compositeSetting label="Port12 Value2" value="1"/>
@@ -6720,6 +7077,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port12 Type" tooltip="Port 12 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port12 Config" value="0"/>
+            <compositeSetting label="Port12 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port12 Config" value="31"/>
+            <compositeSetting label="Port12 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port12 Config" value="27"/>
+            <compositeSetting label="Port12 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port12 Type variable created later in this definition file-->
 
       <!--Port12 Opcode1-->
       <variable item="Port12 Opcode1 Address" CV="85" mask="XVVVVVVV">
@@ -7005,7 +7392,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 13 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 13 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port13 Config" CV="39" default="0">
@@ -7032,7 +7419,7 @@
         <tooltip>Port 13 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port13 Type" tooltip="Port 13 Config and Value2" exclude="003,004,005,210,211">
+      <variable item="Port13 Type" tooltip="Port 13 Config and Value2" exclude="003,004,005,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port9 Type combo-->
         <compositeVal>
           <!--Input types-->
@@ -7254,6 +7641,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port13 Type" tooltip="Port 13 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port13 Config" value="0"/>
+            <compositeSetting label="Port13 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port13 Config" value="31"/>
+            <compositeSetting label="Port13 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port13 Config" value="27"/>
+            <compositeSetting label="Port13 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port13 Type variable created later in this definition file-->
 
       <!--Port13 Opcode1-->
       <variable item="Port13 Opcode1 Address" CV="88" mask="XVVVVVVV">
@@ -7520,7 +7937,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 14 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 14 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port14 Config" CV="42" default="0">
@@ -7547,7 +7964,7 @@
         <tooltip>Port 14 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port14 Type" tooltip="Port 14 Config and Value2" exclude="003,004,005,210,211">
+      <variable item="Port14 Type" tooltip="Port 14 Config and Value2" exclude="003,004,005,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port13 Type combo-->
         <compositeVal>
           <!--Input types-->
@@ -7769,6 +8186,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port14 Type" tooltip="Port 14 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port14 Config" value="0"/>
+            <compositeSetting label="Port14 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port14 Config" value="31"/>
+            <compositeSetting label="Port14 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port14 Config" value="27"/>
+            <compositeSetting label="Port14 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port14 Type variable created later in this definition file-->
 
       <!--Port14 Opcode1-->
       <variable item="Port14 Opcode1 Address" CV="91" mask="XVVVVVVV">
@@ -8035,7 +8482,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 15 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 15 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port15 Config" CV="45" default="0">
@@ -8062,7 +8509,7 @@
         <tooltip>Port 15 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port15 Type" tooltip="Port 15 Config and Value2" exclude="003,004,005,210,211">
+      <variable item="Port15 Type" tooltip="Port 15 Config and Value2" exclude="003,004,005,200,210,211">
         <compositeVal>
           <!--Input types-->
           <compositeChoice choice="Input Toggle switch">
@@ -8283,6 +8730,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port15 Type" tooltip="Port 15 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port15 Config" value="0"/>
+            <compositeSetting label="Port15 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port15 Config" value="31"/>
+            <compositeSetting label="Port15 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port15 Config" value="27"/>
+            <compositeSetting label="Port15 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port15 Type variable created later in this definition file-->
 
       <!--Port15 Opcode1-->
       <variable item="Port15 Opcode1 Address" CV="94" mask="XVVVVVVV">
@@ -8549,7 +9026,7 @@
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
-        <tooltip>Port 16 DCC Address (decimal, 1-2048)</tooltip>
+        <tooltip>Port 16 DCC Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port16 Config" CV="48" default="0">
@@ -8576,7 +9053,7 @@
         <tooltip>Port 16 Value2 = (Address MINUS 1) MOD 128</tooltip>
       </variable>
 
-      <variable item="Port16 Type" tooltip="Port 16 Config and Value2" exclude="003,004,005,210,211">
+      <variable item="Port16 Type" tooltip="Port 16 Config and Value2" exclude="003,004,005,200,210,211">
         <!--exclude 210,211 LocoRCD2 to hide the combo, config is set from Port15 Type combo-->
         <compositeVal>
           <!--Input types-->
@@ -8798,6 +9275,36 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
       </variable>
+
+      <variable item="Port16 Type" tooltip="Port 16 Config and Value2 for RCD connection" include="200">
+        <!--only available on LocoRCD-->
+        <compositeVal>
+          <compositeChoice choice="Ports Not In Use">
+            <choice>Port Not In Use</choice>
+            <choice xml:lang="de">Anschluss nicht benutzt</choice>
+            <choice xml:lang="nl">Poort niet in gebruik</choice>
+            <compositeSetting label="Port16 Config" value="0"/>
+            <compositeSetting label="Port16 Value2" value="0"/>
+          </compositeChoice>
+
+          <compositeChoice choice="Input Occu Low">
+            <choice>Input: Occupancy - active Low</choice>
+            <compositeSetting label="Port16 Config" value="31"/>
+            <compositeSetting label="Port16 Value2" value="16"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Occu Low Delayed">
+            <choice>Input: Occupancy - active Low Delayed</choice>
+            <compositeSetting label="Port16 Config" value="27"/>
+            <compositeSetting label="Port16 Value2" value="16"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Mode:</label>
+        <label xml:lang="de">Typ:</label>
+        <label xml:lang="nl">Type:</label>
+        <tooltip>Select one active port on this LocoRCD board</tooltip>
+      </variable>
+
+      <!--RCD2 Port16 Type variable created later in this definition file-->
 
       <!--Port16 Opcode1-->
       <variable item="Port16 Opcode1 Address" CV="97" mask="XVVVVVVV">
@@ -9069,8 +9576,8 @@
 
       <!--RCD2 Port Type variables created after basic variables are in place. Operates 2 ports at once-->
 
-      <variable item="Port1 Type" tooltip="Port 1+2 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port1 Type" tooltip="Port 1+2 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9102,11 +9609,11 @@
         <label>Mode:</label>
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
-        <tooltip>Select a set of active ports on tab LocoIO</tooltip>
+        <tooltip>Select one set of active ports on this LocoRCD2 board</tooltip>
       </variable>
 
-      <variable item="Port3 Type" tooltip="Port 3+4 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port3 Type" tooltip="Port 3+4 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9140,8 +9647,8 @@
         <tooltip>Also configures port 4</tooltip>
       </variable>
 
-      <variable item="Port5 Type" tooltip="Port 5+6 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port5 Type" tooltip="Port 5+6 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9175,8 +9682,8 @@
         <tooltip>Also configures port 6</tooltip>
       </variable>
 
-      <variable item="Port7 Type" tooltip="Port 7+8 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port7 Type" tooltip="Port 7+8 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9210,8 +9717,8 @@
         <tooltip>Also configures port 8</tooltip>
       </variable>
 
-      <variable item="Port9 Type" tooltip="Port 9+10 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port9 Type" tooltip="Port 9+10 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9245,8 +9752,8 @@
         <tooltip>Also configures port 10</tooltip>
       </variable>
 
-      <variable item="Port11 Type" tooltip="Port 11+12 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port11 Type" tooltip="Port 11+12 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9280,8 +9787,8 @@
         <tooltip>Also configures port 12</tooltip>
       </variable>
 
-      <variable item="Port13 Type" tooltip="Port 13+14 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port13 Type" tooltip="Port 13+14 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9315,8 +9822,8 @@
         <tooltip>Also configures port 14</tooltip>
       </variable>
 
-      <variable item="Port15 Type" tooltip="Port 15+16 Config and Value2 for RCD/RCD2 connection" include="210,211">
-        <!--only available on LocoRCD(2)-->
+      <variable item="Port15 Type" tooltip="Port 15+16 Config and Value2 for RCD2 connection" include="210,211">
+        <!--only available on LocoRCD2-->
         <!--TODO check values per choice-->
         <compositeVal>
           <compositeChoice choice="Ports Not In Use">
@@ -9348,6 +9855,357 @@
         <label xml:lang="de">Typ:</label>
         <label xml:lang="nl">Type:</label>
         <tooltip>Also configures port 16</tooltip>
+      </variable>
+
+      <!--Central selector for LocoRCD 1-port set-->
+      <variable item="RCD Port Setter" comment="For RCD UI only" include="200">
+        <compositeVal>
+          <compositeChoice>
+            <choice>Select...</choice>
+            <choice xml:lang="nl">Selecteer...</choice>
+            <comment>No action</comment>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 1</choice>
+            <choice xml:lang="nl">Poort 1</choice>
+            <compositeSetting label="Port1 Type" value="1"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 2</choice>
+            <choice xml:lang="nl">Poort 2</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="1"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 3</choice>
+            <choice xml:lang="nl">Poorte3</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="1"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 4</choice>
+            <choice xml:lang="nl">Poort 4</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="1"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 5</choice>
+            <choice xml:lang="nl">Poort 5</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="1"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 6</choice>
+            <choice xml:lang="nl">Poort 6</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="1"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 7</choice>
+            <choice xml:lang="nl">Poort 7</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="1"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 8</choice>
+            <choice xml:lang="nl">Poort 8</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="1"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 9</choice>
+            <choice xml:lang="nl">Poort 9</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="1"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 10</choice>
+            <choice xml:lang="nl">Poort 10</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="1"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 11</choice>
+            <choice xml:lang="nl">Poort 11</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="1"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 12</choice>
+            <choice xml:lang="nl">Poort 12</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="1"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 13</choice>
+            <choice xml:lang="nl">Poort 13</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="1"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 14</choice>
+            <choice xml:lang="nl">Poort 14</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="1"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 15</choice>
+            <choice xml:lang="nl">Poort 15</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="1"/>
+            <compositeSetting label="Port16 Type" value="0"/>
+          </compositeChoice>
+          <compositeChoice>
+            <choice>Port 16</choice>
+            <choice xml:lang="nl">Poort 16</choice>
+            <compositeSetting label="Port1 Type" value="0"/>
+            <compositeSetting label="Port2 Type" value="0"/>
+            <compositeSetting label="Port3 Type" value="0"/>
+            <compositeSetting label="Port4 Type" value="0"/>
+            <compositeSetting label="Port5 Type" value="0"/>
+            <compositeSetting label="Port6 Type" value="0"/>
+            <compositeSetting label="Port7 Type" value="0"/>
+            <compositeSetting label="Port8 Type" value="0"/>
+            <compositeSetting label="Port9 Type" value="0"/>
+            <compositeSetting label="Port10 Type" value="0"/>
+            <compositeSetting label="Port11 Type" value="0"/>
+            <compositeSetting label="Port12 Type" value="0"/>
+            <compositeSetting label="Port13 Type" value="0"/>
+            <compositeSetting label="Port14 Type" value="0"/>
+            <compositeSetting label="Port15 Type" value="0"/>
+            <compositeSetting label="Port16 Type" value="1"/>
+          </compositeChoice>
+        </compositeVal>
+        <label>Port to use:</label>
+        <label xml:lang="de">Aktive Ausgang:</label>
+        <label xml:lang="nl">Actieve poort:</label>
+        <tooltip>Select a unique 2-port set between all boards that share one RCD2 Board address</tooltip>
       </variable>
 
       <!--Central selector for LocoRCD 2-port set-->
@@ -9477,14 +10335,45 @@
 
   <!-- LocoIO Board Settings Pane -->
   <pane>
-    <name>LocoIO</name>
+    <name>Loco...</name>
 
     <column>
-      <label>
-        <text>&lt;html&gt;&lt;strong&gt;Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;&lt;strong&gt;Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
-      </label>
+      <group exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoIO Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoIO Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="003,004,005">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;LocoBooster Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoBooster Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoBooster Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="101,102,103,104,105,106">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;LocoServo Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoServo Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoServo Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="200">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;LocoRCD Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoRCD Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoRCD Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="210,211">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;LocoRCD2 Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoRCD2 Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoRCD2 Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+
       <display item="Decoder Version"/>
       <row>
         <display item="Blink Rate"/>
@@ -9533,7 +10422,7 @@
         </label>
       </row>
 
-      <group include="210,211">
+      <group include="200,210,211">
         <separator/>
         <row>
           <display item="RCD Port Setter"/>
@@ -9559,7 +10448,26 @@
               <display item="Port1 Type"/>
             </row>
             <row>
-              <display item="Port1 Address"/>
+              <group>
+                <qualifier>
+                  <variableref>Port1 Type</variableref>
+                  <relation>ne</relation>
+                  <value>2</value>
+                </qualifier>
+                <row>
+                  <display item="Port1 Address"/>
+                </row>
+              </group>
+              <group>
+                <qualifier>
+                  <variableref>Port1 Type</variableref>
+                  <relation>eq</relation>
+                  <value>1</value>
+                </qualifier>
+                <row>
+                  <display item="Port1 Address2"/>
+                </row>
+              </group>
               <display item="Port1 HiAddress"/>
               <display item="Port1 LowAddress"/>
             </row>
@@ -9583,16 +10491,34 @@
 
           <row>
             <display item="Port1 Config"/>
+            <display item="Port1 Value1"/>
             <display item="Port1 Value2"/>
             <!--<display item="Port1 Old Block"/>-->
           </row>
         </column>
 
         <!--RCD2 only-->
-        <column>
-          <display item="Port1 Train Control" format="checkbox"/>
-          <display item="Port1 Train Reverse" format="checkbox"/>
-        </column>
+        <group>
+          <qualifier>
+            <variableref>Port1 Type</variableref>
+            <relation>ne</relation>
+            <value>0</value>
+          </qualifier>
+          <column>
+            <row>
+              <display item="Port1 Train Control" format="checkbox"/>
+              <display item="Port1 Train Reverse" format="checkbox"/>
+            </row>
+            <row>
+              <display item="Port1 Train Slow Down" layout="left" format="hslider"/>
+              <display item="Port1 Train Slow Down" layout="left" label=""/>
+            </row>
+            <row>
+              <display item="Port1 Train Wait" layout="left" format="hslider"/>
+              <display item="Port1 Train Wait" layout="left" label=""/>
+            </row>
+          </column>
+        </group>
 
         <group>
           <!--Opcode 1 2 option, hide on ports 1-4 when set to Special Ports-->
