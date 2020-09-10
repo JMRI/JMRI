@@ -392,6 +392,6 @@ public class CtcEditorActionTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
 
 }

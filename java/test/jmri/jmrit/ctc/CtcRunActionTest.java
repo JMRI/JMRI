@@ -113,5 +113,5 @@ public class CtcRunActionTest {
         JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcRunActionTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcRunActionTest.class);
 }
