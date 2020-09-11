@@ -16,7 +16,7 @@ import jmri.jmrix.ipocs.protocol.packets.ConnectionResponsePacket;
 import jmri.jmrix.ipocs.protocol.packets.Packet;
 
 public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer> {
-  private final static Logger log = LoggerFactory.getLogger(IpocsSocketAcceptor.class);
+  private final static Logger log = LoggerFactory.getLogger(IpocsClientHandler.class);
   private final AsynchronousSocketChannel client;
   private byte unitId;
   private List<IpocsClientListener> clientListeners = new ArrayList<IpocsClientListener>();
@@ -50,7 +50,7 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
           listener.clientDisconnected(this);
         }
       } catch (final IOException ex) {
-        log.error("Unable to close client: {0}", ex.getMessage());
+        log.error("Unable to close client: {}", ex.getMessage());
       }
       return;
     }
@@ -98,7 +98,9 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
   public void failed(final Throwable exc, final ByteBuffer attachment) {
     try {
       client.close();
-    } catch (IOException ex) {}
+    } catch (IOException ex) {
+      log.error("Error closing connection", ex);
+    }
     for (IpocsClientListener listener : clientListeners) {
       listener.clientDisconnected(this);
     }

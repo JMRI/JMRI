@@ -21,7 +21,7 @@ public class DisconnectPacket extends Packet {
 
   @Override
   protected byte[] serializeSpecific() {
-    ByteBuffer buffer = ByteBuffer.allocate(2);
+    ByteBuffer buffer = ByteBuffer.allocate(1);
     buffer.put(reason.value);
     buffer.rewind();
     return buffer.array();

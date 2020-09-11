@@ -12,7 +12,7 @@ import jmri.jmrix.ipocs.protocol.packets.Packet;
 import jmri.jmrix.ipocs.protocol.packets.SetOutputPacket;
 
 public class IpocsLight extends AbstractLight implements IpocsClientListener {
-  private final static Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
+  private final static Logger log = LoggerFactory.getLogger(IpocsLight.class);
   private IpocsPortController portController;
 
   public IpocsLight(IpocsPortController portController, String systemName, String userName) {

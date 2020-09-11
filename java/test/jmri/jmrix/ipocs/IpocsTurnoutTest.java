@@ -35,13 +35,10 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Override
   public void checkThrownMsgSent() throws InterruptedException {
-    // TODO Auto-generated method stub
-
   }
 
   @Override
   public void checkClosedMsgSent() throws InterruptedException {
-    // TODO Auto-generated method stub
   }
 
   @Test

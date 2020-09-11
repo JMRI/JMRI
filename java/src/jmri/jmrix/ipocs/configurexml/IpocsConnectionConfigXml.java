@@ -57,7 +57,7 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
       try {
         portController.connect();
       } catch (IOException ex) {
-        log.error("Unable to start service: {0}", ex.getMessage());
+        log.error("Unable to start service: {}", ex.getMessage());
       }
     }
     return true;
