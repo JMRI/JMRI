@@ -448,7 +448,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             } else if (at.getMode() == ActiveTrain.MANUAL) {
                 at.setMode(ActiveTrain.AUTOMATIC);
                 aat.restoreSavedSpeedAndDirection();
-                aat.setForward(!aat.getRunInReverse());
                 if ((at.getStatus() == ActiveTrain.RUNNING)
                         || (at.getStatus() == ActiveTrain.WAITING)) {
                     if (aat.getCurrentSignal() != null) {

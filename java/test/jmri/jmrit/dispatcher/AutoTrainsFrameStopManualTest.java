@@ -64,7 +64,7 @@ import java.nio.file.StandardCopyOption;
 
             checkAndSetSpeedsSML();
             SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-            BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+            // BlockManager bm = InstanceManager.getDefault(BlockManager.class);
 
             JUnitUtil.setBeanStateAndWait(sm.getSensor("Occ South Block"), Sensor.ACTIVE);
 
