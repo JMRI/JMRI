@@ -115,13 +115,13 @@
           </li>
 
           <li>
-            Optionally, enter a User Name for the Sensor. Any string of other Sensors will be accepted, but it is
+            Optionally, enter a User Name for the Sensor. Any string not used by other Sensors will be accepted, but it is
             useful to enter a name that describes the intended use or location of the Sensor.
           </li>
 
           <li>
             You can add a number of Sensors at once by clicking on the <strong>Add a Range</strong> checkbox and 
-            then       the <strong>Number to Add.</strong> JMRI will increment the hardware number for each additional
+            then entering the <strong>Number to Add.</strong> JMRI will increment the hardware number for each additional
             sensor.  If a hardware address already exists in the Sensors range that is being added, then JMRI will skip
             that address. If you have entered a User Name, then a number will be appended for each additional sensor to
             ensure that the User Name is unique.
