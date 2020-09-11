@@ -1,19 +1,19 @@
 package jmri.jmrix.ipocs.protocol.enums;
 
-public enum RqPointsState {
-  Right(1),
-  Left(2),
+public enum RqDerailerState {
+  Passable(1),
+  NonPassable(2),
   Moving(3),
   OutOfControl(4);
 
   public final byte value;
 
-  private RqPointsState(int value) {
+  private RqDerailerState(int value) {
     this.value = (byte)value;
   }
 
-  public static RqPointsState valueOf(byte value) {
-    for (RqPointsState e : values()) {
+  public static RqDerailerState valueOf(byte value) {
+    for (RqDerailerState e : values()) {
       if (e.value == value) {
         return e;
       }

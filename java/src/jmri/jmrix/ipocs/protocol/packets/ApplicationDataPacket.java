@@ -38,6 +38,7 @@ public class ApplicationDataPacket extends Packet {
   }
 
   public ByteBuffer getData() {
+    data.rewind();
     return data;
   }
 

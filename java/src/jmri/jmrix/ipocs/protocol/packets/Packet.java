@@ -7,19 +7,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class Packet {
-  public final static byte IDENT = 0;
   private final static Logger log = LoggerFactory.getLogger(Packet.class);
   private byte length;
   private byte ack;
 
   public abstract byte getId();
 
-  public byte getLength() {
-    return length;
-  }
-
   public byte getAck() {
     return ack;
+  }
+
+  public void setAck(byte ack) {
+    this.ack = ack;
+  }
+
+  public byte getLength() {
+      return length;
+  }
+
+  public void setLength(byte length) {
+      this.length = length;
   }
 
   public static Packet parse(ByteBuffer buffer)  {
@@ -35,8 +42,8 @@ public abstract class Packet {
       for (Packet implClass : loader) {
         if (implClass.getId() == id) {
           pkt = implClass;
-          pkt.length = length;
           pkt.ack = ack;
+          pkt.length = length;
           break;
         }
       }

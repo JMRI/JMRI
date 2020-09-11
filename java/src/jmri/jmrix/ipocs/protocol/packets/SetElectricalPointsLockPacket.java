@@ -2,10 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqPointsLockCommand;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SetElectricalPointsLockPacket extends Packet {
   public final static byte IDENT = 14;
-  private byte command;
+  private RqPointsLockCommand command;
 
   @Override
   public byte getId() {
@@ -14,22 +16,22 @@ public class SetElectricalPointsLockPacket extends Packet {
 
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
-    command = buffer.get();
+    command = RqPointsLockCommand.valueOf(buffer.get());
   }
 
   @Override
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(1);
-    buffer.put(command);
+    buffer.put(command.value);
     buffer.rewind();
     return buffer.array();
   }
 
-  public byte getCommand() {
+  public RqPointsLockCommand getCommand() {
     return command;
   }
 
-  public void setCommand(byte command) {
+  public void setCommand(RqPointsLockCommand command) {
     this.command = command;
   }
 }

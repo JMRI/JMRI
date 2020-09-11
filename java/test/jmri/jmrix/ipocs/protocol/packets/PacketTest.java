@@ -1,0 +1,61 @@
+package jmri.jmrix.ipocs.protocol.packets;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.ByteBuffer;
+import java.util.Random;
+
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+
+public class PacketTest {
+  Packet pkt = null;
+  private byte[] testPacket = { 0x20, 0x03, 0x12 };
+
+  @BeforeEach
+  public void beforeEach() {
+    pkt = new Packet() {
+      @Override
+      public byte getId() {
+        return (char)0x20;
+      }
+  
+      @Override
+      protected void parseSpecific(ByteBuffer buffer) {
+      }
+  
+      @Override
+      protected byte[] serializeSpecific() {
+        return new byte[0];
+      }
+    };
+  }
+
+  @Test
+  public void ackTest() {
+    if (pkt == null) {
+      beforeEach();
+    }
+    byte[] bytes = new byte[1];
+    new Random().nextBytes(bytes);
+    pkt.setAck(bytes[0]);
+    assertEquals(bytes[0], pkt.getAck());
+  }
+
+  @Test
+  public void parseTest() {
+    // Right now this cannot be tested, because ServiceLoader cannot be mocked.
+    // Could be solved by using PowerMockito:
+    // stackoverflow.com/questions/21105403/mocking-static-methods-with-mockito
+  }
+
+  @Test
+  public void serializeTest() {
+    if (pkt == null) {
+      beforeEach();
+    }
+    pkt.setAck((byte)0x12);
+    assertEquals(ByteBuffer.wrap(testPacket), pkt.serialize());
+    assertEquals(0x03, pkt.getLength());
+  }
+}

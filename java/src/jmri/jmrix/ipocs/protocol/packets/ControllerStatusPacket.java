@@ -2,10 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqControllerState;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ControllerStatusPacket extends Packet {
   public final static byte IDENT = 15;
-  private byte state;
+  private RqControllerState state;
 
   @Override
   public byte getId() {
@@ -14,22 +16,22 @@ public class ControllerStatusPacket extends Packet {
 
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
-    state = buffer.get();
+    state = RqControllerState.valueOf(buffer.get());
   }
 
   @Override
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(1);
-    buffer.put(state);
+    buffer.put(state.value);
     buffer.rewind();
     return buffer.array();
   }
 
-  public byte getState() {
+  public RqControllerState getState() {
     return state;
   }
 
-  public void setState(byte state) {
+  public void setState(RqControllerState state) {
     this.state = state;
   }
 }

@@ -1,6 +1,5 @@
 package jmri.jmrix.ipocs;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import org.junit.Test;
@@ -8,15 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import cucumber.api.java.Before;
 import jmri.implementation.AbstractTurnoutTestBase;
 import jmri.jmrix.ipocs.protocol.Message;
 import jmri.jmrix.ipocs.protocol.enums.RqPointsState;
 import jmri.jmrix.ipocs.protocol.packets.ControllerStatusPacket;
 import jmri.jmrix.ipocs.protocol.packets.PointsStatusPacket;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import net.jodah.typetools.TypeResolver.Unknown;
 
 public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
@@ -53,35 +49,35 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     MockitoAnnotations.initMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
-    IpocsClientHandler client = mock(IpocsClientHandler.class);
-    Message msg = new Message();
+    final IpocsClientHandler client = mock(IpocsClientHandler.class);
+    final Message msg = new Message();
 
     msg.setObjectName("WRONG");
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
 
     // Test a packet that's unknown
     msg.setObjectName(t.getUserName());
     msg.getPackets().add(new ControllerStatusPacket());
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
 
     // Test a known packet
     msg.getPackets().clear();
-    PointsStatusPacket pkt = new PointsStatusPacket();
+    final PointsStatusPacket pkt = new PointsStatusPacket();
     pkt.setState(RqPointsState.Left);
     msg.getPackets().add(pkt);
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
 
     // Test a known packet
     pkt.setState(RqPointsState.Right);
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
 
     // Test a known packet
     pkt.setState(RqPointsState.Moving);
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
 
     // Test a known packet
     pkt.setState(RqPointsState.OutOfControl);
-    ((IpocsTurnout)t).onMessage(client, msg);
+    ((IpocsTurnout) t).onMessage(client, msg);
   }
 
   @Test
@@ -89,8 +85,8 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     MockitoAnnotations.initMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
-    ((IpocsTurnout)t).forwardCommandChangeToLayout(IpocsTurnout.UNKNOWN);
-    //JUnitAppender.assertErrorMessage("Unknown turnout order state");
+    ((IpocsTurnout) t).forwardCommandChangeToLayout(IpocsTurnout.UNKNOWN);
+    // JUnitAppender.assertErrorMessage("Unknown turnout order state");
   }
 
   @Test
@@ -98,7 +94,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     MockitoAnnotations.initMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
-    ((IpocsTurnout)t).turnoutPushbuttonLockout(false);
+    ((IpocsTurnout) t).turnoutPushbuttonLockout(false);
   }
 
   @Test
@@ -106,8 +102,8 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     MockitoAnnotations.initMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
-    IpocsClientHandler client = mock(IpocsClientHandler.class);
-    ((IpocsTurnout)t).clientConnected(client);
+    final IpocsClientHandler client = mock(IpocsClientHandler.class);
+    ((IpocsTurnout) t).clientConnected(client);
   }
 
   @Test
@@ -115,7 +111,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
     MockitoAnnotations.initMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
-    IpocsClientHandler client = mock(IpocsClientHandler.class);
+    final IpocsClientHandler client = mock(IpocsClientHandler.class);
     ((IpocsTurnout)t).clientDisconnected(client);
   }
 }

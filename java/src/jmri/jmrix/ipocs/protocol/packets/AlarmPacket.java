@@ -2,12 +2,14 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqAlarmState;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class AlarmPacket extends Packet {
   public final static byte IDENT = 16;
   private short alarmCode;
   private byte alarmLevel;
-  private byte alarmState;
+  private RqAlarmState alarmState;
   private int parameter1;
   private int parameter2;
 
@@ -20,7 +22,7 @@ public class AlarmPacket extends Packet {
   protected void parseSpecific(ByteBuffer buffer) {
     alarmCode = buffer.getShort();
     alarmLevel = buffer.get();
-    alarmState = buffer.get();
+    alarmState = RqAlarmState.valueOf(buffer.get());
     parameter1 = buffer.getInt();
     parameter2 = buffer.getInt();
   }
@@ -30,7 +32,7 @@ public class AlarmPacket extends Packet {
     ByteBuffer buffer = ByteBuffer.allocate(12);
     buffer.putShort(alarmCode);
     buffer.put(alarmLevel);
-    buffer.put(alarmState);
+    buffer.put(alarmState.value);
     buffer.putInt(parameter1);
     buffer.putInt(parameter2);
     buffer.rewind();
@@ -53,11 +55,11 @@ public class AlarmPacket extends Packet {
     this.alarmLevel = alarmLevel;
   }
 
-  public byte getAlarmState() {
+  public RqAlarmState getAlarmState() {
     return alarmState;
   }
 
-  public void setAlarmState(byte alarmState) {
+  public void setAlarmState(RqAlarmState alarmState) {
     this.alarmState = alarmState;
   }
 
@@ -65,7 +67,15 @@ public class AlarmPacket extends Packet {
     return parameter1;
   }
 
+  public void setParameter1(int parameter1) {
+      this.parameter1 = parameter1;
+  }
+
   public int getParameter2() {
     return parameter2;
+  }
+
+  public void setParameter2(int parameter2) {
+      this.parameter2 = parameter2;
   }
 }

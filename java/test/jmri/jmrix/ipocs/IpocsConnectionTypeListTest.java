@@ -8,9 +8,10 @@ import jmri.util.JUnitUtil;
 import org.junit.Assert;
 
 /**
- * Tests for MqttConnectionTypeList class.
+ * Tests for IpocsConnectionTypeList class.
  *
  * @author Bob Jacobsen Copyright (C) 2018
+ * @author Fredrik Elestedt Copyright (C) 2020
  * @since 4.11.5
  */
 public class IpocsConnectionTypeListTest {

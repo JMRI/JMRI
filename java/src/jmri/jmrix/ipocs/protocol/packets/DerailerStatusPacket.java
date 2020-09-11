@@ -2,11 +2,14 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqDerailerState;
+import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class DerailerStatusPacket extends Packet {
   public final static byte IDENT = 18;
-  private byte state;
-  private byte releaseState;
+  private RqDerailerState state;
+  private RqReleaseState releaseState;
   private short operationTime;
 
   @Override
@@ -16,34 +19,34 @@ public class DerailerStatusPacket extends Packet {
 
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
-    state = buffer.get();
-    releaseState = buffer.get();
+    state = RqDerailerState.valueOf(buffer.get());
+    releaseState = RqReleaseState.valueOf(buffer.get());
     operationTime = buffer.getShort();
   }
 
   @Override
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(4);
-    buffer.put(state);
-    buffer.put(releaseState);
+    buffer.put(state.value);
+    buffer.put(releaseState.value);
     buffer.putShort(operationTime);
     buffer.rewind();
     return buffer.array();
   }
 
-  public byte getState() {
+  public RqDerailerState getState() {
     return state;
   }
 
-  public void setState(byte state) {
+  public void setState(RqDerailerState state) {
     this.state = state;
   }
 
-  public byte getReleaseState() {
+  public RqReleaseState getReleaseState() {
     return releaseState;
   }
 
-  public void setReleaseState(byte releaseState) {
+  public void setReleaseState(RqReleaseState releaseState) {
     this.releaseState = releaseState;
   }
 

@@ -3,12 +3,13 @@ package jmri.jmrix.ipocs.protocol.packets;
 import java.nio.ByteBuffer;
 
 import jmri.jmrix.ipocs.protocol.enums.RqPointsState;
+import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class PointsStatusPacket extends Packet {
   public final static byte IDENT = 17;
   private RqPointsState state;
-  private byte releaseState;
+  private RqReleaseState releaseState;
   private short operationTime;
 
   @Override
@@ -19,7 +20,7 @@ public class PointsStatusPacket extends Packet {
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
     state = RqPointsState.valueOf(buffer.get());
-    releaseState = buffer.get();
+    releaseState = RqReleaseState.valueOf(buffer.get());
     operationTime = buffer.getShort();
   }
 
@@ -27,7 +28,7 @@ public class PointsStatusPacket extends Packet {
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(4);
     buffer.put(state.value);
-    buffer.put(releaseState);
+    buffer.put(releaseState.value);
     buffer.putShort(operationTime);
     buffer.rewind();
     return buffer.array();
@@ -41,11 +42,11 @@ public class PointsStatusPacket extends Packet {
     this.state = state;
   }
 
-  public byte getReleaseState() {
+  public RqReleaseState getReleaseState() {
     return releaseState;
   }
 
-  public void setReleaseState(byte releaseState) {
+  public void setReleaseState(RqReleaseState releaseState) {
     this.releaseState = releaseState;
   }
 

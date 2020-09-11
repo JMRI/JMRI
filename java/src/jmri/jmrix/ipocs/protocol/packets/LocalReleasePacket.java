@@ -2,10 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqReleaseCommand;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class LocalReleasePacket extends Packet {
   public final static byte IDENT = 9;
-  private byte command;
+  private RqReleaseCommand command;
 
   @Override
   public byte getId() {
@@ -14,22 +16,22 @@ public class LocalReleasePacket extends Packet {
 
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
-    command = buffer.get();
+    command = RqReleaseCommand.valueOf(buffer.get());
   }
 
   @Override
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(1);
-    buffer.put(command);
+    buffer.put(command.value);
     buffer.rewind();
     return buffer.array();
   }
 
-  public byte getCommand() {
+  public RqReleaseCommand getCommand() {
     return command;
   }
 
-  public void setCommand(byte command) {
+  public void setCommand(RqReleaseCommand command) {
     this.command = command;
   }
 }

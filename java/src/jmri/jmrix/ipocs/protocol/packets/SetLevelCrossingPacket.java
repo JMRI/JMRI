@@ -2,10 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+import jmri.jmrix.ipocs.protocol.enums.RqLevelCrossingCommand;
+
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SetLevelCrossingPacket extends Packet {
   public final static byte IDENT = 12;
-  private byte command;
+  private RqLevelCrossingCommand command;
   private short delay;
   private byte track;
 
@@ -16,7 +18,7 @@ public class SetLevelCrossingPacket extends Packet {
 
   @Override
   protected void parseSpecific(ByteBuffer buffer) {
-    command = buffer.get();
+    command = RqLevelCrossingCommand.valueOf(buffer.get());
     delay = buffer.getShort();
     track = buffer.get();
   }
@@ -24,18 +26,18 @@ public class SetLevelCrossingPacket extends Packet {
   @Override
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(4);
-    buffer.put(command);
+    buffer.put(command.value);
     buffer.putShort(delay);
     buffer.put(track);
     buffer.rewind();
     return buffer.array();
   }
 
-  public byte getCommand() {
+  public RqLevelCrossingCommand getCommand() {
     return command;
   }
 
-  public void setCommand(byte command) {
+  public void setCommand(RqLevelCrossingCommand command) {
     this.command = command;
   }
 

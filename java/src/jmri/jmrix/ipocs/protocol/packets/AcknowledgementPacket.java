@@ -7,7 +7,6 @@ public class AcknowledgementPacket extends Packet {
   public final static byte IDENT = 4;
   private short ackReason;
 
-
   @Override
   public byte getId() {
     return IDENT;
