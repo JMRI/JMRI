@@ -22,6 +22,8 @@ import org.junit.jupiter.api.io.TempDir;
  */
 public class CtcRunActionTest {
 
+    static final boolean PAUSE = false;
+
     @Test
     public void testAction() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -52,7 +54,7 @@ public class CtcRunActionTest {
         Assert.assertTrue(sm.getSensor("IS2:RDGK").getKnownState() == Sensor.ACTIVE);
         Assert.assertFalse(smm.getSignalMast("SM-Alpha-Left-A").getHeld());
 
-//         JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Clear Right turnout left on siding using Call On.
         sm.getSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
@@ -60,7 +62,7 @@ public class CtcRunActionTest {
         JUnitUtil.waitFor(()->{return sm.getSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE;},"3/4 turnout thrown indicator not active");
         Assert.assertTrue(sm.getSensor("IS3:SWRI").getKnownState() == Sensor.ACTIVE);
 
-//         JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Set block occupied, move signal lever to left traffic, set Call-On lever
         sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
@@ -70,13 +72,13 @@ public class CtcRunActionTest {
         sm.getSensor("IS4:CALLON").setKnownState(Sensor.ACTIVE);
         sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
 
-//         JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         JUnitUtil.waitFor(()->{return sm.getSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE;},"3/4 signal left indicator not active");
         Assert.assertTrue(sm.getSensor("IS4:LDGK").getKnownState() == Sensor.ACTIVE);
         Assert.assertFalse(smm.getSignalMast("SM-Alpha-Right-A").getHeld());
 
-//         JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Simulate left to right train
         sm.getSensor("S-Alpha-Left").setKnownState(Sensor.ACTIVE);
@@ -88,7 +90,7 @@ public class CtcRunActionTest {
         sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
         sm.getSensor("S-Alpha-Side").setKnownState(Sensor.INACTIVE);
 
-//         JUnitUtil.waitFor(10000);        // Delay to see screen
+        if (PAUSE) JUnitUtil.waitFor(5000);
 
     }
 

@@ -28,6 +28,7 @@ public class CtcEditorActionTest {
     JFrameOperator _jfo = null;
 
     static final int DELAY = 0;
+    static final boolean PAUSE = false;
 
     @Test
     public void testEditor() throws Exception {
@@ -45,16 +46,16 @@ public class CtcEditorActionTest {
 
         _jfo = new JFrameOperator("CTC Editor");
         Assert.assertNotNull(_jfo);
-//         JUnitUtil.waitFor(5000);     // Delay to see screen
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Perform the tests
-        menuTests();
-        frameButtonTests();
+//         menuTests();
+//         frameButtonTests();
         editTests();
 
         _jfo.requestClose();
         _jfo = null;
-//         JUnitUtil.waitFor(5000);     // Delay to see screen
+        if (PAUSE) JUnitUtil.waitFor(2000);
     }
 
     void menuTests() {
@@ -75,7 +76,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmFix = new JFrameOperator(Bundle.getMessage("TitleDlgFix"));  // NOI18N
         Assert.assertNotNull(frmFix);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmFix, Bundle.getMessage("ButtonProceed")).doClick();
 
 
@@ -93,7 +94,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmDebug = new JFrameOperator(Bundle.getMessage("TitleDlgDeb"));  // NOI18N
         Assert.assertNotNull(frmDebug);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmDebug, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuDefaults
@@ -105,7 +106,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmDefaults = new JFrameOperator(Bundle.getMessage("TitleDlgDef"));  // NOI18N
         Assert.assertNotNull(frmDefaults);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmDefaults, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuFleeting
@@ -117,7 +118,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmFleeting = new JFrameOperator(Bundle.getMessage("TitleDlgFleet"));  // NOI18N
         Assert.assertNotNull(frmFleeting);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmFleeting, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuPatterns
@@ -129,7 +130,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmPatterns = new JFrameOperator(Bundle.getMessage("TItleDlgPat"));  // NOI18N
         Assert.assertNotNull(frmPatterns);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmPatterns, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // MenuDesign
@@ -141,7 +142,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmGUI = new JFrameOperator(Bundle.getMessage("TitleDlgGUI"));  // NOI18N
         Assert.assertNotNull(frmGUI);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmGUI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // ** About menu **
@@ -157,7 +158,7 @@ public class CtcEditorActionTest {
         new JMenuItemOperator(aboutMenuItem).doClick();
         JFrameOperator frmAbout = new JFrameOperator("About");  // NOI18N
         Assert.assertNotNull(frmAbout);
-// JUnitUtil.waitFor(1000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmAbout, Bundle.getMessage("ButtonOK")).doClick();
     }
 
@@ -172,9 +173,9 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmAdd = new JFrameOperator("Add new Switch and Signal etc. #'s");  // NOI18N
         Assert.assertNotNull(frmAdd);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmAdd, Bundle.getMessage("ButtonSaveClose")).doClick();
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // ButtonMoveUp
         jlo.clickOnItem(2, 1);
@@ -183,7 +184,7 @@ public class CtcEditorActionTest {
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // ButtonMoveDown
         jlo.clickOnItem(1, 1);
@@ -192,7 +193,7 @@ public class CtcEditorActionTest {
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // ButtonDelete
         jlo.clickOnItem(2, 1);
@@ -201,7 +202,7 @@ public class CtcEditorActionTest {
         if (DELAY > 0) {
             new EventTool().waitNoEvent(DELAY);
         }
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // ButtonChange
         jlo.clickOnItem(0, 1);
@@ -212,7 +213,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmChange = new JFrameOperator("Modify Switch and Signal etc. #'s");  // NOI18N
         Assert.assertNotNull(frmChange);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // ButtonReapplyItem -- Not a frame, use dialog mode
@@ -220,7 +221,7 @@ public class CtcEditorActionTest {
         Thread btnApply = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
         JButtonOperator jbApply = new JButtonOperator(_jfo, Bundle.getMessage("ButtonReapplyItem"));
         jbApply.doClick();
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         JUnitUtil.waitFor(() -> {
             return !(btnApply.isAlive());
         }, "btnApply finished");  // NOI18N
@@ -242,7 +243,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmCB = new JFrameOperator(Bundle.getMessage("TitleDlgCB"));  // NOI18N
         Assert.assertNotNull(frmCB);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmCB, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // SIDI button
@@ -254,7 +255,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmSIDI = new JFrameOperator(Bundle.getMessage("TitleSIDI"));  // NOI18N
         Assert.assertNotNull(frmSIDI);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // SIDL button
@@ -266,7 +267,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmSIDL = new JFrameOperator(Bundle.getMessage("TitleDlgSIDL"));  // NOI18N
         Assert.assertNotNull(frmSIDL);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // SWDI button
@@ -278,7 +279,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmSWDI = new JFrameOperator(Bundle.getMessage("TitleSWDI"));  // NOI18N
         Assert.assertNotNull(frmSWDI);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // SWDL button
@@ -290,7 +291,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmSWDL = new JFrameOperator(Bundle.getMessage("TitleDlgSWDL"));  // NOI18N
         Assert.assertNotNull(frmSWDL);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // CO button
@@ -302,7 +303,8 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmCO = new JFrameOperator(Bundle.getMessage("TitleDlgCO"));  // NOI18N
         Assert.assertNotNull(frmCO);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
+        doCallOnRules(frmCO);
         new JButtonOperator(frmCO, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // TUL button
@@ -314,7 +316,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmTUL = new JFrameOperator(Bundle.getMessage("TitleDlgTUL"));  // NOI18N
         Assert.assertNotNull(frmTUL);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmTUL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // IL button
@@ -326,7 +328,7 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmIL = new JFrameOperator(Bundle.getMessage("TitleDlgIL"));  // NOI18N
         Assert.assertNotNull(frmIL);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmIL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
         // TRL button -- Special handling required since the TRL frame starts the Rules frame.
@@ -341,9 +343,16 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmTRL = new JFrameOperator(Bundle.getMessage("TitleDlgTRL"));  // NOI18N
         Assert.assertNotNull(frmTRL);
-// JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
-        // Open the Rules frame
+        // Do the automatic TRL generation
+        JButtonOperator jbAutoGen = new JButtonOperator(frmTRL, Bundle.getMessage("LabelDlgTRLAutoGenerate"), 0);
+        jbAutoGen.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+
+        // Open the right rules frame and do the detail checks
         JButtonOperator jbRules = new JButtonOperator(frmTRL, Bundle.getMessage("ButtonEdit"), 0);
         jbRules.doClick();
         if (DELAY > 0) {
@@ -351,10 +360,25 @@ public class CtcEditorActionTest {
         }
         JFrameOperator frmRules = new JFrameOperator("Edit Right traffic locking rules");  // NOI18N
         Assert.assertNotNull(frmRules);
-// JUnitUtil.waitFor(2000);
+        doTrlRules(frmRules);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
-        // Close them in reverse order
+        // Save and closed the right rules
         new JButtonOperator(frmRules, Bundle.getMessage("ButtonSaveClose")).doClick();
+
+
+        // Open the left rules frame
+        jbRules = new JButtonOperator(frmTRL, Bundle.getMessage("ButtonEdit"), 1);
+        jbRules.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        JFrameOperator frmRulesLeft = new JFrameOperator("Edit Left traffic locking rules");  // NOI18N
+        Assert.assertNotNull(frmRulesLeft);
+        if (PAUSE) JUnitUtil.waitFor(2000);
+        frmRulesLeft.close();
+
+        // Close the TRL summary
         new JButtonOperator(frmTRL, Bundle.getMessage("ButtonOK")).doClick();
     }
 
@@ -362,13 +386,153 @@ public class CtcEditorActionTest {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
-// JUnitUtil.waitFor(2000);
+            if (PAUSE) JUnitUtil.waitFor(2000);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
         t.start();
         return t;
+    }
+
+    void doCallOnRules(JFrameOperator rules) {
+        JListOperator jloRules = new JListOperator(rules);
+
+        // add new, signal required, block required
+        // Add button
+        JButtonOperator jbAdd = new JButtonOperator(rules, Bundle.getMessage("ButtonAddNew"));
+        jbAdd.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Select signal mast
+        JComboBoxOperator jcbo = new JComboBoxOperator(rules, 0);
+        jcbo.setSelectedItem("SM-Alpha-Left-B");
+
+        // Select block
+        jcbo = new JComboBoxOperator(rules, 10);
+        jcbo.setSelectedItem("B-Right-Approach");
+
+        // Add this...
+        JButtonOperator jbAddToEnd = new JButtonOperator(rules, Bundle.getMessage("TextDlgCOAddInstructions"));
+        jbAddToEnd.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Edit row
+        jloRules.clickOnItem(0, 1);
+        JButtonOperator jbEdit = new JButtonOperator(rules, Bundle.getMessage("ButtonEditBelow"));
+        jbEdit.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Update...
+        JButtonOperator jbUpdate = new JButtonOperator(rules, Bundle.getMessage("TextDlgCOUpdateInstructions"));
+        jbUpdate.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        jloRules.clickOnItem(2, 1);
+        jbEdit = new JButtonOperator(rules, Bundle.getMessage("ButtonEditBelow"));
+        jbEdit.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Cancel...
+        JButtonOperator jbCancel = new JButtonOperator(rules, Bundle.getMessage("ButtonCancel"));
+        jbCancel.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        jloRules.clickOnItem(2, 1);
+        JButtonOperator jbDelete = new JButtonOperator(rules, Bundle.getMessage("ButtonDelete"));
+        jbDelete.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(5000);
+    }
+
+    void doTrlRules(JFrameOperator rules) {
+        JListOperator jloRules = new JListOperator(rules);
+
+        // Add button
+        JButtonOperator jbAdd = new JButtonOperator(rules, Bundle.getMessage("ButtonAddNew"));
+        jbAdd.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Add this...
+        JButtonOperator jbAddToEnd = new JButtonOperator(rules, Bundle.getMessage("TextDlgTRLRulesAddThis"));
+        jbAddToEnd.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // duplicate row
+        jloRules.clickOnItem(0, 1);
+        JButtonOperator jbDup = new JButtonOperator(rules, Bundle.getMessage("ButtonDlgTRLRules"));
+        jbDup.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // edit row
+        jloRules.clickOnItem(0, 1);
+        JButtonOperator jbEdit = new JButtonOperator(rules, Bundle.getMessage("ButtonEditBelow"));
+        jbEdit.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Update...
+        JButtonOperator jbUpdate = new JButtonOperator(rules, Bundle.getMessage("TextDlgTRLRulesUpdateThis"));
+        jbUpdate.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        jloRules.clickOnItem(2, 1);
+        jbEdit = new JButtonOperator(rules, Bundle.getMessage("ButtonEditBelow"));
+        jbEdit.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // Cancel...
+        JButtonOperator jbCancel = new JButtonOperator(rules, Bundle.getMessage("ButtonCancel"));
+        jbCancel.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        jloRules.clickOnItem(2, 1);
+        JButtonOperator jbDelete = new JButtonOperator(rules, Bundle.getMessage("ButtonDelete"));
+        jbDelete.doClick();
+        if (DELAY > 0) {
+            new EventTool().waitNoEvent(DELAY);
+        }
+        if (PAUSE) JUnitUtil.waitFor(5000);
     }
 
     @Test
