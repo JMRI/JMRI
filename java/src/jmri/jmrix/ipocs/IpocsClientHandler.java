@@ -31,15 +31,6 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
     client.read(recvBuffer, recvBuffer, this);
   }
 
-  private static String toHex(ByteBuffer bb, Integer bytesRead) {
-    StringBuilder sb = new StringBuilder("[ ");
-    while (bb.position() < bytesRead) {
-        sb.append(String.format("%02X ", bb.get()));
-    }
-    sb.append("]");
-    return sb.toString();
-  }
-
   @Override
   public void completed(final Integer bytesRead, final ByteBuffer recvBuffer) {
     // connection closed by the server
@@ -55,8 +46,6 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
       return;
     }
     int currPos = recvBuffer.position();
-    recvBuffer.rewind();
-    log.debug("Bytes {} recieved {}", currPos, toHex(recvBuffer, currPos));
     recvBuffer.rewind();
 
     Message msg = null;
