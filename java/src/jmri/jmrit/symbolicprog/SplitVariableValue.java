@@ -57,7 +57,8 @@ public class SplitVariableValue extends VariableValue
         _maxVal = ~0;
         stepOneActions(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         _name = name;
-        _mask = mask;
+        _mask = mask; // partly replaced by MaskArray to apply separate mask for each CV
+        _maskArray = mask.split(" "); // type accepts multiple for SplitVariableValue
         _cvNum = cvNum;
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
@@ -83,14 +84,15 @@ public class SplitVariableValue extends VariableValue
         List<String> nameList = CvUtil.expandCvList(_cvNum); // see if cvName needs expanding
         if (nameList.isEmpty()) {
             // primary CV
-            cvList.add(new CvItem(_cvNum, mask));
+            cvList.add(new CvItem(_cvNum, _maskArray[0]));
 
             if (pSecondCV != null && !pSecondCV.equals("")) {
                 cvList.add(new CvItem(pSecondCV, _uppermask));
             }
         } else {
-            for (String s : nameList) {
-                cvList.add(new CvItem(s, mask));
+            for (int i = 0; i < nameList.size(); i++) {
+                cvList.add(new CvItem(nameList.get(i), _maskArray[Math.min(i, _maskArray.length-1)]));
+                // use last mask for all following CVs if less than the number of CVs were provided
             }
         }
 
@@ -205,13 +207,13 @@ public class SplitVariableValue extends VariableValue
         if (mSecondCV != null && !mSecondCV.equals("")) {
             return _uppermask + _mask;
         } else {
-            return _mask;
+            return _mask; // a list of 1-n masks, separated by spaces
         }
     }
 
     /**
      * Provide a user-readable description of the CVs accessed by this variable.
-     * <br><br>
+     * <br>
      * Actual individual masks are added to CVs in this method.
      *
      * @return A user-friendly CV(s) and bitmask(s) description.
@@ -239,7 +241,8 @@ public class SplitVariableValue extends VariableValue
     int mFactor;
     int mOffset;
     String _name;
-    String _mask;
+    String _mask; // TODO remove this and replace by _maskArray
+    String[] _maskArray;
     String _cvNum;
 
     List<CvItem> cvList;
@@ -460,7 +463,7 @@ public class SplitVariableValue extends VariableValue
         long x = getLongValue();
         long y = x & intMask;
         if ((Long.compareUnsigned(x, y) != 0)) {
-            log.error("Value {} cannot be converted to 'int'", x);
+            log.error("Value {} from textField {} cannot be converted to 'int'", x, _name);
         }
         return (int) ((getValueFromText(_textField.getText()) - mOffset) / mFactor);
     }
@@ -721,7 +724,6 @@ public class SplitVariableValue extends VariableValue
                                 cvList.get(i).thisCV.setState(AbstractValue.UNKNOWN);
                             }
                         }
-
                     }
                 }
             } else {  // writing CVs
@@ -862,9 +864,7 @@ public class SplitVariableValue extends VariableValue
     // clean up connections when done
     @Override
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
         if (_textField != null) {
             _textField.removeActionListener(this);
         }

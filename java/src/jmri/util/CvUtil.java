@@ -137,7 +137,7 @@ public class CvUtil {
      * @param toolTip       The tool tip text. It can be plain text or HTML
      *                      format.
      * @param cvDescription The CV description text.
-     * @param mask          The bit mask, a string containing only the
+     * @param mask          The bit mask, a (list of) string containing only the
      *                      characters 'V' &amp; 'X', with 'V' signifying a used
      *                      bit.
      * @return The original tool tip text plus (if the Roster Preferences allow)
@@ -163,13 +163,13 @@ public class CvUtil {
     }
 
     /**
-     * Generate bit numbers from a bit mask if applicable. Returns empty String
-     * if not applicable.
+     * Generate bit numbers from a bit mask if applicable.
      *
      * @param mask A string containing only the characters 'V' &amp; 'X', with
      *             'V' signifying a used bit.
      * @return A plain text description, of the used bits. (For example, "bits
-     *         0-3,7" from the string "VXXXVVVV".)
+     *         0-3,7" from the string "VXXXVVVV".) Empty String
+     *         if not applicable
      */
     public static String getMaskDescription(String mask) {
         StringBuilder maskDescString = new StringBuilder();

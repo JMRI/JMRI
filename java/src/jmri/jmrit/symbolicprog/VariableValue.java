@@ -271,7 +271,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *                  only
      * @param cvNum     the CV number
      * @param mask      a bit mask like XXXVVVXX (converts to a value like
-     *                  0b00011100)
+     *                  0b00011100) or a series of masks of which item 1 is used
      * @param v         a vector of CV objects used to look up CVs
      * @param status    a field that holds the current status
      * @param item      the unique name for this Variable
@@ -288,7 +288,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         _writeOnly = writeOnly;
         _opsOnly = opsOnly;
         _cvNum = cvNum;
-        _mask = mask;
+        _mask = mask.split(" ")[0]; // expect a single 8 bit mask, type accepts multiple masks to use in for SplitVariableValue
         _cvMap = v;
         _status = status;
         _item = item;

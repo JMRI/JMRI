@@ -70,9 +70,7 @@ public class CompositeVariableValue extends EnumVariableValue {
     @Override
     public CvValue[] usesCVs() {
         HashSet<CvValue> cvSet = new HashSet<CvValue>(20);  // 20 is arbitrary
-        Iterator<VariableValue> i = variables.iterator();
-        while (i.hasNext()) {
-            VariableValue v = i.next();
+        for (VariableValue v : variables) {
             CvValue[] cvs = v.usesCVs();
             for (int k = 0; k < cvs.length; k++) {
                 cvSet.add(cvs[k]);
@@ -261,7 +259,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         log.debug("action event: {}", e);
 
         // notify
-        prop.firePropertyChange("Value", null, Integer.valueOf(getIntValue()));
+        prop.firePropertyChange("Value", null, getIntValue());
         // Here for new values; set as needed
         selectValue(getIntValue());
     }
@@ -310,7 +308,7 @@ public class CompositeVariableValue extends EnumVariableValue {
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
-            prop.firePropertyChange("Value", null, Integer.valueOf(value));
+            prop.firePropertyChange("Value", null, value);
         }
     }
 
@@ -505,10 +503,8 @@ public class CompositeVariableValue extends EnumVariableValue {
                 // some programming operation just finished
                 if (amReading) {
                     continueRead();
-                    return;
                 } else if (amWriting) {
                     continueWrite();
-                    return;
                 }
                 // if we're not reading or writing, no problem, that's just something else happening
             }
