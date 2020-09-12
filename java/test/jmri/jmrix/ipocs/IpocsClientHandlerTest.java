@@ -54,7 +54,7 @@ public class IpocsClientHandlerTest {
 
   @Test
   public void getUnitIdTest() {
-    assertEquals(0, new IpocsClientHandler(client).getUnitId());
+    assertEquals(null, new IpocsClientHandler(client).getUnitId());
   }
 
   @Test

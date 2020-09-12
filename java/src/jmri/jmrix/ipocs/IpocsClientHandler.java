@@ -18,10 +18,10 @@ import jmri.jmrix.ipocs.protocol.packets.Packet;
 public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer> {
   private final static Logger log = LoggerFactory.getLogger(IpocsClientHandler.class);
   private final AsynchronousSocketChannel client;
-  private byte unitId;
+  private String unitId;
   private List<IpocsClientListener> clientListeners = new ArrayList<IpocsClientListener>();
 
-  public byte getUnitId() {
+  public String getUnitId() {
       return unitId;
   }
 
@@ -54,7 +54,7 @@ public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer
       for (Packet pkt : msg.getPackets()) {
         switch (pkt.getId()) {
           case ConnectionRequestPacket.IDENT:
-            unitId = (byte)(Integer.parseInt(msg.getObjectName()) & 0xFF);
+            unitId = msg.getObjectName();
             // TODO Check site data version
             for (IpocsClientListener listener : clientListeners) {
               listener.clientConnected(this);

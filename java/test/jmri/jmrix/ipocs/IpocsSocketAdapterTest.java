@@ -1,7 +1,6 @@
 package jmri.jmrix.ipocs;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.mock;
 
 import java.nio.channels.AsynchronousServerSocketChannel;
