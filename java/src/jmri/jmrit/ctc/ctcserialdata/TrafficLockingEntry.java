@@ -75,6 +75,27 @@ public class TrafficLockingEntry {
     private static final int UNIQUE_ID5_INDEX = 30;
     private static final int ARRAY_SIZE = 31;
 
+    public TrafficLockingEntry() {
+        // Used to satisfy test requirement
+        _mDestinationSignalOrComment = null;
+        _mSwitchAlignment1 = null;
+        _mSwitchAlignment2 = null;
+        _mSwitchAlignment3 = null;
+        _mSwitchAlignment4 = null;
+        _mSwitchAlignment5 = null;
+        _mOccupancyExternalSensor1 = null;
+        _mOccupancyExternalSensor2 = null;
+        _mOccupancyExternalSensor3 = null;
+        _mOccupancyExternalSensor4 = null;
+        _mOccupancyExternalSensor5 = null;
+        _mOccupancyExternalSensor6 = null;
+        _mOccupancyExternalSensor7 = null;
+        _mOccupancyExternalSensor8 = null;
+        _mOccupancyExternalSensor9 = null;
+        _mOptionalExternalSensor1 = null;
+        _mOptionalExternalSensor2 = null;
+    }
+
     public TrafficLockingEntry(String csvString) {
         ArrayList<String> arrayListOfStrings = ProjectsCommonSubs.getFixedArrayListSizeFromCSV(csvString, ARRAY_SIZE);
         _mUserRuleNumber = arrayListOfStrings.get(USER_RULE_NUMBER_INDEX);
@@ -107,7 +128,7 @@ public class TrafficLockingEntry {
         _mUniqueID4 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
         _mUniqueID5 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
     }
-    
+
     public TrafficLockingEntry( String ruleEnabled,
                                 String destinationSignalOrComment,
                                 String switchAlignment1,
@@ -178,16 +199,16 @@ public class TrafficLockingEntry {
         _mUniqueID4= sourceTrafficLockingEntry._mUniqueID4;
         _mUniqueID5= sourceTrafficLockingEntry._mUniqueID5;
     }
-    
+
 
     /**
      * Constructor to take a TopologyInfo entry and create a properly formed "this".
-     * 
+     *
      * @param ruleNumber    Rule # (just an integer, starting with 1)
      * @param destinationSignalMast String representation of the destination signal mast so user can see on the form.
      * @param topologyInfo  Source of data.
      */
-    
+
     public TrafficLockingEntry(int ruleNumber, String destinationSignalMast, TopologyInfo topologyInfo) {
         _mUserRuleNumber = FrmTRL_Rules.getRuleNumberString(ruleNumber);
         _mRuleEnabled = FrmTRL_Rules.getRuleEnabledString();

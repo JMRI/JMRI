@@ -49,8 +49,8 @@ public class CtcEditorActionTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Perform the tests
-//         menuTests();
-//         frameButtonTests();
+        menuTests();
+        frameButtonTests();
         editTests();
 
         _jfo.requestClose();
