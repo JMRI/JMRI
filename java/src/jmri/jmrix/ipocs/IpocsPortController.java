@@ -28,8 +28,8 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
   private Map<String, IpocsClientHandler> clients = new HashMap<>();
   private Map<String, Message> lastMessage = new HashMap<>();
 
-  public IpocsPortController() {
-    super(new IpocsSystemConnectionMemo());
+  public IpocsPortController(IpocsSystemConnectionMemo memo) {
+    super(memo);
     super.setManufacturer(IpocsConnectionTypeList.IPOCSMR);
     final Option o1 = new Option("Listing port", new String[]{"10000"}, false, Option.Type.TEXT);
     super.options.put(super.option1Name, o1);
@@ -95,7 +95,7 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
 
   @Override
   public void clientDisconnected(IpocsClientHandler client) {
-    clients.forEach((userName, storedClient) -> {
+    new HashMap<String, IpocsClientHandler>(clients).forEach((userName, storedClient) -> {
       if (storedClient == client) {
         clients.remove(userName);
         lastMessage.remove(userName);

@@ -29,7 +29,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
   @Override
   protected void setInstance() {
     if (portController == null) {
-      portController = new IpocsPortController();
+      portController = new IpocsPortController(new IpocsSystemConnectionMemo());
       portController.configure();
     }
   }

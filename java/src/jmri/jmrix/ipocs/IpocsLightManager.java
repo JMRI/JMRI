@@ -8,7 +8,6 @@ public class IpocsLightManager extends AbstractLightManager {
 
   public IpocsLightManager(SystemConnectionMemo memo) {
     super(memo);
-    // TODO Auto-generated constructor stub
   }
 
   private IpocsPortController getPortController() {

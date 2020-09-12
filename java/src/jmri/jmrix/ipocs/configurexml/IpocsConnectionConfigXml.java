@@ -10,6 +10,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.ipocs.IpocsConnectionConfig;
 import jmri.jmrix.ipocs.IpocsPortController;
+import jmri.jmrix.ipocs.IpocsSystemConnectionMemo;
 
 public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   private final static Logger log = LoggerFactory.getLogger(IpocsConnectionConfigXml.class);
@@ -64,7 +65,7 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
 
   @Override
   protected void getInstance() {
-    portController = new IpocsPortController();
+    portController = new IpocsPortController(new IpocsSystemConnectionMemo());
     portController.getSystemConnectionMemo().setPortController(portController);
   }
 
