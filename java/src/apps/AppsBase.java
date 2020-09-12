@@ -422,4 +422,21 @@ public abstract class AppsBase {
         }
         return false;
     }
+
+    /**
+     * The application decided to shutdown  jmri and OS, handle that.
+     *
+     * @return true if successfully ran all shutdown tasks and can quit with code shudownOS; false
+     *         otherwise
+     */
+    static public boolean handleShutdownSystem() {
+        log.debug("Start handleRestart");
+        try {
+            return InstanceManager.getDefault(jmri.ShutDownManager.class).shutdownOS();
+        } catch (Exception e) {
+            log.error("Continuing after error in shutDownSystem", e);
+        }
+        return false;
+    }
+
 }
