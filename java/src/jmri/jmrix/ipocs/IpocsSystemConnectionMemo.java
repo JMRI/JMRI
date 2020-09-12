@@ -1,5 +1,7 @@
 package jmri.jmrix.ipocs;
 
+import jmri.LightManager;
+import jmri.SensorManager;
 import jmri.TurnoutManager;
 
 public class IpocsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements jmri.jmrix.ConfiguringSystemConnectionMemo {
@@ -13,6 +15,8 @@ public class IpocsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectio
   @Override
   public void configureManagers() {
     jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
+    jmri.InstanceManager.setLightManager(getLightManager());
+    jmri.InstanceManager.setSensorManager(getSensorManager());
     register();
   }
 
@@ -24,6 +28,26 @@ public class IpocsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectio
   @Override
   protected java.util.ResourceBundle getActionModelResourceBundle() {
     return null;
+  }
+
+  public IpocsSensorManager getSensorManager() {
+    if (getDisabled()) {
+      return null;
+    }
+    return (IpocsSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (c) -> {
+      IpocsSensorManager t = new IpocsSensorManager(this);
+      return t;
+    });
+  }
+
+  public IpocsLightManager getLightManager() {
+    if (getDisabled()) {
+      return null;
+    }
+    return (IpocsLightManager) classObjectMap.computeIfAbsent(LightManager.class, (c) -> {
+      IpocsLightManager t = new IpocsLightManager(this);
+      return t;
+    });
   }
 
   public IpocsTurnoutManager getTurnoutManager() {

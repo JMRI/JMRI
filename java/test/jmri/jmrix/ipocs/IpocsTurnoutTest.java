@@ -22,7 +22,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
   @BeforeEach
   public void subSetup() {
     JUnitUtil.initDefaultUserMessagePreferences();
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     // when(portController..send())
     t = new IpocsTurnout(portController, "MT2", "Vx2");
     // t.client
@@ -43,7 +43,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Test
   public void testOnMessage() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     final IpocsClientHandler client = mock(IpocsClientHandler.class);
@@ -79,7 +79,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Test
   public void testForwardCommandChangeToLayout() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     ((IpocsTurnout) t).forwardCommandChangeToLayout(IpocsTurnout.UNKNOWN);
@@ -88,7 +88,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Test
   public void testTurnoutPushbuttonLockout() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     ((IpocsTurnout) t).turnoutPushbuttonLockout(false);
@@ -96,7 +96,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Test
   public void testClientConnected() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     final IpocsClientHandler client = mock(IpocsClientHandler.class);
@@ -105,7 +105,7 @@ public class IpocsTurnoutTest extends AbstractTurnoutTestBase {
 
   @Test
   public void testClientDisconnected() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     t = new IpocsTurnout(portController, "MT2", "Vx2");
 
     final IpocsClientHandler client = mock(IpocsClientHandler.class);
