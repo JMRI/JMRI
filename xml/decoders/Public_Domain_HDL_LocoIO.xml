@@ -284,11 +284,11 @@
       </variable>
 
       <variable item="Port1 SensorAddress" CV="5,4,5" mask="XXVXXXXX XVVVVVVV XXXXVVVV">
-        <!-- Detector In/Outputs calculate low address differently: half in Value2 -->
-        <splitVal factor="2" offset="1" min="1" max="4096" default="1"/>
+        <!-- Detector In/Outputs store address differently -->
+        <splitVal factor="1" offset="1" min="1" max="4096" default="1"/>
         <label>Address1B:</label>
-        <label xml:lang="de">Adresse:</label>
-        <label xml:lang="nl">Adres:</label>
+        <label xml:lang="de">Adresse1B:</label>
+        <label xml:lang="nl">Adres1B:</label>
         <tooltip>Port 1 DCC Sensor Address (decimal, 1-4096)</tooltip>
       </variable>
 

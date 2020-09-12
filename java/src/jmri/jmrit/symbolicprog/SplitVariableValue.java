@@ -19,12 +19,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends VariableValue to represent a variable split across multiple CVs.
- * <br><br>
+ * <br>
  * The {@code mask} attribute represents the part of the value that's present in
- * each CV; higher-order bits are loaded to subsequent CVs.
+ * each CV; higher-order bits are loaded to subsequent CVs.<br>
+ * It is possible to assign a specific mask for each CV by provising a space separated list of masks,
+ * starting with the lowest, and matching the order of CV's
  * <br><br>
  * The original use was for addresses of stationary (accessory) decoders.
- * <br><br>
+ * <br>
  * The original version only allowed two CVs, with the second CV specified by
  * the attributes {@code highCV} and {@code upperMask}.
  * <br><br>
@@ -40,7 +42,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2003, 2004, 2013
  * @author Dave Heap Copyright (C) 2016, 2019
- *
+ * @author Egbert Broerse Copyright (C) 2020
  */
 public class SplitVariableValue extends VariableValue
         implements ActionListener, FocusListener {
@@ -57,7 +59,7 @@ public class SplitVariableValue extends VariableValue
         _maxVal = ~0;
         stepOneActions(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         _name = name;
-        _mask = mask; // partly replaced by MaskArray to apply separate mask for each CV
+        _mask = mask; // coverted to MaskArray to apply separate mask for each CV
         _maskArray = mask.split(" "); // type accepts multiple for SplitVariableValue
         _cvNum = cvNum;
         _textField = new JTextField("0");
@@ -91,8 +93,9 @@ public class SplitVariableValue extends VariableValue
             }
         } else {
             for (int i = 0; i < nameList.size(); i++) {
-                cvList.add(new CvItem(nameList.get(i), _maskArray[Math.min(i, _maskArray.length-1)]));
-                // use last mask for all following CVs if less than the number of CVs were provided
+                cvList.add(new CvItem(nameList.get(i), _maskArray[Math.min(i, _maskArray.length - 1)]));
+                // use last mask for all following CVs if fewer masks than the number of CVs listed were provided
+                log.debug("Added mask #{}: {}", i, _maskArray[Math.min(i, _maskArray.length - 1)]);
             }
         }
 
@@ -109,7 +112,7 @@ public class SplitVariableValue extends VariableValue
             log.debug("Variable={};cvName={};cvMask={};startOffset={};currentOffset={}", _name, cvList.get(i).cvName, cvList.get(i).cvMask, cvList.get(i).startOffset, currentOffset);
 
             // connect CV for notification
-            CvValue cv = (_cvMap.get(cvList.get(i).cvName));
+            CvValue cv = _cvMap.get(cvList.get(i).cvName);
             cvList.get(i).thisCV = cv;
         }
 
@@ -165,8 +168,8 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * subclasses can override this to invoke further actions after cvList has
-     * been built
+     * Subclasses can override this to invoke further actions after cvList has
+     * been built.
      */
     public void stepTwoActions() {
         if (currentOffset > bitCount) {
@@ -214,7 +217,7 @@ public class SplitVariableValue extends VariableValue
     /**
      * Provide a user-readable description of the CVs accessed by this variable.
      * <br>
-     * Actual individual masks are added to CVs in this method.
+     * Actual individual masks are added to CVs if more are present.
      *
      * @return A user-friendly CV(s) and bitmask(s) description.
      */
@@ -233,6 +236,7 @@ public class SplitVariableValue extends VariableValue
                 buf.append(temp);
             }
         }
+        buf.append("."); // mark that mask descriptions are already inserted for CvUtil.addCvDescription
         return buf.toString();
     }
 
@@ -241,7 +245,7 @@ public class SplitVariableValue extends VariableValue
     int mFactor;
     int mOffset;
     String _name;
-    String _mask; // TODO remove this and replace by _maskArray
+    String _mask; // partially replaced by _maskArray
     String[] _maskArray;
     String _cvNum;
 
@@ -345,7 +349,7 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * Contains numeric-value specific code.
-     * <br><br>
+     * <br>
      * firePropertyChange for "Value" with new and old contents of _textField
      */
     void exitField() {

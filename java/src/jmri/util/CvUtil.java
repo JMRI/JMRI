@@ -145,9 +145,10 @@ public class CvUtil {
      */
     public static String addCvDescription(String toolTip, String cvDescription, String mask) {
         String descString = cvDescription;
-        String temp = getMaskDescription(mask);
-        if (temp.length() > 0) {
-            descString = descString + " " + temp;
+        String maskDescString = getMaskDescription(mask);
+        if (maskDescString.length() > 0 && !cvDescription.endsWith(".")) {
+            // skip overridden getCvDescription() that already includes maskDescription, eg SplitVariableValue
+            descString = descString + " " + maskDescString;
         }
         if (PaneProgFrame.getShowCvNumbers() && (descString != null)) {
             if (toolTip == null || toolTip.length() < 1) {
@@ -165,9 +166,9 @@ public class CvUtil {
     /**
      * Generate bit numbers from a bit mask if applicable.
      *
-     * @param mask A string containing only the characters 'V' &amp; 'X', with
-     *             'V' signifying a used bit.
-     * @return A plain text description, of the used bits. (For example, "bits
+     * @param mask A string containing only the characters 'V' &amp; 'X',
+     *             with 'V' signifying a used bit.
+     * @return A plain text description of the used bits. (For example, "bits
      *         0-3,7" from the string "VXXXVVVV".) Empty String
      *         if not applicable
      */
@@ -210,4 +211,5 @@ public class CvUtil {
     }
 
     private final static Logger log = LoggerFactory.getLogger(CvUtil.class.getName());
+
 }
