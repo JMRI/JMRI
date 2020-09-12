@@ -12,6 +12,7 @@ import jmri.jmrix.ipocs.IpocsPortController;
 public class IpocsConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractConnectionConfigXmlTestBase {
 
   private IpocsPortController portController;
+  private IpocsConnectionConfig connConfig;
 
   @BeforeEach
   @Override
@@ -21,8 +22,10 @@ public class IpocsConnectionConfigXmlTest extends jmri.jmrix.configurexml.Abstra
     xmlAdapter = new IpocsConnectionConfigXml();
     portController = mock(IpocsPortController.class);
     when(portController.getOptions()).thenReturn(new String[] {});
-    cc = new IpocsConnectionConfig(portController);
-    ((IpocsConnectionConfigXml)xmlAdapter).getInstance((IpocsConnectionConfig)cc);
+    when(portController.getDisabled()).thenReturn(true);
+    connConfig = mock(IpocsConnectionConfig.class);
+    when(connConfig.getAdapter()).thenReturn(portController);
+    cc = connConfig;
   }
 
   @AfterEach

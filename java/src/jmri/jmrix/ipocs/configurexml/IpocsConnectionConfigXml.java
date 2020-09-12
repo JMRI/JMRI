@@ -22,7 +22,6 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   @Override
   public Element store(Object o) {
     Element e = new Element("connection");
-    log.error(o.getClass().getName());
     getInstance((IpocsConnectionConfig)o);
 
     storeCommon(e, portController);

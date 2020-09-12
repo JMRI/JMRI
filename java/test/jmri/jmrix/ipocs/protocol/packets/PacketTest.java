@@ -1,6 +1,8 @@
 package jmri.jmrix.ipocs.protocol.packets;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.nio.ByteBuffer;
 import java.util.Random;
@@ -44,9 +46,12 @@ public class PacketTest {
 
   @Test
   public void parseTest() {
-    // Right now this cannot be tested, because ServiceLoader cannot be mocked.
+    // This test is not a really good one - it relies on the actual ServiceLoader.
     // Could be solved by using PowerMockito:
     // stackoverflow.com/questions/21105403/mocking-static-methods-with-mockito
+    byte[] successPacket = { ResetControllerPacket.IDENT, 0x03, 0x00 };
+    assertNotNull(Packet.parse(ByteBuffer.wrap(successPacket)));
+    assertNull(Packet.parse(ByteBuffer.wrap(testPacket)));
   }
 
   @Test
