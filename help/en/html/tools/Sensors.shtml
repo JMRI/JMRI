@@ -137,7 +137,7 @@
           </li>
 
           <li>
-            You will then see the current status of the sensor (or sensors) in the main Sensor Table pane.
+            You will then see the current status of the sensor (or sensors) in the main Sensor Table panel.
           </li>
         </ol>
         
@@ -148,38 +148,27 @@
 
         <p>Below the table are check boxes to display additional columns with sensor control information.</p>
 
-        <p>The <strong>Defaults</strong> pulldown menu allows you to set two system-wide
+        <p>The <strong>Defaults</strong> pulldown menu on the window menu bar allows you to set two system-wide
         settings:</p>
 
         <ul>
-          <li><a href="#Debounce">Global Debounce Delay</a></li>
+          <li><a href="#Debounce">Global Debounce Delay</a>: to set debounce time on a system-wide basis (unless overridden). See also below.</li>
 
           <li>Initial Sensor State (for Internal Sensors only): lets you choose what state Internal Sensors (system name beginning with
        "IS") will display after JMRI startup. [Note that the initial state of other sensors cannot be set directly by JMRI, 
        although you can use a <a href="scripting/index.shtml">script</a> to set them.</li>
         </ul>
         
-        <h2>Sensor Groups</h2>
-        
-        <p>A Sensor Group is a group of sensors of which at most one can be active at a time.  When one member of the group
-        becomes active, all others are set to inactive.</p>
-        
-        <p>Sensor Groups are configured via the <a href="../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">
-        Sensor Group Tool</a>.</p>
-            
         <h2><a name="Debounce" id="Debounce"></a>Sensor Debounce Delay</h2>
 
-        <p>The Sensor Debounce Delay facility is there to help prevent
-        false triggers of a Sensor being passed into the system and
+        <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
         triggering other events in the system.<br>
         Such false triggers could be due to a dirty piece of track
         or electrical interference.</p>
 
-        <p>The facility allows you to assign a delay in
-        milliseconds before the change is registered with the rest
-        of the system. If after that period the state has not
-        changed compared to the original state, the Sensor state will
-        be passed onto the rest of the system.<br>
+        <p>You can assign a delay in milliseconds before any sensor change is registered with the rest
+        of the system. If after that period the state has not changed compared to the original state, the Sensor state 
+        will be passed onto the rest of the system.<br>
         However if the Sensor's state is different after the delay
         has passed, then the system will restart the process,
         this time after the timer has finished it will check to see
@@ -188,7 +177,14 @@
         again until the state is the same before and after the
         delay has passed.</p>
 
+        <h2>Sensor Groups</h2>
         
+        <p>A Sensor Group is a group of sensors of which at most one can be active at a time.  When one member of the group
+        becomes active, all others are set to inactive.</p>
+        
+        <p>Sensor Groups are configured via the <a href="../../package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">
+        Sensor Group Tool</a>.</p>
+            
         <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
