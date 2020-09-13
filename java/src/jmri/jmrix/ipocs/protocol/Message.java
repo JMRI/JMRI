@@ -9,6 +9,14 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.ipocs.protocol.packets.Packet;
 
+/**
+ * Represents a IPOCS Message.
+ *
+ * Protocol details can be found on the project website, https://ipocsmr.github.io
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class Message {
   private final static Logger log = LoggerFactory.getLogger(Message.class);
   private byte length;

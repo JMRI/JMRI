@@ -2,6 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Packet transmitted as a response when requested by sender of a message and packet.
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class AcknowledgementPacket extends Packet {
   public final static byte IDENT = 4;

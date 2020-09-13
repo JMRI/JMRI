@@ -18,6 +18,11 @@ import jmri.jmrix.AbstractPortController;
 import jmri.jmrix.ipocs.protocol.Message;
 import jmri.util.zeroconf.ZeroConfService;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsPortController extends AbstractPortController implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsPortController.class);
   private static String INADDR_ANY = "0.0.0.0";

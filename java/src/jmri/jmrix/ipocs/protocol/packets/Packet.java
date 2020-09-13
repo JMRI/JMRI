@@ -6,6 +6,12 @@ import java.util.ServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Base packet functionality
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public abstract class Packet {
   private final static Logger log = LoggerFactory.getLogger(Packet.class);
   private byte length;

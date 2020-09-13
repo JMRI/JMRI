@@ -11,6 +11,11 @@ import jmri.jmrix.ipocs.protocol.packets.InputStatusPacket;
 import jmri.jmrix.ipocs.protocol.packets.Packet;
 import jmri.jmrix.ipocs.protocol.packets.RequestStatusPacket;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsSensor extends AbstractSensor implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsSensor.class);
   private IpocsPortController portController;

@@ -4,6 +4,13 @@ import java.nio.ByteBuffer;
 
 import jmri.jmrix.ipocs.protocol.enums.RqAlarmState;
 
+/**
+ * An alarm packet that can be sent by any party when something goes wrong
+ * which is not covered by an Acknowledgement Packet (or one wasn't requested).
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class AlarmPacket extends Packet {
   public final static byte IDENT = 16;

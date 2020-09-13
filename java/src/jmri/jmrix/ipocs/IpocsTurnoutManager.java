@@ -4,6 +4,11 @@ import jmri.SystemConnectionMemo;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsTurnoutManager extends AbstractTurnoutManager {
 
   public IpocsTurnoutManager(SystemConnectionMemo memo) {

@@ -2,6 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Client sends this when initiating a connection.
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ConnectionRequestPacket extends Packet {
   public final static byte IDENT = 1;

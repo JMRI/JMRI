@@ -4,6 +4,11 @@ import jmri.Light;
 import jmri.SystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsLightManager extends AbstractLightManager {
 
   public IpocsLightManager(SystemConnectionMemo memo) {

@@ -2,6 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Packet to send just about anything.
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class ApplicationDataPacket extends Packet {
   public final static byte IDENT = 5;

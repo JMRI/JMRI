@@ -4,6 +4,11 @@ import jmri.Sensor;
 import jmri.SystemConnectionMemo;
 import jmri.managers.AbstractSensorManager;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsSensorManager extends AbstractSensorManager {
 
   public IpocsSensorManager(SystemConnectionMemo memo) {

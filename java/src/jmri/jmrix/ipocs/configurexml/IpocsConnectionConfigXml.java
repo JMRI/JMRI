@@ -12,6 +12,11 @@ import jmri.jmrix.ipocs.IpocsConnectionConfig;
 import jmri.jmrix.ipocs.IpocsPortController;
 import jmri.jmrix.ipocs.IpocsSystemConnectionMemo;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   private final static Logger log = LoggerFactory.getLogger(IpocsConnectionConfigXml.class);
   IpocsPortController portController;

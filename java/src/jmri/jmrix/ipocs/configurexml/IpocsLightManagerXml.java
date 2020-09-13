@@ -4,6 +4,11 @@ import org.jdom2.Element;
 
 import jmri.managers.configurexml.AbstractLightManagerConfigXML;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsLightManagerXml extends AbstractLightManagerConfigXML {
 
   @Override

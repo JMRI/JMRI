@@ -1,5 +1,10 @@
 package jmri.jmrix.ipocs;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = jmri.jmrix.ConnectionTypeList.class)
 public class IpocsConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
 

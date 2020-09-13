@@ -5,6 +5,12 @@ import java.nio.ByteBuffer;
 import jmri.jmrix.ipocs.protocol.enums.RqDerailerState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
+/**
+ * Derailer status
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class DerailerStatusPacket extends Packet {
   public final static byte IDENT = 18;

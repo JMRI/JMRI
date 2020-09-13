@@ -1,5 +1,9 @@
 package jmri.jmrix.ipocs.protocol.enums;
 
+/**
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public enum RqReleaseState {
   LocalControl(1),
   CentralControl(2),

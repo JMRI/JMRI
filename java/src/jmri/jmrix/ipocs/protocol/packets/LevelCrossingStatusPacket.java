@@ -5,6 +5,12 @@ import java.nio.ByteBuffer;
 import jmri.jmrix.ipocs.protocol.enums.RqLevelCrossingState;
 import jmri.jmrix.ipocs.protocol.enums.RqReleaseState;
 
+/**
+ * Level Crossing Status
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class LevelCrossingStatusPacket extends Packet {
   public final static byte IDENT = 19;

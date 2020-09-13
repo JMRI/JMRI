@@ -2,6 +2,12 @@ package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
 
+/**
+ * Request IPOCS unit to periodically send sign of life notifications.
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SignOfLifeTimerPacket extends Packet {
   public final static byte IDENT = 8;

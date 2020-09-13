@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsConnectionConfig extends AbstractConnectionConfig {
   private final static Logger log = LoggerFactory.getLogger(IpocsConnectionConfig.class);
   IpocsPortController portController;

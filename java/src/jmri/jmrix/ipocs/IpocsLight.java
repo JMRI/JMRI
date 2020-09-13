@@ -11,6 +11,11 @@ import jmri.jmrix.ipocs.protocol.packets.OutputStatusPacket;
 import jmri.jmrix.ipocs.protocol.packets.Packet;
 import jmri.jmrix.ipocs.protocol.packets.SetOutputPacket;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsLight extends AbstractLight implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsLight.class);
   private IpocsPortController portController;

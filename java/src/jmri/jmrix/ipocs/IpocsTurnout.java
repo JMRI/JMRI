@@ -11,6 +11,11 @@ import jmri.jmrix.ipocs.protocol.packets.Packet;
 import jmri.jmrix.ipocs.protocol.packets.PointsStatusPacket;
 import jmri.jmrix.ipocs.protocol.packets.ThrowPointsPacket;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsTurnout extends AbstractTurnout implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsTurnout.class);
   private IpocsPortController portController;

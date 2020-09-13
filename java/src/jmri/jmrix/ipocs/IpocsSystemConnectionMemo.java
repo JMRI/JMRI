@@ -4,6 +4,11 @@ import jmri.LightManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionMemo implements jmri.jmrix.ConfiguringSystemConnectionMemo {
   private IpocsPortController portController;
 

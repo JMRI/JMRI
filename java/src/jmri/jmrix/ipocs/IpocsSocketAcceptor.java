@@ -7,6 +7,11 @@ import java.nio.channels.CompletionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsSocketAcceptor implements CompletionHandler<AsynchronousSocketChannel, Object> {
   private final static Logger log = LoggerFactory.getLogger(IpocsSocketAcceptor.class);
   private final AsynchronousServerSocketChannel serverSocket;

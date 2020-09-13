@@ -15,6 +15,11 @@ import jmri.jmrix.ipocs.protocol.packets.ConnectionRequestPacket;
 import jmri.jmrix.ipocs.protocol.packets.ConnectionResponsePacket;
 import jmri.jmrix.ipocs.protocol.packets.Packet;
 
+/**
+ *
+ * @author Fredrik Elestedt Copyright (C) 2020
+ * @since 4.21.2
+ */
 public class IpocsClientHandler implements CompletionHandler<Integer, ByteBuffer> {
   private final static Logger log = LoggerFactory.getLogger(IpocsClientHandler.class);
   private final AsynchronousSocketChannel client;
