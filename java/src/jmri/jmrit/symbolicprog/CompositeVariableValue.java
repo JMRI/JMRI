@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * It's therefore recommended that a CompositeVariableValue just make changes to
  * target variables on the same programming page.
+ * <li>To apply a mask when setting a value, use an intermediary variable set
+ * from here, which in turn references the goal variable with a mask.
  * </ol>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013

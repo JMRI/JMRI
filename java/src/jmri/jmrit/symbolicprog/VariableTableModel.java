@@ -376,10 +376,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // set to default value if specified (CV load may later override this)
         if (setDefaultValue(e, v)) {
-            if (_cvModel.getCvByNumber(CV) == null) {
-                log.error("null cv found in cvModel {}, skipping setState", CV);
-                return;
-            }
             _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
         }
     }
@@ -882,9 +878,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
         String stdname = e.getAttribute("item").getValue();
-        if (log.isDebugEnabled()) {
-            log.debug("Starting to setConstant \"{}\"", stdname);
-        }
+        log.debug("Starting to setConstant \"{}\"", stdname);
 
         String name = LocaleSelector.getAttribute(e, "label");
         if (name == null || name.equals("")) {
@@ -911,9 +905,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int defaultVal = 0;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("Found default value: {} for {}", val, stdname);
-            }
+            log.debug("Found default value: {} for {}", val, stdname);
             defaultVal = Integer.parseInt(val);
         }
 
@@ -930,9 +922,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // set to default value if specified (CV load will later override this)
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("Found default value: {} for {}", val, name);
-            }
+            log.debug("Found default value: {} for {}", val, name);
             v.setIntValue(defaultVal);
         }
     }
