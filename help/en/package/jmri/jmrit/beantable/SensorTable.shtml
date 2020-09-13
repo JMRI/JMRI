@@ -175,13 +175,13 @@
         
        </dl>
 
-       <p>The word <strong>Defaults</Strong> appears on the window's command line.  Clicking it brings up two options:       
+       <p>The word <strong>Defaults</Strong> appears on the window's menu bar.  Clicking it brings up two options:       
 
       <dl>
-      <dt><strong>Global Debouce</strong><dt>
+      <dt><strong>Global Debouce</strong><dt> 
 
        <dd>The "<a href="#Debounce">Global Debounce Delays...</a>" menu
-        lets item you configure default values for both delays.</dd>
+        lets item you configure default values for both delays.  See below.</dd>
         
        <dt><strong>Initial Sensor State</strong> (for Internal Sensors ONLY)
        <dd>The "Initial Sensor State" menu item lets you choose what state Internal Sensors (system name beginning with
@@ -194,31 +194,20 @@
       available on the main window. Check to display icons for sensor state instead of text.
       
 
-      <a name="Debounce" id="Debounce"></a><h2>Sensor Debounce Delays</h2>
+      <h2><a name="Debounce" id="Debounce">Sensor Debounce Delays</a></h2>
 
       <a href="images/SensorGlobalDelayPane.png"><img
       src="images/SensorGlobalDelayPane.png" height="100" width="317"
       align="right" alt="Sensor Global Debounce Delays edit pane"></a>
-      <p>The Debounce Delay facility is there to help prevent
-      false triggers of a Sensor being passed into the system and
-      triggering other events in the system.<br>
-      Such false triggers could be due to a dirty piece of track or
-      electrical interference.</p>
-
+      
+      <p>The Sensor Debounce Delay helps prevent false triggers of a Sensor being passed into the system and
+      triggering other events in the system.</p>
+        
       <p>Debounce Delays, activated from the Sensor Table "Defaults
       &gt; Global Debounce Delays..."
       menu, allows you to assign a period in milliseconds
-      before the change is registered with the rest of the system.
-      If within that period the state has not changed, the Sensor
-      state will be passed on to the rest the of the system.<br>
-      However if the Sensors state is different after the timer has
-      finished, then the system will restart the process. This
-      time, after the timer has finished it will check to see if
-      the Sensor is in the same state as it was before it restarted
-      the process. If not, the process is re-started again until
-      the state is the same before and after the timer is run.<br>
-      You can set different delays for a change to Inactive and a
-      change to Active.</p>
+      before any sensor change is registered with the rest of the system.
+      See <a href="../../../../html/tools/Sensors.shtml#Debounce"> for general info on debounce.</a></p>
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
