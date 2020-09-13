@@ -45,6 +45,7 @@ public class LongAddrVariableValue extends VariableValue
         highCV = mHighCV;
         highCV.addPropertyChangeListener(this);
         highCV.setState(CvValue.FROMFILE);
+        // simplifyMask(); // not required as mask is ignored
     }
 
     CvValue highCV;
@@ -379,7 +380,7 @@ public class LongAddrVariableValue extends VariableValue
             CvValue cv0 = _cvMap.get(getCvNum());
             CvValue cv1 = highCV;
             int newVal = (cv0.getValue() & 0x3f) * 256 + cv1.getValue();
-            setValue(newVal);  // check for duplicate done inside setVal
+            setValue(newVal);  // check for duplicate done inside setValue
             // state change due to CV state change, so propagate that
             setState(cv0.getState());
             // see if this was a read or write operation

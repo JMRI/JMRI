@@ -59,8 +59,13 @@ public class SplitVariableValue extends VariableValue
         _maxVal = ~0;
         stepOneActions(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         _name = name;
-        _mask = mask; // coverted to MaskArray to apply separate mask for each CV
-        _maskArray = mask.split(" "); // type accepts multiple for SplitVariableValue
+        _mask = mask; // will be converted to MaskArray to apply separate mask for each CV
+        if (mask != null && mask.contains(" ")) {
+            _maskArray = mask.split(" "); // type accepts multiple masks for SplitVariableValue
+        } else {
+            _maskArray = new String[1];
+            _maskArray[0] = mask;
+        }
         _cvNum = cvNum;
         _textField = new JTextField("0");
         _defaultColor = _textField.getBackground();
@@ -86,7 +91,14 @@ public class SplitVariableValue extends VariableValue
         List<String> nameList = CvUtil.expandCvList(_cvNum); // see if cvName needs expanding
         if (nameList.isEmpty()) {
             // primary CV
-            cvList.add(new CvItem(_cvNum, _maskArray[0]));
+            String tMask;
+            if (_maskArray != null && _maskArray.length == 1) {
+                log.debug("PrimaryCV mask={}", _maskArray[0]);
+                tMask = _maskArray[0];
+            } else {
+                tMask = _mask; // mask supplied could be an empty string
+            }
+            cvList.add(new CvItem(_cvNum, tMask));
 
             if (pSecondCV != null && !pSecondCV.equals("")) {
                 cvList.add(new CvItem(pSecondCV, _uppermask));
@@ -145,10 +157,10 @@ public class SplitVariableValue extends VariableValue
      * @param v         hashmap of string and cv value.
      * @param status    status.
      * @param stdname   std name.
-     * @param pSecondCV second cv.
+     * @param pSecondCV second cv (no longer preferred, specify in cv)
      * @param pFactor   factor.
      * @param pOffset   offset.
-     * @param uppermask upper mask.
+     * @param uppermask upper mask (no longer preferred, specify in mask)
      * @param extra1    extra 1.
      * @param extra2    extra 2.
      * @param extra3    extra 3.
@@ -196,7 +208,7 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * There are multiple masks for the CVs accessed by this variable.
+     * Multiple masks can be defined for the CVs accessed by this variable.
      * <br>
      * Actual individual masks are returned in
      * {@link #getCvDescription getCvDescription()}.
@@ -215,11 +227,24 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
+     * Access a specific mask, used in tests
+     *
+     * @param i index of CV in variable
+     * @return a single mask as string in the form XXXXVVVV, or empty string if index out of bounds
+     */
+    protected String getMask(int i) {
+        if (i < cvCount) {
+            return cvList.get(i).cvMask;
+        }
+        return "";
+    }
+
+    /**
      * Provide a user-readable description of the CVs accessed by this variable.
      * <br>
      * Actual individual masks are added to CVs if more are present.
      *
-     * @return A user-friendly CV(s) and bitmask(s) description.
+     * @return A user-friendly CV(s) and bitmask(s) description
      */
     @Override
     public String getCvDescription() {
@@ -245,8 +270,8 @@ public class SplitVariableValue extends VariableValue
     int mFactor;
     int mOffset;
     String _name;
-    String _mask; // partially replaced by _maskArray
-    String[] _maskArray;
+    String _mask; // full string as provided, use _maskArray to access one of multiple masks
+    String[] _maskArray = new String[0];
     String _cvNum;
 
     List<CvItem> cvList;
@@ -877,6 +902,7 @@ public class SplitVariableValue extends VariableValue
         }
 
         _textField = null;
+        _maskArray = null;
         // do something about the VarTextField
     }
 

@@ -32,6 +32,7 @@ public class ConstantValue extends VariableValue {
         for (int i = 0; i <= maxVal; i++) {
             _value.addItem(i);
         }
+        // simplifyMask(); // not required as mask is ignored
     }
 
     /**

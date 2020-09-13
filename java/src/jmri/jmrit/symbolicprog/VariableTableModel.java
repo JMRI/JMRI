@@ -894,7 +894,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _writeButtons.addElement(bw);
 
         // config read button as a dummy - there's really nothing to read
-        JButton br = new JButton("Read");
+        JButton br = new JButton("Read"); // NOI18N
         _readButtons.addElement(br);
 
         // no CV references are added here

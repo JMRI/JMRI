@@ -156,6 +156,18 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 256 * 128 + 3, cv.getValue());
     }
 
+    @Test
+    public void testVariableValueMask() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VXXXXXXX XXXXVVVV", 0, 64, v, null, null);
+
+        Assert.assertEquals("mask at start", "VXXXXXXX", variable.getMask());
+    }
+
     // can we change the CV and see the result in the Variable?
     @Test
     public void testVariableFromCV() {
@@ -356,7 +368,7 @@ public abstract class AbstractVariableValueTestBase {
         }
     }
 
-    // check synchonization of value, representations
+    // check synchronization of value, representations
     @Test
     public void testVariableSynch() {
 

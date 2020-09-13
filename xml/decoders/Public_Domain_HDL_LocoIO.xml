@@ -274,9 +274,9 @@
 
       <!-- Port 1 -->
 
-      <variable item="Port1 Address" CV="4" mask="XVVVVVVV">
+      <variable item="Port1 Address" CV="4,5" mask="XVVVVVVV XXXXVVVV">
         <!-- CV4 ignores bit 8 in port address -->
-        <splitVal highCV="5" upperMask="XXXXVVVV" factor="1" offset="1" min="1" max="4096" default="1"/>
+        <splitVal factor="1" offset="1" min="1" max="4096" default="1"/>
         <label>Address1A:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -10456,17 +10456,17 @@
       <display item="Decoder Version"/>
       <row>
         <display item="Blink Rate"/>
-        <display item="Blink Rate" format="hslider" label=""/>
+        <display item="Blink Rate" format="hslider-percent" label=""/>
       </row>
       <row>
         <!--LocoRCD2 only-->
         <display item="Detection Delay"/>
-        <display item="Detection Delay" format="hslider" label=""/>
+        <display item="Detection Delay" format="hslider-percent" label=""/>
       </row>
       <row>
         <!--LocoRCD2 only-->
         <display item="Light Intensity"/>
-        <display item="Light Intensity" format="hslider" label=""/>
+        <display item="Light Intensity" format="hslider-percent" label=""/>
       </row>
 
       <row>

@@ -40,6 +40,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         _minVal = minVal;
 
         treeNodes.addLast(new DefaultMutableTreeNode("")); // root
+        simplifyMask();
     }
 
     /**
@@ -227,7 +228,11 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
     @Override
     public String getTextValue() {
-        return _value.getSelectedItem().toString();
+        if (_value.getSelectedItem() != null) {
+            return _value.getSelectedItem().toString();
+        } else {
+            return "";
+        }
     }
 
     @Override
@@ -505,7 +510,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                 // update value of Variable
                 CvValue cv = _cvMap.get(getCvNum());
                 int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal-1); // _maxVal value is count of possibles, i.e. radix
-                setValue(newVal);  // check for duplicate done inside setVal
+                setValue(newVal);  // check for duplicate done inside setValue
                 break;
             }
             default:
