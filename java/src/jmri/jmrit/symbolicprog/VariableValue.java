@@ -503,7 +503,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             // avoid method calls unless debugging
             log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
-        if (getCvNum() == null) {
+        if (getCvNum() == null || getCvNum().equals("")) {
             log.debug("no CV defined for value {}. setToRead skipped", _item);
             return;
         }
@@ -548,14 +548,16 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             log.debug("setToRead({}) with overrides {},{},{} sets {}",
                     state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
-        CvValue CvOld; // null check in case decoder variable has no CV defined (yet)
+        CvValue cvVal; // null check in case decoder variable has no CV defined (yet)
         try {
-            CvOld = _cvMap.get(getCvNum());
+            cvVal = _cvMap.get(getCvNum());
         } catch (NullPointerException e) {
             log.error("no CV defined for value {}. setToWrite skipped. Verify variable was defined", _item);
             return;
         }
-        CvOld.setToWrite(newState);
+        if (cvVal != null) {
+            cvVal.setToWrite(newState);
+        }
     }
 
     /**
@@ -566,7 +568,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     @Override
     public boolean isToWrite() {
-        return _cvMap.get(getCvNum()).isToWrite();
+        if (_cvMap.get(getCvNum()) != null) { // skip displayed variables without a CV
+            return _cvMap.get(getCvNum()).isToWrite();
+        }
+        return false;
     }
 
     /**

@@ -323,17 +323,12 @@
         <!-- only used up to version 1.40. Later versions set active high/low per port-->
       </variable>
 
-<!--      <variable item="Port1 LowAddress" CV="4">-->
-<!--        <decVal/>-->
-<!--        <label>Low:</label>-->
-<!--        <tooltip>Port 1 Value1 = (Address MINUS 1) &amp; 127</tooltip>-->
-<!--      </variable>-->
-
-<!--      <variable item="Port1 HiAddress" CV="5" mask="XXXXVVVV">-->
-<!--        <decVal/>-->
-<!--        <label>Hi:</label>-->
-<!--        <tooltip>Port 1 Value2 = (Address MINUS 1) MOD 128</tooltip>-->
-<!--      </variable>-->
+      <!--handles display of proper Address field from non-contiguous Mode values-->
+      <variable item="Port1 SensorMode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>S:</label>
+        <tooltip>Selected Port Mode is Sensor type Y/N (set by Mode combo)</tooltip>
+      </variable>
 
       <variable item="Port1 Type" exclude="200,210,211">
         <compositeVal>
@@ -342,78 +337,92 @@
             <choice>Input: Toggle switch</choice>
             <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
             <compositeSetting label="Port1 Config" value="15"/>
-            <compositeSetting label="Port1 Value2A" value="1"/> <!--CV value via mask = 16 as per documentation-->
+            <compositeSetting label="Port1 Value2A" value="1"/> <!--set CV value via mask = 16 as per documentation-->
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
             <choice xml:lang="nl">Ingang: Wisselcontact - Indirect</choice>
             <compositeSetting label="Port1 Config" value="7"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
             <choice>Input: Occupancy</choice>
             <compositeSetting label="Port1 Config" value="15"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
-<!--            <compositeSetting label="Port1 Old Block" value="1"/> &lt;!&ndash; special case: set SV4 bit 7 to 1&ndash;&gt;-->
+            <compositeSetting label="Port1 SensorMode" value="1"/>
+            <!-- <compositeSetting label="Port1 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
             <choice>Input: Occupancy - active Low</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active High Delayed</choice>
             <compositeSetting label="Port1 Config" value="91"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port1 Config" value="111"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port1 Config" value="103"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port1 Config" value="47"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port1 Config" value="39"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
             <choice>Input: Feedback - Normal</choice>
             <compositeSetting label="Port1 Config" value="23"/>
             <compositeSetting label="Port1 Value2A" value="7"/> <!--CV value via mask = 112 as per documentation-->
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Switch Feedback Contact1" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 1</choice>
             <compositeSetting label="Port1 Config" value="55"/>
             <compositeSetting label="Port1 Value2A" value="7"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Switch Feedback Contact2" exclude="135,139,140,141,142,144"> <!-- v1.45 and higher -->
             <choice>Input: Feedback - Contact 2</choice>
             <compositeSetting label="Port1 Config" value="55"/>
             <compositeSetting label="Port1 Value2A" value="6"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <!--Output types-->
@@ -422,94 +431,112 @@
             <choice>Output: Pulse 1</choice>
             <compositeSetting label="Port1 Config" value="136"/> <!-- have to check -->
             <compositeSetting label="Port1 Value2A" value="2"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Pulse 2" include="135,139,140,141">
             <choice>Output: Pulse 2</choice>
             <compositeSetting label="Port1 Config" value="136"/> <!-- have to check -->
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Output Pulse 1 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Soft Reset</choice>
             <compositeSetting label="Port1 Config" value="136"/>
             <compositeSetting label="Port1 Value2A" value="2"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Pulse 2 Soft" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Soft Reset</choice>
             <compositeSetting label="Port1 Config" value="136"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Pulse 1 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 1 - Hard Reset</choice>
             <compositeSetting label="Port1 Config" value="140"/>
             <compositeSetting label="Port1 Value2A" value="2"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Pulse 2 Hard" exclude="135,139,140,141">
             <choice>Output: Pulse 2 - Hard Reset</choice>
             <compositeSetting label="Port1 Config" value="140"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 1 On" exclude="135">
             <choice>Output: Fixed 1 - On</choice>
             <compositeSetting label="Port1 Config" value="129"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 Off">
             <choice>Output: Fixed 1 - Off</choice>
             <compositeSetting label="Port1 Config" value="128"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 On Blink" exclude="135,139">
             <choice>Output: Fixed 1 - On - Blinking</choice>
             <compositeSetting label="Port1 Config" value="145"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 Off Blink" exclude="135,139">
             <choice>Output: Fixed 1 - Off - Blinking</choice>
             <compositeSetting label="Port1 Config" value="144"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 On 4Way" exclude="135">
             <choice>Output: Fixed 1 - On - 4-Way</choice>
             <compositeSetting label="Port1 Config" value="161"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 Off 4Way">
             <choice>Output: Fixed 1 - Off - 4-Way</choice>
             <compositeSetting label="Port1 Config" value="160"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 On 4Way Blink" exclude="135,139">
             <choice>Output: Fixed 1 - On - 4-Way - Blinking</choice>
             <compositeSetting label="Port1 Config" value="177"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 1 Off 4Way Blink" exclude="135,139">
             <choice>Output: Fixed 1 - Off - 4-Way - Blinking</choice>
             <compositeSetting label="Port1 Config" value="176"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
             <choice>Output: Fixed 1 - On</choice>
             <compositeSetting label="Port1 Config" value="129"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 Off">
             <choice>Output: Fixed 2 - Off</choice>
             <compositeSetting label="Port1 Config" value="128"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 On Blink" exclude="135,139">
             <choice>Output: Fixed 2 - On - Blinking</choice>
             <compositeSetting label="Port1 Config" value="145"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 Off Blink" exclude="135,139">
             <choice>Output: Fixed 2 - Off - Blinking</choice>
             <compositeSetting label="Port1 Config" value="144"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 On 4Way" exclude="135">
             <choice>Output: Fixed 2 - On - 4-Way</choice>
@@ -520,16 +547,19 @@
             <choice>Output: Fixed 2 - Off - 4-Way</choice>
             <compositeSetting label="Port1 Config" value="160"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 On 4Way Blink" exclude="135,139">
             <choice>Output: Fixed 2 - On - 4-Way - Blinking</choice>
             <compositeSetting label="Port1 Config" value="177"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Output Fixed 2 Off 4Way Blink" exclude="135,139">
             <choice>Output: Fixed 2 - Off - 4-Way - Blinking</choice>
             <compositeSetting label="Port1 Config" value="176"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 SensorMode" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
@@ -537,6 +567,7 @@
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port1 Config" value="192"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Output Block Blink" exclude="135,139">
@@ -544,6 +575,7 @@
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend</choice>
             <compositeSetting label="Port1 Config" value="208"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label="Port1 SensorMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -551,14 +583,15 @@
             <choice xml:lang="nl">Poort niet in gebruik</choice>
             <compositeSetting label="Port1 Config" value="0"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
+            <compositeSetting label= "Port1 SensorMode" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Select...">
-            <choice>Changed</choice>
-            <choice xml:lang="de">Geändert</choice>
-            <choice xml:lang="nl">Gewijzigd</choice>
-            <compositeSetting label="Port1 Config" value="0"/>
-          </compositeChoice>
+          <!--          <compositeChoice choice="Select...">-->
+          <!--            <choice>Changed</choice>-->
+          <!--            <choice xml:lang="de">Geändert</choice>-->
+          <!--            <choice xml:lang="nl">Gewijzigd</choice>-->
+          <!--            <compositeSetting label="Port1 SensorMode" value="0"/>-->
+          <!--          </compositeChoice>-->
         </compositeVal>
         <!--Mode: label not shown on top, at beginning of row unless var placed in row on pane, bug when we hide/show 2 of these-->
         <label>Mode:</label>
@@ -10456,12 +10489,12 @@
       <display item="Decoder Version"/>
       <row>
         <display item="Blink Rate"/>
-        <display item="Blink Rate" format="hslider-percent" label=""/>
+        <display item="Blink Rate" format="hslider" label=""/>
       </row>
       <row>
         <!--LocoRCD2 only-->
         <display item="Detection Delay"/>
-        <display item="Detection Delay" format="hslider-percent" label=""/>
+        <display item="Detection Delay" format="hslider" label=""/>
       </row>
       <row>
         <!--LocoRCD2 only-->
@@ -10529,9 +10562,9 @@
             <row>
               <group>
                 <qualifier>
-                  <variableref>Port1 Type</variableref>
+                  <variableref>Port1 SensorMode</variableref>
                   <relation>ne</relation>
-                  <value>2</value>
+                  <value>1</value>
                 </qualifier>
                 <row>
                   <display item="Port1 Address"/>
@@ -10539,15 +10572,16 @@
               </group>
               <group>
                 <qualifier>
-                  <variableref>Port1 Type</variableref>
+                  <variableref>Port1 SensorMode</variableref>
                   <relation>eq</relation>
-                  <value>2</value>
+                  <value>1</value>
                 </qualifier>
                 <row>
                   <display item="Port1 SensorAddress"/>
                 </row>
               </group>
               <display item="Port1 Value2A"/>
+              <display item="Port1 SensorMode" format="checkbox"/>
             </row>
           </group>
 
