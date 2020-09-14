@@ -101,7 +101,7 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS104</systemName>
-      <userName>S-Alpha-Sdie</userName>
+      <userName>S-Alpha-Side</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>IS105</systemName>
@@ -260,7 +260,7 @@
       <systemName>IB:AUTO:0004</systemName>
       <userName>B-Alpha-Side</userName>
       <permissive>yes</permissive>
-      <occupancysensor>S-Alpha-Sdie</occupancysensor>
+      <occupancysensor>S-Alpha-Side</occupancysensor>
       <path todir="128" fromdir="64" block="IB:AUTO:0002">
         <beansetting setting="4">
           <turnout systemName="T-Alpha-Left" />
@@ -310,7 +310,7 @@
       <systemName>ILB3</systemName>
       <userName>B-Alpha-Main</userName>
     </layoutblock>
-    <layoutblock systemName="ILB4" occupancysensor="S-Alpha-Sdie" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+    <layoutblock systemName="ILB4" occupancysensor="S-Alpha-Side" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
       <systemName>ILB4</systemName>
       <userName>B-Alpha-Side</userName>
     </layoutblock>
@@ -363,7 +363,7 @@
       <routeOutputSensor systemName="S-Left-Approach" state="INACTIVE" />
       <routeOutputSensor systemName="S-Alpha-Left" state="INACTIVE" />
       <routeOutputSensor systemName="S-Alpha-Main" state="INACTIVE" />
-      <routeOutputSensor systemName="S-Alpha-Sdie" state="INACTIVE" />
+      <routeOutputSensor systemName="S-Alpha-Side" state="INACTIVE" />
       <routeOutputSensor systemName="S-Alpha-Right" state="INACTIVE" />
       <routeOutputSensor systemName="S-Right-Approach" state="INACTIVE" />
       <routeOutputSensor systemName="Reset" state="INACTIVE" />
@@ -491,7 +491,7 @@
           <ExternalSignal>SH-Alpha-Left-AL</ExternalSignal>
           <SignalFacingDirection>RIGHTTRAFFIC</SignalFacingDirection>
           <SignalAspectToDisplay>Flashing Red</SignalAspectToDisplay>
-          <CalledOnExternalSensor>S-Alpha-Sdie</CalledOnExternalSensor>
+          <CalledOnExternalSensor>S-Alpha-Side</CalledOnExternalSensor>
           <ExternalBlock />
           <SwitchIndicators>
             <sensor>IS1:SWRI</sensor>
@@ -566,7 +566,7 @@
           </switches>
           <OccupancyExternalSensors>
             <sensor>S-Alpha-Left</sensor>
-            <sensor>S-Alpha-Sdie</sensor>
+            <sensor>S-Alpha-Side</sensor>
           </OccupancyExternalSensors>
           <OptionalExternalSensors />
         </TRL_TrafficLockingRule>
@@ -646,7 +646,7 @@
           <ExternalSignal>SH-Alpha-Right-AL</ExternalSignal>
           <SignalFacingDirection>LEFTTRAFFIC</SignalFacingDirection>
           <SignalAspectToDisplay>Flashing Red</SignalAspectToDisplay>
-          <CalledOnExternalSensor>S-Alpha-Sdie</CalledOnExternalSensor>
+          <CalledOnExternalSensor>S-Alpha-Side</CalledOnExternalSensor>
           <ExternalBlock />
           <SwitchIndicators>
             <sensor>IS3:SWRI</sensor>
@@ -685,7 +685,7 @@
           </switches>
           <OccupancyExternalSensors>
             <sensor>S-Alpha-Right</sensor>
-            <sensor>S-Alpha-Sdie</sensor>
+            <sensor>S-Alpha-Side</sensor>
           </OccupancyExternalSensors>
           <OptionalExternalSensors />
         </TRL_TrafficLockingRule>
@@ -816,7 +816,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="S-Alpha-Sdie" x="350" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="S-Alpha-Side" x="350" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>

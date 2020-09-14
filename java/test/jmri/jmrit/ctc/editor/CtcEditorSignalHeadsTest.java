@@ -19,11 +19,11 @@ import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Tests for the CtcEditorAction Class.
+ * Tests for the CtcEditorAction Class using signal heads.
  *
  * @author Dave Sand Copyright (C) 2019
  */
-public class CtcEditorActionTest {
+public class CtcEditorSignalHeadsTest {
 
     JFrameOperator _jfo = null;
 
@@ -35,11 +35,11 @@ public class CtcEditorActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
-        java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Masts-SML.xml");  // NOI18N
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml");  // NOI18N
         InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
-        JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
+//         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        JUnitUtil.waitFor(1000);     // Wait for block routing and SML initialization
 
         // Start the Editor
         new CtcEditorAction().actionPerformed(null);
@@ -345,13 +345,6 @@ public class CtcEditorActionTest {
         Assert.assertNotNull(frmTRL);
         if (PAUSE) JUnitUtil.waitFor(2000);
 
-        // Do the automatic TRL generation
-        JButtonOperator jbAutoGen = new JButtonOperator(frmTRL, Bundle.getMessage("LabelDlgTRLAutoGenerate"), 0);
-        jbAutoGen.doClick();
-        if (DELAY > 0) {
-            new EventTool().waitNoEvent(DELAY);
-        }
-
         // Open the right rules frame and do the detail checks
         JButtonOperator jbRules = new JButtonOperator(frmTRL, Bundle.getMessage("ButtonEdit"), 0);
         jbRules.doClick();
@@ -407,13 +400,13 @@ public class CtcEditorActionTest {
         }
         if (PAUSE) JUnitUtil.waitFor(2000);
 
-        // Select signal mast
+        // Select signal head
         JComboBoxOperator jcbo = new JComboBoxOperator(rules, 0);
-        jcbo.setSelectedItem("SM-Alpha-Left-B");
+        jcbo.setSelectedItem("SH-Alpha-Left-C");
 
-        // Select block
-        jcbo = new JComboBoxOperator(rules, 10);
-        jcbo.setSelectedItem("B-Right-Approach");
+        // Select sensor
+        jcbo = new JComboBoxOperator(rules, 3);
+        jcbo.setSelectedItem("S-Left-Approach");
 
         // Add this...
         JButtonOperator jbAddToEnd = new JButtonOperator(rules, Bundle.getMessage("TextDlgCOAddInstructions"));
