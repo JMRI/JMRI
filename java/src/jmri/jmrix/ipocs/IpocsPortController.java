@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.help.UnsupportedOperationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,14 +72,12 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
 
   @Override
   public DataInputStream getInputStream() {
-    // This will never return anything, since this is a server port controller
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public DataOutputStream getOutputStream() {
-    // This will never return anything, since this is a server port controller
-    return null;
+    throw new UnsupportedOperationException();
   }
 
   @Override
