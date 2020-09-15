@@ -532,6 +532,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
         </ul>
 
