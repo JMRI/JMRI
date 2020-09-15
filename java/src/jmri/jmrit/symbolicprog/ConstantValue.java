@@ -96,7 +96,7 @@ public class ConstantValue extends VariableValue {
 
     @Override
     public Object getValueObject() {
-        return Integer.valueOf(_value.getSelectedIndex());
+        return _value.getSelectedIndex();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class ConstantValue extends VariableValue {
         int oldVal = _value.getSelectedIndex();
         _value.setSelectedIndex(value);
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
-            prop.firePropertyChange("Value", null, Integer.valueOf(value));
+            prop.firePropertyChange("Value", null, value);
         }
     }
 

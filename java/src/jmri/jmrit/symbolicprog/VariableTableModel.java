@@ -376,11 +376,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // set to default value if specified (CV load may later override this)
         if (setDefaultValue(e, v)) {
-            if (!CV.equals("")) {
-                _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
-            } else {
-                log.error("Default property not allowed on decoder variables without a valid CV property");
-            }
+            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE); // correct for transition to "edited"
         }
     }
 

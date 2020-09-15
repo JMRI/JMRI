@@ -98,12 +98,17 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddre
+    } // mask is ignored by splitAddress
 
     @Override
     @Test
     public void testVariableFromCV() {
-    }     // low CV is upper part of address
+    } // low CV is upper part of address
+
+    @Override
+    @Test
+    public void testVariableValueTwinMask() {
+    } // mask is ignored
 
     @Override
     @Test
@@ -118,7 +123,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     @Override
     @Test
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of SplitAddr
 
     @Override
     @Test

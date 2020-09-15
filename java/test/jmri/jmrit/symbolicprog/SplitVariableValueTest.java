@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link SplitVariableValue} class.
  *
- * @TODO need a check of the MIXED state model for long address
+ * TODO need a check of the MIXED state model for long address
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2019
  */
@@ -1081,7 +1081,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
     @Test
     @Override
-    public void testVariableValueMask() {
+    public void testVariableValueTwinMask() {
         String name = "Masked Field";
         String comment = "";
         String cvName = "";
