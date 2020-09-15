@@ -532,6 +532,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
         </ul>
 
