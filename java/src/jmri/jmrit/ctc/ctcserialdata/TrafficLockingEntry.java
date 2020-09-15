@@ -126,7 +126,7 @@ public class TrafficLockingEntry {
         _mUniqueID2 = arrayListOfStrings.get(UNIQUE_ID2_INDEX);
         _mUniqueID3 = arrayListOfStrings.get(UNIQUE_ID3_INDEX);
         _mUniqueID4 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
-        _mUniqueID5 = arrayListOfStrings.get(UNIQUE_ID4_INDEX);
+        _mUniqueID5 = arrayListOfStrings.get(UNIQUE_ID5_INDEX);
     }
 
 //     public TrafficLockingEntry( String ruleEnabled,
