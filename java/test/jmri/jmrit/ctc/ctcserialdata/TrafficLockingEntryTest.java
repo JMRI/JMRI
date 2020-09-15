@@ -1,8 +1,5 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 

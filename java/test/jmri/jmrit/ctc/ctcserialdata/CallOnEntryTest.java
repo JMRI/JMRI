@@ -1,7 +1,5 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
-import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
