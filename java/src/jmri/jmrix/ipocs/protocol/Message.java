@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.SerializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,7 +79,11 @@ public class Message {
       buffer.put(oldBuffer);
       buffer.put(serPacket);
     }
+    if (buffer.capacity() > 0xFF) {
+      throw new SerializationException("Serialized message is longer than protocol allows for.");
+    }
     buffer.put(0, (byte)buffer.capacity());
+
     buffer.rewind();
     return buffer;
   }
