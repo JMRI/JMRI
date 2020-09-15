@@ -35,7 +35,6 @@ public class CtcRunMiscTest {
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
         JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
 
         // Load the CTC run time
