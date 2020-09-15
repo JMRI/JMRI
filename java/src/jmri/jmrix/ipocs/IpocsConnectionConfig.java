@@ -13,15 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @author Fredrik Elestedt Copyright (C) 2020
  * @since 4.21.2
  */
 public class IpocsConnectionConfig extends AbstractConnectionConfig {
-  private final static Logger log = LoggerFactory.getLogger(IpocsConnectionConfig.class);
   private IpocsPortController portController;
   private final JTextField portField = new JTextField(6);
   private final JLabel portFieldLabel = new JLabel();
@@ -79,7 +75,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-        JOptionPane.showMessageDialog(null, "Unable to set prefix");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
         systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
@@ -88,7 +84,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void focusLost(java.awt.event.FocusEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
-        JOptionPane.showMessageDialog(null, "Unable to set prefix");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PREFIX));
         systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       }
     }
@@ -102,7 +98,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void actionPerformed(java.awt.event.ActionEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-        JOptionPane.showMessageDialog(null, "Unable to set connection name");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
         connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
       }
     }
@@ -111,7 +107,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     @Override
     public void focusLost(java.awt.event.FocusEvent e) {
       if (!getAdapter().getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
-        JOptionPane.showMessageDialog(null, "Unable to set connection change");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_CONNNAME));
         connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
       }
     }
@@ -127,7 +123,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
       try {
         getAdapter().setPort(Short.parseShort(portField.getText()));
       } catch (java.lang.NumberFormatException ex) {
-          log.warn("Could not parse port attribute");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
       }
     }
   }
@@ -137,7 +133,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
       try {
         getAdapter().setPort(Short.parseShort(portField.getText()));
       } catch (java.lang.NumberFormatException ex) {
-          log.warn("Could not parse port attribute");
+        JOptionPane.showMessageDialog(null, Bundle.getMessage(Bundle.UNABLE_PORT));
       }
     }
 
@@ -152,10 +148,10 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     _details.setLayout(gbLayout);
     setInstance();
 
-    portField.setToolTipText("Port to accept IPOCS connections on");
+    portField.setToolTipText(Bundle.getMessage(Bundle.PORT_TOOLTIP));
     portField.setEnabled(true);
     portField.setText(String.valueOf(getAdapter().getPort()));
-    portFieldLabel.setText("Listening port: ");
+    portFieldLabel.setText(Bundle.getMessage(Bundle.PORT_LABEL));
 
     if (getAdapter().getSystemConnectionMemo() != null) {
       systemPrefixField.setValue(getAdapter().getSystemConnectionMemo().getSystemPrefix());
