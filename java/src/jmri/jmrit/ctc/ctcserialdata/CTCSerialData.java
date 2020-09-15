@@ -292,7 +292,7 @@ Solution:
     In this way the file is totally stable when it finally appears in the directory
     with its proper filename that the other program is looking for.
      */
-    private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
+//     private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
 
 //     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
 //     public void writeDataToXMLFile(String filename) {
