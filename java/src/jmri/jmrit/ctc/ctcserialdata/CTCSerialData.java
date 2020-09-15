@@ -294,20 +294,20 @@ Solution:
      */
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
 
-    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
-    public void writeDataToXMLFile(String filename) {
-        String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
-        try { // Write temporary file:
-            try (XMLEncoder xmlEncoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(temporaryFilename)))) {
-                xmlEncoder.writeObject(_mOtherData);
-                xmlEncoder.writeObject(_mCodeButtonHandlerDataArrayList);
-            }
-            CTCFiles.rotate(filename, false);
-            File outputFile = new File(filename);
-
-            outputFile.delete();    // Delete existing old file.
-            (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
-        } catch (IOException e) {
-        }
-    }
+//     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
+//     public void writeDataToXMLFile(String filename) {
+//         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
+//         try { // Write temporary file:
+//             try (XMLEncoder xmlEncoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(temporaryFilename)))) {
+//                 xmlEncoder.writeObject(_mOtherData);
+//                 xmlEncoder.writeObject(_mCodeButtonHandlerDataArrayList);
+//             }
+//             CTCFiles.rotate(filename, false);
+//             File outputFile = new File(filename);
+//
+//             outputFile.delete();    // Delete existing old file.
+//             (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
+//         } catch (IOException e) {
+//         }
+//     }
 }

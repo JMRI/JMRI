@@ -104,8 +104,7 @@ public class CtcRunWithSignalHeadsTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initRouteManager();
-        JUnitUtil.initDefaultSignalMastManager();
-        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initLayoutBlockManager();
     }
 

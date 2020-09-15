@@ -41,6 +41,7 @@ public class CtcEditorSignalMastsTest {
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
 
+
         // Start the Editor
         new CtcEditorAction().actionPerformed(null);
 
@@ -547,6 +548,12 @@ public class CtcEditorSignalMastsTest {
         JUnitUtil.resetProfileManager(new NullProfile(folder));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initLayoutBlockManager();
     }
 
     @AfterEach
@@ -556,6 +563,6 @@ public class CtcEditorSignalMastsTest {
         JUnitUtil.tearDown();
     }
 
-//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorSignalMastsTest.class);
 
 }

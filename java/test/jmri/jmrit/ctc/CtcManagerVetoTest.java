@@ -40,6 +40,7 @@ public class CtcManagerVetoTest {
         InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        JUnitUtil.waitFor(5000);     // Wait for block routing and SML initialization
 
         String msg = "";
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
@@ -87,7 +88,6 @@ public class CtcManagerVetoTest {
         java.io.File f = new java.io.File("java/test/jmri/jmrit/ctc/configurexml/load/CTC_Test_Heads-SSL.xml");  // NOI18N
         InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
         String msg = "";
 

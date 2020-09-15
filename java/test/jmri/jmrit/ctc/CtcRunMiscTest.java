@@ -54,7 +54,7 @@ public class CtcRunMiscTest {
         JUnitUtil.waitFor(()->{return sm.getSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE;},"7/8 signal left indicator not active");
         Assert.assertTrue(sm.getSensor("IS8:LDGK").getKnownState() == Sensor.ACTIVE);
 
-        if (!PAUSE) JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Stop JMRI fast clock
         sm.getSensor("ISCLOCKRUNNING").setKnownState(Sensor.INACTIVE);
@@ -71,7 +71,7 @@ public class CtcRunMiscTest {
         JUnitUtil.waitFor(()->{return sm.getSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE;},"5/6 unlocked indicator not active");
         Assert.assertTrue(sm.getSensor("IS6:UNLOCKEDINDICATOR").getKnownState() == Sensor.ACTIVE);
 
-        if (!PAUSE) JUnitUtil.waitFor(2000);
+        if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Reload run time
         sm.getSensor("IS:RELOADCTC").setKnownState(Sensor.ACTIVE);
@@ -79,7 +79,7 @@ public class CtcRunMiscTest {
         JUnitUtil.waitFor(()->{return sm.getSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE;},"7/8 normal indicator not active");
         Assert.assertTrue(sm.getSensor("IS8:NGK").getKnownState() == Sensor.ACTIVE);
 
-        if (!PAUSE) JUnitUtil.waitFor(5000);
+        if (PAUSE) JUnitUtil.waitFor(5000);
 
     }
 

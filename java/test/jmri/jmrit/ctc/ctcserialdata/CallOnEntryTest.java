@@ -1,18 +1,23 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
+import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /*
-* Dummy test for the CallOnEntry Class
-* Provide minimal coverage, there is no executable code in the class.
+* Test for the CallOnEntry Class
 * @author  Dave Sand   Copyright (C) 2020
 */
 public class CallOnEntryTest {
 
     @Test
-    public void testCtor() {
-        Assert.assertNotNull("CallOnEntry Constructor Return", new CallOnEntry(""));
+    public void testCsvSplitting() {
+        String ssvString = "AW-Throat,RIGHTTRAFFIC,Flashing Red,,B-Alpha-Main,IS1:SWNI,,,,,;AW-Throat,RIGHTTRAFFIC,Flashing Red,,B-Alpha-Side,IS1:SWRI,,,,,";
+        for (String csvString : ProjectsCommonSubs.getArrayListFromSSV(ssvString)) {
+            CallOnEntry entry = new CallOnEntry(csvString);
+            Assert.assertTrue(entry._mExternalSignal.equals("AW-Throat"));
+        }
     }
 
     @BeforeEach
