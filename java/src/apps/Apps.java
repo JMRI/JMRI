@@ -964,16 +964,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     /**
-     * The application decided to restart, handle that.
-     *
-     * @return true if successfully ran all shutdown tasks and can quit with code shutdownOS; false
-     *         otherwise
-     */
-    static public boolean handleShutdownSystem() {
-        return AppsBase.handleShutdownSystem();
-    }
-
-    /**
      * Set up the configuration file name at startup.
      * <p>
      * The Configuration File name variable holds the name used to load the

@@ -561,6 +561,6 @@ while [ "${EXIT_STATUS}" -eq "${RESTART_CODE}" ] ; do
     [ -n "${DEBUG}" ] && echo Exit Status: "${EXIT_STATUS}" | tee -a ${launcher_log}
 done
 if [ $EXIT_STATUS -eq 200 ] ; then
-    sudo shutdown -h 
+    sudo shutdown -h now
 fi
 exit $EXIT_STATUS
