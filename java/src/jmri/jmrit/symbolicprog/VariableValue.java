@@ -518,7 +518,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     @Override
     public boolean isToRead() {
-        return _cvMap.get(getCvNum()).isToRead();
+        if (_cvMap.get(getCvNum()) != null) { // skip displayed variables without a CV
+            return _cvMap.get(getCvNum()).isToRead();
+            }
+        return false;
     }
 
     /**

@@ -57,19 +57,19 @@
     </revision>
     <revision>
       <revnumber>4</revnumber>
-      <date>2020-09-10</date>
+      <date>2020-09-15</date>
       <authorinitials>EB</authorinitials>
       <revremark>Changed address field labels hi/lo to function like 81/1 entry
         Use compositeVal type values (ports 1-16), add LocoBooster,
-        Opcode1 and Opcode2 for ports 1-16, tested on actual hardware (read only)
-        LocoRCD(2) experimental
+        Opcode1 and Opcode2 for ports 1-16, tested on actual hardware (read only),
+        correct triple mask to store sensor address, LocoRCD(2) experimental
       </revremark>
     </revision>
   </revhistory>
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
-  <version author="Egbert Broerse" version="4" lastUpdated="20200910"/>
+  <version author="Egbert Broerse" version="4" lastUpdated="20200915"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -293,10 +293,10 @@
       </variable>
 
       <!--handles display of proper Address field from non-contiguous Mode values-->
-      <variable item="Port1 OccuMode">
+      <variable item="Port1 OccuMode" readOnly="yes">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
       
       <variable item="Port1 Config" CV="3" default="0">
@@ -385,25 +385,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port1 Config" value="111"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port1 Config" value="103"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port1 Config" value="47"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port1 Config" value="39"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -976,7 +976,7 @@
       <variable item="Port2 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port2 Config" CV="6" default="0">
@@ -1059,25 +1059,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port2 Config" value="111"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
-            <compositeSetting label="Port2 OccuMode" value="0"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port2 Config" value="103"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
-            <compositeSetting label="Port2 OccuMode" value="0"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port2 Config" value="47"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
-            <compositeSetting label="Port2 OccuMode" value="0"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port2 Config" value="39"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
-            <compositeSetting label="Port2 OccuMode" value="0"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -1609,7 +1609,7 @@
       <variable item="Port3 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port3 Config" CV="9" default="0">
@@ -1708,25 +1708,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port3 Config" value="111"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
-            <compositeSetting label="Port3 OccuMode" value="0"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port3 Config" value="103"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
-            <compositeSetting label="Port3 OccuMode" value="0"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port3 Config" value="47"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
-            <compositeSetting label="Port3 OccuMode" value="0"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port3 Config" value="39"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
-            <compositeSetting label="Port3 OccuMode" value="0"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -2257,7 +2257,7 @@
       <variable item="Port4 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port4 Config" CV="12" default="0">
@@ -2338,25 +2338,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port4 Config" value="111"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
-            <compositeSetting label="Port4 OccuMode" value="0"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port4 Config" value="103"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
-            <compositeSetting label="Port4 OccuMode" value="0"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port4 Config" value="47"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
-            <compositeSetting label="Port4 OccuMode" value="0"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port4 Config" value="39"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
-            <compositeSetting label="Port4 OccuMode" value="0"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -2888,7 +2888,7 @@
       <variable item="Port5 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port5 Config" CV="15" default="0">
@@ -2986,25 +2986,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port5 Config" value="111"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port5 Config" value="103"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port5 Config" value="47"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port5 Config" value="39"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -3583,7 +3583,7 @@
       <variable item="Port6 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port6 Config" CV="18" default="0"><!--TODO fix value out of bound for LocoBooster-->
@@ -3666,25 +3666,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port6 Config" value="111"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port6 Config" value="103"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port6 Config" value="47"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port6 Config" value="39"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -4264,7 +4264,7 @@
       <variable item="Port7 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port7 Config" CV="21" default="0">
@@ -4345,25 +4345,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port7 Config" value="111"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
-            <compositeSetting label="Port7 OccuMode" value="0"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port7 Config" value="103"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
-            <compositeSetting label="Port7 OccuMode" value="0"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port7 Config" value="47"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
-            <compositeSetting label="Port7 OccuMode" value="0"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port7 Config" value="39"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
-            <compositeSetting label="Port7 OccuMode" value="0"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -4938,7 +4938,7 @@
       <variable item="Port8 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port8 Config" CV="24" default="0">
@@ -5020,25 +5020,25 @@
               <choice>Input: Push button - active High </choice>
               <compositeSetting label="Port8 Config" value="111"/>
               <compositeSetting label="Port8 Value2A" value="0"/>
-            <compositeSetting label="Port8 OccuMode" value="0"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active High Indirect</choice>
               <compositeSetting label="Port8 Config" value="103"/>
               <compositeSetting label="Port8 Value2A" value="0"/>
-            <compositeSetting label="Port8 OccuMode" value="0"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Direct">
               <choice>Input: Push button - active Low </choice>
               <compositeSetting label="Port8 Config" value="47"/>
               <compositeSetting label="Port8 Value2A" value="1"/>
-            <compositeSetting label="Port8 OccuMode" value="0"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active Low Indirect</choice>
               <compositeSetting label="Port8 Config" value="39"/>
               <compositeSetting label="Port8 Value2A" value="1"/>
-            <compositeSetting label="Port8 OccuMode" value="0"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
             </compositeChoice>
 
             <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -5590,7 +5590,7 @@
       <variable item="Port9 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port9 Config" CV="27" default="0">
@@ -5671,25 +5671,25 @@
               <choice>Input: Push button - active High </choice>
               <compositeSetting label="Port9 Config" value="111"/>
               <compositeSetting label="Port9 Value2A" value="0"/>
-            <compositeSetting label="Port9 OccuMode" value="0"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active High Indirect</choice>
               <compositeSetting label="Port9 Config" value="103"/>
               <compositeSetting label="Port9 Value2A" value="0"/>
-            <compositeSetting label="Port9 OccuMode" value="0"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Direct">
               <choice>Input: Push button - active Low </choice>
               <compositeSetting label="Port9 Config" value="47"/>
               <compositeSetting label="Port9 Value2A" value="1"/>
-            <compositeSetting label="Port9 OccuMode" value="0"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active Low Indirect</choice>
               <compositeSetting label="Port9 Config" value="39"/>
               <compositeSetting label="Port9 Value2A" value="1"/>
-            <compositeSetting label="Port9 OccuMode" value="0"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
             </compositeChoice>
 
             <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -6241,7 +6241,7 @@
       <variable item="Port10 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port10 Config" CV="30" default="0">
@@ -6323,25 +6323,25 @@
               <choice>Input: Push button - active High </choice>
               <compositeSetting label="Port10 Config" value="111"/>
               <compositeSetting label="Port10 Value2A" value="0"/>
-            <compositeSetting label="Port10 OccuMode" value="0"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active High Indirect</choice>
               <compositeSetting label="Port10 Config" value="103"/>
               <compositeSetting label="Port10 Value2A" value="0"/>
-            <compositeSetting label="Port10 OccuMode" value="0"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Direct">
               <choice>Input: Push button - active Low </choice>
               <compositeSetting label="Port10 Config" value="47"/>
               <compositeSetting label="Port10 Value2A" value="1"/>
-            <compositeSetting label="Port10 OccuMode" value="0"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
             </compositeChoice>
             <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
               <choice>Input: Push button - active Low Indirect</choice>
               <compositeSetting label="Port10 Config" value="39"/>
               <compositeSetting label="Port10 Value2A" value="1"/>
-            <compositeSetting label="Port10 OccuMode" value="0"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
             </compositeChoice>
 
             <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -6893,7 +6893,7 @@
       <variable item="Port11 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port11 Config" CV="33" default="0">
@@ -6974,25 +6974,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port11 Config" value="111"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
-            <compositeSetting label="Port11 OccuMode" value="0"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port11 Config" value="103"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
-            <compositeSetting label="Port11 OccuMode" value="0"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port11 Config" value="47"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
-            <compositeSetting label="Port11 OccuMode" value="0"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port11 Config" value="39"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
-            <compositeSetting label="Port11 OccuMode" value="0"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -7544,7 +7544,7 @@
       <variable item="Port12 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port12 Config" CV="36" default="0">
@@ -7626,25 +7626,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port12 Config" value="111"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
-            <compositeSetting label="Port12 OccuMode" value="0"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port12 Config" value="103"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
-            <compositeSetting label="Port12 OccuMode" value="0"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port12 Config" value="47"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
-            <compositeSetting label="Port12 OccuMode" value="0"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port12 Config" value="39"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
-            <compositeSetting label="Port12 OccuMode" value="0"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -8196,7 +8196,7 @@
       <variable item="Port13 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port13 Config" CV="39" default="0">
@@ -8278,25 +8278,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port13 Config" value="111"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
-            <compositeSetting label="Port13 OccuMode" value="0"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port13 Config" value="103"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
-            <compositeSetting label="Port13 OccuMode" value="0"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port13 Config" value="47"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
-            <compositeSetting label="Port13 OccuMode" value="0"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port13 Config" value="39"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
-            <compositeSetting label="Port13 OccuMode" value="0"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -8803,7 +8803,7 @@
       <variable item="Port14 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port14 Config" CV="42" default="0">
@@ -8885,25 +8885,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port14 Config" value="111"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
-            <compositeSetting label="Port14 OccuMode" value="0"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port14 Config" value="103"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
-            <compositeSetting label="Port14 OccuMode" value="0"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port14 Config" value="47"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
-            <compositeSetting label="Port14 OccuMode" value="0"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port14 Config" value="39"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
-            <compositeSetting label="Port14 OccuMode" value="0"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -9410,7 +9410,7 @@
       <variable item="Port15 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port15 Config" CV="45" default="0">
@@ -9491,25 +9491,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port15 Config" value="111"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
-            <compositeSetting label="Port15 OccuMode" value="0"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port15 Config" value="103"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
-            <compositeSetting label="Port15 OccuMode" value="0"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port15 Config" value="47"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
-            <compositeSetting label="Port15 OccuMode" value="0"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port15 Config" value="39"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
-            <compositeSetting label="Port15 OccuMode" value="0"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -10016,7 +10016,7 @@
       <variable item="Port16 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Selected Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port16 Config" CV="48" default="0">
@@ -10098,25 +10098,25 @@
             <choice>Input: Push button - active High </choice>
             <compositeSetting label="Port16 Config" value="111"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
-            <compositeSetting label="Port16 OccuMode" value="0"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active High Indirect</choice>
             <compositeSetting label="Port16 Config" value="103"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
-            <compositeSetting label="Port16 OccuMode" value="0"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
             <choice>Input: Push button - active Low </choice>
             <compositeSetting label="Port16 Config" value="47"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
-            <compositeSetting label="Port16 OccuMode" value="0"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
             <choice>Input: Push button - active Low Indirect</choice>
             <compositeSetting label="Port16 Config" value="39"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
-            <compositeSetting label="Port16 OccuMode" value="0"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -11540,7 +11540,7 @@
                 </row>
               </group>
               <display item="Port1 Value2A"/>
-<!--              <display item="Port1 OccuMode" format="checkbox"/>-->
+              <display item="Port1 OccuMode" format="checkbox"/>
             </row>
           </group>
 
