@@ -31,8 +31,7 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
     getInstance((IpocsConnectionConfig)o);
 
     storeCommon(e, portController);
-    e.setAttribute("port", "10000");
-    e.setAttribute("enableAutoConf", "true");
+    e.setAttribute("port", String.valueOf(portController.getPort()));
     e.setAttribute("class", this.getClass().getName());
 
     extendElement(e);
@@ -43,16 +42,12 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
     getInstance();
     try {
-      // TODO do this
-      //int port = Integer.parseInt(shared.getAttribute("port").getValue());
-      //portController.setPort(port);
+      short port = (short)shared.getAttribute("port").getIntValue();
+      portController.setPort(port);
+    } catch (org.jdom2.DataConversionException ex) {
+      log.warn("Could not parse port attribute: {}", shared.getAttribute("port"));
     } catch (NullPointerException ex) {
-    }
-    try {
-      // TODO do this
-      //boolean autoConf = shared.getAttribute("enableAutoConf").getValue().equals("true");
-      //portController.setAutoConf(hostName);
-    } catch (NullPointerException ex) {
+      log.error("No port attribute availableCould not parse port attribute", ex);
     }
     loadCommon(shared, perNode, portController);
     register();
@@ -75,7 +70,7 @@ public class IpocsConnectionConfigXml extends AbstractConnectionConfigXml {
   }
 
   protected void getInstance(IpocsConnectionConfig o) {
-    portController = (IpocsPortController)o.getAdapter();
+    portController = o.getAdapter();
   }
 
   @Override

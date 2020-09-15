@@ -2,9 +2,15 @@ package jmri.jmrix.ipocs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
+import javax.swing.JOptionPane;
 
 import org.junit.Test;
+import org.mockito.MockedStatic;
 
 public class IpocsConnectionConfigTest {
   @Test
@@ -22,10 +28,16 @@ public class IpocsConnectionConfigTest {
   }
 
   @Test
+  public void setInstanceTest() {
+    IpocsConnectionConfig cc = new IpocsConnectionConfig();
+    cc.setInstance();
+  }
+
+  @Test
   public void getInfoTest() {
     IpocsPortController portController = mock(IpocsPortController.class);
     IpocsConnectionConfig cc = new IpocsConnectionConfig(portController);
-    assertEquals("IPOCS", cc.getInfo());
+    assertEquals(null, cc.getInfo());
   }
 
   @Test
@@ -47,6 +59,37 @@ public class IpocsConnectionConfigTest {
     IpocsPortController portController = mock(IpocsPortController.class);
     IpocsConnectionConfig cc = new IpocsConnectionConfig(portController);
     cc.updateAdapter();
+    IpocsSystemConnectionMemo memo = mock(IpocsSystemConnectionMemo.class);
+    when(portController.getSystemConnectionMemo()).thenReturn(memo);
+    when(memo.setSystemPrefix(any())).thenReturn(true);
+    cc.updateAdapter();
+    when(memo.setSystemPrefix(any())).thenReturn(false);
+    cc.updateAdapter();
+  }
+
+  @Test
+  public void loadDetailsTest() {
+    IpocsPortController portController = mock(IpocsPortController.class);
+    IpocsConnectionConfig cc = new IpocsConnectionConfig(portController);
+    cc.loadDetails(new javax.swing.JPanel());
+    IpocsSystemConnectionMemo memo = mock(IpocsSystemConnectionMemo.class);
+    when(portController.getSystemConnectionMemo()).thenReturn(memo);
+    when(memo.setSystemPrefix(any())).thenReturn(true);
+    cc.loadDetails(new javax.swing.JPanel());
+    when(memo.setSystemPrefix(any())).thenReturn(false);
+    cc.loadDetails(new javax.swing.JPanel());
+    // Test action listeners
+    try (MockedStatic<JOptionPane> theMock = mockStatic(JOptionPane.class)) {
+      cc.new SystemPrefixFieldActionListener().actionPerformed(null);
+      cc.new SystemPrefixFieldFocusListener().focusLost(null);
+      cc.new SystemPrefixFieldFocusListener().focusGained(null);
+      cc.new ConnectionNameFieldActionListener().actionPerformed(null);
+      cc.new ConnectionNameFieldFocusListener().focusLost(null);
+      cc.new ConnectionNameFieldFocusListener().focusGained(null);
+      cc.new PortFieldActionListener().actionPerformed(null);
+      cc.new PortFieldFocusListener().focusLost(null);
+      cc.new PortFieldFocusListener().focusGained(null);
+    }
   }
 
   @Test
@@ -85,5 +128,4 @@ public class IpocsConnectionConfigTest {
     cc.setDisabled(true);
     assertEquals(true, cc.getDisabled());
   }
-
 }

@@ -3,6 +3,7 @@ package jmri.jmrix.ipocs;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.UnsupportedOperationException;
 import java.net.InetSocketAddress;
 import java.net.StandardSocketOptions;
 import java.nio.channels.AsynchronousServerSocketChannel;
@@ -11,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.help.UnsupportedOperationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +28,7 @@ import jmri.util.zeroconf.ZeroConfService;
 public class IpocsPortController extends AbstractPortController implements IpocsClientListener {
   private final static Logger log = LoggerFactory.getLogger(IpocsPortController.class);
   private static String INADDR_ANY = "0.0.0.0";
+  private short port = 0;
   private AsynchronousServerSocketChannel serverSocket = null;
   private IpocsSocketAcceptor socketAcceptor;
   private ZeroConfService zeroConfService = null;
@@ -38,7 +39,7 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
   public IpocsPortController(IpocsSystemConnectionMemo memo) {
     super(memo);
     super.setManufacturer(IpocsConnectionTypeList.IPOCSMR);
-    final Option o1 = new Option("Listing port", new String[]{"10000"}, false, Option.Type.TEXT);
+    final Option o1 = new Option("Port", new String[]{"0"}, false, Option.Type.TEXT);
     super.options.put(super.option1Name, o1);
   }
 
@@ -60,13 +61,13 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
     log.info("Setting up service");
     serverSocket = AsynchronousServerSocketChannel.open();
     socketAcceptor = new IpocsSocketAcceptor(this, serverSocket);
-    final int port = Integer.parseInt(super.getOptionState(super.option1Name));
     final InetSocketAddress address = new InetSocketAddress(INADDR_ANY, port);
     serverSocket.bind(address);
     serverSocket.setOption(StandardSocketOptions.SO_REUSEADDR, true);
     serverSocket.accept(null, socketAcceptor);
-    log.info("Starting ZeroConfService _ipocs._tcp.local");
-    zeroConfService = ZeroConfService.create("_ipocs._tcp.local.", "ipocs", 10000, 0, 0, new HashMap<String, String>());
+    int servicePort = ((InetSocketAddress)serverSocket.getLocalAddress()).getPort();
+    log.info("Starting ZeroConfService _ipocs._tcp.local for port {}", servicePort);
+    zeroConfService = ZeroConfService.create("_ipocs._tcp.local.", "ipocs", servicePort, 0, 0, new HashMap<String, String>());
     zeroConfService.publish();
   }
 
@@ -133,5 +134,13 @@ public class IpocsPortController extends AbstractPortController implements Ipocs
 
   public Message getLastStatus(String userName) {
     return lastMessage.get(userName);
+  }
+
+  public short getPort() {
+    return port;
+  }
+
+  public void setPort(short port) {
+      this.port = port;
   }
 }
