@@ -274,9 +274,10 @@
 
       <!-- Port 1 -->
 
-      <variable item="Port1 Address" CV="4,5" mask="XVVVVVVV XXXXVVVV">
+      <variable item="Port1 Address" CV="4,5" mask="XVVVVVVV XXXXVVVV" minVal="1">
+        <!--qualifier not functioning to prevent improper recalculation of address field via CV-->
         <!-- CV4 ignores bit 8 in port address -->
-        <splitVal factor="1" offset="1" min="1" max="4096" default="1"/>
+        <splitVal offset="1" min="1" max="4096" default="1"/>
         <label>Address:</label>
         <label xml:lang="de">Adresse:</label>
         <label xml:lang="nl">Adres:</label>
@@ -285,7 +286,7 @@
 
       <variable item="Port1 SensorAddress" CV="5,4,5" mask="XXVXXXXX XVVVVVVV XXXXVVVV">
         <!-- Detector In/Outputs store address differently -->
-        <splitVal factor="1" offset="1" min="1" max="4096" default="1"/>
+        <splitVal offset="1" min="1" max="4096" default="1"/>
         <label>Address :</label> <!-- just a subtle hint that the occu type address is shown-->
         <label xml:lang="de">Adresse :</label>
         <label xml:lang="nl">Adres :</label>
@@ -293,12 +294,12 @@
       </variable>
 
       <!--handles display of proper Address field from non-contiguous Mode values-->
-      <variable item="Port1 OccuMode" readOnly="yes">
+      <variable item="Port1 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
-      
+
       <variable item="Port1 Config" CV="3" default="0">
         <decVal/>
         <label>Config:</label>
@@ -346,6 +347,7 @@
             <compositeSetting label="Port1 Config" value="7"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="0"/>
+
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
@@ -564,7 +566,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port1 Config" value="192"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
@@ -587,12 +589,12 @@
             <compositeSetting label="Port1 OccuMode" value="0"/>
           </compositeChoice>
 
-          <!--          <compositeChoice choice="Select...">-->
-          <!--            <choice>Changed</choice>-->
-          <!--            <choice xml:lang="de">Geändert</choice>-->
-          <!--            <choice xml:lang="nl">Gewijzigd</choice>-->
-          <!--            <compositeSetting label="Port1 OccuMode" value="0"/>-->
-          <!--          </compositeChoice>-->
+<!--          <compositeChoice choice="Select...">-->
+<!--            <choice>Changed</choice>-->
+<!--            <choice xml:lang="de">Geändert</choice>-->
+<!--            <choice xml:lang="nl">Gewijzigd</choice>-->
+<!--            <compositeSetting label="Port1 OccuMode" value="0"/>-->
+<!--          </compositeChoice>-->
         </compositeVal>
         <!--Mode: label not shown on top, at beginning of row unless var placed in row on pane, bug when we hide/show 2 of these-->
         <label>Mode:</label>
@@ -697,7 +699,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -716,7 +718,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -733,7 +735,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -755,7 +757,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -772,7 +774,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -828,7 +830,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -847,7 +849,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -864,7 +866,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -886,7 +888,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -903,7 +905,7 @@
         <qualifier>
           <variableref>Port1 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -954,7 +956,7 @@
 
 
       <!-- Port 2 -->
-      <variable item="Port2 Address" CV="7,8" mask="XVVVVVVV XXXXVVVV">
+      <variable item="Port2 Address" CV="7,8" mask="XVVVVVVV XXXXVVVV" minVal="1">
         <!-- CV7 ignores bit 8 in port address -->
         <splitVal factor="1" offset="1" min="1" max="2048" default="1"/>
         <label>Address:</label>
@@ -976,7 +978,7 @@
       <variable item="Port2 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port2 Config" CV="6" default="0">
@@ -1238,7 +1240,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port2 Config" value="192"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
@@ -1332,7 +1334,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1351,7 +1353,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1368,7 +1370,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1390,7 +1392,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1407,7 +1409,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1462,7 +1464,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1481,7 +1483,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1498,7 +1500,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1520,7 +1522,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1537,7 +1539,7 @@
         <qualifier>
           <variableref>Port2 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -1609,7 +1611,7 @@
       <variable item="Port3 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port3 Config" CV="9" default="0">
@@ -1887,7 +1889,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port3 Config" value="192"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
@@ -1981,7 +1983,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2000,7 +2002,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2017,7 +2019,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2039,7 +2041,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2056,7 +2058,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2111,7 +2113,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2130,7 +2132,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2147,7 +2149,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2169,7 +2171,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2186,7 +2188,7 @@
         <qualifier>
           <variableref>Port3 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port3 Config</variableref>
@@ -2257,7 +2259,7 @@
       <variable item="Port4 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port4 Config" CV="12" default="0">
@@ -2517,7 +2519,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port4 Config" value="192"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
@@ -2611,7 +2613,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2630,7 +2632,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2647,7 +2649,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2669,7 +2671,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2686,7 +2688,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2741,7 +2743,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2760,7 +2762,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2777,7 +2779,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2799,7 +2801,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2816,7 +2818,7 @@
         <qualifier>
           <variableref>Port4 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port4 Config</variableref>
@@ -2888,7 +2890,7 @@
       <variable item="Port5 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port5 Config" CV="15" default="0">
@@ -3165,7 +3167,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port5 Config" value="192"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
@@ -3204,7 +3206,7 @@
             <choice xml:lang="nl">Ingang: Feedback van Booster In</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Feedback Booster Input2">
             <choice>Select...</choice>
@@ -3212,7 +3214,7 @@
             <choice xml:lang="nl">Selecteer...</choice>
             <compositeSetting label="Port5 Config" value="0"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
-            <compositeSetting label="Port5 OccuMode" value="0"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
         </compositeVal>
         <label>Mode:</label>
@@ -3287,7 +3289,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3306,7 +3308,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3323,7 +3325,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3345,7 +3347,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3362,7 +3364,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3417,7 +3419,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3436,7 +3438,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3453,7 +3455,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3475,7 +3477,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3492,7 +3494,7 @@
         <qualifier>
           <variableref>Port5 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port5 Config</variableref>
@@ -3552,8 +3554,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port5 Speed" CV="103" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port5 Speed" CV="103" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -3583,7 +3585,7 @@
       <variable item="Port6 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port6 Config" CV="18" default="0"><!--TODO fix value out of bound for LocoBooster-->
@@ -3845,7 +3847,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port6 Config" value="192"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
@@ -3884,8 +3886,8 @@
             <choice>Input: Feedback of Booster Out</choice>
             <choice xml:lang="nl">Ingang: Feedback van Booster Uit</choice>
             <compositeSetting label="Port6 Config" value="31"/>
-            <compositeSetting label="Port6 Value2A" value="1"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 Value2A" value="3"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Feedback Booster Output2">
             <choice>Select...</choice>
@@ -3893,7 +3895,7 @@
             <choice xml:lang="nl">Selecteer...</choice>
             <compositeSetting label="Port6 Config" value="0"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
-            <compositeSetting label="Port6 OccuMode" value="0"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
         </compositeVal>
         <label>Mode:</label>
@@ -3968,7 +3970,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -3987,7 +3989,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4004,7 +4006,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4026,7 +4028,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4043,7 +4045,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4098,7 +4100,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4117,7 +4119,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4134,7 +4136,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4156,7 +4158,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4173,7 +4175,7 @@
         <qualifier>
           <variableref>Port6 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port6 Config</variableref>
@@ -4233,8 +4235,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port6 Speed" CV="106" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port6 Speed" CV="106" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -4264,7 +4266,7 @@
       <variable item="Port7 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port7 Config" CV="21" default="0">
@@ -4524,7 +4526,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port7 Config" value="192"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
@@ -4642,7 +4644,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4661,7 +4663,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4678,7 +4680,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4700,7 +4702,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4717,7 +4719,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4772,7 +4774,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4791,7 +4793,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4808,7 +4810,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4830,7 +4832,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4847,7 +4849,7 @@
         <qualifier>
           <variableref>Port7 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port7 Config</variableref>
@@ -4907,8 +4909,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port7 Speed" CV="109" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port7 Speed" CV="109" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -4938,7 +4940,7 @@
       <variable item="Port8 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port8 Config" CV="24" default="0">
@@ -5199,7 +5201,7 @@
             </compositeChoice>
 
             <compositeChoice choice="Output Block">
-              <choice>Output: Block Detector (0xC0 command)</choice>
+              <choice>Output: Block Detector</choice>
               <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
               <compositeSetting label="Port8 Config" value="192"/>
               <compositeSetting label="Port8 Value2A" value="0"/>
@@ -5294,7 +5296,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5313,7 +5315,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5330,7 +5332,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5352,7 +5354,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5369,7 +5371,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5424,7 +5426,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5443,7 +5445,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5460,7 +5462,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5482,7 +5484,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5499,7 +5501,7 @@
         <qualifier>
           <variableref>Port8 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port8 Config</variableref>
@@ -5559,8 +5561,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port8 Speed" CV="112" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port8 Speed" CV="112" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -5590,7 +5592,7 @@
       <variable item="Port9 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port9 Config" CV="27" default="0">
@@ -5850,7 +5852,7 @@
             </compositeChoice>
 
             <compositeChoice choice="Output Block">
-              <choice>Output: Block Detector (0xC0 command)</choice>
+              <choice>Output: Block Detector</choice>
               <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
               <compositeSetting label="Port9 Config" value="192"/>
               <compositeSetting label="Port9 Value2A" value="0"/>
@@ -5945,7 +5947,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -5964,7 +5966,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -5981,7 +5983,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6003,7 +6005,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6020,7 +6022,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6075,7 +6077,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6094,7 +6096,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6111,7 +6113,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6133,7 +6135,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6150,7 +6152,7 @@
         <qualifier>
           <variableref>Port9 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port9 Config</variableref>
@@ -6210,8 +6212,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port9 Speed" CV="115" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port9 Speed" CV="115" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -6241,7 +6243,7 @@
       <variable item="Port10 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port10 Config" CV="30" default="0">
@@ -6502,7 +6504,7 @@
             </compositeChoice>
 
             <compositeChoice choice="Output Block">
-              <choice>Output: Block Detector (0xC0 command)</choice>
+              <choice>Output: Block Detector</choice>
               <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
               <compositeSetting label="Port10 Config" value="192"/>
               <compositeSetting label="Port10 Value2A" value="0"/>
@@ -6597,7 +6599,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6616,7 +6618,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6633,7 +6635,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6655,7 +6657,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6672,7 +6674,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6727,7 +6729,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6746,7 +6748,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6763,7 +6765,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6785,7 +6787,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6802,7 +6804,7 @@
         <qualifier>
           <variableref>Port10 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port10 Config</variableref>
@@ -6862,8 +6864,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port10 Speed" CV="118" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port10 Speed" CV="118" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -6893,7 +6895,7 @@
       <variable item="Port11 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port11 Config" CV="33" default="0">
@@ -7153,7 +7155,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port11 Config" value="192"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
@@ -7248,7 +7250,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7267,7 +7269,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7284,7 +7286,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7306,7 +7308,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7323,7 +7325,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7378,7 +7380,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7397,7 +7399,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7414,7 +7416,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7436,7 +7438,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7453,7 +7455,7 @@
         <qualifier>
           <variableref>Port11 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port11 Config</variableref>
@@ -7513,8 +7515,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port11 Speed" CV="121" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port11 Speed" CV="121" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -7544,7 +7546,7 @@
       <variable item="Port12 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port12 Config" CV="36" default="0">
@@ -7805,7 +7807,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port12 Config" value="192"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
@@ -7900,7 +7902,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -7919,7 +7921,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -7936,7 +7938,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -7958,7 +7960,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -7975,7 +7977,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8030,7 +8032,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8049,7 +8051,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8066,7 +8068,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8088,7 +8090,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8105,7 +8107,7 @@
         <qualifier>
           <variableref>Port12 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port12 Config</variableref>
@@ -8165,8 +8167,8 @@
         <label>  Pos2:</label>
         <tooltip>Servo position #2 (1-127)</tooltip>
       </variable>
-      <variable item="Port12 Speed" CV="124" default="1" include="101,102,103,104,105,106">
-        <decVal min="1" max="7"/>
+      <variable item="Port12 Speed" CV="124" default="0" include="101,102,103,104,105,106">
+        <decVal min="0" max="7"/>
         <label>Speed:</label>
         <label xml:lang="de">Geschw.:</label>
         <label xml:lang="nl">Snelh.:</label>
@@ -8196,7 +8198,7 @@
       <variable item="Port13 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port13 Config" CV="39" default="0">
@@ -8457,7 +8459,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port13 Config" value="192"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
@@ -8526,7 +8528,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8545,7 +8547,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8562,7 +8564,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8584,7 +8586,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8601,7 +8603,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8656,7 +8658,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8675,7 +8677,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8692,7 +8694,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8714,7 +8716,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8731,7 +8733,7 @@
         <qualifier>
           <variableref>Port13 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port13 Config</variableref>
@@ -8803,7 +8805,7 @@
       <variable item="Port14 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port14 Config" CV="42" default="0">
@@ -9064,7 +9066,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port14 Config" value="192"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
@@ -9133,7 +9135,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9152,7 +9154,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9169,7 +9171,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9191,7 +9193,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9208,7 +9210,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9263,7 +9265,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9282,7 +9284,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9299,7 +9301,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9321,7 +9323,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9338,7 +9340,7 @@
         <qualifier>
           <variableref>Port14 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port14 Config</variableref>
@@ -9410,7 +9412,7 @@
       <variable item="Port15 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port15 Config" CV="45" default="0">
@@ -9670,7 +9672,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port15 Config" value="192"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
@@ -9739,7 +9741,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9758,7 +9760,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9775,7 +9777,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9797,7 +9799,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9814,7 +9816,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9869,7 +9871,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9888,7 +9890,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9905,7 +9907,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9927,7 +9929,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -9944,7 +9946,7 @@
         <qualifier>
           <variableref>Port15 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port15 Config</variableref>
@@ -10016,7 +10018,7 @@
       <variable item="Port16 OccuMode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>o:</label>
-        <tooltip>Is this Port used for Occupancy Y/N (set by Type combo)</tooltip>
+        <tooltip>Is this Port used for Occupancy N/Y (set by Type combo)</tooltip>
       </variable>
 
       <variable item="Port16 Config" CV="48" default="0">
@@ -10277,7 +10279,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Block">
-            <choice>Output: Block Detector (0xC0 command)</choice>
+            <choice>Output: Block Detector</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (0xC0 commando)</choice>
             <compositeSetting label="Port16 Config" value="192"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
@@ -10346,7 +10348,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10365,7 +10367,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10382,7 +10384,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10404,7 +10406,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10421,7 +10423,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10476,7 +10478,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10495,7 +10497,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10512,7 +10514,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10534,7 +10536,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>
@@ -10551,7 +10553,7 @@
         <qualifier>
           <variableref>Port16 Config</variableref>
           <relation>lt</relation>
-          <value>100</value>
+          <value>112</value>
         </qualifier>
         <qualifier>
           <variableref>Port16 Config</variableref>

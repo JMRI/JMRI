@@ -13,11 +13,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent a constant enum-like-thing Note that
- * there's no CV associated with this.
+ * Extends VariableValue to represent a constant enum-like-thing.
+ * Note that there's no CV associated with this.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- *
  */
 public class ConstantValue extends VariableValue {
 
@@ -207,9 +206,7 @@ public class ConstantValue extends VariableValue {
      */
     @Override
     public void readAll() {
-        if (log.isDebugEnabled()) {
-            log.debug("read invoked");
-        }
+        log.debug("read invoked");
         setToRead(false);
         setState(READ);
         setBusy(true);
@@ -226,9 +223,7 @@ public class ConstantValue extends VariableValue {
      */
     @Override
     public void writeAll() {
-        if (log.isDebugEnabled()) {
-            log.debug("write invoked");
-        }
+        log.debug("write invoked");
         setToWrite(false);
         setState(STORED);
         setBusy(true);
@@ -243,9 +238,7 @@ public class ConstantValue extends VariableValue {
     // clean up connections when done
     @Override
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         _value = null;
         // do something about the VarComboBox
