@@ -170,6 +170,24 @@
     runs a specific test or test suite.<br>
     (See also how to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
+    <p>
+    There is also a PowerShell (Core) script available to help running tests
+    with maven, <pre style="font-family: monospace;">./java/runtests.ps1</pre>.
+    Its main features are:
+    <ul>
+      <li>Find all test cases in a package, including sub packages</li>
+      <li>Generate code coverage reports locally</li>
+      <li>Optionally: Target a single test class inside the specified package</li>
+      <li>Optionally: Clean, and recompile, all tests and objects under test</li>
+    </ul>
+    Find detailed usage by issuing
+    <pre style="font-family: monospace;">powershell -File .\java\runtests.ps1 -?</pre>
+    in a console.
+    If your console is a PowerShell console, you can issue
+    <pre style="font-family: monospace;">Get-Help .\java\runtests.ps1 -detailed</pre>
+    to get detailed help and instructions.
+    </p>
+
     <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
     There are a number of
     run-time optional checks

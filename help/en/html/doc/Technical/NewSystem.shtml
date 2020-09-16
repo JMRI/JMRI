@@ -191,6 +191,11 @@
             for the old system's functionality): <code>ant tests
             &amp;&amp;./runtest.csh
             jmri.jmrix.powerline.SerialTest</code></p>
+            
+            <p>
+              There is also a PowerShell script available, see the
+              <a href="JUnit.shtml">JUnit</a> page for more information
+            </p>
           </dd>
 
           </dl>

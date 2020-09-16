@@ -329,6 +329,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 _resumingAutomatic = false;
                 _activeTrain.setStatus(ActiveTrain.RUNNING);
                 setupNewCurrentSignal(null, true);
+                // if no current signal use saved.
+                if (!isCurrentSignal()) {
+                    restoreSavedSpeedAndDirection();
+                }
                 setEngineDirection();
                 setSpeedBySignal();
             } else if (InstanceManager.getDefault(DispatcherFrame.class).getAutoAllocate()) {
@@ -392,13 +396,16 @@ public class AutoActiveTrain implements ThrottleListener {
 
     // keeps track of and restores previous speed
     private float _savedSpeed = 0.0f;
+    private boolean _savedForward = true;
 
-    protected void saveSpeed() {
+    protected void saveSpeedAndDirection() {
         _savedSpeed = _targetSpeed;
+        _savedForward = _forward;
     }
 
-    protected void restoreSavedSpeed() {
+    protected void restoreSavedSpeedAndDirection() {
         _targetSpeed = _savedSpeed;
+        _forward = _savedForward;
     }
 
     // keeps track of number of horn execution threads that are active
@@ -669,6 +676,27 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _controllingSignalMast = null;
         _needSetSpeed = false;
+    }
+
+    /**
+     * Checks for a controlling signal
+     * @return true if there is one
+     */
+    protected boolean isCurrentSignal() {
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
+            if (_controllingSignal != null) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // SignalMast
+            if (_controllingSignalMast != null) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     /**
@@ -1495,6 +1523,9 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     protected void initiateWorking() {
         if (_activeTrain.getStatus() != ActiveTrain.WORKING) {
+            _activeTrain.setMode(ActiveTrain.DISPATCHED);
+            _activeTrain.setStatus(ActiveTrain.WORKING);
+            saveSpeedAndDirection();
             if (_autoEngineer != null) {
                 _autoEngineer.setHalt(true);
                 waitUntilStopped();
@@ -1503,8 +1534,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 _autoEngineer = null;
                 _throttle = null;
             }
-            _activeTrain.setMode(ActiveTrain.MANUAL);
-            _activeTrain.setStatus(ActiveTrain.WORKING);
         }
     }
 

@@ -114,8 +114,18 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private void handleActiveTrainChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("mode")) {
             handleChangeOfMode(e);
+        } else if (e.getPropertyName().equals("status")) {
+            handleChangeOfStatus(e);
+            handleChangeOfStatus(e);
         }
         displayAutoTrains();
+    }
+
+    private void handleChangeOfStatus(java.beans.PropertyChangeEvent e) {
+        if ((int) e.getOldValue() == ActiveTrain.WORKING) {
+            // put back listener
+            addThrottleListener(((ActiveTrain) e.getSource()).getAutoActiveTrain());
+        }
     }
 
     private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
@@ -124,8 +134,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 int newValue = ((Integer) e.getNewValue()).intValue();
                 int oldValue = ((Integer) e.getOldValue()).intValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
-                    removeThrottleListener((AutoActiveTrain) e.getSource());
-//                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+                    removeThrottleListener(aat);
                 } else if (oldValue == ActiveTrain.DISPATCHED) {
                     setupThrottle(aat);
                 }
@@ -393,7 +402,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     // resume
                     aat.setEngineDirection();
                     aat.getAutoEngineer().setHalt(false);
-                    aat.restoreSavedSpeed();
+                    aat.restoreSavedSpeedAndDirection();
                     at.setStatus(aat.getSavedStatus());
                     if ((at.getStatus() == ActiveTrain.RUNNING)
                             || (at.getStatus() == ActiveTrain.WAITING)) {
@@ -406,7 +415,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 } else {
                     // stop
                     aat.getAutoEngineer().setHalt(true);
-                    aat.saveSpeed();
+                    aat.saveSpeedAndDirection();
                     aat.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
                     if (at.getMode() == ActiveTrain.MANUAL) {
@@ -429,7 +438,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.AUTOMATIC) {
                 at.setMode(ActiveTrain.MANUAL);
                 if (aat.getAutoEngineer() != null) {
-                    aat.saveSpeed();
+                    aat.saveSpeedAndDirection();
                     aat.getAutoEngineer().setHalt(true);
                     aat.setTargetSpeed(0.0f);
                     aat.waitUntilStopped();
@@ -438,11 +447,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 }
             } else if (at.getMode() == ActiveTrain.MANUAL) {
                 at.setMode(ActiveTrain.AUTOMATIC);
-                aat.restoreSavedSpeed();
-                aat.setForward(!aat.getRunInReverse());
+                aat.restoreSavedSpeedAndDirection();
                 if ((at.getStatus() == ActiveTrain.RUNNING)
                         || (at.getStatus() == ActiveTrain.WAITING)) {
+                    if (aat.getCurrentSignal() != null) {
                     aat.setSpeedBySignal();
+                    }
                 }
             }
         }
@@ -506,7 +516,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             ActiveTrain at = aat.getActiveTrain();
             if ((at.getStatus() != ActiveTrain.STOPPED) && (aat.getAutoEngineer() != null)) {
                 aat.getAutoEngineer().setHalt(true);
-                aat.saveSpeed();
+                aat.saveSpeedAndDirection();
                 aat.setSavedStatus(at.getStatus());
                 at.setStatus(ActiveTrain.STOPPED);
             }
@@ -557,14 +567,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     _reverseButtons.get(i).setVisible(false);
                     _speedSliders.get(i).setVisible(false);
                     _throttleStatus.get(i).setVisible(true);
-                } else if ((at.getMode() == ActiveTrain.MANUAL) && ((at.getStatus() == ActiveTrain.WORKING)
-                        || (at.getStatus() == ActiveTrain.READY))) {
+                } else if (at.getMode() == ActiveTrain.DISPATCHED) {
                     manualButton.setVisible(false);
                     _resumeAutoRunningButtons.get(i).setVisible(true);
                     _forwardButtons.get(i).setVisible(false);
                     _reverseButtons.get(i).setVisible(false);
-                    _speedSliders.get(i).setVisible(true);
-                    _throttleStatus.get(i).setVisible(true);
+                    _speedSliders.get(i).setVisible(false);
+                    _throttleStatus.get(i).setVisible(false);
                 } else {
                     manualButton.setText(Bundle.getMessage("ToAutoButton"));
                     manualButton.setToolTipText(Bundle.getMessage("ToAutoButtonHint"));
