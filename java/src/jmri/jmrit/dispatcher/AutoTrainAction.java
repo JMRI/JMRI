@@ -288,7 +288,7 @@ public class AutoTrainAction {
                     int state = _doneSensor.getKnownState();
                     if (state == Sensor.ACTIVE) {
                         if (_activeTrain.getStatus() == ActiveTrain.WORKING) {
-                            _activeTrain.setStatus(ActiveTrain.READY);
+                            _activeTrain.getAutoActiveTrain().resumeAutomaticRunning();
                         }
                     }
                 }
@@ -340,19 +340,8 @@ public class AutoTrainAction {
                 if (spd > _autoActiveTrain.getMaxSpeed()) {
                     spd = _autoActiveTrain.getMaxSpeed();
                 }
-                _autoActiveTrain.setTargetSpeed(spd * _autoActiveTrain.getSpeedFactor());
-                if ((_autoActiveTrain.getRampRate() != AutoActiveTrain.RAMP_NONE)
-                        && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    // temporarily turn ramping off
-                    _autoActiveTrain.setCurrentRampRate(AutoActiveTrain.RAMP_NONE);
-                    // wait for train to achieve speed in a separate thread which will complete action
-                    Runnable monTrainSpeed = new MonitorTrainSpeed(tsa);
-                    Thread tMonTrainSpeed = jmri.util.ThreadingUtil.newThread(monTrainSpeed);
-                    tsa.setWaitingThread(tMonTrainSpeed);
-                    tMonTrainSpeed.start();
-                } else {
-                    completedAction(tsa);
-                }
+                _autoActiveTrain.getAutoEngineer().setSpeedImmediate(spd * _autoActiveTrain.getSpeedFactor());
+                completedAction(tsa);
                 break;
             case TransitSectionAction.RAMPTRAINSPEED:
                 // set current speed to target using specified ramp rate

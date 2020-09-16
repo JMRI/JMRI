@@ -442,7 +442,9 @@
 
  <indexitem text="OakTree Systems - Hardware, Connection, Tools " target="html.hardware.oaktree.OakTree"/>
 
- <indexitem text="OBlock (Occupance Block) " target="package.jmri.jmrit.logix.OBlockTable"/>
+ <indexitem text="OBlock (Occupancy Block, Warrants) " target="package.jmri.jmrit.logix.OBlockTable"/>
+
+ <indexitem text="OPath (Occupancy Path, Warrants) " target="package.jmri.jmrit.logix.OBlockEdit"/>
 
  <indexitem text="Occupancy Sensor " target="html.tools.Sensors"/>
 
@@ -505,6 +507,8 @@
  <indexitem text="Path (in OBlock) " target="package.jmri.jmrit.logix.OBlockTable"/>
 
  <indexitem text="Pi (Raspberry) - Hardware, Connection, Tools " target="html.hardware.pi.index"/>
+
+ <indexitem text="Portals (Warrants) " target="package.jmri.jmrit.logix.OBlockEdit"/>
 
  <indexitem text="Power Control Panel " target="package.jmri.jmrit.powerpanel.PowerPanelFrame"/>
 
@@ -578,7 +582,7 @@
   <indexitem text="Tracking Display " target="package.jmri.jmrix.rps.trackingpanel.RpsTrackingFrame"/>
 
  </indexitem>
- <indexitem text="SC (Signal Controlled) Warrant " target="package.jmri.jmrit.logix.SCWarrant"/>
+ <indexitem text="SC Warrant (Signal Controlled) " target="package.jmri.jmrit.logix.SCWarrant"/>
 
  <indexitem text="Scripting " target="html.tools.scripting.index">
   <indexitem text="Getting Started " target="html.tools.scripting.Start"/>
@@ -720,7 +724,7 @@
 
  <indexitem text="Train Throttle App (Windows Throttle) " target="html.apps.index_addapp"/>
 
- <indexitem text="Train Trackers " target="package.jmri.jmrit.logix.Tracker"/>
+ <indexitem text="Train Trackers (Warrants) " target="package.jmri.jmrit.logix.Tracker"/>
 
  <indexitem text="TrainCrew " target="html.apps.index_addapp"/>
 
@@ -760,8 +764,14 @@
 
  <indexitem text="Wangrow - Hardware, Connection, Tools " target="html.hardware.nce.Wangrow"/>
 
- <indexitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
-  <indexitem text="Create Warrant " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
+ <indexitem text="Warrants " target="html.tools.WarrantsIntro">
+   <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
+
+   <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
+
+   <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+
+   <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
  </indexitem>
  <indexitem text="Web Access to JMRI " target="html.web.index"/>

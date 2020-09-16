@@ -167,6 +167,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
             tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
+                throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
                 lnt.throttleDispose();
                 return true;
             }

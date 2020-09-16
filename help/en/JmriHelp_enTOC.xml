@@ -547,8 +547,8 @@
    <tocitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
   </tocitem>
-  <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant">
-   <tocitem text="Warrants Introduction " target="package.jmri.jmrit.logix.Warrant"/>
+  <tocitem text="Warrants " target="html.tools.WarrantsIntro">
+   <tocitem text="Warrants Overview and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
 
    <tocitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 

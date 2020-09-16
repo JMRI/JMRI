@@ -217,6 +217,10 @@
 ./runtest.csh apps/jmrit/XmlFileValidateRunner xml/decoders/0NMRA.xml 
 </code>
 </pre>
+    <p>
+      There is also a PowerShell script available, see the
+      <a href="JUnit.shtml">JUnit</a> page for more information.
+    </p>
 
       <p>For a quick file check, Linux and Mac OS X users can
       validate from the command line with e.g.</p>
