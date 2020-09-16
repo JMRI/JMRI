@@ -3,16 +3,12 @@ package jmri.managers;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import jmri.AnalogIO;
-import jmri.AnalogIOManager;
-import jmri.InstanceManager;
-import jmri.VariableLight;
-import jmri.LightManager;
-import jmri.Manager;
-import jmri.NamedBean;
+
+import jmri.*;
 
 /**
  * Implementation of a AnalogIOManager that can serve as a proxy for multiple

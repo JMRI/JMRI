@@ -23,14 +23,15 @@ public class MeterAction extends AbstractAction {
 
     public MeterAction(String s) {
         super(s);
-        
-        // disable ourself if no MeterGroup available
-        if (!hasVoltageMeter()) {
+/*        
+        // disable ourself if no Meter is available
+        if (!hasMeters()) {
             setEnabled(false);
         }
+*/        
     }
-    
-    private boolean hasVoltageMeter() {
+/*    
+    private boolean hasMeters() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
         if (mm == null) return false;
         
@@ -40,10 +41,9 @@ public class MeterAction extends AbstractAction {
         }
         return false;
     }
-
+*/
     @Override
     public void actionPerformed(ActionEvent e) {
-
         MeterFrame f = new MeterFrame();
         f.initComponents();
         f.setVisible(true);

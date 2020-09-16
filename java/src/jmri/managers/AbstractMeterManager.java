@@ -12,7 +12,7 @@ import jmri.SystemConnectionMemo;
  * @author Dave Duchamp      Copyright (C) 2004
  * @author Daniel Bergqvist  Copyright (C) 2020
  */
-public class DefaultMeterManager extends AbstractManager<Meter>
+public class AbstractMeterManager extends AbstractManager<Meter>
         implements MeterManager {
 
     /**
@@ -20,7 +20,7 @@ public class DefaultMeterManager extends AbstractManager<Meter>
      * 
      * @param memo the system connection
      */
-    public DefaultMeterManager(SystemConnectionMemo memo) {
+    public AbstractMeterManager(SystemConnectionMemo memo) {
         super(memo);
     }
 
@@ -57,6 +57,6 @@ public class DefaultMeterManager extends AbstractManager<Meter>
         return Meter.class;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(AbstractAnalogIOManager.class);
+//    private final static Logger log = LoggerFactory.getLogger(AbstractMeterManager.class);
 
 }

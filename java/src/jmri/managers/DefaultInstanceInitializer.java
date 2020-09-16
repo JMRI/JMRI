@@ -77,7 +77,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == MeterManager.class) {
-            return new DefaultMeterManager(memo);
+            return new ProxyMeterManager();
         }
 
         if (type == MeterGroupManager.class) {

@@ -4,6 +4,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.*;
 
@@ -23,6 +24,8 @@ import jmri.util.JmriJFrame;
  */
 public class MeterFrame extends JmriJFrame {
 
+    private final UUID uuid;
+    
     private final List<Meter> voltageMeters = new ArrayList<>();
     private final List<Meter> currentMeters = new ArrayList<>();
     
@@ -46,6 +49,7 @@ public class MeterFrame extends JmriJFrame {
     private int displayLength;
     private boolean displayDP;
 
+    // !!!!!!!! This should be NamedBeanHandle<Meter> !!!!!!!!!!
     private Meter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
@@ -60,8 +64,14 @@ public class MeterFrame extends JmriJFrame {
     JPanel meterPane;
     
     public MeterFrame() {
+        this(UUID.randomUUID());
+    }
+    
+    public MeterFrame(UUID uuid) {
         super(Bundle.getMessage("TrackVoltageMeterTitle"));
-
+        
+        this.uuid = uuid;
+        
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
         if (mm == null) throw new RuntimeException("No meter manager exists");
         
@@ -69,17 +79,55 @@ public class MeterFrame extends JmriJFrame {
             if ((m != null) && (m instanceof VoltageMeter)) voltageMeters.add(m);
             if ((m != null) && (m instanceof CurrentMeter)) currentMeters.add(m);
         }
-        if (voltageMeters.isEmpty() && currentMeters.isEmpty()) throw new RuntimeException("No volt meter or amp meter exists");
+//        if (voltageMeters.isEmpty() && currentMeters.isEmpty()) throw new RuntimeException("No volt meter or amp meter exists");
         
         if (!voltageMeters.isEmpty()) {
             meter = voltageMeters.get(0);
             setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", meter.getDisplayName()));
-        } else {
+        } else if (!currentMeters.isEmpty()) {
             meter = currentMeters.get(0);
             setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", meter.getDisplayName()));
+        } else {
+            setTitle(Bundle.getMessage("TrackVoltageMeterTitle"));
+        }
+        
+        MeterFrameManager.getInstance().register(this);
+    }
+    
+    public UUID getUUID() {
+        return uuid;
+    }
+    
+    public Meter getMeter() {
+        return meter;
+    }
+    
+    public void setMeter(Meter m) {
+        if (lastSelectedMenuItem != null) lastSelectedMenuItem.setSelected(false);
+
+        meter.disable();
+        meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+
+        meter = m;
+        meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+        meter.enable();
+
+        // Update the display
+        digitIcons = null;
+
+        buildContents();
+
+        // Initially we want to scale the icons to fit the previously saved window size
+        scaleImage();
+        buildContents();
+
+        if (meter instanceof VoltageMeter) {
+            setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
+        } else {
+            setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
         }
     }
-
+    
     @Override
     public void initComponents() {
         // Create menu bar
@@ -203,7 +251,7 @@ public class MeterFrame extends JmriJFrame {
         // build the actual multimeter display.
         meterPane.setLayout(new BoxLayout(meterPane, BoxLayout.X_AXIS));
 
-        boolean isVoltage = (meter instanceof VoltageMeter);
+        boolean isVoltage = (meter == null) || (meter instanceof VoltageMeter);
         
         if (digitIcons == null) {
             digitIcons = new ArrayList<>(displayLength); // 1 decimal place precision.
@@ -215,7 +263,11 @@ public class MeterFrame extends JmriJFrame {
         for(int i=0;i<digitIcons.size()-1;i++){
             meterPane.add(digitIcons.get(i));
         }
-        switch (meter.getUnit()) {
+        
+        // We might not have a meter yet.
+        Meter.Unit unit = (meter != null) ? meter.getUnit() : Meter.Unit.NoPrefix;
+        
+        switch (unit) {
             case Milli:
                 if (isVoltage) meterPane.add(milliVolt);
                 else meterPane.add(milliAmp);
@@ -279,8 +331,11 @@ public class MeterFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
-        meter.disable();
-        meter.removePropertyChangeListener(propertyChangeListener);
+        if (meter != null) {
+            meter.disable();
+            meter.removePropertyChangeListener(propertyChangeListener);
+        }
+        MeterFrameManager.getInstance().deregister(this);
         super.dispose();
     }
 
@@ -297,29 +352,7 @@ public class MeterFrame extends JmriJFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (lastSelectedMenuItem != null) lastSelectedMenuItem.setSelected(false);
-            
-            meter.disable();
-            meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
-            
-            meter = m;
-            meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
-            meter.enable();
-            
-            // Update the display
-            digitIcons = null;
-            
-            buildContents();
-
-            // Initially we want to scale the icons to fit the previously saved window size
-            scaleImage();
-            buildContents();
-            
-            if (meter instanceof VoltageMeter) {
-                MeterFrame.this.setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
-            } else {
-                MeterFrame.this.setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
-            }
+            setMeter(m);
             
             JMenuItem selectedItem = (JMenuItem) e.getSource();
             selectedItem.setSelected(true);

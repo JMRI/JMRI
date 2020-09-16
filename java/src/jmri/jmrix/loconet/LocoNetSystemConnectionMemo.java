@@ -213,12 +213,13 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         InstanceManager.setDefault(ClockControl.class, cc);
 
-        getMeterGroup();
-
         getIdTagManager();
 
         // register this SystemConnectionMemo to connect to rest of system
         register();
+
+        // This must be done after the memo is registered
+        getMeterGroup();
     }
 
     public LnPowerManager getPowerManager() {
@@ -291,6 +292,17 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     public LnMeterGroup getMeterGroup() {
         if (getDisabled()) {
             return null;
+        }
+        switch (getSlotManager().commandStationType) {
+            case COMMAND_STATION_USB_DCS240_ALONE:
+            case COMMAND_STATION_DCS240:
+            case COMMAND_STATION_DCS210:
+            case COMMAND_STATION_USB_DCS52_ALONE:
+            case COMMAND_STATION_DCS052:
+                break;
+            default:
+                // The command station does not support these meters
+                return null;
         }
         if (meterGroup == null) {
             meterGroup = new LnMeterGroup(this);
