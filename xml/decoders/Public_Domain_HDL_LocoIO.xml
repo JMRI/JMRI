@@ -210,9 +210,19 @@
       </variable>
 
       <variable CV="0" mask="XXXXXXVX" item="Alternate Mode" default="0" exclude="135,139">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+<!--        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>-->
+        <enumVal>
+          <enumChoice choice="0" value="0">
+            <choice>Fixed</choice>
+            <choice xml:lang="nl">Vaste Code</choice>
+          </enumChoice>
+          <enumChoice choice="0" value="1">
+            <choice>Alternating</choice>
+            <choice xml:lang="nl">Wisselend</choice>
+          </enumChoice>
+        </enumVal>
         <label>Alternate code:</label>
-        <tooltip>Button sends alternating code, default: unselected = fixed code</tooltip>
+        <tooltip>Button sends alternating or fixed code, default: fixed</tooltip>
       </variable>
 
       <variable CV="0" mask="XXXXXXXV" item="Port Refresh" default="0">
@@ -274,7 +284,7 @@
 
       <!-- Port 1 -->
 
-      <variable item="Port1 Address" CV="4,5" mask="XVVVVVVV XXXXVVVV" minVal="1">
+      <variable item="Port1 Address" CV="4,5" mask="XVVVVVVV XXXXVVVV">
         <!--qualifier not functioning to prevent improper recalculation of address field via CV-->
         <!-- CV4 ignores bit 8 in port address -->
         <splitVal offset="1" min="1" max="4096" default="1"/>
@@ -956,7 +966,7 @@
 
 
       <!-- Port 2 -->
-      <variable item="Port2 Address" CV="7,8" mask="XVVVVVVV XXXXVVVV" minVal="1">
+      <variable item="Port2 Address" CV="7,8" mask="XVVVVVVV XXXXVVVV">
         <!-- CV7 ignores bit 8 in port address -->
         <splitVal factor="1" offset="1" min="1" max="2048" default="1"/>
         <label>Address:</label>
@@ -11466,8 +11476,12 @@
       <row>
         <display item="Action Mode"/>
       </row>
-      <display item="Alternate Mode" format="checkbox"/>
-      <display item="Port Refresh" format="checkbox"/>
+      <row>
+        <display item="Alternate Mode"/>
+      </row>
+      <row>
+        <display item="Port Refresh" format="checkbox"/>
+      </row>
       <display item="Board Active High" format="checkbox"/>
       <!-- next item must exist as qualifier variable, but not shown on pane/supported in older versions-->
       <group exclude="003,101,102,103,135,139,140,141,142,144,145,146,148,149,210,211">
