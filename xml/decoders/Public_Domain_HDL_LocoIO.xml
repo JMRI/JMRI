@@ -57,7 +57,7 @@
     </revision>
     <revision>
       <revnumber>4</revnumber>
-      <date>2020-09-15</date>
+      <date>2020-09-16</date>
       <authorinitials>EB</authorinitials>
       <revremark>Changed address field labels hi/lo to function like 81/1 entry
         Use compositeVal type values (ports 1-16), add LocoBooster,
@@ -69,7 +69,7 @@
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
-  <version author="Egbert Broerse" version="4" lastUpdated="20200915"/>
+  <version author="Egbert Broerse" version="4" lastUpdated="20200916"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -348,8 +348,9 @@
             <choice>Input: Toggle switch</choice>
             <choice xml:lang="nl">Ingang: Wisselschakelaar</choice>
             <compositeSetting label="Port1 Config" value="15"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/> <!--set CV value via mask = 16 as per documentation-->
+            <compositeSetting label="Port1 Value2A" value="1"/><!--sets SV5 value via mask to 16 as per documentation-->
+            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 SensorAddress" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Toggle Indirect" exclude="135,139,140,141,142">
             <choice>Input: Toggle switch - Indirect</choice>
@@ -357,7 +358,7 @@
             <compositeSetting label="Port1 Config" value="7"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="0"/>
-
+            <compositeSetting label="Port1 SensorAddress" value="0"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
@@ -365,6 +366,7 @@
             <compositeSetting label="Port1 Config" value="15"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
+            <compositeSetting label="Port1 Address" value="0"/>
             <!-- <compositeSetting label="Port1 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
@@ -373,12 +375,14 @@
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
+            <compositeSetting label="Port1 Address" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Occupancy - active Low Delayed</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
+            <compositeSetting label="Port1 Address" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
             <choice>Input: Occupancy - active High</choice>
@@ -11536,21 +11540,21 @@
             </row>
             <row>
               <group>
-                <qualifier>
-                  <variableref>Port1 OccuMode</variableref>
-                  <relation>ne</relation>
-                  <value>1</value>
-                </qualifier>
+<!--                <qualifier>-->
+<!--                  <variableref>Port1 OccuMode</variableref>-->
+<!--                  <relation>ne</relation>-->
+<!--                  <value>1</value>-->
+<!--                </qualifier>-->
                 <row>
                   <display item="Port1 Address"/>
                 </row>
               </group>
               <group>
-                <qualifier>
-                  <variableref>Port1 OccuMode</variableref>
-                  <relation>eq</relation>
-                  <value>1</value>
-                </qualifier>
+<!--                <qualifier>-->
+<!--                  <variableref>Port1 OccuMode</variableref>-->
+<!--                  <relation>eq</relation>-->
+<!--                  <value>1</value>-->
+<!--                </qualifier>-->
                 <row>
                   <display item="Port1 SensorAddress"/>
                 </row>
@@ -13072,16 +13076,70 @@
     </column>
   </pane>
 
+  <pane>
+    <name>ReadMe</name>
+    <name xml:lang="de">Lese Mich</name>
+    <name xml:lang="fr">Lisez Moi</name>
+    <name xml:lang="nl">Lees Mij</name>
+    <column>
+      <label>
+        <text>&lt;html&gt;&lt;h1&gt;Information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
+        <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Modules LocoIO HDL&lt;/h1&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
+      </label>
+      <separator/>
+      <label>
+        <text>&lt;html&gt;&lt;strong&gt;JMRI 4.21.2 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.21.2 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.21.2 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.21.1 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
+      </label>
+      <separator/>
+      <label>
+        <text>&lt;html&gt;&lt;h3&gt;SV Programming Ops Mode addressing (LOCONETSV1MODE), Read &amp; Write.&lt;/h3&gt;&lt;br&gt;
+          You have to select your PIC version and model when creating a roster entry.&lt;br/&gt;
+          Replace the DCC Address suggested by a reasonal low addres like "81" (default, translates to 81/1)&lt;br/&gt;
+          Save and close the decoder Roster entry and reopen from the Roster using "Programming On Main".&lt;html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;&lt;h3&gt;SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), Lesen und Schreiben.&lt;/h3&gt;&lt;br&gt;
+          Handmässiger Modell- u. Versionsauswahl erforderlich bei Neueintrag. Vorgeschlagene Adresse ersetzen von
+          einen gültigen Wert wie "81" (Modul 81/1 = Werkseinstellung).&lt;/html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;SV's Programmeren via POM (LOCONETSV1MODE), Lezen &amp; Schrijven.&lt;/h3&gt;&lt;br&gt;
+          Kies handmatig het type en PIC-versie bij het aanmaken van een Loc-definitie.&lt;br/&gt;
+          Vervang het ingevulde DCC adres door een normaal getal bijv. "81" (standaard adres, 81/1).&lt;br/&gt;
+          Bewaar en sluit de Decoder en open in de Loklijst met "Programmeren via POM")&lt;/html&gt;</text>
+      </label>
+      <label>
+        <text>&lt;html&gt;
+            As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
+            &lt;br/&gt;
+            Be careful to first disconnect all other LocoIO devices before changing a board's (sub)address (Broadcast).&lt;br/&gt;
+            &lt;br/&gt;
+            Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
+            Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
+            Step 3: Set desired options and click "Write to decoder".&lt;br/&gt;
+            Step 4: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
+            &lt;br/&gt;
+            &lt;/html&gt;</text>
+      </label>
+      <label>
+        <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
+        <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
+        <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
+      </label>
+    </column>
+  </pane>
+
   <!-- LocoIO Valid Values Reference (static info) -->
   <pane>
     <name>Cheat Sheet</name>
     <name xml:lang="nl">Spiekblad</name>
     <column>
       <row>
-      <label>
-        <text>&lt;html&gt;&lt;strong&gt;What values to enter on the Ports tab?&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Kies een rij en vul de waarden in op tab Poorten&lt;/strong&gt;&lt;/html&gt;</text>
-      </label>
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;Values to enter on the Ports tab&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Waarden gebruikt op tab Poorten&lt;/strong&gt;&lt;br/&gt;&lt;br/&gt;&lt;/html&gt;</text>
+        </label>
       </row>
 
       <row>
@@ -13191,44 +13249,44 @@
 
           <label>
             <text>&lt;html&gt;
-              Address&lt;br/&gt;
-              Address&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
               &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
-              &lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 1)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              Note 2)&lt;br/&gt;
+              1&lt;br/&gt;
               &lt;/html&gt;</text>
           </label>
         </column>
@@ -13332,55 +13390,13 @@
           </label>
         </column>
       </row>
-    </column>
-  </pane>
-
-  <pane>
-    <name>ReadMe</name>
-    <name xml:lang="de">Lese Mich</name>
-    <name xml:lang="fr">Lisez Moi</name>
-    <name xml:lang="nl">Lees Mij</name>
-    <column>
-      <label>
-        <text>&lt;html&gt;&lt;h1&gt;Information about HDL LocoIO Boards&lt;/h1&gt;&lt;/html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;&lt;h1&gt;Information bzw. HDL LocoIO Einheiten&lt;/h1&gt;&lt;/html&gt;</text>
-        <text xml:lang="fr">&lt;html&gt;&lt;h1&gt;d'Information importante sur les Modules LocoIO HDL&lt;/h1&gt;&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;h1&gt;Informatie over HDL LocoIO Modules&lt;/h1&gt;&lt;/html&gt;</text>
-      </label>
-      <separator/>
-      <label>
-        <text>&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 oder neuer erforderlich für diese Decoderdefinition.&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="fr">&lt;html&gt;&lt;strong&gt;JMRI 4.15.5 ou plus nouveau est réquis pour útiliser cette Definition Décodeur.&lt;/strong&gt;&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;Vereist JMRI 4.15.5 of later met deze definitie.&lt;/strong&gt;&lt;/html&gt;</text>
-      </label>
-      <separator/>
-      <label>
-        <text>&lt;html&gt;&lt;h3&gt;TEST for SV Programming Ops Mode addressing (LOCONETSV1MODE), Read &amp; Write&lt;/h3&gt;&lt;br&gt;
-          You have to select your PIC version and model when creating a roster entry.&lt;html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;&lt;h3&gt;Experimenteller SV-Programmierung auf dem Hauptgleis (LOCONETSV1MODE), Lesen und Schreiben&lt;/h3&gt;&lt;br&gt;
-          Handmässiger Modell- u. Versionsauswahl erforderlich&lt;/html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;&lt;h3&gt;TEST voor SV's Programmeren via POM (LOCONETSV1MODE), Lezen &amp; Schrijven&lt;/h3&gt;&lt;br&gt;
-          Kies handmatig het type en PIC-versie bij het aanmaken van een Loc-definitie.&lt;/html&gt;</text>
-      </label>
-      <label>
-        <text>&lt;html&gt;
-            As an alternative for the HDL Windows LocoIO Config program, follow these steps:&lt;br/&gt;
-            &lt;br/&gt;
-            Be careful to first disconnect all other LocoIO devices before changing a board's (sub)address (Broadcast).&lt;br/&gt;
-            &lt;br/&gt;
-            Step 1: Connect power and LocoNet to the unit.&lt;br/&gt;
-            Step 2: You can now modify the CVs using CV byte or CV bit programming.&lt;br/&gt;
-            Step 3: Set desired options and click "Write to decoder".&lt;br/&gt;
-            Step 4: Your modifications have been saved and the decoder module is ready for use.&lt;br/&gt;
-            &lt;br/&gt;
-            &lt;/html&gt;</text>
-      </label>
-      <label>
-        <text>&lt;html&gt;For further information on this hardware and how to install it, please consult the manual available at http://users.telenet.be/deloof/&lt;html&gt;</text>
-        <text xml:lang="de">&lt;html&gt;Weitere Informationen zur Anwendung dieser Hardware finden Sie in der digitalen Anleitung, verfügbar über http://users.telenet.be/deloof/&lt;html&gt;</text>
-        <text xml:lang="nl">&lt;html&gt;Raadpleeg voor meer informatie over installatie en toepassing van deze hardware de handleiding, te vinden op &lt;a href="http://users.telenet.be/deloof"&gt;users.telenet.be/deloof&lt;/a&gt;/&lt;html&gt;</text>
-      </label>
+      <row>
+        <label>
+          <text>&lt;html&gt;&lt;br/&gt;
+            Note 1) Address bits 0-6 (bits 7-12 stored in Value2 bits 4-7)&lt;br/&gt;
+            Note 2) Address bits 1-6 (bits 0 and 7-12 stored in Value2)&lt;/html&gt;</text>
+        </label>
+      </row>
     </column>
   </pane>
 

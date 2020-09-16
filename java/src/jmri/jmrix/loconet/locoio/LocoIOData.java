@@ -140,7 +140,8 @@ public class LocoIOData extends PropertyChangeSupport
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
      *
-     * If possible add/support the additional config options for HDL boards - Work has moved to xml decoder definition
+     * If possible add/support the additional config options for HDL boards -
+     * Work has moved to xml decoder definition Public_Domain_HDL_LocoIO
      * </pre>
      * @param portRefresh port refresh value, bit 0.
      * @param altCodePBs alternated code PBs, bit 1.
