@@ -193,6 +193,15 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
+    @Override
+    public boolean shutdownOS() {
+        return shutdown(200, true);
+    }
+
+    /**
      * First asks the shutdown tasks if shutdown is allowed. If not return
      * false.
      * <p>
