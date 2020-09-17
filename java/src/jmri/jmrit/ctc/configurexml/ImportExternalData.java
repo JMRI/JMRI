@@ -8,24 +8,20 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.Content;
-import org.jdom2.JDOMException;
-import org.jdom2.util.IteratorIterable;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
+import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.*;
 import jmri.jmrit.ctc.*;
 import jmri.jmrit.ctc.editor.code.*;
 import jmri.jmrit.ctc.ctcserialdata.*;
 
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
