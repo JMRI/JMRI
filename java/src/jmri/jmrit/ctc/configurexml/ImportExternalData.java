@@ -203,27 +203,6 @@ public class ImportExternalData {
 
 
 
-    /**
-     * Implementation for loading the contents of the CTC configuration.
-     *
-     * @param sharedCtcData Element to loaded.
-     * @param perNodeCtcData Element to loaded (same as sharedCtcData).
-     * @return true for successful load.
-     */
-//     public boolean load(Element sharedCtcData, Element perNodeCtcData) {
-//         List<Element> ctcList = sharedCtcData.getChildren();
-//
-//         for (Element lvl1 : ctcList) {
-//             if (lvl1.getName().equals("ctcProperties")) {
-//                 loadProperties(cm, lvl1);
-//                 continue;
-//             }
-//             if (lvl1.getName().equals("ctcOtherData")) {
-//                 loadOtherData(cm, lvl1);
-//                 continue;
-//             }
-//             if (lvl1.getName().equals("ctcCodeButtonData")) {
-                // Create basic CodeButtonHandlerData
     static void loadCodeButtonHandlerData(HashMap<String, String> fieldList) {
     log.info("------------- CBHD ------------");
         String value = fieldList.get("_mUniqueID");
@@ -418,11 +397,9 @@ public class ImportExternalData {
         // IL section
         value = fieldList.get("_mIL_Enabled");
         if (value != null) cbhd._mIL_Enabled = loadBoolean(value);
-//                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
 
         value = fieldList.get("_mIL_ListOfCSVSignalNames");
         if (value != null) cbhd._mIL_Signals = getSignalList(value);
-//                 cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_Signals"));
 
 // Debugging aid -- not active due to SpotBugs
 //                 log.info("CodeButtonHandlerData, {}/{}:", _mSwitchNumber, _mSignalEtcNumber);
@@ -613,17 +590,6 @@ public class ImportExternalData {
     }
 
     // **** Load ArrayList objects ****
-
-//     ArrayList<NBHSensor> getSensorList(Element element) {
-//         ArrayList<NBHSensor> sensorList = new ArrayList<>();
-//         if (element != null) {
-//             for (Element el : element.getChildren()) {
-//                 NBHSensor sensor = loadSensor(el, false);
-//                 sensorList.add(sensor);
-//             }
-//         }
-//         return sensorList;
-//     }
 
     static ArrayList<NBHSignal> getSignalList(String value) {
         ArrayList<NBHSignal> signalList = new ArrayList<>();
