@@ -333,8 +333,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
     
     /**
-     * Try to create a system manager. If this proxy manager is able to create
-     * a system manager, the concrete class must implement this method.
+     * Try to create a system manager.
      *
      * @param systemPrefix the system prefix
      * @return the new manager or null if it's not possible to create the manager
@@ -342,7 +341,9 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     private Manager<E> createSystemManager(@Nonnull String systemPrefix) {
         Manager<E> m = null;
         
-        ConnectionConfigManager manager = InstanceManager.getDefault(ConnectionConfigManager.class);
+        ConnectionConfigManager manager = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+        if (manager == null) return null;
+        
         ConnectionConfig connections[] = manager.getConnections();
         
         for (ConnectionConfig connection : connections) {

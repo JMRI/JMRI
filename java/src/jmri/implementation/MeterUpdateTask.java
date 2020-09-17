@@ -60,9 +60,7 @@ public abstract class MeterUpdateTask {
     }
     
     public void disable(Meter m) {
-        if (!meters.containsKey(m)) {
-            throw new IllegalArgumentException("Meter is not registered");
-        }
+        if (!meters.containsKey(m)) return;
         
         if (meters.get(m)) {
             meters.put(m, false);

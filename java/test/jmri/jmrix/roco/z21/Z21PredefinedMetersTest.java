@@ -18,9 +18,6 @@ public class Z21PredefinedMetersTest {
     private Z21PredefinedMeters mm;
 
     public double getCurrent() {
-        InstanceManager.getDefault(MeterManager.class);
-        InstanceManager.getDefault(MeterManager.class).getBySystemName("ZVCommandStationCurrent");
-        InstanceManager.getDefault(MeterManager.class).getBySystemName("ZVCommandStationCurrent").getKnownAnalogValue();
         return InstanceManager.getDefault(MeterManager.class).getBySystemName("ZVCommandStationCurrent").getKnownAnalogValue();
     }
     
@@ -57,7 +54,7 @@ public class Z21PredefinedMetersTest {
         tc.sendTestMessage(reply);
         Assert.assertEquals(8, getVoltage(), 0.001 );
         
-        msg[14] = 23;   msg[5] = 2;   // 535 mV voltage
+        msg[14] = 23;   msg[15] = 2;   // 535 mV voltage
         reply = new Z21Reply(msg, 20);
         tc.sendTestMessage(reply);
         Assert.assertEquals(535, getVoltage(), 0.001 );

@@ -275,6 +275,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (predefinedMeters == null) {
+            InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(adapterMemo));
             predefinedMeters = new CbusPredefinedMeters(adapterMemo);
         }
         return predefinedMeters;

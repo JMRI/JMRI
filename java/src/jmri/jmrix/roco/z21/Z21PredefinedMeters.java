@@ -73,6 +73,7 @@ public class Z21PredefinedMeters {
 
         @Override 
         public void disable(){
+            if (!enabled) return;
             super.disable();
             enabled = false;
             RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();

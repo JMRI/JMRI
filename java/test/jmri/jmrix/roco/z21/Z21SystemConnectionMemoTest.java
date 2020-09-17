@@ -61,6 +61,7 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
         JUnitUtil.setUp();
         InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         scm = new Z21SystemConnectionMemo();
+        InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(scm));
         scm.setTrafficController(new Z21InterfaceScaffold());
         scm.setRocoZ21CommandStation(new RocoZ21CommandStation());
 
