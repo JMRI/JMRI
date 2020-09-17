@@ -299,6 +299,7 @@ public class DecoderFileTest {
     // static variables for the test XML structures
     Element root = null;
     public Element decoder = null;
+    public Element model = null;
     Document doc = null;
 
     // provide a test document in the above static variables
@@ -315,6 +316,11 @@ public class DecoderFileTest {
                         .setAttribute("mfg", "Digitrax")
                         .setAttribute("defnVersion", "242")
                         .setAttribute("comment", "DH142 decoder: FX, transponding")
+                        .addContent(model = new Element("model")
+                                .setAttribute("model", "33")
+                                .setAttribute("maxFnNum", "31")
+                                .setAttribute("productID", "567")
+                        )
                 )
                 .addContent(new Element("programming")
                         .setAttribute("direct", "byteOnly")

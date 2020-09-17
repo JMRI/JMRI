@@ -24,6 +24,14 @@ public class AcelaSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
         Assert.assertFalse("Provides ConsistManager", scm.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void checkConfigureManagers() {
+        scm.configureManagers();
+        Assert.assertNotNull("Sensor Manager after configureManagers", scm.getSensorManager());
+        Assert.assertNotNull("Turnout Manager after configureManagers", scm.getTurnoutManager());
+        Assert.assertNotNull("Light Manager after configureManagers", scm.getLightManager());
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

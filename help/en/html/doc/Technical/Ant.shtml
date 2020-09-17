@@ -42,9 +42,14 @@
       tool does not.
 
       <h2 id="ant">Ant</h2>
-      Ant is available for download at
-      <a href="http://ant.apache.org/">http://ant.apache.org/</a>.
-      Install it, then:
+      You computer may already have Ant installed as part of
+      a developer tools package.  Try <code>ant -version</code>
+      to check.  JMRI requires at least version 1.10.6, and 
+      should work with any version after that. 
+      <p>
+      If you need to install it, Ant is available for download at
+      <a href="http://ant.apache.org/">http://ant.apache.org/</a>
+      or via the usual package managers.
 
       <ul>
         <li>Create a directory to contain your project.</li>

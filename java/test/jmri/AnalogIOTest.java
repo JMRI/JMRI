@@ -62,6 +62,16 @@ public class AnalogIOTest {
         }
 
         @Override
+        public void setState(double value) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public double getState(double v) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public String getBeanType() {
             return "AnalogIO";
         }

@@ -383,11 +383,17 @@ public class CbusNodeConstants {
         result.put(53, "CANBIP_OUT"); // NOI18N
         result.put(54, "CANASTOP"); // NOI18N
         result.put(55, "CANCSB"); // NOI18N
-        result.put(56, "CANMAGOT"); // NOI18N
+        result.put(56, "CANMAG"); // NOI18N
         result.put(57, "CANACE16CMIO"); // NOI18N
         result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "CANDISP"); // NOI18N
         result.put(60, "CANCOMPUTE"); // NOI18N
+        result.put(61, "CANRC522"); // NOI18N
+        result.put(62, "CANINP"); // NOI18N
+        result.put(63, "CANOUT"); // NOI18N
+        result.put(64, "CANEMIO"); // NOI18N
+        result.put(65, "CANCABDC"); // NOI18N
+        result.put(66, "CANRCOM"); // NOI18N
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -508,11 +514,11 @@ public class CbusNodeConstants {
         result.put(29, "Control panel 32 Outputs + 32 Inputs");
         result.put(30, "Newer version of CANACE3 firmware");
         result.put(31, "Control panel 64 Inputs / 64 Outputs");
-        result.put(32, "Multiple I/O");
-        result.put(33, "Multiple IO module emulating ACE8C");
+        result.put(32, "Multiple I/O – Universal CANMIO firmware");
+        result.put(33, "Multiple IO module 16 inputs emulating CANACE8C on CANMIO hardware");
         result.put(34, "Solenoid driver module");
-        result.put(35, "Bipolar IO module with additional 8 I/O pins");
-        result.put(36, "Solenoid driver module with additional 6 I/O pins");
+        result.put(35, "Universal CANBIP firmware - Bipolar IO module with additional 8 I/O pins (CANMIO family)");
+        result.put(36, "Solenoid driver module with additional 6 I/O pins (CANMIO family)");
         result.put(37, "CANACC4 firmware ported to CANCDU");
         result.put(38, "CAN to MiWi base station");
         result.put(39, "Wireless cab using MiWi protocol");
@@ -526,17 +532,23 @@ public class CbusNodeConstants {
         result.put(47, "DC train controller");
         result.put(48, "Nelevator controller");
         result.put(49, "128 switch inputs");
-        result.put(50, "16MHz 25k80 version of CANSERVO8c");
-        result.put(51, "16MHz 25k80 version of CANACE8MIO");
-        result.put(52, "16MHz 25k80 version of CANACC8");
-        result.put(53, "16MHz 25k80 version of CANACC5");
+        result.put(50, "16MHz 25k80 version of CANSERVO8c on CANMIO hardware");
+        result.put(51, "16MHz 25k80 version of CANACE8MIO on CANMIO hardware");
+        result.put(52, "16MHz 25k80 version of CANACC8 on CANMIO hardware");
+        result.put(53, "16MHz 25k80 version of CANACC5 on CANMIO hardware");
         result.put(54, "DCC stop generator");
         result.put(55, "Command Station with 3A booster");
         result.put(56, "Magnet on Track detector");
         result.put(57, "16 input equivaent to CANACE8C");
         result.put(58, "CBUS module based on Raspberry Pi");
         result.put(59, "25K80 version of CANLED64");
-        result.put(60, "Event processing engine");
+        result.put(60, "Compute Event processing engine");
+        result.put(61, "Read/Write from/to RC522 RFID tags");
+        result.put(62, "8 inputs module (2g version of CANACE8c)");
+        result.put(63, "8 outputs module (2g version of CANACC8)");
+        result.put(64, "Extended CANMIO (24 I/O ports)");
+        result.put(65, "DC cab");
+        result.put(66, "DCC Railcom detector/reader");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -681,6 +693,12 @@ public class CbusNodeConstants {
         // result.put(58, "CANPiNODE"); // NOI18N
         result.put(59, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:candisp"); // NOI18N
         result.put(60, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cancompute"); // NOI18N
+        result.put(61, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:canrc522"); // NOI18N
+        result.put(62, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:caninp"); // NOI18N
+        result.put(63, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:canout"); // NOI18N
+        // result.put(64, "CANEMIO"); // NOI18N
+        result.put(65, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:cancabdc"); // NOI18N
+        result.put(66, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:canrcom"); // NOI18N
         
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N

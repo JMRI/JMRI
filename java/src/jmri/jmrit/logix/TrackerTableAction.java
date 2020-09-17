@@ -61,7 +61,6 @@ import org.slf4j.LoggerFactory;
  * becomes inactive.
  *
  * @author Peter Cressman
- *
  */
 public class TrackerTableAction extends AbstractAction implements PropertyChangeListener{
 
@@ -900,4 +899,5 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             return set;
         }
     }
+
 }

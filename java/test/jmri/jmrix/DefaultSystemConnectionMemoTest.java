@@ -102,7 +102,7 @@ public class DefaultSystemConnectionMemoTest {
 
     @Test
     public void testGetConsistManagerWithAPM() {
-        SystemConnectionMemo t = new DefaultSystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -131,12 +131,12 @@ public class DefaultSystemConnectionMemoTest {
             }
 
         };
-        Assert.assertNotNull("consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNotNull("consist manager", m.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerWithAPM() {
-        SystemConnectionMemo t = new DefaultSystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new DefaultSystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -164,7 +164,26 @@ public class DefaultSystemConnectionMemoTest {
                 return super.get(T);
             }
         };
-        Assert.assertTrue("null consist manager", t.provides(jmri.ConsistManager.class));
+        Assert.assertTrue("null consist manager", m.provides(jmri.ConsistManager.class));
+    }
+
+    @Test
+    public void testRestartRequired() {
+        Assert.assertTrue("not dirty", _memo.isRestartRequired());
+    }
+
+    @Test
+    public void testSetDisabled() {
+        Assert.assertFalse("memo enabled", _memo.getDisabled());
+        _memo.setDisabled(true);
+        Assert.assertTrue("memo disabled", _memo.getDisabled());
+    }
+
+    @Test
+    public void testSetGetOutputInterval() {
+        Assert.assertEquals("default interval in memo", _memo.getOutputInterval(), 250);
+        _memo.setOutputInterval(123);
+        Assert.assertEquals("new interval set in memo", _memo.getOutputInterval(), 123);
     }
 
     @BeforeEach
@@ -187,8 +206,10 @@ public class DefaultSystemConnectionMemoTest {
 
     @AfterEach
     public void tearDown() {
+        _memo = null;
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DefaultSystemConnectionMemoTest.class);
+
 }

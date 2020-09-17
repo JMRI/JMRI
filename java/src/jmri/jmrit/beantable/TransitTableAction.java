@@ -1319,12 +1319,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     private boolean checkTransitInformation() {
+        //transits can now be of length 1 segmant.
+        //With these the route has to start outside the transit
+        /*
         if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
             JOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return false;
-        }
+        }   */
+
         return true;
     }
 
@@ -1731,7 +1735,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panelx.add(panel2);
             JPanel panel21 = new JPanel();
             panel21.setLayout(new FlowLayout());
-            whatPercentSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
+            whatPercentSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.00f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
             whatPercentSpinner.setEditor(new JSpinner.NumberEditor(whatPercentSpinner, "# %")); // show as a percentage % sign
             panel21.add(whatPercentSpinner);
             panel21.add(whatMinuteSpinner1);
@@ -1920,10 +1924,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         log.debug("setWhat code = {}", code);
         switch (code) {
             case TransitSectionAction.PAUSE:
+                whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 if (editActionMode) {
                     whatMinuteSpinner1.setValue(Math.max(curTSA.getDataWhat1(), 1));
                 }
-                whatMinuteSpinner1.setModel(new SpinnerNumberModel(1, 1, 65500, 1));
                 whatMinuteSpinner1.setVisible(true);
                 whatMinuteSpinner1.setToolTipText(rbx.getString("HintPauseData"));
                 break;
@@ -1931,7 +1935,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.SETCURRENTSPEED:
             case TransitSectionAction.RAMPTRAINSPEED:
                 if (editActionMode) {
-                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.1f);
+                    float maxPerc = Math.max(Float.valueOf(0.01f * curTSA.getDataWhat1()), 0.0f);
                     whatPercentSpinner.setValue(maxPerc);
                 }
                 whatPercentSpinner.setVisible(true);
@@ -2167,7 +2171,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 tWhatData1 = Math.round(100 * (float) whatPercentSpinner.getValue());
                 break;
             case TransitSectionAction.TOMANUALMODE:
-                if (doneSensorComboBox.getSelectedIndex() != 0) { // it's optional, so might be 0
+                tWhatString="";
+                if (doneSensorComboBox.getSelectedIndex() >= 0) { // it's optional, so might be -1
                     tWhatString = doneSensorComboBox.getSelectedItemSystemName(); // sensor system name
                 }
                 if (tWhatString.length() >= 1) {

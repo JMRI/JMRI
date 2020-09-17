@@ -6,12 +6,10 @@ import org.junit.jupiter.api.*;
 
 
 /**
- * SRCPSensorTest.java
- *
- * Test for the jmri.jmrix.srcp.SRCPSensor class
+ * Tests for the jmri.jmrix.srcp.SRCPSensor class
  *
  * @author Bob Jacobsen
- * @author      Paul Bender Copyright (C) 2018
+ * @author Paul Bender Copyright (C) 2018
  */
 public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
@@ -27,7 +25,6 @@ public class SRCPSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void checkStatusRequestMsgSent() {}
 
-        
     @Override
     @BeforeEach
     public void setUp() {

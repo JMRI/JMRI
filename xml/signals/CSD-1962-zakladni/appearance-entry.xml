@@ -228,23 +228,23 @@
     <appearance>
       <aspectname>Opatrně na přivolávací návěst bez červené</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/030_opn2_5v.gif</imagelink>
-      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.png</imagelink>
-      <imagelink type="AŽD žzčbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrwg.png</imagelink>
-      <imagelink type="AŽD žčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_yrw.png</imagelink>
-      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.png</imagelink>
-      <imagelink type="ESP žzčbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrwg.png</imagelink>
-      <imagelink type="ESP žčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_yrw.png</imagelink>
+      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.gif</imagelink>
+      <imagelink type="AŽD žzčbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrwg.gif</imagelink>
+      <imagelink type="AŽD žčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_yrw.gif</imagelink>
+      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.gif</imagelink>
+      <imagelink type="ESP žzčbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrwg.gif</imagelink>
+      <imagelink type="ESP žčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_yrw.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opatrně na přivolávací návěst</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/031_opn_5v.gif</imagelink>
-      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.png</imagelink>
-      <imagelink type="AŽD žzčbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrwg.png</imagelink>
-      <imagelink type="AŽD žčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_yrw.png</imagelink>
-      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.png</imagelink>
-      <imagelink type="ESP žzčbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrwg.png</imagelink>
-      <imagelink type="ESP žčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_yrw.png</imagelink>
+      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.gif</imagelink>
+      <imagelink type="AŽD žzčbz">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrwg.gif</imagelink>
+      <imagelink type="AŽD žčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_yrw.gif</imagelink>
+      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.gif</imagelink>
+      <imagelink type="ESP žzčbz">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrwg.gif</imagelink>
+      <imagelink type="ESP žčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_yrw.gif</imagelink>
     </appearance>
 
   </appearances>

@@ -39,6 +39,17 @@ public class PortalList extends JList<Portal> {
         _portalListModel.dataChange();
     }
 
+    void setSelected(Portal portal) {
+        List<Portal> list = _portalListModel._homeBlock.getPortals();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(portal)) {
+                setSelectedIndex(i);
+                return;
+            }
+        }
+        clearSelection();
+    }
+
     private static class PortalCellRenderer extends JLabel implements ListCellRenderer<Portal>{
 
         @Override
@@ -105,6 +116,7 @@ public class PortalList extends JList<Portal> {
             fireContentsChanged(this, 0, 0);
         }
 
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             Object source = e.getSource();
             String property = e.getPropertyName();

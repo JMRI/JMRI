@@ -26,6 +26,14 @@
     <div id="mainContent">
 
       <h1>JMRI: PanelPro Frequently Asked Questions</h1>
+      
+      <p>
+      This is the JMRI PanelPro "frequently asked
+      questions" list. Items get listed here if they're asked a
+      lot, even if they're also available somewhere else. 
+      <br>See also the <a href="../../FAQ.shtml">JMRI general FAQ.</a>
+      </p>
+      
       <dl class="faq">
       <dt id="context" class="on">How does
           JMRI tie into the rest of my layout?</dt>

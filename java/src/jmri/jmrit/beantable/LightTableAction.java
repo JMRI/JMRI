@@ -1,10 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,21 +13,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -42,15 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+
 import com.alexandriasoftware.swing.Validation;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.Manager;
-import jmri.Sensor;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
-import jmri.implementation.LightControl;
+import jmri.implementation.DefaultLightControl;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
@@ -196,7 +175,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     return true;
                 }
                 if (col == INTENSITYCOL) {
-                    return ((Light) getValueAt(row, SYSNAMECOL)).isIntensityVariable();
+                    return getValueAt(row, SYSNAMECOL) instanceof VariableLight;
                 }
                 if (col == ENABLECOL) {
                     return true;
@@ -244,7 +223,12 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     case EDITCOL:
                         return Bundle.getMessage("ButtonEdit");
                     case INTENSITYCOL:
-                        return ((Light) getValueAt(row, SYSNAMECOL)).getTargetIntensity();
+                        Object o = getValueAt(row, SYSNAMECOL);
+                        if (o instanceof VariableLight) {
+                            return ((VariableLight)o).getTargetIntensity();
+                        } else {
+                            return 0.0;
+                        }
                     case ENABLECOL:
                         return ((Light) getValueAt(row, SYSNAMECOL)).getEnabled();
                     default:
@@ -282,15 +266,25 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     case INTENSITYCOL:
                         // alternate
                         try {
-                            Light l = (Light) getValueAt(row, SYSNAMECOL);
-                            double intensity = ((Double) value);
-                            if (intensity < 0) {
-                                intensity = 0;
+                            if (getValueAt(row, SYSNAMECOL) instanceof VariableLight) {
+                                VariableLight l = (VariableLight) getValueAt(row, SYSNAMECOL);
+                                double intensity = ((Double) value);
+                                if (intensity < 0) {
+                                    intensity = 0;
+                                }
+                                if (intensity > 1.0) {
+                                    intensity = 1.0;
+                                }
+                                l.setTargetIntensity(intensity);
+                            } else {
+                                Light l = (Light) getValueAt(row, SYSNAMECOL);
+                                double intensity = ((Double) value);
+                                if (intensity > 0.5) {
+                                    l.setCommandedState(Light.ON);
+                                } else {
+                                    l.setCommandedState(Light.OFF);
+                                }
                             }
-                            if (intensity > 1.0) {
-                                intensity = 1.0;
-                            }
-                            l.setTargetIntensity(intensity);
                         } catch (IllegalArgumentException e1) {
                             status1.setText(Bundle.getMessage("LightError16"));
                             status1.setForeground(Color.red);
@@ -1106,18 +1100,18 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
         status2.setText("");
         status2.setVisible(false);
-        if (g.isIntensityVariable()) {
+        if (g instanceof VariableLight) {
             if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
                 log.debug("minInt value entered: {}", minIntensity.getValue());
                 // do not set intensity
                 status2.setText(Bundle.getMessage("LightWarn9"));
                 status2.setVisible(true);
             } else {
-                g.setMinIntensity((Double) minIntensity.getValue());
-                g.setMaxIntensity((Double) maxIntensity.getValue());
+                ((VariableLight)g).setMinIntensity((Double) minIntensity.getValue());
+                ((VariableLight)g).setMaxIntensity((Double) maxIntensity.getValue());
             }
-            if (g.isTransitionAvailable()) {
-                g.setTransitionTime((Double) transitionTime.getValue());
+            if (((VariableLight)g).isTransitionAvailable()) {
+                ((VariableLight)g).setTransitionTime((Double) transitionTime.getValue());
             }
         }
         // provide feedback to user
@@ -1212,18 +1206,20 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // Get a copy of the LightControl list
         controlList = new ArrayList<>();
         curLight.getLightControlList().forEach((lightControlList1) -> {
-            controlList.add(new LightControl(lightControlList1));
+            controlList.add(new DefaultLightControl(lightControlList1));
         });
 
         // variable intensity
-        if (g.isIntensityVariable()) {
-            minIntensity.setValue(g.getMinIntensity()); // displayed as percentage
-            maxIntensity.setValue(g.getMaxIntensity());
-            if (g.isTransitionAvailable()) {
-                transitionTime.setValue(g.getTransitionTime()); // displays i18n decimal separator eg. 0,00 in _nl
+        if (g instanceof VariableLight) {
+            minIntensity.setValue(((VariableLight)g).getMinIntensity()); // displayed as percentage
+            maxIntensity.setValue(((VariableLight)g).getMaxIntensity());
+            if (((VariableLight)g).isTransitionAvailable()) {
+                transitionTime.setValue(((VariableLight)g).getTransitionTime()); // displays i18n decimal separator eg. 0,00 in _nl
             }
+            setupVariableDisplay(true, ((VariableLight)g).isTransitionAvailable());
+        } else {
+            setupVariableDisplay(false, false);
         }
-        setupVariableDisplay(g.isIntensityVariable(), g.isTransitionAvailable());
 
         update.setVisible(true);
         create.setVisible(false);
@@ -1278,11 +1274,11 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         setLightControlInformation(g);
         // Variable intensity, transitions
-        if (g.isIntensityVariable()) {
-            g.setMinIntensity((Double) minIntensity.getValue());
-            g.setMaxIntensity((Double) maxIntensity.getValue());
-            if (g.isTransitionAvailable()) {
-                g.setTransitionTime((Double) transitionTime.getValue());
+        if (g instanceof VariableLight) {
+            ((VariableLight)g).setMinIntensity((Double) minIntensity.getValue());
+            ((VariableLight)g).setMaxIntensity((Double) maxIntensity.getValue());
+            if (((VariableLight)g).isTransitionAvailable()) {
+                ((VariableLight)g).setTransitionTime((Double) transitionTime.getValue());
             }
         }
         g.activateLight();
@@ -1721,7 +1717,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.error("Incorrect value found in a Time: {}", pe);
             return;
         }
-        lc = new LightControl();
+        lc = new DefaultLightControl();
         if (setControlInformation(lc,controlList)) {
             controlList.add(lc);
             lightControlChanged = true;
@@ -1815,7 +1811,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(sensorName);
+                        sensor1Box.setSelectedItem(s);
                     }
                 }
             }
@@ -1891,7 +1887,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         if (t != null) {
                             // update turnout system name in case it changed
                             turnoutName = t.getSystemName();
-                            turnoutBox.setSelectedItem(turnoutName);
+                            turnoutBox.setSelectedItem(t);
                         }
                     }
                 }
@@ -1930,7 +1926,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         triggerSensorName = s.getSystemName();
-                        sensorOnBox.setSelectedItem(triggerSensorName);
+                        sensorOnBox.setSelectedItem(s);
                     }
                 }
             }
@@ -1966,7 +1962,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s != null) {
                         // update sensor system name in case it changed
                         sensorName = s.getSystemName();
-                        sensor1Box.setSelectedItem(sensorName);
+                        sensor1Box.setSelectedItem(s);
                     }
                 }
                 s2 = InstanceManager.sensorManagerInstance().
@@ -1978,7 +1974,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     if (s2 != null) {
                         // update sensor system name in case it changed
                         sensor2Name = s2.getSystemName();
-                        sensor2Box.setSelectedItem(sensor2Name);
+                        sensor2Box.setSelectedItem(s2);
                     }
                 }
             }
@@ -2094,7 +2090,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         switch (ctType) {
             case Light.SENSOR_CONTROL:
                 setUpControlType(Light.SENSOR_CONTROL);
-                sensor1Box.setSelectedItem(lc.getControlSensorName());
+                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);
@@ -2113,7 +2109,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 break;
             case Light.TURNOUT_STATUS_CONTROL:
                 setUpControlType(Light.TURNOUT_STATUS_CONTROL);
-                turnoutBox.setSelectedItem(lc.getControlTurnoutName());
+                turnoutBox.setSelectedItemByName(lc.getControlTurnoutName());
                 stateBox.setSelectedIndex(turnoutClosedIndex);
                 if (lc.getControlTurnoutState() == Turnout.THROWN) {
                     stateBox.setSelectedIndex(turnoutThrownIndex);
@@ -2122,13 +2118,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             case Light.TIMED_ON_CONTROL:
                 setUpControlType(Light.TIMED_ON_CONTROL);
                 int duration = lc.getTimedOnDuration();
-                sensorOnBox.setSelectedItem(lc.getControlTimedOnSensorName());
+                sensorOnBox.setSelectedItemByName(lc.getControlTimedOnSensorName());
                 timedOnSpinner.setValue(duration);
                 break;
             case Light.TWO_SENSOR_CONTROL:
                 setUpControlType(Light.TWO_SENSOR_CONTROL);
-                sensor1Box.setSelectedItem(lc.getControlSensorName());
-                sensor2Box.setSelectedItem(lc.getControlSensor2Name());
+                sensor1Box.setSelectedItemByName(lc.getControlSensorName());
+                sensor2Box.setSelectedItemByName(lc.getControlSensor2Name());
                 stateBox.setSelectedIndex(sensorActiveIndex);
                 if (lc.getControlSensorSense() == Sensor.INACTIVE) {
                     stateBox.setSelectedIndex(sensorInactiveIndex);

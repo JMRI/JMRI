@@ -8,7 +8,7 @@
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!--#include virtual="/Style" -->
+    <!--#include virtual="/Style.shtml" -->
 </head>
 <body>
 <!--#include virtual="/Header.shtml" -->

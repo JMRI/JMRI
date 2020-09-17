@@ -1,4 +1,4 @@
-# Example of how to define a new prefix for the MQTT Turnouts
+# Example of how to define new send and receive topics strings for the MQTT Turnouts
 #
 # The script before should be run before loading the panels.
 # It only sets the prefix for Turnouts created _after_ this is run.
@@ -24,7 +24,8 @@ if( m is None ):
 
 # Now set a sample prefix
 if( m is not None ):
-    m.setTopicPrefix("foo/bar/jmri-sample-prefix/")  # can be anything but should have a / at end but not at start
-    print( "MQTT prefix updated" )
+    m.setSendTopicPrefix("foo/bar/jmri-sample-prefix/")  # can be anything but should have a / at end but not at start
+    m.setRcvTopicPrefix("foo/bar/jmri-sample-prefix/")
+    print( "MQTT prefixes updated" )
 else:
-    print( "MQTT prefix not updated" )
+    print( "MQTT prefixes not updated" )

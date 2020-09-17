@@ -23,7 +23,28 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <h1>NCE Clock Monitor</h1>
+      <h1>NCE Fast Clock</h1>
+      
+        <p>The NCE fast clock can be
+          either a source of fast time or can be commanded to
+          follow the internal clock. The best synchronization is
+          when the NCE clock is the master source. It works by
+          adjusting the internal clock ratio so the fast minutes
+          will be the same. The provides for the clocks to be
+          basically in sync all the time. Adjustments are made
+          about every 20 fast seconds.</p>
+
+          <p>You may also have the internal clock drive the NCE
+          fast clock. However, this requires some number of seconds
+          to be added or skipped in the NCE fast clock so the
+          minutes will roll over at the same time. That minute roll
+          over is critical for the NCE as that is when the time is
+          sent to all the Pro cabs. Due to limited adjustments in
+          the NCE fast clock this method causes the clock to run
+          fast for part of the minute and slow for the other part
+          of the minute so the minute roll over is correct.</p>
+
+    <h1>NCE Clock Monitor</h1>
 
       <p>When running in the NCE as clock master mode, the internal
       clock rate is adjusted to match time with the NCE command

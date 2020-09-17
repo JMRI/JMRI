@@ -135,9 +135,6 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
             pass
         if ( jmri.InstanceManager.throttleManagerInstance().requestThrottle(listenToDCCThrottle, self) == False):
             print "Couldn't request a throttle for "+locoAddress
-            
-    def notifyStealThrottleRequired(LocoAddress):
-        pass # Throttle steal decisions are delegated to the Hardware
         
     def notifyDecisionRequired(LocoAddress, decision):
         pass # Throttle steal / share decisions are delegated to the ThrottleManager

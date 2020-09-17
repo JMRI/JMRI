@@ -121,7 +121,6 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
     }
 
     private SprogTrafficController st;
-    private SprogCommandStation commandStation;
 
     private Thread slotThread;
 
@@ -133,10 +132,14 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
      * Configure the programming manager and "command station" objects.
      */
     public void configureCommandStation() {
+        if(classObjectMap.containsKey(CommandStation.class)) {
+            return;
+        }
         log.debug("start command station queuing thread");
-        commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
+        SprogCommandStation commandStation = new jmri.jmrix.sprog.SprogCommandStation(st);
         commandStation.setSystemConnectionMemo(this);
         jmri.InstanceManager.store(commandStation, jmri.CommandStation.class);
+        store(commandStation, jmri.CommandStation.class);
         switch (sprogMode) {
             case OPS:
                 slotThread = jmri.util.ThreadingUtil.newThread(commandStation);
@@ -158,7 +161,7 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
      * @return the command station
      */
     public SprogCommandStation getCommandStation() {
-        return commandStation;
+        return get(CommandStation.class);
     }
 
     @Override
@@ -187,6 +190,8 @@ public class SprogSystemConnectionMemo extends DefaultSystemConnectionMemo imple
      * Configure the common managers for Sprog connections.
      */
     public void configureManagers() {
+
+        configureCommandStation();
 
         if (getProgrammerManager().isAddressedModePossible()) {
             jmri.InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);

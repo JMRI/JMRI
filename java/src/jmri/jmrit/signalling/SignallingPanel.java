@@ -967,10 +967,29 @@ public class SignallingPanel extends JmriPanel {
         sml.setMasts(hashSignalMasts, destMast);
 
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
+        
+        //required to set up transits using Layout Panel
+        this.setAssociatedSection(destMast);
+        
         sml.initialise(destMast);
         if (smlPairAdded) {
             log.debug("New SML");  // NOI18N
             firePropertyChange("newDestination", null, destMastBox.getSelectedItem()); // to show new SML in underlying table  // NOI18N
+        }
+    }
+    
+    void setAssociatedSection(SignalMast destMast){
+        jmri.SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
+        if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty()) {
+            jmri.Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
+            if (sec == null) {
+                //A Section already exists, lets grab it and check that it is one used with the SML, if so carry on using that.
+                sec = sm.getSection(sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName());
+                if (sec.getSectionType() != jmri.Section.SIGNALMASTLOGIC) {
+                    return;
+                }
+            }
+            sml.setAssociatedSection(sec, destMast);
         }
     }
 

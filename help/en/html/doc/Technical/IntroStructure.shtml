@@ -205,7 +205,9 @@
       tests for this which can be
       run via <code>./runtest.csh jmri.ArchitectureCheck</code>
       as part of
-      <a href="JUnit.shtml">developer unit testing</a>.
+      <a href="JUnit.shtml">developer unit testing</a>
+        (there is also a PowerShell script available, see the
+        <a href="JUnit.shtml">developer unit testing</a> page for more information).
       This will highlight many existing structure violations
       in addition to new ones
       because we haven't yet cleaned up some historical issues.

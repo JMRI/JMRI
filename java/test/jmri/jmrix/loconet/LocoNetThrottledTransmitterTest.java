@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -87,6 +88,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testSendOneNowOneLater() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 

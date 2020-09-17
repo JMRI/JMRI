@@ -12,7 +12,7 @@
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20191212">
   <meta name="keywords" content="JMRI help Signal Mast Add Edit Matrix Turnout DCC">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

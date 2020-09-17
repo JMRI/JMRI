@@ -12,7 +12,7 @@
   "text/html; charset=us-ascii">
   <meta name="keywords" content=
   "JMRI help Logix Conditional Add Edit">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
   <style type="text/css">
     table th { text-align: left; }
     table td { text-align: center; }
