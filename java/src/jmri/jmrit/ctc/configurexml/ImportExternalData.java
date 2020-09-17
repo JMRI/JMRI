@@ -70,8 +70,12 @@ public class ImportExternalData {
         doDataLoading();
 
         // Rename data files
-        CTCFiles.renameFile("ProgramProperties.xml",  "OldProgramProperties.xml");
-        CTCFiles.renameFile("CTCSystem.xml",  "OldCTCSystem.xml");
+        if (!CTCFiles.renameFile("ProgramProperties.xml", "OldProgramProperties.xml")) {
+            log.error("Rename failed for ProgramProperties.xml");
+        }
+        if (!CTCFiles.renameFile("CTCSystem.xml", "OldCTCSystem.xml")) {
+            log.error("Rename failed for CTCSystem.xml");
+        }
     }
 
     public static void loadCTCSystemContent() {
@@ -127,16 +131,12 @@ public class ImportExternalData {
                 case "object":
                     break;
                 case "string":
-                    fields.put(fieldName, child.getValue());
-                    break;
                 case "int":
-                    fields.put(fieldName, child.getValue());
-                    break;
                 case "boolean":
                     fields.put(fieldName, child.getValue());
                     break;
                 default:
-                    log.error("++++  unknown type +++++", fieldName, child.getValue());
+                    log.error("++++  unknown type +++++: {}, {}", fieldName, child.getValue());
                     break;
             }
         }

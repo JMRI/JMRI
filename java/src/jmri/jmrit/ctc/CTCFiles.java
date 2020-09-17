@@ -55,8 +55,7 @@ public class CTCFiles {
             log.error("Rename file {} failed: new file {} already exists", oldFileName,  newFileName);
             return false;
         }
-        oldFile.renameTo(newFile);
-        return true;
+        return oldFile.renameTo(newFile);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CTCFiles.class);
