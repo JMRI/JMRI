@@ -4,6 +4,11 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li>Fixed issue unable to initialise adapter</li>
+            </ul>
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
