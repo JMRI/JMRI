@@ -44,6 +44,12 @@
                 <li></li>
             </ul>
 
+        <h4>IPOCSMR</h4>
+            <ul>
+                <li>Initial support added.</li>
+                <li>Turnouts, Lights (on/off) and Sensors</li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -533,5 +539,8 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
         </ul>
 
