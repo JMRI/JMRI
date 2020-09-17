@@ -31,18 +31,18 @@ import org.slf4j.LoggerFactory;
  * java
  *   object - new OtherData
  *     void - "getField"
- *       string - <field name>
+ *       string - field name
  *       void - "set"
  *         object - parent ref
- *         boolean/string/int - <value>
+ *         boolean/string/int - value
  *   object - ArrayList
  *     void - "add"
  *       object - new CodeButtonHandlerData
  *         void - "getField"
- *           string - <field name>
+ *           string - field name
  *           void - "set"
  *             object - parent ref
- *             boolean/string/int - <value>
+ *             boolean/string/int - value
  * etc.
  * </code>
  *
