@@ -129,6 +129,12 @@
             <authorinitials>MJM</authorinitials>
             <revremark>Added PNP8 and 21PNEM8 decoders</revremark>
         </revision>
+        <revision>
+            <revnumber>12</revnumber>
+            <date>2020-09-17</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Fix sound select for PNP8 and 21PNEM8 decoders</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
@@ -840,7 +846,7 @@
                 </enumVal>
                 <label>Airhorn Select</label>
             </variable>
-            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="10" include="310,311,312,313,314" tooltip="Selects which airhorn to use">
+            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="10" include="310,311,312,313,314,323,329" tooltip="Selects which airhorn to use">
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
                 </enumVal>
@@ -855,27 +861,27 @@
                 </enumVal>
                 <label>Auxiliary Airhorn Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="276,280,284,288" default="18" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="276,280,284,288,292,319,325" default="18" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="310,311,312,313,314" default="14" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="310,311,312,313,314,323,329" default="14" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="277,281,285,289" default="36" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="277,281,285,289,293,320,326" default="36" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="278,282,286,290" default="10" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="278,282,286,290,294,321,327" default="10" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="279,283,287,291" default="47" tooltip="Bell sound effect and ring-rate">
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="279,283,287,291,295,322,328" default="47" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288,292" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="276,280,284,288,292,319,325" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 (No Transition)</choice>
@@ -907,7 +913,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="310,311,312,313,314" default="4" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="310,311,312,313,314,323,329" default="4" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>EMD 567 12 Cylinder No Transition</choice>
@@ -936,7 +942,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289,293" default="2" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="277,281,285,289,293,320,326" default="2" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>FDL-12</choice>
@@ -965,7 +971,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290,294" default="0" tooltip="Select one of prime mover sound effects">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="278,282,286,290,294,321,327" default="0" tooltip="Select one of prime mover sound effects">
                 <enumVal>
                     <enumChoice>
                         <choice>ALCO 539 Turbo</choice>
@@ -997,7 +1003,7 @@
                 </enumVal>
                 <label>Prime Mover Select</label>
             </variable>
-            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="279,283,287,291,295" default="0">
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="279,283,287,291,295,322,328" default="0">
                 <enumVal>
                     <enumChoice>
                         <choice>Baldwin VO</choice>
@@ -1042,15 +1048,15 @@
                         GTEL and GenSet only after Sept 2017 (SW version 1.2)&lt;br&gt;
                         &lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288,310,311,312,313,314" default="3" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288,292,310,311,312,313,314,319,323,325,329" default="3" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="277,281,285,289" default="1" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="277,281,285,289,293,320,326" default="1" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="278,282,286,34,280,283,287,291" default="0" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="278,279,282,283,286,287,290,291,294,295,321,322,327,328" default="0" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>
@@ -1100,7 +1106,7 @@
                 <label>Alarm Bell Volume</label>
             </variable>
             <!-- Only when Gas Turbine selected in models for Baldwin and Other Diesel Prototypes -->
-            <variable CV="136" mask="VVVVVVVV" item="Sound Setting 36" default="200" include="279,283,287,291,295">
+            <variable CV="136" mask="VVVVVVVV" item="Sound Setting 36" default="200" include="279,283,287,291,295,322,328">
                 <qualifier>
                   <variableref>Prime Mover Select</variableref>
                   <relation>ge</relation>
@@ -1119,7 +1125,7 @@
                         &lt;/html&gt;</tooltip>
             </variable>
             <!-- Only when Cummins QSK19C x3 GenSet selected in models for Baldwin and Other Diesel Prototypes -->
-            <variable CV="141" mask="VVVVVVVV" item="Sound Setting 37" default="185" include="279,283,287,291,295">
+            <variable CV="141" mask="VVVVVVVV" item="Sound Setting 37" default="185" include="279,283,287,291,295,322,328">
                 <qualifier>
                   <variableref>Prime Mover Select</variableref>
                   <relation>eq</relation>
@@ -1132,7 +1138,7 @@
                         Sets the volume of the 2nd Prime Mover
                         &lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="142" mask="VVVVVVVV" item="Sound Setting 38" default="220" include="279,283,287,291,295">
+            <variable CV="142" mask="VVVVVVVV" item="Sound Setting 38" default="220" include="279,283,287,291,295,322,328">
                 <qualifier>
                   <variableref>Prime Mover Select</variableref>
                   <relation>eq</relation>
