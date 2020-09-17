@@ -43,26 +43,47 @@ public class CTCFiles {
         return new File(getFileLocation(), fileName).getAbsolutePath();
     }
 
+    public static boolean fileExists(String fileName) {
+        File file = getFile(fileName);
+        return (file == null ? false : file.exists());
+    }
+
+    public static boolean renameFile(String oldFileName, String newFileName) {
+        File oldFile = getFile(oldFileName);
+        File newFile = getFile(newFileName);
+        if (newFile.exists()) {
+            log.error("Rename file {} failed: new file {} already exists", oldFileName,  newFileName);
+            return false;
+        }
+        oldFile.renameTo(newFile);
+        return true;
+    }
+//             CTCFiles.rotate(filename, false);
+//             File outputFile = new File(filename);
+//
+//             outputFile.delete();    // Delete existing old file.
+//             (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
+
     /**
      * Rotate a file with 4 versions.  The file name extension is .bup.
      * @param fileName The file name.
      * @param isPortableFileName Indicates whether the name is just the file or full path name.
      */
-    public static void rotate(String fileName, boolean isPortableFileName) {
-        File file;
-        if (isPortableFileName) {
-            file = getFile(fileName);
-        } else {
-            file = new File(fileName);
-        }
-        if (file.exists()) {
-            try {
-                FileUtil.rotate(file, 4, "bup");  // NOI18N
-            } catch (IOException ex) {
-                log.warn("Rotate failed for file {}", fileName);  // NOI18N
-            }
-        }
-    }
+//     public static void rotate(String fileName, boolean isPortableFileName) {
+//         File file;
+//         if (isPortableFileName) {
+//             file = getFile(fileName);
+//         } else {
+//             file = new File(fileName);
+//         }
+//         if (file.exists()) {
+//             try {
+//                 FileUtil.rotate(file, 4, "bup");  // NOI18N
+//             } catch (IOException ex) {
+//                 log.warn("Rotate failed for file {}", fileName);  // NOI18N
+//             }
+//         }
+//     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CTCFiles.class);
 }

@@ -67,6 +67,12 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public CTCSerialData newCTCSerialData() {
         ctcSerialData = new CTCSerialData();
+
+        nbhSensors.clear();
+        nbhSignals.clear();
+        nbhTurnouts.clear();
+        blocks.clear();
+
         return ctcSerialData;
     }
 

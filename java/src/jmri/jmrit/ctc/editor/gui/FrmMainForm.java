@@ -16,6 +16,8 @@ https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#dynamic
 */
 package jmri.jmrit.ctc.editor.gui;
 
+import jmri.jmrit.ctc.CTCFiles;
+import jmri.jmrit.ctc.configurexml.ImportExternalData;
 import jmri.jmrit.ctc.editor.code.Columns;
 import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
@@ -28,6 +30,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -70,6 +73,7 @@ public class FrmMainForm extends JFrame {
         _mAwtWindowProperties = new AwtWindowProperties(this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
         _mCheckJMRIObject = new CheckJMRIObject();
         setupEditor();
+        _mImport.setEnabled(CTCFiles.fileExists("CTCSystem.xml"));   // Disable import if there is no file
 //  Before we "start up the editor", let's warn the user about using "," and ";" if they haven't seen it before:
         if (!_mProgramProperties._mNoMoreReservedCharactersWarning) {
             Object[] options = { Bundle.getMessage("CTCNamesMessageOK"), Bundle.getMessage("CTCNamesMessageDontShowThisAgain") }; // NOI18N
@@ -957,6 +961,11 @@ public class FrmMainForm extends JFrame {
                 "The import process is under construction",
                 "Import Pending",
                 JOptionPane.OK_OPTION);
+        CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
+        _mProgramProperties = ctcManager.newProgramProperties();
+        _mCTCSerialData = ctcManager.newCTCSerialData();
+        ImportExternalData.loadExternalData();
+        setupEditor();
     }//GEN-LAST:event__mImportActionPerformed
 
     private void _mFleetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFleetingActionPerformed
