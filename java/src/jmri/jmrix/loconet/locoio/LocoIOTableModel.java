@@ -60,7 +60,7 @@ public class LocoIOTableModel
     public static final int WRITECOLUMN = 8;   // "write" button
     public static final int HIGHESTCOLUMN = WRITECOLUMN + 1;
 
-    private String[] msg = new String[_numRows];
+    private final String[] msg = new String[_numRows];
 
     /**
      * Reference to the JTextField which should receive status info.
@@ -90,7 +90,7 @@ public class LocoIOTableModel
         // String s = "LocoIOTableModel: " + evt.getPropertyName() + " := " + evt.getNewValue() + " from " + evt.getSource();
         if (evt.getPropertyName().equals("PortChange")) { // NOI18N
             Integer i = (Integer) evt.getNewValue();
-            int v = i.intValue();
+            int v = i;
             // log.debug("{} ROW = {}", i, v);
             fireTableRowsUpdated(v, v);
         }
@@ -258,10 +258,10 @@ public class LocoIOTableModel
         } else if (col == ADDRCOLUMN) {
             int a;
             if (((String) (value)).startsWith("0x")) {
-                a = Integer.valueOf(((String) value).substring(2), 16).intValue();
+                a = Integer.valueOf(((String) value).substring(2), 16);
             } else {
                 try {
-                    a = Integer.valueOf((String) value, 10).intValue();
+                    a = Integer.valueOf((String) value, 10);
                 } catch (NumberFormatException ne) {
                     log.warn("Enter a hex or decimal number for the Port Address first");
                     return;
