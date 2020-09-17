@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.Meter;
-import jmri.MeterGroup;
+import jmri.*;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -18,27 +17,34 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTestBase {
+public class CbusPredefinedMetersTest {
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusPredefinedMeters mm;
 
     @BeforeEach
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         
+        // This test requires a registred connection config since ProxyMeterManager
+        // auto creates system meter managers using the connection configs.
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter();
+        pa.setSystemPrefix("M");
+        jmri.jmrix.ConnectionConfig cc = new jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig(pa);
+        InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(cc);
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        mm = new CbusMeterGroup(memo);
+        mm = new CbusPredefinedMeters(memo);
     }
     
     @AfterEach
-    @Override
     public void tearDown() {
         mm = null;
         tcis.terminateThreads();
@@ -49,38 +55,48 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
     }
     
     public double getCurrent() {
-        return mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getKnownAnalogValue();
+        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter").getKnownAnalogValue();
     }
     
     public double getVoltage() {
-        return mm.getMeterByName(MeterGroup.VoltageMeter).getMeter().getKnownAnalogValue();
+        return InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSVoltageMeter").getKnownAnalogValue();
     }
 
+    private void enable() {
+        mm.updateTask.enable(mm.currentMeter);
+        mm.updateTask.enable(mm.voltageMeter);
+    }
+    
+    private void disable() {
+        mm.updateTask.disable(mm.currentMeter);
+        mm.updateTask.disable(mm.voltageMeter);
+    }
+    
     @Test
     public void testEnableDisable(){
         
         Assert.assertEquals("no listener to start",0,tcis.numListeners());
         
-        mm.enable();
+        enable();
         Assert.assertEquals("listening",1,tcis.numListeners());
-        mm.disable();
+        disable();
         Assert.assertEquals("not listening",0,tcis.numListeners());
         
         CbusNodeTableDataModel nodeModel = new CbusNodeTableDataModel(memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         jmri.InstanceManager.setDefault(CbusNodeTableDataModel.class,nodeModel );
         Assert.assertEquals("node table listening",1,tcis.numListeners());
-        mm.enable();
+        enable();
         Assert.assertEquals("mm listening",2,tcis.numListeners());
-        mm.disable();
+        disable();
         Assert.assertEquals("mm not listening",1,tcis.numListeners());
         
         CbusNode testCs = nodeModel.provideNodeByNodeNum(777);
         testCs.setCsNum(0);
         Assert.assertEquals("node + node table listening",2,tcis.numListeners());
         
-        mm.enable();
+        enable();
         Assert.assertEquals("multimeter listening",3,tcis.numListeners());
-        mm.disable();
+        disable();
         Assert.assertEquals("mm not listening",2,tcis.numListeners());
         
         nodeModel.dispose();
@@ -97,7 +113,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
         testCs.setCsNum(0);
         
-        mm.enable();
+        enable();
         
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(7);
@@ -108,22 +124,22 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(4, 0x01); // en 1
         r.setElement(5, 0x00); // 8mA
         r.setElement(6, 0x08); // 8mA
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         
         Assert.assertEquals(0,getCurrent(),0.001 ); // wrong opc
         
         r.setElement(0, CbusConstants.CBUS_ACON2);
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         
         Assert.assertEquals(0,getCurrent(),0.001 ); // wrong node
         
         r.setElement(2, 0x31); // nn 54321
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(8,getCurrent(),0.001 );
         
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(4807,getCurrent(),0.001 );
         
         CanMessage m = new CanMessage(tcis.getCanid());
@@ -136,7 +152,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         m.setElement(5, 0x00); // 0mA
         m.setElement(6, 0x00); // 0mA
         
-        ((CbusMeterGroup)mm).message(m);
+        ((CbusPredefinedMeters)mm).message(m);
         Assert.assertEquals(4807,getCurrent(),0.001 ); // CanMessage Ignored
         
         r = new CanReply(tcis.getCanid());
@@ -149,7 +165,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(5, 0x00); // 0mA
         r.setElement(6, 0x00); // 0mA
         
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         // wrong event num
@@ -163,25 +179,25 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(5, 0x12); // 4807mA
         r.setElement(6, 0xc7); // 4807mA
         
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals("Wrong event",0,getCurrent(),0.001 );
         r.setElement(4, 0x01); // en1
         r.setRtr(true);
         
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(true);
         r.setRtr(false);
         
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
         r.setExtended(false);
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(4807,getCurrent(),0.001 );
         
-        mm.disable();
+        disable();
         
         nodeModel.dispose();
         testCs.dispose();
@@ -197,7 +213,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         CbusNode testCs = nodeModel.provideNodeByNodeNum(54321);
         testCs.setCsNum(0);
         
-        mm.enable();
+        enable();
         
         CanReply r = new CanReply(tcis.getCanid());
         r.setNumDataElements(7);
@@ -209,7 +225,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(5, 0x00); // 12.9V
         r.setElement(6, 0x81); // 12.9V
         System.out.format("testMultiMVoltCanReply: reply(12.9) volt%n");
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(12.9,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
@@ -221,7 +237,7 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(4, 0x02); // en 2
         r.setElement(5, 0x01); // 25.6V
         r.setElement(6, 0x00); // 25.6V
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(25.6,getVoltage(),0.001 );
         
         r = new CanReply(tcis.getCanid());
@@ -233,10 +249,10 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
         r.setElement(4, 0x01); // en2
         r.setElement(5, 0x00); // 0V
         r.setElement(6, 0x00); // 0V
-        ((CbusMeterGroup)mm).reply(r);
+        ((CbusPredefinedMeters)mm).reply(r);
         Assert.assertEquals(0,getCurrent(),0.001 );
         
-        mm.disable();
+        disable();
         
         nodeModel.dispose();
         testCs.dispose();
@@ -245,10 +261,9 @@ public class CbusMeterGroupTest extends jmri.implementation.AbstractMeterGroupTe
     
     @Test
     public void testSmallFuncs(){
-        ((CbusMeterGroup)mm).requestUpdateFromLayout();
-        Assert.assertEquals("ma units", mm.getMeterByName(MeterGroup.CurrentMeter).getMeter().getUnit(), Meter.Unit.Milli);
+        Assert.assertEquals("ma units", InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter").getUnit(), Meter.Unit.Milli);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusMeterGroupTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusPredefinedMetersTest.class);
 
 }

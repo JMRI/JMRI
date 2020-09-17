@@ -9,7 +9,6 @@ import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.managers.Bundle;
 
 /**
  * Implementation of a MeterManager that can serve as a proxy for multiple
@@ -128,6 +127,6 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyMeterManager.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyMeterManager.class);
 
 }

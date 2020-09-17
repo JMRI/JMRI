@@ -676,7 +676,6 @@ public final class InstanceManager {
             ((ProxyManager<Meter>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: MeterManager default isn't an AbstractProxyManager<Meter>");
-            log.error("MeterManager: {}", apm.getClass().getName());
         }
     }
 

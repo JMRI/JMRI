@@ -6,7 +6,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Meter;
 import jmri.MeterManager;
-import jmri.MeterGroup;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
 import jmri.util.JUnitUtil;
@@ -27,10 +26,9 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+            jmri.InstanceManager.getDefault(jmri.MeterManager.class)
                     .getNamedBeanSet().first()
-                    .getMeterByName(MeterGroup.VoltageMeter)
-                    .getMeter().setCommandedAnalogValue(2.1f);
+                    .setCommandedAnalogValue(2.1f);
         });
     }
 
@@ -39,10 +37,9 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+            jmri.InstanceManager.getDefault(jmri.MeterManager.class)
                     .getNamedBeanSet().first()
-                    .getMeterByName(MeterGroup.VoltageMeter)
-                    .getMeter().setCommandedAnalogValue(32.1f);
+                    .setCommandedAnalogValue(32.1f);
         });
     }
 
@@ -51,10 +48,9 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+            jmri.InstanceManager.getDefault(jmri.MeterManager.class)
                     .getNamedBeanSet().first()
-                    .getMeterByName(MeterGroup.VoltageMeter)
-                    .getMeter().setCommandedAnalogValue(432.1f);
+                    .setCommandedAnalogValue(432.1f);
         });
     }
 
@@ -63,10 +59,9 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         runOnLayout(() -> {
             frame.initComponents();
-            jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class)
+            jmri.InstanceManager.getDefault(jmri.MeterManager.class)
                     .getNamedBeanSet().first()
-                    .getMeterByName(MeterGroup.VoltageMeter)
-                    .getMeter().setCommandedAnalogValue(5432.1f);
+                    .setCommandedAnalogValue(5432.1f);
         });
     }
 
@@ -75,7 +70,16 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.InstanceManager.getDefault(jmri.MeterGroupManager.class).register(new TestMeter());
+        
+        Meter voltageMeter = new DefaultMeter.DefaultVoltageMeter("IVVoltageMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
+            @Override
+            public void requestUpdateFromLayout() {
+                // Do nothing
+            }
+        });
+        
+        InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
+        
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new MeterFrame();
         }
@@ -95,25 +99,6 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private class TestMeter extends jmri.implementation.DefaultMeterGroup {
-
-        public TestMeter() {
-            super("IVTestMeter");
-            
-            Meter voltageMeter = new DefaultMeter.DefaultVoltageMeter("IVVoltageMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
-                @Override
-                public void requestUpdateFromLayout() {
-                    // Do nothing
-                }
-            });
-            
-            addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
-            
-            InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
-        }
-        
     }
 
     private interface RunnableWithException {

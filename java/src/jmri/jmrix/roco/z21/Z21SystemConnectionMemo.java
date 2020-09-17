@@ -195,8 +195,8 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if ( xpm instanceof Z21XNetProgrammerManager) {
             ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
         }
-        // setup the MeterGroup
-        createMeterGroup();
+        // setup the PredefinedMeters
+        createPredefinedMeters();
 
         // setup the HeartBeat
         getHeartBeat();
@@ -243,24 +243,23 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         store(c,RocoZ21CommandStation.class);
     }
 
-    protected Z21MeterGroup meterGroup;
+    protected Z21PredefinedMeters predefinedMeters;
     
     /**
      * Provide access to the Roco Z21 MultiMeter for this particular
      * connection.
      * <p>
-     * NOTE: MeterGroup defaults to NULL
-     * @return MeterGroup, creates new if null.
+     * NOTE: PredefinedMeters defaults to NULL
+     * @return PredefinedMeters, creates new if null.
      */
-    public MeterGroup createMeterGroup() {
+    public Z21PredefinedMeters createPredefinedMeters() {
         if (getDisabled()) {
             return null;
         }
-        if (meterGroup == null) {
-            meterGroup = new Z21MeterGroup(this);
-            InstanceManager.store(meterGroup, jmri.MeterGroup.class );
+        if (predefinedMeters == null) {
+            predefinedMeters = new Z21PredefinedMeters(this);
         }
-        return meterGroup;
+        return predefinedMeters;
     }
 
     /**
@@ -292,6 +291,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         }
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
+        }
         super.dispose();
     }
 

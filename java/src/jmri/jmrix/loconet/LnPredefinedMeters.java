@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Provide access to current meter from the Digitrax Evolution Base Station
  *
  */
-public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implements LocoNetListener {
+public class LnPredefinedMeters implements LocoNetListener {
 
     private SlotManager sm = null;
     private LnTrafficController tc = null;
@@ -20,12 +20,11 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
     private final Meter voltageMeter;
 
     /**
-     * Create a MeterGroup object
+     * Create a LnPredefinedMeters object
      *
      * @param scm  connection memo
      */
-    public LnMeterGroup(LocoNetSystemConnectionMemo scm) {
-        super(scm.getSystemPrefix() + "V" + "CommandStation");
+    public LnPredefinedMeters(LocoNetSystemConnectionMemo scm) {
         
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
@@ -47,9 +46,6 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
-        
-        addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
-        addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
         
         tc.addLocoNetListener(~0, this);
         
@@ -91,12 +87,20 @@ public class LnMeterGroup extends jmri.implementation.DefaultMeterGroup implemen
         voltageMeter.setCommandedAnalogValue(value);
     }
 
-    @Override
+    public void dispose() {
+        updateTask.disable(currentMeter);
+        updateTask.disable(voltageMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(voltageMeter);
+        updateTask.dispose(currentMeter);
+        updateTask.dispose(voltageMeter);
+    }
+
     public void requestUpdateFromLayout() {
         sm.sendReadSlot(249);
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(LnMeterGroup.class);
+    private final static Logger log = LoggerFactory.getLogger(LnPredefinedMeters.class);
 
 }

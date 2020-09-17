@@ -219,7 +219,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         register();
 
         // This must be done after the memo is registered
-        getMeterGroup();
+        getPredefinedMeters();
     }
 
     public LnPowerManager getPowerManager() {
@@ -287,9 +287,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
-    protected LnMeterGroup meterGroup;
+    protected LnPredefinedMeters predefinedMeters;
 
-    public LnMeterGroup getMeterGroup() {
+    public LnPredefinedMeters getPredefinedMeters() {
         if (getDisabled()) {
             return null;
         }
@@ -304,11 +304,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
                 // The command station does not support these meters
                 return null;
         }
-        if (meterGroup == null) {
-            meterGroup = new LnMeterGroup(this);
-            InstanceManager.getDefault(MeterGroupManager.class).register(meterGroup);
+        if (predefinedMeters == null) {
+            predefinedMeters = new LnPredefinedMeters(this);
         }
-        return meterGroup;
+        return predefinedMeters;
     }
 
     @Override
@@ -368,6 +367,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
+        }
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
         }
         super.dispose();
     }

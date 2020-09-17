@@ -144,16 +144,6 @@ public class MeterFrame extends JmriJFrame {
             currentMetersMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m)));
         }
         
-        JMenu meterGroupsMenu = new JMenu(Bundle.getMessage("MenuMeterGroups"));
-        menuBar.add(meterGroupsMenu);
-        for (MeterGroup mg : InstanceManager.getDefault(MeterGroupManager.class).getNamedBeanSet()) {
-            JMenu meterMenu = new JMenu(mg.getDisplayName());
-            meterGroupsMenu.add(meterMenu);
-            for (MeterGroup.MeterInfo mi : mg.getMeters()) {
-                meterMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(mi.getMeter().getDisplayName(), mi.getMeter())));
-            }
-        }
-        
         setJMenuBar(menuBar);
 
         //Load the images (these are now the larger version of the original gifs

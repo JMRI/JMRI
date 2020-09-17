@@ -615,8 +615,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int IDTAGS = SIGNALMASTLOGICS + 10;
     public static final int ANALOGIOS = IDTAGS + 10;
     public static final int METERS = ANALOGIOS + 10;
-    public static final int METERGROUPS = METERS + 10;
-    public static final int STRINGIOS = METERGROUPS + 10;
+    public static final int STRINGIOS = METERS + 10;
     public static final int LOGIXS = STRINGIOS + 10;
     public static final int CONDITIONALS = LOGIXS + 10;
     public static final int AUDIO = LOGIXS + 10;

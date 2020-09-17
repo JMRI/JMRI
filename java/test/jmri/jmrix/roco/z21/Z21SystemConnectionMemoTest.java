@@ -46,16 +46,20 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     }
 
     @Test
-    public void testGetMultiMeter() {
-        Assert.assertNotNull("Get MeterGroup",
-                InstanceManager.getDefault(jmri.MeterGroupManager.class)
-                        .getBySystemName("ZVCommandStation"));
+    public void testGetMeters() {
+        Assert.assertNotNull("Get current meter",
+                InstanceManager.getDefault(jmri.MeterManager.class)
+                        .getBySystemName("ZVCommandStationCurrent"));
+        Assert.assertNotNull("Get voltage meter",
+                InstanceManager.getDefault(jmri.MeterManager.class)
+                        .getBySystemName("ZVCommandStationVoltage"));
     }
 
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
         scm = new Z21SystemConnectionMemo();
         scm.setTrafficController(new Z21InterfaceScaffold());
         scm.setRocoZ21CommandStation(new RocoZ21CommandStation());

@@ -10,7 +10,7 @@ import jmri.implementation.MeterUpdateTask;
  * @author Mark Underwood (C) 2015
  * @author Paul Bender (C) 2017
  */
-public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
+public class Z21PredefinedMeters {
 
     private Z21TrafficController tc;
     private Z21SystemConnectionMemo _memo;
@@ -19,8 +19,7 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
     private final Meter voltageMeter;
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
-    public Z21MeterGroup(Z21SystemConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "V" + "CommandStation");
+    public Z21PredefinedMeters(Z21SystemConnectionMemo memo) {
         
         _memo = memo;
         tc = _memo.getTrafficController();
@@ -38,17 +37,21 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
         
-        addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
-        addMeter(MeterGroup.VoltageMeter, MeterGroup.VoltageMeterDescr, voltageMeter);
-        
-        InstanceManager.getDefault(MeterGroupManager.class).register(this);
-        
         log.debug("Z21MultiMeter constructor called");
 
     }
 
     public void setZ21TrafficController(Z21TrafficController controller) {
         tc = controller;
+    }
+
+    public void dispose() {
+        updateTask.disable(currentMeter);
+        updateTask.disable(voltageMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(voltageMeter);
+        updateTask.dispose(currentMeter);
+        updateTask.dispose(voltageMeter);
     }
 
 
@@ -110,6 +113,6 @@ public class Z21MeterGroup extends jmri.implementation.DefaultMeterGroup {
         }
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21MeterGroup.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21PredefinedMeters.class);
 
 }

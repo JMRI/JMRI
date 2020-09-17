@@ -12,21 +12,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood (C) 2015
  */
-public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup implements DCCppListener {
+public class DCCppPredefinedMeters implements DCCppListener {
 
     private DCCppTrafficController tc = null;
     private final MeterUpdateTask updateTask;
     private final Meter currentMeter;
 
-    public DCCppMeterGroup(DCCppSystemConnectionMemo memo) {
-        super(memo.getSystemPrefix() + "V" + "BaseStation");
+    public DCCppPredefinedMeters(DCCppSystemConnectionMemo memo) {
         
         tc = memo.getDCCppTrafficController();
 
         updateTask = new MeterUpdateTask() {
             @Override
             public void requestUpdateFromLayout() {
-                tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppMeterGroup.this);
+                tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
             }
         };
         
@@ -36,8 +35,6 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
         
         InstanceManager.getDefault(MeterManager.class).register(currentMeter);
         
-        addMeter(MeterGroup.CurrentMeter, MeterGroup.CurrentMeterDescr, currentMeter);
-
         // TODO: For now this is OK since the traffic controller
         // ignores filters and sends out all updates, but
         // at some point this will have to be customized.
@@ -69,18 +66,19 @@ public class DCCppMeterGroup extends jmri.implementation.DefaultMeterGroup imple
     public void message(DCCppMessage m) {
         // Do nothing
     }
-
-    @Override
-    public void requestUpdateFromLayout() {
-        updateTask.requestUpdateFromLayout();
+    
+    public void dispose() {
+        updateTask.disable(currentMeter);
+        InstanceManager.getDefault(MeterManager.class).deregister(currentMeter);
+        updateTask.dispose(currentMeter);
     }
-
+    
     // Handle a timeout notification
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         log.debug("Notified of timeout on message {}, {} retries available.", msg.toString(), msg.getRetries());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppMeterGroup.class);
+    private final static Logger log = LoggerFactory.getLogger(DCCppPredefinedMeters.class);
 
 }

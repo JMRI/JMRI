@@ -46,7 +46,7 @@ public class AbstractMeterManager extends AbstractManager<Meter>
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameMeterGroups" : "BeanNameMeterGroup");
+        return Bundle.getMessage(plural ? "BeanNameMeters" : "BeanNameMeter");
     }
 
     /**

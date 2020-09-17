@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import jmri.InstanceManager;
 import jmri.MeterManager;
-import jmri.MeterGroupManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -87,7 +86,6 @@ public class CbusConfigurationManagerTest {
     @Test
     public void testGetMeters() {
         t.configureManagers();
-        Assert.assertNotNull( InstanceManager.getDefault(MeterGroupManager.class).getBySystemName("MVCBUSMeterGroup") );
         Assert.assertNotNull( InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSCurrentMeter") );
         Assert.assertNotNull( InstanceManager.getDefault(MeterManager.class).getBySystemName("MVCBUSVoltageMeter") );
     }
@@ -138,6 +136,15 @@ public class CbusConfigurationManagerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        
+        // This test requires a registred connection config since ProxyMeterManager
+        // auto creates system meter managers using the connection configs.
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        jmri.jmrix.NetworkPortAdapter pa = new jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter();
+        pa.setSystemPrefix("M");
+        jmri.jmrix.ConnectionConfig cc = new jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig(pa);
+        InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(cc);
+        
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
