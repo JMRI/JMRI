@@ -86,6 +86,7 @@ public class ConditionalEditBase {
     ConditionalManager _conditionalManager = null;
     LogixManager _logixManager = null;
     Logix _curLogix = null;
+    JmriJFrame _editLogixFrame = null;
 
     int _numConditionals = 0;
     boolean _inEditMode = false;
@@ -93,8 +94,6 @@ public class ConditionalEditBase {
     boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
-
-    NamedBeanComboBox<?> _comboNameBox = null;
 
     /**
      * Input selection names.
@@ -1530,6 +1529,15 @@ public class ConditionalEditBase {
                 Bundle.getMessage("Error30", svName),
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void bringToFront() {
+        _editLogixFrame.toFront();
+    }
+
+    public void locateAt(Component c) {
+        _editLogixFrame.setLocationRelativeTo(c);
+        _editLogixFrame.toFront();
     }
 
     protected String getClassName() {

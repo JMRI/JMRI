@@ -30,6 +30,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
@@ -67,9 +68,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     public ConditionalTreeEdit() {
     }
 
-    JmriJFrame _editLogixFrame = null;
     JPanel _curDetailPanel = new JPanel();
     JTextField _editLogixUserName = new JTextField(20);   // Logix User Name field
+    NamedBeanComboBox<?> _comboNameBox = null;
+
 
     // ------------ Edit detail components ------------
     JPanel _detailGrid = new JPanel();
@@ -1508,10 +1510,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         logixData.clear();
         logixData.put("Finish", _curLogix.getSystemName());  // NOI18N
         fireLogixEvent();
-    }
-
-    public void bringToFront() {
-        _editLogixFrame.toFront();
     }
 
     // ============  Tree Content and Navigation ============
@@ -3754,6 +3752,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelActionSignal"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalSetHint"));  // NOI18N
                     loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
+                    _actionBox.setSelectedItem(_curAction.getActionDataString());
                 } else if (actionType != Conditional.Action.NONE) {
                     signalHeadGrid = "NameTypeActionFinal";  // NOI18N
                 }
@@ -3776,6 +3775,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelSignalAspect"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalMastSetHint"));  // NOI18N
                     loadJComboBoxWithMastAspects(_actionBox, _actionNameField.getText().trim());
+                    _actionBox.setSelectedItem(_curAction.getActionDataString());
                 } else if (actionType != Conditional.Action.NONE) {
                     signalMastGrid = "NameTypeActionFinal";  // NOI18N
                 }
