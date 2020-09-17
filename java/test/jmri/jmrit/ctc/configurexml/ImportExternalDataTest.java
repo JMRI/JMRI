@@ -8,7 +8,6 @@ import java.nio.file.StandardCopyOption;
 
 import jmri.InstanceManager;
 import jmri.jmrit.ctc.CTCFiles;
-import jmri.jmrit.ctc.configurexml.ImportExternalData;
 import jmri.profile.NullProfile;
 import jmri.util.JUnitUtil;
 
@@ -24,7 +23,7 @@ import org.junit.jupiter.api.io.TempDir;
 public class ImportExternalDataTest {
 
     @Test
-    public void testExternalDataImport() throws Exception {
+    public void testExternalDataImport() throws Exception    {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Load the test panel and initialize Logix and advanced block routing
