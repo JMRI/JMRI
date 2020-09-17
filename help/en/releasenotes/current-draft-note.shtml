@@ -438,7 +438,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
+                end JMRI and then request that the underlying OS shutdown or restart itself</li>
         </ul>
 
     <h3>Signals</h3>
