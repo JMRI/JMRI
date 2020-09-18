@@ -4,9 +4,6 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
-import jmri.implementation.MeterUpdateTask;
-import jmri.implementation.DefaultMeter.DefaultVoltageMeter;
-import jmri.implementation.DefaultMeter.DefaultCurrentMeter;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.util.NamedBeanComparator;
@@ -257,6 +254,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
             return null;
         }
         if (predefinedMeters == null) {
+            InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(this));
             predefinedMeters = new Z21PredefinedMeters(this);
         }
         return predefinedMeters;

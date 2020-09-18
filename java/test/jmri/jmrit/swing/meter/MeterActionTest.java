@@ -16,9 +16,8 @@ public class MeterActionTest {
     public void testCTor() {
         MeterAction t = new MeterAction();
         Assert.assertNotNull("exists",t);
-        // there is no Meter registered, make sure the action is
-        // disabled.
-        Assert.assertFalse(t.isEnabled());
+        // Meters may be created while the program is running.
+        Assert.assertTrue(t.isEnabled());
     }
 
     @BeforeEach
