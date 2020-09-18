@@ -77,6 +77,6 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         super.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadAndStoreTest.class);
 
 }
