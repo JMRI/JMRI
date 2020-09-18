@@ -251,6 +251,7 @@ public class MeterFrame extends JmriJFrame {
         voltIcon.scale(scale,this);
         milliAmpIcon.scale(scale,this);
         ampIcon.scale(scale, this);
+        percentIcon.scale(scale, this);
 
         meterPane.revalidate();
         this.getContentPane().revalidate();

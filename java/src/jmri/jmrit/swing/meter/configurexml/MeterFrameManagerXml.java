@@ -45,6 +45,11 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         e2.addContent(frame.getMeter().getSystemName());    // This should be a NamedBeanHandle
         e.addContent(e2);
         
+        e.setAttribute("x", Integer.toString(frame.getX()));
+        e.setAttribute("y", Integer.toString(frame.getY()));
+        e.setAttribute("width", Integer.toString(frame.getWidth()));
+        e.setAttribute("height", Integer.toString(frame.getHeight()));
+        
         return e;
     }
     
@@ -76,12 +81,16 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             if (frame == null) {
                 frame = new MeterFrame(uuid);
                 frame.initComponents();
-                if (meter != null) frame.setMeter(meter);
                 log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, frame.getMeter().getSystemName(), meterSystemName);
-                frame.setVisible(true);
-            } else {
-                if (meter != null) frame.setMeter(meter);
             }
+            if (meter != null) frame.setMeter(meter);
+            frame.setLocation(
+                    Integer.parseInt(elem.getAttributeValue("x")),
+                    Integer.parseInt(elem.getAttributeValue("y")));
+            frame.setSize(
+                    Integer.parseInt(elem.getAttributeValue("width")),
+                    Integer.parseInt(elem.getAttributeValue("height")));
+            frame.setVisible(true);
         }
         
         return true;
