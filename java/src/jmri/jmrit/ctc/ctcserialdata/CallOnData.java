@@ -25,20 +25,6 @@ public class CallOnData {
     public CallOnData() {
     }
 
-    public CallOnData( NBHSignal externalSignal,
-                        String signalFacingDirection,
-                        String signalAspectToDisplay,
-                        NBHSensor calledOnExternalSensor,
-                        NamedBeanHandle<Block> externalBlock,
-                        ArrayList<NBHSensor> switchIndicators) {
-        _mExternalSignal = externalSignal;
-        _mSignalFacingDirection = signalFacingDirection;
-        _mSignalAspectToDisplay = signalAspectToDisplay;
-        _mCalledOnExternalSensor = calledOnExternalSensor;
-        _mExternalBlock = externalBlock;
-        _mSwitchIndicators = switchIndicators;
-    }
-
     @Override
     public String toString() {
         String formattedString = String.format("%s,%s,%s,%s,%s",

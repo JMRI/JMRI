@@ -1,6 +1,3 @@
-/*_mResultSoFar getCaretPosition
-http://www.coderslexicon.com/tracking-the-caret-in-a-jtextarea-with-java/
-*/
 package jmri.jmrit.ctc.editor.gui;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

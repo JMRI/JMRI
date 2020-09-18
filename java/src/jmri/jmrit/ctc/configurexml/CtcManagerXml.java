@@ -699,19 +699,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return sensorList;
     }
 
-//     public static ArrayList<String> getArrayListOfSelectableSwitchDirectionIndicators(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
-//         ArrayList<String> returnValue = new ArrayList<>();
-//         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
-//             if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName().isEmpty()) {
-//                 returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName());
-//             }
-//             if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName().isEmpty()) {
-//                 returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName());
-//             }
-//         }
-//         return returnValue;
-//     }
-
     void convertCallOnSensorNamesToNBHSensors(CtcManager cm) {
         for (CodeButtonHandlerData cbhd : cm.getCTCSerialData().getCodeButtonHandlerDataArrayList()) {
             for (CallOnData cod : cbhd._mCO_GroupingsList) {

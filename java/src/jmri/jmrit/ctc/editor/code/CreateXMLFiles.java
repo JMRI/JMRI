@@ -15,13 +15,6 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  */
 public class CreateXMLFiles {
 
-    public CreateXMLFiles(OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-    }
-
-    public void createTextFiles(String directoryToCreateThemIn) {
-        CreateGUIObjectsXMLFile.writeGUIObjects();
-    }
-
     public static void generateProlog(PrintWriter printWriter) {
         printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");  // NOI18N
         printWriter.println("<?xml-stylesheet href=\"/xml/XSLT/panelfile-2-9-6.xsl\" type=\"text/xsl\"?>"); // NOI18N

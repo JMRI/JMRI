@@ -3,19 +3,6 @@
 
 package jmri.jmrit.ctc.ctcserialdata;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -27,7 +14,7 @@ import jmri.jmrit.ctc.*;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class CodeButtonHandlerData implements Serializable, Comparable<CodeButtonHandlerData> {
+public class CodeButtonHandlerData {
     public static final int SWITCH_NOT_SLAVED = -1;
 
     public enum LOCK_IMPLEMENTATION {
@@ -62,19 +49,6 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         RIGHT;
     }
 
-    @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
-    @Override
-    public int compareTo(CodeButtonHandlerData codeButtonHandlerData) {
-        return this._mGUIColumnNumber - codeButtonHandlerData._mGUIColumnNumber;
-    }
-
-    public CodeButtonHandlerData() {
-        _mOSSectionSwitchSlavedToUniqueID = SWITCH_NOT_SLAVED;
-        _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-        _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
-    }
-    private static final long serialVersionUID = 1L;
-//  Data and code used ONLY by the GUI designer, no use objectInputStream runtime system:
     public CodeButtonHandlerData(int uniqueID, int switchNumber, int signalEtcNumber, int guiColumnNumber) {
         _mUniqueID = uniqueID;
         _mSwitchNumber = switchNumber;
@@ -84,57 +58,15 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
         _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
     }
+
 //  This number NEVER changes, and is how this object is uniquely identified:
     public int _mUniqueID = -1;         // FORCE serialization to write out the FIRST unique number 0 into the XML file (to make me happy!)
-//  Used by the Editor only:
     public int _mSwitchNumber;         // Switch Indicators and lever #
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
+
     public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + ", " + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
     public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
 
-    public static ArrayList <Field> getAllStringFields() {
-        Field[] fields = CodeButtonHandlerData.class.getFields();
-        ArrayList <Field> stringFields = new ArrayList<>();
-        for (Field field : fields) {
-            if (field.getType() == String.class) {
-                stringFields.add(field);
-            }
-        }
-        return stringFields;
-    }
-
-    public static ArrayList<Field> getAllInternalSensorStringFields() {
-        return ProjectsCommonSubs.getAllPartialVariableNameStringFields(INTERNAL_SENSOR, CodeButtonHandlerData.class.getFields());
-    }
-
-//  Duplicates get ONLY ONE entry in the set (obviously).
-    public HashSet<String> getAllInternalSensors() {
-        HashSet<String> returnValue = new HashSet<>();
-        ArrayList<Field> fields = getAllInternalSensorStringFields();
-        for (Field field : fields) {
-            try {
-                returnValue.add((String)field.get(this));
-             } catch (IllegalArgumentException | IllegalAccessException ex) { continue; }
-        }
-        return returnValue;
-    }
-
-//  You can call this at any time to get rid of leading / trailing spaces
-//  in ALL Strings in this record.  In addition, any null entries are replaced
-//  with "".
-    public void trimAndFixAllStrings() {
-        ArrayList <Field> stringFields = getAllStringFields();
-        for (Field field : stringFields) {
-            try {
-                String unmodifiedString = (String)field.get(this);
-                if (unmodifiedString != null) {
-                    field.set(this, unmodifiedString.trim());
-                }
-                else
-                    field.set(this, "");    // Null is replaced with "".
-            } catch (IllegalAccessException e) {} // Skip this field on any error
-        }
-    }
 /*
 Because of "getAllInternalSensorStringFields", ANY JMRI sensor object that we
 create should have "InternalSensor" (case sensitive,
@@ -147,9 +79,7 @@ that as part of their variable name (ex: _mOSSectionOccupiedExternalSensor).
 Also, see CheckJMRIObject's "public static final String EXTERNAL_xxx" definitions
 at the top for "automatic" JMRI object verification.
 */
-    private static final String INTERNAL_SENSOR = "InternalSensor";     // NOI18N
-//  Version of this file for supporting upgrade paths from prior versions:
-//  Data used by the runtime (JMRI) and Editor systems:
+
     public NBHSensor            _mCodeButtonInternalSensor;
     public NBHSensor            _mOSSectionOccupiedExternalSensor;              // Required
     public NBHSensor            _mOSSectionOccupiedExternalSensor2;             // Optional

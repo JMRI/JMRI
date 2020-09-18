@@ -348,12 +348,12 @@ public class CommonSubs {
 
 //  Returns the directory only of a directory + filename combination.  The return
 //  string has a file separator at the end, so that filenames can just be appended to it.
-    public static String getDirectoryOnly(String directoryAndFilename) {
-        File file = new File(directoryAndFilename);
-        String parent = file.getParent();   // Returns "null" if no parent.
-        if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
-        return file.getParent() + File.separator;
-    }
+//     public static String getDirectoryOnly(String directoryAndFilename) {
+//         File file = new File(directoryAndFilename);
+//         String parent = file.getParent();   // Returns "null" if no parent.
+//         if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
+//         return file.getParent() + File.separator;
+//     }
 
     /**
      * Get a NBHSensor from the CtcManager NBHSensor map or create a new one.

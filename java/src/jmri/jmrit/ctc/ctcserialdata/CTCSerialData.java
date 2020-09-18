@@ -1,15 +1,15 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+// import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+//
+// import java.beans.XMLDecoder;
+// import java.beans.XMLEncoder;
+// import java.io.BufferedInputStream;
+// import java.io.BufferedOutputStream;
+// import java.io.File;
+// import java.io.FileInputStream;
+// import java.io.FileOutputStream;
+// import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,8 +18,8 @@ import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.NBHTurnout;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -29,7 +29,7 @@ public class CTCSerialData {
 
     private OtherData _mOtherData;
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
-    private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
+//     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
 
     /**
      * "Return" value from function "getCTCTurnoutData":
@@ -187,15 +187,6 @@ public class CTCSerialData {
         return highestColumnNumber;
     }
 
-//  Duplicates get ONLY ONE entry in the set (obviously).
-    public HashSet<String> getAllInternalSensors() {
-        HashSet<String> returnValue = _mOtherData.getAllInternalSensors();
-        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-            returnValue.addAll(codeButtonHandlerData.getAllInternalSensors());
-        }
-        return returnValue;
-    }
-
     /**
      * Routine to search our _mCodeButtonHandlerDataArrayList for the O.S. section
      * that contains the passed turnout.
@@ -236,78 +227,4 @@ public class CTCSerialData {
         return lockedTurnouts;
     }
 
-    @SuppressWarnings("unchecked") // See below comments:
-    public boolean readDataFromXMLFile(String filename) {
-//         CodeButtonHandlerData.preprocessingUpgradeSelf(filename);   // WHOLE FILE operations FIRST.
-        boolean returnValue = false;    // Assume error
-        try {
-            try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)))) {
-                _mOtherData = (OtherData) xmlDecoder.readObject();
-                // triggers unchecked warning
-                _mCodeButtonHandlerDataArrayList = (ArrayList<CodeButtonHandlerData>) xmlDecoder.readObject(); // Type safety: Unchecked cast from Object to ArrayList<>
-            }
-            returnValue = true;
-        } catch (IOException e) {
-            log.debug("Unable to read {}", filename, e); // debug because missing file is not error
-        }
-// Safety:
-        if (_mOtherData == null) {
-            _mOtherData = new OtherData();
-        }
-        if (_mCodeButtonHandlerDataArrayList == null) {
-            _mCodeButtonHandlerDataArrayList = new ArrayList<>();
-        }
-
-//  Make all strings "sane" on the way in, in case user used a standard editor to modify our file:
-//  This works for both the CTCEditor and JMRI runtime which both call this routine:
-        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-            codeButtonHandlerData.trimAndFixAllStrings();
-        }
-//  Kludge for new field added but I forgot to init it in "CodeButtonHandlerDataRoutines" (an enum is NOT an integer like other languages, but an object!):
-//  Can be removed someday!
-        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-            if (codeButtonHandlerData._mSWDI_GUITurnoutType == null) {
-                codeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-            }
-        }
-//  Finally, give each object a chance to upgrade itself BEFORE anything uses it:
-//         _mOtherData.upgradeSelf();
-//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-//             codeButtonHandlerData.upgradeSelf();
-//         }
-        return returnValue;
-    }
-
-    /*  This routine properly supports other programs that may poll for this shared
-    files existance and attempt to read it at the same time.
-Problem:
-    If this routine was writing this file while another program was polling for
-    it's change and then attempted to immediately read it, that reading program
-    could randomly at times get some form of I/O error.
-Solution:
-    1.) Write the xml file to a temporary filename.
-    2.) Delete the existing file.
-    3.) Rename the temporary to the proper (formerly existing) filename.
-
-    In this way the file is totally stable when it finally appears in the directory
-    with its proper filename that the other program is looking for.
-     */
-//     private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
-
-//     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
-//     public void writeDataToXMLFile(String filename) {
-//         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
-//         try { // Write temporary file:
-//             try (XMLEncoder xmlEncoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(temporaryFilename)))) {
-//                 xmlEncoder.writeObject(_mOtherData);
-//                 xmlEncoder.writeObject(_mCodeButtonHandlerDataArrayList);
-//             }
-//             CTCFiles.rotate(filename, false);
-//             File outputFile = new File(filename);
-//
-//             outputFile.delete();    // Delete existing old file.
-//             (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
-//         } catch (IOException e) {
-//         }
-//     }
 }

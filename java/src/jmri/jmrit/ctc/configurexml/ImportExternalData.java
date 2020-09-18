@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Import the old ProgramProperties.xml and CTCSystem.xml files.
- * <code>
+ * <pre>
  * java
  *   object - new OtherData
  *     void - "getField"
@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *             object - parent ref
  *             boolean/string/int - value
  * etc.
- * </code>
+ * </pre>
  *
  * @author Dave Sand Copyright (c) 2020
  */
@@ -139,59 +139,19 @@ public class ImportExternalData {
     }
 
     public static class CTCSystemFile extends XmlFile {
-        private static String fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
-        private static String baseFileName = "CTCSystem.xml";  // NOI18N
-
-        public static String getDefaultFileName() {
-            return getFileLocation() + getFileName();
-        }
-
         public File getFile() {
-            File chkdir = new File(getFileLocation());
-            if (!chkdir.exists()) {
-                log.error("There is no ctc directory: {}", chkdir);  // NOI18N
-                return null;
-            }
-
-            File file = findFile(getDefaultFileName());
-            if (file == null) {
-                log.error("The CTCSystem.xml file does not exist");
-                return null;
-            }
-            return file;
-        }
-
-        public static String getFileName() {
-            if (baseFileName == null) {
-               baseFileName = "OldCTCSystem.xml";  // NOI18N
-            }
-            return baseFileName;
-        }
-
-        public static String getFileLocation() {
-            if (fileLocation == null) {
-               fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
-            }
-            return fileLocation;
+            return CTCFiles.getFile("CTCSystem.xml");
         }
     }
 
     static void doDataLoading() {
         int index = 0;
         if (hasOtherData) {
-//             log.info("---- Other data section ----");
-//             sections.get(index).forEach((k, v) -> {
-//                 log.info("field = {}, value = {}", k, v);
-//             });
             loadOtherData(sections.get(index));
             index++;
         }
 
         for (int idx = index; idx < sections.size(); idx++) {
-//             log.info("---- start cbhd {} ----", idx);
-//             sections.get(idx).forEach((k, v) -> {
-//                 log.info("field = {}, value = {}", k, v);
-//             });
             loadCodeButtonHandlerData(sections.get(idx));
         }
         convertCallOnSensorNamesToNBHSensors();

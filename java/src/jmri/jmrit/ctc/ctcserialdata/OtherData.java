@@ -1,13 +1,5 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,7 +10,7 @@ import jmri.jmrit.ctc.NBHSensor;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class OtherData implements Serializable {
+public class OtherData {
     public final static String CTC_VERSION = "v2.0";
 
     public enum CTC_PANEL_TYPE {
@@ -70,28 +62,6 @@ public class OtherData implements Serializable {
         public static SIGNAL_SYSTEM_TYPE getSignalSystemType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
 
-    public static ArrayList<Field> getAllInternalSensorStringFields() {
-        return ProjectsCommonSubs.getAllPartialVariableNameStringFields(INTERNAL_SENSOR, OtherData.class.getFields());
-    }
-
-//  Duplicates get ONLY ONE entry in the set (obviously).
-    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Just skip problem fields is fine")
-    public HashSet<String> getAllInternalSensors() {
-        HashSet<String> returnValue = new HashSet<>();
-        ArrayList<Field> fields = getAllInternalSensorStringFields();
-        for (Field field : fields) {
-            try {
-                returnValue.add((String)field.get(this));
-            } catch (IllegalArgumentException | IllegalAccessException ex) {}
-        }
-        return returnValue;
-    }
-/*
-Because of "getAllInternalSensorStringFields", ANY JMRI sensor object that we
-create should have "InternalSensor" (case sensitive) as ANY PART of their
-variable name and declared as type String.
-*/
-    private static final String INTERNAL_SENSOR = "InternalSensor";             // NOI18N
 //  Fleeting:
     public NBHSensor   _mFleetingToggleInternalSensor;
     public boolean  _mDefaultFleetingEnabled;

@@ -30,20 +30,6 @@ public class TrafficLockingData {
     public TrafficLockingData() {
     }
 
-    public TrafficLockingData( String userRuleNumber,
-                                String ruleEnabled,
-                                String destinationSignalOrComment,
-                                List<TRLSwitch> switchAlignments,
-                                List<NBHSensor> occupancyExternalSensors,
-                                List<NBHSensor> optionalExternalSensors) {
-        _mUserRuleNumber = userRuleNumber;
-        _mRuleEnabled = ruleEnabled;
-        _mDestinationSignalOrComment = destinationSignalOrComment;
-        _mSwitchAlignments = switchAlignments;
-        _mOccupancyExternalSensors = occupancyExternalSensors;
-        _mOptionalExternalSensors = optionalExternalSensors;
-    }
-
     /**
      * Constructor to take a TopologyInfo entry and create a properly formed "this".
      *
