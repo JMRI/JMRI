@@ -15,7 +15,6 @@ public class Z21PredefinedMetersTest {
 
     private Z21InterfaceScaffold tc;
     private Z21SystemConnectionMemo memo;
-    private Z21PredefinedMeters mm;
 
     public double getCurrent() {
         return InstanceManager.getDefault(MeterManager.class).getBySystemName("ZVCommandStationCurrent").getKnownAnalogValue();
@@ -77,7 +76,7 @@ public class Z21PredefinedMetersTest {
         memo = new Z21SystemConnectionMemo();
         memo.setTrafficController(tc);  
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
-        mm = new Z21PredefinedMeters(memo);
+        new Z21PredefinedMeters(memo);
     }
 
     @AfterEach
@@ -85,7 +84,6 @@ public class Z21PredefinedMetersTest {
         tc.terminateThreads();
         memo = null;
         tc = null;
-        mm = null;
         JUnitUtil.tearDown(); 
     }
 
