@@ -96,7 +96,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
      */
     public void loadMeters(Element meters) {
         List<Element> meterList = meters.getChildren("meter");
-        log.error("Found {} Meter objects", meterList.size());
         log.debug("Found {} Meter objects", meterList.size());
         MeterManager mm = InstanceManager.getDefault(MeterManager.class);
 
@@ -111,7 +110,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
 
             checkNameNormalization(sysName, userName, mm);
 
-            log.error("get Meter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             log.debug("get Meter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Meter m = mm.getBySystemName(sysName);
             if (m != null) {
@@ -119,7 +117,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
                 // load common parts
                 loadCommon(m, el);
             } else {
-                log.error("Meter ({}) does not exists and cannot be created", sysName);
                 log.debug("Meter ({}) does not exists and cannot be created", sysName);
             }
         }

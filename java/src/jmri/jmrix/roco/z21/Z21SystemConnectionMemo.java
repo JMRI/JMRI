@@ -192,6 +192,7 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.DefaultSystemConnectionM
         if ( xpm instanceof Z21XNetProgrammerManager) {
             ((Z21XNetProgrammerManager) xpm).setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
         }
+
         // setup the PredefinedMeters
         createPredefinedMeters();
 
