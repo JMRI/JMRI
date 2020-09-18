@@ -3,7 +3,9 @@ package jmri.jmrit.swing.meter;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.swing.*;
@@ -39,7 +41,9 @@ public class MeterFrame extends JmriJFrame {
     JLabel amp;
     JLabel percent;
     
+    Map<Meter, JCheckBoxMenuItem> meterMenuItemMap = new HashMap<>();
     JMenuItem lastSelectedMenuItem;
+    boolean frameIsInitialized = false;
     
     int iconWidth;
     int iconHeight;
@@ -49,7 +53,6 @@ public class MeterFrame extends JmriJFrame {
     private int displayLength;
     private boolean displayDP;
 
-    // !!!!!!!! This should be NamedBeanHandle<Meter> !!!!!!!!!!
     private Meter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
@@ -82,11 +85,9 @@ public class MeterFrame extends JmriJFrame {
 //        if (voltageMeters.isEmpty() && currentMeters.isEmpty()) throw new RuntimeException("No volt meter or amp meter exists");
         
         if (!voltageMeters.isEmpty()) {
-            meter = voltageMeters.get(0);
-            setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", meter.getDisplayName()));
+            setMeter(voltageMeters.get(0));
         } else if (!currentMeters.isEmpty()) {
-            meter = currentMeters.get(0);
-            setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", meter.getDisplayName()));
+            setMeter(currentMeters.get(0));
         } else {
             setTitle(Bundle.getMessage("TrackVoltageMeterTitle"));
         }
@@ -94,32 +95,57 @@ public class MeterFrame extends JmriJFrame {
         MeterFrameManager.getInstance().register(this);
     }
     
+    /**
+     * Get the UUID of this frame.
+     * The UUID is used if two different panel files are loaded with the same
+     * meter frame.
+     * @return the UUID of this frame
+     */
     public UUID getUUID() {
         return uuid;
     }
     
+    /**
+     * Get the meter that is displayed
+     * @return the meter
+     */
     public Meter getMeter() {
         return meter;
     }
     
+    /**
+     * Set the meter that is displayed.
+     * @param m the meter or null if no meter is to be shown
+     */
     public void setMeter(Meter m) {
         if (lastSelectedMenuItem != null) lastSelectedMenuItem.setSelected(false);
 
-        meter.disable();
-        meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+        if (meter != null) {
+            meter.disable();
+            meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+        }
 
         meter = m;
+        
+        if (meter == null) return;
+        
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         meter.enable();
 
         // Update the display
         digitIcons = null;
 
-        buildContents();
+        if (frameIsInitialized) {
+            buildContents();
 
-        // Initially we want to scale the icons to fit the previously saved window size
-        scaleImage();
-        buildContents();
+            // Initially we want to scale the icons to fit the previously saved window size
+            scaleImage();
+            buildContents();
+
+            JCheckBoxMenuItem menuItem = meterMenuItemMap.get(meter);
+            menuItem.setSelected(true);
+            lastSelectedMenuItem = menuItem;
+        }
 
         if (meter instanceof VoltageMeter) {
             setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
@@ -135,13 +161,17 @@ public class MeterFrame extends JmriJFrame {
         JMenu voltageMetersMenu = new JMenu(Bundle.getMessage("MenuVoltageMeters"));
         menuBar.add(voltageMetersMenu);
         for (Meter m : voltageMeters) {
-            voltageMetersMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m)));
+            JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
+            voltageMetersMenu.add(item);
+            meterMenuItemMap.put(m, item);
         }
         
         JMenu currentMetersMenu = new JMenu(Bundle.getMessage("MenuCurrentMeters"));
         menuBar.add(currentMetersMenu);
         for (Meter m : currentMeters) {
-            currentMetersMenu.add(new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m)));
+            JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
+            currentMetersMenu.add(item);
+            meterMenuItemMap.put(m, item);
         }
         
         setJMenuBar(menuBar);
@@ -198,6 +228,7 @@ public class MeterFrame extends JmriJFrame {
             }
         });
 
+        frameIsInitialized = true;
     }
 
     // Added method to scale the clock digit images to fit the
