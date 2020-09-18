@@ -41,6 +41,8 @@ public interface Meter extends AnalogIO {
     /**
      * Remove references to and from this object, so that it can eventually be
      * garbage-collected.
+     * <p>
+     * The meter must be disabled before it's disposed.
      */
     @Override
     public void dispose();

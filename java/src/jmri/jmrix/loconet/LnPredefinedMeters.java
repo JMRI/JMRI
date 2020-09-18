@@ -8,8 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to current meter from the Digitrax Evolution Base Station
+ * Provide access to current and voltage meter from some LocoNet command stations
  *
+ * @author Steve G           Copyright (C) 2019
+ * @author Bob Jacobsen      Copyright (C) 2019
+ * @author Egbert Boerse     Copyright (C) 2019
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class LnPredefinedMeters implements LocoNetListener {
 

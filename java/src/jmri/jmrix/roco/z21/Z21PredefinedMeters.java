@@ -7,8 +7,9 @@ import jmri.implementation.MeterUpdateTask;
 /**
  * Provide access to voltage and current readings from the Roco Z21 
  *
- * @author Mark Underwood (C) 2015
- * @author Paul Bender (C) 2017
+ * @author Mark Underwood    Copyright (C) 2015
+ * @author Paul Bender       Copyright (C) 2017
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class Z21PredefinedMeters {
 

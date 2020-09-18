@@ -667,7 +667,7 @@ public final class InstanceManager {
     // Needs to have proxy manager converted to work
     // with current list of managers (and robust default
     // management) before this can be deprecated in favor of
-    // store(p, TurnoutManager.class)
+    // store(p, MeterManager.class)
     @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
     static public void setMeterManager(MeterManager p) {
         log.debug(" setMeterManager");

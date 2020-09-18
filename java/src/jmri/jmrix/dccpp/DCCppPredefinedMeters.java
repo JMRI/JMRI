@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide access to current meter from the DCC++ Base Station
  *
- * @author Mark Underwood (C) 2015
+ * @author Mark Underwood    Copyright (C) 2015
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class DCCppPredefinedMeters implements DCCppListener {
 

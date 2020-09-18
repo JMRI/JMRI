@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory;
  * updates the data of the meter, for example its user name.
  * Or this class is overridden by a class that knows how to create the meters.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
+ * @author Bob Jacobsen      Copyright (C) 2002, 2008
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
 

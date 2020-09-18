@@ -67,7 +67,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
         
-        getMeters();
+        getPredefinedMeters();
         
         InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
@@ -270,7 +270,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     
     protected CbusPredefinedMeters predefinedMeters;
     
-    public CbusPredefinedMeters getMeters() {
+    public CbusPredefinedMeters getPredefinedMeters() {
         if (adapterMemo.getDisabled()) {
             return null;
         }

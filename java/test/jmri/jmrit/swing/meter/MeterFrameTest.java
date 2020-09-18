@@ -16,8 +16,9 @@ import org.junit.jupiter.api.*;
 
 /**
  *
- * Copied from ampmeter
- * @author Andrew Crosland Copyright (C) 2020
+ * @author Paul Bender       Copyright (C) 2017
+ * @author Andrew Crosland   Copyright (C) 2020
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
 

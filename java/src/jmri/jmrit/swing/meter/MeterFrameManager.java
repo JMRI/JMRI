@@ -27,6 +27,7 @@ public class MeterFrameManager {
      * Get the instance of MeterFrameManager.
      * @return the MeterFrameManager instance
      */
+    @CheckReturnValue
     public static MeterFrameManager getInstance() {
         return _instance;
     }

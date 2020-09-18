@@ -18,6 +18,8 @@ import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
  * 
  * @author Andrew Crosland 2020
  * Added voltage capability to use with new jmrit.voltmeter class
+ * 
+ * @author Daniel Bergqvist Copyright (C) 2020
  */
 public class CbusPredefinedMeters implements CanListener {
 
