@@ -1,15 +1,5 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
-// import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-//
-// import java.beans.XMLDecoder;
-// import java.beans.XMLEncoder;
-// import java.io.BufferedInputStream;
-// import java.io.BufferedOutputStream;
-// import java.io.File;
-// import java.io.FileInputStream;
-// import java.io.FileOutputStream;
-// import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,9 +7,6 @@ import java.util.HashSet;
 import jmri.Turnout;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.NBHTurnout;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -29,7 +16,6 @@ public class CTCSerialData {
 
     private OtherData _mOtherData;
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
-//     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);
 
     /**
      * "Return" value from function "getCTCTurnoutData":

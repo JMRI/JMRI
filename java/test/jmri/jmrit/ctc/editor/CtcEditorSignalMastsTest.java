@@ -50,9 +50,10 @@ public class CtcEditorSignalMastsTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Perform the tests
-        menuTests();
         frameButtonTests();
         editTests();
+        toggleCheckBoxes();
+        menuTests();        // Last because File => New wipes out the data.
 
         _jfo.requestClose();
         _jfo = null;
@@ -79,8 +80,6 @@ public class CtcEditorSignalMastsTest {
         Assert.assertNotNull(frmFix);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmFix, Bundle.getMessage("ButtonProceed")).doClick();
-
-
 
         // ** Configure menu **
         jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuConfigure"));  // NOI18N
@@ -161,6 +160,31 @@ public class CtcEditorSignalMastsTest {
         Assert.assertNotNull(frmAbout);
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmAbout, Bundle.getMessage("ButtonOK")).doClick();
+
+        // ** File menu **
+        jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuFile"));  // NOI18N
+        jpm = jmo.getPopupMenu();
+
+        // MenuNew
+        JMenuItem newMenuItem = (JMenuItem) jpm.getComponent(0);
+        Assert.assertTrue(newMenuItem.getText().equals(Bundle.getMessage("MenuNew")));  // NOI18N
+        Thread btnNew = createModalDialogOperatorThread(Bundle.getMessage("NewConfigTitle"), Bundle.getMessage("ButtonYes"), "btnNew");  // NOI18N
+        new JMenuItemOperator(newMenuItem).doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(btnNew.isAlive());
+        }, "btnNew finished");  // NOI18N
+        if (PAUSE) JUnitUtil.waitFor(2000);
+
+        // MenuImport -- Reply No, the actual test is in ImportExternalDataTest
+        JMenuItem importMenuItem = (JMenuItem) jpm.getComponent(1);
+        Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImport")));  // NOI18N
+        importMenuItem.setEnabled(true);
+        Thread btnImport = createModalDialogOperatorThread(Bundle.getMessage("ImportTitle"), Bundle.getMessage("ButtonNo"), "btnImport");  // NOI18N
+        new JMenuItemOperator(importMenuItem).doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(btnImport.isAlive());
+        }, "btnImport finished");  // NOI18N
+        if (PAUSE) JUnitUtil.waitFor(2000);
     }
 
     void frameButtonTests() {
@@ -244,6 +268,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmCB = new JFrameOperator(Bundle.getMessage("TitleDlgCB"));  // NOI18N
         Assert.assertNotNull(frmCB);
+        new JButtonOperator(frmCB, Bundle.getMessage("ButtonReapply")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmCB, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -256,6 +281,8 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmSIDI = new JFrameOperator(Bundle.getMessage("TitleSIDI"));  // NOI18N
         Assert.assertNotNull(frmSIDI);
+        new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonReapply")).doClick();
+        new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonSIDIBoth")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -268,6 +295,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmSIDL = new JFrameOperator(Bundle.getMessage("TitleDlgSIDL"));  // NOI18N
         Assert.assertNotNull(frmSIDL);
+        new JButtonOperator(frmSIDL, Bundle.getMessage("ButtonReapply")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSIDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -280,6 +308,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmSWDI = new JFrameOperator(Bundle.getMessage("TitleSWDI"));  // NOI18N
         Assert.assertNotNull(frmSWDI);
+        new JButtonOperator(frmSWDI, Bundle.getMessage("ButtonReapply")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDI, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -292,6 +321,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmSWDL = new JFrameOperator(Bundle.getMessage("TitleDlgSWDL"));  // NOI18N
         Assert.assertNotNull(frmSWDL);
+        new JButtonOperator(frmSWDL, Bundle.getMessage("ButtonReapply")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmSWDL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -305,6 +335,7 @@ public class CtcEditorSignalMastsTest {
         JFrameOperator frmCO = new JFrameOperator(Bundle.getMessage("TitleDlgCO"));  // NOI18N
         Assert.assertNotNull(frmCO);
         if (PAUSE) JUnitUtil.waitFor(2000);
+        new JButtonOperator(frmCO, Bundle.getMessage("ButtonReapply")).doClick();
         doCallOnRules(frmCO);
         new JButtonOperator(frmCO, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -317,6 +348,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmTUL = new JFrameOperator(Bundle.getMessage("TitleDlgTUL"));  // NOI18N
         Assert.assertNotNull(frmTUL);
+        new JButtonOperator(frmTUL, Bundle.getMessage("ButtonReapply")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmTUL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -329,6 +361,7 @@ public class CtcEditorSignalMastsTest {
         }
         JFrameOperator frmIL = new JFrameOperator(Bundle.getMessage("TitleDlgIL"));  // NOI18N
         Assert.assertNotNull(frmIL);
+        new JButtonOperator(frmIL, Bundle.getMessage("ButtonDlgILCompact")).doClick();
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmIL, Bundle.getMessage("ButtonSaveClose")).doClick();
 
@@ -394,6 +427,17 @@ public class CtcEditorSignalMastsTest {
         t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
         t.start();
         return t;
+    }
+
+    void toggleCheckBoxes() {
+        JListOperator jlo = new JListOperator(_jfo);
+        jlo.clickOnItem(0, 1);
+
+        for (int index = 0; index < 8; index++) {
+            JCheckBoxOperator xbox = new JCheckBoxOperator(_jfo, index);
+            xbox.setSelected(false);
+            xbox.setSelected(true);
+        }
     }
 
     void doCallOnRules(JFrameOperator rules) {
@@ -564,5 +608,4 @@ public class CtcEditorSignalMastsTest {
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorSignalMastsTest.class);
-
 }

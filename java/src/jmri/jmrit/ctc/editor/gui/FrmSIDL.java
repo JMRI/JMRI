@@ -28,20 +28,20 @@ public class FrmSIDL extends javax.swing.JFrame {
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
 
-    private String _mSIDL_LeftInternalSensorOrig;
-    private String _mSIDL_NormalInternalSensorOrig;
-    private String _mSIDL_RightInternalSensorOrig;
-    private void initOrig() {
-        _mSIDL_LeftInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName();
-        _mSIDL_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName();
-        _mSIDL_RightInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName();
-    }
-    private boolean dataChanged() {
-        if (!_mSIDL_LeftInternalSensorOrig.equals(_mSIDL_LeftInternalSensor.getText())) return true;
-        if (!_mSIDL_NormalInternalSensorOrig.equals(_mSIDL_NormalInternalSensor.getText())) return true;
-        if (!_mSIDL_RightInternalSensorOrig.equals(_mSIDL_RightInternalSensor.getText())) return true;
-        return false;
-    }
+//     private String _mSIDL_LeftInternalSensorOrig;
+//     private String _mSIDL_NormalInternalSensorOrig;
+//     private String _mSIDL_RightInternalSensorOrig;
+//     private void initOrig() {
+//         _mSIDL_LeftInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName();
+//         _mSIDL_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName();
+//         _mSIDL_RightInternalSensorOrig = _mCodeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName();
+//     }
+//     private boolean dataChanged() {
+//         if (!_mSIDL_LeftInternalSensorOrig.equals(_mSIDL_LeftInternalSensor.getText())) return true;
+//         if (!_mSIDL_NormalInternalSensorOrig.equals(_mSIDL_NormalInternalSensor.getText())) return true;
+//         if (!_mSIDL_RightInternalSensorOrig.equals(_mSIDL_RightInternalSensor.getText())) return true;
+//         return false;
+//     }
 
     public FrmSIDL( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
@@ -55,34 +55,34 @@ public class FrmSIDL extends javax.swing.JFrame {
         _mSIDL_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName());
         _mSIDL_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName());
         _mSIDL_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName());
-        initOrig();
+//         initOrig();
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
 
-    public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
-        if (!codeButtonHandlerData._mSIDL_Enabled) return true; // Not enabled, can be no error!
-//  For interrelationship(s) checks:
-        boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName());
-        boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName());
-//  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName())) return false;
-        if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
-        return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
-    }
+//     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
+//         if (!codeButtonHandlerData._mSIDL_Enabled) return true; // Not enabled, can be no error!
+// //  For interrelationship(s) checks:
+//         boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName());
+//         boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName());
+// //  Checks:
+//         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName())) return false;
+//         if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
+//         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
+//     }
 
 //  Validate all internal fields as much as possible:
-    private ArrayList<String> formFieldsValid() {
-        ArrayList<String> errors = new ArrayList<>();
-//  For interrelationship(s) checks:
-        boolean leftInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_LeftInternalSensor);
-        boolean rightInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_RightInternalSensor);
-//  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mSIDL_NormalInternalSensor, _mSIDL_NormalInternalSensorPrompt, errors);
-        if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDL_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDL_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
-        return errors;
-    }
+//     private ArrayList<String> formFieldsValid() {
+//         ArrayList<String> errors = new ArrayList<>();
+// //  For interrelationship(s) checks:
+//         boolean leftInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_LeftInternalSensor);
+//         boolean rightInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_RightInternalSensor);
+// //  Checks:
+//         CommonSubs.checkJTextFieldNotEmpty(_mSIDL_NormalInternalSensor, _mSIDL_NormalInternalSensorPrompt, errors);
+//         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDL_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDL_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
+//         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
+//         return errors;
+//     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -194,9 +194,9 @@ public class FrmSIDL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
-        if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
-            return; // Do not allow exit or transfer of data.
-        }
+//         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
+//             return; // Do not allow exit or transfer of data.
+//         }
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -204,7 +204,8 @@ public class FrmSIDL extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
-        if (CommonSubs.allowClose(this, dataChanged())) dispose();
+//         if (CommonSubs.allowClose(this, dataChanged())) dispose();
+        dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

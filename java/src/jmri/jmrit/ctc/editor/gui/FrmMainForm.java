@@ -957,10 +957,12 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mNewActionPerformed
 
     private void _mImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mImportActionPerformed
-        JOptionPane.showMessageDialog(this,
-                "The import process is under construction",
-                "Import Pending",
-                JOptionPane.OK_OPTION);
+        int response = JOptionPane.showConfirmDialog(this,
+                Bundle.getMessage("ImportWarning"),
+                Bundle.getMessage("ImportTitle"),
+                JOptionPane.YES_NO_OPTION);
+        if (response == 1) return;
+
         CtcManager ctcManager = InstanceManager.getDefault(CtcManager.class);
         _mProgramProperties = ctcManager.newProgramProperties();
         _mCTCSerialData = ctcManager.newCTCSerialData();

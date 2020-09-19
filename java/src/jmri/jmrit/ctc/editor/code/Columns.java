@@ -158,9 +158,9 @@ public class Columns {
     public void fixAllErrors() {
         for (CodeButtonHandlerData codeButtonHandlerData : _mCTCSerialData.getCodeButtonHandlerDataArrayList()) {
             if (!FrmSIDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSIDI_Enabled = false;
-            if (!FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSIDL_Enabled = false;
+//             if (!FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSIDL_Enabled = false;
             if (!FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSWDI_Enabled = false;
-            if (!FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSWDL_Enabled = false;
+//             if (!FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSWDL_Enabled = false;
             if (!FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mCO_Enabled = false;
             if (!FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mTRL_Enabled = false;
             if (!FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mTUL_Enabled = false;
@@ -180,9 +180,9 @@ public class Columns {
     public void updateCurrentlySelectedColumnErrorStatus() {
         lazy1(_mEdit_CB_Prompt, FrmCB.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SIDI_Prompt, FrmSIDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-        lazy1(_mEdit_SIDL_Prompt, FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+//         lazy1(_mEdit_SIDL_Prompt, FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDI_Prompt, FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-        lazy1(_mEdit_SWDL_Prompt, FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
+//         lazy1(_mEdit_SWDL_Prompt, FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TUL_Prompt, FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
@@ -231,13 +231,13 @@ public class Columns {
     }
 
     private void specialUpdateEnableCO_and_TRL() {
-        boolean signalDirectionLeverEnabledAndValid = signalDirectionLeverEnabledAndValid();
-        if (!signalDirectionLeverEnabledAndValid()) {   // Force these, until user fixes it.
+        boolean signalDirectionLeverEnabled = signalDirectionLeverEnabled();
+        if (!signalDirectionLeverEnabled()) {   // Force these, until user fixes it.
             _mSelectedCodeButtonHandlerData._mCO_Enabled = false;
             _mSelectedCodeButtonHandlerData._mTRL_Enabled = false;
         }
-        lazy1(_mCO_Enabled, _mEdit_CO, signalDirectionLeverEnabledAndValid, _mSelectedCodeButtonHandlerData._mCO_Enabled);
-        lazy1(_mTRL_Enabled, _mEdit_TRL, signalDirectionLeverEnabledAndValid, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
+        lazy1(_mCO_Enabled, _mEdit_CO, signalDirectionLeverEnabled, _mSelectedCodeButtonHandlerData._mCO_Enabled);
+        lazy1(_mTRL_Enabled, _mEdit_TRL, signalDirectionLeverEnabled, _mSelectedCodeButtonHandlerData._mTRL_Enabled);
     }
 
     static private void lazy1(JCheckBox jCheckBox, JButton jButton, boolean enabled, boolean value) {
@@ -376,9 +376,9 @@ public class Columns {
     private static String generatePossibleErrorString(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData currentCodeButtonHandlerData) {
         if (!FrmCB.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSIDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-        if (!FrmSIDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+//         if (!FrmSIDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-        if (!FrmSWDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
+//         if (!FrmSWDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTUL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
@@ -397,8 +397,9 @@ public class Columns {
         return displayString;
     }
 
-    private boolean signalDirectionLeverEnabledAndValid() {
-        if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
-        return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
+    private boolean signalDirectionLeverEnabled() {
+        return _mSelectedCodeButtonHandlerData._mSIDL_Enabled;
+//         if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
+//         return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
     }
 }
