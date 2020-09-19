@@ -95,12 +95,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
 
         _mGUIGeneratedAtLeastOnceAlready.setText(Bundle.getMessage("LabelDlgAddModGen")
         );
-        _mGUIGeneratedAtLeastOnceAlready.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,10 +167,6 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }//GEN-LAST:event_formWindowClosing
-
-    private void _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner _mGUIColumnNumber;

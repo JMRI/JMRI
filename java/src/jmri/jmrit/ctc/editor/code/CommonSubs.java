@@ -302,17 +302,6 @@ public class CommonSubs {
         }
     }
 
-//  Or you can get the actual string that the user sees in the button (or null if you screwed up by
-//  allowing all buttons to be non-selected, for instance if you didn't select one by default).
-    public static String getButtonSelectedText(ButtonGroup buttonGroup) {
-        Enumeration<AbstractButton> buttons = buttonGroup.getElements();
-        while (buttons.hasMoreElements()) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) return button.getText();
-        }
-        return null;
-    }
-
 //  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
@@ -345,15 +334,6 @@ public class CommonSubs {
     public static boolean isJComboBoxNotEmpty(javax.swing.JComboBox<String> combo) {
         return !((String) combo.getSelectedItem()).trim().isEmpty();
     }
-
-//  Returns the directory only of a directory + filename combination.  The return
-//  string has a file separator at the end, so that filenames can just be appended to it.
-//     public static String getDirectoryOnly(String directoryAndFilename) {
-//         File file = new File(directoryAndFilename);
-//         String parent = file.getParent();   // Returns "null" if no parent.
-//         if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
-//         return file.getParent() + File.separator;
-//     }
 
     /**
      * Get a NBHSensor from the CtcManager NBHSensor map or create a new one.

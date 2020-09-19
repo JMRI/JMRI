@@ -435,8 +435,8 @@ public class CtcEditorSignalMastsTest {
 
         for (int index = 0; index < 8; index++) {
             JCheckBoxOperator xbox = new JCheckBoxOperator(_jfo, index);
-            xbox.setSelected(false);
-            xbox.setSelected(true);
+            xbox.doClick();
+            xbox.doClick();
         }
     }
 
