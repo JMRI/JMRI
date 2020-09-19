@@ -105,7 +105,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddre
+    }// mask is ignored by splitAddress tests
 
     @Override
     @Test
@@ -115,17 +115,17 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
