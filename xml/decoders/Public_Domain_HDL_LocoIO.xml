@@ -5875,12 +5875,12 @@
         <compositeVal>
 
           <!--          Initial label?-->
-          <compositeChoice choice="Select...">
-            <choice>Changed</choice>
-            <choice xml:lang="de">Geändert</choice>
-            <choice xml:lang="nl">Gewijzigd</choice>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
-          </compositeChoice>
+<!--          <compositeChoice choice="Select...">-->
+<!--            <choice>Changed</choice>-->
+<!--            <choice xml:lang="de">Geändert</choice>-->
+<!--            <choice xml:lang="nl">Gewijzigd</choice>-->
+<!--            <compositeSetting label="Port1 OccuMode" value="0"/>-->
+<!--          </compositeChoice>-->
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
