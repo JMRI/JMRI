@@ -127,6 +127,7 @@
         <label xml:lang="fr">Version PIC: </label>
         <label xml:lang="de">PIC Version: </label>
         <label xml:lang="nl">PIC-versie: </label>
+        <tooltip>Open the LocoNet Monitor to confirm the actual firmware version number (shown after you click Read Full Sheet)</tooltip>
       </variable>
 
       <variable CV="0" mask="VVVVXXXX" comment="Board Blink Rate" item="Blink Rate" default="0" exclude="135,139,140,200,210,211">
@@ -269,7 +270,7 @@
         <tooltip>Message DSTH byte (editable in v1.46 and higher)</tooltip>
       </variable>
 
-      <variable item="User Id #1" CV="2" readOnly="yes" default="1" include="135,139,140,141,142,144,145">
+      <variable item="User Id #2" CV="2" readOnly="yes" default="1" include="135,139,140,141,142,144,145">
         <decVal/>
         <label>/ SubAddress (Fixed):</label>
         <label xml:lang="de">/ Unteradresse (unveränderlich):</label>
@@ -5860,6 +5861,11 @@
 
 
       <!-- Portx Type variables are created now that basic variables are in place. -->
+      <!-- Note on Address handling:                                               -->
+      <!-- Sensor Inputs, Sensor (State) Outputs and Push buttons store address with odd bit in SV5 bit 5, -->
+      <!-- which is overlapping on other Types so we offer 2 options in de combo box. As long as basic type is correct, -->
+      <!-- selected option will adjust to address entered-->
+
       <!-- Some, like LocoRCD operate sets of 2 or more ports at once -->
 
       <!--Note: Port 1, 5, 9, 13 Type contain an extra option for LocoView, turning off the next 3 ports-->
@@ -5868,13 +5874,13 @@
       <variable item="Port1 Type" exclude="200,210,211">
         <compositeVal>
 
-          <!--Initial label?-->
-          <!--          <compositeChoice choice="Select...">-->
-          <!--            <choice>Changed</choice>-->
-          <!--            <choice xml:lang="de">Geändert</choice>-->
-          <!--            <choice xml:lang="nl">Gewijzigd</choice>-->
-          <!--            <compositeSetting label="Port1 OccuMode" value="0"/>-->
-          <!--          </compositeChoice>-->
+          <!--          Initial label?-->
+          <compositeChoice choice="Select...">
+            <choice>Changed</choice>
+            <choice xml:lang="de">Geändert</choice>
+            <choice xml:lang="nl">Gewijzigd</choice>
+            <compositeSetting label="Port1 OccuMode" value="0"/>
+          </compositeChoice>
 
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -5901,8 +5907,9 @@
             <compositeSetting label="Port1 OccuMode" value="0"/>
           </compositeChoice>
 
+          <!--Occu Type ports, see not at beginning op Type declaration-->
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port1 Config" value="15"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -5910,84 +5917,108 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port1 Config" value="15"/>
             <compositeSetting label="Port1 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port1 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port1 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port1 Config" value="91"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="91"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port1 Config" value="111"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port1 Config" value="111"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port1 Config" value="103"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port1 Config" value="103"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port1 Config" value="47"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port1 Config" value="47"/>
+            <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port1 Config" value="39"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
-            <compositeSetting label="Port1 OccuMode" value="0"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port1 Config" value="39"/>
+            <compositeSetting label="Port1 Value2A" value="3"/>
+            <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Switch Feedback Normal" exclude="135,139,140,141,142"> <!-- v1.44 and higher -->
@@ -6099,7 +6130,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port1 Config" value="129"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="0"/>
@@ -6233,25 +6264,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -6292,7 +6323,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port2 Config" value="15"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
@@ -6300,83 +6331,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port2 Config" value="15"/>
             <compositeSetting label="Port2 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port2 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port2 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port2 Config" value="31"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port2 Config" value="31"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port2 Config" value="95"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port2 Config" value="95"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port2 Config" value="91"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port2 Config" value="91"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port2 Config" value="111"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port2 Config" value="111"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port2 Config" value="103"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port2 Config" value="103"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port2 Config" value="47"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port2 Config" value="47"/>
+            <compositeSetting label="Port2 Value2A" value="3"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port2 Config" value="39"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
+            <compositeSetting label="Port2 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port2 Config" value="39"/>
+            <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6489,7 +6544,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port2 Config" value="129"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="0"/>
@@ -6587,25 +6642,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port2 Config" value="31"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port2 Config" value="31"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
@@ -6646,7 +6701,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port3 Config" value="15"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -6654,83 +6709,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port3 Config" value="15"/>
             <compositeSetting label="Port3 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port3 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port3 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port3 Config" value="95"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port3 Config" value="95"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port3 Config" value="91"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port3 Config" value="91"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port3 Config" value="111"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port3 Config" value="111"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port3 Config" value="103"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port3 Config" value="103"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port3 Config" value="47"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port3 Config" value="47"/>
+            <compositeSetting label="Port3 Value2A" value="3"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port3 Config" value="39"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
+            <compositeSetting label="Port3 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port3 Config" value="39"/>
+            <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6843,7 +6922,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port3 Config" value="129"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="0"/>
@@ -6941,25 +7020,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -7000,7 +7079,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port4 Config" value="15"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
@@ -7008,83 +7087,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port4 Config" value="15"/>
             <compositeSetting label="Port4 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port4 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port4 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port4 Config" value="31"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port4 Config" value="31"/>
             <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port4 Config" value="27"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port4 Config" value="27"/>
             <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd)</choice>
+            <choice>Input: Block Detector - active High (odd)</choice>
             <compositeSetting label="Port4 Config" value="95"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port4 Config" value="95"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port4 Config" value="91"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port4 Config" value="91"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port4 Config" value="111"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port4 Config" value="111"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port4 Config" value="103"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port4 Config" value="103"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port4 Config" value="47"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port4 Config" value="47"/>
+            <compositeSetting label="Port4 Value2A" value="3"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port4 Config" value="39"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
+            <compositeSetting label="Port4 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port4 Config" value="39"/>
+            <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7197,7 +7300,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port4 Config" value="129"/>
             <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="0"/>
@@ -7295,25 +7398,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port4 Config" value="31"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port4 Config" value="31"/>
             <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port4 Config" value="27"/>
             <compositeSetting label="Port4 Value2A" value="1"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port4 Config" value="27"/>
             <compositeSetting label="Port4 Value2A" value="3"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
@@ -7355,7 +7458,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port5 Config" value="15"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -7363,83 +7466,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port5 Config" value="15"/>
             <compositeSetting label="Port5 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port5 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port5 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port5 Config" value="95"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port5 Config" value="95"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port5 Config" value="91"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port5 Config" value="91"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port5 Config" value="111"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port5 Config" value="111"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port5 Config" value="103"/>
             <compositeSetting label="Port5 Value2A" value="0"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port5 Config" value="103"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port5 Config" value="47"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port5 Config" value="47"/>
+            <compositeSetting label="Port5 Value2A" value="3"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port5 Config" value="39"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port5 Config" value="39"/>
+            <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7552,7 +7679,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port5 Config" value="129"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="0"/>
@@ -7623,7 +7750,7 @@
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Output Block Blink Even" exclude="135,139">
-            <choice>Output: Block Detector - Blinking (even address)</choice>
+            <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port5 Config" value="208"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
@@ -7704,25 +7831,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -7765,7 +7892,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port6 Config" value="15"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
@@ -7773,83 +7900,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port6 Config" value="15"/>
             <compositeSetting label="Port6 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port6 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port6 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port6 Config" value="31"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port6 Config" value="31"/>
             <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port6 Config" value="27"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port6 Config" value="27"/>
             <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port6 Config" value="95"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port6 Config" value="95"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port6 Config" value="91"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port6 Config" value="91"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port6 Config" value="111"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port6 Config" value="111"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port6 Config" value="103"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port6 Config" value="103"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port6 Config" value="47"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port6 Config" value="47"/>
+            <compositeSetting label="Port6 Value2A" value="3"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port6 Config" value="39"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
+            <compositeSetting label="Port6 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port6 Config" value="39"/>
+            <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7962,7 +8113,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port6 Config" value="129"/>
             <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="0"/>
@@ -8114,25 +8265,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port6 Config" value="31"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port6 Config" value="31"/>
             <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port6 Config" value="27"/>
             <compositeSetting label="Port6 Value2A" value="1"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port6 Config" value="27"/>
             <compositeSetting label="Port6 Value2A" value="3"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
@@ -8173,7 +8324,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port7 Config" value="15"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -8181,83 +8332,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port7 Config" value="15"/>
             <compositeSetting label="Port7 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port7 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port7 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port7 Config" value="95"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port7 Config" value="95"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port7 Config" value="91"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port7 Config" value="91"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port7 Config" value="111"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port7 Config" value="111"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port7 Config" value="103"/>
             <compositeSetting label="Port7 Value2A" value="0"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port7 Config" value="103"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port7 Config" value="47"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port7 Config" value="47"/>
+            <compositeSetting label="Port7 Value2A" value="3"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port7 Config" value="39"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
+            <compositeSetting label="Port7 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port7 Config" value="39"/>
+            <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8370,7 +8545,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port7 Config" value="129"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="0"/>
@@ -8517,25 +8692,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -8577,7 +8752,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port8 Config" value="15"/>
             <compositeSetting label="Port8 Value2A" value="0"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
@@ -8585,83 +8760,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port8 Config" value="15"/>
             <compositeSetting label="Port8 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port8 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port8 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port8 Config" value="31"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port8 Config" value="31"/>
             <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port8 Config" value="27"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port8 Config" value="27"/>
             <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port8 Config" value="95"/>
             <compositeSetting label="Port8 Value2A" value="0"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port8 Config" value="95"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port8 Config" value="91"/>
             <compositeSetting label="Port8 Value2A" value="0"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port8 Config" value="91"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port8 Config" value="111"/>
             <compositeSetting label="Port8 Value2A" value="0"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port8 Config" value="111"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port8 Config" value="103"/>
             <compositeSetting label="Port8 Value2A" value="0"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port8 Config" value="103"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port8 Config" value="47"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port8 Config" value="47"/>
+            <compositeSetting label="Port8 Value2A" value="3"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port8 Config" value="39"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
+            <compositeSetting label="Port8 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port8 Config" value="39"/>
+            <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8774,7 +8973,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port8 Config" value="129"/>
             <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="0"/>
@@ -8898,25 +9097,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port8 Config" value="31"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port8 Config" value="31"/>
             <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port8 Config" value="27"/>
             <compositeSetting label="Port8 Value2A" value="1"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port8 Config" value="27"/>
             <compositeSetting label="Port8 Value2A" value="3"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
@@ -8957,7 +9156,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port9 Config" value="15"/>
             <compositeSetting label="Port9 Value2A" value="0"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -8965,83 +9164,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port9 Config" value="15"/>
             <compositeSetting label="Port9 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port9 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port9 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port9 Config" value="95"/>
             <compositeSetting label="Port9 Value2A" value="0"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port9 Config" value="95"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port9 Config" value="91"/>
             <compositeSetting label="Port9 Value2A" value="0"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port9 Config" value="91"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port9 Config" value="111"/>
             <compositeSetting label="Port9 Value2A" value="0"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port9 Config" value="111"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port9 Config" value="103"/>
             <compositeSetting label="Port9 Value2A" value="0"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port9 Config" value="103"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port9 Config" value="47"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port9 Config" value="47"/>
+            <compositeSetting label="Port9 Value2A" value="3"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port9 Config" value="39"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port9 Config" value="39"/>
+            <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9154,7 +9377,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port9 Config" value="129"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="0"/>
@@ -9306,25 +9529,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -9366,7 +9589,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port10 Config" value="15"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
@@ -9374,83 +9597,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port10 Config" value="15"/>
             <compositeSetting label="Port10 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port10 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port10 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port10 Config" value="31"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port10 Config" value="31"/>
             <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port10 Config" value="27"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port10 Config" value="27"/>
             <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port10 Config" value="95"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port10 Config" value="95"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port10 Config" value="91"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port10 Config" value="91"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port10 Config" value="111"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port10 Config" value="111"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port10 Config" value="103"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port10 Config" value="103"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port10 Config" value="47"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port10 Config" value="47"/>
+            <compositeSetting label="Port10 Value2A" value="3"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port10 Config" value="39"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
+            <compositeSetting label="Port10 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port10 Config" value="39"/>
+            <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9563,7 +9810,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port10 Config" value="129"/>
             <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="0"/>
@@ -9687,25 +9934,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port10 Config" value="31"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port10 Config" value="31"/>
             <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port10 Config" value="27"/>
             <compositeSetting label="Port10 Value2A" value="1"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port10 Config" value="27"/>
             <compositeSetting label="Port10 Value2A" value="3"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
@@ -9746,7 +9993,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port11 Config" value="15"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -9754,83 +10001,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port11 Config" value="15"/>
             <compositeSetting label="Port11 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port11 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port11 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port11 Config" value="95"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port11 Config" value="95"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port11 Config" value="91"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port11 Config" value="91"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port11 Config" value="111"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port11 Config" value="111"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port11 Config" value="103"/>
             <compositeSetting label="Port11 Value2A" value="0"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port11 Config" value="103"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port11 Config" value="47"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port11 Config" value="47"/>
+            <compositeSetting label="Port11 Value2A" value="3"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port11 Config" value="39"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
+            <compositeSetting label="Port11 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port11 Config" value="39"/>
+            <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9943,7 +10214,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port11 Config" value="129"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="0"/>
@@ -10067,25 +10338,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -10127,7 +10398,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port12 Config" value="15"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
@@ -10135,83 +10406,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port12 Config" value="15"/>
             <compositeSetting label="Port12 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port12 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port12 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port12 Config" value="31"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port12 Config" value="31"/>
             <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port12 Config" value="27"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port12 Config" value="27"/>
             <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port12 Config" value="95"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port12 Config" value="95"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port12 Config" value="91"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port12 Config" value="91"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port12 Config" value="111"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port12 Config" value="111"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port12 Config" value="103"/>
             <compositeSetting label="Port12 Value2A" value="0"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port12 Config" value="103"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port12 Config" value="47"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port12 Config" value="47"/>
+            <compositeSetting label="Port12 Value2A" value="3"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port12 Config" value="39"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
+            <compositeSetting label="Port12 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port12 Config" value="39"/>
+            <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10324,7 +10619,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port12 Config" value="129"/>
             <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="0"/>
@@ -10448,25 +10743,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port12 Config" value="31"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port12 Config" value="31"/>
             <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port12 Config" value="27"/>
             <compositeSetting label="Port12 Value2A" value="1"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port12 Config" value="27"/>
             <compositeSetting label="Port12 Value2A" value="3"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
@@ -10507,7 +10802,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port13 Config" value="15"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -10515,83 +10810,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port13 Config" value="15"/>
             <compositeSetting label="Port13 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port13 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port13 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port13 Config" value="95"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port13 Config" value="95"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port13 Config" value="91"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port13 Config" value="91"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port13 Config" value="111"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port13 Config" value="111"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port13 Config" value="103"/>
             <compositeSetting label="Port13 Value2A" value="0"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port13 Config" value="103"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port13 Config" value="47"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port13 Config" value="47"/>
+            <compositeSetting label="Port13 Value2A" value="3"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port13 Config" value="39"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port13 Config" value="39"/>
+            <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10704,7 +11023,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port13 Config" value="129"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="0"/>
@@ -10830,25 +11149,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -10890,7 +11209,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port14 Config" value="15"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
@@ -10898,83 +11217,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port14 Config" value="15"/>
             <compositeSetting label="Port14 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port14 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port14 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port14 Config" value="31"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port14 Config" value="31"/>
             <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed )dd)</choice>
+            <choice>Input: Block Detector - active Low Delayed )dd)</choice>
             <compositeSetting label="Port14 Config" value="27"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port14 Config" value="27"/>
             <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port14 Config" value="95"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port14 Config" value="95"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port14 Config" value="91"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port14 Config" value="91"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port14 Config" value="111"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port14 Config" value="111"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port14 Config" value="103"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port14 Config" value="103"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port14 Config" value="47"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port14 Config" value="47"/>
+            <compositeSetting label="Port14 Value2A" value="3"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port14 Config" value="39"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
+            <compositeSetting label="Port14 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port14 Config" value="39"/>
+            <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11087,7 +11430,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port14 Config" value="129"/>
             <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="0"/>
@@ -11185,25 +11528,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port14 Config" value="31"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port14 Config" value="31"/>
             <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port14 Config" value="27"/>
             <compositeSetting label="Port14 Value2A" value="1"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port14 Config" value="27"/>
             <compositeSetting label="Port14 Value2A" value="3"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
@@ -11244,7 +11587,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port15 Config" value="15"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -11252,83 +11595,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port15 Config" value="15"/>
             <compositeSetting label="Port15 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port15 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port15 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port15 Config" value="95"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port15 Config" value="95"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port15 Config" value="91"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port15 Config" value="91"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port15 Config" value="111"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port15 Config" value="111"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port15 Config" value="103"/>
             <compositeSetting label="Port15 Value2A" value="0"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port15 Config" value="103"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port15 Config" value="47"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port15 Config" value="47"/>
+            <compositeSetting label="Port15 Value2A" value="3"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port15 Config" value="39"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
+            <compositeSetting label="Port15 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port15 Config" value="39"/>
+            <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11441,7 +11808,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port15 Config" value="129"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="0"/>
@@ -11539,25 +11906,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -11599,7 +11966,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu" include="135,139,140">
-            <choice>Input: Occupancy (odd address)</choice>
+            <choice>Input: Block Detector (odd address)</choice>
             <compositeSetting label="Port16 Config" value="15"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
@@ -11607,83 +11974,107 @@
             <!--TODO reset "Portx Old Block" bit to 0 for all other choices on 135,139,140-->
           </compositeChoice>
           <compositeChoice choice="Input Occu Even" include="135,139,140">
-            <choice>Input: Occupancy (even address)</choice>
+            <choice>Input: Block Detector (even address)</choice>
             <compositeSetting label="Port16 Config" value="15"/>
             <compositeSetting label="Port16 Value2A" value="2"/><!-- adds 32 to Value2/CV5)-->
             <compositeSetting label="Port16 OccuMode" value="1"/>
             <!-- <compositeSetting label="Port16 Old Block" value="1"/> special case: set SV4 bit 7 to 1 -->
           </compositeChoice>
           <compositeChoice choice="Input Occu Low" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port16 Config" value="31"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port16 Config" value="31"/>
             <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port16 Config" value="27"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port16 Config" value="27"/>
             <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (odd address)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port16 Config" value="95"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
-            <choice>Input: Occupancy - active High (even address)</choice>
+            <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port16 Config" value="95"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (odd)</choice>
+            <choice>Input: Block Detector - active High Delayed (odd)</choice>
             <compositeSetting label="Port16 Config" value="91"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
-            <choice>Input: Occupancy - active High Delayed (even)</choice>
+            <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port16 Config" value="91"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
           <compositeChoice choice="Input Push High Direct">
-            <choice>Input: Push button - active High </choice>
+            <choice>Input: Push button - active High (odd address)</choice>
             <compositeSetting label="Port16 Config" value="111"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Direct Even">
+            <choice>Input: Push button - active High (even address)</choice>
+            <compositeSetting label="Port16 Config" value="111"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push High Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active High Indirect</choice>
+            <choice>Input: Push button - active High - Indirect (odd)</choice>
             <compositeSetting label="Port16 Config" value="103"/>
             <compositeSetting label="Port16 Value2A" value="0"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push High Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active High - Indirect (even)</choice>
+            <compositeSetting label="Port16 Config" value="103"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Direct">
-            <choice>Input: Push button - active Low </choice>
+            <choice>Input: Push button - active Low (odd address)</choice>
             <compositeSetting label="Port16 Config" value="47"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
+          <compositeChoice choice="Input Push Low Direct Even">
+            <choice>Input: Push button - active Low (even address)</choice>
+            <compositeSetting label="Port16 Config" value="47"/>
+            <compositeSetting label="Port16 Value2A" value="3"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
+          </compositeChoice>
           <compositeChoice choice="Input Push Low Indirect" exclude="135,139,140,141,142">
-            <choice>Input: Push button - active Low Indirect</choice>
+            <choice>Input: Push button - active Low - Indirect (odd)</choice>
             <compositeSetting label="Port16 Config" value="39"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
+            <compositeSetting label="Port16 OccuMode" value="1"/>
+          </compositeChoice>
+          <compositeChoice choice="Input Push Low Indirect Even" exclude="135,139,140,141,142">
+            <choice>Input: Push button - active Low - Indirect (even)</choice>
+            <compositeSetting label="Port16 Config" value="39"/>
+            <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11796,7 +12187,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Output Fixed 2 On" exclude="135">
-            <choice>Output: Fixed 1 - On</choice>
+            <choice>Output: Fixed 2 - On</choice>
             <compositeSetting label="Port16 Config" value="129"/>
             <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="0"/>
@@ -11894,25 +12285,25 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port16 Config" value="31"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port16 Config" value="31"/>
             <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port16 Config" value="27"/>
             <compositeSetting label="Port16 Value2A" value="1"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port16 Config" value="27"/>
             <compositeSetting label="Port16 Value2A" value="3"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
@@ -11944,7 +12335,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -11953,7 +12344,7 @@
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port1 Config" value="31"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -11963,7 +12354,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -11972,7 +12363,7 @@
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
@@ -12004,7 +12395,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -12013,7 +12404,7 @@
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port3 Config" value="31"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -12023,7 +12414,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="1"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -12032,7 +12423,7 @@
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
             <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port3 Config" value="27"/>
             <compositeSetting label="Port3 Value2A" value="3"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
@@ -12064,7 +12455,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -12073,7 +12464,7 @@
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port5 Config" value="31"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -12083,7 +12474,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="1"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -12092,7 +12483,7 @@
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port5 Config" value="27"/>
             <compositeSetting label="Port5 Value2A" value="3"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
@@ -12124,7 +12515,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -12133,7 +12524,7 @@
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port7 Config" value="31"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -12143,7 +12534,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="1"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -12152,7 +12543,7 @@
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port7 Config" value="27"/>
             <compositeSetting label="Port7 Value2A" value="3"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
@@ -12184,7 +12575,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -12193,7 +12584,7 @@
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port9 Config" value="31"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -12203,7 +12594,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="1"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -12212,7 +12603,7 @@
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port9 Config" value="27"/>
             <compositeSetting label="Port9 Value2A" value="3"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
@@ -12244,7 +12635,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -12253,7 +12644,7 @@
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port11 Config" value="31"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -12263,7 +12654,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="1"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -12272,7 +12663,7 @@
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port11 Config" value="27"/>
             <compositeSetting label="Port11 Value2A" value="3"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
@@ -12304,7 +12695,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -12313,7 +12704,7 @@
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port13 Config" value="31"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -12323,7 +12714,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="1"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -12332,7 +12723,7 @@
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port13 Config" value="27"/>
             <compositeSetting label="Port13 Value2A" value="3"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
@@ -12364,7 +12755,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low">
-            <choice>Input: Occupancy - active Low (odd address)</choice>
+            <choice>Input: Block Detector - active Low (odd address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -12373,7 +12764,7 @@
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Even">
-            <choice>Input: Occupancy - active Low (even address)</choice>
+            <choice>Input: Block Detector - active Low (even address)</choice>
             <compositeSetting label="Port15 Config" value="31"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -12383,7 +12774,7 @@
           </compositeChoice>
 
           <compositeChoice choice="Input Occu Low Delayed" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (odd)</choice>
+            <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="1"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -12392,7 +12783,7 @@
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu Low Delayed Even" exclude="210">
-            <choice>Input: Occupancy - active Low Delayed (even)</choice>
+            <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port15 Config" value="27"/>
             <compositeSetting label="Port15 Value2A" value="3"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
@@ -14750,14 +15141,14 @@
               Input: Toggle Switch - Indirect&lt;br/&gt;
               Input: Toggle Switch&lt;br/&gt;
               Input: Switch Point Feedback - Normal&lt;br/&gt;
-              Input: Block Detect - Active Low - Delayed&lt;br/&gt;
-              Input: Block Detect - Active Low&lt;br/&gt;
+              Input: Block Detection - Active Low - Delayed&lt;br/&gt;
+              Input: Block Detection - Active Low&lt;br/&gt;
               Input: Push Button - Active Low - Indirect&lt;br/&gt;
               Input: Push Button - Active Low&lt;br/&gt;
               Input: Switch Point Feedback - Contact 2&lt;br/&gt;
               Input: Switch Point Feedback - Contact 1&lt;br/&gt;
-              Input: Block Detect - Active High - Delayed&lt;br/&gt;
-              Input: Block Detect - Active High&lt;br/&gt;
+              Input: Block Detection - Active High - Delayed&lt;br/&gt;
+              Input: Block Detection - Active High&lt;br/&gt;
               Input: Push Button - Active High - Indirect&lt;br/&gt;
               Input: Push Button - Active High&lt;br/&gt;
               &lt;br/&gt;
@@ -14782,8 +15173,8 @@
               Output: Fixed - 1 - On - 4-Way - Blink&lt;br/&gt;
               Output: Fixed - 2 - On - 4-Way&lt;br/&gt;
               Output: Fixed - 2 - On - 4-Way - Blink&lt;br/&gt;
-              Output: Occupancy&lt;br/&gt;
-              Output: Occupancy - Blink&lt;br/&gt;
+              Output: Occupancy = Block Detection&lt;br/&gt;
+              Output: Block Detection - Blink&lt;br/&gt;
               Port Not In Use&lt;br/&gt;
               &lt;/html&gt;</text>
           </label>
