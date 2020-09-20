@@ -498,9 +498,9 @@
         src="images/IntelliJ/IjPushSelectRepoOrigin.png" width="286"
         height="62" alt="IntelliJ Push Dialog Option"></a>
         <br>
-        Click on the underlined part of the top line to see tha pop-up.
-        "origin" is your personal remote repository, "JMRI" is the official
-        developer's repository.<br>
+        Click on the underlined part of the top line to see that pop-up.
+        You should push to a (new) branch on "origin", your personal
+        remote repository.<br>
         If the path and all else is correct, click "Push".</li>
 
         <li>To push to your GitHub repository after a local Commit,
@@ -553,7 +553,7 @@
       </ol>
 
       <p>We've documented the following steps to help you get started using the built-in Debug tool. We tested the
-        JMRI project with the JAR, Application and JUnit (test) Templates.</p>
+      JMRI project with the JAR, Application and JUnit (test) Templates.</p>
 
       <ol>
         <li>In IntelliJ, start by opening Preferences > Build, Execution, Deployment
@@ -657,7 +657,7 @@
       margin a green Run Test arrow will show next to every test. Click it and select one of the 3 options from the
       combo:<br>
       <a href="images/IntelliJ/IjFileRunTestIcon.png"><img src="images/IntelliJ/IjFileRunTestIcon.png"
-      width="181" height="75" alt="IntelliJ Run @Test"></a>
+      width="363" height="151" alt="IntelliJ Run @Test"></a>
       </p>
 
       <a name="spotbugs" id="spotbugs"></a>
@@ -707,7 +707,7 @@
       </li> -->
       </ol>
       <p>For additional resources check the official
-        <a href="https://spotbugs.readthedocs.io/en/stable/installing.html">SpotBugs Help</a></p>
+      <a href="https://spotbugs.readthedocs.io/en/stable/installing.html">SpotBugs Help</a></p>
 
       <h2>Making a Pull Request</h2>
 
@@ -719,26 +719,26 @@
       <p>To make a PR from within IntelliJ IDEA, select "Create
       Pull Request" from the "VCS" -&gt; "Git" menu (it's the one but
       last item, supported by the Git plugin).<br>
-      Note: Be sure to select your own repository if you see multiple options
-      to choose from in this submenu:<br>
-      <img src="images/IntelliJ/IjPullViaOwnRepo.png" width="622" height="52" alt="IntelliJ Git Menu"></p>
+      Note: Be sure to select your own repository <code>origin:</code> if you see
+      multiple options to choose from in this submenu:<br>
+      <img src="images/IntelliJ/IjGitPRViaOwnRepo.png" width="664" height="100" alt="IntelliJ Git Menu"></p>
       <p>Fill in a title and comment for your PR:<br>
       <a href="images/IntelliJ/IjGitPRCreate.png">
-      <img src="images/IntelliJ/IjGitPRCreate.png" width="265" height="120" alt="IntelliJ Git Create PR"></a>
+      <img src="images/IntelliJ/IjGitPRCreate.png" width="531" height="241" alt="IntelliJ Git Create PR"></a>
       </p>
       <p>Unless your change is intended for a special branch like a previous release, you would set the PR Target
       Branch to "master" as shown above. Otherwise, use the combo box to change the branch where you want your new
       changes to be added:<br>
-      <a href="images/IntelliJ/IjCreatePrSelectBaseBranch.png">
-      <img src="images/IntelliJ/IjCreatePrSelectBaseBranch.png" width="300" height="168"
+      <a href="images/IntelliJ/IjGitCreatePrSelectBaseBranch.png">
+      <img src="images/IntelliJ/IjGitCreatePrSelectBaseBranch.png" width="300" height="168"
       alt="IntelliJ Git Create PR Base Branch"></a>
       </p>
       <p>To create a PR from GitHub web - outside IntelliJ - start by
-        signing on to the <a href="http://github.com">GitHub web
-          site</a>, selecting your repository &amp; branch and clicking
-        the <a href="gitdeveloper.shtml#pull">Pull Request
-          button</a>. For more info, see the
-        <a href="gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
+      signing on to the <a href="http://github.com">GitHub web
+      site</a>, selecting your repository &amp; branch and clicking
+      the <a href="gitdeveloper.shtml#pull">Pull Request
+      button</a>. For more info, see the
+      <a href="gitdeveloper.shtml#pull">Git Developer Help</a> page.</p>
 
       <a name="tricks" id="tricks"></a>
       <h3>Tricks</h3>
@@ -764,7 +764,7 @@
            alt="IntelliJ Bundle edit window"></a></p>
 
       <p>When you open a specific language file, at the bottom of the screen you can switch views by clicking the
-        <b>Resource Bundle</b> or the <b>Text</b> tab:<br>
+      <b>Resource Bundle</b> or the <b>Text</b> tab:<br>
       <img src="images/IntelliJ/IjResourceJump.png" width="396" height="169" alt="IntelliJ Bundle edit menu">
 
       <h4>Reset HEAD</h4>
@@ -803,9 +803,9 @@
       <h4>Error: Can't start Git</h4>
 
       <p>On macOS, when you run into this error, usually when starting IntelliJ for the
-        first time after a system update:<br>
-        <a href="images/IntelliJ/IjXcodeGitProblem1.png">
-          <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a></p>
+      first time after a system update:<br>
+      <a href="images/IntelliJ/IjXcodeGitProblem1.png">
+      <img src="images/IntelliJ/IjXcodeGitProblem1.png" width="373" height="110" alt="IntelliJ Git error"></a></p>
       <ol>
         <li>Quit and restart IntelliJ</li>
         <li>If that does not fix it, quit IntelliJ and start the Apple Xcode application.<br>
@@ -845,6 +845,7 @@
       reference</a> and other <a href=
       "https://www.jetbrains.com/idea/help/using-online-resources.html">
       resources</a> for more specific information on using this IDE.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

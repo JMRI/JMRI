@@ -45,6 +45,24 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         hideIcons();
     }
 
+    @Override
+    protected void hideIcons() {
+        if (_detectPanel != null) {
+            _detectPanel.setVisible(true);
+            _detectPanel.invalidate();
+        }
+        super.hideIcons();
+    }
+
+    @Override
+    protected void showIcons() {
+        if (_detectPanel != null) {
+            _detectPanel.setVisible(false);
+            _detectPanel.invalidate();
+        }
+        super.showIcons();
+    }
+
     /**
      * Init for update of existing track block.
      * _bottom3Panel has "Update Panel" button put onto _bottom1Panel.

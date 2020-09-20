@@ -10,7 +10,7 @@
     <meta name="author" content="Matt Harris">
     <meta name="keywords" content="JMRI help Audio Add Edit">
 
-<!--#include virtual="/Style" -->
+<!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>

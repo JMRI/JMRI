@@ -5,14 +5,12 @@ import jmri.implementation.AbstractLight;
 
 import javax.annotation.Nonnull;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * JMRIClient implementation of the Light interface.
+ * MQTT implementation of the Light interface.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2008
  * @author Paul Bender Copyright (C) 2010
+ * @author Fredrik Elestedt  Copyright (C) 2020
  */
 public class MqttLight extends AbstractLight implements MqttEventListener {
     private final MqttAdapter mqttAdapter;
@@ -130,12 +128,12 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
 
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
-        if (!receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic)) {
+        if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
             log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
             return;
         }        
         parser.beanFromPayload(this, message, receivedTopic);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttLight.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttLight.class);
 }

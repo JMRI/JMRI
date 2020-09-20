@@ -63,8 +63,9 @@
       this window. Your changes to the Preferences don't take
       effect until the program is stopped and restarted, so the
       program will prompt you to do that after saving the
-      Preferences.</p><a name="Connection" id="Connection"></a>
+      Preferences.</p>
 
+      <a name="Connection" id="Connection"></a>
       <h2>Connections</h2>You can select any of the various JMRI
       layout Connections here.
 
@@ -77,11 +78,11 @@
       Connection that you are using. You will then be presented
       with a series of most commonly required settings that need to
       be set. If you need to change some of the more advanced
-      settings then connection then check the "Additional
-      Connection Settings" box and this will provide you with
-      further details.</p>
+      settings for this connection, check the "Additional
+      Connection Settings" box (where available).
+      </p>
 
-      <p>To add an additional layout Connection, in the Connections
+      <p>To add an new layout Connection, in the Connections
       pane click on the tab with a "+", this will then present you
       with a fresh connection tab. To remove a Connection, in the
       System Manufacturer drop down list, select <strong>(none
@@ -106,8 +107,7 @@
           MERG Connection, the Defaults pane lets you select which connection
           you want to use for a particular purpose. For example, you 
           can select one connection (LocoNet in the figure) for train throttles
-          and consists, 
-          while using a different one (SPROG in the figure) for the 
+          and consists, while using a different one (SPROG in the figure) for the
           service mode programming track.</p>
       <p>For most Layout objects there is no default connection.
           Every time you create a Turnout, Signal or Sensor, 

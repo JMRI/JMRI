@@ -7,9 +7,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
- * SpeedoSystemConnectionMemoTest.java
- * <p>
- * Test for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class
+ * Test for the jmri.jmrix.bachrus.SpeedoSystemConnectionMemo class.
  *
  * @author Paul Bender Copyright (C) 2016
  */

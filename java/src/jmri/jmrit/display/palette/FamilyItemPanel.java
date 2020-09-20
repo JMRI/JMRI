@@ -82,6 +82,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
+            makeShowIconsButton();
             super.init();
         }
         hideIcons();
@@ -117,9 +118,11 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _update = false;
         _suppressDragging = true; // no dragging in circuitBuilder
         initIconFamiliesPanel();
+        remove(_bottomPanel);
         bottomPanel.add(makeShowIconsButton(), 0);
         add(bottomPanel);
         _initialized = true;
+        hideIcons();
     }
 
     /**
@@ -301,8 +304,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (mapFamily.equals(fam)) {
                     if (_update) {
                         JOptionPane.showMessageDialog(_frame,
-                                Bundle.getMessage("DuplicateFamilyName", _itemType,
-                                        Bundle.getMessage("CannotUseName", Bundle.getMessage("unNamed"))),
+                                Bundle.getMessage("DuplicateFamilyName", mapFamily, _itemType,
+                                        Bundle.getMessage("UseAnotherName")),
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         mapFamily = null;
                         nameOK = false;

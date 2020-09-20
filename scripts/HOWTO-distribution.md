@@ -46,16 +46,20 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 4.21.1 4.21.2 4.21.2
+  ./scripts/update-HOWTO.sh 4.19.9 4.21.1 4.21.2
 ```
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
 
-- To check the script ran OK, the following should be the release you're doing now: 4.21.1
+- To check the script ran OK, the following should be the release you're doing now: 4.19.9
 
 ================================================================================
 ## Notification
 
-- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-4.21.1". (This might already exist, if it was properly created at the end of the last build cycle)
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.21.1". (This might already exist, if it was properly created at the end of the last build cycle)  Typical content:
+```
+This is the next release in the 4.22 cycle. It's intended to be created from the HEAD of the master branch.
+```
+
 
 ================================================================================
 ## Update Content
@@ -172,6 +176,7 @@ git push github
         git checkout master
         git pull 
         cp jmri4.21.1.shtml jmri4.22.2.shtml
+        $EDITOR jmri4.22.2.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old (see below)
@@ -184,7 +189,7 @@ git push github
 
 - Check if any section headings were added to the release-note fragment
 
-    diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.19-master.shtml
+    diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.21-master.shtml
     
     If there were, update the master
 
@@ -201,7 +206,7 @@ git push github
 
 - Create the new draft note section
 
-    cp help/en/releasenotes/jmri4.19-master.shtml help/en/releasenotes/current-draft-note.shtml
+    cp help/en/releasenotes/jmri4.21-master.shtml help/en/releasenotes/current-draft-note.shtml
     cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
     git commit -m"start for 4.22.2 release note" help/en/releasenotes/*.shtml
     git push github
@@ -217,7 +222,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-03-01+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2020-06-01+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -243,7 +248,7 @@ where the date at the end should be the date (and optionally time) of the last r
 
 - (MANUAL STEP FOR NOW)  Update the <version> element in pom.xml to say the next release:
 ```
-    <version>4.22.2</version>
+    <version>4.21.2-SNAPSHOT</version>
 ```
 Commit, and push back directly to master (this should be the only change, and has to be before the next step)
 ```
@@ -328,7 +333,7 @@ https://builds.jmri.org/jenkins/job/testreleases/job/4.21.1/
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
 
-Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do more checking of the development releases leading up to the test release build)
+Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to better functional checking of the development releases leading up to the test release build)
 
 ```
 
@@ -358,6 +363,10 @@ If somebody has merged their change into master (or it's branched from master la
 - Merge master into the release-4.21.1 branch.  This will bring _everything_ that's been merged in, so remember to update the version markers on those PRs.  Effectively, you've just started the release process later.  Note that the `release.properties` and `pom.xml` files will have the wrong minor number in them:  You'll have to edit and commit that to get the right number in the release.
 
 - `git cherrypick` just the changes you want. *This is not the recommended approach, as it is error-prone; we've had to withdraw releases in the past due to this.*  Read the documentation on that command carefully and double check your work. If possible, check the contents of the release branch on the GitHub web site to make sure only the changes you wanted were included.
+
+- Make sure that the 4.21.1 milestone is on the original PR
+
+- If the PR has any changes to the help/en/releasenotes directory, go through the steps to update the master if any section(s) were added, and to move notes and warnings to the 4.21.1 release note.  Merge these as needed to the release-4.21.1 and master branches
 
 ====================================================================================
 ## Create zipped .properties (experimental)
@@ -472,7 +481,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.22.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.20 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 4.22 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v4.21.1 for release 4.21.1) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.21.1) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -526,7 +535,7 @@ git push github
 
 - Mail announcement to jmriusers@groups.io
 
-    Subject is "Test version 4.21.1 of JMRI/DecoderPro is available for download" or "JMRI 4.20 is available for download"
+    Subject is "Test version 4.21.1 of JMRI/DecoderPro is available for download" or "JMRI 4.22 is available for download"
 
     Content:
     

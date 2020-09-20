@@ -78,20 +78,36 @@ public class JUnitUtil {
     static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
     
     /**
+     * Default standard time step (in mSec) when looping in a waitFor operation.
+     */    
+    static final private int DEFAULT_WAITFOR_DELAY_STEP = 5;
+
+    /**
      * Standard time step (in mSec) when looping in a waitFor operation.
      * <p>
      * Public in case modification is needed from a test or script.
+     * This value is always reset to {@value #DEFAULT_WAITFOR_DELAY_STEP}
+     * during setUp().
      */    
-    static final public int WAITFOR_DELAY_STEP = 5;
+    static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
+
+    /**
+     * Default maximum time to wait before failing a waitFor operation.
+     * <p>
+     * The default value is really long, but that only matters when the test
+     * is failing anyway, and some of the LayoutEditor/SignalMastLogic tests
+     * are slow. But too long will cause CI jobs to time out before this logs
+     * the error....
+     */    
+    static final private int DEFAULT_WAITFOR_MAX_DELAY = 10000;
+
     /**
      * Maximum time to wait before failing a waitFor operation.
-     * The default value is really long, but that only matters when the test is failing anyway, 
-     * and some of the LayoutEditor/SignalMastLogic tests are slow. But too long will cause CI jobs
-     * to time out before this logs the error....
      * <p>
      * Public in case modification is needed from a test or script.
+     * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
      */    
-    static final public int WAITFOR_MAX_DELAY = 10000;
+    static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
      * When true, prints each setUp method to help identify which tests include a failure.
@@ -249,6 +265,9 @@ public class JUnitUtil {
      * be present in the {@code @Before} routine.
      */
     public static void setUp() {
+        WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
+        WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
+        
         // all the setup for a MockInstanceManager applies
         setUpLoggingAndCommonProperties();
 
@@ -271,7 +290,7 @@ public class JUnitUtil {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
             if (duration > checkTestDurationMax) {
                 // test too long, log that
-                System.err.println("Test in "+getTestClassName()+" duration "+duration+" msec exceeded limit "+checkTestDurationMax);
+                System.err.println("Test in "+getTestClassName()+" duration "+duration+" ms exceeded limit "+checkTestDurationMax);
             }
         }
         // Log and/or check the use of setUp and tearDown
@@ -464,7 +483,7 @@ public class JUnitUtil {
      * this will have to do.
      * <p>
      *
-     * @param time Delay in msec
+     * @param time Delay in milliseconds
      */
     static public void waitFor(int time) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {

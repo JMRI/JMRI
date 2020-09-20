@@ -146,7 +146,7 @@ public class Portal {
         }
         Portal p = jmri.InstanceManager.getDefault(PortalManager.class).getPortal(newName);
         if (p != null) {
-            return Bundle.getMessage("DuplicatePortalName", oldName, p.getDescription());
+            return Bundle.getMessage("DuplicatePortalName", newName, p.getDescription());
         }
         _name = newName;
         InstanceManager.getDefault(WarrantManager.class).portalNameChange(oldName, newName);
@@ -688,7 +688,8 @@ public class Portal {
         }
         if (_toBlock != null) {
             _toBlock.removePortal(this);
-        } else if (_fromBlock != null) {
+        }
+        if (_fromBlock != null) {
             _fromBlock.removePortal(this);
         }
         pcs.firePropertyChange("portalDelete", true, false);

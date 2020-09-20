@@ -42,6 +42,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     public PortalIcon(Editor editor) {
         super(editor);
+        _status = PortalIcon.HIDDEN;
         makeIconMap();
     }
 
@@ -243,39 +244,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return false;
     }
 
-    private void setPositionableMenu(JPopupMenu popup) {
-        JCheckBoxMenuItem lockItem = new JCheckBoxMenuItem(Bundle.getMessage("LockPosition"));
-        lockItem.setSelected(!isPositionable());
-        lockItem.addActionListener(new ActionListener() {
-            Positionable comp;
-            JCheckBoxMenuItem checkBox;
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                comp.setPositionable(!checkBox.isSelected());
-            }
-
-            ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
-                comp = pos;
-                checkBox = cb;
-                return this;
-            }
-        }.init(this, lockItem));
-        popup.add(lockItem);
-    }
-
-    private void setShowCoordinatesMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLocationXY", getX(), getY()));
-        edit.addActionListener(CoordinateEdit.getCoordinateEditAction(this));
-        popup.add(edit);
-    }
-
-    private void setDisplayLevelMenu(JPopupMenu popup) {
-        JMenu edit = new JMenu(Bundle.getMessage("EditLevel_", getDisplayLevel()));
-        edit.addActionListener(CoordinateEdit.getLevelEditAction(this));
-        popup.add(edit);
-    }
-
     private void setRemoveMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
             @Override
@@ -292,17 +260,25 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     @Override
     public boolean showPopUp(JPopupMenu popup) {
         popup.add(getNameString());
-        setPositionableMenu(popup);
+        _editor.setPositionableMenu(this, popup);
         if (isPositionable()) {
-            setShowCoordinatesMenu(popup);
+            _editor.setShowCoordinatesMenu(this, popup);
         }
-        setDisplayLevelMenu(popup);
+        _editor.setDisplayLevelMenu(this, popup);
         popup.addSeparator();
         popup.add(CoordinateEdit.getScaleEditAction(this));
         popup.add(CoordinateEdit.getRotateEditAction(this));
         popup.addSeparator();
         setRemoveMenu(popup);
         return true;
+    }
+
+    @Override 
+    public void setLocation(int x, int y ) {
+        ControlPanelEditor cpe = (ControlPanelEditor)_editor;
+        if (cpe.getCircuitBuilder().portalIconMove(this, x, y)) {
+            super.setLocation(x, y);
+        }
     }
 
     @Override

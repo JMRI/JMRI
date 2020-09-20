@@ -111,6 +111,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged"; // NOI18N
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
+    public static final String LOCATION_REPORTER_PROPERTY = "locationReporterChange"; // NOI18N
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -1277,6 +1278,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         }
         return false;
     }
+    
+    public boolean hasReporters() {
+        for (Track track : getTracksList()) {
+            if (track.getReporter() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /*
      * set the jmri.Reporter object associated with this location.
@@ -1287,7 +1297,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         Reporter old = _reader;
         _reader = r;
         if (old != r) {
-            setDirtyAndFirePropertyChange("reporterChange", old, r);
+            setDirtyAndFirePropertyChange(LOCATION_REPORTER_PROPERTY, old, r);
         }
     }
 
@@ -1298,6 +1308,13 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      */
     public Reporter getReporter() {
         return _reader;
+    }
+    
+    public String getReporterName() {
+        if (getReporter() != null) {
+            return getReporter().getDisplayName();
+        }
+        return "";
     }
 
     public void dispose() {

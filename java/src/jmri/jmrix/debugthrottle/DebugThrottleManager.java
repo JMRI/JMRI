@@ -89,10 +89,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
-                , SpeedStepMode.NMRA_DCC_28
-                , SpeedStepMode.NMRA_DCC_27
-                , SpeedStepMode.NMRA_DCC_14);
+        return EnumSet.allOf(SpeedStepMode.class);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);

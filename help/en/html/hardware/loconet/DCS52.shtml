@@ -359,7 +359,7 @@
         quit the program and restart.</li>
       </ul>
 
-      <p>The "connection" preferences should look similar to this image:</p>
+      <p>The "Connection" preferences should look similar to this image:</p>
 
       <img src="images/DCS52LocoNetInterfaceConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a LocoNet interface" width="500">
 
@@ -389,7 +389,7 @@
       device.
 
       <p>You don't need to install a separate driver when using
-      current versions of Mac OS X or Linux.</p>
+      current versions of MacOS or Linux.</p>
 
       <h1><a name="SeeAlso" id="SeeAlso">See Also</a></h1>
       <ul>

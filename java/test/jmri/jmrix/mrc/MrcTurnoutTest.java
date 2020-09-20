@@ -18,7 +18,7 @@ public class MrcTurnoutTest {
         memo.setMrcTrafficController(tc);
         jmri.InstanceManager.store(memo, MrcSystemConnectionMemo.class);
         MrcTurnout t = new MrcTurnout(5,tc,"test");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @BeforeEach
