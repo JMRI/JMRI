@@ -343,7 +343,7 @@ public class LongAddrVariableValue extends VariableValue
                 default:  // unexpected!
                     log.error("Unexpected state found: {}", _progState);
                     _progState = IDLE;
-                    //return;
+                    return;
             }
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(getCvNum());
