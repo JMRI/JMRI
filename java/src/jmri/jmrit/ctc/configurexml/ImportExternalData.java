@@ -99,7 +99,6 @@ public class ImportExternalData {
                         Element level3 = level2.getChild("object");
 
                         // This is were a new CodeButtonHandleData starts
-                        log.info("=== new cbhd ===");
                         fields = new HashMap<>();
                         for (Element level4 : level3.getChildren()) {
                             getField(level4);
@@ -160,7 +159,7 @@ public class ImportExternalData {
 
 
     static void loadCodeButtonHandlerData(HashMap<String, String> fieldList) {
-    log.info("------------- CBHD ------------");
+    log.debug("------------- CBHD ------------");
         String value = fieldList.get("_mUniqueID");
         int _mUniqueID = loadInt(value);
 
@@ -179,7 +178,7 @@ public class ImportExternalData {
         cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
 
 
-    log.info("------------- Code ------------");
+    log.debug("------------- Code ------------");
 
         // Code section
         value = fieldList.get("_mCodeButtonInternalSensor");
@@ -199,7 +198,7 @@ public class ImportExternalData {
 
         value = fieldList.get("_mCodeButtonDelayTime");
         if (value != null) cbhd._mCodeButtonDelayTime = loadInt(value);
-    log.info("------------- SIDI ------------");
+    log.debug("------------- SIDI ------------");
 
         // SIDI section
         value = fieldList.get("_mSIDI_Enabled");
@@ -229,7 +228,7 @@ public class ImportExternalData {
         value = fieldList.get("_mSIDI_RightLeftTrafficSignalsCSVList");
         if (value != null) cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(value);
 
-    log.info("------------- SIDL ------------");
+    log.debug("------------- SIDL ------------");
         // SIDL section
         value = fieldList.get("_mSIDL_Enabled");
         if (value != null) cbhd._mSIDL_Enabled = loadBoolean(value);
@@ -243,7 +242,7 @@ public class ImportExternalData {
         value = fieldList.get("_mSIDL_RightInternalSensor");
         if (value != null) cbhd._mSIDL_RightInternalSensor = loadSensor(value, true);
 
-    log.info("------------- SWDI ------------");
+    log.debug("------------- SWDI ------------");
         // SWDI section
         value = fieldList.get("_mSWDI_Enabled");
         if (value != null) cbhd._mSWDI_Enabled = loadBoolean(value);
@@ -272,7 +271,7 @@ public class ImportExternalData {
         value = fieldList.get("_mSWDI_GUICrossoverLeftHand");
         if (value != null) cbhd._mSWDI_GUICrossoverLeftHand = loadBoolean(value);
 
-    log.info("------------- SWDL ------------");
+    log.debug("------------- SWDL ------------");
         // SWDL section
         value = fieldList.get("_mSWDL_Enabled");
         if (value != null) cbhd._mSWDL_Enabled = loadBoolean(value);
@@ -280,7 +279,7 @@ public class ImportExternalData {
         value = fieldList.get("_mSWDL_InternalSensor");
         if (value != null) cbhd._mSWDL_InternalSensor = loadSensor(value, true);
 
-    log.info("-------------  CO  ------------");
+    log.debug("-------------  CO  ------------");
         // CO section
         value = fieldList.get("_mCO_Enabled");
         if (value != null) cbhd._mCO_Enabled = loadBoolean(value);
@@ -291,7 +290,7 @@ public class ImportExternalData {
         value = fieldList.get("_mCO_GroupingsListString");
         if (value != null) cbhd._mCO_GroupingsList = getCallOnList(value);
 
-    log.info("------------- TRL  ------------");
+    log.debug("------------- TRL  ------------");
         // TRL section
         value = fieldList.get("_mTRL_Enabled");
         if (value != null) cbhd._mTRL_Enabled = loadBoolean(value);
@@ -302,7 +301,7 @@ public class ImportExternalData {
         value = fieldList.get("_mTRL_RightTrafficLockingRulesSSVList");
         if (value != null) cbhd._mTRL_RightTrafficLockingRules = getTrafficLocking(value);
 
-    log.info("------------- TUL  ------------");
+    log.debug("------------- TUL  ------------");
         // TUL section
         value = fieldList.get("_mTUL_Enabled");
         if (value != null) cbhd._mTUL_Enabled = loadBoolean(value);
@@ -349,7 +348,7 @@ public class ImportExternalData {
             cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = feedback;
         }
 
-    log.info("-------------  IL  ------------");
+    log.debug("-------------  IL  ------------");
         // IL section
         value = fieldList.get("_mIL_Enabled");
         if (value != null) cbhd._mIL_Enabled = loadBoolean(value);

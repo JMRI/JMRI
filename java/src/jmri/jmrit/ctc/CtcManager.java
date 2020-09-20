@@ -90,9 +90,9 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public void putNBHSensor(String name, NBHSensor nbh) {
         NBHSensor oldSensor = nbhSensors.put(name, nbh);
-        log.info("sensor put = {} -- {}", name, nbh);
+        log.debug("sensor put = {} -- {}", name, nbh);
         if (oldSensor != null) {
-            log.info("---- duplicate sensor: {} -- {}", name, nbh);
+            log.debug("---- duplicate sensor: {} -- {}", name, nbh);
             // cleanup after replace an existing sensor may have a different name
         }
 //         nbh.getBean().addPropertyChangeListener(this, nbh.getHandleName(), "somethng");
@@ -107,9 +107,9 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public void putNBHSignal(String name, NBHSignal nbh) {
         NBHSignal oldSignal = nbhSignals.put(name, nbh);
-        log.info("signal put = {} -- {}", name, nbh);
+        log.debug("signal put = {} -- {}", name, nbh);
         if (oldSignal != null) {
-            log.info("---- duplicate signal: {} -- {}", name, nbh);
+            log.debug("---- duplicate signal: {} -- {}", name, nbh);
             // cleanup after replace
         }
     }
@@ -121,9 +121,9 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public void putNBHTurnout(String name, NBHTurnout nbh) {
         NBHTurnout oldTurnout = nbhTurnouts.put(name, nbh);
-        log.info("turnout put = {} -- {}", name, nbh);
+        log.debug("turnout put = {} -- {}", name, nbh);
         if (oldTurnout != null) {
-            log.info("---- duplicate turnout: {} -- {}", name, nbh);
+            log.debug("---- duplicate turnout: {} -- {}", name, nbh);
             // cleanup after replace
         }
     }
@@ -135,9 +135,9 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public void putBlock(String name, NamedBeanHandle<Block> block) {
         NamedBeanHandle<Block> oldBlock = blocks.put(name, block);
-        log.info("block put = {} -- {}", name, block);
+        log.debug("block put = {} -- {}", name, block);
         if (oldBlock != null) {
-            log.info("---- duplicate block: {} -- {}", name, block);
+            log.debug("---- duplicate block: {} -- {}", name, block);
             // cleanup after replace
         }
     }

@@ -357,7 +357,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             }
             if (lvl1.getName().equals("ctcCodeButtonData")) {
                 // Create basic CodeButtonHandlerData
-    log.info("------------- CBHD ------------");
+    log.debug("------------- CBHD ------------");
                 int _mUniqueID = loadInt(lvl1.getChild("UniqueID"));
                 int _mSwitchNumber = loadInt(lvl1.getChild("SwitchNumber"));
                 int _mSignalEtcNumber = loadInt(lvl1.getChild("SignalEtcNumber"));
@@ -368,7 +368,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                         _mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber, cm.getProgramProperties());
                 cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
 
-    log.info("------------- Code ------------");
+    log.debug("------------- Code ------------");
 
                 // Code section
                 cbhd._mCodeButtonInternalSensor = loadSensor(lvl1.getChild("CodeButtonInternalSensor"), true);
@@ -377,7 +377,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mOSSectionSwitchSlavedToUniqueID = loadInt(lvl1.getChild("OSSectionSwitchSlavedToUniqueID"));
                 cbhd._mGUIGeneratedAtLeastOnceAlready = loadBoolean(lvl1.getChild("GUIGeneratedAtLeastOnceAlready"));
                 cbhd._mCodeButtonDelayTime = loadInt(lvl1.getChild("CodeButtonDelayTime"));
-    log.info("------------- SIDI ------------");
+    log.debug("------------- SIDI ------------");
 
                 // SIDI section
                 cbhd._mSIDI_Enabled = loadBoolean(lvl1.getChild("SIDI_Enabled"));
@@ -390,14 +390,14 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(lvl1.getChild("SIDI_LeftRightTrafficSignals"));
                 cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(lvl1.getChild("SIDI_RightLeftTrafficSignals"));
 
-    log.info("------------- SIDL ------------");
+    log.debug("------------- SIDL ------------");
                 // SIDL section
                 cbhd._mSIDL_Enabled = loadBoolean(lvl1.getChild("SIDL_Enabled"));
                 cbhd._mSIDL_LeftInternalSensor = loadSensor(lvl1.getChild("SIDL_LeftInternalSensor"), true);
                 cbhd._mSIDL_NormalInternalSensor = loadSensor(lvl1.getChild("SIDL_NormalInternalSensor"), true);
                 cbhd._mSIDL_RightInternalSensor = loadSensor(lvl1.getChild("SIDL_RightInternalSensor"), true);
 
-    log.info("------------- SWDI ------------");
+    log.debug("------------- SWDI ------------");
                 // SWDI section
                 cbhd._mSWDI_Enabled = loadBoolean(lvl1.getChild("SWDI_Enabled"));
                 cbhd._mSWDI_NormalInternalSensor = loadSensor(lvl1.getChild("SWDI_NormalInternalSensor"), true);
@@ -409,24 +409,24 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mSWDI_GUITurnoutLeftHand = loadBoolean(lvl1.getChild("SWDI_GUITurnoutLeftHand"));
                 cbhd._mSWDI_GUICrossoverLeftHand = loadBoolean(lvl1.getChild("SWDI_GUICrossoverLeftHand"));
 
-    log.info("------------- SWDL ------------");
+    log.debug("------------- SWDL ------------");
                 // SWDL section
                 cbhd._mSWDL_Enabled = loadBoolean(lvl1.getChild("SWDL_Enabled"));
                 cbhd._mSWDL_InternalSensor = loadSensor(lvl1.getChild("SWDL_InternalSensor"), true);
 
-    log.info("-------------  CO  ------------");
+    log.debug("-------------  CO  ------------");
                 // CO section
                 cbhd._mCO_Enabled = loadBoolean(lvl1.getChild("CO_Enabled"));
                 cbhd._mCO_CallOnToggleInternalSensor = loadSensor(lvl1.getChild("CO_CallOnToggleInternalSensor"), true);
                 cbhd._mCO_GroupingsList = getCallOnList(lvl1.getChild("CO_GroupingsList"));
 
-    log.info("------------- TRL  ------------");
+    log.debug("------------- TRL  ------------");
                 // TRL section
                 cbhd._mTRL_Enabled = loadBoolean(lvl1.getChild("TRL_Enabled"));
                 cbhd._mTRL_LeftTrafficLockingRules = getTrafficLocking(lvl1.getChild("TRL_LeftRules"));
                 cbhd._mTRL_RightTrafficLockingRules = getTrafficLocking(lvl1.getChild("TRL_RightRules"));
 
-    log.info("------------- TUL  ------------");
+    log.debug("------------- TUL  ------------");
                 // TUL section
                 cbhd._mTUL_Enabled = loadBoolean(lvl1.getChild("TUL_Enabled"));
                 cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorLockToggle"), true);
@@ -438,7 +438,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(lvl1.getChild("TUL_LockImplementation")));
                 loadAdditionalTurnouts(lvl1.getChild("TUL_AdditionalExternalTurnouts"), cbhd);
 
-    log.info("-------------  IL  ------------");
+    log.debug("-------------  IL  ------------");
                 // IL section
                 cbhd._mIL_Enabled = loadBoolean(lvl1.getChild("IL_Enabled"));
                 cbhd._mIL_Signals = getSignalList(lvl1.getChild("IL_Signals"));
