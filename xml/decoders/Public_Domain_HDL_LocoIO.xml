@@ -57,7 +57,7 @@
     </revision>
     <revision>
       <revnumber>4</revnumber>
-      <date>2020-09-19</date>
+      <date>2020-09-20</date>
       <authorinitials>EB</authorinitials>
       <revremark>Changed address field labels hi/lo to function like 81/1 entry
         Use compositeVal type values (ports 1-16), add LocoBooster,
@@ -69,7 +69,7 @@
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
-  <version author="Egbert Broerse" version="4" lastUpdated="20200919"/>
+  <version author="Egbert Broerse" version="4" lastUpdated="20200920"/>
 
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
@@ -5875,7 +5875,7 @@
         <compositeVal>
 
           <!--          Initial label?-->
-<!--          <compositeChoice choice="Select...">-->
+<!--          <compositeChoice choice="Port Mode Changed">-->
 <!--            <choice>Changed</choice>-->
 <!--            <choice xml:lang="de">Geändert</choice>-->
 <!--            <choice xml:lang="nl">Gewijzigd</choice>-->
@@ -5956,7 +5956,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port1 Config" value="95"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -5968,7 +5968,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="91"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6189,7 +6189,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port1 Config" value="192"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6204,7 +6204,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port1 Config" value="208"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6217,29 +6217,23 @@
             <compositeSetting label="Port1 OccuMode" value="1"/>
             <compositeSetting label="Port2 Config" value="0"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port2 Address" value="1"/>-->
             <compositeSetting label="Port3 Config" value="0"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port3 Address" value="1"/>-->
             <compositeSetting label="Port4 Config" value="0"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port4 Address" value="1"/>-->
           </compositeChoice>
           <compositeChoice choice="LocoView Even" include="153,154">
             <choice>Output: LocoView (even address)</choice>
             <choice xml:lang="nl">Uitgang: LocoView (even adres)</choice>
             <compositeSetting label="Port1 Config" value="224"/>
-            <compositeSetting label="Port1 Value2A" value="1"/>
+            <compositeSetting label="Port1 Value2A" value="2"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
             <compositeSetting label="Port2 Config" value="0"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port2 Address" value="1"/>-->
             <compositeSetting label="Port3 Config" value="0"/>
             <compositeSetting label="Port3 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port3 Address" value="1"/>-->
             <compositeSetting label="Port4 Config" value="0"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
-            <!--                <compositeSetting label="Port4 Address" value="1"/>-->
           </compositeChoice>
 
         </compositeVal>
@@ -6370,7 +6364,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port2 Config" value="95"/>
-            <compositeSetting label="Port2 Value2A" value="1"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -6382,7 +6376,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port2 Config" value="91"/>
-            <compositeSetting label="Port2 Value2A" value="1"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6603,7 +6597,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port2 Config" value="192"/>
-            <compositeSetting label="Port2 Value2A" value="1"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6618,7 +6612,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port2 Config" value="208"/>
-            <compositeSetting label="Port2 Value2A" value="1"/>
+            <compositeSetting label="Port2 Value2A" value="2"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6748,7 +6742,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port3 Config" value="95"/>
-            <compositeSetting label="Port3 Value2A" value="1"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -6760,7 +6754,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port3 Config" value="91"/>
-            <compositeSetting label="Port3 Value2A" value="1"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6981,7 +6975,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port3 Config" value="192"/>
-            <compositeSetting label="Port3 Value2A" value="1"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -6996,7 +6990,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port3 Config" value="208"/>
-            <compositeSetting label="Port3 Value2A" value="1"/>
+            <compositeSetting label="Port3 Value2A" value="2"/>
             <compositeSetting label="Port3 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7118,7 +7112,7 @@
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High" exclude="135,139,140">
-            <choice>Input: Block Detector - active High (odd)</choice>
+            <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port4 Config" value="95"/>
             <compositeSetting label="Port4 Value2A" value="0"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
@@ -7126,7 +7120,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port4 Config" value="95"/>
-            <compositeSetting label="Port4 Value2A" value="1"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -7138,7 +7132,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port4 Config" value="91"/>
-            <compositeSetting label="Port4 Value2A" value="1"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7359,7 +7353,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port4 Config" value="192"/>
-            <compositeSetting label="Port4 Value2A" value="1"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7374,7 +7368,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port4 Config" value="208"/>
-            <compositeSetting label="Port4 Value2A" value="1"/>
+            <compositeSetting label="Port4 Value2A" value="2"/>
             <compositeSetting label="Port4 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7505,7 +7499,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port5 Config" value="95"/>
-            <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -7517,7 +7511,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port5 Config" value="91"/>
-            <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7738,7 +7732,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port5 Config" value="192"/>
-            <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7753,7 +7747,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port5 Config" value="208"/>
-            <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -7775,7 +7769,7 @@
             <choice>Output: LocoView (even address)</choice>
             <choice xml:lang="nl">Uitgang: LocoView (even adres)</choice>
             <compositeSetting label="Port5 Config" value="224"/>
-            <compositeSetting label="Port5 Value2A" value="1"/>
+            <compositeSetting label="Port5 Value2A" value="2"/>
             <compositeSetting label="Port5 OccuMode" value="1"/>
             <compositeSetting label="Port6 Config" value="0"/>
             <compositeSetting label="Port6 Value2A" value="0"/>
@@ -7939,7 +7933,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port6 Config" value="95"/>
-            <compositeSetting label="Port6 Value2A" value="1"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -7951,7 +7945,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port6 Config" value="91"/>
-            <compositeSetting label="Port6 Value2A" value="1"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8172,7 +8166,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port6 Config" value="192"/>
-            <compositeSetting label="Port6 Value2A" value="1"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8187,7 +8181,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port6 Config" value="208"/>
-            <compositeSetting label="Port6 Value2A" value="1"/>
+            <compositeSetting label="Port6 Value2A" value="2"/>
             <compositeSetting label="Port6 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8371,7 +8365,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port7 Config" value="95"/>
-            <compositeSetting label="Port7 Value2A" value="1"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -8383,7 +8377,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port7 Config" value="91"/>
-            <compositeSetting label="Port7 Value2A" value="1"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8604,7 +8598,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port7 Config" value="192"/>
-            <compositeSetting label="Port7 Value2A" value="1"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8619,7 +8613,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port7 Config" value="208"/>
-            <compositeSetting label="Port7 Value2A" value="1"/>
+            <compositeSetting label="Port7 Value2A" value="2"/>
             <compositeSetting label="Port7 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -8799,7 +8793,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port8 Config" value="95"/>
-            <compositeSetting label="Port8 Value2A" value="1"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -8811,7 +8805,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port8 Config" value="91"/>
-            <compositeSetting label="Port8 Value2A" value="1"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9032,7 +9026,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port8 Config" value="192"/>
-            <compositeSetting label="Port8 Value2A" value="1"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9047,7 +9041,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port8 Config" value="208"/>
-            <compositeSetting label="Port8 Value2A" value="1"/>
+            <compositeSetting label="Port8 Value2A" value="2"/>
             <compositeSetting label="Port8 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9203,7 +9197,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port9 Config" value="95"/>
-            <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -9215,7 +9209,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port9 Config" value="91"/>
-            <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9436,7 +9430,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port9 Config" value="192"/>
-            <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9451,7 +9445,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port9 Config" value="208"/>
-            <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9473,7 +9467,7 @@
             <choice>Output: LocoView (even address)</choice>
             <choice xml:lang="nl">Uitgang: LocoView (even adres)</choice>
             <compositeSetting label="Port9 Config" value="224"/>
-            <compositeSetting label="Port9 Value2A" value="1"/>
+            <compositeSetting label="Port9 Value2A" value="2"/>
             <compositeSetting label="Port9 OccuMode" value="1"/>
             <compositeSetting label="Port10 Config" value="0"/>
             <compositeSetting label="Port10 Value2A" value="0"/>
@@ -9636,7 +9630,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port10 Config" value="95"/>
-            <compositeSetting label="Port10 Value2A" value="1"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -9648,7 +9642,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port10 Config" value="91"/>
-            <compositeSetting label="Port10 Value2A" value="1"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9869,7 +9863,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port10 Config" value="192"/>
-            <compositeSetting label="Port10 Value2A" value="1"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -9884,7 +9878,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port10 Config" value="208"/>
-            <compositeSetting label="Port10 Value2A" value="1"/>
+            <compositeSetting label="Port10 Value2A" value="2"/>
             <compositeSetting label="Port10 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10040,7 +10034,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port11 Config" value="95"/>
-            <compositeSetting label="Port11 Value2A" value="1"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -10052,7 +10046,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port11 Config" value="91"/>
-            <compositeSetting label="Port11 Value2A" value="1"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10273,7 +10267,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port11 Config" value="192"/>
-            <compositeSetting label="Port11 Value2A" value="1"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10288,7 +10282,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port11 Config" value="208"/>
-            <compositeSetting label="Port11 Value2A" value="1"/>
+            <compositeSetting label="Port11 Value2A" value="2"/>
             <compositeSetting label="Port11 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10445,7 +10439,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port12 Config" value="95"/>
-            <compositeSetting label="Port12 Value2A" value="1"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -10457,7 +10451,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port12 Config" value="91"/>
-            <compositeSetting label="Port12 Value2A" value="1"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10678,7 +10672,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port12 Config" value="192"/>
-            <compositeSetting label="Port12 Value2A" value="1"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10693,7 +10687,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port12 Config" value="208"/>
-            <compositeSetting label="Port12 Value2A" value="1"/>
+            <compositeSetting label="Port12 Value2A" value="2"/>
             <compositeSetting label="Port12 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -10849,7 +10843,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port13 Config" value="95"/>
-            <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -10861,7 +10855,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port13 Config" value="91"/>
-            <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11082,7 +11076,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port13 Config" value="192"/>
-            <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11097,7 +11091,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port13 Config" value="208"/>
-            <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11119,7 +11113,7 @@
             <choice>Output: LocoView (even address)</choice>
             <choice xml:lang="nl">Uitgang: LocoView (even adres)</choice>
             <compositeSetting label="Port13 Config" value="224"/>
-            <compositeSetting label="Port13 Value2A" value="1"/>
+            <compositeSetting label="Port13 Value2A" value="2"/>
             <compositeSetting label="Port13 OccuMode" value="1"/>
             <compositeSetting label="Port14 Config" value="0"/>
             <compositeSetting label="Port14 Value2A" value="0"/>
@@ -11256,7 +11250,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port14 Config" value="95"/>
-            <compositeSetting label="Port14 Value2A" value="1"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -11268,7 +11262,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port14 Config" value="91"/>
-            <compositeSetting label="Port14 Value2A" value="1"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11489,7 +11483,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port14 Config" value="192"/>
-            <compositeSetting label="Port14 Value2A" value="1"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11504,7 +11498,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port14 Config" value="208"/>
-            <compositeSetting label="Port14 Value2A" value="1"/>
+            <compositeSetting label="Port14 Value2A" value="2"/>
             <compositeSetting label="Port14 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11634,7 +11628,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port15 Config" value="95"/>
-            <compositeSetting label="Port15 Value2A" value="1"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -11646,7 +11640,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port15 Config" value="91"/>
-            <compositeSetting label="Port15 Value2A" value="1"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11867,7 +11861,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port15 Config" value="192"/>
-            <compositeSetting label="Port15 Value2A" value="1"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -11882,7 +11876,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port15 Config" value="208"/>
-            <compositeSetting label="Port15 Value2A" value="1"/>
+            <compositeSetting label="Port15 Value2A" value="2"/>
             <compositeSetting label="Port15 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -12013,7 +12007,7 @@
           <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port16 Config" value="95"/>
-            <compositeSetting label="Port16 Value2A" value="1"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Input Occu High Delayed" exclude="101,135,139,140,141,142,144,145,146">
@@ -12025,7 +12019,7 @@
           <compositeChoice choice="Input Occu High Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active High Delayed (even)</choice>
             <compositeSetting label="Port16 Config" value="91"/>
-            <compositeSetting label="Port16 Value2A" value="1"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -12246,7 +12240,7 @@
             <choice>Output: Block Detector (even address)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder (even)</choice>
             <compositeSetting label="Port16 Config" value="192"/>
-            <compositeSetting label="Port16 Value2A" value="1"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -12261,7 +12255,7 @@
             <choice>Output: Block Detector - Blinking (even)</choice>
             <choice xml:lang="nl">Uitgang: Bezetmelder - knipperend (even)</choice>
             <compositeSetting label="Port16 Config" value="208"/>
-            <compositeSetting label="Port16 Value2A" value="1"/>
+            <compositeSetting label="Port16 Value2A" value="2"/>
             <compositeSetting label="Port16 OccuMode" value="1"/>
           </compositeChoice>
 
@@ -13318,6 +13312,21 @@
         </label>
       </group>
 
+      <group><!--address 80 reserved for LocoBuffer-->
+        <qualifier>
+          <variableref>Short Address</variableref>
+          <relation>eq</relation>
+          <value>80</value>
+        </qualifier>
+        <separator/>
+        <label>
+          <text>WARNING: LocoIO board main address is incorrectly set to 80, reserved value for LocoBuffer. Please correct on tab Basic.</text>
+          <text xml:lang="de">ACHTUNG: LocoIO Moduladresse 80 nicht gültig. Wert reserviert für LocoBuffer. Bitte sofort ändern.</text>
+          <text xml:lang="nl">WAARSCHUWING: LocoIO hoofdadres is foutief ingesteld op 80, dit adres is gereserveerd voor LocoBuffer. Direct verbeteren.</text>
+        </label>
+        <separator/>
+      </group>
+
       <display item="Decoder Version"/>
       <row>
         <display item="Blink Rate"/>
@@ -13363,10 +13372,10 @@
     <column>
       <row>
         <label>
-          <text>&lt;html&gt;Max port address: 2048 (7 x 128 + 127 + 1). Port address is stored as (Hi * 128) + Low + 1.&lt;br/&gt;
+          <text>&lt;html&gt;Max port address: 2048 (7 x 128 + 127 + 1). Checkbox "o" for Detector style address.&lt;br/&gt;
             Use the Mode combo boxes to define the port operation mode, autofilling the Config and Value2 fields.&lt;/html&gt;</text>
-          <text xml:lang="nl">&lt;html&gt;Hoogste poortadres: 2048 (7 x 128 + 127 + 1). Poortadres bestaat uit (Hi * 128) + Low + 1.&lt;br/&gt;
-            Selecteer in de keuzelijst het type poort. Dit vult Config- en Value2-velden.&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;Hoogste poortadres: 2048 (7 x 128 + 127 + 1). Aankruisvak "o" for Detector adres.&lt;br/&gt;
+            Selecteer in de keuzelijst het type poort. Dit vult de Config- en Value2-velden.&lt;/html&gt;</text>
         </label>
       </row>
 
@@ -14973,8 +14982,8 @@
             <display item="Port15 Opcode1 Address"/>
             <row>
               <display item="Port15 Opcode1 Opc"/>
-              <display item="Port15 Opcode4 Arg1"/>
-              <display item="Port15 Opcode4 Arg2"/>
+              <display item="Port15 Opcode1 Arg1"/>
+              <display item="Port15 Opcode1 Arg2"/>
             </row>
           </column>
           <column>
@@ -15141,14 +15150,14 @@
               Input: Toggle Switch - Indirect&lt;br/&gt;
               Input: Toggle Switch&lt;br/&gt;
               Input: Switch Point Feedback - Normal&lt;br/&gt;
-              Input: Block Detection - Active Low - Delayed&lt;br/&gt;
-              Input: Block Detection - Active Low&lt;br/&gt;
+              Input: Block Detector - Active Low - Delayed&lt;br/&gt;
+              Input: Block Detector - Active Low&lt;br/&gt;
               Input: Push Button - Active Low - Indirect&lt;br/&gt;
               Input: Push Button - Active Low&lt;br/&gt;
               Input: Switch Point Feedback - Contact 2&lt;br/&gt;
               Input: Switch Point Feedback - Contact 1&lt;br/&gt;
-              Input: Block Detection - Active High - Delayed&lt;br/&gt;
-              Input: Block Detection - Active High&lt;br/&gt;
+              Input: Block Detector - Active High - Delayed&lt;br/&gt;
+              Input: Block Detector - Active High&lt;br/&gt;
               Input: Push Button - Active High - Indirect&lt;br/&gt;
               Input: Push Button - Active High&lt;br/&gt;
               &lt;br/&gt;
@@ -15173,8 +15182,8 @@
               Output: Fixed - 1 - On - 4-Way - Blink&lt;br/&gt;
               Output: Fixed - 2 - On - 4-Way&lt;br/&gt;
               Output: Fixed - 2 - On - 4-Way - Blink&lt;br/&gt;
-              Output: Occupancy = Block Detection&lt;br/&gt;
-              Output: Block Detection - Blink&lt;br/&gt;
+              Output: Occupancy = Block Detector&lt;br/&gt;
+              Output: Block Detector - Blink&lt;br/&gt;
               Port Not In Use&lt;br/&gt;
               &lt;/html&gt;</text>
           </label>
