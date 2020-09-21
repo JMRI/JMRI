@@ -140,8 +140,8 @@ public class LocoIOData extends PropertyChangeSupport
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
      *
-     * If possible add/support the additional config options for HDL boards -
-     * Work has moved to xml decoder definition Public_Domain_HDL_LocoIO
+     * Add/support the additional config options for HDL boards -
+     * Work has moved to xml decoder definition Public_Domain_HDL_LocoIO, is included there since 4.21.2
      * </pre>
      * @param portRefresh port refresh value, bit 0.
      * @param altCodePBs alternated code PBs, bit 1.
@@ -152,6 +152,7 @@ public class LocoIOData extends PropertyChangeSupport
         int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
                 // bit 2 is left at zero
+                // later LocoServo boards store 2 pos/4 pos type in bits 2-3, see Public_Domain_HDL_LocoIO
                 ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         firePropertyChange("UnitConfig", sv0, newsv0); // NOI18N
@@ -545,6 +546,7 @@ public class LocoIOData extends PropertyChangeSupport
             default:
                 log.error("Pin {} unexpected write state, can't advance {}", currentPin, writeState[currentPin]); // NOI18N
                 writeState[currentPin] = NONE;
+                return;
         }
     }
 
@@ -642,7 +644,7 @@ public class LocoIOData extends PropertyChangeSupport
      * Timer Management Protect against communication failures, addressing
      * mixups and the like.
      */
-    static private int TIMEOUT = 2000;    // ms
+    private static final int TIMEOUT = 2000;    // ms
     protected javax.swing.Timer timer = null;
     private int timeoutcounter;
 

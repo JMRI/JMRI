@@ -15,10 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent a NMRA long address
+ * Extends VariableValue to represent an NMRA long address.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2016
- *
  */
 public class LongAddrVariableValue extends VariableValue
         implements ActionListener, FocusListener {
@@ -373,6 +372,7 @@ public class LongAddrVariableValue extends VariableValue
                 default:  // unexpected!
                     log.error("Unexpected state found: {}", _progState);
                     _progState = IDLE;
+                    return;
             }
         }
     }
