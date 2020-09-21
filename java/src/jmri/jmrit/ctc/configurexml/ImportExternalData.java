@@ -124,6 +124,10 @@ public class ImportExternalData {
         for (Element child : children.getChildren()) {
             switch (child.getName()) {
                 case "object":
+                    if (child.getAttributeValue("class") != null && child.getAttributeValue("class").contains("Enum")) {
+                        String enumValue = child.getChild("string").getValue();
+                        fields.put(fieldName, enumValue);
+                    }
                     break;
                 case "string":
                 case "int":
@@ -203,12 +207,14 @@ public class ImportExternalData {
         if (value != null) cbhd._mSIDI_Enabled = loadBoolean(value);
 
         value = fieldList.get("_mSIDI_LeftInternalSensor");
+        String sidiLeft = value;    // Save for setting traffic direction
         if (value != null) cbhd._mSIDI_LeftInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_NormalInternalSensor");
         if (value != null) cbhd._mSIDI_NormalInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_RightInternalSensor");
+        String sidiRight = value;    // Save for setting traffic direction
         if (value != null) cbhd._mSIDI_RightInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_CodingTimeInMilliseconds");
@@ -217,14 +223,22 @@ public class ImportExternalData {
         value = fieldList.get("_mSIDI_TimeLockingTimeInMilliseconds");
         if (value != null) cbhd._mSIDI_TimeLockingTimeInMilliseconds = loadInt(value);
 
-        value = fieldList.get("_mSIDI_TrafficDirection");
-        if (value != null) cbhd._mSIDI_TrafficDirection = CodeButtonHandlerData.TRAFFIC_DIRECTION.valueOf(loadString(value));
-
         value = fieldList.get("_mSIDI_LeftRightTrafficSignalsCSVList");
         if (value != null) cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(value);
 
         value = fieldList.get("_mSIDI_RightLeftTrafficSignalsCSVList");
         if (value != null) cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(value);
+
+        // Set the traffic direction based on indicator sensors.
+        String trafficDirection = "BOTH";
+        if (sidiLeft.isEmpty() && !sidiRight.isEmpty()) {
+            trafficDirection = "RIGHT";
+        } else if (!sidiLeft.isEmpty() && sidiRight.isEmpty()) {
+            trafficDirection = "LEFT";
+        }
+        cbhd._mSIDI_TrafficDirection = CodeButtonHandlerData.TRAFFIC_DIRECTION.valueOf(trafficDirection);
+
+
 
     log.debug("------------- SIDL ------------");
         // SIDL section
@@ -261,7 +275,7 @@ public class ImportExternalData {
         if (value != null) cbhd._mSWDI_CodingTimeInMilliseconds = loadInt(value);
 
         value = fieldList.get("_mSWDI_GUITurnoutType");
-        if (value != null) cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(loadInt(value));
+        if (value != null) cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.valueOf(value);
 
         value = fieldList.get("_mSWDI_GUITurnoutLeftHand");
         if (value != null) cbhd._mSWDI_GUITurnoutLeftHand = loadBoolean(value);
@@ -323,7 +337,7 @@ public class ImportExternalData {
         if (value != null) cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(value);
 
         value = fieldList.get("_mTUL_LockImplementation");
-        if (value != null) cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(value));
+        if (value != null) cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.valueOf(value);
 
         value = fieldList.get("_mTUL_AdditionalExternalTurnout1");
         if (value != null) {
@@ -407,13 +421,13 @@ public class ImportExternalData {
         if (value != null) od._mGUIDesign_NumberOfEmptyColumnsAtEnd = loadInt(value);
 
         value = fieldList.get("_mGUIDesign_CTCPanelType");
-        if (value != null) od._mGUIDesign_CTCPanelType = OtherData.CTC_PANEL_TYPE.getRadioGroupValue(loadInt(value));
+        if (value != null) od._mGUIDesign_CTCPanelType = OtherData.CTC_PANEL_TYPE.valueOf(value);
 
         value = fieldList.get("_mGUIDesign_BuilderPlate");
         if (value != null) od._mGUIDesign_BuilderPlate = loadBoolean(value);
 
         value = fieldList.get("_mGUIDesign_SignalsOnPanel");
-        if (value != null) od._mGUIDesign_SignalsOnPanel = OtherData.SIGNALS_ON_PANEL.getRadioGroupValue(loadInt(value));
+        if (value != null) od._mGUIDesign_SignalsOnPanel = OtherData.SIGNALS_ON_PANEL.valueOf(value);
 
         value = fieldList.get("_mGUIDesign_FleetingToggleSwitch");
         if (value != null) od._mGUIDesign_FleetingToggleSwitch = loadBoolean(value);
@@ -431,7 +445,7 @@ public class ImportExternalData {
         if (value != null) od._mGUIDesign_CreateTrackPieces = loadBoolean(value);
 
         value = fieldList.get("_mGUIDesign_VerticalSize");
-        if (value != null) od._mGUIDesign_VerticalSize = OtherData.VERTICAL_SIZE.getRadioGroupValue(loadInt(value));
+        if (value != null) od._mGUIDesign_VerticalSize = OtherData.VERTICAL_SIZE.valueOf(value);
 
         value = fieldList.get("_mGUIDesign_OSSectionUnknownInconsistentRedBlink");
         if (value != null) od._mGUIDesign_OSSectionUnknownInconsistentRedBlink = loadBoolean(value);
