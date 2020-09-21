@@ -207,14 +207,14 @@ public class ImportExternalData {
         if (value != null) cbhd._mSIDI_Enabled = loadBoolean(value);
 
         value = fieldList.get("_mSIDI_LeftInternalSensor");
-        String sidiLeft = value;    // Save for setting traffic direction
+        String sidiLeft = value  == null ? "" : value;    // Save for setting traffic direction
         if (value != null) cbhd._mSIDI_LeftInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_NormalInternalSensor");
         if (value != null) cbhd._mSIDI_NormalInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_RightInternalSensor");
-        String sidiRight = value;    // Save for setting traffic direction
+        String sidiRight = value  == null ? "" : value;    // Save for setting traffic direction
         if (value != null) cbhd._mSIDI_RightInternalSensor = loadSensor(value, true);
 
         value = fieldList.get("_mSIDI_CodingTimeInMilliseconds");
