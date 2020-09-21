@@ -69,9 +69,6 @@ public class ProgramProperties {
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS = "_mCodeButtonDelayTime";// NOI18N
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(0);
     public int _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
-    private static final String NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY = "_mNoMoreReservedCharactersWarning";// NOI18N
-    private static final String NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY_DEFAULT = Boolean.toString(false);
-    public boolean _mNoMoreReservedCharactersWarning = Boolean.parseBoolean(NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY_DEFAULT);
 
     public ProgramProperties() {
         _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
@@ -91,7 +88,6 @@ public class ProgramProperties {
         _mTUL_DispatcherInternalSensorLockTogglePattern = TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT;
         _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT;
         _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
-        _mNoMoreReservedCharactersWarning = Boolean.parseBoolean(NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY_DEFAULT);
     }
 
     private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N
@@ -120,7 +116,6 @@ public class ProgramProperties {
             _mTUL_DispatcherInternalSensorLockTogglePattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT);
             _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT);
             _mCodeButtonDelayTime = Integer.parseInt(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
-            _mNoMoreReservedCharactersWarning = Boolean.parseBoolean(properties.getProperty(NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY, NO_MORE_RESERVED_CHARACTERS_WARNING_DISPLAY_DEFAULT));
         } catch (IOException | NumberFormatException e) {
             log.error("ProgramProperties: {}", e.getMessage());
         }

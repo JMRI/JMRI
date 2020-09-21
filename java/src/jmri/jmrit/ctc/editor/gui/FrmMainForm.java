@@ -74,13 +74,6 @@ public class FrmMainForm extends JFrame {
         _mCheckJMRIObject = new CheckJMRIObject();
         setupEditor();
         _mImport.setEnabled(CTCFiles.fileExists("CTCSystem.xml"));   // Disable import if there is no file
-//  Before we "start up the editor", let's warn the user about using "," and ";" if they haven't seen it before:
-        if (!_mProgramProperties._mNoMoreReservedCharactersWarning) {
-            Object[] options = { Bundle.getMessage("CTCNamesMessageOK"), Bundle.getMessage("CTCNamesMessageDontShowThisAgain") }; // NOI18N
-            if (1 == JOptionPane.showOptionDialog(this, Bundle.getMessage("CTCNamesMessage"), Bundle.getMessage("ReminderTitle"), JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0])) {
-                _mProgramProperties._mNoMoreReservedCharactersWarning = true;
-            }
-        }
     }
 
     /**
@@ -967,6 +960,7 @@ public class FrmMainForm extends JFrame {
         _mProgramProperties = ctcManager.newProgramProperties();
         _mCTCSerialData = ctcManager.newCTCSerialData();
         ImportExternalData.loadExternalData();
+        _mImport.setEnabled(CTCFiles.fileExists("CTCSystem.xml"));   // Disable import if there is no file
         setupEditor();
     }//GEN-LAST:event__mImportActionPerformed
 

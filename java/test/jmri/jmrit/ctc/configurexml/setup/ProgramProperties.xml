@@ -20,5 +20,4 @@
 <entry key="_mSIDI_TimeLockingTimeInMilliseconds">3000</entry>
 <entry key="_mSIDI_LeftInternalSensorPattern">IS#:LDGK</entry>
 <entry key="_mCodeButtonInternalSensorPattern">IS#:CB</entry>
-<entry key="_mNoMoreReservedCharactersWarning">true</entry>
 </properties>

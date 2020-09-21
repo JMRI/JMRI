@@ -148,7 +148,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         properties.addContent(storeString("TUL_DispatcherInternalSensorLockTogglePattern", pp._mTUL_DispatcherInternalSensorLockTogglePattern));
         properties.addContent(storeString("TUL_DispatcherInternalSensorUnlockedIndicatorPattern", pp._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern));
         properties.addContent(storeInt("CodeButtonDelayTime", pp._mCodeButtonDelayTime));
-        properties.addContent(storeBoolean("NoMoreReservedCharactersWarning", pp._mNoMoreReservedCharactersWarning));
 
         return properties;
     }
@@ -484,7 +483,6 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
         pp._mTUL_DispatcherInternalSensorLockTogglePattern = loadString(el.getChild("TUL_DispatcherInternalSensorLockTogglePattern"));
         pp._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = loadString(el.getChild("TUL_DispatcherInternalSensorUnlockedIndicatorPattern"));
         pp._mCodeButtonDelayTime = loadInt(el.getChild("CodeButtonDelayTime"));
-        pp._mNoMoreReservedCharactersWarning = loadBoolean(el.getChild("NoMoreReservedCharactersWarning"));
 
 // Debugging aid -- not active due to SpotBugs
 //             log.debug("ProgramProperties:");

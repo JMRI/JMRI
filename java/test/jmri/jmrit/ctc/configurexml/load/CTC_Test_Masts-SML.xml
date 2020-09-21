@@ -488,7 +488,6 @@
       <TUL_DispatcherInternalSensorLockTogglePattern>IS#:LOCKTOGGLE</TUL_DispatcherInternalSensorLockTogglePattern>
       <TUL_DispatcherInternalSensorUnlockedIndicatorPattern>IS#:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicatorPattern>
       <CodeButtonDelayTime>0</CodeButtonDelayTime>
-      <NoMoreReservedCharactersWarning>true</NoMoreReservedCharactersWarning>
     </ctcProperties>
     <ctcOtherData>
       <CtcVersion>v2.0</CtcVersion>

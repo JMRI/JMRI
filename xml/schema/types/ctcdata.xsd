@@ -52,7 +52,6 @@
               <xs:element type="xs:string" name="TUL_DispatcherInternalSensorLockTogglePattern"/>
               <xs:element type="xs:string" name="TUL_DispatcherInternalSensorUnlockedIndicatorPattern"/>
               <xs:element type="xs:integer" name="CodeButtonDelayTime"/>
-              <xs:element type="xs:string" name="NoMoreReservedCharactersWarning"/>
             </xs:sequence>
           </xs:complexType>
         </xs:element>

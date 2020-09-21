@@ -156,8 +156,6 @@ public class ImportExternalData {
         convertCallOnSensorNamesToNBHSensors();
     }
 
-
-
     static void loadCodeButtonHandlerData(HashMap<String, String> fieldList) {
     log.debug("------------- CBHD ------------");
         String value = fieldList.get("_mUniqueID");
