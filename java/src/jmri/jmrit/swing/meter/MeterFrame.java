@@ -84,10 +84,14 @@ public class MeterFrame extends JmriJFrame {
     NamedIcon integerDigits[] = new NamedIcon[10];
     NamedIcon decimalDigits[] = new NamedIcon[10];
     NamedIcon decimalIcon;
+    NamedIcon microVoltIcon;
     NamedIcon milliVoltIcon;
     NamedIcon voltIcon;
+    NamedIcon kiloVoltIcon;
+    NamedIcon microAmpIcon;
     NamedIcon milliAmpIcon;
     NamedIcon ampIcon;
+    NamedIcon kiloAmpIcon;
     NamedIcon percentIcon;
 
     JPanel pane1;
@@ -169,6 +173,7 @@ public class MeterFrame extends JmriJFrame {
             lastSelectedMeterMenuItem = menuItem;
             
             updateMenuUnits();
+            initSelectedUnit();
         }
 
         if (meter instanceof VoltageMeter) {
@@ -209,7 +214,6 @@ public class MeterFrame extends JmriJFrame {
                     units_MenuItemMap.get(selectedUnit).setSelected(false);
                     unitLabels.get(selectedUnit).setVisible(false);
                     scaleChanged = true;
-//                    updateMenuUnits();
                     units_MenuItemMap.get(u).setSelected(true);
                     unitLabels.get(u).setVisible(true);
                     selectedUnit = u;
@@ -219,7 +223,6 @@ public class MeterFrame extends JmriJFrame {
             units_MenuItemMap.put(unit, item);
             settingsMenu.add(item);
         }
-        updateMenuUnits();
         
         settingsMenu.addSeparator();
         
@@ -279,22 +282,26 @@ public class MeterFrame extends JmriJFrame {
             decimalDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
-        milliVoltIcon = new NamedIcon("resources/icons/misc/LCD/millivoltb.gif", "resources/icons/misc/LCD/millivoltb.gif");
+        microVoltIcon = new NamedIcon("resources/icons/misc/LCD/uvoltb.gif", "resources/icons/misc/LCD/uvoltb.gif");
+        milliVoltIcon = new NamedIcon("resources/icons/misc/LCD/mvoltb.gif", "resources/icons/misc/LCD/mvoltb.gif");
         voltIcon = new NamedIcon("resources/icons/misc/LCD/voltb.gif", "resources/icons/misc/LCD/voltb.gif");
-        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/milliampb.gif", "resources/icons/misc/LCD/milliampb.gif");
+        kiloVoltIcon = new NamedIcon("resources/icons/misc/LCD/kvoltb.gif", "resources/icons/misc/LCD/kvoltb.gif");
+        microAmpIcon = new NamedIcon("resources/icons/misc/LCD/uampb.gif", "resources/icons/misc/LCD/uampb.gif");
+        milliAmpIcon = new NamedIcon("resources/icons/misc/LCD/mampb.gif", "resources/icons/misc/LCD/mampb.gif");
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
+        kiloAmpIcon = new NamedIcon("resources/icons/misc/LCD/kampb.gif", "resources/icons/misc/LCD/kampb.gif");
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
         
         decimal = new JLabel(decimalIcon);
         unitLabels.put(Unit.PERCENT, new JLabel(percentIcon));
-        unitLabels.put(Unit.MICRO_VOLT, new JLabel(milliVoltIcon));
+        unitLabels.put(Unit.MICRO_VOLT, new JLabel(microVoltIcon));
         unitLabels.put(Unit.MILLI_VOLT, new JLabel(milliVoltIcon));
         unitLabels.put(Unit.VOLT, new JLabel(voltIcon));
-        unitLabels.put(Unit.KILO_VOLT, new JLabel(milliVoltIcon));
-        unitLabels.put(Unit.MICRO_AMPERE, new JLabel(milliAmpIcon));
+        unitLabels.put(Unit.KILO_VOLT, new JLabel(kiloVoltIcon));
+        unitLabels.put(Unit.MICRO_AMPERE, new JLabel(microAmpIcon));
         unitLabels.put(Unit.MILLI_AMPERE, new JLabel(milliAmpIcon));
         unitLabels.put(Unit.AMPERE, new JLabel(ampIcon));
-        unitLabels.put(Unit.KILO_AMPERE, new JLabel(milliAmpIcon));
+        unitLabels.put(Unit.KILO_AMPERE, new JLabel(kiloAmpIcon));
         
         for (Unit unit : Unit.values()) unitLabels.get(unit).setVisible(false);
         
@@ -324,19 +331,8 @@ public class MeterFrame extends JmriJFrame {
         
         meter.enable();
 
-        boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
-        boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
-        boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
-        
-        if (isPercent) selectedUnit = Unit.PERCENT;
-        else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_VOLT;
-        else if (isVoltage) selectedUnit = Unit.VOLT;
-        else if (isCurrent && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_AMPERE;
-        else selectedUnit = Unit.AMPERE;
-        
-        units_MenuItemMap.get(selectedUnit).setSelected(true);
-        unitLabels.get(selectedUnit).setVisible(true);
-        update();
+        updateMenuUnits();
+        initSelectedUnit();
 
         // Request callback to update time
         propertyChangeListener = (java.beans.PropertyChangeEvent e) -> {
@@ -363,6 +359,22 @@ public class MeterFrame extends JmriJFrame {
         frameIsInitialized = true;
     }
 
+    private void initSelectedUnit() {
+        boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
+        boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
+        boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
+        
+        if (isPercent) selectedUnit = Unit.PERCENT;
+        else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_VOLT;
+        else if (isVoltage) selectedUnit = Unit.VOLT;
+        else if (isCurrent && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_AMPERE;
+        else selectedUnit = Unit.AMPERE;
+        
+        units_MenuItemMap.get(selectedUnit).setSelected(true);
+        unitLabels.get(selectedUnit).setVisible(true);
+        update();
+    }
+
     // Added method to scale the clock digit images to fit the
     // size of the display window
     synchronized public void scaleImage() {
@@ -383,10 +395,14 @@ public class MeterFrame extends JmriJFrame {
             decimalDigits[i].scale(scale,this);
         }
         decimalIcon.scale(scale,this);
+        microVoltIcon.scale(scale,this);
         milliVoltIcon.scale(scale,this);
         voltIcon.scale(scale,this);
+        kiloVoltIcon.scale(scale,this);
+        microAmpIcon.scale(scale,this);
         milliAmpIcon.scale(scale,this);
         ampIcon.scale(scale, this);
+        kiloAmpIcon.scale(scale,this);
         percentIcon.scale(scale, this);
 
         meterPane.revalidate();
