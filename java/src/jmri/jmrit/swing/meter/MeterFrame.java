@@ -26,6 +26,25 @@ import jmri.util.JmriJFrame;
  */
 public class MeterFrame extends JmriJFrame {
 
+    private enum Unit {
+        PERCENT(1.0),    // Not a unit, but here anyway
+        MICRO_VOLT(1000*1000),
+        MILLI_VOLT(1000),
+        VOLT(1.0),
+        KILO_VOLT(1/1000.0),
+        MICRO_AMPERE(1000*1000),
+        MILLI_AMPERE(1000),
+        AMPERE(1.0),
+        KILO_AMPERE(1/1000.0);
+        
+        private final double multiply;
+        
+        private Unit(double m) { multiply = m; }
+    };
+    
+    private final int MAX_INTEGER_DIGITS = 7;
+    private final int MAX_DECIMAL_DIGITS = 2;
+    
     private final UUID uuid;
     
     private final List<Meter> voltageMeters = new ArrayList<>();
@@ -33,29 +52,37 @@ public class MeterFrame extends JmriJFrame {
     
     // GUI member declarations
     private JMenuBar menuBar;
-    ArrayList<JLabel> digitIcons;
+    ArrayList<JLabel> integerDigitIcons;
+    ArrayList<JLabel> decimalDigitIcons;
     JLabel decimal;
-    JLabel milliVolt;
-    JLabel volt;
-    JLabel milliAmp;
-    JLabel amp;
-    JLabel percent;
+    Map<Unit, JLabel> unitLabels = new HashMap<>();
     
-    Map<Meter, JCheckBoxMenuItem> meterMenuItemMap = new HashMap<>();
-    JMenuItem lastSelectedMenuItem;
+    Map<Meter, JCheckBoxMenuItem> meter_MenuItemMap = new HashMap<>();
+    Map<Unit, JCheckBoxMenuItem> units_MenuItemMap = new HashMap<>();
+    Map<Integer, JCheckBoxMenuItem> integerDigits_MenuItemMap = new HashMap<>();
+    Map<Integer, JCheckBoxMenuItem> decimalDigits_MenuItemMap = new HashMap<>();
+    JMenuItem lastSelectedMeterMenuItem;
+    JMenuItem lastSelectedIntegerDigitsMenuItem;
+    JMenuItem lastSelectedDecimalDigitsMenuItem;
+    int numIntegerDigits = 3;
+    int numDecimalDigits = 0;
+    int lastNumDecimalDigits = -1;
+    int widthOfAllIconsToDisplay = 0;
     boolean frameIsInitialized = false;
+    boolean scaleChanged = true;
+    Unit selectedUnit = Unit.VOLT;
     
-    int iconWidth;
+    int digitIconWidth;
+    int decimalIconWidth;
+    int unitIconWidth;
     int iconHeight;
 
     private PropertyChangeListener propertyChangeListener;
 
-    private int displayLength;
-    private boolean displayDP;
-
     private Meter meter;
 
-    NamedIcon digits[] = new NamedIcon[10];
+    NamedIcon integerDigits[] = new NamedIcon[10];
+    NamedIcon decimalDigits[] = new NamedIcon[10];
     NamedIcon decimalIcon;
     NamedIcon milliVoltIcon;
     NamedIcon voltIcon;
@@ -82,7 +109,6 @@ public class MeterFrame extends JmriJFrame {
             if ((m != null) && (m instanceof VoltageMeter)) voltageMeters.add(m);
             if ((m != null) && (m instanceof CurrentMeter)) currentMeters.add(m);
         }
-//        if (voltageMeters.isEmpty() && currentMeters.isEmpty()) throw new RuntimeException("No volt meter or amp meter exists");
         
         if (!voltageMeters.isEmpty()) {
             setMeter(voltageMeters.get(0));
@@ -97,8 +123,10 @@ public class MeterFrame extends JmriJFrame {
     
     /**
      * Get the UUID of this frame.
+     * <P>
      * The UUID is used if two different panel files are loaded with the same
      * meter frame.
+     * 
      * @return the UUID of this frame
      */
     public UUID getUUID() {
@@ -118,7 +146,7 @@ public class MeterFrame extends JmriJFrame {
      * @param m the meter or null if no meter is to be shown
      */
     public void setMeter(Meter m) {
-        if (lastSelectedMenuItem != null) lastSelectedMenuItem.setSelected(false);
+        if (lastSelectedMeterMenuItem != null) lastSelectedMeterMenuItem.setSelected(false);
 
         if (meter != null) {
             meter.disable();
@@ -132,19 +160,15 @@ public class MeterFrame extends JmriJFrame {
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         meter.enable();
 
-        // Update the display
-        digitIcons = null;
-
         if (frameIsInitialized) {
-            buildContents();
-
             // Initially we want to scale the icons to fit the previously saved window size
             scaleImage();
-            buildContents();
 
-            JCheckBoxMenuItem menuItem = meterMenuItemMap.get(meter);
+            JCheckBoxMenuItem menuItem = meter_MenuItemMap.get(meter);
             menuItem.setSelected(true);
-            lastSelectedMenuItem = menuItem;
+            lastSelectedMeterMenuItem = menuItem;
+            
+            updateMenuUnits();
         }
 
         if (meter instanceof VoltageMeter) {
@@ -163,7 +187,7 @@ public class MeterFrame extends JmriJFrame {
         for (Meter m : voltageMeters) {
             JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
             voltageMetersMenu.add(item);
-            meterMenuItemMap.put(m, item);
+            meter_MenuItemMap.put(m, item);
         }
         
         JMenu currentMetersMenu = new JMenu(Bundle.getMessage("MenuCurrentMeters"));
@@ -171,14 +195,88 @@ public class MeterFrame extends JmriJFrame {
         for (Meter m : currentMeters) {
             JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
             currentMetersMenu.add(item);
-            meterMenuItemMap.put(m, item);
+            meter_MenuItemMap.put(m, item);
+        }
+        
+        JMenu settingsMenu = new JMenu(Bundle.getMessage("MenuMeterSettings"));
+        menuBar.add(settingsMenu);
+        
+        for (Unit unit : Unit.values()) {
+            final Unit u = unit;
+            JCheckBoxMenuItem item = new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("MenuMeter_"+unit.name())){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    units_MenuItemMap.get(selectedUnit).setSelected(false);
+                    unitLabels.get(selectedUnit).setVisible(false);
+                    scaleChanged = true;
+//                    updateMenuUnits();
+                    units_MenuItemMap.get(u).setSelected(true);
+                    unitLabels.get(u).setVisible(true);
+                    selectedUnit = u;
+                    update();
+                }
+            });
+            units_MenuItemMap.put(unit, item);
+            settingsMenu.add(item);
+        }
+        updateMenuUnits();
+        
+        settingsMenu.addSeparator();
+        
+        for (int i=1; i <= 7; i++) {
+            final int ii = i;
+            JCheckBoxMenuItem item = new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("MenuMeterIntegerDigits", i)){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    integerDigits_MenuItemMap.get(numIntegerDigits).setSelected(false);
+                    numIntegerDigits = ii;
+                    scaleChanged = true;
+                    update();
+                }
+            });
+            integerDigits_MenuItemMap.put(ii, item);
+            settingsMenu.add(item);
+            if (ii == numIntegerDigits) item.setSelected(true);
+        }
+        settingsMenu.addSeparator();
+        for (int i=0; i <= 2; i++) {
+            final int ii = i;
+            JCheckBoxMenuItem item = new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("MenuMeterDecimalDigits", i)){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    decimalDigits_MenuItemMap.get(numDecimalDigits).setSelected(false);
+                    decimalDigits_MenuItemMap.get(ii).setSelected(true);
+                    numDecimalDigits = ii;
+                    scaleChanged = true;
+                    update();
+                }
+            });
+            decimalDigits_MenuItemMap.put(ii, item);
+            settingsMenu.add(item);
+            if (ii == numDecimalDigits) item.setSelected(true);
         }
         
         setJMenuBar(menuBar);
 
+        // clear the contents
+        getContentPane().removeAll();
+
+        pane1 = new JPanel();
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+        
+        meterPane = new JPanel();
+        meterPane.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder()));
+
+        // build the actual multimeter display.
+        meterPane.setLayout(new BoxLayout(meterPane, BoxLayout.X_AXIS));
+
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            integerDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+        }
+        for (int i = 0; i < 10; i++) {
+            decimalDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
         milliVoltIcon = new NamedIcon("resources/icons/misc/LCD/millivoltb.gif", "resources/icons/misc/LCD/millivoltb.gif");
@@ -187,33 +285,60 @@ public class MeterFrame extends JmriJFrame {
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
         
-        iconWidth = digits[0].getIconWidth();
-        iconHeight = digits[0].getIconHeight();
-
-        // Voltage readings are displayed as 3 digits with one decimal place
-        displayLength = 3;
-        displayDP = true;
-        
-        // init GUI
-        percent = new JLabel(percentIcon);
         decimal = new JLabel(decimalIcon);
-        milliVolt = new JLabel(milliVoltIcon);
-        volt = new JLabel(voltIcon);
-        milliAmp = new JLabel(milliAmpIcon);
-        amp = new JLabel(ampIcon);
+        unitLabels.put(Unit.PERCENT, new JLabel(percentIcon));
+        unitLabels.put(Unit.MICRO_VOLT, new JLabel(milliVoltIcon));
+        unitLabels.put(Unit.MILLI_VOLT, new JLabel(milliVoltIcon));
+        unitLabels.put(Unit.VOLT, new JLabel(voltIcon));
+        unitLabels.put(Unit.KILO_VOLT, new JLabel(milliVoltIcon));
+        unitLabels.put(Unit.MICRO_AMPERE, new JLabel(milliAmpIcon));
+        unitLabels.put(Unit.MILLI_AMPERE, new JLabel(milliAmpIcon));
+        unitLabels.put(Unit.AMPERE, new JLabel(ampIcon));
+        unitLabels.put(Unit.KILO_AMPERE, new JLabel(milliAmpIcon));
         
-        buildContents();
-
+        for (Unit unit : Unit.values()) unitLabels.get(unit).setVisible(false);
+        
+        integerDigitIcons = new ArrayList<>(MAX_INTEGER_DIGITS);
+        for(int i = 0; i < MAX_INTEGER_DIGITS; i++) {
+            integerDigitIcons.add(i,new JLabel(integerDigits[i]));
+            meterPane.add(integerDigitIcons.get(i));
+        }
+        
+        meterPane.add(decimal);
+        
+        decimalDigitIcons = new ArrayList<>(MAX_DECIMAL_DIGITS);
+        for(int i = 0; i < MAX_DECIMAL_DIGITS; i++) {
+            decimalDigitIcons.add(i,new JLabel(decimalDigits[i]));
+            meterPane.add(decimalDigitIcons.get(i));
+        }
+        
+        for (JLabel label : unitLabels.values()) meterPane.add(label);
+        
+        iconHeight = integerDigits[0].getIconHeight();
+        digitIconWidth = integerDigits[0].getIconWidth();
+        decimalIconWidth = decimalIcon.getIconWidth();
+        unitIconWidth = milliVoltIcon.getIconWidth();
+        
         // Initially we want to scale the icons to fit the previously saved window size
         scaleImage();
-        buildContents();
         
         meter.enable();
 
+        boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
+        boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
+        boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
+        
+        if (isPercent) selectedUnit = Unit.PERCENT;
+        else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_VOLT;
+        else if (isVoltage) selectedUnit = Unit.VOLT;
+        else if (isCurrent && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_AMPERE;
+        else selectedUnit = Unit.AMPERE;
+        
+        units_MenuItemMap.get(selectedUnit).setSelected(true);
+        unitLabels.get(selectedUnit).setVisible(true);
         update();
 
-        // request callback to update time
-        // Again, adding updates.
+        // Request callback to update time
         propertyChangeListener = (java.beans.PropertyChangeEvent e) -> {
             update();
         };
@@ -227,6 +352,13 @@ public class MeterFrame extends JmriJFrame {
                 scaleImage();
             }
         });
+        
+        pane1.add(meterPane);
+        getContentPane().add(pane1);
+        
+        getContentPane().setPreferredSize(meterPane.getPreferredSize());
+        
+        pack();
 
         frameIsInitialized = true;
     }
@@ -234,17 +366,21 @@ public class MeterFrame extends JmriJFrame {
     // Added method to scale the clock digit images to fit the
     // size of the display window
     synchronized public void scaleImage() {
+        
         int frameHeight = this.getContentPane().getHeight()
                 - meterPane.getInsets().top - meterPane.getInsets().bottom;
         int frameWidth = this.getContentPane().getWidth()
                 - meterPane.getInsets().left - meterPane.getInsets().right;
         
         double hscale = ((double)frameHeight)/((double)iconHeight);
-        double wscale = ((double)frameWidth)/((double)(iconWidth * digitIcons.size()));
+        double wscale = ((double)frameWidth)/((double)widthOfAllIconsToDisplay);
         double scale = hscale < wscale? hscale:wscale;
 
         for (int i = 0; i < 10; i++) {
-            digits[i].scale(scale,this);
+            integerDigits[i].scale(scale,this);
+        }
+        for (int i = 0; i < 10; i++) {
+            decimalDigits[i].scale(scale,this);
         }
         decimalIcon.scale(scale,this);
         milliVoltIcon.scale(scale,this);
@@ -257,97 +393,84 @@ public class MeterFrame extends JmriJFrame {
         this.getContentPane().revalidate();
     }
 
-    private void buildContents(){
-        // clear the contents
-        getContentPane().removeAll();
-
-        pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+    private void updateMenuUnits() {
+        boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
+        boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
+        boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
         
-        meterPane = new JPanel();
-        meterPane.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder()));
-//        meterPane.setBorder(BorderFactory.createTitledBorder(
-//            BorderFactory.createEtchedBorder(), Bundle.getMessage("TrackVoltage")));
-
-        // build the actual multimeter display.
-        meterPane.setLayout(new BoxLayout(meterPane, BoxLayout.X_AXIS));
-
-        boolean isVoltage = (meter == null) || (meter instanceof VoltageMeter);
+        units_MenuItemMap.get(Unit.PERCENT).setVisible(isPercent);
         
-        if (digitIcons == null) {
-            digitIcons = new ArrayList<>(displayLength); // 1 decimal place precision.
-            for(int i = 0;i<displayLength;i++) {
-               digitIcons.add(i,new JLabel(digits[0]));
-            }
-        }
+        units_MenuItemMap.get(Unit.MICRO_VOLT).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.MILLI_VOLT).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.VOLT).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.KILO_VOLT).setVisible(isVoltage);
         
-        for(int i=0;i<digitIcons.size()-1;i++){
-            meterPane.add(digitIcons.get(i));
-        }
-        
-        // We might not have a meter yet.
-        Meter.Unit unit = (meter != null) ? meter.getUnit() : Meter.Unit.NoPrefix;
-        
-        switch (unit) {
-            case Milli:
-                if (isVoltage) meterPane.add(milliVolt);
-                else meterPane.add(milliAmp);
-                break;
-            case NoPrefix:
-                meterPane.add(decimal);
-                meterPane.add(digitIcons.get(digitIcons.size()-1));
-                
-                if (isVoltage) meterPane.add(this.volt);
-                else meterPane.add(amp);
-                break;
-            case Percent:
-            default:
-                meterPane.add(decimal);
-                meterPane.add(digitIcons.get(digitIcons.size()-1));
-                meterPane.add(percent);
-                break;
-        }
-//        meterPane.add(decimal);
-//        meterPane.add(digitIcons.get(digitIcons.size()-1));
-//        meterPane.add(volt);
-
-        pane1.add(meterPane);
-        getContentPane().add(pane1);
-        
-        getContentPane().setPreferredSize(meterPane.getPreferredSize());
-        
-        pack();
+        units_MenuItemMap.get(Unit.MICRO_AMPERE).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.MILLI_AMPERE).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.AMPERE).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.KILO_AMPERE).setVisible(isCurrent);
     }
-
+    
     /**
      * Update the displayed value.
      * 
      * Assumes an integer value has an extra, non-displayed decimal digit.
      */
     synchronized void update() {
-        double val = meter.getKnownAnalogValue();
-        int value = (int)Math.floor(val *10); // keep one decimal place.
+        Meter.Unit meterUnit = (meter != null) ? meter.getUnit() : Meter.Unit.NoPrefix;
         
-        String valStr;
-        if (displayDP) valStr = String.format("%1.1f", val);
-        else valStr = String.format("%1f", val);
+        double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
         
-        boolean scaleChanged = false;
-        while ((digitIcons.size()+1) < valStr.length()) {
-           digitIcons.add(0,new JLabel(digits[0]));
-           scaleChanged = true;
+        if (meterUnit == Meter.Unit.Milli) meterValue /= 1000.0;
+        
+        // We want at least one decimal digit so we cut the last digit later.
+        // The problem is that the format string %05.0f will not add the dot
+        // and we always want the dot to be able to split the string by the dot.
+        int numChars = numIntegerDigits + numDecimalDigits + 2;
+        String formatStr = String.format("%%0%d.%df", numChars, numDecimalDigits+1);
+        String valueStr = String.format(formatStr, meterValue);
+        
+        String[] valueParts = valueStr.split("\\.");
+        
+        for (int i=0; i < MAX_INTEGER_DIGITS; i++) {
+            JLabel label = integerDigitIcons.get(i);
+            if (i < valueParts[0].length()) {
+                label.setIcon(integerDigits[valueParts[0].charAt(i)-'0']);
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
         }
+        
+        decimal.setVisible(numDecimalDigits > 0);
+        
+        for (int i=0; i < MAX_DECIMAL_DIGITS; i++) {
+            JLabel label = decimalDigitIcons.get(i);
+            if (i < valueParts[1].length()-1) {     // the decimal part has one digit too much
+                label.setIcon(integerDigits[valueParts[1].charAt(i)-'0']);
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
+        }
+        
+        
+        // Add width of integer digits
+        widthOfAllIconsToDisplay = digitIconWidth * valueParts[0].length();
+        
+        // Add decimal point
+        if (numDecimalDigits > 0) widthOfAllIconsToDisplay += decimalIconWidth;
+        
+        // Add width of decimal digits
+        widthOfAllIconsToDisplay += digitIconWidth * (valueParts[1].length()-1);
+        
+        // Add one for the unit icon
+        widthOfAllIconsToDisplay += unitIconWidth;
         
         if (scaleChanged){
             // clear the content pane and rebuild it.
             scaleImage();
-            buildContents();
-        }
-
-        for(int i = digitIcons.size()-1; i>=0; i--){
-            digitIcons.get(i).setIcon(digits[value%10]);
-            value = value / 10;
+            scaleChanged = false;
         }
     }
 
@@ -378,8 +501,9 @@ public class MeterFrame extends JmriJFrame {
             
             JMenuItem selectedItem = (JMenuItem) e.getSource();
             selectedItem.setSelected(true);
-            lastSelectedMenuItem = selectedItem;
+            lastSelectedMeterMenuItem = selectedItem;
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrame.class);
 }
