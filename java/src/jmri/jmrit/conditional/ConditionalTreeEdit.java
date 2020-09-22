@@ -1591,8 +1591,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Actions, Level 3 contains the detail Variable and Action entries.
      */
     void createConditionalContent() {
-        int _numConditionals = _curLogix.getNumConditionals();
-        for (int i = 0; i < _numConditionals; i++) {
+        int numConditionals = _curLogix.getNumConditionals();
+        for (int i = 0; i < numConditionals; i++) {
             String csName = _curLogix.getConditionalByNumberOrder(i);
             Conditional curConditional = _curLogix.getConditional(csName);
             _cdlNode = new ConditionalTreeNode(buildNodeText("Conditional", curConditional, 0), "Conditional", csName, i);    // NOI18N

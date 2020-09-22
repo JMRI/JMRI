@@ -88,7 +88,6 @@ public class ConditionalEditBase {
     Logix _curLogix = null;
     JmriJFrame _editLogixFrame = null;
 
-    int _numConditionals = 0;
     boolean _inEditMode = false;
 
     boolean _showReminder = false;

@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,7 +21,6 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -60,7 +57,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Matthew Harris copyright (c) 2009
  * @author Dave Sand copyright (c) 2017
  */
-public class ConditionalListEdit extends ConditionalEditBase {
+public class ConditionalListEdit extends ConditionalList {
 
     /**
      * Create a new Conditional List View editor.
@@ -78,20 +75,13 @@ public class ConditionalListEdit extends ConditionalEditBase {
     // ------------ Logix Variables ------------
     JTextField _editUserName;
     JLabel _status;
+    int _numConditionals = 0;
 
     // ------------ Conditional Variables ------------
     ConditionalTableModel conditionalTableModel = null;
-    Conditional _curConditional = null;
     int _conditionalRowNumber = 0;
     boolean _inReorderMode = false;
     int _nextInOrder = 0;
-
-    ConditionalEditFrame _editConditionalFrame = null;
-
-    JComboBox<String> _selectLogixBox = new JComboBox<>();
-    JComboBox<String> _selectConditionalBox = new JComboBox<>();
-    TreeMap<String, String> _selectLogixMap = new TreeMap<>();
-    ArrayList<String> _selectConditionalList = new ArrayList<>();
 
     static final int STRUT = 10;
 
@@ -275,30 +265,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        // make system name for new conditional
-        int num = _curLogix.getNumConditionals() + 1;
-        _curConditional = null;
-        String cName = null;
-        while (_curConditional == null) {
-            cName = _curLogix.getSystemName() + "C" + Integer.toString(num);
-            _curConditional = _conditionalManager.createNewConditional(cName, "");
-            num++;
-            if (num == 1000) {
-                break;
-            }
-        }
-        if (_curConditional == null) {
-            // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: {}", cName);
-            return;
-        }
-        // add to Logix at the end of the calculate order
-        _curLogix.addConditional(cName, -1);
-        conditionalTableModel.fireTableRowsInserted(_numConditionals, _numConditionals);
-        _conditionalRowNumber = _numConditionals;
-        _numConditionals++;
-        _showReminder = true;
-        // clear action items
+        _curConditional = makeNewConditional(_curLogix);
         makeEditConditionalWindow();
     }
 
@@ -448,43 +415,41 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Respond to the Delete Conditional Button in the Edit Conditional window.
-     *
-     * @param sName system name of Conditional to be deleted
      */
-    void deleteConditionalPressed(String sName) {
+    void deleteConditionalPressed() {
         if (_curConditional == null) {
             return;
         }
-        // delete this Conditional - this is done by the parent Logix
-        if (sName == null) {
-            sName = _curConditional.getSystemName();
-        }
+        String sName = _curConditional.getSystemName();
 
-        _showReminder = true;
-        _curConditional = null;
-        _numConditionals--;
-        String[] msgs = _curLogix.deleteConditional(sName);
-        if (msgs != null) {
-            JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Error11", (Object[]) msgs), // NOI18N
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);  // NOI18N
+        if (!_newConditional) {
+            _showReminder = true;
+            _curConditional = null;
+            _numConditionals--;
+            String[] msgs = _curLogix.deleteConditional(sName);
+            if (msgs != null) {
+                JOptionPane.showMessageDialog(_editLogixFrame,
+                        Bundle.getMessage("Error11", (Object[]) msgs), // NOI18N
+                        Bundle.getMessage("ErrorTitle"),
+                        JOptionPane.ERROR_MESSAGE);  // NOI18N
+            }
+            conditionalTableModel.fireTableRowsDeleted(_conditionalRowNumber,
+                    _conditionalRowNumber);
+            if (_numConditionals < 1 && !_suppressReminder) {
+                // warning message - last Conditional deleted
+                JOptionPane.showMessageDialog(_editLogixFrame,
+                        Bundle.getMessage("Warn1"),
+                        Bundle.getMessage("WarningTitle"), // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+            }
         }
-
+        _newConditional = false;
         // complete deletion
         if (_pickTables != null) {
             _pickTables.dispose();
             _pickTables = null;
         }
-        conditionalTableModel.fireTableRowsDeleted(_conditionalRowNumber,
-                _conditionalRowNumber);
-        if (_numConditionals < 1 && !_suppressReminder) {
-            // warning message - last Conditional deleted
-            JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Warn1"),
-                    Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        closeConditionalFrame();
     }
 
     /**
@@ -493,131 +458,21 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * @return true if this is the case, after showing dialog to user
      */
     boolean checkEditConditional() {
-        if (_editConditionalFrame != null) {
-            if (_editConditionalFrame._dataChanged) {
+        if (_conditionalFrame != null) {
+            if (_conditionalFrame._dataChanged) {
                 // Already editing a Conditional, ask for completion of that edit
-                JOptionPane.showMessageDialog(_editConditionalFrame,
-                        Bundle.getMessage("Error35", _curConditional.getSystemName()), // NOI18N
+                JOptionPane.showMessageDialog(_conditionalFrame,
+                        Bundle.getMessage("Error34", _curConditional.getSystemName()), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return true;
             } else {
-                _editConditionalFrame.cancelConditionalPressed();
+                _conditionalFrame.cancelConditionalPressed();
             }
         }
         return false;
     }
 
-    // ----------------- utilities for logix and Conditional variables
-
-    /**
-     * Load the Logix selection box. Set the selection to the current Logix.
-     *
-     * @since 4.7.4
-     * @param curVariable Current ConditionalVariable
-     */
-    void loadSelectLogixBox(ConditionalVariable curVariable) {
-        // Get the current Logix name for selecting the current combo box row
-        String cdlName = curVariable.getName();
-        String lgxName;
-        if (cdlName.length() == 0 || (curVariable.getType() != Conditional.Type.CONDITIONAL_TRUE
-                && curVariable.getType() != Conditional.Type.CONDITIONAL_FALSE)) {
-            // Use the current logix name for "add" state variable
-            lgxName = _curLogix.getSystemName();
-        } else {
-            Logix x = _conditionalManager.getParentLogix(cdlName);
-            if (x == null) {
-                log.error("Unable to find the Logix for {}, using the current Logix", cdlName);  // NOI18N
-                lgxName = _curLogix.getSystemName();
-            } else {
-                lgxName = x.getSystemName();
-            }
-        }
-
-        _selectLogixBox.removeAllItems();
-        _selectLogixMap.clear();
-
-        // Create Logix list sorted by a custom display name
-        String itemKey = "";
-        for (Logix lgx : _logixManager.getNamedBeanSet()) {
-            String sName = lgx.getSystemName();
-            if (sName.equals("SYS")) {  // NOI18N
-                // Cannot refer to sensor name groups
-                continue;
-            }
-            String uName = lgx.getUserName();
-            String itemName = "";
-            if (uName == null || uName.length() < 1) {
-                itemName = sName;
-            } else {
-                itemName = uName + " ( " + sName + " )";
-            }
-            _selectLogixMap.put(itemName, sName);
-            if (lgxName.equals(sName)) {
-                itemKey = itemName;
-            }
-        }
-
-        // Load the combo box
-        for (String item : _selectLogixMap.keySet()) {
-            _selectLogixBox.addItem(item);
-        }
-
-        JComboBoxUtil.setupComboBoxMaxRows(_selectLogixBox);
-        _selectLogixBox.setSelectedItem(itemKey);
-        loadSelectConditionalBox(lgxName, curVariable);
-    }
-
-    /**
-     * Load the Conditional selection box. The first row is a prompt.
-     *
-     * @since 4.7.4
-     * @param logixName The Logix system name for selecting the owned
-     *                  Conditionals
-     * @param curVariable Current ConditionalVariable
-     */
-    void loadSelectConditionalBox(String logixName, ConditionalVariable curVariable) {
-        // Get the current Conditional name for selecting the current combo box row
-        String cdlName = curVariable.getName();
-
-        _selectConditionalBox.removeAllItems();
-        _selectConditionalList.clear();
-
-        // Create the first row
-        String itemKey = Bundle.getMessage("SelectFirstRow");  // NOI18N
-        _selectConditionalBox.addItem(itemKey);
-        _selectConditionalList.add("-None-");  // NOI18N
-
-        Logix x = _logixManager.getBySystemName(logixName);
-        if (x == null) {
-            log.error("Logix '{}' not found while building the conditional list", logixName);  // NOI18N
-            return;
-        }
-        if (x.getNumConditionals() == 0) {
-            return;
-        }
-        for (String cName : _conditionalManager.getSystemNameListForLogix(x)) {
-            Conditional c = _conditionalManager.getConditional(cName);
-            if (_curConditional.getSystemName().equals(c.getSystemName())) {
-                // Don't add myself to the list
-                continue;
-            }
-            String uName = c.getUserName();
-            String itemName = "";
-            if (uName == null || uName.length() < 1) {
-                itemName = cName;
-            } else {
-                itemName = uName + " ( " + cName + " )";
-            }
-            _selectConditionalBox.addItem(itemName);
-            _selectConditionalList.add(cName);
-            if (cdlName.equals(cName)) {
-                itemKey = itemName;
-            }
-        }
-        JComboBoxUtil.setupComboBoxMaxRows(_selectConditionalBox);
-        _selectConditionalBox.setSelectedItem(itemKey);
-    }
     // ============ Edit Conditional Window and Methods ============
 
     /**
@@ -630,49 +485,75 @@ public class ConditionalListEdit extends ConditionalEditBase {
     void makeEditConditionalWindow() {
         // deactivate this Logix
         _curLogix.deActivateLogix();
-        _editConditionalFrame = new ConditionalEditFrame(Bundle.getMessage("TitleEditConditional"), _curConditional, this);  // NOI18N
 
-        // add Delete Conditional button to bottom panel
-        JButton deleteConditional = new JButton(Bundle.getMessage("ButtonDelete"));  // NOI18N
-        _editConditionalFrame._bottomPanel.add(deleteConditional);
-        deleteConditional.addActionListener(new ActionListener() {
+        _conditionalFrame = new ConditionalEditFrame(Bundle.getMessage("TitleEditConditional"), _curConditional, this);  // NOI18N
+        _oldTargetNames.clear();
+        loadReferenceNames(_conditionalFrame._variableList, _oldTargetNames);
+
+        _conditionalFrame.pack();
+        _conditionalFrame.setVisible(true);
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editLogixFrame, null, _conditionalFrame);
+    }
+
+    /**
+     * Make the bottom panel for _conditionalFrame to hold buttons for
+     * Update/Save, Cancel, Delete/FullEdit
+     * 
+     * @return the panel
+     */
+    @Override
+    JPanel makeBottomPanel() {
+        JPanel panel = new JPanel();
+        
+        JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));  // NOI18N
+        panel.add(updateButton);
+        updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                deleteConditionalPressed(null);
+                _conditionalFrame.updateConditionalPressed(e);
             }
         });
-        deleteConditional.setToolTipText(Bundle.getMessage("DeleteConditionalButtonHint"));  // NOI18N
+        updateButton.setToolTipText(Bundle.getMessage("UpdateConditionalButtonHint"));  // NOI18N
+        // Cancel
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));  // NOI18N
+        panel.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                _conditionalFrame.cancelConditionalPressed();
+            }
+        });
+        cancelButton.setToolTipText(Bundle.getMessage("CancelConditionalButtonHint"));  // NOI18N
 
-        _editConditionalFrame.pack();
-        _editConditionalFrame.setVisible(true);
-        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editLogixFrame, null, _editConditionalFrame);
+        // add Delete Conditional button to bottom panel
+        JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));  // NOI18N
+        panel.add(deleteButton);
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteConditionalPressed();
+            }
+        });
+        deleteButton.setToolTipText(Bundle.getMessage("DeleteConditionalButtonHint"));  // NOI18N
+
+        return panel;
     }
 
-    PickSingleListener getPickSingleListener(JTextField textField, Conditional.ItemType itemType) {
-        return new PickSingleListener(textField, itemType);
+    @Override
+    boolean updateConditional(String uName, Conditional.AntecedentOperator logicType, boolean trigger, String antecedent) {
+        if (super.updateConditional(uName, _curLogix, logicType, trigger, antecedent)) { 
+            conditionalTableModel.fireTableRowsInserted(_numConditionals, _numConditionals);
+            _conditionalRowNumber = _numConditionals;
+            _numConditionals++;
+            return true;
+        }
+        return false;
     }
 
+    @Override
     void closeConditionalFrame() {
         conditionalTableModel.fireTableDataChanged();
-        try {
-            _curLogix.activateLogix();
-        } catch (NumberFormatException nfe) {
-            log.debug("NumberFormatException on activation of Logix ", nfe);  // NOI18N
-            JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Error4") + nfe.toString() + Bundle.getMessage("Error7"), // NOI18N
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);  // NOI18N
-        }
-        // when user uses the escape key and returns to editing, interaction with
-        // window closing event create strange environment
-        
-        if (_editConditionalFrame != null) {
-            _editConditionalFrame.dispose();
-            _editConditionalFrame = null;
-        }
-        if (_editLogixFrame != null) {
-            _editLogixFrame.setVisible(true);
-        }
+        super.closeConditionalFrame(_curLogix);
     }
 
     boolean checkConditionalUserName(String uName) {
@@ -681,7 +562,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             if (p != null) {
                 // Conditional with this user name already exists
                 log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
-                JOptionPane.showMessageDialog(_editConditionalFrame,
+                JOptionPane.showMessageDialog(_conditionalFrame,
                         Bundle.getMessage("Error10"),    // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
@@ -689,35 +570,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
             }
         } // else return false;
         return true;
-    }
-
-    // ------------ Methods for Edit Conditional Pane ------------
-
-    boolean updateConditional(String uName) {
-        // Check if the User Name has been changed
-        if (!uName.equals(_curConditional.getUserName())) {
-            // user name has changed - check if already in use
-            if (!checkConditionalUserName(uName, _curLogix)) {
-                return false;
-            }
-            // user name is unique or blank, change it
-            _curConditional.setUserName(uName);
-        }
-        if (_editConditionalFrame._variableList.size() <= 0 && !_suppressReminder) {
-            JOptionPane.showMessageDialog(_editLogixFrame,
-                    Bundle.getMessage("Warn5", _curConditional.getUserName(), _curConditional.getSystemName()),
-                    Bundle.getMessage("WarningTitle"), // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
-        }
-        // complete update
-        _curConditional.setStateVariables(_editConditionalFrame._variableList);
-        _curConditional.setAction(_editConditionalFrame._actionList);
-        _curConditional.setTriggerOnChange(_editConditionalFrame._triggerOnChangeButton.isSelected());
-        _curConditional.setLogicType(_editConditionalFrame._logicType, _editConditionalFrame._antecedent);
-        TreeSet<String> newTargetNames = new TreeSet<String>();
-        loadReferenceNames(_editConditionalFrame._variableList, newTargetNames);
-        updateWhereUsed(_editConditionalFrame._oldTargetNames, newTargetNames, _curConditional.getSystemName());
-        return true;        
     }
 
     /**
@@ -920,7 +772,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 if (_inReorderMode) {
                     swapConditional(row);
                 } else if (_curLogix.getSystemName().equals(SensorGroupFrame.logixSysName)) {
-                    JOptionPane.showMessageDialog(_editConditionalFrame,
+                    JOptionPane.showMessageDialog(_conditionalFrame,
                             Bundle.getMessage("Warn8", SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName),
                             Bundle.getMessage("WarningTitle"),
                             JOptionPane.WARNING_MESSAGE);  // NOI18N
