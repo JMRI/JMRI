@@ -202,6 +202,7 @@ public class Track extends PropertyChangeSupport {
     public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
     public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
+    public static final String TRACK_REPORTER_PROPERTY = "trackReporterChange"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -358,12 +359,6 @@ public class Track extends PropertyChangeSupport {
             return Bundle.getMessage("Staging").toLowerCase();
         }
         return ("unknown"); // NOI18N
-    }
-
-    @Deprecated
-    // as of 10/27/2013 version 3.5.5
-    public void setLocType(String type) {
-        setTrackType(type);
     }
 
     public void setLength(int length) {
@@ -2989,7 +2984,7 @@ public class Track extends PropertyChangeSupport {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {
-            setDirtyAndFirePropertyChange("reporterChange", old, r);
+            setDirtyAndFirePropertyChange(TRACK_REPORTER_PROPERTY, old, r);
         }
     }
 
@@ -3000,6 +2995,13 @@ public class Track extends PropertyChangeSupport {
      */
     public Reporter getReporter() {
         return _reader;
+    }
+    
+    public String getReporterName() {
+        if (getReporter() != null) {
+            return getReporter().getDisplayName();
+        }
+        return "";
     }
 
     private final static Logger log = LoggerFactory.getLogger(Track.class);
