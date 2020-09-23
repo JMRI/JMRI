@@ -53,23 +53,24 @@ public class DCCppThrottleManagerTest extends jmri.managers.AbstractThrottleMana
 
             @Override
             public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
-                // this is a never-stealing impelementation.
+                // this is a never-stealing implementation.
                 InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
             }
         };
+
         DccLocoAddress locoAddress = new DccLocoAddress(1203,true);
         tm.requestThrottle(1203, throtListen,true);
 
         Assert.assertNotNull("have created a throttle", throttle);
         Assert.assertEquals("is DCCppThrottle", throttle.getClass(), jmri.jmrix.dccpp.DCCppThrottle.class);
-        Assert.assertEquals(true, (((DCCppThrottleManager)tm).throttles.containsKey(locoAddress))); // now you see it
+        Assert.assertEquals(true, cs.throttles.containsKey(locoAddress)); // now you see it
         Assert.assertEquals(1,tm.getThrottleUsageCount(locoAddress));
         Assert.assertEquals(1, cs.getRegisterNum(1203));  // now you see it
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
 
         tm.releaseThrottle(throttle, throtListen);
         Assert.assertEquals(0,tm.getThrottleUsageCount(locoAddress));
-        Assert.assertEquals(false, (((DCCppThrottleManager)tm).throttles.containsKey(locoAddress))); //now you dont
+        Assert.assertEquals(false, cs.throttles.containsKey(locoAddress)); //now you dont
         Assert.assertEquals(-1, cs.getRegisterNum(1203)); //now you dont
 
     }
