@@ -43,8 +43,9 @@ public class ImportExternalData {
 
     public static void loadExternalData() {
         cm.getProgramProperties().importExternalProgramProperties();    // Load ProgramProperties
-        loadCTCSystemContent();        // Load the CTCSystem.xml file into special classes
-        doDataLoading();        // Process the content
+        if (loadCTCSystemContent()) {    // Load the CTCSystem.xml file into special classes
+            doDataLoading();            // Process the content
+        }
 
         // Rename data files
 //         if (!CTCFiles.renameFile("ProgramProperties.xml", "OldProgramProperties.xml")) {
@@ -56,24 +57,28 @@ public class ImportExternalData {
     }
 
     @SuppressWarnings("unchecked") // See below comments:
-    public static void loadCTCSystemContent() {
+    public static boolean loadCTCSystemContent() {
         String fullName = CTCFiles.getFullName(CTC_FILE_NAME);
         ImportCodeButtonHandlerData.preprocessingUpgradeSelf(fullName);     // WHOLE FILE operations FIRST.
-        convertClassNameReferences(fullName);   // Change the class references
+        try {
+            convertClassNameReferences(fullName);   // Change the class references
+        } catch (Exception ex) {
+            log.error("Exception occurred converting the class names in CTCSystem.xml: ex = {}", ex.getMessage());
+            return false;
+        }
 
-//         boolean returnValue = false;    // Assume error
         try {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(fullName)))) {
                 _mImportOtherData = (ImportOtherData) xmlDecoder.readObject();
                 // triggers unchecked warning
                 _mImportCodeButtonHandlerDataArrayList = (ArrayList<ImportCodeButtonHandlerData>) xmlDecoder.readObject(); // Type safety: Unchecked cast from Object to ArrayList<>
             }
-//             returnValue = true;
         } catch (IOException e) {
             log.debug("Unable to read {}", CTC_FILE_NAME, e); // debug because missing file is not error
         }
         if (_mImportOtherData == null) {
             log.error("---------  Import failed");
+            return false;
         }
 // Safety:
 //         if (_mImportOtherData == null) {
@@ -100,38 +105,27 @@ public class ImportExternalData {
 //         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
 //             codeButtonHandlerData.upgradeSelf();
 //         }
-//         return returnValue;
+        return true;
     }
 
 //     @SuppressWarnings("unchecked") // See below comments:
-    static private void convertClassNameReferences(String fileName) {
+//     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
+    static private void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
-        try (
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
-            String aLine = null;
-            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-                aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-                writeLine(bufferedWriter, aLine);
-            }
-            bufferedReader.close();
-            bufferedWriter.close();
-            File oldFile = new File(fileName);
-            oldFile.delete();                   // Delete existing old file.
-            try {
-                (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
-            } catch (Exception rx) {
-                log.warn("Rename of {} to {} failed", temporaryFilename, oldFile.getName());
-            }
-        } catch (IOException e) {
-            log.warn("convertClassNameReferences exception", e);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
+        String aLine = null;
+        while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+            aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+            writeLine(bufferedWriter, aLine);
         }
-        try {
-            (new File(temporaryFilename)).delete();        // If we get here, just clean up.
-        } catch (Exception dx) {
-            log.warn("Delete for file {} failed", temporaryFilename);
-        }
+        bufferedReader.close();
+        bufferedWriter.close();
+        File oldFile = new File(fileName);
+        oldFile.delete();                   // Delete existing old file.
+        (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
