@@ -112,21 +112,54 @@ public class ImportExternalData {
 //     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
     static private void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
-        (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
-        String aLine = null;
-        while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-            aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-            writeLine(bufferedWriter, aLine);
-        }
-        bufferedReader.close();
-        bufferedWriter.close();
-        File oldFile = new File(fileName);
-        oldFile.delete();                   // Delete existing old file.
-        (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
-        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
-    }
+        int errors = 0;
+         if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
+         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
+         String aLine = null;
+         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+             writeLine(bufferedWriter, aLine);
+         }
+         bufferedReader.close();
+         bufferedWriter.close();
+         File oldFile = new File(fileName);
+         if(!oldFile.delete()) errors++;                   // Delete existing old file.
+         if (!(new File(temporaryFilename)).renameTo(oldFile)) errors++;    // Rename temporary filename to proper final file.
+         if (!(new File(temporaryFilename)).delete()) errors++;        // If we get here, just clean up.
+         log.info("convertClassNameReferences: errors = {}", errors);
+     }
+
+
+
+
+
+//         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
+//         int errors = 0;
+//         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;
+//         log.info("errors 1 = {}", errors);
+//         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+//         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
+//         String aLine = null;
+//         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+//             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+//             writeLine(bufferedWriter, aLine);
+//         }
+//         bufferedReader.close();
+//         bufferedWriter.close();
+// //         File oldFile = new File(fileName);
+//         if (!CTCFiles.deleteFile(fileName)) errors++;                     // Delete old file
+//         log.info("errors 2 = {}", errors);
+//         if (!CTCFiles.renameFile(temporaryFilename, fileName)) errors++;  // Rename temporary filename to proper final file.
+//         log.info("errors 3 = {}", errors);
+//         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;                       // Delete temp file
+//         log.info("errors 4 = {}", errors);
+// // ====*/        (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+// // ====*/        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
+//         if (errors > 0) {
+//             log.error("Files errrors");
+//         }
+//     }
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();

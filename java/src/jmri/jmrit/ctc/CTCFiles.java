@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.StandardCopyOption;
 import jmri.util.FileUtil;
 
@@ -60,6 +61,21 @@ public class CTCFiles {
             return false;
         }
         return oldFile.renameTo(newFile);
+    }
+
+    public static boolean deleteFile(String fileName) {
+        boolean result = true;
+        try {
+            File file = getFile(fileName);
+            Files.delete(file.toPath());
+        } catch (NoSuchFileException nf) {
+            result = true;  // No file is OK
+        } catch (Exception ex) {
+            log.info("deleteFile: ex", ex);
+            result = false;
+        }
+// o use Files.delete(java.nio.file.Path) or Files.deleteIfExists(java.nio.file.Path) for
+        return result;
     }
 
     public static Path copyFile(String sourceFileName, String destFileName, boolean replace) throws IOException {
