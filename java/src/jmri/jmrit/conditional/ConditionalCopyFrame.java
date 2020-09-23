@@ -175,20 +175,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         contentPane.add(conseqentPanel);
         // End of Action Consequents Section
 
-        JPanel bottomPanel = _parent.makeBottomPanel();
-/*        
-        JButton editButton = new JButton(Bundle.getMessage("fullEditButton"));  // NOI18N
-        bottomPanel.add(editButton);
-        editButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _parent.switchFrameToEdit(_conditionalUserName.getText(), _variableList, _actionList);
-                _parent.closeConditionalFrame();
-            }
-        });
-        editButton.setToolTipText(Bundle.getMessage("AdditionalEditHint", Bundle.getMessage("HintFullEditButton")));  // NOI18N
-*/
-        contentPane.add(bottomPanel);
+        contentPane.add(_parent.makeBottomPanel());
         
         // setup window closing listener
         this.addWindowListener(

@@ -216,9 +216,6 @@ public class ConditionalListCopy extends ConditionalList {
         _conditionalFrame.setVisible(true);
         InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editLogixFrame, null, _conditionalFrame);
     }
-/*
-    void switchFrameToEdit(String userName, List<ConditionalVariable> variableList, List<ConditionalAction> actionList) {
-    }*/
 
     /**
      * Respond to the Done button in the Edit Logix window.

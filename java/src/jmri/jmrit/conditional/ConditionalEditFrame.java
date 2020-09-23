@@ -132,19 +132,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(makeTopPanel(conditional));
-/*        JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout());
-        panel1.add(new JLabel(Bundle.getMessage("ColumnSystemName") + ":"));  // NOI18N
-        panel1.add(new JLabel(conditional.getSystemName()));
-        contentPane.add(panel1);
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
-        panel2.add(new JLabel(Bundle.getMessage("ColumnUserName") + ":"));  // NOI18N
-        _conditionalUserName = new JTextField(30);
-        panel2.add(_conditionalUserName);
-        _conditionalUserName.setText(conditional.getUserName());
-        _conditionalUserName.setToolTipText(Bundle.getMessage("ConditionalUserNameHint"));  // NOI18N
-        contentPane.add(panel2);*/
 
         // add Logical Expression Section
         JPanel logicPanel = new JPanel();
@@ -742,8 +729,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
     void appendToAntecedent() {
         _antecedent = _parent.appendToAntecedent(_logicType, _variableList.size(), _antecedent);
         _antecedentField.setText(ConditionalEditBase.translateAntecedent(_antecedent, false));
-        // store in conditional
-//        _curConditional.setLogicType(_logicType, _antecedent);
     }
 
     /**
@@ -2765,59 +2750,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
         }
     }
 
-    /*.*
-     * Convert user setting in Conditional Action configuration pane to integer
-     * for processing.
-     *
-     * @param itemType            value for current item type
-     * @param actionTypeSelection index of selected item in configuration
-     *                            comboBox
-     * @return integer representing the selected action
-     */
-/*
-    static Conditional.Action getActionTypeFromBox(Conditional.ItemType itemType, int actionTypeSelection) {
-//        if (itemType < 0 || actionTypeSelection < 0) {
-//            return Conditional.Action.NONE;
-//        }
-        if (actionTypeSelection < 0) {
-            return Conditional.Action.NONE;
-        }
-        switch (itemType) {
-            case SENSOR:
-                return Conditional.Action.getSensorItems().get(actionTypeSelection);
-            case TURNOUT:
-                return Conditional.Action.getTurnoutItems().get(actionTypeSelection);
-            case LIGHT:
-                return Conditional.Action.getLightItems().get(actionTypeSelection);
-            case SIGNALHEAD:
-                return Conditional.Action.getSignalHeadItems().get(actionTypeSelection);
-            case SIGNALMAST:
-                return Conditional.Action.getSignalMastItems().get(actionTypeSelection);
-            case MEMORY:
-                return Conditional.Action.getMemoryItems().get(actionTypeSelection);
-            case LOGIX:
-                return Conditional.Action.getLogixItems().get(actionTypeSelection);
-            case WARRANT:
-                return Conditional.Action.getWarrantItems().get(actionTypeSelection);
-            case OBLOCK:
-                return Conditional.Action.getOBlockItems().get(actionTypeSelection);
-            case CLOCK:
-                return Conditional.Action.getClockItems().get(actionTypeSelection);
-            case AUDIO:
-                return Conditional.Action.getAudioItems().get(actionTypeSelection);
-            case SCRIPT:
-                return Conditional.Action.getScriptItems().get(actionTypeSelection);
-            case OTHER:
-                return Conditional.Action.getOtherItems().get(actionTypeSelection);
-            case ENTRYEXIT:
-                return Conditional.Action.getEntryExitItems().get(actionTypeSelection);
-            default:
-                // fall through
-                break;
-        }
-        return Conditional.Action.NONE;
-    }
-*/
     // ------------ Action update processes ------------
 
     /**
