@@ -483,11 +483,9 @@ public class MeterFrame extends JmriJFrame {
             return;
         }
         
-        Meter.Unit meterUnit = (meter != null) ? meter.getUnit() : Meter.Unit.NoPrefix;
-        
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
         
-        if (meterUnit == Meter.Unit.Milli) meterValue /= 1000.0;
+        if (meter.getUnit() == Meter.Unit.Milli) meterValue /= 1000.0;
         
         // We want at least one decimal digit so we cut the last digit later.
         // The problem is that the format string %05.0f will not add the dot
