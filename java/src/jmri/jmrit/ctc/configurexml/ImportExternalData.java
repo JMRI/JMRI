@@ -114,19 +114,21 @@ public class ImportExternalData {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
         if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
+        BufferedReader bufferedReader = null;
+        BufferedWriter bufferedWriter = null;
         try {       // OS_OPEN_STREAM_EXCEPTION_PATH
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
-            String aLine = null;
-            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-                aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-                writeLine(bufferedWriter, aLine);
-            }
-            bufferedReader.close();
-            bufferedWriter.close();
+            bufferedReader = new BufferedReader(new FileReader(fileName));
+            bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
         } catch (Exception ex) {
            log.info("convertClassNameReferences exception", ex);
         }
+        String aLine = null;
+        while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+            aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+            writeLine(bufferedWriter, aLine);
+        }
+        bufferedReader.close();
+        bufferedWriter.close();
         File oldFile = new File(fileName);
         if(!oldFile.delete()) errors++;                   // Delete existing old file.
         if (!(new File(temporaryFilename)).renameTo(oldFile)) errors++;    // Rename temporary filename to proper final file.
