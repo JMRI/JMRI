@@ -42,8 +42,8 @@ public class MeterFrame extends JmriJFrame {
         private Unit(double m) { multiply = m; }
     }
     
-    private final int MAX_INTEGER_DIGITS = 7;
-    private final int MAX_DECIMAL_DIGITS = 2;
+    private static final int MAX_INTEGER_DIGITS = 7;
+    private static final int MAX_DECIMAL_DIGITS = 3;
     
     private final UUID uuid;
     
@@ -93,6 +93,7 @@ public class MeterFrame extends JmriJFrame {
     NamedIcon ampIcon;
     NamedIcon kiloAmpIcon;
     NamedIcon percentIcon;
+    NamedIcon errorIcon;
 
     JPanel pane1;
     JPanel meterPane;
@@ -225,7 +226,7 @@ public class MeterFrame extends JmriJFrame {
         
         settingsMenu.addSeparator();
         
-        for (int i=1; i <= 7; i++) {
+        for (int i=1; i <= MAX_INTEGER_DIGITS; i++) {
             final int ii = i;
             JCheckBoxMenuItem item = new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("MenuMeterIntegerDigits", i)){
                 @Override
@@ -240,7 +241,7 @@ public class MeterFrame extends JmriJFrame {
             if (ii == numIntegerDigits) item.setSelected(true);
         }
         settingsMenu.addSeparator();
-        for (int i=0; i <= 2; i++) {
+        for (int i=0; i <= MAX_DECIMAL_DIGITS; i++) {
             final int ii = i;
             JCheckBoxMenuItem item = new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("MenuMeterDecimalDigits", i)){
                 @Override
@@ -288,6 +289,7 @@ public class MeterFrame extends JmriJFrame {
         ampIcon = new NamedIcon("resources/icons/misc/LCD/ampb.gif", "resources/icons/misc/LCD/ampb.gif");
         kiloAmpIcon = new NamedIcon("resources/icons/misc/LCD/kampb.gif", "resources/icons/misc/LCD/kampb.gif");
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
+        errorIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_Error.GIF", "resources/icons/misc/LCD/Lcd_Error.GIF");
         
         decimal = new JLabel(decimalIcon);
         unitLabels.put(Unit.PERCENT, new JLabel(percentIcon));
@@ -404,6 +406,7 @@ public class MeterFrame extends JmriJFrame {
         ampIcon.scale(scale, this);
         kiloAmpIcon.scale(scale,this);
         percentIcon.scale(scale, this);
+        errorIcon.scale(scale, this);
 
         meterPane.revalidate();
         this.getContentPane().revalidate();
@@ -427,12 +430,59 @@ public class MeterFrame extends JmriJFrame {
         units_MenuItemMap.get(Unit.KILO_AMPERE).setVisible(isCurrent);
     }
     
+    private void showError() {
+        for (int i=0; i < MAX_INTEGER_DIGITS; i++) {
+            JLabel label = integerDigitIcons.get(i);
+            if (i < numIntegerDigits) {
+                label.setIcon(errorIcon);
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
+        }
+        
+        decimal.setVisible(numDecimalDigits > 0);
+        
+        for (int i=0; i < MAX_DECIMAL_DIGITS; i++) {
+            JLabel label = decimalDigitIcons.get(i);
+            if (i < numDecimalDigits) {
+                label.setIcon(errorIcon);
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
+        }
+        
+        // Add width of integer digits
+        widthOfAllIconsToDisplay = digitIconWidth * numIntegerDigits;
+        
+        // Add decimal point
+        if (numDecimalDigits > 0) widthOfAllIconsToDisplay += decimalIconWidth;
+        
+        // Add width of decimal digits
+        widthOfAllIconsToDisplay += digitIconWidth * numDecimalDigits;
+        
+        // Add one for the unit icon
+        widthOfAllIconsToDisplay += unitIconWidth;
+        
+        if (widthOfAllIconsToDisplay != oldWidthOfAllIconsToDisplay){
+            // clear the content pane and rebuild it.
+            scaleImage();
+            oldWidthOfAllIconsToDisplay = widthOfAllIconsToDisplay;
+        }
+    }
+    
     /**
      * Update the displayed value.
      * 
      * Assumes an integer value has an extra, non-displayed decimal digit.
      */
     synchronized void update() {
+        if (meter == null) {
+            showError();
+            return;
+        }
+        
         Meter.Unit meterUnit = (meter != null) ? meter.getUnit() : Meter.Unit.NoPrefix;
         
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
