@@ -121,6 +121,7 @@ public class ImportExternalData {
             bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
         } catch (Exception ex) {
            log.info("convertClassNameReferences exception", ex);
+           return;
         }
         String aLine = null;
         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
