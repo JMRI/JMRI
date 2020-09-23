@@ -1,7 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import java.util.EnumSet;
-
+import java.util.HashMap;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
@@ -19,8 +19,9 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppThrottleManager extends AbstractThrottleManager implements DCCppListener {
 
+    protected HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
+
     protected DCCppTrafficController tc = null;
-    protected DCCppCommandStation cs = null;
 
     /**
      * Constructor.
@@ -30,7 +31,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
         super(memo);
         // connect to the TrafficManager
         tc = memo.getDCCppTrafficController();
-        cs = tc.getCommandStation();
 
         // Register to listen for throttle messages
         tc.addDCCppListener(DCCppInterface.THROTTLE, this);
@@ -45,8 +45,8 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         DCCppThrottle throttle;
         log.debug("Requesting Throttle: {}", address);
-        if (cs.throttles.containsKey(address)) {
-            notifyThrottleKnown(cs.throttles.get(address), address);
+        if (throttles.containsKey(address)) {
+            notifyThrottleKnown(throttles.get(address), address);
         } else {
             if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
                 failedThrottleRequest(address, "No Register available for Throttle. Address="+ address);
@@ -54,7 +54,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
                 return;
             }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
-            cs.throttles.put(address, throttle);
+            throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
         }
     }
@@ -109,16 +109,9 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
      * Local method for deciding short/long address
      * (is it?)
      */
-    public static boolean isLongAddress(int num) {
+    static protected boolean isLongAddress(int num) {
         return (num >= 128);
     }
-
-    /*
-     * Is address in use?
-     */
-//    public boolean isAddressInUse(LocoAddress la) {
-//        return (cs.throttles.containsKey(la));
-//    }
 
     /**
      * What speed modes are supported by this system? value should be xor of
@@ -153,7 +146,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
 
     }
 
-    // listen for the messages going out to the command station
+    // listen for the messages to the LI100/LI101
     @Override
     public void message(DCCppMessage l) {
     }
@@ -174,7 +167,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements DCC
             tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             if (t instanceof DCCppThrottle) {
                 DCCppThrottle lnt = (DCCppThrottle) t;
-                cs.throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
+                throttles.remove(lnt.getLocoAddress()); // remove from throttles map.
                 lnt.throttleDispose();
                 return true;
             }
