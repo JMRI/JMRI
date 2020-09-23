@@ -113,21 +113,25 @@ public class ImportExternalData {
     static private void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
-         if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
-         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
-         String aLine = null;
-         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-             writeLine(bufferedWriter, aLine);
-         }
-         bufferedReader.close();
-         bufferedWriter.close();
-         File oldFile = new File(fileName);
-         if(!oldFile.delete()) errors++;                   // Delete existing old file.
-         if (!(new File(temporaryFilename)).renameTo(oldFile)) errors++;    // Rename temporary filename to proper final file.
-         if (!(new File(temporaryFilename)).delete()) errors++;        // If we get here, just clean up.
-         log.info("convertClassNameReferences: errors = {}", errors);
+        if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
+        try {       // OS_OPEN_STREAM_EXCEPTION_PATH
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
+            String aLine = null;
+            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+                aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+                writeLine(bufferedWriter, aLine);
+            }
+            bufferedReader.close();
+            bufferedWriter.close();
+        } catch (Exception ex) {
+           log.info("convertClassNameReferences exception", ex);
+        }
+        File oldFile = new File(fileName);
+        if(!oldFile.delete()) errors++;                   // Delete existing old file.
+        if (!(new File(temporaryFilename)).renameTo(oldFile)) errors++;    // Rename temporary filename to proper final file.
+        if (!(new File(temporaryFilename)).delete()) errors++;        // If we get here, just clean up.
+        log.warn("convertClassNameReferences: errors = {}", errors);
      }
 
 
