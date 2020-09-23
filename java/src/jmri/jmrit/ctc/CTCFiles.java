@@ -2,6 +2,10 @@ package jmri.jmrit.ctc;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import jmri.util.FileUtil;
 
 /**
@@ -57,6 +61,44 @@ public class CTCFiles {
         }
         return oldFile.renameTo(newFile);
     }
+
+    public static Path copyFile(String sourceFileName, String destFileName, boolean replace) throws IOException {
+        File sourceFile = getFile(sourceFileName);
+        File destFile = getFile(destFileName);
+        if (destFile.exists() && !replace) {
+            log.error("Rename file {} failed: new file {} already exists", sourceFileName,  destFileName);
+            return null;
+        }
+        return Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    public static String addExtensionIfMissing(String path, String missingExtension) {
+        String filenameOnly = getFilenameOnly(path);
+        if (filenameOnly.indexOf('.') >= 0) return path;
+        return path + missingExtension;
+    }
+
+    public static String changeExtensionTo(String path, String newExtension) {
+        return addExtensionIfMissing(removeFileExtension(path), newExtension);
+    }
+
+    public static String removeFileExtension(String filename) {
+        final int lastIndexOf = filename.lastIndexOf('.');
+        return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;
+    }
+
+    public static String getFilenameOnly(String path) {
+        // Paths.get(path) can return null per the Paths documentation
+        Path file = Paths.get(path);
+        if (file != null){
+            Object fileName = file.getFileName();
+            if (fileName!=null) {
+                return fileName.toString();
+            }
+        }
+        return "";
+    }
+
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CTCFiles.class);
 }

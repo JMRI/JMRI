@@ -1,372 +1,244 @@
 package jmri.jmrit.ctc.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.beans.XMLDecoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
 import java.lang.reflect.Field;
 import java.util.*;
 
-import jmri.jmrit.XmlFile;
+// import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.*;
 import jmri.jmrit.ctc.*;
 import jmri.jmrit.ctc.editor.code.*;
 import jmri.jmrit.ctc.ctcserialdata.*;
 
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Import the old ProgramProperties.xml and CTCSystem.xml files.
- * <pre>
- * java
- *   object - new OtherData
- *     void - "getField"
- *       string - field name
- *       void - "set"
- *         object - parent ref
- *         boolean/string/int - value
- *   object - ArrayList
- *     void - "add"
- *       object - new CodeButtonHandlerData
- *         void - "getField"
- *           string - field name
- *           void - "set"
- *             object - parent ref
- *             boolean/string/int - value
- * etc.
- * </pre>
+ * The external data was created using XMLEncoder.  The import process changes the
+ * class names in the xml file and then loads the temporary classes using XMLDecoder.
+ * The content from the temporary classes is then transferred and converted to the
+ * real classes.
  *
  * @author Dave Sand Copyright (c) 2020
  */
 public class ImportExternalData {
+
     static final CtcManager cm = InstanceManager.getDefault(CtcManager.class);
-    static ArrayList<HashMap<String, String>> sections = new ArrayList<>();
-    static HashMap<String, String> fields;
-    static boolean hasOtherData = false;
-    static int cbdhCount = 0;
+    static ImportOtherData _mImportOtherData;
+    static ArrayList<ImportCodeButtonHandlerData> _mImportCodeButtonHandlerDataArrayList = new ArrayList<>();
+
+    private static final String CTC_FILE_NAME = "CTCSystem.xml";                        // NOI18N
+    private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
 
     public static void loadExternalData() {
-        // Load ProgramProperties
-        cm.getProgramProperties().importExternalProgramProperties();
-
-        // Convert the CTCSystem.xml to an ArrayList of HashMaps containing field names and values.
-        loadCTCSystemContent();
-
-        // Process the field content
-        doDataLoading();
+        cm.getProgramProperties().importExternalProgramProperties();    // Load ProgramProperties
+        loadCTCSystemContent();        // Load the CTCSystem.xml file into special classes
+        doDataLoading();        // Process the content
 
         // Rename data files
-        if (!CTCFiles.renameFile("ProgramProperties.xml", "OldProgramProperties.xml")) {
-            log.error("Rename failed for ProgramProperties.xml");
-        }
-        if (!CTCFiles.renameFile("CTCSystem.xml", "OldCTCSystem.xml")) {
-            log.error("Rename failed for CTCSystem.xml");
-        }
+//         if (!CTCFiles.renameFile("ProgramProperties.xml", "OldProgramProperties.xml")) {
+//             log.error("Rename failed for ProgramProperties.xml");
+//         }
+//         if (!CTCFiles.renameFile("CTCSystem.xml", "OldCTCSystem.xml")) {
+//             log.error("Rename failed for CTCSystem.xml");
+//         }
     }
 
+    @SuppressWarnings("unchecked") // See below comments:
     public static void loadCTCSystemContent() {
-        // Get the XML file for the OtherData and CodeButtonHandlerData content
-        CTCSystemFile x = new CTCSystemFile();
-        File file = x.getFile();
+        String fullName = CTCFiles.getFullName(CTC_FILE_NAME);
+        ImportCodeButtonHandlerData.preprocessingUpgradeSelf(fullName);   // WHOLE FILE operations FIRST.
 
-        // Parse the XMLExport format
+        boolean returnValue = false;    // Assume error
         try {
-            Element root = x.rootFromFile(file);
-            for (Element level1 : root.getChildren()) {
-                if (level1.getAttributeValue("class").contains("OtherData")) {
-                    // This will be the OtherData section
-                    fields = new HashMap<>();
-                    for (Element level2 : level1.getChildren()) {
-                        getField(level2);
-                    }
-                    sections.add(fields);
-                    hasOtherData = true;
-                    continue;
-                }
-                if (level1.getAttributeValue("class").contains("ArrayList")) {
-                    // This will be the CodeButtonHandleData section
-                    for (Element level2 : level1.getChildren()) {
-                        Element level3 = level2.getChild("object");
-
-                        // This is were a new CodeButtonHandleData starts
-                        fields = new HashMap<>();
-                        for (Element level4 : level3.getChildren()) {
-                            getField(level4);
-                        }
-                        sections.add(fields);
-                        cbdhCount++;
-                    }
-                }
+            try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(fullName)))) {
+                _mImportOtherData = (ImportOtherData) xmlDecoder.readObject();
+                // triggers unchecked warning
+                _mImportCodeButtonHandlerDataArrayList = (ArrayList<ImportCodeButtonHandlerData>) xmlDecoder.readObject(); // Type safety: Unchecked cast from Object to ArrayList<>
             }
-        } catch (JDOMException ex) {
-            log.error("File invalid: {}", ex);  // NOI18N
-            return;
-        } catch (IOException ex) {
-            log.error("Error reading file: {}", ex);  // NOI18N
-            return;
+            returnValue = true;
+        } catch (IOException e) {
+            log.debug("Unable to read {}", CTC_FILE_NAME, e); // debug because missing file is not error
         }
+        if (_mImportOtherData == null) {
+            log.error("---------  Import failed");
+        }
+// Safety:
+//         if (_mImportOtherData == null) {
+//             _mImportOtherData = new ImportOtherData();
+//         }
+//         if (_mImportCodeButtonHandlerDataArrayList == null) {
+//             _mImportCodeButtonHandlerDataArrayList = new ArrayList<>();
+//         }
+//     }
+//  Make all strings "sane" on the way in, in case user used a standard editor to modify our file:
+//  This works for both the CTCEditor and JMRI runtime which both call this routine:
+//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+//             codeButtonHandlerData.trimAndFixAllStrings();
+//         }
+//  Kludge for new field added but I forgot to init it in "CodeButtonHandlerDataRoutines" (an enum is NOT an integer like other languages, but an object!):
+//  Can be removed someday!
+//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+//             if (codeButtonHandlerData._mSWDI_GUITurnoutType == null) {
+//                 codeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
+//             }
+//         }
+//  Finally, give each object a chance to upgrade itself BEFORE anything uses it:
+//         _mOtherData.upgradeSelf();
+//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
+//             codeButtonHandlerData.upgradeSelf();
+//         }
+//         return returnValue;
     }
 
-    static void getField(Element element) {
-        String fieldName = element.getChild("string").getValue();
-
-        Element children = element.getChild("void");
-        for (Element child : children.getChildren()) {
-            switch (child.getName()) {
-                case "object":
-                    if (child.getAttributeValue("class") != null && child.getAttributeValue("class").contains("Enum")) {
-                        String enumValue = child.getChild("string").getValue();
-                        fields.put(fieldName, enumValue);
-                    }
-                    break;
-                case "string":
-                case "int":
-                case "boolean":
-                    fields.put(fieldName, child.getValue());
-                    break;
-                default:
-                    log.error("++++  unknown type +++++: {}, {}", fieldName, child.getValue());
-                    break;
+//     @SuppressWarnings("unchecked") // See below comments:
+    static private void convertClassNameReferences(String fileName) {
+        String temporaryFilename = fileName + TEMPORARY_EXTENSION;
+        (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
+        try (
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
+            String aLine = null;
+            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+                aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+                writeLine(bufferedWriter, aLine);
             }
+            bufferedReader.close();
+            bufferedWriter.close();
+            File oldFile = new File(fileName);
+            oldFile.delete();                   // Delete existing old file.
+            (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+        } catch (IOException e) {
+            log.warn("convertClassNameReferences exception", e);
         }
+        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
     }
 
-    public static class CTCSystemFile extends XmlFile {
-        public File getFile() {
-            return CTCFiles.getFile("CTCSystem.xml");
-        }
+    static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
+        bufferedWriter.write(aLine); bufferedWriter.newLine();
     }
 
     static void doDataLoading() {
-        int index = 0;
-        if (hasOtherData) {
-            loadOtherData(sections.get(index));
-            index++;
-        }
-
-        for (int idx = index; idx < sections.size(); idx++) {
-            loadCodeButtonHandlerData(sections.get(idx));
-        }
+        loadOtherData();
+        _mImportCodeButtonHandlerDataArrayList.forEach(imp -> {
+            loadCodeButtonHandlerData(imp);
+        });
         convertCallOnSensorNamesToNBHSensors();
     }
 
-    static void loadCodeButtonHandlerData(HashMap<String, String> fieldList) {
-    log.debug("------------- CBHD ------------");
-        String value = fieldList.get("_mUniqueID");
-        int _mUniqueID = loadInt(value);
-
-        value = fieldList.get("_mSwitchNumber");
-        int _mSwitchNumber = loadInt(value);
-
-        value = fieldList.get("_mSignalEtcNumber");
-        int _mSignalEtcNumber = loadInt(value);
-
-        value = fieldList.get("_mGUIColumnNumber");
-        int _mGUIColumnNumber = loadInt(value);
+    static void loadCodeButtonHandlerData(ImportCodeButtonHandlerData oldCBHD) {
+    log.debug("------------- Create CBHD ------------");
+        int _mUniqueID = oldCBHD._mUniqueID;
+        int _mSwitchNumber = oldCBHD._mSwitchNumber;
+        int _mSignalEtcNumber = oldCBHD._mSignalEtcNumber;
+        int _mGUIColumnNumber = oldCBHD._mGUIColumnNumber;
 
         // Create a new CodeButtonHandlerData via CodeButtonHandlerDataRoutines which sets default values and empty NBH... objects
         CodeButtonHandlerData cbhd = CodeButtonHandlerDataRoutines.createNewCodeButtonHandlerData(
                 _mUniqueID, _mSwitchNumber, _mSignalEtcNumber, _mGUIColumnNumber, cm.getProgramProperties());
         cm.getCTCSerialData().addCodeButtonHandlerData(cbhd);
 
-
     log.debug("------------- Code ------------");
 
         // Code section
-        value = fieldList.get("_mCodeButtonInternalSensor");
-        if (value != null) cbhd._mCodeButtonInternalSensor = loadSensor(value, true);
+        cbhd._mCodeButtonInternalSensor = loadSensor(oldCBHD._mCodeButtonInternalSensor, true);
+        cbhd._mOSSectionOccupiedExternalSensor = loadSensor(oldCBHD._mOSSectionOccupiedExternalSensor, false);
+        cbhd._mOSSectionOccupiedExternalSensor2 = loadSensor(oldCBHD._mOSSectionOccupiedExternalSensor2, false);
+        cbhd._mOSSectionSwitchSlavedToUniqueID = oldCBHD._mOSSectionSwitchSlavedToUniqueID;
+        cbhd._mGUIGeneratedAtLeastOnceAlready = oldCBHD._mGUIGeneratedAtLeastOnceAlready;
+        cbhd._mCodeButtonDelayTime = oldCBHD._mCodeButtonDelayTime;
 
-        value = fieldList.get("_mOSSectionOccupiedExternalSensor");
-        if (value != null) cbhd._mOSSectionOccupiedExternalSensor = loadSensor(value, false);
-
-        value = fieldList.get("_mOSSectionOccupiedExternalSensor2");
-        if (value != null) cbhd._mOSSectionOccupiedExternalSensor2 = loadSensor(value, false);
-
-        value = fieldList.get("_mOSSectionSwitchSlavedToUniqueID");
-        if (value != null) cbhd._mOSSectionSwitchSlavedToUniqueID = loadInt(value);
-
-        value = fieldList.get("_mGUIGeneratedAtLeastOnceAlready");
-        if (value != null) cbhd._mGUIGeneratedAtLeastOnceAlready = loadBoolean(value);
-
-        value = fieldList.get("_mCodeButtonDelayTime");
-        if (value != null) cbhd._mCodeButtonDelayTime = loadInt(value);
     log.debug("------------- SIDI ------------");
 
         // SIDI section
-        value = fieldList.get("_mSIDI_Enabled");
-        if (value != null) cbhd._mSIDI_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mSIDI_LeftInternalSensor");
-        String sidiLeft = value  == null ? "" : value;    // Save for setting traffic direction
-        if (value != null) cbhd._mSIDI_LeftInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSIDI_NormalInternalSensor");
-        if (value != null) cbhd._mSIDI_NormalInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSIDI_RightInternalSensor");
-        String sidiRight = value  == null ? "" : value;    // Save for setting traffic direction
-        if (value != null) cbhd._mSIDI_RightInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSIDI_CodingTimeInMilliseconds");
-        if (value != null) cbhd._mSIDI_CodingTimeInMilliseconds = loadInt(value);
-
-        value = fieldList.get("_mSIDI_TimeLockingTimeInMilliseconds");
-        if (value != null) cbhd._mSIDI_TimeLockingTimeInMilliseconds = loadInt(value);
-
-        value = fieldList.get("_mSIDI_LeftRightTrafficSignalsCSVList");
-        if (value != null) cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(value);
-
-        value = fieldList.get("_mSIDI_RightLeftTrafficSignalsCSVList");
-        if (value != null) cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(value);
+        cbhd._mSIDI_Enabled = oldCBHD._mSIDI_Enabled;
+        cbhd._mSIDI_LeftInternalSensor = loadSensor(oldCBHD._mSIDI_LeftInternalSensor, true);
+        cbhd._mSIDI_NormalInternalSensor = loadSensor(oldCBHD._mSIDI_NormalInternalSensor, true);
+        cbhd._mSIDI_RightInternalSensor = loadSensor(oldCBHD._mSIDI_RightInternalSensor, true);
+        cbhd._mSIDI_CodingTimeInMilliseconds = oldCBHD._mSIDI_CodingTimeInMilliseconds;
+        cbhd._mSIDI_TimeLockingTimeInMilliseconds = oldCBHD._mSIDI_TimeLockingTimeInMilliseconds;
+        cbhd._mSIDI_LeftRightTrafficSignals = getSignalList(oldCBHD._mSIDI_LeftRightTrafficSignalsCSVList);
+        cbhd._mSIDI_RightLeftTrafficSignals = getSignalList(oldCBHD._mSIDI_RightLeftTrafficSignalsCSVList);
 
         // Set the traffic direction based on indicator sensors.
         String trafficDirection = "BOTH";
-        if (sidiLeft.isEmpty() && !sidiRight.isEmpty()) {
+        if (oldCBHD._mSIDI_LeftInternalSensor.isEmpty() && !oldCBHD._mSIDI_RightInternalSensor.isEmpty()) {
             trafficDirection = "RIGHT";
-        } else if (!sidiLeft.isEmpty() && sidiRight.isEmpty()) {
+        } else if (!oldCBHD._mSIDI_LeftInternalSensor.isEmpty() && oldCBHD._mSIDI_RightInternalSensor.isEmpty()) {
             trafficDirection = "LEFT";
         }
         cbhd._mSIDI_TrafficDirection = CodeButtonHandlerData.TRAFFIC_DIRECTION.valueOf(trafficDirection);
 
-
-
     log.debug("------------- SIDL ------------");
         // SIDL section
-        value = fieldList.get("_mSIDL_Enabled");
-        if (value != null) cbhd._mSIDL_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mSIDL_LeftInternalSensor");
-        if (value != null) cbhd._mSIDL_LeftInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSIDL_NormalInternalSensor");
-        if (value != null) cbhd._mSIDL_NormalInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSIDL_RightInternalSensor");
-        if (value != null) cbhd._mSIDL_RightInternalSensor = loadSensor(value, true);
+        cbhd._mSIDL_Enabled = oldCBHD._mSIDL_Enabled;
+        cbhd._mSIDL_LeftInternalSensor = loadSensor(oldCBHD._mSIDL_LeftInternalSensor, true);
+        cbhd._mSIDL_NormalInternalSensor = loadSensor(oldCBHD._mSIDL_NormalInternalSensor, true);
+        cbhd._mSIDL_RightInternalSensor = loadSensor(oldCBHD._mSIDL_RightInternalSensor, true);
 
     log.debug("------------- SWDI ------------");
         // SWDI section
-        value = fieldList.get("_mSWDI_Enabled");
-        if (value != null) cbhd._mSWDI_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mSWDI_NormalInternalSensor");
-        if (value != null) cbhd._mSWDI_NormalInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSWDI_ReversedInternalSensor");
-        if (value != null) cbhd._mSWDI_ReversedInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mSWDI_FeedbackDifferent");
-        if (value != null) cbhd._mSWDI_FeedbackDifferent = loadBoolean(value);
-
-        value = fieldList.get("_mSWDI_ExternalTurnout");
-        if (value != null) cbhd._mSWDI_ExternalTurnout = loadTurnout(value, cbhd._mSWDI_FeedbackDifferent);
-
-        value = fieldList.get("_mSWDI_CodingTimeInMilliseconds");
-        if (value != null) cbhd._mSWDI_CodingTimeInMilliseconds = loadInt(value);
-
-        value = fieldList.get("_mSWDI_GUITurnoutType");
-        if (value != null) cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.valueOf(value);
-
-        value = fieldList.get("_mSWDI_GUITurnoutLeftHand");
-        if (value != null) cbhd._mSWDI_GUITurnoutLeftHand = loadBoolean(value);
-
-        value = fieldList.get("_mSWDI_GUICrossoverLeftHand");
-        if (value != null) cbhd._mSWDI_GUICrossoverLeftHand = loadBoolean(value);
+        cbhd._mSWDI_Enabled = oldCBHD._mSWDI_Enabled;
+        cbhd._mSWDI_NormalInternalSensor = loadSensor(oldCBHD._mSWDI_NormalInternalSensor, true);
+        cbhd._mSWDI_ReversedInternalSensor = loadSensor(oldCBHD._mSWDI_ReversedInternalSensor, true);
+        cbhd._mSWDI_FeedbackDifferent = oldCBHD._mSWDI_FeedbackDifferent;
+        cbhd._mSWDI_ExternalTurnout = loadTurnout(oldCBHD._mSWDI_ExternalTurnout, oldCBHD._mSWDI_FeedbackDifferent);
+        cbhd._mSWDI_CodingTimeInMilliseconds = oldCBHD._mSWDI_CodingTimeInMilliseconds;
+        cbhd._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.valueOf(oldCBHD._mSWDI_GUITurnoutType.toString());
+        cbhd._mSWDI_GUITurnoutLeftHand = oldCBHD._mSWDI_GUITurnoutLeftHand;
+        cbhd._mSWDI_GUICrossoverLeftHand = oldCBHD._mSWDI_GUICrossoverLeftHand;
 
     log.debug("------------- SWDL ------------");
         // SWDL section
-        value = fieldList.get("_mSWDL_Enabled");
-        if (value != null) cbhd._mSWDL_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mSWDL_InternalSensor");
-        if (value != null) cbhd._mSWDL_InternalSensor = loadSensor(value, true);
+        cbhd._mSWDL_Enabled = oldCBHD._mSWDL_Enabled;
+        cbhd._mSWDL_InternalSensor = loadSensor(oldCBHD._mSWDL_InternalSensor, true);
 
     log.debug("-------------  CO  ------------");
         // CO section
-        value = fieldList.get("_mCO_Enabled");
-        if (value != null) cbhd._mCO_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mCO_CallOnToggleInternalSensor");
-        if (value != null) cbhd._mCO_CallOnToggleInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mCO_GroupingsListString");
-        if (value != null) cbhd._mCO_GroupingsList = getCallOnList(value);
+        cbhd._mCO_Enabled = oldCBHD._mCO_Enabled;
+        cbhd._mCO_CallOnToggleInternalSensor = loadSensor(oldCBHD._mCO_CallOnToggleInternalSensor, true);
+        cbhd._mCO_GroupingsList = getCallOnList(oldCBHD._mCO_GroupingsListString);
 
     log.debug("------------- TRL  ------------");
         // TRL section
-        value = fieldList.get("_mTRL_Enabled");
-        if (value != null) cbhd._mTRL_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mTRL_LeftTrafficLockingRulesSSVList");
-        if (value != null) cbhd._mTRL_LeftTrafficLockingRules = getTrafficLocking(value);
-
-        value = fieldList.get("_mTRL_RightTrafficLockingRulesSSVList");
-        if (value != null) cbhd._mTRL_RightTrafficLockingRules = getTrafficLocking(value);
+        cbhd._mTRL_Enabled = oldCBHD._mTRL_Enabled;
+        cbhd._mTRL_LeftTrafficLockingRules = getTrafficLocking(oldCBHD._mTRL_LeftTrafficLockingRulesSSVList);
+        cbhd._mTRL_RightTrafficLockingRules = getTrafficLocking(oldCBHD._mTRL_RightTrafficLockingRulesSSVList);
 
     log.debug("------------- TUL  ------------");
         // TUL section
-        value = fieldList.get("_mTUL_Enabled");
-        if (value != null) cbhd._mTUL_Enabled = loadBoolean(value);
+        cbhd._mTUL_Enabled = oldCBHD._mTUL_Enabled;
+        cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(oldCBHD._mTUL_DispatcherInternalSensorLockToggle, true);
+        cbhd._mTUL_ExternalTurnoutFeedbackDifferent = oldCBHD._mTUL_ExternalTurnoutFeedbackDifferent;
+        cbhd._mTUL_ExternalTurnout = loadTurnout(oldCBHD._mTUL_ExternalTurnout, oldCBHD._mTUL_ExternalTurnoutFeedbackDifferent);
+        cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(oldCBHD._mTUL_DispatcherInternalSensorUnlockedIndicator, true);
+        cbhd._mTUL_NoDispatcherControlOfSwitch = oldCBHD._mTUL_NoDispatcherControlOfSwitch;
+        cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = oldCBHD._mTUL_ndcos_WhenLockedSwitchStateIsClosed;
+        cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.valueOf(oldCBHD._mTUL_LockImplementation.toString());
 
-        value = fieldList.get("_mTUL_DispatcherInternalSensorLockToggle");
-        if (value != null) cbhd._mTUL_DispatcherInternalSensorLockToggle = loadSensor(value, true);
+        cbhd._mTUL_AdditionalExternalTurnout1 = loadTurnout(oldCBHD._mTUL_AdditionalExternalTurnout1, oldCBHD._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
+        cbhd._mTUL_AdditionalExternalTurnout2 = loadTurnout(oldCBHD._mTUL_AdditionalExternalTurnout2, oldCBHD._mTUL_AdditionalExternalTurnout2FeedbackDifferent);
+        cbhd._mTUL_AdditionalExternalTurnout3 = loadTurnout(oldCBHD._mTUL_AdditionalExternalTurnout3, oldCBHD._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
 
-        value = fieldList.get("_mTUL_ExternalTurnoutFeedbackDifferent");
-        if (value != null) cbhd._mTUL_ExternalTurnoutFeedbackDifferent = loadBoolean(value);
-
-        value = fieldList.get("_mTUL_ExternalTurnout");
-        if (value != null) cbhd._mTUL_ExternalTurnout = loadTurnout(value, cbhd._mTUL_ExternalTurnoutFeedbackDifferent);
-
-        value = fieldList.get("_mTUL_DispatcherInternalSensorUnlockedIndicator");
-        if (value != null) cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(value, true);
-
-        value = fieldList.get("_mTUL_NoDispatcherControlOfSwitch");
-        if (value != null) cbhd._mTUL_NoDispatcherControlOfSwitch = loadBoolean(value);
-
-        value = fieldList.get("_mTUL_ndcos_WhenLockedSwitchStateIsClosed");
-        if (value != null) cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(value);
-
-        value = fieldList.get("_mTUL_LockImplementation");
-        if (value != null) cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.valueOf(value);
-
-        value = fieldList.get("_mTUL_AdditionalExternalTurnout1");
-        if (value != null) {
-            boolean feedback = loadBoolean(fieldList.get("_mTUL_AdditionalExternalTurnout1FeedbackDifferent"));
-            cbhd._mTUL_AdditionalExternalTurnout1 = loadTurnout(value, feedback);
-            cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = feedback;
-        }
-
-        value = fieldList.get("_mTUL_AdditionalExternalTurnout2");
-        if (value != null) {
-            boolean feedback = loadBoolean(fieldList.get("_mTUL_AdditionalExternalTurnout2FeedbackDifferent"));
-            cbhd._mTUL_AdditionalExternalTurnout2 = loadTurnout(value, feedback);
-            cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent = feedback;
-        }
-
-        value = fieldList.get("_mTUL_AdditionalExternalTurnout3");
-        if (value != null) {
-            boolean feedback = loadBoolean(fieldList.get("_mTUL_AdditionalExternalTurnout3FeedbackDifferent"));
-            cbhd._mTUL_AdditionalExternalTurnout3 = loadTurnout(value, feedback);
-            cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = feedback;
-        }
+        cbhd._mTUL_AdditionalExternalTurnout1FeedbackDifferent = oldCBHD._mTUL_AdditionalExternalTurnout1FeedbackDifferent;
+        cbhd._mTUL_AdditionalExternalTurnout2FeedbackDifferent = oldCBHD._mTUL_AdditionalExternalTurnout2FeedbackDifferent;
+        cbhd._mTUL_AdditionalExternalTurnout3FeedbackDifferent = oldCBHD._mTUL_AdditionalExternalTurnout3FeedbackDifferent;
 
     log.debug("-------------  IL  ------------");
         // IL section
-        value = fieldList.get("_mIL_Enabled");
-        if (value != null) cbhd._mIL_Enabled = loadBoolean(value);
-
-        value = fieldList.get("_mIL_ListOfCSVSignalNames");
-        if (value != null) cbhd._mIL_Signals = getSignalList(value);
+        cbhd._mIL_Enabled = oldCBHD._mIL_Enabled;
+        cbhd._mIL_Signals = getSignalList(oldCBHD._mIL_ListOfCSVSignalNames);
 
 // Debugging aid -- not active due to SpotBugs
 //                 log.info("CodeButtonHandlerData, {}/{}:", _mSwitchNumber, _mSignalEtcNumber);
@@ -382,83 +254,46 @@ public class ImportExternalData {
 
     /**
      * Load the OtherData class.
-     * @param fieldList The "ctcOtherData" fields.
      */
-    static void loadOtherData(HashMap<String, String> fieldList) {
+    static void loadOtherData() {
         OtherData od = cm.getOtherData();
-        String value;
 
 //  Fleeting:
-        value = fieldList.get("_mFleetingToggleInternalSensor");
-        if (value != null) od._mFleetingToggleInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mDefaultFleetingEnabled");
-        if (value != null) od._mDefaultFleetingEnabled = loadBoolean(value);
+        od._mFleetingToggleInternalSensor = loadSensor(_mImportOtherData._mFleetingToggleInternalSensor, true);
+        od._mDefaultFleetingEnabled = _mImportOtherData._mDefaultFleetingEnabled;
 
 //  Global startup:
-        value = fieldList.get("_mTUL_EnabledAtStartup");
-        if (value != null) od._mTUL_EnabledAtStartup = loadBoolean(value);
-
-        value = fieldList.get("_mSignalSystemType");
-        if (value != null) od._mSignalSystemType = OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(loadInt(value));
-
-        value = fieldList.get("_mTUL_SecondsToLockTurnouts");
-        if (value != null) od._mTUL_SecondsToLockTurnouts = loadInt(value);
+        od._mTUL_EnabledAtStartup = _mImportOtherData._mTUL_EnabledAtStartup;
+        od._mSignalSystemType = OtherData.SIGNAL_SYSTEM_TYPE.valueOf(_mImportOtherData._mSignalSystemType.toString());
+        od._mTUL_SecondsToLockTurnouts = _mImportOtherData._mTUL_SecondsToLockTurnouts;
 
 //  Next unique # for each created Column:
-        value = fieldList.get("_mNextUniqueNumber");
-        if (value != null) od._mNextUniqueNumber = loadInt(value);
+        od._mNextUniqueNumber = _mImportOtherData._mNextUniqueNumber;
 
 //  CTC Debugging:
-        value = fieldList.get("_mCTCDebugSystemReloadInternalSensor");
-        if (value != null) od._mCTCDebugSystemReloadInternalSensor = loadSensor(value, true);
-
-        value = fieldList.get("_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor");
-        if (value != null) od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadSensor(value, true);
+        od._mCTCDebugSystemReloadInternalSensor = loadSensor(_mImportOtherData._mCTCDebugSystemReloadInternalSensor, true);
+        od._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = loadSensor(_mImportOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, true);
 
 //  GUI design:
-        value = fieldList.get("_mGUIDesign_NumberOfEmptyColumnsAtEnd");
-        if (value != null) od._mGUIDesign_NumberOfEmptyColumnsAtEnd = loadInt(value);
-
-        value = fieldList.get("_mGUIDesign_CTCPanelType");
-        if (value != null) od._mGUIDesign_CTCPanelType = OtherData.CTC_PANEL_TYPE.valueOf(value);
-
-        value = fieldList.get("_mGUIDesign_BuilderPlate");
-        if (value != null) od._mGUIDesign_BuilderPlate = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_SignalsOnPanel");
-        if (value != null) od._mGUIDesign_SignalsOnPanel = OtherData.SIGNALS_ON_PANEL.valueOf(value);
-
-        value = fieldList.get("_mGUIDesign_FleetingToggleSwitch");
-        if (value != null) od._mGUIDesign_FleetingToggleSwitch = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_AnalogClockEtc");
-        if (value != null) od._mGUIDesign_AnalogClockEtc = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_ReloadCTCSystemButton");
-        if (value != null) od._mGUIDesign_ReloadCTCSystemButton = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_CTCDebugOnToggle");
-        if (value != null) od._mGUIDesign_CTCDebugOnToggle = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_CreateTrackPieces");
-        if (value != null) od._mGUIDesign_CreateTrackPieces = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_VerticalSize");
-        if (value != null) od._mGUIDesign_VerticalSize = OtherData.VERTICAL_SIZE.valueOf(value);
-
-        value = fieldList.get("_mGUIDesign_OSSectionUnknownInconsistentRedBlink");
-        if (value != null) od._mGUIDesign_OSSectionUnknownInconsistentRedBlink = loadBoolean(value);
-
-        value = fieldList.get("_mGUIDesign_TurnoutsOnPanel");
-        if (value != null) od._mGUIDesign_TurnoutsOnPanel = loadBoolean(value);
+        od._mGUIDesign_NumberOfEmptyColumnsAtEnd = _mImportOtherData._mGUIDesign_NumberOfEmptyColumnsAtEnd  ;
+        od._mGUIDesign_CTCPanelType = OtherData.CTC_PANEL_TYPE.valueOf(_mImportOtherData._mGUIDesign_CTCPanelType.toString());
+        od._mGUIDesign_BuilderPlate = _mImportOtherData._mGUIDesign_BuilderPlate  ;
+        od._mGUIDesign_SignalsOnPanel = OtherData.SIGNALS_ON_PANEL.valueOf(_mImportOtherData._mGUIDesign_SignalsOnPanel.toString());
+        od._mGUIDesign_FleetingToggleSwitch = _mImportOtherData._mGUIDesign_FleetingToggleSwitch  ;
+        od._mGUIDesign_AnalogClockEtc = _mImportOtherData._mGUIDesign_AnalogClockEtc  ;
+        od._mGUIDesign_ReloadCTCSystemButton = _mImportOtherData._mGUIDesign_ReloadCTCSystemButton  ;
+        od._mGUIDesign_CTCDebugOnToggle = _mImportOtherData._mGUIDesign_CTCDebugOnToggle  ;
+        od._mGUIDesign_CreateTrackPieces = _mImportOtherData._mGUIDesign_CreateTrackPieces  ;
+        od._mGUIDesign_VerticalSize = OtherData.VERTICAL_SIZE.valueOf(_mImportOtherData._mGUIDesign_VerticalSize.toString());
+        od._mGUIDesign_OSSectionUnknownInconsistentRedBlink = _mImportOtherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink  ;
+        od._mGUIDesign_TurnoutsOnPanel = _mImportOtherData._mGUIDesign_TurnoutsOnPanel  ;
 
 // Debugging aid -- not active due to SpotBugs
 //         log.info("OtherData:");
-//         List<Field> fields = Arrays.asList(OtherData.class.getFields());
+//         List<Field> fields = Arrays.asList(ImportOtherData.class.getFields());
 //         fields.forEach(field -> {
 //             try {
-//                 log.info("    OtherData: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(od));
+//                 log.info("    OtherData: fld = {}, type = {}, val = {}", field.getName(), field.getType(), field.get(_mImportOtherData));
 //             } catch (Exception ex) {
 //                 log.info("    OtherData list exception: {}", ex.getMessage());
 //             }
