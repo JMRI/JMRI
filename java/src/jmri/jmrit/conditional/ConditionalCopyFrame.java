@@ -204,7 +204,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         _actionTableModel.fireTableDataChanged();
     }   // end makeConditionalFrame
 
-    class NameCellEditor extends DefaultCellEditor implements TableCellEditor {
+    class NameCellEditor extends DefaultCellEditor {
 
         NameCellEditor(JComboBox<String> comboBox) {
             super(comboBox);
