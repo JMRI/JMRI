@@ -1,7 +1,11 @@
 package jmri.jmrix.dccpp;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.LocoAddress;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
@@ -27,6 +31,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private String codeBuildDate;
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = 0;
+    public HashMap<LocoAddress, DCCppThrottle> throttles = new HashMap<LocoAddress, DCCppThrottle>(5);
 
     public DCCppCommandStation() {
         super();

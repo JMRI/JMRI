@@ -8,9 +8,13 @@ import java.util.concurrent.DelayQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.DccLocoAddress;
+import jmri.LocoAddress;
+import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
+import jmri.jmrix.dccpp.DCCppThrottleManager;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -43,10 +47,12 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
 
     boolean activeBackgroundRefresh = true;
+    private DCCppCommandStation cs;
 
     public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
+        cs = pCommandStation;
     }
 
     /**
@@ -115,8 +121,13 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
 
         super.sendDCCppMessage(m, reply);
 
-        if (isFunction)
-            enqueueFunction(m);
+        if (isFunction) { //repeat the message if the address is still active
+            LocoAddress la = new DccLocoAddress(m.getFuncAddressInt(),
+                    DCCppThrottleManager.isLongAddress(m.getFuncAddressInt()));
+            if (cs.throttles.containsKey(la)) {  
+                enqueueFunction(m);
+            }
+        }
     }
 
     /**
