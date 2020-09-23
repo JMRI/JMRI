@@ -109,20 +109,13 @@ public class ImportExternalData {
     }
 
 //     @SuppressWarnings("unchecked") // See below comments:
-//     @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
+    @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification = "Low risk due to rare usage")
     static private void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
         if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
-        try {       // OS_OPEN_STREAM_EXCEPTION_PATH
-            bufferedReader = new BufferedReader(new FileReader(fileName));
-            bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
-        } catch (Exception ex) {
-           log.info("convertClassNameReferences exception", ex);
-           return;
-        }
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
         String aLine = null;
         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
@@ -136,37 +129,6 @@ public class ImportExternalData {
         if (!(new File(temporaryFilename)).delete()) errors++;        // If we get here, just clean up.
         log.warn("convertClassNameReferences: errors = {}", errors);
      }
-
-
-
-
-
-//         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
-//         int errors = 0;
-//         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;
-//         log.info("errors 1 = {}", errors);
-//         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-//         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
-//         String aLine = null;
-//         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-//             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-//             writeLine(bufferedWriter, aLine);
-//         }
-//         bufferedReader.close();
-//         bufferedWriter.close();
-// //         File oldFile = new File(fileName);
-//         if (!CTCFiles.deleteFile(fileName)) errors++;                     // Delete old file
-//         log.info("errors 2 = {}", errors);
-//         if (!CTCFiles.renameFile(temporaryFilename, fileName)) errors++;  // Rename temporary filename to proper final file.
-//         log.info("errors 3 = {}", errors);
-//         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;                       // Delete temp file
-//         log.info("errors 4 = {}", errors);
-// // ====*/        (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
-// // ====*/        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
-//         if (errors > 0) {
-//             log.error("Files errrors");
-//         }
-//     }
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
         bufferedWriter.write(aLine); bufferedWriter.newLine();
