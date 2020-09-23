@@ -40,7 +40,7 @@ public class MeterFrame extends JmriJFrame {
         private final double multiply;
         
         private Unit(double m) { multiply = m; }
-    };
+    }
     
     private final int MAX_INTEGER_DIGITS = 7;
     private final int MAX_DECIMAL_DIGITS = 2;
@@ -521,5 +521,5 @@ public class MeterFrame extends JmriJFrame {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrame.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrame.class);
 }

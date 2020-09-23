@@ -34,11 +34,11 @@
   </meters>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Sep 18 03:50:49 CEST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <meterFrames class="jmri.jmrit.swing.meter.configurexml.MeterFrameManagerXml">
-    <meterFrame>
+    <meterFrame x="1189" y="89" width="731" height="430">
       <uuid>399cc071-8baf-4010-b1da-25a7ec0dcd53</uuid>
       <meter>ZVCommandStationVoltage</meter>
     </meterFrame>
-    <meterFrame>
+    <meterFrame x="-9" y="91" width="1095" height="231">
       <uuid>e028e63b-019b-47e2-aab0-c0946dc92204</uuid>
       <meter>ZVCommandStationCurrent</meter>
     </meterFrame>
