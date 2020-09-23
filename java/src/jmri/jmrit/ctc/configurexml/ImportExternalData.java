@@ -58,16 +58,17 @@ public class ImportExternalData {
     @SuppressWarnings("unchecked") // See below comments:
     public static void loadCTCSystemContent() {
         String fullName = CTCFiles.getFullName(CTC_FILE_NAME);
-        ImportCodeButtonHandlerData.preprocessingUpgradeSelf(fullName);   // WHOLE FILE operations FIRST.
+        ImportCodeButtonHandlerData.preprocessingUpgradeSelf(fullName);     // WHOLE FILE operations FIRST.
+        convertClassNameReferences(fullName);   // Change the class references
 
-        boolean returnValue = false;    // Assume error
+//         boolean returnValue = false;    // Assume error
         try {
             try (XMLDecoder xmlDecoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(fullName)))) {
                 _mImportOtherData = (ImportOtherData) xmlDecoder.readObject();
                 // triggers unchecked warning
                 _mImportCodeButtonHandlerDataArrayList = (ArrayList<ImportCodeButtonHandlerData>) xmlDecoder.readObject(); // Type safety: Unchecked cast from Object to ArrayList<>
             }
-            returnValue = true;
+//             returnValue = true;
         } catch (IOException e) {
             log.debug("Unable to read {}", CTC_FILE_NAME, e); // debug because missing file is not error
         }
