@@ -68,8 +68,8 @@ public class MeterFrame extends JmriJFrame {
     int numDecimalDigits = 0;
     int lastNumDecimalDigits = -1;
     int widthOfAllIconsToDisplay = 0;
+    int oldWidthOfAllIconsToDisplay = -1;
     boolean frameIsInitialized = false;
-    boolean scaleChanged = true;
     Unit selectedUnit = Unit.VOLT;
     
     int digitIconWidth;
@@ -213,7 +213,6 @@ public class MeterFrame extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     units_MenuItemMap.get(selectedUnit).setSelected(false);
                     unitLabels.get(selectedUnit).setVisible(false);
-                    scaleChanged = true;
                     units_MenuItemMap.get(u).setSelected(true);
                     unitLabels.get(u).setVisible(true);
                     selectedUnit = u;
@@ -233,7 +232,6 @@ public class MeterFrame extends JmriJFrame {
                 public void actionPerformed(ActionEvent e) {
                     integerDigits_MenuItemMap.get(numIntegerDigits).setSelected(false);
                     numIntegerDigits = ii;
-                    scaleChanged = true;
                     update();
                 }
             });
@@ -250,7 +248,6 @@ public class MeterFrame extends JmriJFrame {
                     decimalDigits_MenuItemMap.get(numDecimalDigits).setSelected(false);
                     decimalDigits_MenuItemMap.get(ii).setSelected(true);
                     numDecimalDigits = ii;
-                    scaleChanged = true;
                     update();
                 }
             });
@@ -363,6 +360,9 @@ public class MeterFrame extends JmriJFrame {
         boolean isPercent = (meter != null) && (meter.getUnit() == Meter.Unit.Percent);
         boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
         boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
+        
+        units_MenuItemMap.get(selectedUnit).setSelected(false);
+        unitLabels.get(selectedUnit).setVisible(false);
         
         if (isPercent) selectedUnit = Unit.PERCENT;
         else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_VOLT;
@@ -483,10 +483,10 @@ public class MeterFrame extends JmriJFrame {
         // Add one for the unit icon
         widthOfAllIconsToDisplay += unitIconWidth;
         
-        if (scaleChanged){
+        if (widthOfAllIconsToDisplay != oldWidthOfAllIconsToDisplay){
             // clear the content pane and rebuild it.
             scaleImage();
-            scaleChanged = false;
+            oldWidthOfAllIconsToDisplay = widthOfAllIconsToDisplay;
         }
     }
 
