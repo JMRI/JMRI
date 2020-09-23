@@ -119,11 +119,19 @@ public class ImportExternalData {
             bufferedWriter.close();
             File oldFile = new File(fileName);
             oldFile.delete();                   // Delete existing old file.
-            (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+            try {
+                (new File(temporaryFilename)).renameTo(oldFile);    // Rename temporary filename to proper final file.
+            } catch (Exception rx) {
+                log.warn("Rename of {} to {} failed", temporaryFilename, oldFile.getName());
+            }
         } catch (IOException e) {
             log.warn("convertClassNameReferences exception", e);
         }
-        (new File(temporaryFilename)).delete();        // If we get here, just clean up.
+        try {
+            (new File(temporaryFilename)).delete();        // If we get here, just clean up.
+        } catch (Exception dx) {
+            log.warn("Delete for file {} failed", temporaryFilename);
+        }
     }
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
