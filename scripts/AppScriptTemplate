@@ -563,4 +563,7 @@ done
 if [ $EXIT_STATUS -eq 200 ] ; then
     sudo shutdown -h now
 fi
+if [ $EXIT_STATUS -eq 210 ] ; then
+    sudo shutdown -r now
+fi
 exit $EXIT_STATUS

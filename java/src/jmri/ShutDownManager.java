@@ -117,6 +117,20 @@ public interface ShutDownManager extends PropertyChangeProvider {
      *
      * @return false if any shutdown task aborts restarting the application
      */
+    public boolean restartOS();
+
+    /**
+     * Run the shutdown tasks, and then terminate the program with status 210 if
+     * not aborted. Does not return under normal circumstances. Returns false if
+     * the shutdown was aborted by the user, in which case the program should
+     * continue to operate.
+     * <p>
+     * By exiting the program with status 210, the batch file (MS Windows) or
+     * shell script (Linux/macOS/UNIX) can catch the exit status and tell the 
+     * operating system to restart.
+     *
+     * @return false if any shutdown task aborts restarting the application
+     */
     public boolean restart();
 
     /**

@@ -17,7 +17,7 @@
 <!--             Add labels to Extended Function Map CVs                    -->
 <!--             as they have been removed from pane definition             -->
 <!--                                                                        -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 
     <!-- Extended function map - functions common to all ECO and TSU2 versions -->
     <variable CV="1.257" item="Extended Function Map Headlight" default="0">
@@ -284,7 +284,6 @@
         <tooltip>Sets the status of automatic effects when stopped in reverse direction</tooltip>
     </variable>
     <variable CV="1.392" mask="XXXVXXXX" item="FX8 Effect Automatic Effects - ESTP" default="0" minOut="8">
-        <defaultItem default="1" include="927"/>
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <tooltip>Sets the status of automatic effects when in emergency stop</tooltip>
     </variable>

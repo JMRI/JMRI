@@ -149,6 +149,11 @@ public class SerialDriverAdapter extends AcelaPortController {
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;

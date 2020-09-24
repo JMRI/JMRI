@@ -4,6 +4,11 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li>Fixed issue unable to initialise adapter</li>
+            </ul>
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
@@ -42,6 +47,12 @@
         <h4>Hornby</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>IPOCSMR</h4>
+            <ul>
+                <li>Initial support added.</li>
+                <li>Turnouts, Lights (on/off) and Sensors</li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -266,7 +277,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>TSU2 Diesel fix sound slections, Genesis OEM Diesel add models</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -439,7 +450,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
+                end JMRI and then request that the underlying OS shutdown or restart itself</li>
         </ul>
 
     <h3>Signals</h3>
@@ -539,6 +551,9 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
         </ul>
 
