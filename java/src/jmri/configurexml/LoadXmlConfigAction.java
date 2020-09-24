@@ -1,15 +1,11 @@
 package jmri.configurexml;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFileChooser;
-
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.swing.meter.MeterFrameManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

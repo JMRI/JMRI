@@ -16,6 +16,11 @@ public interface Meter extends AnalogIO {
         Percent,
         
         /**
+         * The meter measures in kilo units (kilo volts, kilo amperes, ...)
+         */
+        Kilo,
+        
+        /**
          * The meter measures in full units (volts, amperes, ...)
          */
         NoPrefix,
@@ -23,7 +28,12 @@ public interface Meter extends AnalogIO {
         /**
          * The meter measures in milli units (milli volts, milli amperes, ...)
          */
-        Milli;
+        Milli,
+        
+        /**
+         * The meter measures in milli units (milli volts, milli amperes, ...)
+         */
+        Micro;
     }
     
     public Unit getUnit();

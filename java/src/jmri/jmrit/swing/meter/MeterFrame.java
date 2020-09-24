@@ -27,15 +27,15 @@ import jmri.util.JmriJFrame;
 public class MeterFrame extends JmriJFrame {
 
     private enum Unit {
-        PERCENT(1.0),    // Not a unit, but here anyway
-        MICRO_VOLT(1000*1000),
-        MILLI_VOLT(1000),
-        VOLT(1.0),
-        KILO_VOLT(1/1000.0),
-        MICRO_AMPERE(1000*1000),
-        MILLI_AMPERE(1000),
-        AMPERE(1.0),
-        KILO_AMPERE(1/1000.0);
+        Percent(1.0),    // Not a unit, but here anyway
+        MicroVolt(1000*1000),
+        MilliVolt(1000),
+        Volt(1.0),
+        KiloVolt(1/1000.0),
+        MicroAmpere(1000*1000),
+        MilliAmpere(1000),
+        Ampere(1.0),
+        KiloAmpere(1/1000.0);
         
         private final double multiply;
         
@@ -70,7 +70,7 @@ public class MeterFrame extends JmriJFrame {
     int widthOfAllIconsToDisplay = 0;
     int oldWidthOfAllIconsToDisplay = -1;
     boolean frameIsInitialized = false;
-    Unit selectedUnit = Unit.VOLT;
+    Unit selectedUnit = Unit.Volt;
     
     int digitIconWidth;
     int decimalIconWidth;
@@ -292,15 +292,15 @@ public class MeterFrame extends JmriJFrame {
         errorIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_Error.GIF", "resources/icons/misc/LCD/Lcd_Error.GIF");
         
         decimal = new JLabel(decimalIcon);
-        unitLabels.put(Unit.PERCENT, new JLabel(percentIcon));
-        unitLabels.put(Unit.MICRO_VOLT, new JLabel(microVoltIcon));
-        unitLabels.put(Unit.MILLI_VOLT, new JLabel(milliVoltIcon));
-        unitLabels.put(Unit.VOLT, new JLabel(voltIcon));
-        unitLabels.put(Unit.KILO_VOLT, new JLabel(kiloVoltIcon));
-        unitLabels.put(Unit.MICRO_AMPERE, new JLabel(microAmpIcon));
-        unitLabels.put(Unit.MILLI_AMPERE, new JLabel(milliAmpIcon));
-        unitLabels.put(Unit.AMPERE, new JLabel(ampIcon));
-        unitLabels.put(Unit.KILO_AMPERE, new JLabel(kiloAmpIcon));
+        unitLabels.put(Unit.Percent, new JLabel(percentIcon));
+        unitLabels.put(Unit.MicroVolt, new JLabel(microVoltIcon));
+        unitLabels.put(Unit.MilliVolt, new JLabel(milliVoltIcon));
+        unitLabels.put(Unit.Volt, new JLabel(voltIcon));
+        unitLabels.put(Unit.KiloVolt, new JLabel(kiloVoltIcon));
+        unitLabels.put(Unit.MicroAmpere, new JLabel(microAmpIcon));
+        unitLabels.put(Unit.MilliAmpere, new JLabel(milliAmpIcon));
+        unitLabels.put(Unit.Ampere, new JLabel(ampIcon));
+        unitLabels.put(Unit.KiloAmpere, new JLabel(kiloAmpIcon));
         
         for (Unit unit : Unit.values()) unitLabels.get(unit).setVisible(false);
         
@@ -366,11 +366,11 @@ public class MeterFrame extends JmriJFrame {
         units_MenuItemMap.get(selectedUnit).setSelected(false);
         unitLabels.get(selectedUnit).setVisible(false);
         
-        if (isPercent) selectedUnit = Unit.PERCENT;
-        else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_VOLT;
-        else if (isVoltage) selectedUnit = Unit.VOLT;
-        else if (isCurrent && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MILLI_AMPERE;
-        else selectedUnit = Unit.AMPERE;
+        if (isPercent) selectedUnit = Unit.Percent;
+        else if (isVoltage && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MilliVolt;
+        else if (isVoltage) selectedUnit = Unit.Volt;
+        else if (isCurrent && (meter.getUnit() == Meter.Unit.Milli)) selectedUnit = Unit.MilliAmpere;
+        else selectedUnit = Unit.Ampere;
         
         units_MenuItemMap.get(selectedUnit).setSelected(true);
         unitLabels.get(selectedUnit).setVisible(true);
@@ -417,17 +417,17 @@ public class MeterFrame extends JmriJFrame {
         boolean isVoltage = (meter != null) && (meter instanceof VoltageMeter) && !isPercent;
         boolean isCurrent = (meter != null) && (meter instanceof CurrentMeter) && !isPercent;
         
-        units_MenuItemMap.get(Unit.PERCENT).setVisible(isPercent);
+        units_MenuItemMap.get(Unit.Percent).setVisible(isPercent);
         
-        units_MenuItemMap.get(Unit.MICRO_VOLT).setVisible(isVoltage);
-        units_MenuItemMap.get(Unit.MILLI_VOLT).setVisible(isVoltage);
-        units_MenuItemMap.get(Unit.VOLT).setVisible(isVoltage);
-        units_MenuItemMap.get(Unit.KILO_VOLT).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.MicroVolt).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.MilliVolt).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.Volt).setVisible(isVoltage);
+        units_MenuItemMap.get(Unit.KiloVolt).setVisible(isVoltage);
         
-        units_MenuItemMap.get(Unit.MICRO_AMPERE).setVisible(isCurrent);
-        units_MenuItemMap.get(Unit.MILLI_AMPERE).setVisible(isCurrent);
-        units_MenuItemMap.get(Unit.AMPERE).setVisible(isCurrent);
-        units_MenuItemMap.get(Unit.KILO_AMPERE).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.MicroAmpere).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.MilliAmpere).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.Ampere).setVisible(isCurrent);
+        units_MenuItemMap.get(Unit.KiloAmpere).setVisible(isCurrent);
     }
     
     private void showError() {
@@ -485,7 +485,24 @@ public class MeterFrame extends JmriJFrame {
         
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
         
-        if (meter.getUnit() == Meter.Unit.Milli) meterValue /= 1000.0;
+        switch (meter.getUnit()) {
+            case Kilo:
+                meterValue *= 1000.0;
+                break;
+                
+            case Milli:
+                meterValue /= 1000.0;
+                break;
+                
+            case Micro:
+                meterValue /= 1000_000.0;
+                break;
+                
+            case NoPrefix:
+            case Percent:
+            default:
+                // Do nothing
+        }
         
         // We want at least one decimal digit so we cut the last digit later.
         // The problem is that the format string %05.0f will not add the dot
@@ -495,6 +512,12 @@ public class MeterFrame extends JmriJFrame {
         String valueStr = String.format(formatStr, meterValue);
         
         String[] valueParts = valueStr.split("\\.");
+        
+        // Show error if we don't have enough integer digits to show the result
+        if (valueParts[0].length() > MAX_INTEGER_DIGITS) {
+            showError();
+            return;
+        }
         
         for (int i=0; i < MAX_INTEGER_DIGITS; i++) {
             JLabel label = integerDigitIcons.get(i);

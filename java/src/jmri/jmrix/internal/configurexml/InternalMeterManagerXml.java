@@ -9,7 +9,8 @@ import org.jdom2.Element;
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2006
+ * @author Bob Jacobsen      Copyright (C) 2006
+ * @author Daniel Bergqvist  Copyright (C) 2020
  */
 public class InternalMeterManagerXml extends jmri.managers.configurexml.AbstractMeterManagerXml {
 
