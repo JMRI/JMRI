@@ -38,22 +38,35 @@ public class ImportExternalData {
     static ImportOtherData _mImportOtherData;
     static ArrayList<ImportCodeButtonHandlerData> _mImportCodeButtonHandlerDataArrayList = new ArrayList<>();
 
-    private static final String CTC_FILE_NAME = "CTCSystem.xml";                        // NOI18N
-    private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
+    private static final String CTC_FILE_NAME = "CTCSystem.xml";        // NOI18N
+    private static final String PROG_PROPS = "ProgramProperties.xml";   // NOI18N
+    private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
+    private static final String SAVED_PREFIX = "V1_Save_";              // NOI18N
+    private static final String OLD_PREFIX = "OLD_";                    // NOI18N
 
     public static void loadExternalData() {
+        // Make an initial backup of the CTCSystem.xml file.  This only occurs on the very first run
+        // This backup can be used to run version 1 CTC.
+        String backName = SAVED_PREFIX + CTC_FILE_NAME;
+        if (!CTCFiles.fileExists(backName)) {
+            if (!CTCFiles.copyFile(CTC_FILE_NAME, backName, false)) {
+                log.warn("Unable to make backup copy: source = {}, backup = {}", CTC_FILE_NAME, backName);
+                return;
+            }
+        }
+
         cm.getProgramProperties().importExternalProgramProperties();    // Load ProgramProperties
-        if (loadCTCSystemContent()) {    // Load the CTCSystem.xml file into special classes
+        if (loadCTCSystemContent()) {   // Load the CTCSystem.xml file into special classes
             doDataLoading();            // Process the content
         }
 
         // Rename data files
-//         if (!CTCFiles.renameFile("ProgramProperties.xml", "OldProgramProperties.xml")) {
-//             log.error("Rename failed for ProgramProperties.xml");
-//         }
-//         if (!CTCFiles.renameFile("CTCSystem.xml", "OldCTCSystem.xml")) {
-//             log.error("Rename failed for CTCSystem.xml");
-//         }
+        if (!CTCFiles.renameFile(CTC_FILE_NAME, OLD_PREFIX + CTC_FILE_NAME, true)) {
+            log.error("Rename failed for CTCSystem.xml");
+        }
+        if (!CTCFiles.renameFile(PROG_PROPS, OLD_PREFIX + PROG_PROPS, true)) {
+            log.error("Rename failed for ProgramProperties.xml");
+        }
     }
 
     @SuppressWarnings("unchecked") // See below comments:
@@ -61,7 +74,7 @@ public class ImportExternalData {
         String fullName = CTCFiles.getFullName(CTC_FILE_NAME);
         ImportCodeButtonHandlerData.preprocessingUpgradeSelf(fullName);     // WHOLE FILE operations FIRST.
         try {
-            convertClassNameReferences(fullName);   // Change the class references
+            convertClassNameReferences(CTC_FILE_NAME);   // Change the class references
         } catch (Exception ex) {
             log.error("Exception occurred converting the class names in CTCSystem.xml: ex = {}", ex.getMessage());
             return false;
@@ -80,42 +93,23 @@ public class ImportExternalData {
             log.error("---------  Import failed");
             return false;
         }
-// Safety:
-//         if (_mImportOtherData == null) {
-//             _mImportOtherData = new ImportOtherData();
-//         }
-//         if (_mImportCodeButtonHandlerDataArrayList == null) {
-//             _mImportCodeButtonHandlerDataArrayList = new ArrayList<>();
-//         }
-//     }
-//  Make all strings "sane" on the way in, in case user used a standard editor to modify our file:
-//  This works for both the CTCEditor and JMRI runtime which both call this routine:
-//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-//             codeButtonHandlerData.trimAndFixAllStrings();
-//         }
-//  Kludge for new field added but I forgot to init it in "CodeButtonHandlerDataRoutines" (an enum is NOT an integer like other languages, but an object!):
-//  Can be removed someday!
-//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-//             if (codeButtonHandlerData._mSWDI_GUITurnoutType == null) {
-//                 codeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-//             }
-//         }
-//  Finally, give each object a chance to upgrade itself BEFORE anything uses it:
-//         _mOtherData.upgradeSelf();
-//         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-//             codeButtonHandlerData.upgradeSelf();
-//         }
+
+        // Give each object a chance to upgrade itself BEFORE anything uses it:
+        _mImportOtherData.upgradeSelf();
+        for (ImportCodeButtonHandlerData codeButtonHandlerData : _mImportCodeButtonHandlerDataArrayList) {
+            codeButtonHandlerData.upgradeSelf();
+        }
+
         return true;
     }
 
-//     @SuppressWarnings("unchecked") // See below comments:
     @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification = "Low risk due to rare usage")
     static private void convertClassNameReferences(String fileName) throws Exception {
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
-        if (!(new File(temporaryFilename)).delete()) errors++;   // Just delete it for safety before we start:
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename));
+        if (!CTCFiles.deleteFile(temporaryFilename)) errors++;   // Just delete it for safety before we start:
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(CTCFiles.getFullName(fileName)));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CTCFiles.getFullName(temporaryFilename)));
         String aLine = null;
         while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
             aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
@@ -123,11 +117,9 @@ public class ImportExternalData {
         }
         bufferedReader.close();
         bufferedWriter.close();
-        File oldFile = new File(fileName);
-        if(!oldFile.delete()) errors++;                   // Delete existing old file.
-        if (!(new File(temporaryFilename)).renameTo(oldFile)) errors++;    // Rename temporary filename to proper final file.
-        if (!(new File(temporaryFilename)).delete()) errors++;        // If we get here, just clean up.
-        log.warn("convertClassNameReferences: errors = {}", errors);
+        if (!CTCFiles.deleteFile(fileName)) errors++;   // Just delete it for safety before we start:
+        if (!CTCFiles.renameFile(temporaryFilename, fileName, false)) errors++;   // Just delete it for safety before we start:
+        log.debug("convertClassNameReferences: errors = {}", errors);
      }
 
     static private void writeLine(BufferedWriter bufferedWriter, String aLine) throws IOException {
@@ -307,13 +299,13 @@ public class ImportExternalData {
 
     // **** Load simple objects ****
 
-    static String loadString(String value) {
-        String newString = null;
-        if (value != null) {
-            newString = value;
-        }
-        return newString;
-    }
+//     static String loadString(String value) {
+//         String newString = null;
+//         if (value != null) {
+//             newString = value;
+//         }
+//         return newString;
+//     }
 
     static int loadInt(String value) {
         int newInt = 0;
@@ -327,13 +319,13 @@ public class ImportExternalData {
         return newInt;
     }
 
-    static boolean loadBoolean(String value) {
-        boolean newBoolean = false;
-        if (value != null) {
-            newBoolean = value.equals("true") ? true : false;
-        }
-        return newBoolean;
-    }
+//     static boolean loadBoolean(String value) {
+//         boolean newBoolean = false;
+//         if (value != null) {
+//             newBoolean = value.equals("true") ? true : false;
+//         }
+//         return newBoolean;
+//     }
 
     static NBHSensor loadSensor(String value, boolean isInternal) {
         NBHSensor sensor = null;
@@ -416,8 +408,8 @@ public class ImportExternalData {
 
             CallOnEntry entry = new CallOnEntry(csvString);
             cod._mExternalSignal = loadSignal(entry._mExternalSignal);
-            cod._mSignalFacingDirection = loadString(entry._mSignalFacingDirection);
-            cod._mSignalAspectToDisplay = loadString(entry._mSignalAspectToDisplay);
+            cod._mSignalFacingDirection = entry._mSignalFacingDirection;
+            cod._mSignalAspectToDisplay = entry._mSignalAspectToDisplay;
             cod._mCalledOnExternalSensor = loadSensor(entry._mCalledOnExternalSensor, false);
             cod._mExternalBlock = loadBlock(entry._mExternalBlock);
 
@@ -459,9 +451,9 @@ public class ImportExternalData {
             TrafficLockingData trl = new TrafficLockingData();
 
             TrafficLockingEntry entry = new TrafficLockingEntry(csvString);
-            trl._mUserRuleNumber = loadString(entry._mUserRuleNumber);
-            trl._mRuleEnabled = loadString(entry._mRuleEnabled);
-            trl._mDestinationSignalOrComment = loadString(entry._mDestinationSignalOrComment);
+            trl._mUserRuleNumber = entry._mUserRuleNumber;
+            trl._mRuleEnabled = entry._mRuleEnabled;
+            trl._mDestinationSignalOrComment = entry._mDestinationSignalOrComment;
 
             trl._mSwitchAlignments = getTRLSwitchList(entry);
 

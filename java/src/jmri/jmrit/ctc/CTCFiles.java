@@ -53,39 +53,50 @@ public class CTCFiles {
         return (file == null ? false : file.exists());
     }
 
-    public static boolean renameFile(String oldFileName, String newFileName) {
-        File oldFile = getFile(oldFileName);
-        File newFile = getFile(newFileName);
-        if (newFile.exists()) {
-            log.error("Rename file {} failed: new file {} already exists", oldFileName,  newFileName);
-            return false;
-        }
-        return oldFile.renameTo(newFile);
-    }
-
-    public static boolean deleteFile(String fileName) {
-        boolean result = true;
-        try {
-            File file = getFile(fileName);
-            Files.delete(file.toPath());
-        } catch (NoSuchFileException nf) {
-            result = true;  // No file is OK
-        } catch (Exception ex) {
-            log.info("deleteFile: ex", ex);
-            result = false;
-        }
-// o use Files.delete(java.nio.file.Path) or Files.deleteIfExists(java.nio.file.Path) for
-        return result;
-    }
-
-    public static Path copyFile(String sourceFileName, String destFileName, boolean replace) throws IOException {
+    public static boolean copyFile(String sourceFileName, String destFileName, boolean replace) {
         File sourceFile = getFile(sourceFileName);
         File destFile = getFile(destFileName);
         if (destFile.exists() && !replace) {
-            log.error("Rename file {} failed: new file {} already exists", sourceFileName,  destFileName);
-            return null;
+            log.error("Copy file {} failed: new file {} already exists", sourceFileName,  destFileName);
+            return false;
         }
-        return Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        try {
+            if (Files.copy(sourceFile.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING) == null) return false;
+        } catch(IOException ex) {
+            log.error("Copy file {} to {} failed, exception: ", sourceFileName,  destFileName, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean renameFile(String oldFileName, String newFileName, boolean replace) {
+        File oldFile = getFile(oldFileName);
+        File newFile = getFile(newFileName);
+        if (newFile.exists() && !replace) {
+            log.error("Rename file {} failed: new file {} already exists", oldFileName,  newFileName);
+            return false;
+        }
+        try {
+            if (Files.move(oldFile.toPath(), oldFile.toPath().resolveSibling(newFileName), StandardCopyOption.REPLACE_EXISTING) == null) return false;
+        } catch(IOException ex) {
+            log.error("Rename file {} to {} failed, exception: ", oldFileName,  newFileName, ex);
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean deleteFile(String fileName) {
+        File file = getFile(fileName);
+        if (!file.exists()) {
+            return true;
+        }
+        try {
+            Files.delete(file.toPath());
+        } catch(IOException ex) {
+            log.error("Delete file {} failed, exception: ", fileName, ex);
+            return false;
+        }
+        return true;
     }
 
     public static String addExtensionIfMissing(String path, String missingExtension) {
