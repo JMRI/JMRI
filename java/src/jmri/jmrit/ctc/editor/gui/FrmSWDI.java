@@ -26,8 +26,6 @@ public class FrmSWDI extends javax.swing.JFrame {
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
 
-    private String _mSWDI_NormalInternalSensorOrig;
-    private String _mSWDI_ReversedInternalSensorOrig;
     private String _mSWDI_ExternalTurnoutOrig;
     private int _mSWDI_CodingTimeInMillisecondsOrig;
     private boolean _mSWDI_FeedbackDifferentOrig;
@@ -36,8 +34,6 @@ public class FrmSWDI extends javax.swing.JFrame {
     private boolean _mSWDI_GUICrossoverLeftHandOrig;
 
     private void initOrig() {
-        _mSWDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_NormalInternalSensor.getHandleName();
-        _mSWDI_ReversedInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor.getHandleName();
         _mSWDI_ExternalTurnoutOrig = _mCodeButtonHandlerData._mSWDI_ExternalTurnout.getHandleName();
         _mSWDI_CodingTimeInMillisecondsOrig = _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds;
         _mSWDI_FeedbackDifferentOrig = _mCodeButtonHandlerData._mSWDI_FeedbackDifferent;
@@ -46,8 +42,6 @@ public class FrmSWDI extends javax.swing.JFrame {
         _mSWDI_GUICrossoverLeftHandOrig = _mCodeButtonHandlerData._mSWDI_GUICrossoverLeftHand;
     }
     private boolean dataChanged() {
-        if (!_mSWDI_NormalInternalSensorOrig.equals(_mSWDI_NormalInternalSensor.getText())) return true;
-        if (!_mSWDI_ReversedInternalSensorOrig.equals(_mSWDI_ReversedInternalSensor.getText())) return true;
         if (!_mSWDI_ExternalTurnoutOrig.equals(_mSWDI_ExternalTurnout.getSelectedItem())) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mSWDI_FeedbackDifferentOrig != _mSWDI_FeedbackDifferent.isSelected()) return true;

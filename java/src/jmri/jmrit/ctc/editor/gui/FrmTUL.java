@@ -58,10 +58,8 @@ public class FrmTUL extends javax.swing.JFrame {
     private String _mCurrentAdditionalTurnout3;
 //  End of support of no dups.
 
-    private String _mTUL_DispatcherInternalSensorLockToggleOrig;
     private String _mTUL_ExternalTurnoutOrig;
     private boolean _mTUL_ExternalTurnoutFeedbackDifferentOrig;
-    private String _mTUL_DispatcherInternalSensorUnlockedIndicatorOrig;
     private boolean _mTUL_NoDispatcherControlOfSwitchOrig;
     private boolean _mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig;
     private CodeButtonHandlerData.LOCK_IMPLEMENTATION _mTUL_LockImplementationOrig;
@@ -73,10 +71,8 @@ public class FrmTUL extends javax.swing.JFrame {
     private boolean _mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig;
 
     private void initOrig() {
-        _mTUL_DispatcherInternalSensorLockToggleOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName();
         _mTUL_ExternalTurnoutOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnout.getHandleName();
         _mTUL_ExternalTurnoutFeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent;
-        _mTUL_DispatcherInternalSensorUnlockedIndicatorOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName();
         _mTUL_NoDispatcherControlOfSwitchOrig = _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch;
         _mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig = _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed;
         _mTUL_LockImplementationOrig = _mCodeButtonHandlerData._mTUL_LockImplementation;
@@ -89,10 +85,8 @@ public class FrmTUL extends javax.swing.JFrame {
     }
 
     private boolean dataChanged() {
-        if (!_mTUL_DispatcherInternalSensorLockToggleOrig.equals(_mTUL_DispatcherInternalSensorLockToggle.getText())) return true;
         if (!_mTUL_ExternalTurnoutOrig.equals(_mTUL_ExternalTurnout.getSelectedItem())) return true;
         if (_mTUL_ExternalTurnoutFeedbackDifferentOrig != _mTUL_ExternalTurnoutFeedbackDifferent.isSelected()) return true;
-        if (!_mTUL_DispatcherInternalSensorUnlockedIndicatorOrig.equals(_mTUL_DispatcherInternalSensorUnlockedIndicator.getText())) return true;
         if (_mTUL_NoDispatcherControlOfSwitchOrig != _mTUL_NoDispatcherControlOfSwitch.isSelected()) return true;
         if (_mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig != _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected()) return true;
         if (_mTUL_LockImplementationOrig != CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation)) return true;

@@ -34,9 +34,6 @@ public class FrmSIDI extends javax.swing.JFrame {
     private final boolean _mSignalHeadSelected;
     private CodeButtonHandlerData.TRAFFIC_DIRECTION _mSIDI_TrafficDirectionTemp;
 
-    private String _mSIDI_LeftInternalSensorOrig;
-    private String _mSIDI_NormalInternalSensorOrig;
-    private String _mSIDI_RightInternalSensorOrig;
     private int _mSIDI_CodingAndResponseTimeOrig;
     private int _mSIDI_TimeLockingIntervalOrig;
     private CodeButtonHandlerData.TRAFFIC_DIRECTION _mSIDI_TrafficDirectionOrig;
@@ -45,9 +42,6 @@ public class FrmSIDI extends javax.swing.JFrame {
     private ArrayList<String> _mRightLeftTrafficSignalsArrayListOrig = new ArrayList<>();
 
     private void initOrig(ArrayList<String> signalArrayList1, ArrayList<String> signalArrayList2) {
-        _mSIDI_LeftInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName();
-        _mSIDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName();
-        _mSIDI_RightInternalSensorOrig = _mCodeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName();
         _mSIDI_CodingAndResponseTimeOrig = _mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds;
         _mSIDI_TimeLockingIntervalOrig = _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds;
         _mSIDI_TrafficDirectionOrig = _mCodeButtonHandlerData._mSIDI_TrafficDirection;
@@ -60,9 +54,6 @@ public class FrmSIDI extends javax.swing.JFrame {
     }
 
     private boolean dataChanged() {
-        if (!_mSIDI_LeftInternalSensorOrig.equals(_mSIDI_LeftInternalSensor.getText())) return true;
-        if (!_mSIDI_NormalInternalSensorOrig.equals(_mSIDI_NormalInternalSensor.getText())) return true;
-        if (!_mSIDI_RightInternalSensorOrig.equals(_mSIDI_RightInternalSensor.getText())) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingAndResponseTime) != _mSIDI_CodingAndResponseTimeOrig) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_TimeLockingInterval) != _mSIDI_TimeLockingIntervalOrig) return true;
         if (_mSIDI_TrafficDirectionOrig != _mSIDI_TrafficDirectionTemp) return true;

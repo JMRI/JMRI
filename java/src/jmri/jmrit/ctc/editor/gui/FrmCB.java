@@ -31,20 +31,17 @@ public class FrmCB extends javax.swing.JFrame {
     private final CheckJMRIObject _mCheckJMRIObject;
     private final ArrayList<Integer> _mArrayListOfSelectableOSSectionUniqueIDs;
 
-    private String _mCodeButtonInternalSensorOrig;
     private String _mOSSectionOccupiedExternalSensorOrig;
     private String _mOSSectionOccupiedExternalSensor2Orig;
     private int _mOSSectionSwitchSlavedToUniqueIDIndexOrig;
     private int _mCodeButtonDelayTimeOrig;
     private void initOrig() {
-        _mCodeButtonInternalSensorOrig = _mCodeButtonHandlerData._mCodeButtonInternalSensor.getHandleName();
         _mOSSectionOccupiedExternalSensorOrig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName();
         _mOSSectionOccupiedExternalSensor2Orig = _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2.getHandleName();
         _mOSSectionSwitchSlavedToUniqueIDIndexOrig = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         _mCodeButtonDelayTimeOrig = _mCodeButtonHandlerData._mCodeButtonDelayTime;
     }
     private boolean dataChanged() {
-        if (!_mCodeButtonInternalSensorOrig.equals(_mCodeButtonInternalSensor.getText())) return true;
         if (!_mOSSectionOccupiedExternalSensorOrig.equals(_mOSSectionOccupiedExternalSensor.getSelectedItem())) return true;
         if (!_mOSSectionOccupiedExternalSensor2Orig.equals(_mOSSectionOccupiedExternalSensor2.getSelectedItem())) return true;
         if (_mOSSectionSwitchSlavedToUniqueIDIndexOrig != _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex()) return true;
@@ -76,7 +73,6 @@ public class FrmCB extends javax.swing.JFrame {
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
 //  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor.getHandleName())) return false;
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor.getHandleName())) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
@@ -85,7 +81,6 @@ public class FrmCB extends javax.swing.JFrame {
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
 //  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mCodeButtonInternalSensor, _mCodeButtonInternalSensorPrompt, errors);
         CommonSubs.checkJComboBoxNotEmpty(_mOSSectionOccupiedExternalSensor, _mOSSectionOccupiedExternalSensorPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;

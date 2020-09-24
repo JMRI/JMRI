@@ -38,18 +38,15 @@ public class FrmCO extends javax.swing.JFrame {
     private final boolean _mSignalHeadSelected;
     private final DefaultListModel<CallOnData> _mDefaultListModel;
     private boolean _mAddNewPressed;
-    private String _mCO_CallOnToggleInternalSensorOrig;
     private ArrayList<CallOnData> _mDefaultListModelOrig = new ArrayList<> ();
 
     private void initOrig() {
-        _mCO_CallOnToggleInternalSensorOrig = _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName();
         int defaultListModelSize = _mDefaultListModel.getSize();
         for (int index = 0; index < defaultListModelSize; index++) {
             _mDefaultListModelOrig.add(_mDefaultListModel.get(index));
         }
     }
     private boolean dataChanged() {
-        if (!_mCO_CallOnToggleInternalSensorOrig.equals(_mCO_CallOnToggleInternalSensor.getText())) return true;
         int defaultListModelSize = _mDefaultListModel.getSize();
         if (defaultListModelSize != _mDefaultListModelOrig.size()) return true;
         for (int index = 0; index < defaultListModelSize; index++) {
@@ -114,7 +111,6 @@ public class FrmCO extends javax.swing.JFrame {
      public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
          if (!codeButtonHandlerData._mCO_Enabled) return true;  // Not enabled, can be no error!
  //  Checks:
-         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName())) return false;
          for (CallOnData callOnDataRow : codeButtonHandlerData._mCO_GroupingsList) {
              if (!checkJMRIObject.validClass(callOnDataRow)) return false;
          }
@@ -125,7 +121,6 @@ public class FrmCO extends javax.swing.JFrame {
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
 //  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mCO_CallOnToggleInternalSensor, _mCO_CallOnToggleInternalSensorPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }

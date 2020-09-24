@@ -28,15 +28,6 @@ public class FrmSWDL extends javax.swing.JFrame {
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
 
-    private String _mSWDL_InternalSensorOrig;
-    private void initOrig() {
-        _mSWDL_InternalSensorOrig = _mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName();
-    }
-    private boolean dataChanged() {
-        if (!_mSWDL_InternalSensorOrig.equals(_mSWDL_InternalSensor.getText())) return true;
-        return false;
-    }
-
     public FrmSWDL( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
         super();
@@ -47,25 +38,8 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mProgramProperties = programProperties;
         _mCheckJMRIObject = checkJMRIObject;
         _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName());
-        initOrig();
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
-    }
-
-    public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
-        if (!codeButtonHandlerData._mSWDL_Enabled) return true; // Not enabled, can be no error!
-//  Checks:
-        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor.getHandleName())) return false;
-        return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
-    }
-
-//  Validate all internal fields as much as possible:
-    private ArrayList<String> formFieldsValid() {
-        ArrayList<String> errors = new ArrayList<>();
-//  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mSWDL_InternalSensor, _mSWDL_InternalSensorPrompt, errors);
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
-        return errors;
     }
 
     /**
@@ -148,10 +122,6 @@ public class FrmSWDL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
-        if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
-            return; // Do not allow exit or transfer of data.
-        }
-
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -159,7 +129,7 @@ public class FrmSWDL extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
-        if (CommonSubs.allowClose(this, dataChanged())) dispose();
+        dispose();
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
