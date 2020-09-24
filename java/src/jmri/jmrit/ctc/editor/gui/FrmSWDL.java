@@ -20,13 +20,11 @@ public class FrmSWDL extends javax.swing.JFrame {
      * Creates new form DlgSWDL
      */
     private static final String FORM_PROPERTIES = "DlgSWDL";    // NOI18N
-    private static final String PREFIX = "_mSWDL_";             // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
-    private final CheckJMRIObject _mCheckJMRIObject;
 
     public FrmSWDL( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
@@ -36,7 +34,6 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
-        _mCheckJMRIObject = checkJMRIObject;
         _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName());
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
