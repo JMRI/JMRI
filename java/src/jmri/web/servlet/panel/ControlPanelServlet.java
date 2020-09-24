@@ -24,8 +24,6 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = HttpServlet.class)
 public class ControlPanelServlet extends AbstractPanelServlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
-
     @Override
     protected String getPanelType() {
         return "ControlPanel";
@@ -87,4 +85,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
+
 }

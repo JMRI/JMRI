@@ -57,6 +57,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     protected boolean _icon = false;
     protected boolean _control = false;
     protected String _state;
+    protected String _color;
     protected String stateClosed = Bundle.getMessage("StateClosedShort");
     protected String stateThrown = Bundle.getMessage("StateThrownShort");
 
@@ -75,7 +76,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      *
      * @param index       DCC address.
      * @param bean        layout object to connect to.
-     * @param switchName  descriptive name corresponding with system name to.
+     * @param switchName  descriptive name corresponding with system name to
      *                    display in switch tooltip, i.e. LT1.
      * @param shapeChoice Button, Icon (static) or Drawing (vector graphics).
      * @param editor      main switchboard editor.
@@ -96,12 +97,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
         switchTooltip = switchName + " (" + _uname + ")";
         this.setLayout(new BorderLayout()); // makes JButtons expand to the whole grid cell
-        if (shapeChoice != 0) {
-            _shape = shapeChoice; // Button
-        } else {
-            _shape = 0;
-        }
-        String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer i.e. M for MERG
+        _shape = shapeChoice;
+        String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer prefix i.e. M for MERG
         beanTypeChar = _label.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
         // check for space char which might be caused by connection name > 2 chars and/or space in name
         if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
@@ -143,7 +140,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // TODO when web supports graphic switches: replace true by false;
+                _text = true; // TODO when web server supports graphic icon based switches: replace true by false;
                 _icon = true;
                 beanIcon.setLabel(switchLabel);
                 beanIcon.positionLabel(17, 45); // provide x, y offset, depending on image size and free space
@@ -171,7 +168,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // TODO when web supports graphic switches: replace true by false;
+                _text = true; // TODO when web server supports graphic keyboard switches: replace true by false;
                 _icon = true;
                 beanKey.setLabel(switchLabel);
                 beanKey.positionLabel(14, 60); // provide x, y offset, depending on image size and free space
@@ -199,15 +196,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // TODO when web supports graphic switches: replace true by false;
-                _icon = true;
-                beanSymbol.setLabel(switchLabel);
+                _text = true; // web server supports in-browser drawn switches
+                _icon = true; // panel.js assigns only text OR icon for a single class such as BeanSwitch
+                beanSymbol.setLabel("switchLabel"); // TODO EBR no label
                 beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
                 }
                 beanSymbol.setBackground(_editor.getDefaultBackgroundColor());
-                //remove the line around icon switches?
+                // common (in)activecolor etc defined in SwitchboardEditor, retrieved by Servlet
+                // remove the line around icon switches?
                 this.setBorder(BorderFactory.createLineBorder(_editor.getDefaultBackgroundColor(), 3));
                 this.add(beanSymbol);
                 break;
@@ -230,7 +228,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true;
                 _icon = false;
-                beanButton.setBackground(_editor.getDefaultBackgroundColor());
+                beanButton.setForeground(_editor.getDefaultTextColorAsColor());
                 beanButton.setOpaque(false);
                 if (_editor.showToolTip()) {
                     beanButton.setToolTipText(switchTooltip);
@@ -247,6 +245,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     case 0:
                         beanButton.setEnabled(false);
                         break;
+                    case 3:
                     default:
                         beanIcon.setOpacity(dim);
                 }
@@ -257,13 +256,13 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 case 'T':
                     getTurnout().addPropertyChangeListener(this, _label, "Switchboard Editor Turnout Switch");
                     if (getTurnout().canInvert()) {
-                        this.setInverted(getTurnout().getInverted()); // only add and set when suppported by object/connection
+                        this.setInverted(getTurnout().getInverted()); // only add and set when supported by object/connection
                     }
                     break;
                 case 'S':
                     getSensor().addPropertyChangeListener(this, _label, "Switchboard Editor Sensor Switch");
                     if (getSensor().canInvert()) {
-                        this.setInverted(getSensor().getInverted()); // only add and set when suppported by object/connection
+                        this.setInverted(getSensor().getInverted()); // only add and set when supported by object/connection
                     }
                     break;
                 default: // light
@@ -282,7 +281,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Stores an object as NamedBeanHandle, using _label as the display
+     * Store an object as NamedBeanHandle, using _label as the display
      * name.
      *
      * @param bean the object (either a Turnout, Sensor or Light) to attach
@@ -324,7 +323,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      *
      * @return the index of the selected item in Shape comboBox
      */
-    public int getType() {
+    public int getShape() {
         return _shape;
     }
 
@@ -412,6 +411,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public void displayState(int state) {
         String switchLabel;
+        Color switchColor;
         log.debug("heard change");
         if (getNamedBean() == null) {
             log.debug("Display state {}, disconnected", state);
@@ -420,20 +420,25 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             switch (state) {
                 case 2:
                     switchLabel = getActiveText();
+                    switchColor = Color.RED;
                     break;
                 case 4:
                     switchLabel = getInactiveText();
+                    switchColor = Color.GREEN;
                     break;
                 case 1:
                     switchLabel = getUnknownText();
+                    switchColor = Color.GRAY;
                     break;
                 default:
                     switchLabel = getInconsistentText();
+                    switchColor = Color.WHITE;
                     log.warn("invalid char in Switchboard Button \"{}\". ERROR state shown.", _label);
             }
             log.debug("Switch label {} state: {} ", switchLabel, state);
             if (isText() && !isIcon()) { // to allow text buttons on web switchboard. TODO add graphic switches on web
                 beanButton.setText(switchLabel);
+                beanButton.setBackground(switchColor); // TODO get button color to change
             }
             if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
                 beanIcon.showSwitchIcon(state);
@@ -703,7 +708,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
         _bname.setUserName(newUserName);
-        if (!newUserName.equals("")) {
+        if (!newUserName.equals("")) { // TODO always true remove
             if (oldName == null || oldName.equals("")) {
                 if (!nbhm.inUse(_label, _bname)) {
                     return; // no problem, so stop
@@ -717,7 +722,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     try {
                         nbhm.updateBeanFromSystemToUser(_bname);
                     } catch (JmriException ex) {
-                        //We should never get an exception here as we already check that the username is not valid
+                        // We should never get an exception here as we already check that the username is not valid
                     }
                 }
 
@@ -743,6 +748,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Invert attached object on the layout, if supported by its connection.
+     *
      * @param set new inverted state, true for inverted, false for normal.
      */
     public void setBeanInverted(boolean set) {
@@ -835,6 +841,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Create new bean and connect it to this switch. Use type letter from
      * switch label (S, T or L).
+     *
      * @param systemName system name of bean.
      */
     protected void connectNew(String systemName) {

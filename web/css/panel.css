@@ -56,7 +56,7 @@ body {
     line-height: 20px;
 }
 
-.beanswitch.text {
+.beanswitch.text { /* SwitchBoard (Panel) interactive button symbols default */
     position: static;
     float: left;
     padding: 4px;

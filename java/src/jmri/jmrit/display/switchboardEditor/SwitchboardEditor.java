@@ -39,6 +39,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 
+import com.sun.jna.StringArray;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -105,8 +106,7 @@ public class SwitchboardEditor extends Editor {
     static final String SENSOR = Bundle.getMessage("Sensors");
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
-    private JComboBox beanTypeList;
-    private char beanTypeChar;
+    private JComboBox<String> beanTypeList;
     JSpinner columns = new JSpinner(new SpinnerNumberModel(3, 1, 25, 1)); // columns is actually used for the number of rows
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
@@ -123,6 +123,9 @@ public class SwitchboardEditor extends Editor {
 
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
+    private final Color defaultActiveColor = Color.YELLOW;
+    private final Color defaultInactiveColor = Color.GRAY;
+    private final Color defaultUnknownColor = Color.WHITE;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
@@ -222,14 +225,14 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.setLayout(new FlowLayout(FlowLayout.TRAILING));
         JLabel beanTypeTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanTypeLabel")));
         beanSetupPane.add(beanTypeTitle);
-        beanTypeList = new JComboBox<>(beanTypeStrings);
+        beanTypeList = new JComboBox<String>(beanTypeStrings);
         beanTypeList.setSelectedIndex(0); // select bean type in comboBox
         beanTypeList.setActionCommand(LAYER_COMMAND);
         beanTypeList.addActionListener(this);
         beanSetupPane.add(beanTypeList);
 
         // add connection selection comboBox
-        beanTypeChar = getSwitchType().charAt(0); // translate from selectedIndex to char
+        char beanTypeChar = getSwitchType().charAt(0); // translate from selectedIndex to char
         log.debug("beanTypeChar set to [{}]", beanTypeChar);
         JLabel beanManuTitle = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ConnectionLabel")));
         beanSetupPane.add(beanManuTitle);
@@ -379,7 +382,7 @@ public class SwitchboardEditor extends Editor {
             switchboardLayeredPane.remove(i);
         }
         switchlist.clear(); // reset list
-        log.debug("switchlist cleared, size is now: {}", switchlist.size());
+        log.debug("switchlist cleared, size is now: {}", 0); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
         switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % range, 1),
@@ -391,9 +394,10 @@ public class SwitchboardEditor extends Editor {
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
         // update the title at the bottom of the switchboard to match (no) layout control
-        border.setTitle(beanManuNames.getSelectedItem().toString() + " "
-                + beanTypeList.getSelectedItem().toString() + " - "
-                + (allControlling() ? interact : noInteract));
+        if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
+            border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
+                    beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
+        }
         help3.setVisible(switchlist.size() == 0); // show/hide help3 warning
         help2.setVisible(switchlist.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
@@ -590,9 +594,10 @@ public class SwitchboardEditor extends Editor {
         controllingBox.addActionListener((ActionEvent event) -> {
             setAllControlling(controllingBox.isSelected());
             // update the title on the switchboard to match (no) layout control
-            border.setTitle(beanManuNames.getSelectedItem().toString() + " "
-                    + beanTypeList.getSelectedItem().toString() + " - "
-                    + (allControlling() ? interact : noInteract));
+            if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
+                border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
+                        beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
+            }
             switchboardLayeredPane.repaint();
             log.debug("border title updated");
         });
@@ -738,6 +743,18 @@ public class SwitchboardEditor extends Editor {
 
     public Color getDefaultTextColorAsColor() {
         return defaultTextColor;
+    }
+
+    public String getActiveSwitchColor() {
+        return ColorUtil.colorToColorName(defaultInactiveColor);
+    }
+
+    public String getInactiveSwitchColor() {
+        return ColorUtil.colorToColorName(defaultActiveColor);
+    }
+
+    public String getUnknownSwitchColor() {
+        return ColorUtil.colorToColorName(defaultUnknownColor);
     }
 
     /**
@@ -925,7 +942,10 @@ public class SwitchboardEditor extends Editor {
      * @return bean type prefix
      */
     public String getSwitchType() {
-        String switchType = beanTypeList.getSelectedItem().toString();
+        String switchType = "";
+        if (beanTypeList.getSelectedItem() != null) {
+            switchType = beanTypeList.getSelectedItem().toString();
+        }
         if (switchType.equals(LIGHT)) { // switch-case doesn't work here
             typePrefix = "L";
         } else if (switchType.equals(SENSOR)) {
@@ -1006,7 +1026,10 @@ public class SwitchboardEditor extends Editor {
      */
     public String getSwitchShape() {
         String shape;
-        int shapeChoice = switchShapeList.getSelectedIndex();
+        int shapeChoice = 0;
+        if (switchShapeList.getSelectedIndex() > 0) {
+            shapeChoice = switchShapeList.getSelectedIndex();
+        }
         switch (shapeChoice) {
             case 1:
                 shape = "icon";
@@ -1018,7 +1041,7 @@ public class SwitchboardEditor extends Editor {
                 shape = "symbol";
                 break;
             default:
-                // Turnout
+                // 0 = basic labelled button
                 shape = "button";
                 break;
         }
@@ -1240,7 +1263,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Create sequence of panels, etc. for switches: JFrame contains its
      * ContentPane which contains a JPanel with BoxLayout (p1) which contains a
-     * JScollPane (js) which contains the targetPane.
+     * JScrollPane (js) which contains the targetPane.
      * Note this is a private menuBar, looking identical to the Editor's _menuBar
      *
      * @param name title for the Switchboard.

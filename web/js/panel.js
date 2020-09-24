@@ -1010,7 +1010,7 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     //set up context used by switchboardeditor "beanswitch" objects, set some defaults
     if ($gPanel.paneltype == "Switchboard") {
-        // TODO add contents
+        // add contents directly?
         //$("#panel-area").prepend("<canvas id='panelCanvas' width=95% height=95% style='position:absolute;z-index:2;'>");
         //set background color from panel attribute
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
@@ -1375,15 +1375,16 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
                             break;
-                        case "beanswitch" : // Switchboard BeanSwitch of shape "button"
+                        case "beanswitch" : // all Switchboard BeanSwitches // TODO EBR
+                            jmri_logging = true;
                             $widget['name'] = $widget.label; // normalize name
                             $widget['text'] = $widget.label; // use label as initial button text
                             if (typeof $widget["systemName"] === "undefined")
                                 $widget["systemName"] = $widget.name;
-                            switch  ($widget["type"]) {
+                            switch  ($widget['type']) {
                                 case "T" :
                                     $widget.jsonType = "turnout"; // JSON object type
-                                    jmri.getTurnout($widget["systemName"]); // have the html button immediately follow the state on the layout
+                                    jmri.getTurnout($widget["systemName"]); // have the html button follow the state on the layout
                                     break;
                                 case "S" :
                                     $widget.jsonType = "sensor"; // JSON object type
@@ -1393,27 +1394,70 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget.jsonType = "light"; // JSON object type
                                     jmri.getLight($widget["systemName"]);
                             }
-                            // set each state's text (this is only applied when shape is button)
-                            $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
-                            $widget['text2'] = $(this).find('activeText').attr('text');
-                            $widget['text4'] = $(this).find('inactiveText').attr('text');
-                            $widget['text8'] = $(this).find('inconsistentText').attr('text');
+
+                            switch ($widget['shape']) {
+                                case "symbol" :
+                                    // experiment with different settings for symbol
+                                    $widget['text' + UNKNOWN] = $widget.name;
+                                    $widget['text2'] = $widget.name; // show state changes in color, not label
+                                    $widget['text4'] = $widget.name;
+                                    $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                                    $widget.styles['border'] = "1px solid black"
+                                    $widget.styles['border-radius'] = "50px" // draws a circle
+                                    $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
+                                    $widget.styles['height'] = $widget.styles.width;
+                                    // add a shape to the text label?
+                                    // add an empty, but clickable, div to the panel and position it over the label
+                                    //$hoverText = " title='" + $widget.label + "' alt='" + $widget.label + "'";
+                                    //$("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
+                                    $widget.classes += " symbol ";
+                                    break;
+                                case "button" :
+                                default :
+                                    // set each state's text (only applied when shape is button)
+                                    $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
+                                    $widget['text2'] = $(this).find('activeText').attr('text');
+                                    $widget['text4'] = $(this).find('inactiveText').attr('text');
+                                    $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                                    $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
+                                    $widget.styles['border-radius'] = "8px" // mimick JButtons
+                                    $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
+                                    $widget.classes += " button ";
+                            }
+                            // common settings for all beanswitches
+                            // colors
+                            $widget['rgb' + UNKNOWN] = "200, 200, 200"; // unknown
+                            $widget['rgb2'] = "255, 0, 0"; // active TODO fill in values from Servlet EBR
+                            $widget['rgb4'] = "0, 255, 0";  // inactive
+                            $widget['rgb8'] = "240, 240, 240"; // inconsistent
+
                             $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
-                            $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
-                            $widget.styles['border-radius'] = "8px" // mimick JButtons
                             $widget.styles['color'] = $widget.textcolor; // use jmri color
-                            $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
                             // CSS properties
                             $("#panel-area>#" + $widget.id).css(
                             {position: 'relative', float: 'left'});
-                            $widget.classes += "button ";
+
+                            if (jmri_logging) {
+                                log.log("case beanswitch " + $widget.widgetType);
+                                $logProperties($widget);
+                            }
+
                             if ($widget.connected == "true") {
-                                $widget['text'] = $widget['text0']; // add UNKNOWN state to label of connected switches
+                                switch  ($widget['shape']) {
+                                    case "symbol" :
+//                                        $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
+//                                        $widget.styles['background-color'] = "rgb(" + $widget['rgb' + UNKNOWN] + ")";
+//                                        break;
+                                    case "button" :
+                                    default :
+                                        $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
+                                        $widget.styles['background-color'] = "rgb(" + $widget['rgb' + UNKNOWN] + ")";
+                                }
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
-                                $widget.styles['background-color'] = "rgb(240,240,240)" // very light grey to mark connected buttons
                             }
                             break;
                     }
+
                     $widget['safeName'] = $safeName($widget.name);
                     switch ($widget['orientation']) { //use orientation instead of degrees if populated
                         case "vertical_up"   : $widget.degrees = 270;
@@ -1710,7 +1754,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                             }
                             //store widget in persistent array
-    //                                $widget['id'] = $widget.ident;
+                            //$widget['id'] = $widget.ident;
                             $gWidgets[$widget.id] = $widget;
                             //also store the xing's 4 end points for other connections
                             $storeLevelXingPoints($widget);
@@ -1825,7 +1869,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     });
                     break;
             }
-            //add widgetid to whereused array to support updates
+            //add widget.id to whereUsed array to support updates
             if ($widget.systemName) {
                 if (!($widget.systemName in whereUsed)) {
                     whereUsed[$widget.systemName] = new Array();
@@ -3395,7 +3439,7 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    //don't bother if widget not found or not BeanSwitch
+    //don't bother if widget not found or type = BeanSwitch
     if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {
 
         var $height = 0;
@@ -3487,6 +3531,13 @@ var $reDrawIcon = function($widget) {
     }
 };
 
+// draw extra symbol for beanSwitch TODO EBR
+//function $drawBeanswitch($widget) {
+//    //get colors
+//    var $eraseColor = $gPanel.backgroundcolor;
+//    $drawCircle(10, 10, 3, $eraseColor, 1); //($widget.xcen, $widget.ycen, $gPanel.turnoutcirclesize * SIZE, $eraseColor, 1);
+//};
+
 // set new value for widget, showing proper icon, return widgets changed
 var $setWidgetState = function($id, $newState, data) {
     var $widget = $gWidgets[$id];
@@ -3494,7 +3545,7 @@ var $setWidgetState = function($id, $newState, data) {
     // if undefined widget this must be a slip
     if (isUndefined($widget)) {
         // does it have "l" or "r" suffix?
-        if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
+        if ($id.endsWith("l") || $id.endsWith("r")) {
             if (jmri_logging) {
                 log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
@@ -3581,7 +3632,7 @@ var $setWidgetState = function($id, $newState, data) {
             log.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
                 "); (was " + slipStateToString($widget.state) + ")");
         }
-        // JMRI doesn't send slip states… it sends slip turnout states…
+        // JMRI doesn't send slip states, it sends slip turnout states
         // so ignore this (incorrect) slip state change
         return;
     }
@@ -3593,8 +3644,8 @@ var $setWidgetState = function($id, $newState, data) {
         $widget.state = $newState;
 
         //override the state with idTag's "name" in a very specific circumstance
-        if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
-        		$widget.widgetFamily=="icon" && data.value!==null && data.value.type=="idTag") {
+        if (($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) &&
+        		$widget.widgetFamily == "icon" && data.value !== null && data.value.type == "idTag") {
         	$widget.state = data.value.data.name;
         }
 
@@ -3622,6 +3673,12 @@ var $setWidgetState = function($id, $newState, data) {
                     if (typeof $widget['css' + $newState] !== "undefined") {
                         $('div#' + $id).css($widget['css' + $newState]); //set css to new state's css
                     }
+                    if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") { // &&
+                     // $widget['shape'] == "symbol") { // Fill div EBR
+                        $('div#' + $id).css({"background-color": "rgb(" + $widget['rgb' + $newState] + ")"});
+                        //$('div#' + $id).css({"background-color": "rgb(" + $newState + "Red" + $widget.red + ","
+                        //+ $newState + "Green" + $widget.green + "," + $newState + "Blue" + $widget.blue + ")"});
+                    }
                 }
                 break;
             case "drawn" :
@@ -3633,8 +3690,8 @@ var $setWidgetState = function($id, $newState, data) {
                 break;
         }
         $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
-//    } else {
-//        log.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
+        // } else {
+        //    log.log("NOT setting " + $id + " for " + $widget.jsonType + " " + $widget.name + " --> " + $newState);
     }
 };
 
@@ -3743,37 +3800,37 @@ var $getNextState = function($widget) {
     } else if ($widget.widgetType == 'signalmasticon') { //special case for signalmasticons
         //loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
         switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
-        case 0 :
-            var $firstState = undefined;
-            var $currentState = undefined;
-            for (k in $widget) {
-                var s = k.substr(4); //extract the state from current icon var
-                //look for next icon value, skipping Held, Dark and Unknown
-                if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
-              && s !='Unlit' && s !=  'Unknown') {
-                    if (typeof $firstState === "undefined")
-                        $firstState = s;  //remember the first state (for last one)
-                    if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
-                        $nextState = s; //last one was the current, so this one must be next
-                    if (s == $widget.state)
-                        $currentState = s;
-//                  log.log('key: ' + k + " first=" + $firstState);
-                }
-            };
-            if (typeof $nextState === "undefined")
-                $nextState = $firstState;  //if still not set, start over
-            break;
+            case 0 :
+                var $firstState = undefined;
+                var $currentState = undefined;
+                for (k in $widget) {
+                    var s = k.substr(4); //extract the state from current icon var
+                    //look for next icon value, skipping Held, Dark and Unknown
+                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
+                  && s !='Unlit' && s !=  'Unknown') {
+                        if (typeof $firstState === "undefined")
+                            $firstState = s;  //remember the first state (for last one)
+                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
+                            $nextState = s; //last one was the current, so this one must be next
+                        if (s == $widget.state)
+                            $currentState = s;
+    //                  log.log('key: ' + k + " first=" + $firstState);
+                    }
+                };
+                if (typeof $nextState === "undefined")
+                    $nextState = $firstState;  //if still not set, start over
+                break;
 
-        case 1 :
-            //TODO: handle lit/unlit states
-            break;
+            case 1 :
+                //TODO: handle lit/unlit states
+                break;
 
-        case 2 :
-            //toggle between stop and held state
-            $nextState = ($widget.state == "Held" ? "Stop" : "Held");
-            break;
+            case 2 :
+                //toggle between stop and held state
+                $nextState = ($widget.state == "Held" ? "Stop" : "Held");
+                break;
 
-        }; //end of switch clickmode
+            }; //end of switch clickmode
     } else {  //start with INACTIVE, then toggle to ACTIVE and back
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }

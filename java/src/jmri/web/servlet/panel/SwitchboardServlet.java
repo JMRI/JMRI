@@ -25,8 +25,6 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = HttpServlet.class)
 public class SwitchboardServlet extends AbstractPanelServlet {
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
-
     @Override
     protected String getPanelType() {
         return "Switchboard";
@@ -62,10 +60,10 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         panel.setAttribute("shape", editor.getSwitchShape());
         panel.setAttribute("columns", Integer.toString(editor.getColumns()));
         panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
-        log.debug("webserver Switchboard attribs ready");
+        log.debug("webserver Switchboard panel attribs ready");
 
         Element bgColor = new Element("backgroundColor");
-        if (editor.getBackgroundColor() == null) { // set to light grey
+        if (editor.getBackgroundColor() == null) { // default to light grey
             bgColor.setAttribute("red", Integer.toString(192));
             bgColor.setAttribute("green", Integer.toString(192));
             bgColor.setAttribute("blue", Integer.toString(192));
@@ -75,15 +73,24 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             bgColor.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
         }
         panel.addContent(bgColor);
+        log.debug("beanswitch shape = {}", editor.getSwitchShape());
+        //Element swColor = new Element("switchColor"); // TODO EBR
+//        if ("symbol".equals(editor.getSwitchShape())) { // insert symbol details into beanswitch
+//            swColor.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
+//            swColor.setAttribute("activecolor", editor.getInactiveSwitchColor());
+//            swColor.setAttribute("unknowncolor", editor.getUnknownSwitchColor());
+//        }
+        //panel.addContent(swColor);
 
         Element text = new Element("text");
         text.setAttribute("color", editor.getDefaultTextColor());
         text.setAttribute("content", "For now, Switchboards only present buttons in JMRI WebServer.");
+        // TODO update as symbol shape display is developed
         panel.addContent(text);
 
         // include switches, Bug: how to delete the old ones?
         List<BeanSwitch> _switches = editor.getSwitches(); // call method in SwitchboardEditor
-        log.debug("SwbServlet N switches: {}", _switches.size());
+        log.debug("SwbServlet contains {} switches", _switches.size());
         for (BeanSwitch sub : _switches) {
             if (sub != null) {
                 try {
@@ -139,5 +146,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
+    private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
 
 }
