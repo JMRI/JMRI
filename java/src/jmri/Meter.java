@@ -31,7 +31,7 @@ public interface Meter extends AnalogIO {
         Milli,
         
         /**
-         * The meter measures in milli units (milli volts, milli amperes, ...)
+         * The meter measures in micro units (micro volts, micro amperes, ...)
          */
         Micro;
     }
