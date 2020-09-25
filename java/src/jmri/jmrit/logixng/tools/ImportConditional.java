@@ -14,7 +14,6 @@ import jmri.Memory;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.logix.OBlock;
