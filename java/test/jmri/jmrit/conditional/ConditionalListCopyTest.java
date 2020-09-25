@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.Logix;
+import jmri.NamedBean.DisplayOptions;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -35,9 +36,10 @@ public class ConditionalListCopyTest {
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
 
-        new ConditionalListCopy("IX102", x3);
+        ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
         
-        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyLogix"));  // NOI18N
+        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
+                listCopy._targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
         // test no selection
@@ -67,9 +69,10 @@ public class ConditionalListCopyTest {
         Logix x3 = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Copy for IX102");  // NOI18N
         Assert.assertNotNull(x3);
 
-        new ConditionalListCopy("IX102", x3);
+        ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
         
-        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyLogix"));  // NOI18N
+        JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
+                listCopy._targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
         // press full edit button
