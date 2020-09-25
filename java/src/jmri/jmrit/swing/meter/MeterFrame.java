@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  */
 public class MeterFrame extends JmriJFrame {
 
-    private enum Unit {
+    public enum Unit {
         Percent(1.0),    // Not a unit, but here anyway
         MicroVolt(1000*1000),
         MilliVolt(1000),
@@ -569,6 +569,67 @@ public class MeterFrame extends JmriJFrame {
         }
         MeterFrameManager.getInstance().deregister(this);
         super.dispose();
+    }
+
+    /**
+     * Returns the number of integer digits.
+     *
+     * @return the number of integer digits
+     */
+    public int getNumIntegerDigits() {
+        return numIntegerDigits;
+    }
+
+    /**
+     * Sets the number of integer digits.
+     *
+     * @param digits the number of integer digits
+     */
+    public void setNumIntegerDigits(int digits) {
+        numIntegerDigits = digits;
+        update();
+    }
+
+    /**
+     * Returns the number of integer digits.
+     *
+     * @return the number of integer digits
+     */
+    public int getNumDecimalDigits() {
+        return numDecimalDigits;
+    }
+
+    /**
+     * Sets the number of decimal digits.
+     *
+     * @param digits the number of decimal digits
+     */
+    public void setNumDecimalDigits(int digits) {
+        numDecimalDigits = digits;
+        update();
+    }
+
+    /**
+     * Returns the unit.
+     *
+     * @return the unit
+     */
+    public Unit getUnit() {
+        return selectedUnit;
+    }
+
+    /**
+     * Sets the unit.
+     *
+     * @param unit the unit
+     */
+    public void setUnit(Unit unit) {
+        units_MenuItemMap.get(selectedUnit).setSelected(false);
+        unitLabels.get(selectedUnit).setVisible(false);
+        units_MenuItemMap.get(unit).setSelected(true);
+        unitLabels.get(unit).setVisible(true);
+        selectedUnit = unit;
+        update();
     }
 
 

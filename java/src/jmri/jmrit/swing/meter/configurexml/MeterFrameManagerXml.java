@@ -11,6 +11,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.swing.meter.MeterFrame;
 import jmri.jmrit.swing.meter.MeterFrameManager;
 
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 
 /**
@@ -18,6 +19,8 @@ import org.jdom2.Element;
  * @author Daniel Bergqvist Copyright (c) 2020
  */
 public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
+
+    private EnumIO<MeterFrame.Unit> unitEnumMap = new EnumIoNames<>(MeterFrame.Unit.class);
 
     public MeterFrameManagerXml() {
     }
@@ -45,6 +48,9 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         e2.addContent(frame.getMeter().getSystemName());    // This should be a NamedBeanHandle
         e.addContent(e2);
         
+        e.setAttribute("unit", unitEnumMap.outputFromEnum(frame.getUnit()));
+        e.setAttribute("integer-digits", Integer.toString(frame.getNumIntegerDigits()));
+        e.setAttribute("decimal-digits", Integer.toString(frame.getNumDecimalDigits()));
         e.setAttribute("x", Integer.toString(frame.getX()));
         e.setAttribute("y", Integer.toString(frame.getY()));
         e.setAttribute("width", Integer.toString(frame.getWidth()));
@@ -84,6 +90,13 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 log.error("uuid: {}, meter: {}, meter: {}, systemName: {}", frame.getUUID(), meter, frame.getMeter().getSystemName(), meterSystemName);
             }
             if (meter != null) frame.setMeter(meter);
+            
+            Attribute a = elem.getAttribute("unit");
+            if (a != null) frame.setUnit(unitEnumMap.inputFromAttribute(a));
+            
+            frame.setNumIntegerDigits(getAttributeIntegerValue(elem, "integer-digits", 3));
+            frame.setNumDecimalDigits(getAttributeIntegerValue(elem, "decimal-digits", 0));
+            
             frame.setLocation(
                     Integer.parseInt(elem.getAttributeValue("x")),
                     Integer.parseInt(elem.getAttributeValue("y")));

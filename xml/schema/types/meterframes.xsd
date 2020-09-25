@@ -39,28 +39,27 @@
               <xs:element name="uuid" type="xs:string" minOccurs="1" maxOccurs="1"/>
               <xs:element name="meter" type="systemNameType" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
-            <xs:attribute name="x" type="xs:integer" use="required">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
+            <xs:attribute name="unit">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Percent" />
+                  <xs:enumeration value="MicroVolt" />
+                  <xs:enumeration value="MilliVolt" />
+                  <xs:enumeration value="Volt" />
+                  <xs:enumeration value="KiloVolt" />
+                  <xs:enumeration value="MicroAmpere" />
+                  <xs:enumeration value="MilliAmpere" />
+                  <xs:enumeration value="Ampere" />
+                  <xs:enumeration value="KiloAmpere" />
+                </xs:restriction>
+              </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="y" type="xs:integer" use="required">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="width" type="xs:integer" use="required">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="height" type="xs:integer" use="required">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
-<!--
-            <xs:attribute name="systemName" type="systemNameType">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="userName" type="userNameType">
-                <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="value" type="xs:string" />
-            <xs:attribute name="valueClass" type="xs:string" />
--->
+            <xs:attribute name="x" type="xs:integer" use="required"/>
+            <xs:attribute name="y" type="xs:integer" use="required"/>
+            <xs:attribute name="width" type="xs:integer" use="required"/>
+            <xs:attribute name="height" type="xs:integer" use="required"/>
+            <xs:attribute name="integer-digits" type="xs:integer"/>
+            <xs:attribute name="decimal-digits" type="xs:integer"/>
           </xs:complexType>
         </xs:element>
             
