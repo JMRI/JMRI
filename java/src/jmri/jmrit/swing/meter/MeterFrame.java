@@ -586,6 +586,8 @@ public class MeterFrame extends JmriJFrame {
      * @param digits the number of integer digits
      */
     public void setNumIntegerDigits(int digits) {
+        integerDigits_MenuItemMap.get(numIntegerDigits).setSelected(false);
+        integerDigits_MenuItemMap.get(digits).setSelected(true);
         numIntegerDigits = digits;
         update();
     }
@@ -605,6 +607,8 @@ public class MeterFrame extends JmriJFrame {
      * @param digits the number of decimal digits
      */
     public void setNumDecimalDigits(int digits) {
+        decimalDigits_MenuItemMap.get(numDecimalDigits).setSelected(false);
+        decimalDigits_MenuItemMap.get(digits).setSelected(true);
         numDecimalDigits = digits;
         update();
     }
