@@ -1353,7 +1353,13 @@
 
  
 <li>
-<a href="package/jmri/jmrit/logix/OBlockTable.shtml">OBlock (Occupance Block) </a>
+<a href="package/jmri/jmrit/logix/OBlockTable.shtml">OBlock (Occupancy Block, Warrants) </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/logix/OBlockEdit.shtml">OPath (Occupancy Path, Warrants) </a>
 <ul></ul>
 </li>
 
@@ -1544,6 +1550,12 @@
  
 <li>
 <a href="html/hardware/pi/index.shtml">Pi (Raspberry) - Hardware, Connection, Tools </a>
+<ul></ul>
+</li>
+
+ 
+<li>
+<a href="package/jmri/jmrit/logix/OBlockEdit.shtml">Portals (Warrants) </a>
 <ul></ul>
 </li>
 
@@ -1766,7 +1778,7 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.html">SC (Signal Controlled) Warrant </a>
+<a href="package/jmri/jmrit/logix/SCWarrant.html">SC Warrant (Signal Controlled) </a>
 <ul></ul>
 </li>
 
@@ -2200,7 +2212,7 @@
 
  
 <li>
-<a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers </a>
+<a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers (Warrants) </a>
 <ul></ul>
 </li>
 
@@ -2323,11 +2335,29 @@
 
  
 <li>
-<a href="package/jmri/jmrit/logix/Warrant.shtml">Warrants </a>
+<a href="html/tools/WarrantsIntro.shtml">Warrants </a>
 <ul>
   
 <li>
-<a href="package/jmri/jmrit/logix/CreateEditWarrant.shtml">Create Warrant </a>
+<a href="package/jmri/jmrit/logix/Warrant.shtml">Warrants Overiew and Getting Started </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/logix/CreateEditWarrant.shtml">Creating and Editing Warrants </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/logix/WarrantTable.shtml">Warrant List </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/logix/SpeedChanges.shtml">When Warrant Speeds Are Modified </a>
 <ul></ul>
 </li>
 

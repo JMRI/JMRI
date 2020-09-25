@@ -109,6 +109,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
         TreeSet<String> newTargetNames = new TreeSet<String>();
         loadReferenceNames(_conditionalFrame._variableList, newTargetNames);
         updateWhereUsed(_oldTargetNames, newTargetNames, _curConditional.getSystemName());
+        closeConditionalFrame();
         return true;        
     }
 

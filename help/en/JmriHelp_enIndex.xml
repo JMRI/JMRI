@@ -765,13 +765,13 @@
  <indexitem text="Wangrow - Hardware, Connection, Tools " target="html.hardware.nce.Wangrow"/>
 
  <indexitem text="Warrants " target="html.tools.WarrantsIntro">
-   <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
+  <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
 
-   <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
+  <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 
-   <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+  <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
-   <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
+  <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
  </indexitem>
  <indexitem text="Web Access to JMRI " target="html.web.index"/>

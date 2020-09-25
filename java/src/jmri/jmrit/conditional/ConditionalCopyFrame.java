@@ -5,9 +5,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 import java.util.SortedSet;
 
 import javax.swing.*;
@@ -53,7 +50,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
 
     void makeConditionalFrame(Conditional conditional) {
         addHelpMenu(
-                "package.jmri.jmrit.conditional.ConditionalListEditor", true);  // NOI18N
+                "package.jmri.jmrit.conditional.ConditionalCopy", true);  // NOI18N
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(makeTopPanel(conditional));
@@ -408,6 +405,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
             }
             if (col == NAME_COLUMN) {
                 _variableList.get(row).setName((String)value);
+                this.fireTableRowsDeleted(row, row);
             }
         }        
     }
@@ -516,6 +514,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
             }
             if (col == NAME_COLUMN) {
                 _actionList.get(row).setDeviceName((String)value);
+                this.fireTableRowsDeleted(row, row);
             } else if (col == DELETE_COLUMN) {
                 _actionList.remove(row);
                 this.fireTableRowsDeleted(row, row);

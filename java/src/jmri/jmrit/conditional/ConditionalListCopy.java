@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -52,7 +51,10 @@ public class ConditionalListCopy extends ConditionalList {
 
 
     void makeEditLogixWindow() {
-        _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleCopyLogix"));  // NOI18N
+        _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleCopyFromLogix", 
+                _targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
+        _editLogixFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.ConditionalCopy", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
 //        contentPane.setLayout(new BorderLayout());
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -134,26 +136,26 @@ public class ConditionalListCopy extends ConditionalList {
         _curConditional.setAction(conditional.getCopyOfActions());
         _curConditional.setLogicType(conditional.getLogicType(), conditional.getAntecedentExpression());
         if (_fullEditButton.isSelected()) {
-            makeEditConditionalWindow();
+            makeEditConditionalWindow(conditional);
         } else {
-            makeChangeItemNameWindow();
+            makeChangeItemNameWindow(conditional);
         }
     }
 
     /**
-     * Create and/or initialize the Edit Conditional window.
-     * <p>
-     * Note: you can get here via the New Conditional button
-     * (newConditionalPressed) or via an Edit button in the Conditional table of
-     * the Edit Logix window.
+     * Copy a Conditional, with full editing capabilities.
+     * @param  srcCond conditional to be copied.
      */
-    void makeEditConditionalWindow() {
+    void makeEditConditionalWindow(Conditional srcCond) {
         log.debug("makeEditConditionalWindow");
         // deactivate this Logix
         _curLogix.deActivateLogix();
         _targetLogix.deActivateLogix();
 
-        _conditionalFrame = new ConditionalEditFrame(Bundle.getMessage("TitleEditConditional"), _curConditional, this);  // NOI18N
+        _conditionalFrame = new ConditionalEditFrame(
+                Bundle.getMessage("TitleCopyConditional", 
+                        srcCond.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)),
+                _curConditional, this);  // NOI18N
 
         _conditionalFrame.pack();
         _conditionalFrame.setVisible(true);
@@ -203,13 +205,18 @@ public class ConditionalListCopy extends ConditionalList {
         super.closeConditionalFrame(_targetLogix);
     }
 
-    void makeChangeItemNameWindow() {
+    /**
+     * Copy a Conditional, but only change item names
+     * @param  srcCond conditional to be copied.
+     */
+    void makeChangeItemNameWindow(Conditional srcCond) {
         // deactivate this Logix
         _curLogix.deActivateLogix();
         _targetLogix.deActivateLogix();
 
         _conditionalFrame = new ConditionalCopyFrame(
-                Bundle.getMessage("TitleCopyConditional", _curLogix.getDisplayName()),
+                Bundle.getMessage("TitleCopyConditional", 
+                        srcCond.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)),
                 _curConditional, this);  // NOI18N
 
         _conditionalFrame.pack();
@@ -225,6 +232,7 @@ public class ConditionalListCopy extends ConditionalList {
     void donePressed(ActionEvent e) {
         showSaveReminder();
         _inEditMode = false;
+        closeConditionalFrame();
         if (_editLogixFrame != null) {
             _editLogixFrame.setVisible(false);
             _editLogixFrame.dispose();

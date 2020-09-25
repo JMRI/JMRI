@@ -909,6 +909,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
         _curVariableRowNumber = row;
         _curVariable = _variableList.get(row);
         _editVariableFrame = new JmriJFrame(Bundle.getMessage("TitleEditVariable"), true, true);  // NOI18N
+        _editVariableFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.StateVariableActionList", true);  // NOI18N
         JPanel topPanel = makeTopPanel(_editVariableFrame, "TitleAntecedentPhrase", 500, 160);  // NOI18N
 
         Box panel1 = Box.createHorizontalBox();
@@ -1785,6 +1787,8 @@ public class ConditionalEditFrame extends ConditionalFrame {
         _curActionRowNumber = row;
         _curAction = _actionList.get(row);
         _editActionFrame = new JmriJFrame(Bundle.getMessage("TitleEditAction"), true, true);  // NOI18N
+        _editActionFrame.addHelpMenu(
+                "package.jmri.jmrit.conditional.StateVariableActionList", true);  // NOI18N
         JPanel topPanel = makeTopPanel(_editActionFrame, "TitleConsequentPhrase", 600, 160);  // NOI18N
 
         Box panel1 = Box.createHorizontalBox();
