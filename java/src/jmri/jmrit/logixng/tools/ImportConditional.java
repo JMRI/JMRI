@@ -206,7 +206,7 @@ public class ImportConditional {
             throws SocketAlreadyConnectedException, JmriException {
         
         NamedBean nb = conditionalAction.getBean();
-        System.err.format("nb: %s%n", nb == null ? null : nb.getSystemName());
+//        System.err.format("nb: %s%n", nb == null ? null : nb.getSystemName());
         DigitalActionBean newAction;
         switch (conditionalAction.getType().getItemType()) {
             case SENSOR:
@@ -269,7 +269,7 @@ public class ImportConditional {
                 new ExpressionSensor(InstanceManager.getDefault(DigitalExpressionManager.class)
                         .getAutoSystemName(), null);
         
-        System.err.format("Sensor: %s%n", sn == null ? null : sn.getSystemName());
+//        System.err.format("Sensor: %s%n", sn == null ? null : sn.getSystemName());
         
         expression.setSensor(sn);
         
@@ -342,7 +342,7 @@ public class ImportConditional {
     
     
     private DigitalActionBean getTurnoutAction(@Nonnull ConditionalAction ca, Turnout tn) throws JmriException {
-        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
+//        System.err.format("Turnout: %s%n", tn == null ? null : tn.getSystemName());
         
         ActionTurnout action;
         
