@@ -176,7 +176,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     /**
      * Contains byte-value specific code.
-     * <br><br>
+     * <br>
      * Calculates new value for _textField and invokes
      * {@link #setValue(String) setValue(newVal)} to make and notify the change
      *
@@ -205,7 +205,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     /**
      * Contains byte-value specific code.
-     * <br><br>
+     * <br>
      * firePropertyChange for "Value" with new and old contents of _textField
      */
     @Override
@@ -229,7 +229,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     /**
      * Contains byte-value specific code.
-     * <br><br>
+     * <br>
      * invokes {@link #exitField exitField()} to process text and
      * firePropertyChange for "Value" with new contents of _textField
      *
@@ -255,22 +255,15 @@ public class SplitTextVariableValue extends SplitVariableValue {
 
     @Override
     public void setValue(String value) {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; enter setValue {}", _name, value);
-        }
+        log.debug("Variable={}; enter setValue {}", _name, value);
         String oldVal = _textField.getText();
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
-        }
+        log.debug("Variable={}; setValue with new value {} old value {}", _name, value, oldVal);
         _textField.setText(value);
 //        if (!oldVal.equals(value) || getState() == VariableValue.UNKNOWN) {
 //            actionPerformed(null);
 //        }
         prop.firePropertyChange("Value", oldVal, value);
-        if (log.isDebugEnabled()) {
-            log.debug("Variable={}; exit setValue {}", _name, value);
-
-        }
+        log.debug("Variable={}; exit setValue {}", _name, value);
     }
 
     @Override
