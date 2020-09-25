@@ -159,7 +159,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case DROPS_COLUMN:
                 return Bundle.getMessage("Drop");
             case REPORTER_COLUMN:
-                return Bundle.getMessage("Reader");
+                return Bundle.getMessage("Reporters");
             case ACTION_COLUMN:
                 return Bundle.getMessage("Action");
             case EDIT_COLUMN:

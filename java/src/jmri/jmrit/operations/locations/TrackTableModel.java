@@ -212,7 +212,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
             case REPORTER_COLUMN:
-                return Bundle.getMessage("Reader");
+                return Bundle.getMessage("Reporters");
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
