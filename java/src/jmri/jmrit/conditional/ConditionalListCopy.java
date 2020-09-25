@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.conditional.Bundle;
 import jmri.util.JmriJFrame;
 
 /**

@@ -18,7 +18,6 @@ import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;

@@ -11,8 +11,6 @@ import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.conditional.Bundle;
-
 /**
  * Basis for ConditionalListEdit and ConditionalListCopy
  * 

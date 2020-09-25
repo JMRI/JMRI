@@ -16,7 +16,6 @@ import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.conditional.ConditionalEditBase.SelectionMode;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlockManager;

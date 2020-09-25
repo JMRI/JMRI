@@ -23,7 +23,6 @@ import jmri.Conditional.Operator;
 import jmri.Conditional.State;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
-import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.conditional.ConditionalEditBase.NameBoxListener;
 import jmri.jmrit.conditional.ConditionalEditBase.SelectionMode;
 import jmri.jmrit.logix.OBlock;
