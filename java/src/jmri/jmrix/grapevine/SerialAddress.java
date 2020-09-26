@@ -336,8 +336,8 @@ public class SerialAddress {
         Matcher matcher = pattern.matcher(name);
         if (!matcher.matches()) {
             throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
-                    Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameFailedRegex", name, pattern.pattern()),
+                    Bundle.getMessage(locale, "InvalidSystemNameFailedRegex", name, pattern.pattern()));
         }
         int node;
         int bit;
@@ -365,8 +365,8 @@ public class SerialAddress {
                     || (bit >= 301 && bit <= 324)
                     || (bit >= 401 && bit <= 424))) {
                 throw new NamedBean.BadSystemNameException(
-                        Bundle.getMessage(Locale.ENGLISH, "SystemNameInvalidFailedRegex", name, pattern.pattern()),
-                        Bundle.getMessage(locale, "SystemNameInvalidFailedRegex", name, pattern.pattern()));
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameFailedRegex", name, pattern.pattern()),
+                        Bundle.getMessage(locale, "InvalidSystemNameFailedRegex", name, pattern.pattern()));
             }
         } else {
             // sort on subtype
