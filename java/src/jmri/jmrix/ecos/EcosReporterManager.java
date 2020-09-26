@@ -35,5 +35,21 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
         register(r);
         return r;
     }
+    
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for EcosReporterManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        if (!name.matches(".*\\d+.*")) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",name);
+        }
+        return name;
+    }
 
 }
