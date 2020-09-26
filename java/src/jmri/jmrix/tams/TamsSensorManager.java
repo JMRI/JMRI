@@ -164,6 +164,22 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
         return sb.toString();
     }
 
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: add custom TamsSensor validation.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        if (!name.matches(".*\\d+.*")) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",name);
+        }
+        return name;
+    }
+    
     int board = 0;
     int port = 0;
 
