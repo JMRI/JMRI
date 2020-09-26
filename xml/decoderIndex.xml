@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.21.1ish+heap+20200823T0329Z+R6d9504bb83 on Sun Aug 23 13:32:14 AEST 2020-->
-  <decoderIndex version="1018">
+  <!--Written by JMRI version 4.21.2ish+heap+20200926T2211Z+R4de08d1 on Sun Sep 27 08:12:40 AEST 2020-->
+  <decoderIndex version="1020">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7692,7 +7692,7 @@
         <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokPilot 5 micro DCC Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+        <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
@@ -7806,6 +7806,9 @@
         </model>
         <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
@@ -8344,6 +8347,9 @@
         <model model="LokSound 5 micro DCC Direct" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
+        <model model="LokSound 5 micro E24 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
         <model model="LokSound 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
@@ -8355,6 +8361,9 @@
         </model>
         <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokSound 5 micro KATO" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777405">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
@@ -15704,14 +15713,15 @@
         <model model="HDL LocoIO v1.54" productID="154" />
         <!--filtering model specific options relies on new exclude/include support in compositeValType-->
         <model model="HDL LocoIO v1.53" productID="153" />
-        <!--Docs: 1.50-1.52 users should update to 1.53, same options-->
+        <model model="HDL LocoIO v1.52" productID="152" />
+        <!--HDL Docs: 1.50-1.51 users should update to 1.53 or higher, same options-->
         <model model="HDL LocoIO v1.49" productID="149" />
         <model model="HDL LocoIO v1.48" productID="148" />
-        <!--Docs: 1.47 users should update to 1.48, same options-->
+        <!--HDL Docs: 1.47 users should update to 1.48, same options-->
         <model model="HDL LocoIO v1.46" productID="146" />
         <model model="HDL LocoIO v1.45" productID="145" />
         <model model="HDL LocoIO v1.44" productID="144" />
-        <!--Docs: 1.43 users should update to 1.44, same options-->
+        <!--HDL Docs: 1.43 users should update to 1.44, same options-->
         <model model="HDL LocoIO v1.42" productID="142" />
         <model model="HDL LocoIO v1.41" productID="141" />
         <model model="HDL LocoIO v1.40" productID="140" />
@@ -15722,7 +15732,7 @@
         <model model="HDL LocoServo v1.03" productID="103" />
         <model model="HDL LocoServo v1.02" productID="102" />
         <model model="HDL LocoServo v1.01" productID="101">
-          <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
+          <!--LocoServo uses ports 5-12 for 2-4 servo's with special position/timing settings-->
         </model>
         <model model="HDL LocoBooster v3" productID="003">
           <!--LocoBooster only allows config of ports 1-4 (and special ports 5-6)-->
@@ -15730,6 +15740,10 @@
         <model model="HDL LocoBooster v4" productID="004">
           <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
         </model>
+        <model model="HDL LocoBooster v5" productID="005" />
+        <!--<model model="HDL LocoRCD v2.0" productID="200"/> TODO edit copy of 211-->
+        <model model="HDL LocoRCD2 v2.10" productID="210" />
+        <model model="HDL LocoRCD2 v2.11" productID="211" />
         <model model="Original LocoIO" productID="135" />
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
@@ -19860,6 +19874,10 @@
         <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="843" comment="Model T0203.006B" />
         <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="845" comment="Model T0203.009B" />
         <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="852" comment="Model T0203.010B" />
+        <model model="TSU-GN2208 GP38-2 w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="919" comment="Model 8T0203.009" />
+        <model model="TSU-GN2208 GP38-2 w/gyra" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="918" comment="Model 8T0203.008" />
+        <model model="TSU-GN2208 GP38-2 w/srobe" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="920" comment="Model 8T0203.012" />
+        <model model="TSU-GN2208 GP38-2W" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="917" comment="Model 8T0203.001" />
         <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B" />
@@ -19879,6 +19897,7 @@
         <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="854" comment="Model 8T0207.002" />
         <model model="TSU-GN2208 SDF40-2 w/beacon 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="928" comment="Model 8T0207.003" />
         <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="912" comment="Model 8T0206.003" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?" />
         <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="804" comment="Model T0302.003B" />
