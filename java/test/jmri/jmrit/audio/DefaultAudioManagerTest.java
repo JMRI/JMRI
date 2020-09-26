@@ -100,6 +100,14 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         result = l.getNamedBeanSet().size();
         Assert.assertEquals("Verify that we get two buffers & one listener", expResult, result);
     }
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() {

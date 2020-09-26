@@ -57,6 +57,14 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
 
         Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     @Override

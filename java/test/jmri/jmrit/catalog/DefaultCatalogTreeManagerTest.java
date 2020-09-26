@@ -15,6 +15,14 @@ public class DefaultCatalogTreeManagerTest extends jmri.managers.AbstractManager
     public void testCTor() {
         Assert.assertNotNull("exists", l);
     }
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() {

@@ -275,6 +275,14 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Property foo cannot be silenced.");
     }
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     private static class CountingPropertyChangeListener implements PropertyChangeListener {
 

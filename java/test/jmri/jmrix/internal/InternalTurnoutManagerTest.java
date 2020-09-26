@@ -164,6 +164,14 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         Assert.assertEquals("new outputInterval in memo", 50, l.getMemo().getOutputInterval()); // get directly from memo
         Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // get via turnoutManager
     }
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     // from here down is testing infrastructure
     @Override
