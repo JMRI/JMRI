@@ -30,8 +30,6 @@ public class ImportOtherData implements Serializable {
         private final static HashMap<Integer, CTC_PANEL_TYPE> map = new HashMap<>();
         private CTC_PANEL_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (CTC_PANEL_TYPE value : CTC_PANEL_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getRadioGroupValue() { return _mRadioGroupValue; }
-        public static CTC_PANEL_TYPE getRadioGroupValue(int radioGroupValue) { return map.get(radioGroupValue); }
     }
 
     public enum SIGNALS_ON_PANEL {
@@ -42,8 +40,6 @@ public class ImportOtherData implements Serializable {
         private final static HashMap<Integer, SIGNALS_ON_PANEL> map = new HashMap<>();
         private SIGNALS_ON_PANEL (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (SIGNALS_ON_PANEL value : SIGNALS_ON_PANEL.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getRadioGroupValue() { return _mRadioGroupValue; }
-        public static SIGNALS_ON_PANEL getRadioGroupValue(int radioGroupValue) { return map.get(radioGroupValue); }
     }
 
     public enum VERTICAL_SIZE {
@@ -54,8 +50,6 @@ public class ImportOtherData implements Serializable {
         private final static HashMap<Integer, VERTICAL_SIZE> map = new HashMap<>();
         private VERTICAL_SIZE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (VERTICAL_SIZE value : VERTICAL_SIZE.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getRadioGroupValue() { return _mRadioGroupValue; }
-        public static VERTICAL_SIZE getRadioGroupValue(int radioGroupValue) { return map.get(radioGroupValue); }
     }
 
     public enum SIGNAL_SYSTEM_TYPE {
@@ -66,9 +60,6 @@ public class ImportOtherData implements Serializable {
         private final static HashMap<Integer, SIGNAL_SYSTEM_TYPE> map = new HashMap<>();
         private SIGNAL_SYSTEM_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (SIGNAL_SYSTEM_TYPE value : SIGNAL_SYSTEM_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getInt() { return _mRadioGroupValue; }
-        public static SIGNAL_SYSTEM_TYPE getSignalSystemType(int radioGroupValue) { return map.get(radioGroupValue); }
-        public static SIGNAL_SYSTEM_TYPE getSignalSystemType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
 
 /*
@@ -123,19 +114,6 @@ variable name and declared as type String.
         _mGUIDesign_VerticalSize = VERTICAL_SIZE.SMALL;
         _mGUIDesign_OSSectionUnknownInconsistentRedBlink = false;
         _mGUIDesign_TurnoutsOnPanel = true;
-    }
-    public int getNextUniqueNumber() { return _mNextUniqueNumber++; }
-    public void possiblySetToHighest(int value) { if (value + 1 > _mNextUniqueNumber) _mNextUniqueNumber = value + 1; }
-
-    public ImportOtherData deepCopy() {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-            objectOutputStream.writeObject(this);
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-            return (ImportOtherData)objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException ex) { return null;}
     }
 
 //  Figure out if we need to convert from prior verion(s) (As of 2/20/19, no):

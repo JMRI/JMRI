@@ -66,7 +66,7 @@ public class ImportExternalData {
             doDataLoading();            // Process the content
         }
 
-        // Rename data files
+        // Delete tempoary data files
         if (!CTCFiles.deleteFile(CTC_FILE_NAME)) {
             log.error("Delete failed for old CTCSystem.xml");
         }

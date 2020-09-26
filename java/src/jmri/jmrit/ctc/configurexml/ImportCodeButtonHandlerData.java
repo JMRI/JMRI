@@ -28,7 +28,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class ImportCodeButtonHandlerData implements Serializable, Comparable<ImportCodeButtonHandlerData> {
+public class ImportCodeButtonHandlerData implements Serializable {
     private final static int FILE_VERSION = 6;
     public static final int SWITCH_NOT_SLAVED = -1;
 
@@ -40,9 +40,6 @@ public class ImportCodeButtonHandlerData implements Serializable, Comparable<Imp
         private final static HashMap<Integer, LOCK_IMPLEMENTATION> map = new HashMap<>();
         private LOCK_IMPLEMENTATION (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (LOCK_IMPLEMENTATION value : LOCK_IMPLEMENTATION.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getInt() { return _mRadioGroupValue; }
-        public static LOCK_IMPLEMENTATION getLockImplementation(int radioGroupValue) { return map.get(radioGroupValue); }
-        public static LOCK_IMPLEMENTATION getLockImplementation(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
 
     public enum TURNOUT_TYPE {
@@ -53,15 +50,6 @@ public class ImportCodeButtonHandlerData implements Serializable, Comparable<Imp
         private final static HashMap<Integer, TURNOUT_TYPE> map = new HashMap<>();
         private TURNOUT_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (TURNOUT_TYPE value : TURNOUT_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getInt() { return _mRadioGroupValue; }
-        public static TURNOUT_TYPE getTurnoutType(int radioGroupValue) { return map.get(radioGroupValue); }
-        public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
-    }
-
-    @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
-    @Override
-    public int compareTo(ImportCodeButtonHandlerData codeButtonHandlerData) {
-        return this._mGUIColumnNumber - codeButtonHandlerData._mGUIColumnNumber;
     }
 
     public ImportCodeButtonHandlerData() {
@@ -70,23 +58,12 @@ public class ImportCodeButtonHandlerData implements Serializable, Comparable<Imp
         _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
     }
     private static final long serialVersionUID = 1L;
-//  Data and code used ONLY by the GUI designer, no use objectInputStream runtime system:
-    public ImportCodeButtonHandlerData(int uniqueID, int switchNumber, int signalEtcNumber, int guiColumnNumber) {
-        _mUniqueID = uniqueID;
-        _mSwitchNumber = switchNumber;
-        _mSignalEtcNumber = signalEtcNumber;
-        _mOSSectionSwitchSlavedToUniqueID = SWITCH_NOT_SLAVED;
-        _mGUIColumnNumber = guiColumnNumber;
-        _mSWDI_GUITurnoutType = ImportCodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-        _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
-    }
+
 //  This number NEVER changes, and is how this object is uniquely identified:
     public int _mUniqueID = -1;         // FORCE serialization to write out the FIRST unique number 0 into the XML file (to make me happy!)
 //  Used by the Editor only:
     public int _mSwitchNumber;         // Switch Indicators and lever #
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
-    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + ", " + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
-    public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
 //  PRESENTLY (as of 10/18/18) these are ONLY used by the edit routines to TEMPORARILY get a copy.  The
 //  data is NEVER stored anywhere.  I say this because "_mUniqueID" MUST have another unique number if it is EVER
 //  stored anywhere!  For example: take the source # and add 5,000,000 to it each time.  Even copies of copies would

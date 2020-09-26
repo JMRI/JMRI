@@ -158,9 +158,7 @@ public class Columns {
     public void fixAllErrors() {
         for (CodeButtonHandlerData codeButtonHandlerData : _mCTCSerialData.getCodeButtonHandlerDataArrayList()) {
             if (!FrmSIDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSIDI_Enabled = false;
-//             if (!FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSIDL_Enabled = false;
             if (!FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSWDI_Enabled = false;
-//             if (!FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mSWDL_Enabled = false;
             if (!FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mCO_Enabled = false;
             if (!FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mTRL_Enabled = false;
             if (!FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, codeButtonHandlerData)) codeButtonHandlerData._mTUL_Enabled = false;
@@ -180,9 +178,7 @@ public class Columns {
     public void updateCurrentlySelectedColumnErrorStatus() {
         lazy1(_mEdit_CB_Prompt, FrmCB.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SIDI_Prompt, FrmSIDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-//         lazy1(_mEdit_SIDL_Prompt, FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_SWDI_Prompt, FrmSWDI.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
-//         lazy1(_mEdit_SWDL_Prompt, FrmSWDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_CO_Prompt, FrmCO.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TRL_Prompt, FrmTRL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
         lazy1(_mEdit_TUL_Prompt, FrmTUL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData) ? Color.black : Color.red);
@@ -326,8 +322,6 @@ public class Columns {
         } else {
             return "";
         }
-//      if (returnStringBuffer.length() > 0) returnStringBuffer.append("TrL: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));       // NOI18N
-//      return returnStringBuffer.toString();
     }
 
     private void checkThisList(int ourUniqueID, int otherUniqueID, String lr, ArrayList<TrafficLockingData> trafficLockingRules, TreeSet<String> setOfUniqueIDs) {
@@ -342,7 +336,6 @@ public class Columns {
     }
 
     private void lazy3(int ourUniqueID, int otherUniqueID, String lr, int uniqueID, TreeSet<String> setOfUniqueIDs) {
-//         int uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(value, -1);   // Technically should NEVER throw or return default, but for safety.  Default will NEVER be found!
         if (ourUniqueID == uniqueID) {
             setOfUniqueIDs.add(_mCTCSerialData.getMyShortStringNoCommaViaUniqueID(otherUniqueID) + lr + ", ");
         }
@@ -368,17 +361,13 @@ public class Columns {
         } else {
             return "";
         }
-//      if (returnStringBuffer.length() > 0)  returnStringBuffer.append("Sw: " + returnStringBuffer.substring(0, returnStringBuffer.length() - 2));   // NOI18N
-//      return returnStringBuffer.toString();
     }
 
 //  Anything in error, return ERROR_STRING
     private static String generatePossibleErrorString(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData currentCodeButtonHandlerData) {
         if (!FrmCB.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSIDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-//         if (!FrmSIDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmSWDI.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
-//         if (!FrmSWDL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmCO.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTRL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
         if (!FrmTUL.dialogCodeButtonHandlerDataValid(checkJMRIObject, currentCodeButtonHandlerData)) return ERROR_STRING;
@@ -399,8 +388,6 @@ public class Columns {
 
     private boolean signalDirectionLeverEnabled() {
         return _mSelectedCodeButtonHandlerData._mSIDL_Enabled;
-//         if (!_mSelectedCodeButtonHandlerData._mSIDL_Enabled) return false;
-//         return FrmSIDL.dialogCodeButtonHandlerDataValid(_mCheckJMRIObject, _mSelectedCodeButtonHandlerData);
     }
 
 //     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Columns.class);
