@@ -2,7 +2,7 @@ package jmri.jmrix.internal;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-
+import jmri.util.junit.annotations.ToDo;
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,10 +21,12 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

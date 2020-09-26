@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -45,6 +46,16 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() throws Exception {

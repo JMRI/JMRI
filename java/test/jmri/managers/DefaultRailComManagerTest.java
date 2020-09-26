@@ -2,6 +2,7 @@ package jmri.managers;
 
 import jmri.IdTag;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -131,6 +132,16 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
         l = getManager();
     }
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @AfterEach
     @Override

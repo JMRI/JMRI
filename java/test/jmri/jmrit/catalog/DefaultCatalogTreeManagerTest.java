@@ -1,6 +1,7 @@
 package jmri.jmrit.catalog;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -18,10 +19,12 @@ public class DefaultCatalogTreeManagerTest extends jmri.managers.AbstractManager
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

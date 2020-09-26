@@ -10,6 +10,7 @@ import static org.hamcrest.core.StringContains.containsString;
 
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -99,6 +100,16 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         }
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() {

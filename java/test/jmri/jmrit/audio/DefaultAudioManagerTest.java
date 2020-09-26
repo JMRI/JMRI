@@ -5,6 +5,7 @@ import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -103,10 +104,12 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
     @Test
     @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

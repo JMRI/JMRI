@@ -5,6 +5,7 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.jupiter.api.*;
 
 /**
@@ -29,6 +30,16 @@ public class AbstractSignalHeadManagerTest extends AbstractManagerTestBase<jmri.
         l = null;
         JUnitUtil.tearDown();
     }
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    @Test
+    @Override
+    @ToDo("Use test when tested class performs class-specific name validation.")
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractSignalHeadManagerTest.class);
 
