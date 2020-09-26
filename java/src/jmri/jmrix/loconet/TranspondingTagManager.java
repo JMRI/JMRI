@@ -84,6 +84,16 @@ public class TranspondingTagManager extends jmri.managers.DefaultIdTagManager {
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }
+    
+    /**
+     * Validates for odd characters $ : \ .
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateBadCharsInSystemNameFormat(name,locale,new String[] {"$", ":", "\\"});
+    }
 
     private static final Logger log = LoggerFactory.getLogger(TranspondingTagManager.class);
 
