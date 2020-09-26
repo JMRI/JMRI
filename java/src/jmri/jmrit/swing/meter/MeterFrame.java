@@ -103,7 +103,7 @@ public class MeterFrame extends JmriJFrame {
     }
     
     public MeterFrame(UUID uuid) {
-        super(Bundle.getMessage("TrackVoltageMeterTitle"));
+        super(Bundle.getMessage("VoltageMeterTitle"));
         
         this.uuid = uuid;
         
@@ -120,7 +120,7 @@ public class MeterFrame extends JmriJFrame {
         } else if (!currentMeters.isEmpty()) {
             setMeter(currentMeters.get(0));
         } else {
-            setTitle(Bundle.getMessage("TrackVoltageMeterTitle"));
+            setTitle(Bundle.getMessage("VoltageMeterTitle"));
         }
         
         MeterFrameManager.getInstance().register(this);
@@ -178,9 +178,9 @@ public class MeterFrame extends JmriJFrame {
         }
 
         if (meter instanceof VoltageMeter) {
-            setTitle(Bundle.getMessage("TrackVoltageMeterTitle2", m.getDisplayName()));
+            setTitle(Bundle.getMessage("VoltageMeterTitle2", m.getDisplayName()));
         } else {
-            setTitle(Bundle.getMessage("TrackCurrentMeterTitle2", m.getDisplayName()));
+            setTitle(Bundle.getMessage("CurrentMeterTitle2", m.getDisplayName()));
         }
     }
     
