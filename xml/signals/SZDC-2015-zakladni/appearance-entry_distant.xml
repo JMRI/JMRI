@@ -36,6 +36,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Speed map</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2020-09-25</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Speed map for insufficient break distance</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -129,6 +135,23 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+      <advancedAspect>Opakovaná volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Opakovaná výstraha</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Opakovaná očekávej 40</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Opakovaná očekávej 60</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     
