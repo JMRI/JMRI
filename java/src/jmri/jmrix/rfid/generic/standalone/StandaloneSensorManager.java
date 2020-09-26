@@ -76,10 +76,18 @@ public class StandaloneSensorManager extends RfidSensorManager {
         sensor.notify(idTag);
     }
 
-    // to free resources when no longer used
+    /**
+     * Validates to contain at least 1 number.
+     * {@inheritDoc}
+     */
     @Override
-    public void dispose() {
-        super.dispose();
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        if (!name.matches(".*\\d+.*")) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",name);
+        }
+        return name;
     }
 
     private static final Logger log = LoggerFactory.getLogger(StandaloneSensorManager.class);

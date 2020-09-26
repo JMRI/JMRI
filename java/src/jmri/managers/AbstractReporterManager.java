@@ -201,6 +201,15 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     public String getEntryToolTip() {
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateBadCharsInSystemNameFormat(name,locale,new String[] {"$", "\\"});
+    }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
