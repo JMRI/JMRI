@@ -962,7 +962,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 return;
             }
             targetLogix = _logixManager.createNewLogix(uName);
-            sName = targetLogix.getSystemName();
         } else {
             targetLogix = _logixManager.getBySystemName(sName);
             if (targetLogix == null && uName != null) {
