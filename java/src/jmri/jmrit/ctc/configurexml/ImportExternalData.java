@@ -42,7 +42,6 @@ public class ImportExternalData {
     private static final String PROG_PROPS = "ProgramProperties.xml";   // NOI18N
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
     private static final String SAVED_PREFIX = "V1_Save_";              // NOI18N
-    private static final String OLD_PREFIX = "OLD_";                    // NOI18N
 
     public static void loadExternalData() {
         // Make an initial backup of the CTCSystem.xml file.  This only occurs on the very first run
@@ -50,7 +49,14 @@ public class ImportExternalData {
         String backName = SAVED_PREFIX + CTC_FILE_NAME;
         if (!CTCFiles.fileExists(backName)) {
             if (!CTCFiles.copyFile(CTC_FILE_NAME, backName, false)) {
-                log.warn("Unable to make backup copy: source = {}, backup = {}", CTC_FILE_NAME, backName);
+                log.warn("Unable to make version 1 copy: source = {}, backup = {}", CTC_FILE_NAME, backName);
+                return;
+            }
+        }
+        backName = SAVED_PREFIX + PROG_PROPS;
+        if (!CTCFiles.fileExists(backName)) {
+            if (!CTCFiles.copyFile(PROG_PROPS, backName, false)) {
+                log.warn("Unable to make version 1 copy: source = {}, backup = {}", PROG_PROPS, backName);
                 return;
             }
         }
@@ -61,11 +67,11 @@ public class ImportExternalData {
         }
 
         // Rename data files
-        if (!CTCFiles.renameFile(CTC_FILE_NAME, OLD_PREFIX + CTC_FILE_NAME, true)) {
-            log.error("Rename failed for CTCSystem.xml");
+        if (!CTCFiles.deleteFile(CTC_FILE_NAME)) {
+            log.error("Delete failed for old CTCSystem.xml");
         }
-        if (!CTCFiles.renameFile(PROG_PROPS, OLD_PREFIX + PROG_PROPS, true)) {
-            log.error("Rename failed for ProgramProperties.xml");
+        if (!CTCFiles.deleteFile(PROG_PROPS)) {
+            log.error("Delete failed for old ProgramProperties.xml");
         }
     }
 

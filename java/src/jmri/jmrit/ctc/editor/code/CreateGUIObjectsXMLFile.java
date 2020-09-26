@@ -32,7 +32,9 @@ public class CreateGUIObjectsXMLFile {
 
         TreeMap<Integer, Integer> cbhdMap = new TreeMap<>();
         ctcSerialData.getCodeButtonHandlerDataArrayList().forEach(cbhd -> {
-            cbhdMap.put(cbhd._mGUIColumnNumber, cbhd._mUniqueID);
+            if (cbhd._mGUIColumnNumber > 0 && !cbhd._mGUIGeneratedAtLeastOnceAlready) {
+                cbhdMap.put(cbhd._mGUIColumnNumber, cbhd._mUniqueID);
+            }
         });
 
         PrintWriter printWriter;
