@@ -16,7 +16,7 @@ public class AbstractMeterManager extends AbstractManager<Meter>
         implements MeterManager {
 
     /**
-     * Create a new AnalogIOManager instance.
+     * Create a new MeterManager instance.
      * 
      * @param memo the system connection
      */
