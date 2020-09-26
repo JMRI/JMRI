@@ -123,6 +123,9 @@ public class OlcbLightManager extends AbstractLightManager {
         String withoutPrefix = address.replace("ML", "");
         OlcbAddress a = new OlcbAddress(withoutPrefix);
         OlcbAddress[] v = a.split();
+        if (v == null) {
+            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb Light address");
+        }
         switch (v.length) {
             case 1:
                 if (address.startsWith("+") || address.startsWith("-")) {
@@ -134,6 +137,25 @@ public class OlcbLightManager extends AbstractLightManager {
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
+    }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        try {
+            if (!validSystemNameConfig(name)){
+                throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName","Unable to convert " + name);
+            }
+        }
+        catch ( IllegalArgumentException ex ) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",ex.getMessage());
+        }
+        return name;
     }
     
     /**

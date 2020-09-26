@@ -163,6 +163,23 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
     
     /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        try {
+            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        }
+        catch ( IllegalArgumentException ex ) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",ex.getMessage());
+        }
+        return name;
+    }
+    
+    /**
      * {@inheritDoc}
      */
     @Override

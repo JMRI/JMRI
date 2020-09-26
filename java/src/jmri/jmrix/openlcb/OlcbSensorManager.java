@@ -163,7 +163,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return curAddress;
     }
 
-    void validateAddressFormat(String address) {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
@@ -206,6 +206,23 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public void updateAll() {
         // no current mechanisim to request status updates from all layout sensors
+    }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        super.validateSystemNameFormat(name,locale);
+        try {
+            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        }
+        catch ( IllegalArgumentException ex ) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",ex.getMessage());
+        }
+        return name;
     }
 
     private static final Logger log = LoggerFactory.getLogger(OlcbSensorManager.class);
