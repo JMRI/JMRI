@@ -52,7 +52,7 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((EnumVariableValue) var).setValue(Integer.valueOf(val).intValue());
+        ((EnumVariableValue) var).setValue(Integer.parseInt(val));
     }
 
     @Override

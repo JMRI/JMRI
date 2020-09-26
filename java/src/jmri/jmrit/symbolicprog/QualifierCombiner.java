@@ -9,7 +9,6 @@ import java.util.List;
  * outcome is known.
  *
  * @author Bob Jacobsen Copyright (C) 2011
- *
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
 
@@ -17,7 +16,6 @@ public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeLi
         this.qualifiers = qualifiers;
 
         setWatchedAvailable(currentDesiredState());
-
     }
 
     List<Qualifier> qualifiers;
@@ -25,7 +23,7 @@ public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeLi
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // this was a change, may want to change it back
-        setWatchedAvailable(currentDesiredState());  // relies on non-propogation of null changes
+        setWatchedAvailable(currentDesiredState());  // relies on non-propagation of null changes
     }
 
     @Override

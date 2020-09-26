@@ -437,7 +437,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
         LocoAddress.Protocol protocol = addr.getProtocol();
-        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        try {
+            addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        } catch (NumberFormatException e) {
+            log.error("Can't set DccAddress to {}", a);
+        }
     }
 
     public void setDccAddressLong(boolean m) {

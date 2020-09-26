@@ -1309,15 +1309,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("error during locomotive file output", e);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")
-                        + "\n"
+                        Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
+                        Bundle.getMessage("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
-
         }
     }
 
@@ -1353,15 +1351,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("error during locomotive file output", e);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingText")
-                        + "\n"
+                        Bundle.getMessage("ErrorSavingText") + "\n"
                         + e.getMessage(),
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorSavingTitle"),
+                        Bundle.getMessage("ErrorSavingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
             }
-
         }
     }
 
@@ -1404,8 +1400,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             log.error("Error reading roster entry", ex);
             try {
                 JOptionPane.showMessageDialog(null,
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingText"),
-                        ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("ErrorReadingTitle"),
+                        Bundle.getMessage("ErrorReadingText") + "\n" + _fileName,
+                        Bundle.getMessage("ErrorReadingTitle"),
                         JOptionPane.ERROR_MESSAGE);
             } catch (HeadlessException he) {
                 // silently ignore inability to display dialog
