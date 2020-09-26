@@ -39,7 +39,7 @@ public class ConditionalListCopyTest {
         ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
         
         JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
-                listCopy._targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
+                listCopy._curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
         // test no selection
@@ -72,7 +72,7 @@ public class ConditionalListCopyTest {
         ConditionalListCopy listCopy = new ConditionalListCopy("IX102", x3);
         
         JFrameOperator copyFrame = new JFrameOperator(Bundle.getMessage("TitleCopyFromLogix", 
-                listCopy._targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
+                listCopy._curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));
         Assert.assertNotNull(copyFrame);
 
         // press full edit button

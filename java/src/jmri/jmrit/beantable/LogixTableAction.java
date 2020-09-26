@@ -951,9 +951,6 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param lgxName Logix system name to be copied
      */
     private void copyLogixPressed(String lgxName) {
-        if (!checkLogixSysName()) {
-            return;
-        }
         String sName = _systemName.getText();
         String uName = _addUserName.getText();
         if (uName.length() == 0) {
@@ -965,6 +962,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 return;
             }
             targetLogix = _logixManager.createNewLogix(uName);
+            sName = targetLogix.getSystemName();
         } else {
             targetLogix = _logixManager.getBySystemName(sName);
             if (targetLogix == null && uName != null) {

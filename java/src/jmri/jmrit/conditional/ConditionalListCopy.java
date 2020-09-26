@@ -1,11 +1,14 @@
 package jmri.jmrit.conditional;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import jmri.*;
 
@@ -13,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.conditional.Bundle;
 import jmri.util.JmriJFrame;
 
 /**
@@ -51,21 +55,30 @@ public class ConditionalListCopy extends ConditionalList {
 
     void makeEditLogixWindow() {
         _editLogixFrame = new JmriJFrame(Bundle.getMessage("TitleCopyFromLogix", 
-                _targetLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
+                _curLogix.getDisplayName(DisplayOptions.QUOTED_USERNAME_SYSTEMNAME)));  // NOI18N
         _editLogixFrame.addHelpMenu(
                 "package.jmri.jmrit.conditional.ConditionalCopy", true);  // NOI18N
         Container contentPane = _editLogixFrame.getContentPane();
-//        contentPane.setLayout(new BorderLayout());
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(10));
-        JPanel p = new  JPanel();
-        p.add(new JLabel(Bundle.getMessage("SelectCopyConditional", _targetLogix.getDisplayName())));
-        contentPane.add(p);
+
+        JPanel topPanel = new  JPanel();
+        topPanel.add(new JLabel(Bundle.getMessage("SelectCopyConditional", _targetLogix.getDisplayName())));
+        contentPane.add(topPanel);
+        contentPane.add(Box.createVerticalStrut(10));
+
+        JPanel listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         _conditionalListModel = new ConditionalListModel(_curLogix);
         _conditionalList = new JList<>(_conditionalListModel);
         _conditionalList.setCellRenderer(new ConditionalCellRenderer());
         _conditionalList.setVisibleRowCount(6);
-        contentPane.add(new JScrollPane(_conditionalList));
+        listPanel.add(new JScrollPane(_conditionalList));   
+        Border listPanelBorder = BorderFactory.createEtchedBorder();
+        Border listPanelTitled = BorderFactory.createTitledBorder(
+                listPanelBorder, Bundle.getMessage("TitleConditionalList"));  // NOI18N
+        listPanel.setBorder(listPanelTitled);
+        contentPane.add(listPanel);
         contentPane.add(Box.createVerticalStrut(10));
 
         JPanel panel = new JPanel();
@@ -80,10 +93,11 @@ public class ConditionalListCopy extends ConditionalList {
         bGroup.add(itemsOnlyButton);
         panel.add(itemsOnlyButton);
         itemsOnlyButton.setSelected(true);
-        p =  new JPanel();
+        JPanel p =  new JPanel();
         p.add(panel);
+        p.add(Box.createVerticalStrut(10));
         contentPane.add(p);
-        
+       
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
@@ -107,7 +121,12 @@ public class ConditionalListCopy extends ConditionalList {
                 donePressed(e);
             }
         });
-        contentPane.add(panel);
+        p =  new JPanel();
+        p.add(panel);
+        p.add(Box.createVerticalStrut(10));
+        p.add(panel);
+        p.add(Box.createVerticalStrut(10));
+        contentPane.add(p);
 
         _editLogixFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -231,6 +250,10 @@ public class ConditionalListCopy extends ConditionalList {
     void donePressed(ActionEvent e) {
         showSaveReminder();
         _inEditMode = false;
+        if (_targetLogix.getNumConditionals() == 0) {
+            // no conditionals were copied - remove logix
+            _logixManager.deleteLogix(_targetLogix);
+        }
         closeConditionalFrame();
         if (_editLogixFrame != null) {
             _editLogixFrame.setVisible(false);

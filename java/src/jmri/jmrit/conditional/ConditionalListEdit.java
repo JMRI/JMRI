@@ -425,6 +425,7 @@ public class ConditionalListEdit extends ConditionalList {
             _showReminder = true;
             _curConditional = null;
             _numConditionals--;
+            loadReferenceNames(_conditionalFrame._variableList, _oldTargetNames);
             String[] msgs = _curLogix.deleteConditional(sName);
             if (msgs != null) {
                 JOptionPane.showMessageDialog(_editLogixFrame,
