@@ -4,8 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.DigitalActionBean;
 
 /**
@@ -51,5 +49,5 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
         return true;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ShutdownComputerXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutdownComputerXml.class);
 }

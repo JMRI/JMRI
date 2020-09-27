@@ -645,7 +645,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </socket>
       </actions>
     </many>
-    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="10">
+    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:00014</systemName>
       <userName>My shutdown computer</userName>
     </shutdown-computer>
@@ -655,7 +655,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <do-string-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoStringActionXml">
       <systemName>IQDA:AUTO:00016</systemName>
     </do-string-action>
-    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml" seconds="10">
+    <shutdown-computer class="jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml">
       <systemName>IQDA:AUTO:00017</systemName>
     </shutdown-computer>
     <action-light class="jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml">

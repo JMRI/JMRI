@@ -24,6 +24,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private ShutdownComputer actionShutdownComputer;
+    private MockShutDownManager mockShutDownManager;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -42,7 +43,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Shutdown computer after 0 seconds%n");
+        return String.format("Shutdown computer%n");
     }
     
     @Override
@@ -51,7 +52,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Shutdown computer after 0 seconds%n");
+                "         Shutdown computer%n");
     }
     
     @Override
@@ -95,29 +96,26 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Test
     @Override
-    // The only purpose of override this method is to catch the error message
-    // The reason for this is that we have a security manager installed to block
-    // the ShutdownComputer action to shut down the computer during this test.
     public void testMaleSocketIsActive() {
         super.testMaleSocketIsActive();
-        JUnitAppender.suppressMessage(Level.ERROR, "exec is not allowed during test of ShutdownComputer");
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
     
     @Test
     @Override
-    // The only purpose of override this method is to catch the error message.
-    // The reason for this is that we have a security manager installed to block
-    // the ShutdownComputer action to shut down the computer during this test.
     public void testIsActive() {
         super.testIsActive();
-        JUnitAppender.suppressMessage(Level.ERROR, "exec is not allowed during test of ShutdownComputer");
+        JUnitAppender.assertErrorMessage("Shutdown failed");
+        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
     
     @Test
     public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
         ShutdownComputer action = new ShutdownComputer("IQDA321", null);
-        
-        Assert.assertThrows(ShutdownOSException.class, () -> action.execute());
+        action.execute();
+        Assert.assertEquals(MockShutDownManager.Result.SHUTDOWN_OS, mockShutDownManager.result);
+        JUnitAppender.assertErrorMessage("Shutdown failed");
     }
     
     // The minimal setup for log4J
@@ -133,7 +131,8 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         
         InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
-        InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
+        mockShutDownManager = new MockShutDownManager();
+        InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);
         
         _category = Category.EXRAVAGANZA;
         _isExternal = true;
@@ -158,6 +157,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @After
     public void tearDown() {
+        JUnitAppender.assertErrorMessage("Shutdown failed");
         JUnitUtil.tearDown();
     }
     
@@ -165,24 +165,37 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     private static class MockShutDownManager extends DefaultShutDownManager {
         
+        public enum Result {
+            SHUTDOWN,
+            SHUTDOWN_OS,
+            RESTART,
+            RESTART_OS,
+        }
+        
+        public Result result = null;
+        
         @Override
         public boolean shutdown() {
-            throw new ShutdownException();
+            result = Result.SHUTDOWN;
+            return true;
         }
 
         @Override
         public boolean restart() {
-            throw new RestartException();
+            result = Result.RESTART;
+            return true;
         }
 
         @Override
         public boolean restartOS() {
-            throw new RestartOSException();
+            result = Result.RESTART_OS;
+            return true;
         }
 
         @Override
         public boolean shutdownOS() {
-            throw new ShutdownOSException();
+            result = Result.SHUTDOWN_OS;
+            return true;
         }
     }
     
