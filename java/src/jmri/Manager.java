@@ -628,14 +628,14 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int SIGNALMASTLOGICS = WARRANTS + 10;
     public static final int IDTAGS = SIGNALMASTLOGICS + 10;
     public static final int ANALOGIOS = IDTAGS + 10;
-    public static final int STRINGIOS = ANALOGIOS + 10;
+    public static final int METERS = ANALOGIOS + 10;
+    public static final int STRINGIOS = METERS + 10;
     public static final int LOGIXS = STRINGIOS + 10;
     public static final int CONDITIONALS = LOGIXS + 10;
     public static final int AUDIO = CONDITIONALS + 10;
     public static final int TIMEBASE = AUDIO + 10;
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
-    
     // All LogixNG beans share the "Q" letter. For example, a digital expression
     // has a system name like "IQDE001".
     public static final int LOGIXNGS = ENTRYEXIT + 10;                          // LogixNG
@@ -648,6 +648,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int LOGIXNG_ANALOG_ACTIONS = LOGIXNG_ANALOG_EXPRESSIONS + 10;   // LogixNG AnalogAction
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
+    public static final int METERFRAMES = LOGIXNG_STRING_ACTIONS + 10;
 
     /**
      * Determine the order that types should be written when storing panel

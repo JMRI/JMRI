@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.JFileChooser;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;

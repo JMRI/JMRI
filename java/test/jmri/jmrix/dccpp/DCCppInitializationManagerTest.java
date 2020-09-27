@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import jmri.InstanceManager;
+
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 
@@ -21,6 +23,7 @@ public class DCCppInitializationManagerTest {
         DCCppListenerScaffold l = new DCCppListenerScaffold();
         
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(t);
+        InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(memo));
 
         DCCppInitializationManager m = new DCCppInitializationManager(memo) {
                 @Override

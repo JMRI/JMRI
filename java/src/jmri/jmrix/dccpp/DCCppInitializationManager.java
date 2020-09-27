@@ -18,6 +18,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppInitializationManager extends AbstractDCCppInitializationManager {
 
+    DCCppPredefinedMeters predefinedMeters;
+    
     public DCCppInitializationManager(DCCppSystemConnectionMemo memo) {
         super(memo);
     }
@@ -57,8 +59,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
-        systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
-        jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
+        predefinedMeters = new DCCppPredefinedMeters(systemMemo);
 
         systemMemo.register();
         log.info("DCC++ Initialization Complete with station type '{}', version '{}' and build '{}'",base_station, version, code_build);

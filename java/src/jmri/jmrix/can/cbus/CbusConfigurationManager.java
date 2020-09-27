@@ -67,7 +67,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
         
-        InstanceManager.store( getMultiMeter(), jmri.MultiMeter.class );
+        getPredefinedMeters();
         
         InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
@@ -107,8 +107,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
-        } else if (type.equals(jmri.MultiMeter.class)) {
-            return true;
         } else if (type.equals(CbusPreferences.class)) {
             return true;
         } else if (type.equals(CabSignalManager.class)) {
@@ -146,8 +144,6 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getLightManager();
         } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
-        } else if (T.equals(jmri.MultiMeter.class)) {
-            return (T) getMultiMeter();
         } else if (T.equals(CbusPreferences.class)) {
             return (T) getCbusPreferences();
         } else if (T.equals(CabSignalManager.class)) {
@@ -272,17 +268,17 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return commandStation;
     }
     
-    protected CbusMultiMeter multiMeter;
+    protected CbusPredefinedMeters predefinedMeters;
     
-    public CbusMultiMeter getMultiMeter() {
+    public CbusPredefinedMeters getPredefinedMeters() {
         if (adapterMemo.getDisabled()) {
             return null;
         }
-        if (multiMeter == null) {
-            multiMeter = new CbusMultiMeter(adapterMemo);
-            InstanceManager.store( multiMeter, jmri.MultiMeter.class );
+        if (predefinedMeters == null) {
+            InstanceManager.setMeterManager(new jmri.managers.AbstractMeterManager(adapterMemo));
+            predefinedMeters = new CbusPredefinedMeters(adapterMemo);
         }
-        return multiMeter;
+        return predefinedMeters;
     }
     
     private CbusPreferences cbusPreferences = null;
@@ -343,8 +339,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (commandStation != null) {
             InstanceManager.deregister(commandStation, jmri.CommandStation.class);
         }
-        if (multiMeter != null) {
-            InstanceManager.deregister(multiMeter, jmri.MultiMeter.class);
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
         }
         if (cbusPreferences != null) {
             InstanceManager.deregister(cbusPreferences, jmri.jmrix.can.cbus.CbusPreferences.class);
