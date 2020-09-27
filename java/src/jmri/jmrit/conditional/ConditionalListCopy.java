@@ -1,9 +1,7 @@
 package jmri.jmrit.conditional;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.conditional.Bundle;
 import jmri.util.JmriJFrame;
 
 /**

@@ -12,17 +12,13 @@ import javax.swing.border.Border;
 import javax.swing.table.*;
 
 import jmri.*;
-import jmri.implementation.DefaultConditionalAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.conditional.ConditionalEditBase.SelectionMode;
 import jmri.jmrit.entryexit.EntryExitPairs;
-import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
