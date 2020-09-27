@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.managers.DefaultShutDownManager;
 import jmri.util.*;
 
 import org.apache.log4j.Level;
@@ -23,7 +24,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private ShutdownComputer actionShutdownComputer;
-    private String lastExecutedCommand;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -56,7 +56,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new ShutdownComputer(systemName, null, 0);
+        return new ShutdownComputer(systemName, null);
     }
     
     @Override
@@ -66,7 +66,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null, 0));
+        Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null));
     }
     
     @Test
@@ -114,77 +114,10 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testSetSeconds() {
-        ShutdownComputer action = new ShutdownComputer("IQDA321", null, 52);
-        Assert.assertEquals("Correct number of seconds", 52, action.getSeconds());
-        action.setSeconds(7);
-        Assert.assertEquals("Correct number of seconds", 7, action.getSeconds());
-        boolean hasThrown = false;
-        try {
-            action.setSeconds(-12);
-        } catch (IllegalArgumentException e) {
-            hasThrown = true;
-            Assert.assertEquals("error message is correct", "seconds must not be negative", e.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
-        Assert.assertEquals("Correct number of seconds", 7, action.getSeconds());
-        action.setSeconds(0);
-        Assert.assertEquals("Correct number of seconds", 0, action.getSeconds());
-        
-        // This shouldn't do anything but we call setup() for coverage
-        action.setup();
-    }
-    
-    @Test
     public void testExecute() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        ShutdownComputer action = new ShutdownComputer("IQDA321", null, 52);
+        ShutdownComputer action = new ShutdownComputer("IQDA321", null);
         
-        // During this test, we change SystemType.type, but we reset it in tearDown()
-        
-        Field privateField = SystemType.class.
-                getDeclaredField("type");
-        
-        privateField.setAccessible(true);
-        
-        privateField.set(SystemType.class, SystemType.WINDOWS);
-        action.execute();
-        Assert.assertEquals("Shutdown command is correct", "shutdown.exe", lastExecutedCommand);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        
-        privateField.set(SystemType.class, SystemType.MACOSX);
-        action.execute();
-        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        
-        privateField.set(SystemType.class, SystemType.LINUX);
-        action.execute();
-        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        
-        privateField.set(SystemType.class, SystemType.UNIX);
-        action.execute();
-        Assert.assertEquals("Shutdown command is correct", "shutdown", lastExecutedCommand);
-        JUnitAppender.assertErrorMessage("Shutdown failed");
-        
-        boolean hasThrown = false;
-        try {
-            privateField.set(SystemType.class, SystemType.MACCLASSIC);
-            action.execute();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", e.getMessage().startsWith("Unknown OS: "));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
-        
-        hasThrown = false;
-        try {
-            privateField.set(SystemType.class, SystemType.OS2);
-            action.execute();
-        } catch (UnsupportedOperationException e) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", e.getMessage().startsWith("Unknown OS: "));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        Assert.assertThrows(ShutdownOSException.class, () -> action.execute());
     }
     
     // The minimal setup for log4J
@@ -200,9 +133,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         
         InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
-        // Set a secority manager since we don't want this test to shut down
-        // the computer!
-        System.setSecurityManager(new MySecurityManager());
+        InstanceManager.setDefault(ShutDownManager.class, new MockShutDownManager());
         
         _category = Category.EXRAVAGANZA;
         _isExternal = true;
@@ -213,7 +144,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
-        actionShutdownComputer = new ShutdownComputer("IQDA321", null, 0);
+        actionShutdownComputer = new ShutdownComputer("IQDA321", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionShutdownComputer);
         conditionalNG.getChild(0).connect(maleSocket);
@@ -223,55 +154,61 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
-        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
-    }
-    
-    private void resetSystemType() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        // Ensure we reset SystemType
-        Field privateField = SystemType.class.
-                getDeclaredField("isSet");
-        
-        privateField.setAccessible(true);
-        
-        // Save original value
-        boolean origValue = (Boolean) privateField.get(SystemType.class);
-        // Do assert to check that the code works
-        Assert.assertTrue("SystemType.isSet is true", origValue);
-        
-        privateField.set(SystemType.class, false);
-        origValue = (Boolean) privateField.get(SystemType.class);
-        // Do assert to check that the code works
-        Assert.assertFalse("SystemType.isSet is false", origValue);
     }
     
     @After
-    public void tearDown() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        // We change SystemType.type in the method testExecute(). But we
-        // cannot reset SystemType in that method since if an assert fails,
-        // or if an exception is thrown and not catched, we will leave that
-        // method without SystemType being reset. So we must reset SystemType
-        // here.
-        resetSystemType();
-        
-        // Clear security mananger
-        System.setSecurityManager(null);
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
     
     
-    private class MySecurityManager extends SecurityManager {
+    
+    private static class MockShutDownManager extends DefaultShutDownManager {
         
         @Override
-        public void checkExec(String cmd) {
-            lastExecutedCommand = cmd;
-            throw new SecurityException("exec is not allowed during test of ShutdownComputer");
+        public boolean shutdown() {
+            throw new ShutdownException();
         }
-        
+
         @Override
-        public void checkPermission(java.security.Permission perm) {
-            // We don't want any checks, except checkExec()
+        public boolean restart() {
+            throw new RestartException();
         }
-        
+
+        @Override
+        public boolean restartOS() {
+            throw new RestartOSException();
+        }
+
+        @Override
+        public boolean shutdownOS() {
+            throw new ShutdownOSException();
+        }
+    }
+    
+    
+    /**
+     * Exception thrown by restartOS() when simulating shutdown.
+     */
+    public static class RestartOSException extends RuntimeException {
+    }
+
+    /**
+     * Exception thrown by restart() when simulating shutdown.
+     */
+    public static class RestartException extends RuntimeException {
+    }
+
+    /**
+     * Exception thrown by shutdownOS() when simulating shutdown.
+     */
+    public static class ShutdownOSException extends RuntimeException {
+    }
+
+    /**
+     * Exception thrown by shutdown() when simulating shutdown.
+     */
+    public static class ShutdownException extends RuntimeException {
     }
     
 }

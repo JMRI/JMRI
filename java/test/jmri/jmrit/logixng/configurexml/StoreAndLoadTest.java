@@ -331,7 +331,7 @@ public class StoreAndLoadTest {
         MaleSocket socketMany2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMany);
         socketSecondMany.getChild(index++).connect(socketMany2);
 
-        ShutdownComputer actionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00014", "My shutdown computer", 10);
+        ShutdownComputer actionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00014", "My shutdown computer");
         MaleSocket socketShutdownComputer = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionShutdownComputer);
         socketSecondMany.getChild(index++).connect(socketShutdownComputer);
 
@@ -343,7 +343,7 @@ public class StoreAndLoadTest {
         MaleSocket socketDoStringAction = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoStringAction);
         socketSecondMany.getChild(index++).connect(socketDoStringAction);
 
-        ShutdownComputer expressionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00017", null, 10);
+        ShutdownComputer expressionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00017", null);
         MaleSocket socketShutdownComputer2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(expressionShutdownComputer);
         socketSecondMany.getChild(index++).connect(socketShutdownComputer2);
 

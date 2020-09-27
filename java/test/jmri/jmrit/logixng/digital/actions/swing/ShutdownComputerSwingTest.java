@@ -32,7 +32,7 @@ public class ShutdownComputerSwingTest {
         Assert.assertTrue("panel is not null",
             null != new ShutdownComputerSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing().getConfigPanel(new ShutdownComputer("IQDA1", null, 0), new JPanel()));
+            null != new ShutdownComputerSwing().getConfigPanel(new ShutdownComputer("IQDA1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.actions.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
-import org.jdom2.DataConversionException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +35,6 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
         
         storeCommon(p, element);
 
-        element.setAttribute("seconds", Integer.toString(p.getSeconds()));
-
         return element;
     }
     
@@ -46,14 +43,7 @@ public class ShutdownComputerXml extends jmri.managers.configurexml.AbstractName
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         
-        int seconds = 0;
-        try {
-            seconds = shared.getAttribute("seconds").getIntValue();
-        } catch (DataConversionException ex) {
-            log.error("seconds attribute is not an integer", ex);
-        }
-        
-        DigitalActionBean h = new ShutdownComputer(sys, uname, seconds);
+        DigitalActionBean h = new ShutdownComputer(sys, uname);
 
         loadCommon(h, shared);
 

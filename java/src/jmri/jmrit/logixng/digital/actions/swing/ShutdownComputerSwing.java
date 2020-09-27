@@ -15,9 +15,6 @@ import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
  */
 public class ShutdownComputerSwing extends AbstractActionSwing {
 
-    int seconds = 0;
-    
-    
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
@@ -32,7 +29,7 @@ public class ShutdownComputerSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ShutdownComputer action = new ShutdownComputer(systemName, userName, seconds);
+        ShutdownComputer action = new ShutdownComputer(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     

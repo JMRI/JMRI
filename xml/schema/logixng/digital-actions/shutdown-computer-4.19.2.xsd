@@ -41,8 +41,6 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
 
-            <xs:attribute name="seconds" type="xs:integer" />
-
 <!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
         
