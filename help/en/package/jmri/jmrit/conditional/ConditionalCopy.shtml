@@ -84,7 +84,8 @@
           <p>The quick edit window displayed by the <strong>Change Items Only</strong> 
           button uses drop drop down combo boxes for the "Traditional Pick List"
           option. If you prefer using a picklist other than combo boxes, use
-          the "Single Pick List" option.</p>
+          the "Single Pick List" option. To enter an indirect reference to a
+          memory, the "Single Pick List" option must be used.</p>
           <p></P>
 
         </dd>

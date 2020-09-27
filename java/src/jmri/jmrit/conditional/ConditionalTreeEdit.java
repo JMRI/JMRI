@@ -2828,6 +2828,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setTriggerActions(_variableTriggerActions.isSelected());
 
         Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
+        if (!checkIsAction(name, itemType) ) {
+            return false;
+        }
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
@@ -4216,6 +4219,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
             referenceByMemory = true;
         }
+        if (!checkIsVariable(name, itemType) ) {
+            return false;
+        }
         switch (itemType) {
             case SENSOR:
                 if (!referenceByMemory) {
@@ -4554,6 +4560,68 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curConditional.setAction(_actionList);
         _actionList = _curConditional.getCopyOfActions();
         _curLogix.activateLogix();
+    }
+
+    /**
+     * Check that a state variable is not also used as an action
+     * 
+     * @param name of the state variable
+     * @param itemType item type of the state variable
+     * @return true if variable is not an action of if the user OK's
+     * its use as an action also.
+     */
+    boolean checkIsAction(String name, Conditional.ItemType itemType) {
+        String actionName = null;
+        for (ConditionalAction action : _actionList) {
+            Conditional.ItemType actionType = action.getType().getItemType();
+            if (itemType == actionType) {
+                if (name.equals(action.getDeviceName())) {
+                    actionName = action.getDeviceName();
+                } else {
+                    NamedBean bean  = action.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        actionName = action.getDeviceName();
+                   }
+                }
+            }
+            if (actionName != null) {
+                return confirmActionAsVariable(actionName, name);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check that an action is not also used as a state variable
+     * 
+     * @param name of the action
+     * @param itemType item type of the action
+     * @return true if action is not a state variable of if the user OK's
+     * its use as such.
+     */
+    boolean checkIsVariable(String name, Conditional.ItemType itemType) {
+        String varName = null;
+        for (ConditionalVariable var : _variableList) {
+            Conditional.ItemType varType = var.getType().getItemType();
+            if (itemType == varType) {
+                if (name.equals(var.getName())) {
+                    varName = var.getName();
+                } else {
+                    NamedBean bean  = var.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        varName = var.getName();
+                   }
+                }
+            }
+            if (varName != null) {
+                return confirmActionAsVariable(name, varName);
+            }
+        }
+        return true;
     }
 
     // ------------ Action detail listeners ------------

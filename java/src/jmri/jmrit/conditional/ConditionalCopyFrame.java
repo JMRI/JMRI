@@ -12,13 +12,17 @@ import javax.swing.border.Border;
 import javax.swing.table.*;
 
 import jmri.*;
+import jmri.implementation.DefaultConditionalAction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.conditional.Bundle;
 import jmri.jmrit.conditional.ConditionalEditBase.SelectionMode;
 import jmri.jmrit.entryexit.EntryExitPairs;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -94,7 +98,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         nameColumn.setResizable(true);
 
         TableColumn descColumn = variableColumnModel.getColumn(VariableCopyTableModel.DESCRIPTION_COLUMN);
-        descColumn.setPreferredWidth(600);
         descColumn.setMinWidth(300);
         descColumn.setResizable(true);
 
@@ -146,7 +149,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         nameColumn.setResizable(true);
 
         descColumn = actionColumnModel.getColumn(ActionCopyTableModel.DESCRIPTION_COLUMN);
-        descColumn.setPreferredWidth(600);
         descColumn.setMinWidth(300);
         descColumn.setResizable(true);
 
@@ -278,8 +280,135 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         super.cancelConditionalPressed();
     }
 
-    void doFullEditPressed() {
-        
+    /**
+     * Validate Variable name change.
+     * <p>
+     * Messages are sent to the user for any errors found. This routine returns
+     * false immediately after finding the first error, even if there might be
+     * more errors.
+     *
+     * @param name name of the ConditionalVariable
+     * @param variable ConditionalVariable to validate
+     * @return true if all data checks out OK, otherwise false
+     */
+    boolean validateVariable(String name, ConditionalVariable variable) {
+        Conditional.ItemType itemType = variable.getType().getItemType();
+
+        if (!checkIsAction(name, itemType) ) {
+            return false;
+        }
+        if (!isValidType(itemType, name)) {
+            return false;
+        }
+        return (true);
+    }
+    /**
+     * Validate Action item name change.
+     * <p>
+     * Messages are sent to the user for any errors found. This routine returns
+     * false immediately after finding an error, even if there might be more
+     * errors.
+     *
+     * @param name name of the action
+     * @param action ConditionalAction to validate
+     * @return true if all data checks out OK, otherwise false
+     */
+    boolean validateAction(String name, ConditionalAction action) {
+        if (!checkReferenceByMemory(name)) {
+            return false;
+        }
+        Conditional.ItemType itemType = action.getType().getItemType();
+        if (_referenceByMemory) {
+            if (itemType == Conditional.ItemType.MEMORY) {
+                JOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("Warn6"),
+                        Bundle.getMessage("WarningTitle"), // NOI18N
+                        JOptionPane.WARNING_MESSAGE);
+                return false;                
+            }
+        } else {
+            if (!checkIsVariable(name, itemType) ) {
+                return false;
+            }
+            if (!isValidType(itemType, name)) {
+                return false;
+            }
+        }
+        return (true);
+    }
+
+    boolean isValidType( Conditional.ItemType itemType, String name) {
+        switch (itemType) {
+            case SENSOR:
+                name = _parent.validateSensorReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case TURNOUT:
+                name = _parent.validateTurnoutReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case CONDITIONAL:
+                name = _parent.validateConditionalReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case LIGHT:
+                name = _parent.validateLightReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case SIGNALHEAD:
+                name = _parent.validateSignalHeadReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case SIGNALMAST:
+                name = _parent.validateSignalMastReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case MEMORY:
+                name = _parent.validateMemoryReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case LOGIX:
+                name = _parent.validateLogixReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case WARRANT:
+                name = _parent.validateWarrantReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case OBLOCK:
+                name = _parent.validateOBlockReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            case ENTRYEXIT:
+                name = _parent.validateEntryExitReference(name);
+                if (name == null) {
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 
     //------------------- Table Models ----------------------
@@ -365,9 +494,9 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 case ROWNUM_COLUMN:
                     return 10;
                 case NAME_COLUMN:
-                    return 100;
+                    return 200;
                 case DESCRIPTION_COLUMN:
-                    return 500;
+                    return 600;
                 default:
                     break;
             }
@@ -403,8 +532,12 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 return;
             }
             if (col == NAME_COLUMN) {
-                _variableList.get(row).setName((String)value);
-                this.fireTableRowsDeleted(row, row);
+                String name = (String)value;
+                ConditionalVariable variable = _variableList.get(row);
+                if (validateVariable(name, variable)) {
+                    variable.setName(name);
+                    this.fireTableRowsDeleted(row, row);
+                }
             }
         }        
     }
@@ -473,9 +606,9 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         public int getPreferredWidth(int col) {
             switch (col) {
                 case NAME_COLUMN:
-                    return 100;
+                    return 200;
                 case DESCRIPTION_COLUMN:
-                    return 500;
+                    return 600;
                 default:
                     break;
             }
@@ -512,8 +645,12 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 return;
             }
             if (col == NAME_COLUMN) {
-                _actionList.get(row).setDeviceName((String)value);
-                this.fireTableRowsDeleted(row, row);
+                ConditionalAction action = _actionList.get(row);
+                String name = (String)value;
+                if (validateAction(name, action)) {
+                    action.setDeviceName(name);
+                    this.fireTableRowsDeleted(row, row);
+                }
             } else if (col == DELETE_COLUMN) {
                 _actionList.remove(row);
                 this.fireTableRowsDeleted(row, row);

@@ -192,7 +192,6 @@ public class ConditionalEditFrame extends ConditionalFrame {
         notColumn.setResizable(false);
 
         TableColumn descColumn = variableColumnModel.getColumn(VariableTableModel.DESCRIPTION_COLUMN);
-        descColumn.setPreferredWidth(300);
         descColumn.setMinWidth(200);
         descColumn.setResizable(true);
 
@@ -346,9 +345,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
         TableColumn descriptionColumn = actionColumnModel.getColumn(
                 ActionTableModel.DESCRIPTION_COLUMN);
         descriptionColumn.setResizable(true);
-        descriptionColumn.setPreferredWidth(600);
         descriptionColumn.setMinWidth(300);
-        //descriptionColumn.setMaxWidth(760);
 
         TableColumn actionEditColumn = actionColumnModel.getColumn(ActionTableModel.EDIT_COLUMN);
         // ButtonRenderer already exists
@@ -1519,6 +1516,9 @@ public class ConditionalEditFrame extends ConditionalFrame {
         _curVariable.setNum2(0);
         Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
         Conditional.Type testType = Conditional.Type.NONE;
+        if (!checkIsAction(name, itemType) ) {
+            return false;
+        }
         _dataChanged = true;
         switch (itemType) {
             case SENSOR:
@@ -1568,6 +1568,16 @@ public class ConditionalEditFrame extends ConditionalFrame {
                     return false;
                 }
                 _curVariable.setName(name);
+                Conditional c = _parent._conditionalManager.getBySystemName(name);
+                if (c == null) {
+                    return false;
+                }
+                String uName = c.getUserName();
+                if (uName == null || uName.isEmpty()) {
+                    _curVariable.setGuiName(c.getSystemName());
+                } else {
+                    _curVariable.setGuiName(uName);
+                }
                 break;
             case LIGHT:
                 name = _parent.validateLightReference(name);
@@ -2781,21 +2791,15 @@ public class ConditionalEditFrame extends ConditionalFrame {
         _dataChanged = true;
         _curAction.setActionString("");
         _curAction.setActionData(-1);
-        boolean referenceByMemory = false;
-        if (name.length() > 0 && name.charAt(0) == '@') {
-            String memName = name.substring(1);
-            if (!_parent.confirmIndirectMemory(memName)) {
-                return false;
-            }
-            memName = _parent.validateMemoryReference(memName);
-            if (memName == null) {
-                return false;
-            }
-            referenceByMemory = true;
+        if (!checkReferenceByMemory(name)) {
+            return false;
+        }
+        if (!checkIsVariable(name, itemType) ) {
+            return false;
         }
         switch (itemType) {
             case SENSOR:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateSensorReference(name);
                     if (name == null) {
                         return false;
@@ -2824,7 +2828,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case TURNOUT:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateTurnoutReference(name);
                     if (name == null) {
                         return false;
@@ -2861,7 +2865,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case LIGHT:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateLightReference(name);
                     if (name == null) {
                         return false;
@@ -2916,7 +2920,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case SIGNALHEAD:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateSignalHeadReference(name);
                     if (name == null) {
                         return false;
@@ -2932,7 +2936,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case SIGNALMAST:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateSignalMastReference(name);
                     if (name == null) {
                         return false;
@@ -2946,7 +2950,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case MEMORY:
-                if (referenceByMemory) {
+                if (_referenceByMemory) {
                     JOptionPane.showMessageDialog(_editActionFrame,
                             Bundle.getMessage("Warn6"),
                             Bundle.getMessage("WarningTitle"), // NOI18N
@@ -2969,7 +2973,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setActionString(actionString);
                 break;
             case LOGIX:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateLogixReference(name);
                     if (name == null) {
                         return false;
@@ -2980,7 +2984,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 _curAction.setDeviceName(name);
                 break;
             case WARRANT:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateWarrantReference(name);
                     if (name == null) {
                         return false;
@@ -3004,7 +3008,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 }
                 break;
             case OBLOCK:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateOBlockReference(name);
                     if (name == null) {
                         return false;
@@ -3018,7 +3022,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 }
                 break;
             case ENTRYEXIT:
-                if (!referenceByMemory) {
+                if (!_referenceByMemory) {
                     name = _parent.validateEntryExitReference(name);
                     if (name == null) {
                         return false;
@@ -3043,7 +3047,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
                 if (actionType == Conditional.Action.PLAY_SOUND) {
                     _curAction.setActionString(_longActionString.getText().trim());
                 } else if (actionType == Conditional.Action.CONTROL_AUDIO) {
-                    if (!referenceByMemory) {
+                    if (!_referenceByMemory) {
                         name = _parent.validateAudioReference(name);
                         if (name == null) {
                             return false;
@@ -3099,7 +3103,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
             case OTHER:
                 actionType = selection;
                 if (actionType == Conditional.Action.TRIGGER_ROUTE) {
-                    if (!referenceByMemory) {
+                    if (!_referenceByMemory) {
                         name = _parent.validateRouteReference(name);
                         if (name == null) {
                             return false;
@@ -3290,7 +3294,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
 
         public int getPreferredWidth(int col) {
             if (col == DESCRIPTION_COLUMN) {
-                return 500;
+                return 400;
             }
             return 10;
         }
@@ -3459,7 +3463,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
 
         public int getPreferredWidth(int col) {
             if (col == DESCRIPTION_COLUMN) {
-                return 680;
+                return 800;
             }
             return 20;
         }

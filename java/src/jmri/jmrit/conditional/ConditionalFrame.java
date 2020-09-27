@@ -19,6 +19,7 @@ import jmri.util.JmriJFrame;
 
 /**
  * Basis for ConditionalEditFrame and ConditionalCopyFrame.
+ * Holds the common features.
  * 
  * @author Pete Cressman Copyright (C) 2020
  */
@@ -33,6 +34,7 @@ public class ConditionalFrame extends JmriJFrame {
     Conditional.AntecedentOperator _logicType = Conditional.AntecedentOperator.ALL_AND;
     String _antecedent = null;
     boolean _trigger;
+    boolean _referenceByMemory;
 
     // ------------------ Common window parts --------------
     JTextField _conditionalUserName;
@@ -131,6 +133,82 @@ public class ConditionalFrame extends JmriJFrame {
         log.debug("cancelConditionalPressed");
         _dataChanged = false;
         _parent.closeConditionalFrame();
+    }
+
+    boolean checkReferenceByMemory(String name) {
+        _referenceByMemory = false;
+        if (name.length() > 0 && name.charAt(0) == '@') {
+            String memName = name.substring(1);
+            if (!_parent.confirmIndirectMemory(memName)) {
+                return false;
+            }
+            memName = _parent.validateMemoryReference(memName);
+            if (memName == null) {
+                return false;
+            }
+            _referenceByMemory = true;
+        }
+        return true;
+    }
+
+    /**
+     * Check that a state variable is not also used as an action
+     * @param name of the state variable
+     * @param itemType item type of the state variable
+     * @return true if action is not an action of if the user OK's
+     * its use as such.
+     */
+    boolean checkIsAction(String name, Conditional.ItemType itemType) {
+        String actionName = null;
+        for (ConditionalAction action : _actionList) {
+            Conditional.ItemType actionType = action.getType().getItemType();
+            if (itemType == actionType) {
+                if (name.equals(action.getDeviceName())) {
+                    actionName = action.getDeviceName();
+                } else {
+                    NamedBean bean  = action.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        actionName = action.getDeviceName();
+                   }
+                }
+            }
+            if (actionName != null) {
+                return _parent.confirmActionAsVariable(actionName, name);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check that an action is not also used as a state variable
+     * @param name of the action
+     * @param itemType item type of the action
+     * @return true if action is not a state variable of if the user OK's
+     * its use as such.
+     */
+    boolean checkIsVariable(String name, Conditional.ItemType itemType) {
+        String varName = null;
+        for (ConditionalVariable var : _variableList) {
+            Conditional.ItemType varType = var.getType().getItemType();
+            if (itemType == varType) {
+                if (name.equals(var.getName())) {
+                    varName = var.getName();
+                } else {
+                    NamedBean bean  = var.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        varName = var.getName();
+                   }
+                }
+            }
+            if (varName != null) {
+                return _parent.confirmActionAsVariable(name, varName);
+            }
+        }
+        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConditionalFrame.class);
