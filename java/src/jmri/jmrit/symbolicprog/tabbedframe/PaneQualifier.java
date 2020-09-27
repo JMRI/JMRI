@@ -8,10 +8,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Qualify a JMRI DecoderPro pane on a numerical relation by enabling/disabling
- * the tab
+ * the tab.
  *
  * @author Bob Jacobsen Copyright (C) 2010, 2014
- *
  */
 public class PaneQualifier extends ArithmeticQualifier {
 

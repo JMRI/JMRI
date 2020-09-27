@@ -176,12 +176,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return _type;
     }
 
-    @Deprecated
-    // saved for scripts
-    public String getType() {
-        return getTypeName();
-    }
-
     protected boolean _lengthChange = false; // used for loco length change
 
     /**

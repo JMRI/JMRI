@@ -40,6 +40,7 @@ public class DecVariableValue extends VariableValue
         CvValue cv = _cvMap.get(getCvNum());
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
+        simplifyMask();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class DecVariableValue extends VariableValue
                 }
             }
         } else {
-            //As the user has left the contents blank, we shall re-instate the old
+            // As the user has left the contents blank, we shall re-instate the old
             // value as, when a write to decoder is performed, the cv remains the same value.
             _value.setText(oldContents);
         }
@@ -115,9 +116,7 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     void updatedTextField() {
-        if (log.isDebugEnabled()) {
-            log.debug("updatedTextField");
-        }
+        log.debug("updatedTextField");
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
         // compute new cv value by combining old and request
@@ -139,9 +138,7 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("actionPerformed");
-        }
+        log.debug("actionPerformed");
         try {
             int newVal = textToValue(_value.getText());
             updatedTextField();
@@ -156,17 +153,13 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     public void focusGained(FocusEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("focusGained");
-        }
+        log.debug("focusGained");
         enterField();
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("focusLost");
-        }
+        log.debug("focusLost");
         exitField();
     }
 
@@ -397,7 +390,7 @@ public class DecVariableValue extends VariableValue
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
             int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
-            setValue(newVal);  // check for duplicate done inside setVal
+            setValue(newVal);  // check for duplicate done inside setValue
         }
     }
 

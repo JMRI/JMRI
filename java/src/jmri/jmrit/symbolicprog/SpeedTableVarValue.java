@@ -142,6 +142,7 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
         }
 
         _defaultColor = (new JSlider()).getBackground();
+        // simplifyMask(); // not required as mask is ignored
     }
 
     /**

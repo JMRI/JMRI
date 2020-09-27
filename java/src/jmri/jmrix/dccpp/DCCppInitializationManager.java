@@ -28,25 +28,19 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
         String base_station = "Unknown";
         String code_build = "Unknown";
+        String version = "Unknown";
 
-        if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
-            base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
-        }
-        if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
-            code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
+        DCCppCommandStation cs = systemMemo.getDCCppTrafficController().getCommandStation();
+        if (cs != null) {
+            base_station = cs.getStationType();
+            code_build = cs.getBuild();
+            version = cs.getVersion();
         }
 
-        /* First, we load things that should work on all systems */
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
 
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
-
-        /* Next we check the command station type, and add the
-           apropriate managers */
-
-        /* If we still don't  know what we have, load everything */
-        log.debug("Command Station is type {} build {}", base_station, code_build);
 
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
         if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
@@ -67,7 +61,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
 
         systemMemo.register();
-        log.debug("DCC++ Initialization Complete");
+        log.info("DCC++ Initialization Complete with station type '{}', version '{}' and build '{}'",base_station, version, code_build);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);

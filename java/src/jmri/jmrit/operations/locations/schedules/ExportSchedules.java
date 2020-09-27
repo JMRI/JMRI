@@ -1,21 +1,20 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
-import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
  * Exports the Operation Schedules into a comma delimitated file (CSV).
@@ -24,17 +23,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ExportSchedules extends XmlFile {
-
-    /**
-     * Does nothing.
-     * 
-     * @param delimiter the new delimiter for the CSV file
-     * @deprecated since 4.19.4 without direct replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // does nothing; maintained to prevent API breakage
-    }
 
     public void writeOperationsScheduleFile() {
         makeBackupFile(defaultOperationsFilename());

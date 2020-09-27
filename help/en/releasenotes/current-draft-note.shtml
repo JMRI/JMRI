@@ -62,7 +62,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -255,9 +256,12 @@
                 <li></li>
             </ul>
 
+        <a id="diy" name="diy"></a>
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>LocoIO programming using the Public_Domain_HDL_LocoIO decoder definition has been significantly
+                  expanded. This update requires JMRI 4.21.2 or later. Because of the included improvements you are
+                  advised to start with new Roster Entries for your LocoIO boards. Help files have been updated.</li>
             </ul>
 
         <h4>QSI</h4>

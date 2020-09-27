@@ -165,9 +165,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 }
                 break;
             case DCCppConstants.STATUS_REPLY:
-                text = "Base Station Status: ";
-                text += "Version: " + getStatusVersionString() + ", ";
-                text += "Build: " + getStatusBuildDateString();
+                text = "Status Reply:";
+                text += "Version: " + getStationType() + ", ";
+                text += "Build: " + getBuildString();
                 break;
             case DCCppConstants.POWER_REPLY:
                 if(isNamedPowerReply()) {
@@ -248,11 +248,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
-                    log.debug("Status Reply: {}", r.toString());
+                    log.debug("ESP32 Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
-                    log.debug("Status Reply: {}", r.toString());
+                    log.debug("Original Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) {
+                    log.debug("DCC-EX Status Reply: {}", r.toString());
+                    r.myRegex = DCCppConstants.STATUS_REPLY_DCCEX_REGEX;
                 } 
                 return(r);
             case DCCppConstants.THROTTLE_REPLY:
@@ -420,7 +423,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(!m.group(idx).equals("0"));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply bool value index too big. idx = {} msg = {}", idx, this.toString());
             return(false);
         }
     }
@@ -430,8 +433,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(m.group(idx));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply string value index too big. idx = {} msg = {}", idx, this.toString());
             return("");
+        }
+    }
+
+    //is there a match at idx?
+    public boolean valueExists(int idx) {
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvs");
+        if ((m != null) && (idx <= m.groupCount())) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -440,7 +453,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(Integer.parseInt(m.group(idx)));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply int value index too big. idx = {} msg = {}", idx, this.toString());
             return(0);
         }
     }
@@ -523,17 +536,36 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    public String getStatusVersionString() {
+    public String getStationType() {
         if (this.isStatusReply()) {
-            return(this.getValueString(1));
+            return(this.getValueString(1)); //1st match in all versions
         } else {
             return("Unknown");
         }
     }
 
-    public String getStatusBuildDateString() {
+    //build value is 3rd match in v3+, 2nd in previous 
+    public String getBuildString() {
         if (this.isStatusReply()) {
-            return(this.getValueString(2));
+            if (this.valueExists(3)) {             
+                return(this.getValueString(3));
+            } else {
+                return(this.getValueString(2));
+            }
+        } else {
+            return("Unknown");
+        }
+    }
+
+    //version is in 2nd match for v3+, does not exist prior 
+    public String getVersion() {
+        if (this.isStatusReply()) {
+            String s = this.getValueString(2);   
+                if (jmri.Version.isCanonicalVersion(s)) {
+                    return s;
+                } else {
+                    return("0.0.0");
+                }
         } else {
             return("Unknown");
         }
@@ -1129,6 +1161,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
+            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
             (this.isVersionReply())
         ) {
             return(true);
