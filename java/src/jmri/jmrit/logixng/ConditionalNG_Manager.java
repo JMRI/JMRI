@@ -97,6 +97,16 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
     public void setLoadDisabled(boolean s);
     
     /**
+     * Set whenether execute() should run on the GUI thread at once or should
+     * dispatch the call until later, for all ConditionalNGs registered in this
+     * manager.
+     * Most tests turns off the delay to simplify the tests.
+     * @param value true if execute() should run on GUI thread delayed,
+     * false otherwise.
+     */
+    public void setRunOnGUIDelayed(boolean value);
+    
+    /**
      * Get a set of classes that implements the DigitalActionBean interface
      * and can be used as the root in the ConditionalNG tree.
      * 

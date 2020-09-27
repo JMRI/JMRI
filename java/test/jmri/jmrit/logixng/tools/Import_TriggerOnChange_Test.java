@@ -128,9 +128,7 @@ public class Import_TriggerOnChange_Test {
         check.runTest("Logix is removed and LogixNG is not activated", false);
         
         // We want the conditionalNGs run immediately during this test
-        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
-            conditionalNG.setRunOnGUIDelayed(false);
-        }
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
         
@@ -235,9 +233,7 @@ public class Import_TriggerOnChange_Test {
         System.err.println("-------------------------------------------");
 */        
         // We want the conditionalNGs run immediately during this test
-        for (ConditionalNG conditionalNG : InstanceManager.getDefault(ConditionalNG_Manager.class).getNamedBeanSet()) {
-            conditionalNG.setRunOnGUIDelayed(false);
-        }
+        InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
         InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
         

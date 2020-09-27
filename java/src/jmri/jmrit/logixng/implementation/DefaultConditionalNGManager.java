@@ -186,6 +186,13 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public void setLoadDisabled(boolean s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void setRunOnGUIDelayed(boolean value) {
+        for (ConditionalNG conditionalNG : getNamedBeanSet()) {
+            conditionalNG.setRunOnGUIDelayed(false);
+        }
+    }
     
     static volatile DefaultConditionalNGManager _instance = null;
 
