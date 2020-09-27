@@ -198,6 +198,15 @@ public class DefaultShutDownManagerTest {
         assertThat(InstanceManager.getNullableDefault(ShutDownManager.class)).isNotNull();
     }
     
+    @Test
+    public void testSimulate() {
+        dsdm.setSimulateShutdown(true);
+        Assert.assertThrows(ShutDownManager.ShutdownException.class, () -> dsdm.shutdown());
+        Assert.assertThrows(ShutDownManager.ShutdownOSException.class, () -> dsdm.shutdownOS());
+        Assert.assertThrows(ShutDownManager.RestartException.class, () -> dsdm.restart());
+        Assert.assertThrows(ShutDownManager.RestartOSException.class, () -> dsdm.restartOS());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

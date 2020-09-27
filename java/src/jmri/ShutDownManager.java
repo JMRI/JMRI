@@ -103,6 +103,23 @@ public interface ShutDownManager extends PropertyChangeProvider {
     public List<Runnable> getRunnables();
 
     /**
+     * Set whenether shutdown should be executed or only simulated.
+     * <P>
+     * This method is used by tests which want to execute the shutdown() methods
+     * without actually shutdown the computer.
+     * @param simulate true if shutdown() and execute() should only simulate
+     * execution. false otherwise.
+     */
+    public void setSimulateShutdown(boolean simulate);
+
+    /**
+     * Get whenether shutdown should be executed or only simulated.
+     * @return true if shutdown() and execute() should only simulate
+     * execution. false otherwise.
+     */
+    public boolean getSimulateShutdown();
+
+    /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Returns false if
      * the shutdown was aborted by the user, in which case the program should
@@ -114,6 +131,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * <p>
      * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
+     * <p>
+     * If shutdown is simulated, this method throws RestartOSException.
      *
      * @return false if any shutdown task aborts restarting the application
      */
@@ -128,6 +147,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * By exiting the program with status 210, the batch file (MS Windows) or
      * shell script (Linux/macOS/UNIX) can catch the exit status and tell the 
      * operating system to restart.
+     * <p>
+     * If shutdown is simulated, this method throws RestartException.
      *
      * @return false if any shutdown task aborts restarting the application
      */
@@ -144,6 +165,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * <p>
      * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
+     * <p>
+     * If shutdown is simulated, this method throws ShutdownOSException.
      *
      * @return false if any shutdown task aborts restarting the application
      */
@@ -157,6 +180,8 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * <p>
      * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
+     * <p>
+     * If shutdown is simulated, this method throws ShutdownException.
      *
      * @return false if any shutdown task aborts the shutdown or if anything
      *         goes wrong.
@@ -171,4 +196,30 @@ public interface ShutDownManager extends PropertyChangeProvider {
      * @return true if shutting down or restarting
      */
     public boolean isShuttingDown();
+    
+    
+    /**
+     * Exception thrown by restartOS() when simulating shutdown.
+     */
+    public static class RestartOSException extends RuntimeException {
+    }
+    
+    /**
+     * Exception thrown by restart() when simulating shutdown.
+     */
+    public static class RestartException extends RuntimeException {
+    }
+    
+    /**
+     * Exception thrown by shutdownOS() when simulating shutdown.
+     */
+    public static class ShutdownOSException extends RuntimeException {
+    }
+    
+    /**
+     * Exception thrown by shutdown() when simulating shutdown.
+     */
+    public static class ShutdownException extends RuntimeException {
+    }
+    
 }

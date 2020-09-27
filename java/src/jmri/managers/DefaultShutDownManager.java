@@ -59,6 +59,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     private final Set<Callable<Boolean>> callables = new HashSet<>();
     private final Set<Runnable> runnables = new HashSet<>();
     protected final Thread shutdownHook;
+    private boolean simulateShutdown = false;
     // use up to 8 threads for parallel tasks
     private static final RequestProcessor RP = new RequestProcessor("On Start/Stop", 8); // NOI18N
     private static final String NO_NULL_TASK = "Shutdown task cannot be null."; // NOI18N
@@ -177,9 +178,26 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public void setSimulateShutdown(boolean simulate) {
+        simulateShutdown = simulate;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean getSimulateShutdown() {
+        return simulateShutdown;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean shutdown() {
+        if (simulateShutdown) throw new ShutdownException();
         return shutdown(0, true);
     }
 
@@ -189,6 +207,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean restart() {
+        if (simulateShutdown) throw new RestartException();
         return shutdown(100, true);
     }
 
@@ -198,6 +217,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean restartOS() {
+        if (simulateShutdown) throw new RestartOSException();
         return shutdown(210, true);
     }
 
@@ -207,6 +227,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
     @SuppressFBWarnings(value = "DM_EXIT", justification = "OK to directly exit standalone main")
     @Override
     public boolean shutdownOS() {
+        if (simulateShutdown) throw new ShutdownOSException();
         return shutdown(200, true);
     }
 
