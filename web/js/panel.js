@@ -4,11 +4,13 @@
  *    click functions.  Sends and listens for changes to panel elements using the JSON WebSocket server.
  *    If no parm passed, page will list links to available panels.
  *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.
- *    There are 3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members
+ *    There are 3 "widgetFamily"s: text, icon and drawn.  States are handled by storing member's
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
+*
+ *  See JMRI Web Server - Panel Servlet Help for an example description of the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  *  TODO: show error dialog while retrying connection
  *  TODO: add Cancel button to return to home page on errors (not found, etc.)
@@ -995,7 +997,7 @@ function processPanelXML($returnedData, $success, $xhr) {
     $("#panel-area").width($gPanel.panelwidth);
     $("#panel-area").height($gPanel.panelheight);
 
-    //insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
+    // insert the canvas layer and set up context used by layouteditor "drawn" objects, set some defaults
     if ($gPanel.paneltype == "LayoutPanel") {
         $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
                 $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
@@ -1926,7 +1928,7 @@ function $store_occupancysensor(id, sensor) {
     }
 }
 
-//perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
+// perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
     if (jmri_logging) log.log("$handleClick()");
 
@@ -3674,7 +3676,7 @@ var $setWidgetState = function($id, $newState, data) {
                         $('div#' + $id).css($widget['css' + $newState]); //set css to new state's css
                     }
                     if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") { // &&
-                     // $widget['shape'] == "symbol") { // Fill div EBR
+                     // $widget['shape'] == "symbol") { // turned off to also use for shape=button EBR
                         $('div#' + $id).css({"background-color": "rgb(" + $widget['rgb' + $newState] + ")"});
                         //$('div#' + $id).css({"background-color": "rgb(" + $newState + "Red" + $widget.red + ","
                         //+ $newState + "Green" + $widget.green + "," + $newState + "Blue" + $widget.blue + ")"});
@@ -4197,14 +4199,14 @@ $(document).ready(function() {
             memory: function(name, value, data) {
             	if (value !== null) {
             		if (value.type == "idTag") {
-            			value = value.data.userName; //for idTags, use the value in userName instead
+            			value = value.data.userName; // for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead
+            			value = value.data.value;    // for reporters, use the value in data instead
             		} else if (value.type == "rosterEntry") {
             			if (value.data.icon !== null) {
-            				value = "<html><img src='" + value.data.icon + "'></html>";    //for rosterEntries, create an image tag instead
+            				value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
             			} else {
-            				value = value.data.name;                        //if roster icon not set, just show the name
+            				value = value.data.name; //if roster icon not set, just show the name
             			}
             		}
             	}
