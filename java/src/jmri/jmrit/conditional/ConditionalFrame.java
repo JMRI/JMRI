@@ -101,23 +101,21 @@ public class ConditionalFrame extends JmriJFrame {
      * @return true if updated
      */
     boolean updateConditionalPressed(ActionEvent e) {
+        log.debug("updateConditionalPressed");
         for (int i = 0; i < _variableList.size(); i++) {
             if (_variableList.get(i).getType() == Conditional.Type.NONE) {
                 _variableList.remove(i);
-//                _variableTableModel.fireTableRowsDeleted(i, i);
             }
         }
         for (int i = 0; i < _actionList.size(); i++) {
             if (_actionList.get(i).getType() == Conditional.Action.NONE) {
                 _actionList.remove(i);
-//                _actionTableModel.fireTableRowsDeleted(i, i);
             }
         }
         if (_parent.updateConditional(_conditionalUserName.getText(), _logicType, _trigger, _antecedent)) {
             if (_dataChanged) {
                 _parent._showReminder = true;
             }
-            cancelConditionalPressed();
             return true;
         }
         return false;

@@ -541,17 +541,13 @@ public class ConditionalListEdit extends ConditionalList {
 
     @Override
     boolean updateConditional(String uName, Conditional.AntecedentOperator logicType, boolean trigger, String antecedent) {
-        if (super.updateConditional(uName, _curLogix, logicType, trigger, antecedent)) { 
-            conditionalTableModel.fireTableRowsInserted(_numConditionals, _numConditionals);
-            _conditionalRowNumber = _numConditionals;
-            _numConditionals++;
-            return true;
-        }
-        return false;
+        log.debug("updateConditional");
+        return super.updateConditional(uName, _curLogix, logicType, trigger, antecedent);
     }
 
     @Override
     void closeConditionalFrame() {
+        log.debug("closeConditionalFrame()");
         conditionalTableModel.fireTableDataChanged();
         super.closeConditionalFrame(_curLogix);
     }

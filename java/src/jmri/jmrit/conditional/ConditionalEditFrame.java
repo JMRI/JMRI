@@ -629,6 +629,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
         if (alreadyEditingActionOrVariable()) {
             return false;
         }
+        log.debug("updateConditionalPressed");
         if (validateAntecedent()) {
             _antecedent = ConditionalEditBase.translateAntecedent(_antecedentField.getText(), true);
             _trigger = _triggerOnChangeButton.isSelected();
@@ -646,6 +647,7 @@ public class ConditionalEditFrame extends ConditionalFrame {
      */
     @Override
     void cancelConditionalPressed() {
+        log.debug("cancelConditionalPressed");
         if (_editActionFrame != null) {
             cleanUpAction();
         }

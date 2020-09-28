@@ -70,6 +70,7 @@ public class ConditionalListCopy extends ConditionalList {
         _conditionalList = new JList<>(_conditionalListModel);
         _conditionalList.setCellRenderer(new ConditionalCellRenderer());
         _conditionalList.setVisibleRowCount(6);
+        _conditionalList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listPanel.add(new JScrollPane(_conditionalList));   
         Border listPanelBorder = BorderFactory.createEtchedBorder();
         Border listPanelTitled = BorderFactory.createTitledBorder(
@@ -150,6 +151,7 @@ public class ConditionalListCopy extends ConditionalList {
         _curConditional.setStateVariables(conditional.getCopyOfStateVariables());
         _curConditional.setAction(conditional.getCopyOfActions());
         _curConditional.setLogicType(conditional.getLogicType(), conditional.getAntecedentExpression());
+        _curConditional.setUserName(Bundle.getMessage("CopyOf", conditional.getDisplayName(DisplayOptions.DISPLAYNAME)));
         if (_fullEditButton.isSelected()) {
             makeEditConditionalWindow(conditional);
         } else {

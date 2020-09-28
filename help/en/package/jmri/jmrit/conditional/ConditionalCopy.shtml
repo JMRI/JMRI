@@ -31,10 +31,12 @@
           menu. The <Strong>Copy Logix</strong> window will be displayed.
           This window is similar to the <Strong>Add Logix</strong> window and
           the same rules must be be followed when creating a new logix.
-          However additionally, you may enter the name of an existing logix and copy 
-          conditionals into it. You may even copy a logix back into the same
+          Additionally, you may enter the name of an existing logix and copy 
+          conditionals into it. You may even copy logix conditionals back into the same
           logix.  Of course the same restrictions about duplicate system and
-          user names of conditionals must be followed.</p>
+          user names of conditionals must be followed. For detailed information
+          about editing conditionals see the
+          <a href="../../../../html/tools/Logix.shtml">Logix main page</a>.</p>
           <p></P>
 
           <h2><a name="CopyList" id="CopyList">The Copy List</a></h2>

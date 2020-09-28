@@ -38,6 +38,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
     // ------------ Methods for Edit Conditional Pane ------------
 
     Conditional makeNewConditional(Logix logix) {
+        log.debug("makeNewConditional(Logix)");
         // make system name for new conditional
         int num = logix.getNumConditionals() + 1;
         Conditional conditional = null;
@@ -76,6 +77,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
 
     boolean updateConditional(String uName, Logix logix, 
             Conditional.AntecedentOperator logicType, boolean trigger, String antecedent) {
+        log.debug("updateConditional");
         
         // Check if the User Name has been changed
         if (!uName.equals(_curConditional.getUserName())) {
@@ -118,6 +120,7 @@ abstract public class ConditionalList extends ConditionalEditBase {
     abstract void closeConditionalFrame();
 
     void closeConditionalFrame(Logix logix) {
+        log.debug("closeConditionalFrame(Logix)");
         try {
             logix.activateLogix();
         } catch (NumberFormatException nfe) {

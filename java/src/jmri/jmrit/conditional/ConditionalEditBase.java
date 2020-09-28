@@ -1072,7 +1072,7 @@ public class ConditionalEditBase {
     boolean confirmActionAsVariable(String actionName, String variableName) {
         int response = JOptionPane.showConfirmDialog(_editLogixFrame,
                 Bundle.getMessage("ConfirmActionAsVariable", actionName, variableName),
-                 Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, // NOI18N
+                Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, // NOI18N
                 JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.NO_OPTION) {
             return false;
