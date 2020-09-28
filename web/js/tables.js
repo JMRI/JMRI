@@ -204,28 +204,27 @@ function hideEmptyColumns(selector) {
 $(document).ready(function () {
 	jmri = $.JMRI({});
 
-	//replace title with the table type
-	document.title = "JMRI Tables: " + $("html").data("table-type") + "s";
-	$("h1.title").text($("html").data("table-type") + "s");
+	// replace title with the table type
+	document.title = "JMRI Tables: " + $("html").data("table-type") + "s"; // TODO I18N using Bundle
+	//$("h1.title").text($("html").data("table-type") + "s"); // TODO I18N (-s for plural won't work in all languages)
 
 	jmri = $.JMRI({
-		//when we get the hello message, send a websocket list request which 
+		// when we get the hello message, send a websocket list request which
 		//  returns the list and sets up change listeners
 		hello: function (data) {
 			jmri.getList($("html").data("table-type")); // request list and updates for the table-type 
 		},
-		//everything calls console()
+		// everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
 //			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
-			if ($.isArray(data)) {  //if its an array, 
-				rebuildTable(data); //  replace the table with the array list			
+			if ($.isArray(data)) {  // if its an array,
+				rebuildTable(data); // replace the table with the array list
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
 			} else if ((data.type) && (!data.type.match("pong|hello|goodbye"))) { //skip control messages
-				replaceRow(data.data.name, data.data); //if single item, update the row
+				replaceRow(data.data.name, data.data); // if single item, update the row
 			}
 		},
 	});
 });
-

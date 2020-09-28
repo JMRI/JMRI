@@ -195,6 +195,14 @@
       include Trains, Conductor and Manifest functions.
       <a href="/help/en/html/web/Operations.shtml">(More details)</a></p>
 
+      <h3><a id="tables" name="tables">Tables</a></h3>
+      <!-- operationsServlet intro -->
+
+      <p>Panels services at <a href=
+      "http://localhost:12080/panel">http://localhost:12080/panel</a>
+      include Turnouts, Sensors, Routes etc.
+      See <a href="TablesServlet.shtml">Tables Servlet</a> for more information.</p>
+
       <h3><a id="frames" href="FrameServlet.shtml" name=
       "frames">Windows</a></h3><!-- frameServlet intro -->
 
