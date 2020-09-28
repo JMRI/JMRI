@@ -21,11 +21,11 @@ public class LocoIOMode {
         this.sv2 = sv2;
         this.mode = mode;
     }
-    private int isOutput;
-    private int opcode;
-    private int sv0;
-    private int sv2;
-    private String mode;
+    private final int isOutput;
+    private final int opcode;
+    private final int sv0;
+    private final int sv2;
+    private final String mode;
 
     public String getMode() {
         return mode;

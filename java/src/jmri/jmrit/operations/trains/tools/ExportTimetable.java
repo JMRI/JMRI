@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +28,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.ColorUtil;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Provides an export to the Timetable feature.
@@ -95,18 +95,6 @@ import org.apache.commons.csv.CSVPrinter;
 public class ExportTimetable extends XmlFile {
 
     public ExportTimetable() {
-        // nothing to do
-    }
-
-    /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
         // nothing to do
     }
 

@@ -1,6 +1,10 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -10,8 +14,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car on the layout
@@ -151,18 +153,6 @@ public class Car extends RollingStock {
      */
     public String getLoadName() {
         return _loadName;
-    }
-
-    @Deprecated
-    // saved for scripts
-    public void setLoad(String load) {
-        setLoadName(load);
-    }
-
-    @Deprecated
-    // saved for scripts
-    public String getLoad() {
-        return getLoadName();
     }
 
     public void setReturnWhenEmptyLoadName(String load) {
@@ -363,12 +353,6 @@ public class Car extends RollingStock {
         }
     }
 
-    @Deprecated
-    // available for old scripts
-    public void setNextDestination(Location destination) {
-        setFinalDestination(destination);
-    }
-
     public Location getFinalDestination() {
         return _finalDestination;
     }
@@ -397,12 +381,6 @@ public class Car extends RollingStock {
             }
             setDirtyAndFirePropertyChange(FINAL_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
         }
-    }
-
-    @Deprecated
-    // available for old scripts
-    public void setNextDestinationTrack(Track track) {
-        setFinalDestinationTrack(track);
     }
 
     public Track getFinalDestinationTrack() {

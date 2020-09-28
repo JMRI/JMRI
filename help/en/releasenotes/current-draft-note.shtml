@@ -62,7 +62,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -197,7 +198,8 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Added "LokSound 5 micro E24 DCC" and "LokSound 5 micro KATO".</li>
+                <li>Replaced incorrectly-named "LokPilot 5 micro DCC Next18" with "LokPilot 5 Micro Next18 DCC".</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -255,9 +257,12 @@
                 <li></li>
             </ul>
 
+        <a id="diy" name="diy"></a>
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>LocoIO programming using the Public_Domain_HDL_LocoIO decoder definition has been significantly
+                  expanded. This update requires JMRI 4.21.2 or later. Because of the included improvements you are
+                  advised to start with new Roster Entries for your LocoIO boards. Help files have been updated.</li>
             </ul>
 
         <h4>QSI</h4>
@@ -545,6 +550,32 @@
         <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
+        </ul>
+
+   <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li>jmri.MultiMeter is split into jmri.Meter.</li>
+            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
+            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
+            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
+            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
+        </ul>
+
+   <h3>AbstractProxyManager</h3>
+        <a id="Proxy" name="Proxy"></a>
+        <ul>
+            <li>AbstractProxyManager can now automatically create system specific managers.</li>
+            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
+			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
+			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
+			already exists. This works as long as the system specific manager doesn't need to have
+			system specific knowledge of the named beans.</li>
+            <li>This means that, for example, the user may create a Jython script that creates a Meter
+			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
+			manager is automatically created.</li>
+			<li>Once a specific connection needs to store specific data about meters, a connection
+			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
         </ul>
 
     <h3>Miscellaneous</h3>

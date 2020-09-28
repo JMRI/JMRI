@@ -160,6 +160,7 @@ public final class DCCppConstants {
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)"; // V1.0 / V1.1
     public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
+    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([0-9\\\\.]*).*G-(.*)"; 
     //public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+\\s?.*):\\s?(?:BUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
     public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";

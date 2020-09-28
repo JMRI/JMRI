@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.jmrix.lenz.XNetProgrammerManager;
 import jmri.jmrix.lenz.XNetStreamPortController;
@@ -7,6 +8,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
 import jmri.util.JUnitUtil;
+
 import org.mockito.Mockito;
 
 import org.junit.Assert;
@@ -44,13 +46,13 @@ public class Z21SystemConnectionMemoTest extends SystemConnectionMemoTestBase<Z2
     }
 
     @Test
-    public void testProvidesMultiMeter() {
-        Assert.assertTrue("Provides MultiMeter", scm.provides(jmri.MultiMeter.class));
-    }
-
-    @Test
-    public void testGetMultiMeter() {
-        Assert.assertNotNull("Get MultiMeter", scm.get(jmri.MultiMeter.class));
+    public void testGetMeters() {
+        Assert.assertNotNull("Get current meter",
+                InstanceManager.getDefault(jmri.MeterManager.class)
+                        .getBySystemName("ZVCommandStationCurrent"));
+        Assert.assertNotNull("Get voltage meter",
+                InstanceManager.getDefault(jmri.MeterManager.class)
+                        .getBySystemName("ZVCommandStationVoltage"));
     }
 
     @Override

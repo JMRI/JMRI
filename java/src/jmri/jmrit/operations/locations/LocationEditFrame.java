@@ -218,7 +218,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             readerSelector = new NamedBeanComboBox<Reporter>(reporterManager);
             readerSelector.setAllowNull(true);
             readerPanel.setLayout(new GridBagLayout());
-            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReporter")));
             addItem(readerPanel, readerSelector, 0, 0);
             readerPanel.setVisible(true);
             if (_location != null) {
