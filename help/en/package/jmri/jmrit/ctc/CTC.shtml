@@ -332,15 +332,7 @@
         <p>
         <strong>Reapplying patterns to existing information:</strong><br>
         Once you've changed this screen, you may want the new pattern to be selectively applied.
-        There are two choices:</p>
-        <ol>
-        <li>Reapply pattern to selected item (a single O.S. Section) or</li>
-        <li>Reapply pattern to selected item (a single O.S. Section) specific sub-system.</li>
-        </ol>
-        <p>To do 1, get to the main screen, and select a single O.S. Section.  The "Reapply patterns to selected item"
-        button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
-        then take the new pattern specified and completely apply it to all of the O.S. Section's sub-systems.
-        To do 2, get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
+        Get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
         the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
         so what follows may not appear.  You will then see a button at the bottom of the sub-system selected, called
         "Reapply patterns - this form ONLY!". Pressing it will immediately show you the results of the new
@@ -349,105 +341,117 @@
 
         <a name="menuCfgGui" id="menuCfgGui"></a>
         <h5>GUI Design</h5>
-<p>
-<strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
-An additional feature of this program is to be able to automatically create a "standard" USS CTC panel
-from the parameters specified elsewhere in this program.  This screen configures the available options.
-See <a href="#ctcFiles">"Files created for support..."</a> for more information and procedures for loading
-them into the JMRI system.
-Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI's Panel Editor
-(or other) to reposition those items.
-<strong>Caveat:</strong>
-If you do change the locations of items on a panel, JMRI does not modify the files created by this program.
-It is not designed to keep track of which file contains which modifications.  Only if you save the panel to a
-completely different panel name will those changes be saved.  You should completely design the CTC panel using
-this program before saving to another name in JMRI, and then begin the final changes to that panel from within JMRI.
-</p>
-<p>
-<strong>Extra blank columns after last defined column to create:</strong>
-Normally, if this is 0, this program creates after the last CTC O.S. Section column specified a "right
-edge of CTC machine panel".  If you want additional blank column(s) between your last CTC O.S. Sections
-column # and the right edge, enter that number here.
-</p>
-<p>
-<strong>Type of CTC panel</strong>:
-Presently only USS is available at this time (10/31/2018).  More may be available in the future.
-</p>
-<p>
-<strong>Vertical size:</strong>
-JMRI provides blank panel items in each of the sizes listed.  Choose one.
-</p>
-<p>
-<strong>Signals on panel</strong>
-All O.S. Section signals - All of the signals specified in the Signal Direction Indicators sub-system are
-created on the screen for you.  This is not a prototype practice, but will help in your development of
-SSL (Simple Signal Logic) and CTC design.  You can see the state of the signals in the field with this.  Signal
-heads or Signal masts will be created per your specification.
-Green/off only (Future feature) - Not available at this time.  The prototype in certain installations have
-a single green indicator indicating all signal(s) at that location are displaying stop (red) (green indicator
-off) or permissive of some form (one or more signals at that location non-stop (non-red)).
-</p>
-<p>
-<strong>Builder Plate</strong>
-Check this if you want the builder plate on the machine face.
-</p>
-<p>
-<strong>Turnouts on panel</strong>
-Normally you want to generate turnouts on the CTC track board, which is the default "Generate checked".  If
-you don"t want this feature, uncheck this.
-</p>
-<p>
-<strong>Fleeting toggle switch (only if fleeting configured)</strong>
-Create the toggle switch on the panel if checked.
-</p>
-<p>
-<strong>Analog clock and clock on toggle</strong>
-Create an analog clock on the panel, along with above it a toggle switch to turn it on / off.
-</p>
-<p>
-<strong>Reload CTC system button</strong>
-Create a button on the screen to perform this.
-</p>
-<p>
-<strong>CTC Debug on toggle</strong>
-Ditto.
-</p>
-<p>
-<strong>Create variety of track pieces</strong> (future feature):
-A variety of track pieces are created on the screen, so that it is easier to "copy / paste" all of these objects as the designer desires.
-</p>
-<p>
-<strong>O.S. Occupancy sensor blinks red when unknown or inconsistent</strong>
-Normally, JMRI will display an "X" or "?" on a sensor when its state is unknown or inconsistent.  By checking
-this checkbox, the program will substitute a blinking indicator for these to draw better attention to them.
-I personally use these for optical sensors on my layout because of the number of sensors on my layout causes
-LocoNet to loose messages at system startup.
-</p>
+
+          <p>
+          <strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
+          An additional feature of this program is to be able to automatically create a "standard" USS CTC panel
+          from the parameters specified elsewhere in this program.  This screen configures the available options.
+          See <a href="#ctcFiles">"Files created for support..."</a> for more information and procedures for loading
+          them into the JMRI system.
+          Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI's Panel Editor
+          (or other) to reposition those items.
+          </p>
+
+          <p>
+          <strong>Extra blank columns after last defined column to create:</strong>
+          Normally, if this is 0, this program creates after the last CTC O.S. Section column specified a "right
+          edge of CTC machine panel".  If you want additional blank column(s) between your last CTC O.S. Sections
+          column # and the right edge, enter that number here.
+          </p>
+
+          <p>
+          <strong>Type of CTC panel</strong>:
+          Presently only USS is available at this time (10/31/2018).  More may be available in the future.
+          </p>
+
+          <p>
+          <strong>Vertical size:</strong>
+          JMRI provides blank panel items in each of the sizes listed.  Choose one.
+          </p>
+
+          <p>
+          <strong>Signals on panel</strong>
+          All O.S. Section signals - All of the signals specified in the Signal Direction Indicators sub-system are
+          created on the screen for you.  This is not a prototype practice, but will help in your development of
+          SSL (Simple Signal Logic) and CTC design.  You can see the state of the signals in the field with this.  Signal
+          heads or Signal masts will be created per your specification.
+          Green/off only (Future feature) - Not available at this time.  The prototype in certain installations have
+          a single green indicator indicating all signal(s) at that location are displaying stop (red) (green indicator
+          off) or permissive of some form (one or more signals at that location non-stop (non-red)).
+          </p>
+
+          <p>
+          <strong>Builder Plate</strong>
+          Check this if you want the builder plate on the machine face.
+          </p>
+
+          <p>
+          <strong>Turnouts on panel</strong>
+          Normally you want to generate turnouts on the CTC track board, which is the default "Generate checked".  If
+          you don"t want this feature, uncheck this.
+          </p>
+
+          <p>
+          <strong>Fleeting toggle switch (only if fleeting configured)</strong>
+          Create the toggle switch on the panel if checked.
+          </p>
+
+          <p>
+          <strong>Analog clock and clock on toggle</strong>
+          Create an analog clock on the panel, along with above it a toggle switch to turn it on / off.
+          </p>
+
+          <p>
+          <strong>Reload CTC system button</strong>
+          Create a button on the screen to perform this.
+          </p>
+
+          <p>
+          <strong>CTC Debug on toggle</strong>
+          Ditto.
+          </p>
+
+          <p>
+          <strong>Create variety of track pieces</strong> (future feature):
+          A variety of track pieces are created on the screen, so that it is easier to "copy / paste" all of these objects as the designer desires.
+          </p>
+
+          <p>
+          <strong>O.S. Occupancy sensor blinks red when unknown or inconsistent</strong>
+          Normally, JMRI will display an "X" or "?" on a sensor when its state is unknown or inconsistent.  By checking
+          this checkbox, the program will substitute a blinking indicator for these to draw better attention to them.
+          I personally use these for optical sensors on my layout because of the number of sensors on my layout causes
+          LocoNet to loose messages at system startup.
+          </p>
 
 
       <a name="osList" id="osList"></a>
       <h3>OS Section List</h3>
 
-<h4>The Prototype CTC machine and this program</h4>
-A prototype CTC machine is organized by columns (my term).  A single CTC machine column can be blank, or contain an O.S.
-section and all of the associated controls.  I begin the numbering of my CTC machine columns with 1.  This column number
-has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. Section.  You can create as many columns
-as you like on the computer screen(s).
-<h4>OS Sections</h4>
-A non-blank column always has an O.S. Section with a Code Button associated with it.  An O.S. Section always has an odd
-switch number and an even signal number, where the signal number is always one more than the switch number.
-Each O.S. Section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
-They do not have to be in ascending sequence, their order has no impact on the program.  However, it is strongly suggested per
-prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
-you entered them out of order, which is described in another section.
+      <h4>The Prototype CTC machine and this program</h4>
+      <p>
+      A prototype CTC machine is organized by columns (my term).  A single CTC machine column can be blank, or contain an O.S.
+      section and all of the associated controls.  I begin the numbering of my CTC machine columns with 1.  This column number
+      has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. Section.  You can create as many columns
+      as you like on the computer screen(s).
+      </p>
+      <h4>OS Sections</h4>
+      <p>
+      A non-blank column always has an O.S. Section with a Code Button associated with it.  An O.S. Section always has an odd
+      switch number and an even signal number, where the signal number is always one more than the switch number.
+      Each O.S. Section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
+      They do not have to be in ascending sequence, their order has no impact on the program.  However, it is strongly suggested per
+      prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
+      you entered them out of order, which is described in another section.
+      </p>
 
-      <h3>Action buttons</h3>
+      <h4>Action buttons</h4>
       <p>
       These are located to the right of the "Presently defined CTC O.S. Sections:" list.<br>
       The "Add..." button is always available.<br>
       Other buttons are dynamically enabled or disabled based upon the selected item.
       </p>
-        <h4>Add...</h4>
+        <h5>Add...</h5>
         <p>
         Allows you to add another column.
         </p>
@@ -456,10 +460,10 @@ you entered them out of order, which is described in another section.
         </p>
         <p>
         The "GUI Generated before" checkbox is used to control which O.S. Sections will be included when using
-        the <strong>Write .xml files for JMRI GUI support</strong> button.  This is useful when a large CTC
+        the <strong>Write .xml file for JMRI GUI support</strong> button.  This is useful when a large CTC
         configuration spans multiple panels.
         </p>
-        <h4>Delete</h4>
+        <h5>Delete</h5>
         <p>
         Allows you to delete a column <strong>if</strong> there are no references to it.
         </p>
@@ -474,35 +478,31 @@ you entered them out of order, which is described in another section.
         "TrL:" Traffic Locking rule references this.  If there is an 'L' appended, it indicates left traffic rules, otherwise right traffic rules.
           "Sw:" Switch Slaved references this.</p>
 
-        <h4>Reapply patterns to selected item</h4>
-        <p>
-        For details, see <a href="menuCfgPat">Patterns</a>
-        </p>
-
-        <h4>Change Switch and Signal etc. #'s</h4>
+        <h5>Change Switch and Signal etc. #'s</h5>
         <p>
         See the Add button details.
         </p>
 
-        <h4>Move Up</h4>
+        <h5>Move Up</h5>
         <p>
         Move the select O.S. section up one row.  This action has no impact on the data.
         </p>
 
-        <h4>Move Down</h4>
+        <h5>Move Down</h5>
         <p>
         Move the select O.S. section down one row.  This action has no impact on the data.
         </p>
 
-        <h4>Write .xml file for JMRI GUI support</h4>
+        <h5>Write .xml file for JMRI GUI support</h5>
         <p>
-        Create a GUIObjects.xml file.
+        Create a <strong>GUIObjects.xml</strong> file.
         </p>
 
       <h3>Edit Buttons</h3>
       <p>At the bottom of the screen are buttons to configure the selected entry in the list.</p>
-      <p>Note: The CTC internal sensor name fields (IS#:XXX) cannot be edited.  To change them, use
-      <strong>Configure &rArr; Patterns</strong> and then use the apply pattern changes <a href="#menuCfgPat">procedure</a> described earlier.</p>
+      <p>Note: For a new column, the CTC internal sensor name fields (IS#:XXX) will be used.  For
+      CTC implementations using a JMRI panel, these are the preferred names.  If a physical CTC
+      panel is being used, use the combo box to select the hardware sensor.</p>
 
         <a name="frmCB" id="frmCB"></a>
         <h4>Code Button</h4>
@@ -512,7 +512,7 @@ you entered them out of order, which is described in another section.
         </p>
 
         <p>
-        <strong>Code Button sensor</strong>: Required.  Enter the sensor associated with this Code Button.  This name
+        <strong>Code Button sensor</strong>: Required.  Select the sensor associated with this Code Button.  This name
         is automatically generated by the patterns system.
         </p>
 
@@ -565,7 +565,7 @@ you entered them out of order, which is described in another section.
         <p>
         <strong>Left to right and Right to left traffic signal lists</strong>: Here you specify each of the
         signal masts or individual signal heads associated in each direction with this O.S. Section.
-        There must be at least one entry in each, <strong>unless</strong> it is a uni-directional O.S. Section.
+        There must be at least one entry in each, <strong>unless</strong> it is a uni-directional (Left or Right) O.S. Section.
         </p>
 
         <a name="frmSIDL" id="frmSIDL"></a>
@@ -1015,7 +1015,7 @@ you entered them out of order, which is described in another section.
     (<strong>PanelPro &rArr; Preferences...</strong> on macOS), select the Start Up tab,
     press <strong>Add &rArr; Add button to main window...</strong>, scroll to "Start CTC Runtime"
     and select it.  To add a button that opens CTC Editor, do the same but instead scroll
-    to "Open CTC Editor" and select it.
+    to "CTC Editor" and select it.
     </p>
 
     <p>

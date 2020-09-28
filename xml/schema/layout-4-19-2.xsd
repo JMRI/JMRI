@@ -378,11 +378,8 @@ signals - obsolete, EMPTY, never used
         </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
 
-<<<<<<< HEAD
-        <xs:element name="ctcdata" type="CtcDataType" minOccurs="0" maxOccurs="1" />
-=======
         <xs:element name="meterFrames"  type="MeterFrameManagerType" minOccurs="0" maxOccurs="unbounded" />
->>>>>>> master
+        <xs:element name="ctcdata" type="CtcDataType" minOccurs="0" maxOccurs="1" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 
