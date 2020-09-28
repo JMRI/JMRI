@@ -285,6 +285,11 @@ public class OlcbAddress {
     
     /**
      * Validates Strings for OpenLCB format.
+     * @param name   the system name to validate.
+     * @param locale the locale for a localized exception.
+     * @param prefix system prefix, eg. MT for OpenLcb turnout.
+     * @return the unchanged value of the name parameter.
+     * @throws jmri.NamedBean.BadSystemNameException if provided name is an invalid format.
      */
     @Nonnull
     public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
