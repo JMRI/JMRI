@@ -34,7 +34,7 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
-        _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSWDL_InternalSensor, "Sensor", _mCodeButtonHandlerData._mSWDL_InternalSensor.getHandleName(), false);   // NOI18N
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
@@ -49,8 +49,8 @@ public class FrmSWDL extends javax.swing.JFrame {
 
         _mSaveAndClose = new javax.swing.JButton();
         _mSWDL_InternalSensorPrompt = new javax.swing.JLabel();
-        _mSWDL_InternalSensor = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        _mSWDL_InternalSensor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgSWDL"));
@@ -72,8 +72,6 @@ public class FrmSWDL extends javax.swing.JFrame {
         _mSWDL_InternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSWDL_InternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSWDLLever"));
 
-        _mSWDL_InternalSensor.setEnabled(false);
-
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -81,6 +79,8 @@ public class FrmSWDL extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        _mSWDL_InternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,22 +92,22 @@ public class FrmSWDL extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(_mSWDL_InternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mSWDL_InternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(_mSWDL_InternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(106, 106, 106)
                         .addComponent(_mSaveAndClose))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jButton2)))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mSWDL_InternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mSWDL_InternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_mSWDL_InternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mSWDL_InternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(_mSaveAndClose)
                 .addGap(37, 37, 37)
@@ -119,6 +119,9 @@ public class FrmSWDL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
+
+        _mCodeButtonHandlerData._mSWDL_InternalSensor = CommonSubs.getNBHSensor((String) _mSWDL_InternalSensor.getSelectedItem(), false);
+
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -132,11 +135,11 @@ public class FrmSWDL extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SWDL(_mProgramProperties, temp);
-        _mSWDL_InternalSensor.setText(temp._mSWDL_InternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSWDL_InternalSensor, "Sensor", temp._mSWDL_InternalSensor.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField _mSWDL_InternalSensor;
+    private javax.swing.JComboBox<String> _mSWDL_InternalSensor;
     private javax.swing.JLabel _mSWDL_InternalSensorPrompt;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JButton jButton2;

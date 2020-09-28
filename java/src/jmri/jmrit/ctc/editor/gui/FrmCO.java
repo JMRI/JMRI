@@ -77,7 +77,8 @@ public class FrmCO extends javax.swing.JFrame {
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         _mSignalHeadSelected = signalHeadSelected;
-        _mCO_CallOnToggleInternalSensor.setText(_mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mCO_CallOnToggleInternalSensor, "Sensor", _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor.getHandleName(), false);   // NOI18N
+
         _mDefaultListModel = new DefaultListModel<>();
         _mGroupingsList.setModel(_mDefaultListModel);
 //  Once you specify a model, then functions like JList.setListData may update the screen, but the model
@@ -135,7 +136,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mSaveAndClose = new javax.swing.JButton();
         _mCO_CallOnToggleInternalSensorPrompt = new javax.swing.JLabel();
-        _mCO_CallOnToggleInternalSensor = new javax.swing.JTextField();
+        _mCO_CallOnToggleInternalSensor = new javax.swing.JComboBox<>();
         _mGroupingsListPrompt = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -193,7 +194,7 @@ public class FrmCO extends javax.swing.JFrame {
 
         _mCO_CallOnToggleInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCOToggleSensor"));
 
-        _mCO_CallOnToggleInternalSensor.setEnabled(false);
+        _mCO_CallOnToggleInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mGroupingsListPrompt.setText(Bundle.getMessage("LabelDlgCOGroupingList"));
 
@@ -330,7 +331,7 @@ public class FrmCO extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(_mCO_CallOnToggleInternalSensorPrompt)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(_mGroupingsListPrompt, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane1)
@@ -395,7 +396,7 @@ public class FrmCO extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(_mGroupingsListPrompt)
-                        .addGap(44, 44, 44)
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mCO_CallOnToggleInternalSensorPrompt)
                             .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -468,6 +469,8 @@ public class FrmCO extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
+
+        _mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor = CommonSubs.getNBHSensor((String) _mCO_CallOnToggleInternalSensor.getSelectedItem(), false);
 
         int size = _mDefaultListModel.getSize();
         _mCodeButtonHandlerData._mCO_GroupingsList.clear();
@@ -615,7 +618,7 @@ public class FrmCO extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CallOn(_mProgramProperties, temp);
-        _mCO_CallOnToggleInternalSensor.setText(temp._mCO_CallOnToggleInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mCO_CallOnToggleInternalSensor, "Sensor", temp._mCO_CallOnToggleInternalSensor.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mGroupingsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mGroupingsListValueChanged
@@ -662,7 +665,7 @@ public class FrmCO extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mAddNew;
-    private javax.swing.JTextField _mCO_CallOnToggleInternalSensor;
+    private javax.swing.JComboBox<String> _mCO_CallOnToggleInternalSensor;
     private javax.swing.JLabel _mCO_CallOnToggleInternalSensorPrompt;
     private javax.swing.JComboBox<String> _mCalledOnExternalSensor;
     private javax.swing.JButton _mCancel;

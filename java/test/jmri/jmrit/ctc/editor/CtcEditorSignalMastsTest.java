@@ -241,16 +241,6 @@ public class CtcEditorSignalMastsTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
         new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).doClick();
 
-        // ButtonReapplyItem -- Not a frame, use dialog mode
-        jlo.clickOnItem(0, 1);
-        Thread btnApply = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
-        JButtonOperator jbApply = new JButtonOperator(_jfo, Bundle.getMessage("ButtonReapplyItem"));
-        jbApply.doClick();
-        if (PAUSE) JUnitUtil.waitFor(2000);
-        JUnitUtil.waitFor(() -> {
-            return !(btnApply.isAlive());
-        }, "btnApply finished");  // NOI18N
-
         // ButtonXmlFiles -- No GUI object
         JButtonOperator jbXMLFiles = new JButtonOperator(_jfo, Bundle.getMessage("ButtonXmlFiles"));
         jbXMLFiles.doClick();
@@ -453,11 +443,11 @@ public class CtcEditorSignalMastsTest {
         if (PAUSE) JUnitUtil.waitFor(2000);
 
         // Select signal mast
-        JComboBoxOperator jcbo = new JComboBoxOperator(rules, 0);
+        JComboBoxOperator jcbo = new JComboBoxOperator(rules, 1);
         jcbo.setSelectedItem("SM-Alpha-Left-B");
 
         // Select block
-        jcbo = new JComboBoxOperator(rules, 10);
+        jcbo = new JComboBoxOperator(rules, 11);
         jcbo.setSelectedItem("B-Right-Approach");
 
         // Add this...

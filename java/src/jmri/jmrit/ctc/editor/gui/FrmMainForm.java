@@ -123,7 +123,6 @@ public class FrmMainForm extends JFrame {
         _mEdit_IL_Prompt = new javax.swing.JLabel();
         _mIL_Enabled = new javax.swing.JCheckBox();
         _mEdit_IL = new javax.swing.JButton();
-        reapplyPatternsButton = new javax.swing.JButton();
         _mEdit_TRL_Prompt = new javax.swing.JLabel();
         _mTRL_Enabled = new javax.swing.JCheckBox();
         _mEdit_TRL = new javax.swing.JButton();
@@ -312,14 +311,6 @@ public class FrmMainForm extends JFrame {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEdit_ILActionPerformed(evt);
-            }
-        });
-
-        reapplyPatternsButton.setText(Bundle.getMessage("ButtonReapplyItem"));
-        reapplyPatternsButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                reapplyPatternsButtonActionPerformed(evt);
             }
         });
 
@@ -546,6 +537,9 @@ public class FrmMainForm extends JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mButtonWriteXMLFiles, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(12, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(4, 4, 4)
@@ -554,14 +548,9 @@ public class FrmMainForm extends JFrame {
                                             .addComponent(deleteButton)))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(_mMoveUp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(_mMoveDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(changeNumbersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
-                                    .addComponent(_mButtonWriteXMLFiles, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(reapplyPatternsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addComponent(_mMoveDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(changeNumbersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -569,21 +558,19 @@ public class FrmMainForm extends JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addButton)
                         .addGap(18, 18, 18)
                         .addComponent(deleteButton)
                         .addGap(18, 18, 18)
-                        .addComponent(reapplyPatternsButton)
-                        .addGap(18, 18, 18)
                         .addComponent(changeNumbersButton)
                         .addGap(18, 18, 18)
                         .addComponent(_mMoveUp)
                         .addGap(18, 18, 18)
                         .addComponent(_mMoveDown)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(_mButtonWriteXMLFiles)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -843,15 +830,6 @@ public class FrmMainForm extends JFrame {
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_ILActionPerformed
 
-    private void reapplyPatternsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reapplyPatternsButtonActionPerformed
-        if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("FrmMainFormConfirm"),
-                Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {  // NOI18N
-            int index = _mColumns.getEntrySelectedIndex();
-            CodeButtonHandlerData codeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerData(index);
-            CodeButtonHandlerDataRoutines.updateExistingCodeButtonHandlerDataWithSubstitutedData(_mProgramProperties, codeButtonHandlerData);
-        }
-    }//GEN-LAST:event_reapplyPatternsButtonActionPerformed
-
     private void _mTRL_EnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTRL_EnabledActionPerformed
         _mColumns.trl_EnabledClicked(_mTRL_Enabled.isSelected());
     }//GEN-LAST:event__mTRL_EnabledActionPerformed
@@ -923,7 +901,7 @@ public class FrmMainForm extends JFrame {
         _mDefaultListModel = new DefaultListModel<>();
         _mPresentlyDefinedColumns.setModel(_mDefaultListModel);
         _mColumns = new Columns(_mCTCSerialData, _mCheckJMRIObject, _mDefaultListModel,
-                                deleteButton, reapplyPatternsButton, changeNumbersButton,
+                                deleteButton, changeNumbersButton,
                                 _mMoveUp, _mMoveDown,
                                 _mEdit_CB_Prompt, _mCB_EditAlwaysEnabled, _mEdit_CB,
                                 _mEdit_SIDI_Prompt, _mSIDI_Enabled, _mEdit_SIDI,
@@ -1128,6 +1106,5 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton reapplyPatternsButton;
     // End of variables declaration//GEN-END:variables
 }

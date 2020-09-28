@@ -87,9 +87,9 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mSignalHeadSelected = signalHeadSelected;
         CommonSubs.setMillisecondsEdit(_mSIDI_CodingAndResponseTime);
         CommonSubs.setMillisecondsEdit(_mSIDI_TimeLockingInterval);
-        _mSIDI_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName());
-        _mSIDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName());
-        _mSIDI_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_LeftInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDI_LeftInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_NormalInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDI_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_RightInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDI_RightInternalSensor.getHandleName(), false);   // NOI18N
         _mSIDI_CodingAndResponseTime.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds));
         _mSIDI_TimeLockingInterval.setText(Integer.toString(_mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds));
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mSIDI_TableOfLeftToRightTrafficExternalSignalNames.getModel();
@@ -175,7 +175,6 @@ public class FrmSIDI extends javax.swing.JFrame {
                     ).size() != 0;
 
 //  Checks:
-        CommonSubs.checkJTextFieldNotEmpty(_mSIDI_NormalInternalSensor, _mSIDI_NormalInternalSensorPrompt, errors);
 
         if (leftTrafficDirection && !entriesInRightLeftTrafficSignals) errors.add(Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn", Bundle.getMessage("LabelSIDILeftTraffic"), _mTableOfRightToLeftTrafficSignalNamesPrompt.getText()));    // NOI18N
         if (rightTrafficDirection && !entriesInLeftRightTrafficSignals) errors.add(Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn", Bundle.getMessage("LabelSIDIRightTraffic"), _mTableOfLeftToRightTrafficSignalNamesPrompt.getText()));
@@ -217,11 +216,11 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mSIDI_TrafficDirection = new javax.swing.ButtonGroup();
         panelLeftColumn = new javax.swing.JPanel();
         _mSIDI_LeftInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDI_LeftInternalSensor = new javax.swing.JTextField();
+        _mSIDI_LeftInternalSensor = new javax.swing.JComboBox<>();
         _mSIDI_NormalInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDI_NormalInternalSensor = new javax.swing.JTextField();
+        _mSIDI_NormalInternalSensor = new javax.swing.JComboBox<>();
         _mSIDI_RightInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDI_RightInternalSensor = new javax.swing.JTextField();
+        _mSIDI_RightInternalSensor = new javax.swing.JComboBox<>();
         _mSIDI_LableCodeTimeLabel = new javax.swing.JLabel();
         _mSIDI_CodingAndResponseTime = new javax.swing.JFormattedTextField();
         _mSIDI_LockTimeLabel = new javax.swing.JLabel();
@@ -257,17 +256,17 @@ public class FrmSIDI extends javax.swing.JFrame {
         _mSIDI_LeftInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDI_LeftInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDILeft"));
 
-        _mSIDI_LeftInternalSensor.setEnabled(false);
+        _mSIDI_LeftInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mSIDI_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDI_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDINormal"));
 
-        _mSIDI_NormalInternalSensor.setEnabled(false);
+        _mSIDI_NormalInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mSIDI_RightInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDI_RightInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDIRight"));
 
-        _mSIDI_RightInternalSensor.setEnabled(false);
+        _mSIDI_RightInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mSIDI_LableCodeTimeLabel.setText(Bundle.getMessage("LabelSIDICodeTime"));
 
@@ -369,9 +368,9 @@ public class FrmSIDI extends javax.swing.JFrame {
                             .addComponent(_mSIDI_RightInternalSensorPrompt))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLeftColumnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(_mSIDI_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSIDI_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSIDI_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSIDI_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSIDI_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSIDI_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(_mSIDI_CodingAndResponseTime, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(_mSIDI_TimeLockingInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24))
@@ -379,7 +378,7 @@ public class FrmSIDI extends javax.swing.JFrame {
         panelLeftColumnLayout.setVerticalGroup(
             panelLeftColumnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLeftColumnLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
+                .addGap(6, 6, 6)
                 .addGroup(panelLeftColumnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mSIDI_LeftInternalSensorPrompt)
                     .addComponent(_mSIDI_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -761,6 +760,10 @@ public class FrmSIDI extends javax.swing.JFrame {
             return; // Do not allow exit or transfer of data.
         }
 
+        _mCodeButtonHandlerData._mSIDI_LeftInternalSensor = CommonSubs.getNBHSensor((String) _mSIDI_LeftInternalSensor.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mSIDI_NormalInternalSensor = CommonSubs.getNBHSensor((String) _mSIDI_NormalInternalSensor.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mSIDI_RightInternalSensor = CommonSubs.getNBHSensor((String) _mSIDI_RightInternalSensor.getSelectedItem(), false);
+
         _mCodeButtonHandlerData._mSIDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingAndResponseTime);
         _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_TimeLockingInterval);
         _mCodeButtonHandlerData._mSIDI_TrafficDirection = _mSIDI_TrafficDirectionTemp;
@@ -785,9 +788,9 @@ public class FrmSIDI extends javax.swing.JFrame {
     private void _mSIDI_ReapplyPatternsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSIDI_ReapplyPatternsActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SIDI(_mProgramProperties, temp);
-        _mSIDI_LeftInternalSensor.setText(temp._mSIDI_LeftInternalSensor.getHandleName());
-        _mSIDI_NormalInternalSensor.setText(temp._mSIDI_NormalInternalSensor.getHandleName());
-        _mSIDI_RightInternalSensor.setText(temp._mSIDI_RightInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_LeftInternalSensor, "Sensor", temp._mSIDI_LeftInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_NormalInternalSensor, "Sensor", temp._mSIDI_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDI_RightInternalSensor, "Sensor", temp._mSIDI_RightInternalSensor.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event__mSIDI_ReapplyPatternsActionPerformed
 
     private void _mSIDI_LeftTrafficButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSIDI_LeftTrafficButtonActionPerformed
@@ -826,15 +829,15 @@ public class FrmSIDI extends javax.swing.JFrame {
     private javax.swing.JButton _mSIDI_CompactListsButton;
     private javax.swing.JLabel _mSIDI_CompactListsLabel;
     private javax.swing.JLabel _mSIDI_LableCodeTimeLabel;
-    private javax.swing.JTextField _mSIDI_LeftInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDI_LeftInternalSensor;
     private javax.swing.JLabel _mSIDI_LeftInternalSensorPrompt;
     private javax.swing.JPanel _mSIDI_LeftRightSignals;
     private javax.swing.JRadioButton _mSIDI_LeftTrafficButton;
     private javax.swing.JLabel _mSIDI_LockTimeLabel;
-    private javax.swing.JTextField _mSIDI_NormalInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDI_NormalInternalSensor;
     private javax.swing.JLabel _mSIDI_NormalInternalSensorPrompt;
     private javax.swing.JButton _mSIDI_ReapplyPatterns;
-    private javax.swing.JTextField _mSIDI_RightInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDI_RightInternalSensor;
     private javax.swing.JLabel _mSIDI_RightInternalSensorPrompt;
     private javax.swing.JPanel _mSIDI_RightLeftSignals;
     private javax.swing.JRadioButton _mSIDI_RightTrafficButton;

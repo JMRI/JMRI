@@ -37,7 +37,6 @@ public class Columns {
     private final CheckJMRIObject _mCheckJMRIObject;
     private final DefaultListModel<String> _mDefaultListModel;
     private final JButton _mDeleteButton;
-    private final JButton _mReapplyNumbersButton;
     private final JButton _mChangeNumbersButton;
     private final JButton _mMoveUpButton;
     private final JButton _mMoveDownButton;
@@ -72,7 +71,7 @@ public class Columns {
     private CodeButtonHandlerData _mSelectedCodeButtonHandlerData;
 
     public Columns( CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject, DefaultListModel<String> defaultListModel,
-                    JButton deleteButton, JButton reapplyNumbersButton, JButton changeNumbersButton,
+                    JButton deleteButton, JButton changeNumbersButton,
                     JButton moveUpButton, JButton moveDownButton,
                     JLabel edit_CB_Prompt, JLabel cb_EditAlwaysEnabled, JButton edit_CB,
                     JLabel edit_SIDI_Prompt, JCheckBox sidi_Enabled,  JButton edit_SIDI,
@@ -87,7 +86,6 @@ public class Columns {
         _mCheckJMRIObject = checkJMRIObject;
         _mDefaultListModel = defaultListModel;
         _mDeleteButton = deleteButton;
-        _mReapplyNumbersButton = reapplyNumbersButton;
         _mChangeNumbersButton = changeNumbersButton;
         _mMoveUpButton = moveUpButton;
         _mMoveDownButton = moveDownButton;
@@ -129,7 +127,6 @@ public class Columns {
             _mDefaultListModel.addElement(constructSingleColumnDisplayLine(codeButtonHandlerData));
         });
         _mDeleteButton.setEnabled(false);    // None selected.
-        _mReapplyNumbersButton.setEnabled(false);
         _mChangeNumbersButton.setEnabled(false);
         _mMoveUpButton.setEnabled(false);
         _mMoveDownButton.setEnabled(false);
@@ -205,7 +202,6 @@ public class Columns {
     public void setEntrySelected(int selectedIndex) {
         if (selectedIndex >= 0) {
             _mDeleteButton.setEnabled(true);
-            _mReapplyNumbersButton.setEnabled(true);
             _mChangeNumbersButton.setEnabled(true);
             _mMoveUpButton.setEnabled(selectedIndex > 0);
             _mMoveDownButton.setEnabled(selectedIndex < _mCTCSerialData.getCodeButtonHandlerDataSize() - 1);

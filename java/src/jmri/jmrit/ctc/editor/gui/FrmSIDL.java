@@ -34,9 +34,9 @@ public class FrmSIDL extends javax.swing.JFrame {
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
-        _mSIDL_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName());
-        _mSIDL_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName());
-        _mSIDL_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_LeftInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDL_LeftInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_NormalInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDL_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_RightInternalSensor, "Sensor", _mCodeButtonHandlerData._mSIDL_RightInternalSensor.getHandleName(), false);   // NOI18N
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
@@ -51,11 +51,11 @@ public class FrmSIDL extends javax.swing.JFrame {
 
         _mSaveAndClose = new javax.swing.JButton();
         _mSIDL_LeftInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDL_LeftInternalSensor = new javax.swing.JTextField();
+        _mSIDL_LeftInternalSensor = new javax.swing.JComboBox<>();
         _mSIDL_NormalInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDL_NormalInternalSensor = new javax.swing.JTextField();
+        _mSIDL_NormalInternalSensor = new javax.swing.JComboBox<>();
         _mSIDL_RightInternalSensorPrompt = new javax.swing.JLabel();
-        _mSIDL_RightInternalSensor = new javax.swing.JTextField();
+        _mSIDL_RightInternalSensor = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -78,21 +78,20 @@ public class FrmSIDL extends javax.swing.JFrame {
         _mSIDL_LeftInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_LeftInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLLeft"));
 
-        _mSIDL_LeftInternalSensor.setEnabled(false);
+        _mSIDL_LeftInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mSIDL_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLNormal"));
 
-        _mSIDL_NormalInternalSensor.setEnabled(false);
+        _mSIDL_NormalInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mSIDL_RightInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mSIDL_RightInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSIDLRight"));
 
-        _mSIDL_RightInternalSensor.setEnabled(false);
+        _mSIDL_RightInternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
-            @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
@@ -112,16 +111,16 @@ public class FrmSIDL extends javax.swing.JFrame {
                             .addComponent(_mSIDL_NormalInternalSensorPrompt, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(_mSIDL_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSIDL_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSIDL_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(63, Short.MAX_VALUE))
+                            .addComponent(_mSIDL_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSIDL_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(_mSIDL_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addGap(28, 28, 28))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(100, Short.MAX_VALUE)
                 .addComponent(_mSaveAndClose)
                 .addGap(72, 72, 72))
         );
@@ -134,13 +133,13 @@ public class FrmSIDL extends javax.swing.JFrame {
                     .addComponent(_mSIDL_LeftInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mSIDL_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mSIDL_NormalInternalSensorPrompt))
+                    .addComponent(_mSIDL_NormalInternalSensorPrompt)
+                    .addComponent(_mSIDL_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mSIDL_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mSIDL_RightInternalSensorPrompt))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(_mSIDL_RightInternalSensorPrompt)
+                    .addComponent(_mSIDL_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(_mSaveAndClose)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
@@ -151,6 +150,10 @@ public class FrmSIDL extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
+        _mCodeButtonHandlerData._mSIDL_LeftInternalSensor = CommonSubs.getNBHSensor((String) _mSIDL_LeftInternalSensor.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mSIDL_NormalInternalSensor = CommonSubs.getNBHSensor((String) _mSIDL_NormalInternalSensor.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mSIDL_RightInternalSensor = CommonSubs.getNBHSensor((String) _mSIDL_RightInternalSensor.getSelectedItem(), false);
+
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -164,17 +167,17 @@ public class FrmSIDL extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_SIDL(_mProgramProperties, temp);
-        _mSIDL_LeftInternalSensor.setText(temp._mSIDL_LeftInternalSensor.getHandleName());
-        _mSIDL_NormalInternalSensor.setText(temp._mSIDL_NormalInternalSensor.getHandleName());
-        _mSIDL_RightInternalSensor.setText(temp._mSIDL_RightInternalSensor.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_LeftInternalSensor, "Sensor", temp._mSIDL_LeftInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_NormalInternalSensor, "Sensor", temp._mSIDL_NormalInternalSensor.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mSIDL_RightInternalSensor, "Sensor", temp._mSIDL_RightInternalSensor.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField _mSIDL_LeftInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDL_LeftInternalSensor;
     private javax.swing.JLabel _mSIDL_LeftInternalSensorPrompt;
-    private javax.swing.JTextField _mSIDL_NormalInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDL_NormalInternalSensor;
     private javax.swing.JLabel _mSIDL_NormalInternalSensorPrompt;
-    private javax.swing.JTextField _mSIDL_RightInternalSensor;
+    private javax.swing.JComboBox<String> _mSIDL_RightInternalSensor;
     private javax.swing.JLabel _mSIDL_RightInternalSensorPrompt;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JButton jButton2;

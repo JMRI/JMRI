@@ -113,9 +113,9 @@ public class FrmTUL extends javax.swing.JFrame {
         _mCheckJMRIObject = checkJMRIObject;
         CommonSubs.numberButtonGroup(_mTUL_LockImplementation);
         CommonSubs.setButtonSelected(_mTUL_LockImplementation, _mCodeButtonHandlerData._mTUL_LockImplementation.getInt());
-        _mTUL_DispatcherInternalSensorLockToggle.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorLockToggle, "Sensor", _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorUnlockedIndicator, "Sensor", _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName(), false);   // NOI18N
         _mTUL_ExternalTurnoutFeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent);
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName());
         _mTUL_NoDispatcherControlOfSwitch.setSelected(_mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch);
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setSelected(_mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed);
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
@@ -158,12 +158,12 @@ public class FrmTUL extends javax.swing.JFrame {
         _mTUL_LockImplementation = new javax.swing.ButtonGroup();
         _mSaveAndClose = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        _mTUL_DispatcherInternalSensorLockToggle = new javax.swing.JTextField();
+        _mTUL_DispatcherInternalSensorLockToggle = new javax.swing.JComboBox<>();
         _mTUL_ExternalTurnoutFeedbackDifferent = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
         _mTUL_ActualTurnoutPrompt = new javax.swing.JLabel();
-        _mTUL_DispatcherInternalSensorUnlockedIndicator = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        _mTUL_DispatcherInternalSensorUnlockedIndicator = new javax.swing.JComboBox<>();
         _mTUL_NoDispatcherControlOfSwitch = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed = new javax.swing.JCheckBox();
@@ -203,7 +203,7 @@ public class FrmTUL extends javax.swing.JFrame {
 
         jLabel2.setText(Bundle.getMessage("LabelDlgTULSensor"));
 
-        _mTUL_DispatcherInternalSensorLockToggle.setEnabled(false);
+        _mTUL_DispatcherInternalSensorLockToggle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mTUL_ExternalTurnoutFeedbackDifferent.setText(" ");
 
@@ -211,9 +211,9 @@ public class FrmTUL extends javax.swing.JFrame {
 
         _mTUL_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelDlgTULToName"));
 
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setEnabled(false);
-
         jLabel6.setText(Bundle.getMessage("LabelDlgTULInd"));
+
+        _mTUL_DispatcherInternalSensorUnlockedIndicator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mTUL_NoDispatcherControlOfSwitch.setText(" ");
 
@@ -313,7 +313,6 @@ public class FrmTUL extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(_mSaveAndClose)
-                    .addComponent(_mTUL_DispatcherInternalSensorLockToggle, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(_mTUL_NoDispatcherControlOfSwitch)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -341,9 +340,11 @@ public class FrmTUL extends javax.swing.JFrame {
                             .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent)
                             .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent)
                             .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton2)
-                        .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(100, 100, 100)
+                        .addComponent(jButton2))
+                    .addComponent(_mTUL_DispatcherInternalSensorLockToggle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -353,7 +354,7 @@ public class FrmTUL extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(_mTUL_DispatcherInternalSensorLockToggle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mTUL_ActualTurnoutPrompt)
                     .addComponent(_mTUL_ExternalTurnoutFeedbackDifferent)
@@ -372,11 +373,11 @@ public class FrmTUL extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent)
                     .addComponent(_mTUL_AdditionalExternalTurnout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(22, 22, 22)
+                    .addComponent(jLabel6)
+                    .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mTUL_NoDispatcherControlOfSwitch)
                     .addComponent(jLabel7)
@@ -397,7 +398,7 @@ public class FrmTUL extends javax.swing.JFrame {
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addComponent(_mSaveAndClose)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         pack();
@@ -407,6 +408,9 @@ public class FrmTUL extends javax.swing.JFrame {
         if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
             return; // Do not allow exit or transfer of data.
         }
+
+        _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle = CommonSubs.getNBHSensor((String) _mTUL_DispatcherInternalSensorLockToggle.getSelectedItem(), false);
+        _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator = CommonSubs.getNBHSensor((String) _mTUL_DispatcherInternalSensorUnlockedIndicator.getSelectedItem(), false);
 
         // External turnout
         NBHTurnout newTurnout = CommonSubs.getNBHTurnout(_mCurrentExternalTurnout, _mTUL_ExternalTurnoutFeedbackDifferent.isSelected());
@@ -446,13 +450,13 @@ public class FrmTUL extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CodeButtonHandlerData temp = _mCodeButtonHandlerData;
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_TUL(_mProgramProperties, temp);
-        _mTUL_DispatcherInternalSensorLockToggle.setText(temp._mTUL_DispatcherInternalSensorLockToggle.getHandleName());
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(temp._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName());
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorLockToggle, "Sensor", temp._mTUL_DispatcherInternalSensorLockToggle.getHandleName(), false);   // NOI18N
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorUnlockedIndicator, "Sensor", temp._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        _mTUL_DispatcherInternalSensorLockToggle.setText("");
-        _mTUL_DispatcherInternalSensorUnlockedIndicator.setText("");
+//         _mTUL_DispatcherInternalSensorLockToggle.setText("");
+//         _mTUL_DispatcherInternalSensorUnlockedIndicator.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void _mTUL_ExternalTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_ExternalTurnoutActionPerformed
@@ -567,8 +571,8 @@ public class FrmTUL extends javax.swing.JFrame {
     private javax.swing.JCheckBox _mTUL_AdditionalExternalTurnout2FeedbackDifferent;
     private javax.swing.JComboBox<String> _mTUL_AdditionalExternalTurnout3;
     private javax.swing.JCheckBox _mTUL_AdditionalExternalTurnout3FeedbackDifferent;
-    private javax.swing.JTextField _mTUL_DispatcherInternalSensorLockToggle;
-    private javax.swing.JTextField _mTUL_DispatcherInternalSensorUnlockedIndicator;
+    private javax.swing.JComboBox<String> _mTUL_DispatcherInternalSensorLockToggle;
+    private javax.swing.JComboBox<String> _mTUL_DispatcherInternalSensorUnlockedIndicator;
     private javax.swing.JComboBox<String> _mTUL_ExternalTurnout;
     private javax.swing.JCheckBox _mTUL_ExternalTurnoutFeedbackDifferent;
     private javax.swing.ButtonGroup _mTUL_LockImplementation;

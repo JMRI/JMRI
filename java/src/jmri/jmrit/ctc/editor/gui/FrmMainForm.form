@@ -250,6 +250,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
+                              <Component id="_mButtonWriteXMLFiles" min="-2" pref="291" max="-2" attributes="0"/>
+                              <EmptySpace pref="12" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -262,16 +266,9 @@
                                       <Component id="_mMoveUp" alignment="0" max="32767" attributes="0"/>
                                       <Component id="_mMoveDown" alignment="0" max="32767" attributes="0"/>
                                   </Group>
+                                  <Component id="changeNumbersButton" alignment="0" min="-2" pref="291" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="changeNumbersButton" alignment="0" pref="291" max="32767" attributes="0"/>
-                                  <Component id="_mButtonWriteXMLFiles" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="reapplyPatternsButton" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -285,21 +282,19 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="334" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="addButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="deleteButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="reapplyPatternsButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="changeNumbersButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="_mMoveUp" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="_mMoveDown" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="_mButtonWriteXMLFiles" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -590,16 +585,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_mEdit_ILActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="reapplyPatternsButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;ButtonReapplyItem&quot;)" type="code"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reapplyPatternsButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="_mEdit_TRL_Prompt">
