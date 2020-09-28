@@ -269,6 +269,52 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     /**
      * Convenience implementation of
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * that verifies name has has at least 1 number in the String.
+     * <p>
+     * 
+     *
+     * @param name   the system name to validate
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws BadSystemNameException if provided name is an invalid format
+     */
+    @Nonnull
+    public default String validateTrimmedMin1NumberSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
+        name = validateTrimmedSystemNameFormat(name, locale);
+        if (!name.matches(".*\\d+.*")) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameMin1Number",name);
+        }
+        return name;
+    }
+    
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * that verifies name String is purely numeric.
+     * <p>
+     * 
+     *
+     * @param name   the system name to validate
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws BadSystemNameException if provided name is an invalid format
+     */
+    public default String validateSystemNameFormatOnlyNumeric(@Nonnull String name, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, locale);
+        try {
+            Integer.parseInt(name.substring(getSystemNamePrefix().length()));
+        }
+        catch (NumberFormatException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger",name,getSystemNamePrefix());
+        }
+        return name;
+    }
+    
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * that verifies name has no invalid characters in the string.
      * <p>
      * Also checks validateSystemNamePrefix(name,locale);
