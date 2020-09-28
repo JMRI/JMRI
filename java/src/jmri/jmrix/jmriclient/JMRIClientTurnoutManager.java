@@ -56,14 +56,7 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
-        super.validateSystemNameFormat(name,locale);
-        try {
-            Integer.parseInt(name.substring(getSystemNamePrefix().length()));
-        }
-        catch (NumberFormatException ex) {
-            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger",name,getSystemNamePrefix());
-        }
-        return name;
+        return validateSystemNameFormatOnlyNumeric(name,locale);
     }
 
 }
