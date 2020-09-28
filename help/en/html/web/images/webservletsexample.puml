@@ -1,0 +1,77 @@
+@startuml
+box /jmri/
+participant Sensor
+end box
+box /jmri/jmrit/display/panels/xEditor/ #LightBlue
+participant Switchboard
+participant BeanSwitch
+participant SwitchboardXml
+participant BeanSwitchXml
+end box
+box /jmri/web/servlet/panel/
+participant panelServlet.java
+end box
+box "Web Server /web/" #LightBlue
+participant JSONSocketSrv
+participant panel.js
+participant jQuery
+participant panel.css
+end box
+box "Browser" #White
+participant browser
+participant div
+participant Mouse
+end box
+actor User
+
+activate Sensor
+activate Switchboard
+activate BeanSwitch
+activate browser
+activate panel.js
+
+== A. Initial Web Panel Display ==
+User -> Mouse: click
+Mouse -> browser: mouseUp()
+browser -> jQuery: "Show Panel"
+activate jQuery
+jQuery -> panel.js: getPanel()
+panel.js -> panelServlet.java: processPanelXml
+activate panelServlet.java
+panelServlet.java -> SwitchboardXml: store()
+activate SwitchboardXml
+SwitchboardXml -> Switchboard: editor.getBgColor()
+Switchboard -> SwitchboardXml: BgColor="Red"
+SwitchboardXml -> panel.js: XmlDataStream
+deactivate SwitchboardXml
+panelServlet.java -> BeanSwitchXml: store()
+deactivate panelServlet.java
+activate BeanSwitchXml
+BeanSwitchXml -> BeanSwitch: bs.getLabel()
+BeanSwitch -> BeanSwitchXml: label="IS4+"
+BeanSwitchXml -> panel.js: XmlDataStream
+deactivate BeanSwitchXml
+
+panel.js -> browser: HTML5 <panel>
+browser -> panel.css: css4?
+activate panel.css
+panel.css -> browser: "css4"
+deactivate panel.css
+browser -> div: ID#4,Green
+activate div #00bb00
+div -> User: Hi, I'm here
+== B. Handling User Feedback ==
+User -> Mouse: click
+Mouse -> browser: mousUp(x,y)
+browser -> jQuery: clicked(divID4)
+jQuery -> panel.js: handleClick()
+panel.js -> JSONSocketSrv: setObject(#4)
+JSONSocketSrv -> Sensor: setState(4)
+Sensor -> BeanSwitch: Inactive
+BeanSwitch -> JSONSocketSrv: IS4=Inactive
+JSONSocketSrv -> panel.js: handleChange(IS4)
+panel.js -> browser: div#4=8
+deactivate div
+browser -> div: ID#4:Red
+activate div #bb0000
+@enduml

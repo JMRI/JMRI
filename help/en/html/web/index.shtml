@@ -156,8 +156,8 @@
       <a href="#operations">operations</a> services.</p>
       <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
 
-      <h3><a id="panels" href="PanelServlet.shtml" name=
-      "panels">Panels</a></h3><!-- panelServlet intro -->
+      <h3><a id="panels" name="panels"
+      href="PanelServlet.shtml">Panels</a></h3><!-- panelServlet intro -->
 
       <p>Loaded JMRI panels can be used in a modern web browser on
       computers, smart phones, and tablets. A list of the loaded
@@ -198,13 +198,13 @@
       <h3><a id="tables" name="tables">Tables</a></h3>
       <!-- operationsServlet intro -->
 
-      <p>Panels services at <a href=
-      "http://localhost:12080/panel">http://localhost:12080/panel</a>
+      <p>Tables services at <a href=
+      "http://localhost:12080/panel">http://localhost:12080/table</a>
       include Turnouts, Sensors, Routes etc.
       See <a href="TablesServlet.shtml">Tables Servlet</a> for more information.</p>
 
-      <h3><a id="frames" href="FrameServlet.shtml" name=
-      "frames">Windows</a></h3><!-- frameServlet intro -->
+      <h3><a id="frames" name="frames" href="FrameServlet.shtml">Windows</a></h3>
+      <!-- frameServlet intro -->
 
       <p>JMRI can display most <em>already open</em> windows as a
       somewhat usable image to allow partial remote control of
