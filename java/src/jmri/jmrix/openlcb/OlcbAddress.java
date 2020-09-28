@@ -282,6 +282,27 @@ public class OlcbAddress {
         for (int i = 0; i < 8; ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
     }
+    
+    /**
+     * Validates Strings for OpenLCB format.
+     */
+    @Nonnull
+    public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale, @Nonnull String prefix) throws jmri.NamedBean.BadSystemNameException {
+        String oAddr = name.substring(prefix.length());
+        OlcbAddress a = new OlcbAddress(oAddr);
+        OlcbAddress[] v = a.split();
+        if (v == null) {
+            throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb sensor address");
+        }
+        switch (v.length) {
+            case 1:
+            case 2:
+                break;
+            default:
+                throw new jmri.NamedBean.BadSystemNameException(locale,"InvalidSystemNameCustom","Wrong number of events in address: " + name);
+        }
+        return name;
+    }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);
 

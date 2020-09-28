@@ -120,23 +120,17 @@ public class OlcbLightManager extends AbstractLightManager {
 
     @Override
     public boolean validSystemNameConfig(@Nonnull String address) throws IllegalArgumentException {
-        String withoutPrefix = address.replace("ML", "");
-        OlcbAddress a = new OlcbAddress(withoutPrefix);
-        OlcbAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb Light address");
+        
+        if (address.startsWith("+") || address.startsWith("-")) {
+            return false;
         }
-        switch (v.length) {
-            case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
-                    return false;
-                }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
-            case 2:
-                return true;
-            default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+        try {
+            OlcbAddress.validateSystemNameFormat(address,java.util.Locale.getDefault(),getSystemNamePrefix());
         }
+        catch ( jmri.NamedBean.BadSystemNameException ex ){
+            throw new IllegalArgumentException(ex.getMessage());
+        }
+        return true;
     }
     
     /**
@@ -147,14 +141,7 @@ public class OlcbLightManager extends AbstractLightManager {
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
         super.validateSystemNameFormat(name,locale);
-        try {
-            if (!validSystemNameConfig(name)){
-                throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName","Unable to convert " + name);
-            }
-        }
-        catch ( IllegalArgumentException ex ) {
-            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemName",ex.getMessage());
-        }
+        name = OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
         return name;
     }
     
