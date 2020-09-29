@@ -1234,6 +1234,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_ImportCarsFile" url="manual/JMRI_OPS_UsersGuide/Ops_ImportCarsFile.shtml"/>
 
+<mapID target="html.hardware.loconet.LocoIO_second" url="html/hardware/loconet/LocoIO.shtml#second"/>
+
 <mapID target="html.tools.EntryExit" url="html/tools/EntryExit.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_a" url="manual/DecoderPro3/Comp_PrintData_a.shtml"/>
@@ -1629,6 +1631,8 @@
 <mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
 
 <mapID target="package.jmri.jmrit.entryexit.EntryExitFrame" url="package/jmri/jmrit/entryexit/EntryExitFrame.shtml"/>
+
+<mapID target="package.jmri.jmrit.conditional.ConditionalCopy_CopyList" url="package/jmri/jmrit/conditional/ConditionalCopy.shtml#CopyList"/>
 
 <mapID target="html.hardware.ipocsmr.index" url="html/hardware/ipocsmr/index.shtml"/>
 
@@ -2447,6 +2451,8 @@
 <mapID target="html.apps.PanelPro.index_le" url="html/apps/PanelPro/index.shtml#le"/>
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable" url="package/jmri/jmrit/beantable/TurnoutTable.shtml"/>
+
+<mapID target="package.jmri.jmrit.conditional.ConditionalCopy" url="package/jmri/jmrit/conditional/ConditionalCopy.shtml"/>
 
 <mapID target="html.hardware.qsi.index_limitations" url="html/hardware/qsi/index.shtml#limitations"/>
 
@@ -4161,6 +4167,8 @@
 <mapID target="package.jmri.jmrit.display.CircuitBuilder_DirectionArrows" url="package/jmri/jmrit/display/CircuitBuilder.shtml#DirectionArrows"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtBoundary" url="package/jmri/jmrit/display/SetSignalsAtBoundary.shtml"/>
+
+<mapID target="package.jmri.jmrit.conditional.ConditionalCopy_logix" url="package/jmri/jmrit/conditional/ConditionalCopy.shtml#logix"/>
 
 <mapID target="package.jmri.jmrit.beantable.SensorAddEdit_hardwaresensor" url="package/jmri/jmrit/beantable/SensorAddEdit.shtml#hardwaresensor"/>
 

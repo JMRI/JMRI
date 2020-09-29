@@ -165,9 +165,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 }
                 break;
             case DCCppConstants.STATUS_REPLY:
-                text = "Status Reply:";
-                text += "Version: " + getStationType() + ", ";
+                text = "Status:";
+                text += "Station: " + getStationType() + ", ";
                 text += "Build: " + getBuildString();
+                text += "Version: " + getVersion();
                 break;
             case DCCppConstants.POWER_REPLY:
                 if(isNamedPowerReply()) {

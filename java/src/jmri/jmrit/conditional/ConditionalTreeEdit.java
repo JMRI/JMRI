@@ -30,6 +30,7 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
@@ -67,9 +68,10 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     public ConditionalTreeEdit() {
     }
 
-    JmriJFrame _editLogixFrame = null;
     JPanel _curDetailPanel = new JPanel();
     JTextField _editLogixUserName = new JTextField(20);   // Logix User Name field
+    NamedBeanComboBox<?> _comboNameBox = null;
+
 
     // ------------ Edit detail components ------------
     JPanel _detailGrid = new JPanel();
@@ -1510,10 +1512,6 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         fireLogixEvent();
     }
 
-    public void bringToFront() {
-        _editLogixFrame.toFront();
-    }
-
     // ============  Tree Content and Navigation ============
 
     /**
@@ -1593,8 +1591,8 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Actions, Level 3 contains the detail Variable and Action entries.
      */
     void createConditionalContent() {
-        int _numConditionals = _curLogix.getNumConditionals();
-        for (int i = 0; i < _numConditionals; i++) {
+        int numConditionals = _curLogix.getNumConditionals();
+        for (int i = 0; i < numConditionals; i++) {
             String csName = _curLogix.getConditionalByNumberOrder(i);
             Conditional curConditional = _curLogix.getConditional(csName);
             _cdlNode = new ConditionalTreeNode(buildNodeText("Conditional", curConditional, 0), "Conditional", csName, i);    // NOI18N
@@ -2830,6 +2828,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curVariable.setTriggerActions(_variableTriggerActions.isSelected());
 
         Conditional.ItemType itemType = _variableItemBox.getItemAt(_variableItemBox.getSelectedIndex());
+        if (!checkIsAction(name, itemType) ) {
+            return false;
+        }
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
@@ -3754,6 +3755,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelActionSignal"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalSetHint"));  // NOI18N
                     loadJComboBoxWithHeadAppearances(_actionBox, _actionNameField.getText().trim());
+                    _actionBox.setSelectedItem(_curAction.getActionDataString());
                 } else if (actionType != Conditional.Action.NONE) {
                     signalHeadGrid = "NameTypeActionFinal";  // NOI18N
                 }
@@ -3776,6 +3778,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     _actionBoxLabel.setText(Bundle.getMessage("LabelSignalAspect"));  // NOI18N
                     _actionBoxLabel.setToolTipText(Bundle.getMessage("SignalMastSetHint"));  // NOI18N
                     loadJComboBoxWithMastAspects(_actionBox, _actionNameField.getText().trim());
+                    _actionBox.setSelectedItem(_curAction.getActionDataString());
                 } else if (actionType != Conditional.Action.NONE) {
                     signalMastGrid = "NameTypeActionFinal";  // NOI18N
                 }
@@ -4216,6 +4219,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
             }
             referenceByMemory = true;
         }
+        if (!checkIsVariable(name, itemType) ) {
+            return false;
+        }
         switch (itemType) {
             case SENSOR:
                 if (!referenceByMemory) {
@@ -4554,6 +4560,68 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         _curConditional.setAction(_actionList);
         _actionList = _curConditional.getCopyOfActions();
         _curLogix.activateLogix();
+    }
+
+    /**
+     * Check that a state variable is not also used as an action
+     * 
+     * @param name of the state variable
+     * @param itemType item type of the state variable
+     * @return true if variable is not an action of if the user OK's
+     * its use as an action also.
+     */
+    boolean checkIsAction(String name, Conditional.ItemType itemType) {
+        String actionName = null;
+        for (ConditionalAction action : _actionList) {
+            Conditional.ItemType actionType = action.getType().getItemType();
+            if (itemType == actionType) {
+                if (name.equals(action.getDeviceName())) {
+                    actionName = action.getDeviceName();
+                } else {
+                    NamedBean bean  = action.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        actionName = action.getDeviceName();
+                   }
+                }
+            }
+            if (actionName != null) {
+                return confirmActionAsVariable(actionName, name);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check that an action is not also used as a state variable
+     * 
+     * @param name of the action
+     * @param itemType item type of the action
+     * @return true if action is not a state variable of if the user OK's
+     * its use as such.
+     */
+    boolean checkIsVariable(String name, Conditional.ItemType itemType) {
+        String varName = null;
+        for (ConditionalVariable var : _variableList) {
+            Conditional.ItemType varType = var.getType().getItemType();
+            if (itemType == varType) {
+                if (name.equals(var.getName())) {
+                    varName = var.getName();
+                } else {
+                    NamedBean bean  = var.getBean();
+                    if (bean != null &&
+                        (name.equals(bean.getSystemName()) || 
+                                name.equals(bean.getUserName()))) {
+                        varName = var.getName();
+                   }
+                }
+            }
+            if (varName != null) {
+                return confirmActionAsVariable(name, varName);
+            }
+        }
+        return true;
     }
 
     // ------------ Action detail listeners ------------

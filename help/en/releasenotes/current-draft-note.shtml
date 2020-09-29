@@ -26,7 +26,7 @@
 
         <h4>DCC++</h4>
             <ul>
-                <li></li>
+                <li>Only send function refreshes if required (version < 3)</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -390,7 +390,8 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
+          in copying conditionals. See the updated help files for details.</li>
         </ul>
 
     <h3>Operations</h3>
