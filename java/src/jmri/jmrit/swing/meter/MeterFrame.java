@@ -21,8 +21,9 @@ import jmri.util.JmriJFrame;
  * @author Mark Underwood     Copyright (C) 2007
  * @author Andrew Crosland    Copyright (C) 2020
  * @author Daniel Bergqvist   Copyright (C) 2020
+ * @author B. Milhaupt        Copyright (C) 2020
  *
- * Adapted from ampmeter to display voltage and current.
+ * Adapted from ammeter to display voltage and current.
  */
 public class MeterFrame extends JmriJFrame {
 
@@ -328,7 +329,9 @@ public class MeterFrame extends JmriJFrame {
         // Initially we want to scale the icons to fit the previously saved window size
         scaleImage();
         
-        meter.enable();
+        if (meter != null) {
+            meter.enable();
+        }
 
         updateMenuUnits();
         initSelectedUnit();
@@ -337,7 +340,9 @@ public class MeterFrame extends JmriJFrame {
         propertyChangeListener = (java.beans.PropertyChangeEvent e) -> {
             update();
         };
-        meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+        if (meter != null) {
+            meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
+        }
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
