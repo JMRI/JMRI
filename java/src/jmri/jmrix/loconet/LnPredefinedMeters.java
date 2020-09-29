@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import jmri.*;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
+import jmri.jmrix.loconet.duplexgroup.swing.LnIPLImplementation;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +21,6 @@ public class LnPredefinedMeters implements LocoNetListener {
     private SlotManager sm = null;
     private LnTrafficController tc = null;
     private final MeterUpdateTask updateTask;
-    private final Meter currentMeter;
-    private final Meter voltageMeter;
 
     /**
      * Create a LnPredefinedMeters object
@@ -29,30 +28,19 @@ public class LnPredefinedMeters implements LocoNetListener {
      * @param scm  connection memo
      */
     public LnPredefinedMeters(LocoNetSystemConnectionMemo scm) {
-        
+
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
-        
+
         updateTask = new MeterUpdateTask(LnConstants.METER_INTERVAL_MS) {
             @Override
             public void requestUpdateFromLayout() {
                 sm.sendReadSlot(249);
             }
         };
-        
-        currentMeter = new DefaultMeter.DefaultCurrentMeter(
-                scm.getSystemPrefix() + "V" + "CommandStationCurrent",
-                Meter.Unit.NoPrefix, 0, 12.7, 0.1, updateTask);
-        
-        voltageMeter = new DefaultMeter.DefaultVoltageMeter(
-                scm.getSystemPrefix() + "V" + "CommandStationVoltage",
-                Meter.Unit.NoPrefix, 0, 25.4, 0.2, updateTask);
-        
-        InstanceManager.getDefault(MeterManager.class).register(currentMeter);
-        InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
-        
+
         tc.addLocoNetListener(~0, this);
-        
+
         updateTask.initTimer();
     }
 
@@ -65,46 +53,73 @@ public class LnPredefinedMeters implements LocoNetListener {
                     || msg.getElement(3) != 0x79) {
                 return;
             }
-            log.debug("Found slot 249");
-            // CS Types supported
-            switch (msg.getElement(16)) {
-                case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
-                    log.debug("Found Evolution CS Amps[{}] Max[{}]",msg.getElement(6) / 10.0f, (msg.getElement(7) / 10.0f));
-                    setCurrent((msg.getElement(6) / 10.0f));   // return amps
-                    setVoltage((msg.getElement(4)) * 2.0f / 10.0f);   // return volts
-                    break;
-                default:
-                    // do nothing
+
+            float valAmps = msg.getElement(6)/10.0f;
+            float valVolts = msg.getElement(4)*2.0f/10.0f;
+
+            int srcDeviceType = msg.getElement(16);
+            int srcSerNum = msg.getElement(18)+128*msg.getElement(19);
+
+            String voltSysName = getSystemName(srcDeviceType, srcSerNum, "Voltage");
+
+            String ampsSysName = getSystemName(srcDeviceType, srcSerNum, "InputCurrent");
+
+            Meter m = InstanceManager.getDefault(MeterManager.class).getBySystemName(ampsSysName);
+            if (m == null) {
+                // ammeter not (yet) registered
+                Meter newCurrentMeter = new DefaultMeter.DefaultCurrentMeter(
+                    ampsSysName,
+                    Meter.Unit.NoPrefix, 0, 12.7, 0.1, updateTask);
+                newCurrentMeter.setCommandedAnalogValue(valAmps);
+                InstanceManager.getDefault(MeterManager.class).register(newCurrentMeter);
+                log.warn("Adding ammeter {} with value {}",
+                        ampsSysName, valAmps);
+            } else {
+                m.setCommandedAnalogValue(valAmps);
+                log.warn("Updating ammeter {} with value {}",
+                        ampsSysName, valAmps);
+            }
+
+            m = InstanceManager.getDefault(MeterManager.class).getBySystemName(voltSysName);
+            if (m == null) {
+                // volt not (yet) registered
+                Meter newVoltMeter = new DefaultMeter.DefaultVoltageMeter(
+                    voltSysName,
+                    Meter.Unit.NoPrefix, 0, 25.6, 0.2, updateTask);
+                newVoltMeter.setCommandedAnalogValue(valVolts);
+                InstanceManager.getDefault(MeterManager.class).register(newVoltMeter);
+                log.warn("Adding voltmeter {} with value {}",
+                        ampsSysName, valVolts);
+            } else {
+                m.setCommandedAnalogValue(valVolts);
+                log.warn("Updating volt meter {} with value {}",
+                        ampsSysName, valAmps);
             }
         } catch (JmriException e) {
             log.error("exception thrown by setCurrent or setVoltage", e);
         }
     }
 
-    private void setCurrent(double value) throws JmriException {
-        currentMeter.setCommandedAnalogValue(value);
-    }
-
-    private void setVoltage(double value) throws JmriException {
-        voltageMeter.setCommandedAnalogValue(value);
-    }
-
     public void dispose() {
-        updateTask.disable(currentMeter);
-        updateTask.disable(voltageMeter);
-        InstanceManager.getDefault(MeterManager.class).deregister(currentMeter);
-        InstanceManager.getDefault(MeterManager.class).deregister(voltageMeter);
-        updateTask.dispose(currentMeter);
-        updateTask.dispose(voltageMeter);
+        for (Meter m: InstanceManager.getDefault(MeterManager.class).getNamedBeanSet()) {
+            if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) {
+                InstanceManager.getDefault(MeterManager.class).deregister(m);
+                updateTask.disable(m);
+                updateTask.dispose(m);
+            }
+        }
     }
 
     public void requestUpdateFromLayout() {
         sm.sendReadSlot(249);
     }
-    
-    
+
+    private final String getSystemName(int device, int sn, String typeString) {
+        return sm.getSystemPrefix()+"V"+
+                LnIPLImplementation.getDeviceName(0, device,0,0) +
+                "(s/n"+sn+")"+typeString;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnPredefinedMeters.class);
 
 }
