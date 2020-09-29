@@ -2,7 +2,7 @@
 box /jmri/
 participant Sensor
 end box
-box /jmri/jmrit/display/panels/xEditor/ #LightBlue
+box /jmri/jmrit/display/panels/xEditor/ #LightYellow
 participant Switchboard
 participant BeanSwitch
 participant SwitchboardXml
@@ -12,8 +12,8 @@ box /jmri/web/servlet/panel/
 participant panelServlet.java
 end box
 box "Web Server /web/" #LightBlue
-participant JSONSocketSrv
 participant panel.js
+participant JSONSocketSrv
 participant jQuery
 participant panel.css
 end box
@@ -27,8 +27,8 @@ actor User
 activate Sensor
 activate Switchboard
 activate BeanSwitch
-activate browser
 activate panel.js
+activate browser
 
 == A. Initial Web Panel Display ==
 User -> Mouse: click
@@ -70,8 +70,11 @@ JSONSocketSrv -> Sensor: setState(4)
 Sensor -> BeanSwitch: Inactive
 BeanSwitch -> JSONSocketSrv: IS4=Inactive
 JSONSocketSrv -> panel.js: handleChange(IS4)
-panel.js -> browser: div#4=8
+panel.js -> jQuery: div#4=8
 deactivate div
-browser -> div: ID#4:Red
-activate div #bb0000
+jQuery -> div: divID#4:Red
+activate div #dd0000
 @enduml
+
+this file is input for PlantUML to produce PNG images for help/en/html/web Help
+Copyright JMRI Egbert Broerse 09-2020

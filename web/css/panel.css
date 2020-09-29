@@ -69,6 +69,14 @@ body {
     /* add more BeanSwitch stuff */
 }
 
+.beanswitch#symcss0 { /* TODO EBR demo addition div in text node */
+    position: relative;
+    border: 3px solid #73AD21;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+
 div.button {
     float: left;
     background: red;

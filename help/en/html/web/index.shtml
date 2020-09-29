@@ -157,7 +157,8 @@
       <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
 
       <h3><a id="panels" name="panels"
-      href="PanelServlet.shtml">Panels</a></h3><!-- panelServlet intro -->
+      href="PanelServlet.shtml">Panels</a></h3>
+      <!-- panelServlet intro -->
 
       <p>Loaded JMRI panels can be used in a modern web browser on
       computers, smart phones, and tablets. A list of the loaded
