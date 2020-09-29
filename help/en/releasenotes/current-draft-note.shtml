@@ -543,7 +543,8 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>The "Location Following" (sound follows loco) with occupancy sensors and JMRI Blocks
+            now also works with a RosterEntry or RosterId as Block value.</li>
         </ul>
 
    <h3>Meters and MeterFrames</h3>
