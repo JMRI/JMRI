@@ -54,7 +54,7 @@ public class DCCppCommandStationTest {
         // test setting the command station version from a v3+ DCCppReply
         DCCppCommandStation c = new DCCppCommandStation();
         DCCppReply r = DCCppReply.parseDCCppReply(
-                "iDCC-EX V-0.2.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
         Assert.assertNotNull(r);
         log.debug("Status Reply: {}", r.toString());
         c.setCommandStationInfo(r);
@@ -63,7 +63,26 @@ public class DCCppCommandStationTest {
         log.debug("Version: {}", c.getVersion());
         Assert.assertTrue("verifying v3+ station type", c.getStationType().equals("DCC-EX"));
         Assert.assertTrue("verifying v3+ build", c.getBuild().equals("9db6d36"));
-        Assert.assertTrue("verifying v3+ version", c.getVersion().equals("0.2.0"));
+        Assert.assertTrue("verifying v3+ version", c.getVersion().equals("3.0.0"));
+    }
+
+    @Test
+    public void testIsFunctionRefreshRequired() {
+        //verify v3+ does not need refresh
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.0.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("v3+ does not require function refresh", c.isFunctionRefreshRequired());
+
+        //verify < v3 does need refresh
+        c = new DCCppCommandStation();
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("< v3 requires function refresh", c.isFunctionRefreshRequired());
     }
 
     @Test
