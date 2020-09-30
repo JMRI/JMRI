@@ -186,6 +186,9 @@ public class MeterFrame extends JmriJFrame {
     @Override
     public void initComponents() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
+        if (mm == null) {
+            return;
+        }
         mm.addDataListener(new MeterFrame.BeanListListener(this));
         // Create menu bar
 
@@ -647,6 +650,9 @@ public class MeterFrame extends JmriJFrame {
      */
     private void addAllMeters() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
+        if (mm == null) {
+            return;
+        }
         log.debug("attempting to add all meters.  There are {} meters to add.",
                 mm.getNamedBeanSet().size());
         mm.getNamedBeanSet().forEach((m) -> {
