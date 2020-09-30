@@ -647,46 +647,41 @@ public class MeterFrame extends JmriJFrame {
      */
     private void addAllMeters() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
-        log.warn("attempting to add all meters.  There are {} meters to add.",
+        log.debug("attempting to add all meters.  There are {} meters to add.",
                 mm.getNamedBeanSet().size());
-        for (Meter m : mm.getNamedBeanSet()) {
+        mm.getNamedBeanSet().forEach((m) -> {
             if ((m != null) && (m instanceof VoltageMeter)) {
                 if (voltageMeters.contains(m)) {
-                    log.warn("meter {} is already present", m.getDisplayName());
+                    log.debug("meter {} is already present", m.getDisplayName());
                 } else {
                     voltageMeters.add(m);
-                    log.warn("Added voltage meter {}", m.getSystemName());
+                    log.debug("Added voltage meter {}", m.getSystemName());
                 }
             } else if ((m != null) && (m instanceof CurrentMeter)) {
                 if (currentMeters.contains(m)) {
-                    log.warn("meter {} is already present", m.getDisplayName());
+                    log.debug("meter {} is already present", m.getDisplayName());
                 } else {
                     currentMeters.add(m);
-                    log.warn("Added ammeter {}", m.getDisplayName());
-                    log.warn("number of current meters is {}", currentMeters.size());
                 }
             }
-        }
+        });
 
         if ((menuBar != null) && (voltageMetersMenu != null)) {
-            updateVoltageMeters(menuBar, voltageMetersMenu);
+            updateVoltageMeters(voltageMetersMenu);
         }
 
         if ((menuBar != null) && (currentMetersMenu != null)) {
-            updateCurrentMeters(menuBar, currentMetersMenu);
+            updateCurrentMeters(currentMetersMenu);
         }
     }
 
     /**
-     * Update the list of menu items for available "Voltage Meters"
-     * @param menuBar MenuBar on which the menu items exist
+     * Update the list of menu items for available meters of a given "Voltage Meters"
      * @param voltageMetersMenu Menu which contains available voltage meters list
      */
-    private void updateVoltageMeters(JMenuBar menuBar, JMenu voltageMetersMenu) {
-        log.warn("length of voltageMeters is {}", voltageMeters.size());
-        log.warn("meter_MenuItemMap length is {}", meter_MenuItemMap.entrySet().size());
+    private void updateVoltageMeters(JMenu voltageMetersMenu) {
         for (Meter m : voltageMeters) {
-            log.warn("new checkbox for voltmeter {}?", m.getDisplayName());
+            log.debug("Need to add a new checkbox for voltmeter {}?", m.getDisplayName());
             boolean found = false;
 
             if (voltageMetersMenu.getItemCount() > 0) {
@@ -694,42 +689,31 @@ public class MeterFrame extends JmriJFrame {
                     JMenuItem jim = voltageMetersMenu.getItem(i);
                     if (jim instanceof JCheckBoxMenuItem) {
                         if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.warn("item {} is already in voltageMetersMenu", m.getDisplayName());
+                            log.debug("item {} is already in voltageMetersMenu", m.getDisplayName());
                             found = true;
                         } else {
-                            log.warn("item {} is not already in voltageMetersMenu", m.getDisplayName());
+                            log.debug("item {} is not already in voltageMetersMenu", m.getDisplayName());
                         }
-                    } else {
-                        log.warn("voltageMetersMenu component is not JCheckBoxMenuItem, but is type {}", jim.getClass().toString());
                     }
                 }
-            } else {
-                log.warn("skipping menuitem check because voltageMetersMenu.getItemCount() is {} && voltageMetersMenu.getComponentCount() is {}",
-                        voltageMetersMenu.getItemCount(), voltageMetersMenu.getComponentCount());
             }
-
             if (!found) {
-                log.warn("Adding item {} to voltageMetersMenu", m.getDisplayName());
+                log.debug("Adding item {} to voltageMetersMenu", m.getDisplayName());
                 JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
                 voltageMetersMenu.add(item);
                 meter_MenuItemMap.put(m, item);
             }
-            log.warn("now voltageMeters length is {}", voltageMeters.size());
-            log.warn("meter_MenuItemMap length is {}", meter_MenuItemMap.entrySet().size());
         }
     }
 
     /**
      * Update the list of menu items for available "Current Meters"
-     * @param menuBar MenuBar on which the menu items exist
      * @param voltageMetersMenu Menu which contains available current meters list
 
      */
-    private void updateCurrentMeters(JMenuBar menuBar, JMenu currentMetersMenu) {
-        log.warn("length of currentMeters is {}", currentMeters.size());
-        log.warn("meter_MenuItemMap length is {}", meter_MenuItemMap.entrySet().size());
+    private void updateCurrentMeters(JMenu currentMetersMenu) {
         for (Meter m : currentMeters) {
-            log.warn("new checkbox for ammeter {}?", m.getDisplayName());
+            log.debug("need to add a new checkbox for ammeter {}?", m.getDisplayName());
             boolean found = false;
 
             if (currentMetersMenu.getItemCount() > 0) {
@@ -737,28 +721,20 @@ public class MeterFrame extends JmriJFrame {
                     JMenuItem jim = currentMetersMenu.getItem(i);
                     if (jim instanceof JCheckBoxMenuItem) {
                         if (jim.getText().compareTo(m.getDisplayName()) == 0 ) {
-                            log.warn("item {} is already in currentMetersMenu", m.getDisplayName());
+                            log.debug("item {} is already in currentMetersMenu", m.getDisplayName());
                             found = true;
                         } else {
-                            log.warn("item {} is not already in currentMetersMenu", m.getDisplayName());
+                            log.debug("item {} is not already in currentMetersMenu", m.getDisplayName());
                         }
-                    } else {
-                        log.warn("currentMetersMenu component is not JCheckBoxMenuItem, but is type {}", jim.getClass().toString());
                     }
                 }
-            } else {
-                log.warn("skipping menuitem check because currentMetersMenu.getItemCount() is {} && currentMetersMenu.getComponentCount() is {}",
-                        currentMetersMenu.getItemCount(), currentMetersMenu.getComponentCount());
             }
-
             if (!found) {
-                log.warn("Adding item {} to currentMetersMenu", m.getDisplayName());
+                log.debug("Adding item {} to currentMetersMenu", m.getDisplayName());
                 JCheckBoxMenuItem item = new JCheckBoxMenuItem(new SelectMeterAction(m.getDisplayName(), m));
                 currentMetersMenu.add(item);
                 meter_MenuItemMap.put(m, item);
             }
-            log.warn("now currentMeters length is {}", currentMeters.size());
-            log.warn("meter_MenuItemMap length is {}", meter_MenuItemMap.entrySet().size());
         }
     }
 
@@ -766,13 +742,13 @@ public class MeterFrame extends JmriJFrame {
      * Updates the menu items in the voltage meters and current meters menus.
      */
     private void updateCheckboxList() {
-        log.warn("need to update the Checkbox list!");
+        log.debug("Updating the checkbox lists of meters.");
         addAllMeters();
         currentMetersMenu.repaint();
         voltageMetersMenu.repaint();
         return;
     }
-    
+
     /**
      * Provides hooks so that menus of available meters may be updated "on-the-fly"
      * as new meters are created and/or old meters are disposed of.
