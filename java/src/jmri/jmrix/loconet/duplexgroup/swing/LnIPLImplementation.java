@@ -750,7 +750,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         int slave = slaveDevice & 0x7f;
         int smanuf = slaveMfr & 0x7f;
         String mfgName = getManufacturer(manuf);
-        String devName = getDeviceName(manuf, device, 0, 0);
+        String devName = getDeviceName(manuf, device, smanuf, slave);
         if (mfgName == null) {
             return "Unknown Host Manufacturer/Device";
         } else if (devName == null) {
@@ -911,8 +911,8 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      */
     @CheckForNull
     public static String getManufacturer(int manuf) {
-        switch (LnConstants.RE_IPL_MFR_DIGITRAX) {
-            case 0:
+        switch (manuf) {
+            case LnConstants.RE_IPL_MFR_DIGITRAX:
                 return "Digitrax";
             case LnConstants.RE_IPL_MFR_RR_CIRKITS:
                 return "RR-CirKits";
@@ -991,7 +991,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                     case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
                         return "BXPA1";
                     default:
-                        break;
+                        return null;
                 }
             }
             case LnConstants.RE_IPL_MFR_RR_CIRKITS:
@@ -1021,12 +1021,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                         return "WatchMan"; // NOI18N
 
                     default:
-                        break;
+                        return null;
                 }
             default:
-                break;
+                return null;
         }
-        return null;
     }
 
     private boolean waitingForIplReply;
