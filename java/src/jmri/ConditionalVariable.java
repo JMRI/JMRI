@@ -555,6 +555,8 @@ public class ConditionalVariable {
                     value2 = _dataString;
                 }
                 result = compare(value1, value2, caseInsensitive);
+                System.out.format("Memory: Compare: value1: %s, value2: %s, caseInsensitive: %b, result: %b%n", value1, value2, caseInsensitive, result);
+//                if ("Some other string to test".equals(value1)) throw new RuntimeException("Daniel");
                 break;
             case CONDITIONAL:
                 Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());

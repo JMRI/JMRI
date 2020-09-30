@@ -244,7 +244,7 @@ public class Import_TriggerOnChange_Test {
         
         check.runTest("LogixNG is removed", false);
     }
-    
+/*    
     @Test
     public void testConditionalVariableTurnout() {
         ConditionalVariable cv = new ConditionalVariable();
@@ -270,7 +270,7 @@ public class Import_TriggerOnChange_Test {
         ca.setType(Conditional.Action.NONE);
         ca.setType("aaa");
     }
-    
+*/    
     // The minimal setup for log4J
     @Before
     public void setUp() {

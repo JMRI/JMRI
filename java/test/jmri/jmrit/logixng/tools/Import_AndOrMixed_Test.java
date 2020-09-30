@@ -416,6 +416,4 @@ public class Import_AndOrMixed_Test {
         JUnitUtil.tearDown();
     }
     
-    
-    
 }

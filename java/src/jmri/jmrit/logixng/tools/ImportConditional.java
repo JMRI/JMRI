@@ -16,6 +16,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
@@ -62,6 +63,33 @@ public class ImportConditional {
     }
     
     public void doImport() throws SocketAlreadyConnectedException, JmriException {
+/*        
+        // This is only to remember to test everything Logix and Conditional supports
+        String systemName = "";
+        jmri.Logix l = null;
+        
+        java.beans.PropertyChangeEvent evt = null;
+        jmri.Conditional c = null;
+        
+        l.getConditional(systemName);
+        l.getConditionalByNumberOrder(0);
+        l.getEnabled();
+        
+        c.cancelSensorTimer(systemName);
+        c.cancelTurnoutTimer(systemName);
+        c.getAntecedentExpression();        // Tested
+        c.getCopyOfActions();
+        c.getCopyOfStateVariables();
+        c.getLogicType();                   // Tested
+        c.getTriggerOnChange();             // Tested
+*/        
+        
+        
+        
+        
+        
+        
+        
 //        boolean triggerOnChange = _conditional.getTriggerOnChange();
 //        IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
         
@@ -136,9 +164,8 @@ public class ImportConditional {
                     newExpression = getSignalMastExpression(cv, sm);
                     break;
                 case ENTRYEXIT:
-//                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
-//                    newExpression = getSensorExpression(cv, sn);
-                    newExpression = null;
+                    DestinationPoints dp = (DestinationPoints)nb;
+                    newExpression = getEntryExitExpression(cv, dp);
                     break;
                 case CONDITIONAL:
                     Conditional c = (Conditional)nb;
@@ -234,9 +261,8 @@ public class ImportConditional {
                 newAction = getSignalMastAction(conditionalAction, sm);
                 break;
             case ENTRYEXIT:
-//                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
-//                    newAction = getSensorAction(cv, sn);
-                newAction = null;
+                DestinationPoints dp = (DestinationPoints)nb;
+                newAction = getEntryExitAction(conditionalAction, dp);
                 break;
             case CONDITIONAL:
                 Conditional c = (Conditional)nb;
@@ -297,7 +323,27 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getTurnoutExpression(@Nonnull ConditionalVariable cv, Turnout tn) throws JmriException {
-        return null;
+        ExpressionTurnout expression =
+                new ExpressionTurnout(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setTurnout(tn);
+        
+        switch (cv.getType()) {
+            case TURNOUT_CLOSED:
+                expression.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
+                break;
+            case TURNOUT_THROWN:
+                expression.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadTurnoutType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     
@@ -306,8 +352,28 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getLightExpression(@Nonnull ConditionalVariable cv, Light l) throws JmriException {
-        return null;
+    private DigitalExpressionBean getLightExpression(@Nonnull ConditionalVariable cv, Light ln) throws JmriException {
+        ExpressionLight expression =
+                new ExpressionLight(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setLight(ln);
+        
+        switch (cv.getType()) {
+            case LIGHT_ON:
+                expression.setLightState(ExpressionLight.LightState.ON);
+                break;
+            case LIGHT_OFF:
+                expression.setLightState(ExpressionLight.LightState.OFF);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadLightType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     
@@ -321,8 +387,53 @@ public class ImportConditional {
     }
     
     
-    private DigitalExpressionBean getConditionalExpression(@Nonnull ConditionalVariable cv, Conditional c) throws JmriException {
-        return null;
+    private DigitalExpressionBean getEntryExitExpression(@Nonnull ConditionalVariable cv, DestinationPoints dp) throws JmriException {
+        ExpressionEntryExit expression =
+                new ExpressionEntryExit(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setDestinationPoints(dp);
+        
+        switch (cv.getType()) {
+            case ENTRYEXIT_ACTIVE:
+                expression.setEntryExitState(ExpressionEntryExit.EntryExitState.ACTIVE);
+                break;
+            case ENTRYEXIT_INACTIVE:
+                expression.setEntryExitState(ExpressionEntryExit.EntryExitState.INACTIVE);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadEntryExitType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
+    }
+    
+    
+    private DigitalExpressionBean getConditionalExpression(@Nonnull ConditionalVariable cv, Conditional cn) throws JmriException {
+        ExpressionConditional expression =
+                new ExpressionConditional(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setConditional(cn);
+        
+        switch (cv.getType()) {
+            case CONDITIONAL_TRUE:
+                expression.setConditionalState(ExpressionConditional.ConditionalState.TRUE);
+                break;
+            case CONDITIONAL_FALSE:
+                expression.setConditionalState(ExpressionConditional.ConditionalState.FALSE);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     
@@ -408,6 +519,11 @@ public class ImportConditional {
     
     
     private DigitalActionBean getSignalMastAction(@Nonnull ConditionalAction ca, SignalMast sm) throws JmriException {
+        return null;
+    }
+    
+    
+    private DigitalActionBean getEntryExitAction(@Nonnull ConditionalAction ca, DestinationPoints dp) throws JmriException {
         return null;
     }
     
