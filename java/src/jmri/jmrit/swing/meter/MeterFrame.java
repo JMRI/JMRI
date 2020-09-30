@@ -186,7 +186,7 @@ public class MeterFrame extends JmriJFrame {
     @Override
     public void initComponents() {
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
-        mm.addDataListener(new MeterFrame.beanListListener(this));
+        mm.addDataListener(new MeterFrame.BeanListListener(this));
         // Create menu bar
 
         menuBar = new JMenuBar();
@@ -753,9 +753,9 @@ public class MeterFrame extends JmriJFrame {
      * Provides hooks so that menus of available meters may be updated "on-the-fly"
      * as new meters are created and/or old meters are disposed of.
      */
-    private class beanListListener implements jmri.Manager.ManagerDataListener<Meter> {
+    private static class BeanListListener implements jmri.Manager.ManagerDataListener<Meter> {
 
-        private beanListListener(MeterFrame mf) {
+        private BeanListListener(MeterFrame mf) {
             this.mf = mf;
         }
         MeterFrame mf = null;
