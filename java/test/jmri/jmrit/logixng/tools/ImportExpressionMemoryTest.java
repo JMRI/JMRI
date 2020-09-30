@@ -28,7 +28,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
         ConstantCompareLessEqualInsensitive(Conditional.Type.MEMORY_EQUALS_INSENSITIVE, ConditionalVariable.LESS_THAN_OR_EQUAL),
         ConstantCompareGreaterThanInsensitive(Conditional.Type.MEMORY_EQUALS_INSENSITIVE, ConditionalVariable.GREATER_THAN),
         ConstantCompareGreaterEqualInsensitive(Conditional.Type.MEMORY_EQUALS_INSENSITIVE, ConditionalVariable.GREATER_THAN_OR_EQUAL),
-        MemoryEquals(Conditional.Type.MEMORY_COMPARE, ConditionalVariable.LESS_THAN),
+        MemoryEquals(Conditional.Type.MEMORY_COMPARE, ConditionalVariable.EQUAL),
         MemoryCompareLessThan(Conditional.Type.MEMORY_COMPARE, ConditionalVariable.LESS_THAN),
         MemoryCompareLessEqual(Conditional.Type.MEMORY_COMPARE, ConditionalVariable.LESS_THAN_OR_EQUAL),
         MemoryCompareGreaterThan(Conditional.Type.MEMORY_COMPARE, ConditionalVariable.GREATER_THAN),
@@ -71,7 +71,13 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
     public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
         MemoryEnum me = MemoryEnum.valueOf(e.name());
         
-        cv.setDataString("Some string to TEST");
+        if ((me.type == Conditional.Type.MEMORY_EQUALS) || (me.type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)) {
+            cv.setDataString("Some string to TEST");    // The constant string to compare with
+        } else {
+            InstanceManager.getDefault(MemoryManager.class).provide("OtherMemory").setValue("Some string to TEST");
+            cv.setDataString("OtherMemory");    // The memory to compare with
+        }
+        
         cv.setNum1(me.num1);
         cv.setNum2(0);
         
@@ -79,6 +85,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
         
         switch (me) {
             case ConstantEquals:
+            case MemoryEquals:
                 switch (setup) {
                     case Init: memory.setValue("Initial string"); break;
                     case Fail1: memory.setValue("Something different"); break;
@@ -93,6 +100,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantCompareLessThan:
+            case MemoryCompareLessThan:
                 switch (setup) {
                     case Init: memory.setValue("Zzzz string"); break;
                     case Fail1: memory.setValue("Something later"); break;
@@ -107,6 +115,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantCompareLessEqual:
+            case MemoryCompareLessEqual:
                 switch (setup) {
                     case Init: memory.setValue("Zzzz string"); break;
                     case Fail1: memory.setValue("Something later"); break;
@@ -121,6 +130,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantCompareGreaterThan:
+            case MemoryCompareGreaterThan:
                 switch (setup) {
                     case Init: memory.setValue("Aaaa string"); break;
                     case Fail1: memory.setValue("Some earlier string"); break;
@@ -135,6 +145,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantCompareGreaterEqual:
+            case MemoryCompareGreaterEqual:
                 switch (setup) {
                     case Init: memory.setValue("Aaaa string"); break;
                     case Fail1:
@@ -149,6 +160,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantEqualsInsensitive:
+            case MemoryEqualsInsensitive:
                 switch (setup) {
                     case Init: memory.setValue("Zzzz string"); break;
                     case Fail1: memory.setValue("Something later"); break;  // Greater than
@@ -163,6 +175,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 break;
                 
             case ConstantCompareLessThanInsensitive:
+            case MemoryCompareLessThanInsensitive:
                 switch (setup) {
                     case Init: memory.setValue("Zzzz string"); break;
                     case Fail1: memory.setValue("Something later111"); break;
@@ -172,6 +185,51 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                     case Succeed2:
                     case Succeed3: memory.setValue("Some other string to test"); break; // Less than since "other" comes before "string"
                     case Succeed4: memory.setValue("Some aaa string"); break;       // Equal
+                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                }
+                break;
+                
+            case ConstantCompareLessEqualInsensitive:
+            case MemoryCompareLessEqualInsensitive:
+                switch (setup) {
+                    case Init: memory.setValue("Zzzz string"); break;
+                    case Fail1:
+                    case Fail2: memory.setValue("Something later"); break;
+                    case Fail3: memory.setValue("Something else"); break;
+                    case Succeed1: memory.setValue("Some string to test"); break;       // Equal since case sensitive
+                    case Succeed2: memory.setValue("Some other string to test"); break; // Less than since "other" comes before "string"
+                    case Succeed3: memory.setValue("Some stRing to test"); break;       // Less than since case sensitive
+                    case Succeed4: memory.setValue("Some string to TEST"); break;       // Equal
+                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                }
+                break;
+                
+            case ConstantCompareGreaterThanInsensitive:
+            case MemoryCompareGreaterThanInsensitive:
+                switch (setup) {
+                    case Init: memory.setValue("Aaaa string"); break;
+                    case Fail1: memory.setValue("Some earlier string"); break;
+                    case Fail2: memory.setValue("Some string to test"); break;  // Equals since case sensitive
+                    case Fail3: memory.setValue("Some string to TEST"); break;  // Equals
+                    case Succeed1:
+                    case Succeed2:
+                    case Succeed3:
+                    case Succeed4: memory.setValue("Some zzz string to test"); break;   // Greater than since "zzz" comes after "string"
+                    default: throw new RuntimeException("Unknown enum: "+e.name());
+                }
+                break;
+                
+            case ConstantCompareGreaterEqualInsensitive:
+            case MemoryCompareGreaterEqualInsensitive:
+                switch (setup) {
+                    case Init: memory.setValue("Aaaa string"); break;
+                    case Fail1:
+                    case Fail2: memory.setValue("Some other string to test"); break;
+                    case Fail3: memory.setValue("Some string aaa"); break;  // Less than
+                    case Succeed1:
+                    case Succeed2: memory.setValue("Something later"); break;
+                    case Succeed3: memory.setValue("Some string to TEST"); break;   // Equals
+                    case Succeed4: memory.setValue("Some string to test"); break;   // Equals than since case sensitive
                     default: throw new RuntimeException("Unknown enum: "+e.name());
                 }
                 break;
@@ -211,6 +269,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
     @Override
     public ConditionalVariable newConditionalVariable() {
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        InstanceManager.getDefault(MemoryManager.class).provide("OtherMemory");
         cv = new ConditionalVariable();
         cv.setName("IM1");
         return cv;
