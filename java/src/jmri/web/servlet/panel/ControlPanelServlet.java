@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Return xml (for specified ControlPanel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood (C) 2016
  */

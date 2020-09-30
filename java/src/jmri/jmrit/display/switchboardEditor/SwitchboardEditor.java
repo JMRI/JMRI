@@ -107,7 +107,7 @@ public class SwitchboardEditor extends Editor {
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox<String> beanTypeList;
-    JSpinner columns = new JSpinner(new SpinnerNumberModel(3, 1, 25, 1)); // columns is actually used for the number of rows
+    JSpinner rows = new JSpinner(new SpinnerNumberModel(3, 1, 25, 1)); // number of rows on switchboard
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -123,8 +123,8 @@ public class SwitchboardEditor extends Editor {
 
     // editor items (adapted from LayoutEditor toolbar)
     private Color defaultTextColor = Color.BLACK;
-    private final Color defaultActiveColor = Color.YELLOW;
-    private final Color defaultInactiveColor = Color.GRAY;
+    private final Color defaultActiveColor = Color.RED;
+    private final Color defaultInactiveColor = Color.GREEN;
     private final Color defaultUnknownColor = Color.WHITE;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
@@ -273,7 +273,7 @@ public class SwitchboardEditor extends Editor {
         // add column spinner
         JLabel rowsLabel = new JLabel(Bundle.getMessage("NumberOfRows"));
         switchShapePane.add(rowsLabel);
-        switchShapePane.add(columns);
+        switchShapePane.add(rows);
         add(switchShapePane);
 
         JPanel checkboxPane = new JPanel();
@@ -385,8 +385,8 @@ public class SwitchboardEditor extends Editor {
         log.debug("switchlist cleared, size is now: {}", 0); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
-        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) columns.getValue() % range, 1),
-                (Integer) columns.getValue())); // vertical, horizontal
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) rows.getValue() % range, 1),
+                (Integer) rows.getValue())); // vertical, horizontal
         log.debug("adding range for manu index {}", beanManuNames.getSelectedIndex());
         addSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
@@ -1084,8 +1084,26 @@ public class SwitchboardEditor extends Editor {
      *
      * @return the number of switches to display per row
      */
+    public int getRows() {
+        return (Integer) rows.getValue();
+    }
+
+    /**
+     * @deprecated since 4.21.1
+     */
+    @Deprecated
     public int getColumns() {
-        return (Integer) columns.getValue();
+        return (Integer) rows.getValue();
+    }
+
+    /**
+     * Store total number of switches displayed (unconnected/hidden excluded).
+     *
+     * @return the total number of switches displayed
+     */
+    public int getTotal() {
+        log.debug("Total = {}", (Integer) switchlist.size());
+        return (Integer) switchlist.size();
     }
 
     /**
@@ -1093,8 +1111,8 @@ public class SwitchboardEditor extends Editor {
      *
      * @param cols the number of switches to display per row (as text)
      */
-    public void setColumns(int cols) {
-        columns.setValue(cols);
+    public void setColumns(int rws) {
+        rows.setValue(rws);
     }
 
     // all content loaded from file.

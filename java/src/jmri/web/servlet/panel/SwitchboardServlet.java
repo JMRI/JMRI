@@ -17,6 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Return xml (for specified SwitchBoard) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Egbert Broerse (C) 2017 -- based on ControlPanelServlet.java by Randall Wood
  */
@@ -44,6 +48,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         JFrame frame = editor.getTargetFrame();
 
         panel.setAttribute("name", name);
+        panel.setAttribute("paneltype", getPanelType());
         panel.setAttribute("height", Integer.toString(frame.getContentPane().getHeight()));
         panel.setAttribute("width", Integer.toString(frame.getContentPane().getWidth()));
         panel.setAttribute("panelheight", Integer.toString(editor.getTargetPanel().getHeight()));
@@ -58,8 +63,11 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         panel.setAttribute("type", editor.getSwitchType());
         panel.setAttribute("connection", editor.getSwitchManu());
         panel.setAttribute("shape", editor.getSwitchShape());
-        panel.setAttribute("columns", Integer.toString(editor.getColumns()));
+        panel.setAttribute("rows", Integer.toString(editor.getRows()));
+        panel.setAttribute("total", Integer.toString(editor.getTotal()));
         panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
+        panel.setAttribute("activecolor", editor.getActiveSwitchColor());
+        panel.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
         log.debug("webserver Switchboard panel attribs ready");
 
         Element bgColor = new Element("backgroundColor");
@@ -118,10 +126,12 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                         }
                         // read shared attribs
                         e.setAttribute("textcolor", editor.getDefaultTextColor());
+                        e.setAttribute("activecolor", editor.getActiveSwitchColor());
+                        e.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
                         e.setAttribute("type", editor.getSwitchType());
                         e.setAttribute("connection", editor.getSwitchManu());
                         e.setAttribute("shape", editor.getSwitchShape());
-                        e.setAttribute("columns", Integer.toString(editor.getColumns()));
+                        e.setAttribute("columns", Integer.toString(editor.getRows()));
                         // process and add
                         parsePortableURIs(e);
                         panel.addContent(e);

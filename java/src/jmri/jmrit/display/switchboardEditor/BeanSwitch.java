@@ -198,7 +198,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // web server supports in-browser drawn switches
                 _icon = true; // panel.js assigns only text OR icon for a single class such as BeanSwitch
-                beanSymbol.setLabel("switchLabel"); // TODO EBR no label
+                beanSymbol.setLabel(switchLabel); // TODO EBR no label?
                 beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
@@ -436,9 +436,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     log.warn("invalid char in Switchboard Button \"{}\". ERROR state shown.", _label);
             }
             log.debug("Switch label {} state: {} ", switchLabel, state);
-            if (isText() && !isIcon()) { // to allow text buttons on web switchboard. TODO add graphic switches on web
+            if (isText() && !isIcon()) { // to allow text buttons on web switchboard. always add graphic switches on web
                 beanButton.setText(switchLabel);
-                beanButton.setBackground(switchColor); // TODO get button color to change
+                beanButton.setBackground(switchColor); // get button color to change
+                beanButton.setOpaque(true);
             }
             if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
                 beanIcon.showSwitchIcon(state);
@@ -729,7 +730,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else {
                 nbhm.renameBean(oldName, newUserName, _bname);
             }
-
         } else {
             //This will update the bean reference from the old userName to the SystemName
             nbhm.updateBeanFromUserToSystem(_bname);

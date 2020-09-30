@@ -48,10 +48,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());
-        panel.setAttribute("x", "" + posn.x);
-        panel.setAttribute("y", "" + posn.y);
-        panel.setAttribute("height", "" + size.height);
-        panel.setAttribute("width", "" + size.width);
+//        panel.setAttribute("x", "" + posn.x);
+//        panel.setAttribute("y", "" + posn.y);
+//        panel.setAttribute("height", "" + size.height);
+//        panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));
@@ -65,8 +65,11 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("type", p.getSwitchType());
         panel.setAttribute("connection", p.getSwitchManu());
         panel.setAttribute("shape", p.getSwitchShape());
-        panel.setAttribute("columns", "" + p.getColumns());
+        panel.setAttribute("rows", "" + p.getRows());
+        panel.setAttribute("total", "" + p.getTotal()); // total number of items displayed
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
+//        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Uditor by Servlet
+//        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); / not user-settable
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
             panel.setAttribute("greenBackground", "" + p.getBackgroundColor().getGreen());
@@ -101,7 +104,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         int width = 300;
         int rangemin = 1;
         int rangemax = 32;
-        int columns = 4;
+        int rows = 4;
         String type;
         String connection;
         String shape;
@@ -233,13 +236,23 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         shape = shared.getAttribute("shape").getValue();
         panel.setSwitchShape(shape);
 
-        try {
-            columns = shared.getAttribute("columns").getIntValue();
-        } catch (org.jdom2.DataConversionException e) {
-            log.error("failed to convert Switchboard's column count");
-            result = false;
+        if ((a = shared.getAttribute("columns")) != null) {
+            try { // migration of old naming, dropped since 4.21.2
+                rows = shared.getAttribute("columns").getIntValue();
+            } catch (org.jdom2.DataConversionException e) {
+                log.error("failed to convert Switchboard's row (formerly column) count");
+                result = false;
+            }
         }
-        panel.setColumns(columns);
+        if ((a = shared.getAttribute("rows")) != null) {
+            try {
+                rows = shared.getAttribute("rows").getIntValue();
+            } catch (org.jdom2.DataConversionException e) {
+                log.error("failed to convert Switchboard's row count");
+                result = false;
+            }
+        }
+        panel.setColumns(rows);
 
         Color defaultTextColor = Color.BLACK;
         if (shared.getAttribute("defaulttextcolor") != null) {
