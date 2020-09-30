@@ -906,7 +906,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 
     /**
      * provides string representation for an IPL manufacturer number
-     * @param manuf
+     * @param manuf IPL device manufacturer code number
      * @return manufacturer name, or null if no known manufacturer name
      */
     @CheckForNull
