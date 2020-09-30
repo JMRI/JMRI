@@ -145,23 +145,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Method to register any orphan Sensors when a new Serial Node is created.
      * @param node node to register.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
-        // Iterate through the sensors
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during register Sensor");
-            } else {
-                log.debug("system name is {}", sName);
-                if ((sName.charAt(0) == 'K') && (sName.charAt(1) == 'S')) { // TODO multichar prefix
-                    // This is a valid Sensor - make sure it is registered
-                    getMemo().getTrafficController().inputBits().registerSensor(getBySystemName(sName),
-                            (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
-                }
+        for (Sensor s : getNamedBeanSet()) {
+            String sName = s.getSystemName();
+            log.debug("system name is {}", sName);
+            if (sName.startsWith(getSystemNamePrefix())) {
+                // This is a valid Sensor - make sure it is registered
+                getMemo().getTrafficController().inputBits().registerSensor(s,
+                        (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
             }
         }
     }
