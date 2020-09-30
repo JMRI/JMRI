@@ -457,6 +457,16 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     public static void suppressWarnMessage(String msg) {
         suppressMessage(Level.WARN, msg);
     }
+    
+    /**
+     * If there's a next matching message of Warn severity, just ignore it. Not
+     * an error if not present; mismatch is an error. White space is ignored.
+     *
+     * @param msg the message to suppress
+     */
+    public static void suppressWarnMessageStartsWith(String msg) {
+        suppressMessageStartsWith(Level.WARN, msg);
+    }
 
     /**
      * See if a message (completely matching particular text) has been emitted
