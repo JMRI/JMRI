@@ -708,7 +708,7 @@ public class MeterFrame extends JmriJFrame {
 
     /**
      * Update the list of menu items for available "Current Meters"
-     * @param voltageMetersMenu Menu which contains available current meters list
+     * @param currentMetersMenu Menu which contains available current meters list
 
      */
     private void updateCurrentMeters(JMenu currentMetersMenu) {
