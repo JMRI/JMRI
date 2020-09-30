@@ -552,7 +552,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Unknown Host Manufacturer/Device",
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax Unknown Device",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -623,7 +623,7 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev, "Unknown Host Manufacturer/Device",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev, "Digitrax Unknown Device",
                             LnIPLImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -638,7 +638,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Unknown Host Manufacturer/Device",
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax Unknown Device",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -709,7 +709,7 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24", "Unknown Host Manufacturer/Device",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24", "Digitrax Unknown Device",
                             LnIPLImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -724,7 +724,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax Unknown Device",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -792,7 +792,7 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax Unknown Device",
                             LnIPLImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -807,7 +807,7 @@ public class LnIPLImplementationTest {
             m = new LocoNetMessage(msg);
             switch (dev) {
                 case 1:
-                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax Unknown Device",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 4:
@@ -875,7 +875,7 @@ public class LnIPLImplementationTest {
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 default:
-                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Unknown Host Manufacturer/Device",
+                    Assert.assertEquals("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax Unknown Device",
                             LnIPLImplementation.extractInterpretedIplHostDevice(m));
                     break;
             }
@@ -1027,7 +1027,7 @@ public class LnIPLImplementationTest {
             switch (dev) {
                 case 1:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
-                           "Unknown Host Manufacturer/Device",
+                           "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
                 case 4:
@@ -1112,7 +1112,7 @@ public class LnIPLImplementationTest {
                    break;
                 default:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
-                            "Unknown Host Manufacturer/Device",
+                            "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                     break;
             }
@@ -1122,7 +1122,7 @@ public class LnIPLImplementationTest {
             switch (dev) {
                 case 1:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
-                           "Unknown Host Manufacturer/Device",
+                           "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
                 case 4:
@@ -1207,7 +1207,7 @@ public class LnIPLImplementationTest {
                    break;
                 default:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
-                            "Unknown Host Manufacturer/Device",
+                            "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                     break;
             }
@@ -1217,7 +1217,7 @@ public class LnIPLImplementationTest {
             switch (dev) {
                 case 1:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Unknown Host Manufacturer/Device",
+                           "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                    break;
                 case 4:
@@ -1302,7 +1302,7 @@ public class LnIPLImplementationTest {
                    break;
                 default:
                     Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
-                            "Unknown Host Manufacturer/Device",
+                            "Digitrax Unknown Device",
                             LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                     break;
             }
@@ -1366,7 +1366,7 @@ public class LnIPLImplementationTest {
                             break;
                         default:
                            Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: "+mfg+","+dev+",0,0",
-                                    "RR-CirKits (unknown device)",
+                                    "RR-CirKits Unknown Device",
                                    LnIPLImplementation.interpretHostManufacturerDevice(mfg,dev,0,0));
                             break;
                     }
