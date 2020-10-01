@@ -4,6 +4,7 @@ import jmri.*;
 import jmri.implementation.DefaultMeter;
 import jmri.implementation.MeterUpdateTask;
 import jmri.jmrix.loconet.duplexgroup.swing.LnIPLImplementation;
+import java.util.TimerTask;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ public class LnPredefinedMeters implements LocoNetListener {
     private SlotManager sm = null;
     private LnTrafficController tc = null;
     private final MeterUpdateTask updateTask;
+    private final TimerTask initializationTask;
 
     /**
      * Create a LnPredefinedMeters object
@@ -43,6 +45,15 @@ public class LnPredefinedMeters implements LocoNetListener {
         tc.addLocoNetListener(~0, this);
 
         updateTask.initTimer();
+
+        // a lazy work-around to try to ensure transmit path is established
+        // before making first query-mode request
+        initializationTask = new TimerTask() {
+            public void run() {
+                requestUpdateFromLayout();
+            }
+        };
+        jmri.util.TimerUtil.schedule(initializationTask, 10000); // conservatively chosen at 10 seconds
     }
 
     @Override
@@ -61,22 +72,25 @@ public class LnPredefinedMeters implements LocoNetListener {
         int srcDeviceType = msg.getElement(16);
         int srcSerNum = msg.getElement(18)+128*msg.getElement(19);
 
-        String voltSysName = createSystemName(srcDeviceType, srcSerNum, "Voltage");
+        String voltSysName = createSystemName(srcDeviceType, srcSerNum, "Voltage"); // NOI18N
         Meter m = InstanceManager.getDefault(MeterManager.class).getBySystemName(voltSysName);
         updateAddMeter(m, voltSysName, valVolts, true);
 
-        String ampsSysName = createSystemName(srcDeviceType, srcSerNum, "InputCurrent");
+        String ampsSysName = createSystemName(srcDeviceType, srcSerNum, "InputCurrent"); // NOI18N
         m = InstanceManager.getDefault(MeterManager.class).getBySystemName(ampsSysName);
         updateAddMeter(m, ampsSysName, valAmps, false);
     }
 
     public void dispose() {
         for (Meter m: InstanceManager.getDefault(MeterManager.class).getNamedBeanSet()) {
-            if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) {
+            if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) { // NOI18N
                 InstanceManager.getDefault(MeterManager.class).deregister(m);
                 updateTask.disable(m);
                 updateTask.dispose(m);
             }
+        }
+        if (initializationTask != null) {
+            initializationTask.cancel();
         }
     }
 
@@ -87,9 +101,9 @@ public class LnPredefinedMeters implements LocoNetListener {
     private final String createSystemName(int device, int sn, String typeString) {
         String devName = LnIPLImplementation.getDeviceName(0, device,0,0);
         if (devName == null) {
-            devName="["+device+"]";
+            devName="["+device+"]"; // NOI18N
         }
-        return sm.getSystemPrefix()+"V"+ devName + "(s/n"+sn+")"+typeString;
+        return sm.getSystemPrefix()+"V"+ devName + "(s/n"+sn+")"+typeString; // NOI18N
     }
 
     private void updateAddMeter(Meter m, String sysName, float value, boolean typeVolt ) {
@@ -108,24 +122,24 @@ public class LnPredefinedMeters implements LocoNetListener {
                 newMeter.setCommandedAnalogValue(value);
             } catch (JmriException e) {
                 log.debug("Exception setting {}Meter {} to value {}: {}",
-                        (typeVolt?"volt":"current"),
+                        (typeVolt?"volt":"current"), // NOI18N
                         sysName, value, e);
             }
             InstanceManager.getDefault(MeterManager.class).register(newMeter);
             log.debug("Added new {}Meter {} with value {}",
-                        (typeVolt?"volt":"current"),
+                        (typeVolt?"volt":"current"), // NOI18N
                     sysName, value);
         } else {
             try {
                 m.setCommandedAnalogValue(value);
             } catch (JmriException e) {
                 log.debug("Exception setting {}Meter {} to value {}: {}",
-                        (typeVolt?"volt":"current"),
+                        (typeVolt?"volt":"current"), // NOI18N
                         sysName, value, e);
             }
             log.debug("Updating currentMeter {} with value {}",
                     sysName, value);
-        }
+       }
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPredefinedMeters.class);
