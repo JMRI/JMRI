@@ -525,6 +525,13 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                     LnConstants.RE_IPL_MFR_DIGITRAX,
                     LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
         }
+        if (isIplUr92IdentityReportMessage(m)) {
+            return interpretHostManufacturerDevice(
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_HOST_UR92,
+                    LnConstants.RE_IPL_MFR_DIGITRAX,
+                    LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24);
+        }
 
         return interpretHostManufacturerDevice(extractIplIdentityHostManufacturer(m), extractIplIdentityHostDevice(m));
     }
@@ -913,9 +920,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     public static String getManufacturer(int manuf) {
         switch (manuf) {
             case LnConstants.RE_IPL_MFR_DIGITRAX:
-                return "Digitrax";
+                return LnConstants.DIGITRAX_STRING;
             case LnConstants.RE_IPL_MFR_RR_CIRKITS:
-                return "RR-CirKits";
+                return LnConstants.RR_CIRKITS_STRING;
             default:
                 return null;
         }
@@ -926,107 +933,122 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         if (getManufacturer(manuf) == null) {
             return null;
         }
-        switch (manuf) {
-            case LnConstants.RE_IPL_MFR_DIGITRAX: {
-                switch (device) {
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
-                        return "DCS51"; // NOI18N
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
-                        return "DCS52"; // NOI18N
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
-                        if ((slaveManuf == LnConstants.RE_IPL_MFR_DIGITRAX)
-                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
-                            return "DT402D"; // NOI18N
-                        } else {
-                            return "DT402(x)"; // NOI18N
-                        }
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_PR3:
-                        return "PR3"; // NOI18N
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_UR92:
-                        return "UR92"; // NOI18N
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_UT4:
-                        if ((slaveManuf == LnConstants.RE_IPL_MFR_DIGITRAX)
-                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
-                            return "UT4D"; // NOI18N
-                        } else {
-                            return "UT4(x)"; // NOI18N
-                        }
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO:
-                        return "DB210Opto";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB210:
-                        return "DB210";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DB220:
-                        return "DB220";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_PR4:
-                        return "PR4";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
-                        return "BXP88";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_LNWI:
-                        return "LNWI";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-                        return "DCS210";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
-                        return "DCS240";
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_DT500:
-                        if ((slaveManuf == LnConstants.RE_IPL_MFR_DIGITRAX)
-                                && (slave == LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24)) {
-                            return "DT500D"; // NOI18N
-                        } else {
-                            return "DT500(x)"; // NOI18N
-                        }
-
-                    case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
-                        return "BXPA1";
-                    default:
-                        return null;
-                }
+        for (DeviceTypes t: DeviceTypes.values()) {
+            if ((manuf == t.getManufacturer()) &&
+                    (device == t.getDeviceIdNumber()) &&
+                    (slaveManuf == t.getSlaveManufacturer()) &&
+                    (slave == t.getSlaveDeviceIdNumber())) {
+                return t.getDeviceName();
             }
-            case LnConstants.RE_IPL_MFR_RR_CIRKITS:
-                switch (device) {
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64:
-                        return "TC-64"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TC64_MKII:
-                        return "TC-64 Mk-II"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_LNCP:
-                        return "LNCP"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN:
-                        return "MotorMan"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN_II:
-                        return "MotorMan-II"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_SIGNALMAN:
-                        return "SignalMan"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_TOWERMAN:
-                        return "TowerMan"; // NOI18N
-
-                    case LnConstants.RE_IPL_RRCIRKITS_HOST_WATCHMAN:
-                        return "WatchMan"; // NOI18N
-
-                    default:
-                        return null;
-                }
-            default:
-                return null;
         }
+        return null;
     }
+
+    public enum DeviceTypes {
+        UT4D(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_UT4,
+            LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24,
+            LnConstants.DIGITRAX_STRING, "UT4D"),   // NOI18N
+        UT4X(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_UT4,
+            0,0,
+            LnConstants.DIGITRAX_STRING, "UT4(x)"),   // NOI18N
+        DCS51(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS51,
+            0,0,LnConstants.DIGITRAX_STRING, "DCS51"),   // NOI18N
+        DCS52(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS52,
+            0,0,LnConstants.DIGITRAX_STRING, "DCS52"),   // NOI18N
+        DT402D(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DT402,
+            LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24,
+            LnConstants.DIGITRAX_STRING, "DT402D"),   // NOI18N
+        DT402X(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DT402,
+            0,0, LnConstants.DIGITRAX_STRING, "DT402(x)"),   // NOI18N
+        PR3(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_PR3,
+            0,0, LnConstants.DIGITRAX_STRING, "PR3"),   // NOI18N
+        UR92(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_UR92,
+            LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24,
+            LnConstants.DIGITRAX_STRING, "UR92"),   // NOI18N
+        DB210OPTO(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DB210OPTO,
+            0,0, LnConstants.DIGITRAX_STRING, "DB210Opto"),   // NOI18N
+        DB210(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DB210,
+            0,0, LnConstants.DIGITRAX_STRING, "DB210"),   // NOI18N
+        DB220(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DB220,
+            0,0, LnConstants.DIGITRAX_STRING, "DB220"),   // NOI18N
+        PR4(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_PR4,
+            0,0, LnConstants.DIGITRAX_STRING, "PR4"),   // NOI18N
+        BXP88(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_BXP88,
+            0,0, LnConstants.DIGITRAX_STRING, "BXP88"),   // NOI18N
+        LNWI(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_LNWI,
+            0,0, LnConstants.DIGITRAX_STRING, "LNWI"),   // NOI18N
+        DCS210(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS210,
+            0,0, LnConstants.DIGITRAX_STRING, "DCS210"),   // NOI18N
+        DCS240(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DCS240,
+            0,0, LnConstants.DIGITRAX_STRING, "DCS240"),   // NOI18N
+        DT500D(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DT500,
+            LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_SLAVE_RF24,
+            LnConstants.DIGITRAX_STRING, "DT500D"),   // NOI18N
+        DT500X(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DT500,
+            0,0, LnConstants.DIGITRAX_STRING, "DT500(x)"),   // NOI18N
+        DT602X(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_DT602,
+            0,0, LnConstants.DIGITRAX_STRING, "DT602(x)"),   // NOI18N
+        BXPA1(LnConstants.RE_IPL_MFR_DIGITRAX, LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1,
+            0,0, LnConstants.DIGITRAX_STRING, "BXPA1"),   // NOI18N
+        RR_CKTS_TC64(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_TC64,
+            0,0, LnConstants.RR_CIRKITS_STRING, "TC-64"),
+        RR_CKTS_TC_MKII(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_TC64_MKII,
+            0,0, LnConstants.RR_CIRKITS_STRING, "TC-64 Mk-II"),
+        RR_CKTS_LNCP(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_LNCP,
+            0,0, LnConstants.RR_CIRKITS_STRING, "LNCP"),
+        RR_CKTS_MOTORMan(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN,
+            0,0, LnConstants.RR_CIRKITS_STRING, "MotorMan"),
+        RR_CKTS_MOTORMANII(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_MOTORMAN_II,
+            0,0, LnConstants.RR_CIRKITS_STRING, "MotorMan-II"),
+        RR_CKTS_SIGNALMAN(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_SIGNALMAN,
+            0,0, LnConstants.RR_CIRKITS_STRING, "SignalMan"),
+        RR_CKTS_TOWERMAN(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_TOWERMAN,
+            0,0, LnConstants.RR_CIRKITS_STRING, "TowerMan"),
+        RR_CKTS_WATCHMAN(LnConstants.RE_IPL_MFR_RR_CIRKITS, LnConstants.RE_IPL_RRCIRKITS_HOST_WATCHMAN,
+            0,0, LnConstants.RR_CIRKITS_STRING, "WatchMan");
+
+        private int manufacturer;
+        private int deviceIdNumber;
+        private int slaveManufacturer;
+        private int slaveDeviceIdNumber;
+        private String manufacturerName;
+        private String deviceName;
+
+        private DeviceTypes(int mfg, int devId, int slaveMfg, int slaveDevId,
+                String mfgName, String devName) {
+            this.manufacturer = mfg & 0x7f;
+            this.deviceIdNumber = devId & 0x7f;
+            this.slaveManufacturer = slaveMfg & 0x7f;
+            this.slaveDeviceIdNumber = slaveDevId & 0x7f;
+            this.manufacturerName = mfgName;
+            this.deviceName = devName;
+        }
+        public final int getManufacturer() {
+            return manufacturer;
+        }
+        public final int getDeviceIdNumber() {
+            return deviceIdNumber;
+        }
+        public final int getSlaveManufacturer() {
+            return slaveManufacturer;
+        }
+        public final int getSlaveDeviceIdNumber() {
+            return slaveDeviceIdNumber;
+        }
+        public final boolean isDeviceMatch(int mfg, int devId, int slaveMfg, int slaveDevId) {
+            return (mfg==manufacturer) && (devId == deviceIdNumber) &&
+                    (slaveMfg == slaveManufacturer) && (slaveDevId == slaveDeviceIdNumber);
+        }
+        public final boolean isDeviceMatch(int mfg, int devId) {
+            return isDeviceMatch(mfg, devId, 0, 0);
+        }
+        public final String getManufacturerName() {
+            return manufacturerName;
+        }
+        public final String getDeviceName() {
+            return deviceName;
+        }
+    };
 
     private boolean waitingForIplReply;
 }
