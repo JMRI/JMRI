@@ -46,14 +46,21 @@ public class LnPredefinedMeters implements LocoNetListener {
 
         updateTask.initTimer();
 
-        // a lazy work-around to try to ensure transmit path is established
-        // before making first query-mode request
+        // a work-around to ensure that the LocoNet transmit path is established
+        // before making an initial query-mode request
         initializationTask = new TimerTask() {
+            @Override
             public void run() {
-                requestUpdateFromLayout();
+                if (sm.getSystemConnectionMemo().getLnTrafficController().status()) {
+                    requestUpdateFromLayout();
+                    initializationTask.cancel();
+                }
             }
         };
-        jmri.util.TimerUtil.schedule(initializationTask, 10000); // conservatively chosen at 10 seconds
+
+        jmri.util.TimerUtil.scheduleAtFixedRate(initializationTask, 85l,
+                85l); // traffic controller status to be checked after 85mSec,
+                            // until ready to transmit to LocoNet
     }
 
     @Override
@@ -95,6 +102,7 @@ public class LnPredefinedMeters implements LocoNetListener {
     }
 
     public void requestUpdateFromLayout() {
+        log.debug("sending request for voltmeter/ammeter information");
         sm.sendReadSlot(249);
     }
 
