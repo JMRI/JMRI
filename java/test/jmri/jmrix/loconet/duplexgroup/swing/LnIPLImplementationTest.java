@@ -606,6 +606,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS52",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -692,6 +696,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS52",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -775,6 +783,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS52",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -856,6 +868,10 @@ public class LnIPLImplementationTest {
                    break;
                 case 52:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS52",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 81:
@@ -1090,6 +1106,10 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS52",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0, dev));
+                   break;
                 case 81:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
                            "Digitrax BXPA1",
@@ -1102,7 +1122,7 @@ public class LnIPLImplementationTest {
                    break;
                 case 92:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
-                           "Digitrax UR92",
+                           "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
                 case 99:
@@ -1185,6 +1205,10 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS52",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
+                case 62:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DT602(x)",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
                 case 81:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
                            "Digitrax BXPA1",
@@ -1197,7 +1221,7 @@ public class LnIPLImplementationTest {
                    break;
                 case 92:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
-                           "Digitrax UR92",
+                           "Digitrax Unknown Device",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
                 case 99:
@@ -1215,49 +1239,9 @@ public class LnIPLImplementationTest {
 
         for (int dev = 0; dev < 128; ++dev) {
             switch (dev) {
-                case 1:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax Unknown Device",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
                 case 4:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
                            "Digitrax UT4D",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 20:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DB210Opto",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 21:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DB210",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 22:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DB220",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 27:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DCS210",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 28:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DCS240",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 35:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax PR3",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 36:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax PR4",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                    break;
                 case 42:
@@ -1270,34 +1254,9 @@ public class LnIPLImplementationTest {
                            "Digitrax DT500D",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                    break;
-                case 51:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DCS51",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 52:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax DCS52",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 81:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax BXPA1",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 88:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax BXP88",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
                 case 92:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
                            "Digitrax UR92",
-                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
-                   break;
-                case 99:
-                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
-                           "Digitrax LNWI",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                    break;
                 default:
@@ -1309,7 +1268,7 @@ public class LnIPLImplementationTest {
         }
 
         Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,99,128,24",
-                "Digitrax LNWI",
+                "Digitrax Unknown Device",
                 LnIPLImplementation.interpretHostManufacturerDevice(0,99,128,24));
 
         Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,50,0,152",
@@ -1636,7 +1595,7 @@ public class LnIPLImplementationTest {
         Assert.assertFalse("isIplQueryTimerRunning is false", iplImplementation.isIplQueryTimerRunning());
         iplImplementation = new LnIPLImplementation(memo);
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
