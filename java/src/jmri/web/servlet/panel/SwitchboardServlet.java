@@ -82,13 +82,6 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         }
         panel.addContent(bgColor);
         log.debug("beanswitch shape = {}", editor.getSwitchShape());
-        //Element swColor = new Element("switchColor"); // TODO EBR
-//        if ("symbol".equals(editor.getSwitchShape())) { // insert symbol details into beanswitch
-//            swColor.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
-//            swColor.setAttribute("activecolor", editor.getInactiveSwitchColor());
-//            swColor.setAttribute("unknowncolor", editor.getUnknownSwitchColor());
-//        }
-        //panel.addContent(swColor);
 
         Element text = new Element("text");
         text.setAttribute("color", editor.getDefaultTextColor());
@@ -105,9 +98,6 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                     Element e = ConfigXmlManager.elementFromObject(sub);
                     if (e != null) {
                         log.debug("element name: {}", e.getName());
-                        // if (!"button".equals(e.getShape())) { // insert icon details into beanswitch
-                        // do sth;
-                        // }
                         try {
                             e.setAttribute("label", sub.getNameString());
                             e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
@@ -126,12 +116,12 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                         }
                         // read shared attribs
                         e.setAttribute("textcolor", editor.getDefaultTextColor());
-                        e.setAttribute("activecolor", editor.getActiveSwitchColor());
-                        e.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
+//                        e.setAttribute("activecolor", editor.getActiveSwitchColor());
+//                        e.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
                         e.setAttribute("type", editor.getSwitchType());
                         e.setAttribute("connection", editor.getSwitchManu());
                         e.setAttribute("shape", editor.getSwitchShape());
-                        e.setAttribute("columns", Integer.toString(editor.getRows()));
+                        e.setAttribute("rows", Integer.toString(editor.getRows()));
                         // process and add
                         parsePortableURIs(e);
                         panel.addContent(e);
