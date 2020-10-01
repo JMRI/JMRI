@@ -360,6 +360,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs240IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS210 device", dev == 27,
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS210+ device", dev == 26,
+                    LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
         }
         mfg = 1;
         msg[4]=mfg;
@@ -402,6 +404,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs240IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is DCS210 device, mfg=1",
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
+            Assert.assertFalse("IplIdentity device "+dev+" check is DCS210+ device, mfg=1",
+                    LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
         }
         mfg = 127;
         msg[4] = mfg;
@@ -444,6 +448,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs240IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is DCS210 device, mfg=127",
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
+            Assert.assertFalse("IplIdentity device "+dev+" check is DCS210+ device, mfg=127",
+                    LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
         }
 
         mfg = 0;
@@ -489,6 +495,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs240IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS210 device, mfg=0, slave=24", dev == 27,
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS210+ device, mfg=0, slave=24", dev == 26,
+                    LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
         }
         mfg = 0;
         msg[4] = mfg;
@@ -534,6 +542,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplDcs240IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS210 device, mfg=0, slave=24, slaveMfg=2", dev == 27,
                     LnIPLImplementation.isIplDcs210IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS210+ device, mfg=0, slave=24, slaveMfg=2", dev == 26,
+                    LnIPLImplementation.isIplDcs210PlusIdentityReportMessage(m));
             }
 
         m = new LocoNetMessage(2);
@@ -569,6 +579,10 @@ public class LnIPLImplementationTest {
                    break;
                 case 22:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DB220",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
+                case 26:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS210+",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 27:
@@ -664,6 +678,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DB220",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 26:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS210+",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 27:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS210",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -751,6 +769,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DB220",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 26:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS210+",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 27:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS210",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -836,6 +858,10 @@ public class LnIPLImplementationTest {
                    break;
                 case 22:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DB220",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
+                case 26:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS210+",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 27:
@@ -1066,6 +1092,11 @@ public class LnIPLImplementationTest {
                            "Digitrax DB220",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
+                case 26:
+                   Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
+                           "Digitrax DCS210+",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
+                   break;
                 case 27:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
                            "Digitrax DCS210",
@@ -1163,6 +1194,11 @@ public class LnIPLImplementationTest {
                 case 22:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
                            "Digitrax DB220",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
+                case 26:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
+                           "Digitrax DCS210+",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
                 case 27:

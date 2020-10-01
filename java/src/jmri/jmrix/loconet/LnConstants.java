@@ -504,6 +504,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DB210OPTO = 0x14;
     public final static int RE_IPL_DIGITRAX_HOST_DB210 = 0x15;
     public final static int RE_IPL_DIGITRAX_HOST_DB220 = 0x16;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS210PLUS = 0x1a;
     public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
     public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
     public final static int RE_IPL_DIGITRAX_HOST_DCS52 = 0x34;
