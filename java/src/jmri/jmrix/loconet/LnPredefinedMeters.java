@@ -24,6 +24,7 @@ public class LnPredefinedMeters implements LocoNetListener {
     private LnTrafficController tc = null;
     private final MeterUpdateTask updateTask;
     private final TimerTask initializationTask;
+    private boolean initializationTaskIsRunning;
 
     /**
      * Create a LnPredefinedMeters object
@@ -31,7 +32,7 @@ public class LnPredefinedMeters implements LocoNetListener {
      * @param scm  connection memo
      */
     public LnPredefinedMeters(LocoNetSystemConnectionMemo scm) {
-
+        initializationTaskIsRunning = false;
         this.sm = scm.getSlotManager();
         this.tc = scm.getLnTrafficController();
 
@@ -54,13 +55,15 @@ public class LnPredefinedMeters implements LocoNetListener {
                 if (sm.getSystemConnectionMemo().getLnTrafficController().status()) {
                     requestUpdateFromLayout();
                     initializationTask.cancel();
+                    initializationTaskIsRunning = false;
                 }
             }
         };
 
-        jmri.util.TimerUtil.scheduleAtFixedRate(initializationTask, 85l,
-                85l); // traffic controller status to be checked after 85mSec,
+        jmri.util.TimerUtil.scheduleAtFixedRate(initializationTask, 85L,
+                85L); // traffic controller status to be checked after 85mSec,
                             // until ready to transmit to LocoNet
+        initializationTaskIsRunning = true;
     }
 
     @Override
@@ -96,7 +99,7 @@ public class LnPredefinedMeters implements LocoNetListener {
                 updateTask.dispose(m);
             }
         }
-        if (initializationTask != null) {
+        if ((initializationTask != null)&& initializationTaskIsRunning) {
             initializationTask.cancel();
         }
     }
