@@ -69,7 +69,7 @@ public abstract class ImportExpressionComplexTestBase {
     
     /**
      * Create a new conditional variable of the desired type
-     * @return 
+     * @return the conditional variable
      */
     abstract public ConditionalVariable newConditionalVariable();
     
@@ -168,7 +168,7 @@ public abstract class ImportExpressionComplexTestBase {
 //        check.runTest("Logix is removed and LogixNG is not activated. Enum: "+e.name(), false);
         
         // REMOVE LATER!!!
-        if (1==1) return;
+//        if (1==1) return;
         
         // We want the conditionalNGs run immediately during this test
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
@@ -186,6 +186,8 @@ public abstract class ImportExpressionComplexTestBase {
     @Test
     public void testAll() throws JmriException {
         for (Enum e : getEnums()) {
+//            if (e.name().startsWith("Memory")) continue;
+//            if (e.name().equals("MemoryEquals")) continue;
 //            if (e.name().equals("ConstantEquals")) continue;
 //            if (e.name().equals("ConstantCompareLessThan")) continue;
             setupTest();

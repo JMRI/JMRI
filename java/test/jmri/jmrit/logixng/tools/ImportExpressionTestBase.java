@@ -63,7 +63,7 @@ public abstract class ImportExpressionTestBase {
     
     /**
      * Create a new conditional variable of the desired type
-     * @return 
+     * @return the new conditional variable
      */
     abstract public ConditionalVariable newConditionalVariable();
     

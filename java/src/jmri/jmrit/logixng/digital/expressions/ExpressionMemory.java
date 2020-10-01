@@ -35,6 +35,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
+    private boolean _listenToOtherMemory = false;
     private boolean _listenersAreRegistered = false;
     
     public ExpressionMemory(String sys, String user)
@@ -79,6 +80,46 @@ public class ExpressionMemory extends AbstractDigitalExpression
     
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
+    }
+    
+    public void setOtherMemory(@Nonnull String memoryName) {
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        setOtherMemory(memory);
+        if (memory == null) {
+            log.error("memory \"{}\" is not found", memoryName);
+        }
+//        System.out.format("setOtherMemory: %s, %s%n", memoryName, memory);
+    }
+    
+    public void setOtherMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
+            log.error("setMemory must not be called when listeners are registered", e);
+            throw e;
+        }
+        _otherMemoryHandle = handle;
+    }
+    
+    public void setOtherMemory(@CheckForNull Memory memory) {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
+            log.error("setMemory must not be called when listeners are registered", e);
+            throw e;
+        }
+        if (memory != null) {
+            if (_otherMemoryHandle != null) {
+                InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+            }
+            _otherMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(memory.getDisplayName(), memory);
+        } else {
+            _otherMemoryHandle = null;
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+        }
+    }
+    
+    public NamedBeanHandle<Memory> getOtherMemory() {
+        return _otherMemoryHandle;
     }
     
     public void setConstantValue(String constantValue) {
@@ -261,11 +302,13 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+//        System.out.format("ExpressionMemory.evaluate: compareTo: %s, memoryOperation: %s, memoryValue: %s, otherValue: %s%n", _compareTo.name(), _memoryOperation.name(), _memoryHandle, _otherMemoryHandle);
         if (_memoryHandle == null) return false;
         
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
         String memoryValue = getString(_memoryHandle.getBean().getValue());
         String otherValue = null;
+        boolean result;
         
         switch (_compareTo) {
             case VALUE:
@@ -290,22 +333,31 @@ public class ExpressionMemory extends AbstractDigitalExpression
             case GREATER_THAN_OR_EQUAL:
                 // fall through
             case GREATER_THAN:
-                return compare(memoryValue, otherValue, _caseInsensitive);
+                result = compare(memoryValue, otherValue, _caseInsensitive);
+                break;
                 
             case IS_NULL:
-                return memoryValue == null;
+                result = memoryValue == null;
+                break;
             case IS_NOT_NULL:
-                return memoryValue != null;
+                result = memoryValue != null;
+                break;
                 
             case MATCH_REGEX:
-                return matchRegex(memoryValue, otherValue);
+                result = matchRegex(memoryValue, otherValue);
+                break;
                 
             case NOT_MATCH_REGEX:
-                return !matchRegex(memoryValue, otherValue);
+                result = !matchRegex(memoryValue, otherValue);
+                break;
                 
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
         }
+        
+//        System.out.format("ExpressionMemory.evaluate: compareTo: %s, memoryOperation: %s, memoryValue: %s, otherValue: %s, result: %b%n", _compareTo.name(), _memoryOperation.name(), memoryValue, otherValue, result);
+        
+        return result;
     }
 
     /** {@inheritDoc} */
@@ -402,6 +454,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_memoryHandle != null)) {
             _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -411,6 +464,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _memoryHandle.getBean().removePropertyChangeListener("value", this);
+            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = false;
         }
     }

@@ -4,26 +4,17 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import jmri.Conditional;
-import jmri.ConditionalAction;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Light;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.Turnout;
-import jmri.SignalHead;
-import jmri.SignalMast;
+import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.*;
+import jmri.jmrit.logixng.tools.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -348,7 +339,73 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getMemoryExpression(@Nonnull ConditionalVariable cv, Memory my) throws JmriException {
-        return null;
+        ExpressionMemory expression =
+                new ExpressionMemory(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setMemory(my);
+        
+        switch (cv.getNum1()) {
+            case ConditionalVariable.EQUAL:
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
+                break;
+            case ConditionalVariable.LESS_THAN:
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
+                break;
+            case ConditionalVariable.LESS_THAN_OR_EQUAL:
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL);
+                break;
+            case ConditionalVariable.GREATER_THAN:
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+                break;
+            case ConditionalVariable.GREATER_THAN_OR_EQUAL:
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadMemoryNum1", cv.getType().toString()));
+        }
+        
+        Memory memory;
+        switch (cv.getType()) {
+            case MEMORY_EQUALS:
+                expression.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+                expression.setCaseInsensitive(false);
+                expression.setConstantValue(cv.getDataString());
+                break;
+            case MEMORY_EQUALS_INSENSITIVE:
+                expression.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+                expression.setCaseInsensitive(true);
+                expression.setConstantValue(cv.getDataString());
+                break;
+            case MEMORY_COMPARE:
+                expression.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+                expression.setCaseInsensitive(false);
+                expression.setOtherMemory(cv.getDataString());
+                memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
+                if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
+                    memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
+                    expression.setOtherMemory(memory.getSystemName());
+                }
+                break;
+            case MEMORY_COMPARE_INSENSITIVE:
+                expression.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+                expression.setCaseInsensitive(true);
+                expression.setOtherMemory(cv.getDataString());
+                memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
+                if (memory == null) {   // Logix allows the memory name in cv.getDataString() to be a system name without system prefix
+                    memory = InstanceManager.getDefault(MemoryManager.class).provide(cv.getDataString());
+                    expression.setOtherMemory(memory.getSystemName());
+                }
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadMemoryType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     

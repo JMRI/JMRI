@@ -52,21 +52,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
     public Enum[] getEnums() {
         return MemoryEnum.values();
     }
-/*    
-    @Override
-    public Enum getOtherEnum(Enum e) {
-        int value = e.ordinal() + 1;
-        if (value >= MemoryEnum.values().length) value -= MemoryEnum.values().length;
-        return MemoryEnum.values()[value];
-    }
     
-    @Override
-    public Enum getThirdEnum(Enum e) {
-        int value = e.ordinal() + 2;
-        if (value >= MemoryEnum.values().length) value -= MemoryEnum.values().length;
-        return MemoryEnum.values()[value];
-    }
-*/    
     @Override
     public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
         MemoryEnum me = MemoryEnum.valueOf(e.name());
@@ -238,34 +224,7 @@ public class ImportExpressionMemoryTest extends ImportExpressionComplexTestBase 
                 throw new RuntimeException("Unknown enum: "+e.name());
         }
     }
-/*
-    @Override
-    public void setConditionalVariableState(Enum e) {
-        switch (MemoryEnum.valueOf(e.name())) {
-            case ConstantEquals:
-                cv.setType(Conditional.Type.MEMORY_EQUALS);
-                break;
-                
-            case ConstantCompareLessThan:
-                cv.setType(Conditional.Type.MEMORY_COMPARE);
-                break;
-                
-            default:
-                throw new RuntimeException("Unknown enum: "+e.name());
-/*                
-            case EQUALS:
-                cv.setType(Conditional.Type.SENSOR_ACTIVE);
-                break;
-                
-//            case OFF:
-//            case OTHER:
-            default:
-                cv.setType(Conditional.Type.SENSOR_INACTIVE);
-                break;
-*./
-        }
-    }
-*/
+    
     @Override
     public ConditionalVariable newConditionalVariable() {
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
