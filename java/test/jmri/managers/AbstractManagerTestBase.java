@@ -142,7 +142,7 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
     @Test
     public void testMakeSystemNameWithNoPrefixNotASystemName() {
         
-        Assert.assertThrows(jmri.NamedBean.BadSystemNameException.class, () -> l.makeSystemName(l.getSystemNamePrefix()+"$:"));
+        Assert.assertThrows(jmri.NamedBean.BadSystemNameException.class, () -> l.makeSystemName("$:"));
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for " + l.getBeanTypeHandled() + ": ");
         
     } 
