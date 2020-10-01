@@ -933,7 +933,8 @@ public class Maintenance {
         tempText = new StringBuilder();
         found = false;
         empty = true;
-        java.util.Enumeration<BlockBossLogic> enumeration = BlockBossLogic.entries();
+        Enumeration<BlockBossLogic> enumeration = Collections.enumeration(
+            InstanceManager.getDefault(jmri.jmrit.blockboss.BlockBossLogicProvider.class).provideAll());
         while (enumeration.hasMoreElements()) {
             // get the next Logix
             BlockBossLogic bbl = enumeration.nextElement();
