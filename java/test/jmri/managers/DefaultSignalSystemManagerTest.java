@@ -8,7 +8,6 @@ import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -107,14 +106,14 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
         }
     }
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

@@ -2,7 +2,6 @@ package jmri.jmrix.internal;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -59,14 +58,14 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Assert.assertTrue(lm.newLight("IL21", "my name") instanceof VariableLight);
     }
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

@@ -6,7 +6,6 @@ import java.util.*;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -277,14 +276,14 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
                 .hasMessage("Property foo cannot be silenced.");
     }
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     private static class CountingPropertyChangeListener implements PropertyChangeListener {

@@ -5,7 +5,6 @@ import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -102,14 +101,14 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         Assert.assertEquals("Verify that we get two buffers & one listener", expResult, result);
     }
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach

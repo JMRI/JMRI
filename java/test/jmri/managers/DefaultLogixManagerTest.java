@@ -9,7 +9,6 @@ import org.junit.jupiter.api.*;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.util.junit.annotations.ToDo;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
@@ -69,15 +68,15 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         // test of some fails
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
     }
-    
+
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
     
+    // No manager-specific system name validation at present
     @Test
     @Override
-    @ToDo("Use test when tested class performs class-specific name validation.")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
