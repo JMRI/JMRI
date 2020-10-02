@@ -31,7 +31,7 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Sensors and Reporters, must contain at least 1 number.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -41,7 +41,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Turnouts, Sensors and Reporters, must contain at least 1 number.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -104,10 +104,15 @@
             <ul>
                 <li>Default Output Interval reduced to 100ms.</li>
             </ul>
+            
+        <h4>Pi</h4>
+            <ul>
+                <li>Improved System Name validation for Turnouts and Sensors, numeric from 0 - 999</li>
+            </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Standalone sensors, must contain at least 1 number.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -127,7 +132,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Turnouts and Sensors, must contain at least 1 number.</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -138,6 +143,11 @@
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
                 <li></li>
+            </ul>
+            
+        <h4>XPA</h4>
+            <ul>
+                <li>Improved System Name validation for Turnouts, must be numeric.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
