@@ -23,6 +23,7 @@ public class LnPredefinedMeters implements LocoNetListener {
     private SlotManager sm = null;
     private LnTrafficController tc = null;
     private final MeterUpdateTask updateTask;
+    private final jmri.util.TimerUtil initializationTimer;
     private final TimerTask initializationTask;
 
     /**
@@ -58,8 +59,8 @@ public class LnPredefinedMeters implements LocoNetListener {
             }
         };
 
-        jmri.util.TimerUtil.scheduleAtFixedRate(initializationTask, 85L,
-                85L); // traffic controller status to be checked after 85mSec,
+        initializationTimer = new jmri.util.TimerUtil();
+        initializationTimer.schedule(initializationTask, 85L, 85L); // traffic controller status to be checked after 85mSec,
                             // until ready to transmit to LocoNet
     }
 
@@ -91,8 +92,8 @@ public class LnPredefinedMeters implements LocoNetListener {
     public void dispose() {
         for (Meter m: InstanceManager.getDefault(MeterManager.class).getNamedBeanSet()) {
             if (m.getSystemName().startsWith(sm.getSystemPrefix()+"V")) { // NOI18N
-                InstanceManager.getDefault(MeterManager.class).deregister(m);
                 updateTask.disable(m);
+                InstanceManager.getDefault(MeterManager.class).deregister(m);
                 updateTask.dispose(m);
             }
         }
