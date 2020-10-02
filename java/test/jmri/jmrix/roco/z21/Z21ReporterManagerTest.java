@@ -33,6 +33,16 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
        JUnitUtil.waitFor( ()-> { return zr.getReporter("ZR1") != null; },"wait for reporter creation");
        Assert.assertNotNull("Reporter Created via message", zr.getReporter("ZR1"));
    }
+   
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
    @BeforeEach
     @Override
