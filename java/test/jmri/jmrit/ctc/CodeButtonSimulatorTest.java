@@ -1,17 +1,17 @@
-package jmri.jmrit.ctc.editor.code;
+package jmri.jmrit.ctc;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /*
-* Tests for the FindAndReplace Class
-* @author  Dave Sand   Copyright (C) 2019
+* Test for the CodeButtonSimulator Class
+* @author  Dave Sand   Copyright (C) 2020
 */
-public class FindAndReplaceTest {
+public class CodeButtonSimulatorTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("FindAndReplace Constructor Return", new FindAndReplace());
+        Assert.assertNotNull("CodeButtonSimulator Constructor Return", new CodeButtonSimulator());
     }
 
     @BeforeEach

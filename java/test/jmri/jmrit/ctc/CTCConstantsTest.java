@@ -4,7 +4,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /*
-* Tests for the CTCConstants Class
+* Test for the CTCConstants Class
+* Provide minimal coverage, there is no executable code in the class.
 * @author  Dave Sand   Copyright (C) 2019
 */
 public class CTCConstantsTest {

@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * This describes a single line of Call On Data from the GUI screen.
  */
 public class CallOnEntry {
@@ -20,7 +20,7 @@ public class CallOnEntry {
     public final String _mSwitchIndicator4;
     public final String _mSwitchIndicator5;
     public final String _mSwitchIndicator6;
-    
+
     private static final int EXTERNAL_SIGNAL_INDEX = 0;
     private static final int SIGNAL_FACING_DIRECTION_INDEX = 1;
     private static final int SIGNAL_ASPECT_TO_DISPLAY_INDEX = 2;
@@ -47,45 +47,5 @@ public class CallOnEntry {
         _mSwitchIndicator4 = arrayListOfStrings.get(SWITCHINDICATOR4_INDEX);
         _mSwitchIndicator5 = arrayListOfStrings.get(SWITCHINDICATOR5_INDEX);
         _mSwitchIndicator6 = arrayListOfStrings.get(SWITCHINDICATOR6_INDEX);
-    }
-    
-    public CallOnEntry( String externalSignal,
-                        String signalFacingDirection,
-                        String signalAspectToDisplay,
-                        String calledOnExternalSensor,
-                        String externalBlock,
-                        String switchIndicator1,
-                        String switchIndicator2,
-                        String switchIndicator3,
-                        String switchIndicator4,
-                        String switchIndicator5,
-                        String switchIndicator6) {
-        _mExternalSignal = externalSignal;
-        _mSignalFacingDirection = signalFacingDirection;
-        _mSignalAspectToDisplay = signalAspectToDisplay;
-        _mCalledOnExternalSensor = calledOnExternalSensor;
-        _mExternalBlock = externalBlock;
-        _mSwitchIndicator1 = switchIndicator1;
-        _mSwitchIndicator2 = switchIndicator2;
-        _mSwitchIndicator3 = switchIndicator3;
-        _mSwitchIndicator4 = switchIndicator4;
-        _mSwitchIndicator5 = switchIndicator5;
-        _mSwitchIndicator6 = switchIndicator6;
-    }
-    
-    public String toCSVString() {
-        ArrayList<String> newValueArrayList = new ArrayList<>(Arrays.asList(new String[ARRAY_SIZE]));
-        newValueArrayList.set(EXTERNAL_SIGNAL_INDEX, _mExternalSignal);
-        newValueArrayList.set(SIGNAL_FACING_DIRECTION_INDEX, _mSignalFacingDirection);
-        newValueArrayList.set(SIGNAL_ASPECT_TO_DISPLAY_INDEX, _mSignalAspectToDisplay);
-        newValueArrayList.set(CALLED_ON_EXTERNAL_SENSOR_INDEX, _mCalledOnExternalSensor);
-        newValueArrayList.set(EXTERNAL_BLOCK_INDEX, _mExternalBlock);
-        newValueArrayList.set(SWITCHINDICATOR1_INDEX, _mSwitchIndicator1);
-        newValueArrayList.set(SWITCHINDICATOR2_INDEX, _mSwitchIndicator2);
-        newValueArrayList.set(SWITCHINDICATOR3_INDEX, _mSwitchIndicator3);
-        newValueArrayList.set(SWITCHINDICATOR4_INDEX, _mSwitchIndicator4);
-        newValueArrayList.set(SWITCHINDICATOR5_INDEX, _mSwitchIndicator5);
-        newValueArrayList.set(SWITCHINDICATOR6_INDEX, _mSwitchIndicator6);
-        return ProjectsCommonSubs.constructCSVStringFromArrayList(newValueArrayList);
     }
 }

@@ -327,14 +327,10 @@
      <tocitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
       <tocitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
-      <tocitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
-
-      <tocitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+      <tocitem text="Import " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
      </tocitem>
      <tocitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
-      <tocitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
-
       <tocitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
 
      </tocitem>

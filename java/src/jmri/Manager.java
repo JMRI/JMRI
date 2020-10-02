@@ -623,6 +623,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int PANELFILES = TIMEBASE + 10;
     public static final int ENTRYEXIT = PANELFILES + 10;
     public static final int METERFRAMES = ENTRYEXIT + 10;
+    public static final int CTCDATA = METERFRAMES + 10;
 
     /**
      * Determine the order that types should be written when storing panel
