@@ -61,11 +61,18 @@ public class LnPredefinedMeters implements LocoNetListener {
                 || msg.getElement(3) != 0x79) {
             return;
         }
+        int srcDeviceType = msg.getElement(16);
+        if ((srcDeviceType == LnConstants.RE_IPL_DIGITRAX_HOST_BXP88)
+            || (srcDeviceType == LnConstants.RE_IPL_DIGITRAX_HOST_LNWI)
+            || (srcDeviceType == LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1)) {
+            // these devices support Query Mode but always return 0s for
+            // voltage/current data
+            return;
+        }
 
         float valAmps = msg.getElement(6)/10.0f;
         float valVolts = msg.getElement(4)*2.0f/10.0f;
 
-        int srcDeviceType = msg.getElement(16);
         int srcSerNum = msg.getElement(18)+128*msg.getElement(19);
 
         String voltSysName = createSystemName(srcDeviceType, srcSerNum, "Voltage"); // NOI18N
