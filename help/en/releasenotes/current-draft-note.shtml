@@ -21,7 +21,7 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
@@ -68,7 +68,7 @@
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -451,6 +451,9 @@
         <ul>
             <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
                 end JMRI and then request that the underlying OS shutdown or restart itself</li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
         </ul>
 
     <h3>Signals</h3>
