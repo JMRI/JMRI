@@ -89,7 +89,7 @@ public class LnMeterInitTask {
 
         @Override
         public void run() {
-            if (_isEnabled) {
+            if (_isEnabled && tc.status()) {
                 log.debug("Timer triggered.");
                 tc.sendLocoNetMessage(new LocoNetMessage(
                         new int[] {LnConstants.OPC_RQ_SL_DATA, 0x01, 0x79, 0x00}));
