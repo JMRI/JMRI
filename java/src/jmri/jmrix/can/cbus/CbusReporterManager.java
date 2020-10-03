@@ -97,6 +97,16 @@ public class CbusReporterManager extends AbstractReporterManager {
     public String getEntryToolTip() {
         return Bundle.getMessage("AddReporterEntryToolTip");
     }
+    
+    /** 
+     * Validates to only numeric system names.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
+    }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporterManager.class);
 

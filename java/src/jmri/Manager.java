@@ -124,7 +124,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
-    public default String makeSystemName(@Nonnull String name) {
+    public default String makeSystemName(@Nonnull String name) throws BadSystemNameException {
         return makeSystemName(name, true);
     }
 
@@ -146,7 +146,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
-    public default String makeSystemName(@Nonnull String name, boolean logErrors) {
+    public default String makeSystemName(@Nonnull String name, boolean logErrors) throws BadSystemNameException {
         return makeSystemName(name, logErrors, Locale.getDefault());
     }
 
@@ -170,7 +170,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if a valid name can't be created
      */
     @Nonnull
-    public default String makeSystemName(@Nonnull String name, boolean logErrors, Locale locale) {
+    public default String makeSystemName(@Nonnull String name, boolean logErrors, Locale locale) throws BadSystemNameException {
         String prefix = getSystemNamePrefix();
         // the one special case that is not caught by validation here
         if (name.trim().isEmpty()) { // In Java 9+ use name.isBlank() instead
@@ -195,7 +195,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      *                                messages in the default locale
      */
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name) {
+    public default String validateSystemNameFormat(@Nonnull String name) throws BadSystemNameException {
         return Manager.this.validateSystemNameFormat(name, Locale.getDefault());
     }
 
@@ -223,7 +223,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public default String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         return validateSystemNamePrefix(name, locale);
     }
 
@@ -243,7 +243,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateSystemNamePrefix(@Nonnull String name, @Nonnull Locale locale) {
+    public default String validateSystemNamePrefix(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         String prefix = getSystemNamePrefix();
         if (name.equals(prefix)) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameMatchesPrefix", name);
@@ -270,12 +270,83 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public default String validateTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         name = validateSystemNamePrefix(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         if (!suffix.equals(suffix.trim())) {
             throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameTrailingWhitespace", name, prefix);
+        }
+        return name;
+    }
+    
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * that verifies name has has at least 1 number in the String.
+     * <p>
+     * 
+     *
+     * @param name   the system name to validate
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws BadSystemNameException if provided name is an invalid format
+     */
+    @Nonnull
+    public default String validateTrimmedMin1NumberSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
+        name = validateTrimmedSystemNameFormat(name, locale);
+        if (!name.matches(".*\\d+.*")) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameMin1Number",name);
+        }
+        return name;
+    }
+    
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * that verifies name String is purely numeric.
+     * <p>
+     * 
+     *
+     * @param name   the system name to validate
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @return the unchanged value of the name parameter
+     * @throws BadSystemNameException if provided name is an invalid format
+     */
+    public default String validateSystemNameFormatOnlyNumeric(@Nonnull String name, @Nonnull Locale locale) {
+        name = validateTrimmedSystemNameFormat(name, locale);
+        try {
+            Integer.parseInt(name.substring(getSystemNamePrefix().length()));
+        }
+        catch (NumberFormatException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger",name,getSystemNamePrefix());
+        }
+        return name;
+    }
+    
+    /**
+     * Convenience implementation of
+     * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
+     * that verifies name has no invalid characters in the string.
+     * <p>
+     * Also checks validateSystemNamePrefix(name,locale);
+     *
+     * @param name   the system name to validate
+     * @param locale the locale for a localized exception; this is needed for
+     *               the JMRI web server, which supports multiple locales
+     * @param invalidChars array of invalid characters which cannot be in the system name.
+     * @return the unchanged value of the name parameter
+     * @throws BadSystemNameException if provided name is an invalid format
+     */
+    @Nonnull
+    public default String validateBadCharsInSystemNameFormat(@Nonnull String name, @Nonnull Locale locale, @Nonnull String[] invalidChars) throws BadSystemNameException {
+        name = validateSystemNamePrefix(name, locale);
+        for (String s : invalidChars) {
+            if (name.contains(s)) {
+                throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCharacter",name,s);
+            }
         }
         return name;
     }
@@ -296,7 +367,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public default String validateUppercaseTrimmedSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         name = validateTrimmedSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
@@ -324,19 +395,19 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, @Nonnull Locale locale) {
+    public default String validateIntegerSystemNameFormat(@Nonnull String name, int min, int max, @Nonnull Locale locale) throws BadSystemNameException {
         name = validateTrimmedSystemNameFormat(name, locale);
         String prefix = getSystemNamePrefix();
         String suffix = name.substring(prefix.length());
         try {
             int number = Integer.parseInt(suffix);
             if (number < min) {
-                throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameIntegerLessThan", name, min);
+                throw new BadSystemNameException(locale, "InvalidSystemNameIntegerLessThan", name, min);
             } else if (number > max) {
-                throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameIntegerGreaterThan", name, max);
+                throw new BadSystemNameException(locale, "InvalidSystemNameIntegerGreaterThan", name, max);
             }
         } catch (NumberFormatException ex) {
-            throw new NamedBean.BadSystemNameException(locale, "InvalidSystemNameNotInteger", name, prefix);
+            throw new BadSystemNameException(locale, "InvalidSystemNameNotInteger", name, prefix);
         }
         return name;
     }
@@ -359,7 +430,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * @throws BadSystemNameException if provided name is an invalid format
      */
     @Nonnull
-    public default String validateNmraAccessorySystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public default String validateNmraAccessorySystemNameFormat(@Nonnull String name, @Nonnull Locale locale) throws BadSystemNameException {
         return this.validateIntegerSystemNameFormat(name, NmraPacket.accIdLowLimit, NmraPacket.accIdHighLimit, locale);
     }
 
@@ -649,6 +720,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     public static final int LOGIXNG_STRING_EXPRESSIONS = LOGIXNG_ANALOG_ACTIONS + 10;   // LogixNG StringExpression
     public static final int LOGIXNG_STRING_ACTIONS = LOGIXNG_STRING_EXPRESSIONS + 10;   // LogixNG StringAction
     public static final int METERFRAMES = LOGIXNG_STRING_ACTIONS + 10;
+    public static final int CTCDATA = METERFRAMES + 10;
 
     /**
      * Determine the order that types should be written when storing panel

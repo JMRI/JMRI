@@ -20,6 +20,11 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     public String getSystemName(int i) {
         return "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
+    }
 
     @Test
     public void testCtor() {

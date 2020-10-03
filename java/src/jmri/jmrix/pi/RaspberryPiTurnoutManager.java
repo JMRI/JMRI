@@ -32,5 +32,16 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
         Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }
+    
+    /**
+     * Validates to Integer Format 0-999 with valid prefix.
+     * eg. PT0 to PT999
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return this.validateIntegerSystemNameFormat(name, 0, 999, locale);
+    }
 
 }

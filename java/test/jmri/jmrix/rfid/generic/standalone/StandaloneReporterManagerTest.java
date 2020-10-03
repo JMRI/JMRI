@@ -39,6 +39,16 @@ public class StandaloneReporterManagerTest extends jmri.managers.AbstractReporte
 
         };
     }
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @AfterEach
     public void tearDown() {

@@ -2,7 +2,6 @@ package jmri.jmrix.internal;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
-
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,6 +17,16 @@ public class InternalReporterManagerTest extends jmri.managers.AbstractReporterM
     public String getSystemName(String i) {
         return "IR" + i;
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     @Override

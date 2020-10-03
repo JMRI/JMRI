@@ -130,6 +130,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
         return true;
     }
 
+    /**
+     * Does this command station require JMRI to send periodic function refresh packets?
+     * @return true if required, false if not
+     */
+    public boolean isFunctionRefreshRequired() {
+        boolean ret = true;
+        try {
+            //command stations starting with 3 handle their own function refresh
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive

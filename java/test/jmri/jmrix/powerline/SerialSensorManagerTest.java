@@ -131,6 +131,11 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix(){
+        return "B2";
+    }
 
     @Override
     @BeforeEach

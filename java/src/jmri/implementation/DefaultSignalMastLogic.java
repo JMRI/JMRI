@@ -846,8 +846,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
         if (advancedAspect != null) {
             String aspect = stopAspect;
             if (destList.get(destination).permissiveBlock) {
-                //if a block is in a permissive state then we set the permissive appearance
-                aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
+                if (!getSourceMast().isPermissiveSmlDisabled()) {
+                    //if a block is in a permissive state then we set the permissive appearance
+                    aspect = getSourceMast().getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.PERMISSIVE);
+                }
             } else {
                 for (int i = 0; i < advancedAspect.length; i++) {
                     if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
@@ -2244,7 +2246,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
                             if (log.isDebugEnabled()) {
                                 if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
                                          lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
-                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT) 
+                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)
                                         && (!lt.getBlockName().equals(""))) {
                                     log.debug("turnout in list is straight left/right wye");
                                     log.debug("turnout block Name {}", lt.getBlockName());
