@@ -497,6 +497,10 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.DARK;
                             break;
+                        case SIGNAL_HEAD_LUNAR:
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
+                            signalAspect = SignalHead.LUNAR;
+                            break;
                         case SIGNAL_HEAD_FLASHRED:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHRED;
@@ -508,6 +512,10 @@ public class DefaultLogix extends AbstractNamedBean
                         case SIGNAL_HEAD_FLASHGREEN:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHGREEN;
+                            break;
+                        case SIGNAL_HEAD_FLASHLUNAR:
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
+                            signalAspect = SignalHead.FLASHLUNAR;
                             break;
                         case SIGNAL_HEAD_LIT:
                         case SIGNAL_HEAD_HELD:
