@@ -2,6 +2,7 @@ package jmri.jmrit.ctc.editor.gui;
 
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  *
@@ -11,7 +12,7 @@ public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";
     private final AwtWindowProperties _mAwtWindowProperties;
-    
+
     /**
      * Creates new form dlgAbout.
      * @param awtWindowProperties window properties.
@@ -19,7 +20,7 @@ public class FrmAbout extends javax.swing.JFrame {
     public FrmAbout(AwtWindowProperties awtWindowProperties) {
         super();
         initComponents();
-        _mHelpTitle.setText(_mHelpTitle.getText() + CTCSerialData.CTCVersion);
+        _mHelpTitle.setText(_mHelpTitle.getText() + OtherData.CTC_VERSION);
         _mAwtWindowProperties = awtWindowProperties;
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mOK);

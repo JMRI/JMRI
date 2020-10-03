@@ -24,6 +24,19 @@ public class XBeeTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public String getSystemName(int i) {
         return "AT2:" + i;
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "2:2";
+    }
+    
+    /**
+     * Number of turnout to test. Made a separate method so it can be overridden
+     * in subclasses that do or don't support various numbers
+     */
+    protected int getNumToTest1() {
+        return 0;
+    }
 
     @Test
     public void testCtor() {

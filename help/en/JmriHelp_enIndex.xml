@@ -128,17 +128,13 @@
 
     </indexitem>
     <indexitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
-     <indexitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
-
      <indexitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
 
     </indexitem>
     <indexitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
-     <indexitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+     <indexitem text="Import " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
      <indexitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
-
-     <indexitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
     </indexitem>
    </indexitem>

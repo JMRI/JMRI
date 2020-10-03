@@ -44,26 +44,13 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    @Nonnull
-    public Turnout provideTurnout(@Nonnull String name) {
-        Turnout result = getTurnout(name);
-        if (result == null) {
-            result = newTurnout(makeSystemName(name), null);
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
             validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
+            log.error(e.getMessage());
             throw e;
         }
         // validate (will add "+" to unsigned int)
@@ -86,15 +73,14 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) {
         // first, check validity
+        String newAddress;
         try {
-            validateAddressFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            newAddress = CbusAddress.validateSysName(curAddress);
+         } catch (IllegalArgumentException e) {
+            newAddress = curAddress;
         }
-        // prefix unsigned int with "+" as service to user
-        String newAddress = CbusAddress.validateSysName(curAddress);
         return prefix + typeLetter() + newAddress;
     }
 
@@ -108,7 +94,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         try {
             validateAddressFormat(testAddr);
         } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            throw new JmriException(e.getMessage());
         }
         testAddr = CbusAddress.validateSysName(testAddr); // normalize Merg address
         Turnout t = getBySystemName(prefix + typeLetter() + testAddr);
@@ -143,7 +129,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         try {
             validateAddressFormat(name.substring(getSystemNamePrefix().length()));
         } catch (IllegalArgumentException ex) {
-            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", ex.getMessage());
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCustom", ex.getMessage());
         }
         return name;
     }
@@ -177,13 +163,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     void validateAddressFormat(String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
         log.debug("validated system name {}", newAddress);
-    }
-
-
-    /** {@inheritDoc} */
-    @Override
-    public Turnout getBySystemName(@Nonnull String key) {
-        return _tsys.get(key);
     }
 
     /**

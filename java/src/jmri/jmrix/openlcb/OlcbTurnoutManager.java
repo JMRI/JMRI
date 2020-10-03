@@ -1,7 +1,7 @@
 package jmri.jmrix.openlcb;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
@@ -125,9 +125,9 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
-            validateAddressFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),getSystemNamePrefix());
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            throw new JmriException(e.getMessage());
         }
         return prefix + typeLetter() + curAddress;
     }
@@ -136,30 +136,22 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
-            validateAddressFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),prefix+"T");
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            throw new JmriException(e.getMessage());
         }
         return curAddress;
     }
-
-    void validateAddressFormat(String address) throws IllegalArgumentException {
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb turnout address");
-        }
-        switch (v.length) {
-            case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
-                    break;
-                }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
-            case 2:
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
-        }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        name = super.validateSystemNameFormat(name,locale);
+        return OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
     }
     
     /**

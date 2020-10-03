@@ -24,6 +24,11 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public String getSystemName(int i) {
         return "GS" + i;
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "1008";
+    }
 
     @Test
     public void testSensorCreationAndRegistration() {

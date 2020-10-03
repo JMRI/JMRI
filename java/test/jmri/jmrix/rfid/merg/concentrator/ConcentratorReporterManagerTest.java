@@ -40,6 +40,16 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
     @NotApplicable("Not supported by this manager at this time")
     public void testReporterProvideByNumber() {
     }
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No test for manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     ConcentratorTrafficController tc = null;
 

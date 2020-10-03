@@ -13,12 +13,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -31,7 +31,7 @@
 
         <h4>DCC4pc</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Sensors and Reporters, must contain at least 1 number.</li>
             </ul>
 
         <h4>Direct</h4>
@@ -41,7 +41,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Turnouts, Sensors and Reporters, must contain at least 1 number.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -105,10 +105,15 @@
             <ul>
                 <li>Default Output Interval reduced to 100ms.</li>
             </ul>
+            
+        <h4>Pi</h4>
+            <ul>
+                <li>Improved System Name validation for Turnouts and Sensors, numeric from 0 - 999</li>
+            </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Standalone sensors, must contain at least 1 number.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -128,7 +133,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>Improved System Name validation for Turnouts and Sensors, must contain at least 1 number.</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -139,6 +144,11 @@
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
                 <li></li>
+            </ul>
+            
+        <h4>XPA</h4>
+            <ul>
+                <li>Improved System Name validation for Turnouts, must be numeric.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -294,7 +304,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -349,7 +359,13 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li></li>
+            <li>The CTC tool no longer uses an external XML file, CTCSystem.xml, for retaining
+            its configuration.  The configuration is now part of the standard PanelPro data file.
+            This change eliminates issues with data consistency between the JMRI tables and
+            the CTC configuration.  The CTC Editor File menu has an menu item to import an
+            existing CTCSystem.xml file so that the configuration will be included in
+            Panels &rArr; Store Panels.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -415,7 +431,7 @@
             <ul>
                 <li></li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -434,12 +450,12 @@
             <li></li>
         </ul>
 
-    <h3>Routes</h3>    
+    <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
             <li></li>
        </ul>
-       
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -472,7 +488,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -540,7 +556,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -581,5 +597,7 @@
             <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
                 action required, but developers need to be online the first time
                 they build using Maven.</li>
+            <li>An option (disablePermissiveSignalMastLogic) has been added to SignalMasts and SignalMastLogic
+                to enable conditional permissive aspects.  See the jmri.SignalMast Javadoc for details.
         </ul>
 
