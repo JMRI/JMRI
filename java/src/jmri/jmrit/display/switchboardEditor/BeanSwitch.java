@@ -1,9 +1,6 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -69,6 +66,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     private IconSwitch beanKey;
     private IconSwitch beanSymbol;
     private final char beanTypeChar;
+    private final Color defaultActiveColor = Color.RED;
+    private final Color defaultInactiveColor = Color.GREEN;
+    private final Color defaultUnknownColor = Color.WHITE;
     private final SwitchboardEditor _editor;
 
     /**
@@ -140,10 +140,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // TODO when web server supports graphic icon based switches: replace true by false;
+                _text = true; // not actually used
                 _icon = true;
                 beanIcon.setLabel(switchLabel);
-                beanIcon.positionLabel(17, 45); // provide x, y offset, depending on image size and free space
+                beanIcon.positionLabel(17, 45, Component.CENTER_ALIGNMENT, 14); // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanIcon.setToolTipText(switchTooltip);
                 }
@@ -171,7 +171,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 _text = true; // TODO when web server supports graphic keyboard switches: replace true by false;
                 _icon = true;
                 beanKey.setLabel(switchLabel);
-                beanKey.positionLabel(14, 60); // provide x, y offset, depending on image size and free space
+                beanKey.positionLabel(14, 60, Component.CENTER_ALIGNMENT, 14);
+                // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
                 }
@@ -198,8 +199,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // web server supports in-browser drawn switches
                 _icon = true; // panel.js assigns only text OR icon for a single class such as BeanSwitch
-                beanSymbol.setLabel(switchLabel); // TODO EBR no label?
-                beanSymbol.positionLabel(24, 20); // provide x, y offset, depending on image size and free space
+                beanSymbol.setLabel(switchLabel);
+                beanSymbol.positionLabel(24, 20, Component.CENTER_ALIGNMENT, 14); // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
                 }
@@ -229,7 +230,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 _text = true;
                 _icon = false;
                 beanButton.setForeground(_editor.getDefaultTextColorAsColor());
-                beanButton.setOpaque(false);
+                beanButton.setOpaque(true); // to show color from the start
+                this.setBorder(BorderFactory.createLineBorder(_editor.getDefaultBackgroundColor(), 2));
                 if (_editor.showToolTip()) {
                     beanButton.setToolTipText(switchTooltip);
                 }
@@ -239,16 +241,23 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // connect to object or dim switch
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
-                // to dim unconnected symbols
-                float dim = 100f;
-                switch (_shape) {
-                    case 0:
-                        beanButton.setEnabled(false);
-                        break;
-                    case 3:
-                    default:
-                        beanIcon.setOpacity(dim);
-                }
+                // to dim unconnected symbols TODO make them see through, now icons are just white
+//                float dim = 100f;
+//                switch (_shape) {
+//                    case 0:
+//                        beanButton.setEnabled(false);
+//                        break;
+//                    case 1:
+//                        beanIcon.setOpacity(dim);
+//                        break;
+//                    case 2:
+//                        beanKey.setOpacity(dim);
+//                        break;
+//                    case 3:
+//                    default:
+//                        beanSymbol.setOpacity(dim);
+//                }
+                displayState(0); // show unconnected as unknown/greyed
             }
         } else {
             _control = true;
@@ -329,24 +338,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     /**
      * Get text to display on this switch on Switchboard and in Web Server panel when attached
-     * object is Inactive.
-     *
-     * @return text to show on inactive state (differs per type of objects)
-     */
-    public String getInactiveText() {
-        // fetch bean specific abbreviation
-        switch (beanTypeChar) {
-            case 'T':
-                _state = stateThrown; // +
-                break;
-            default: // Light, Sensor
-                _state = "-";         // 1 char abbreviation for StateOff not clear
-        }
-        return _label + ": " + _state;
-    }
-
-    /**
-     * Get text to display on this switch on Switchboard and in Web Server panel when attached
      * object is Active.
      *
      * @return text to show on active state (differs per type of object)
@@ -359,6 +350,24 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 break;
             default: // Light, Sensor
                 _state = "+";         // 1 char abbreviation for StateOff not clear
+        }
+        return _label + ": " + _state;
+    }
+
+    /**
+     * Get text to display on this switch on Switchboard and in Web Server panel when attached
+     * object is Inactive.
+     *
+     * @return text to show on inactive state (differs per type of objects)
+     */
+    public String getInactiveText() {
+        // fetch bean specific abbreviation
+        switch (beanTypeChar) {
+            case 'T':
+                _state = stateThrown; // +
+                break;
+            default: // Light, Sensor
+                _state = "-";         // 1 char abbreviation for StateOff not clear
         }
         return _label + ": " + _state;
     }
@@ -412,43 +421,44 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public void displayState(int state) {
         String switchLabel;
         Color switchColor;
-        log.debug("heard change");
+        log.debug("Change heard. STATE={}", state);
+        // display abbreviated name of state instead of state index, fine for unconnected switches too
+        switch (state) {
+            case 1:
+                switchLabel = getUnknownText();
+                switchColor = Color.GRAY;
+                break;
+            case 2:
+                switchLabel = getActiveText();
+                switchColor = defaultActiveColor;
+                break;
+            case 4:
+                switchLabel = getInactiveText();
+                switchColor = defaultInactiveColor;
+                break;
+            default:
+                switchLabel = getInconsistentText();
+                switchColor = Color.WHITE;
+                log.warn("SwitchState INCONSISTENT");
+        }
         if (getNamedBean() == null) {
-            log.debug("Display state {}, disconnected", state);
+            switchLabel = _label; // remove the : and the ?
+            log.debug("Switch label {} state {}, disconnected", switchLabel, state);
         } else {
-            // display abbreviated name of state instead of state index
-            switch (state) {
-                case 2:
-                    switchLabel = getActiveText();
-                    switchColor = Color.RED;
-                    break;
-                case 4:
-                    switchLabel = getInactiveText();
-                    switchColor = Color.GREEN;
-                    break;
-                case 1:
-                    switchLabel = getUnknownText();
-                    switchColor = Color.GRAY;
-                    break;
-                default:
-                    switchLabel = getInconsistentText();
-                    switchColor = Color.WHITE;
-                    log.warn("invalid char in Switchboard Button \"{}\". ERROR state shown.", _label);
-            }
-            log.debug("Switch label {} state: {} ", switchLabel, state);
-            if (isText() && !isIcon()) { // to allow text buttons on web switchboard. always add graphic switches on web
-                beanButton.setText(switchLabel);
-                beanButton.setBackground(switchColor); // get button color to change
-                beanButton.setOpaque(true);
-            }
-            if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
-                beanIcon.showSwitchIcon(state);
-                beanIcon.setLabel(switchLabel);
-                beanKey.showSwitchIcon(state);
-                beanKey.setLabel(switchLabel);
-                beanSymbol.showSwitchIcon(state);
-                beanSymbol.setLabel(switchLabel);
-            }
+            log.debug("Switch label {} state: {}, connected", switchLabel, state);
+        }
+        if (isText() && !isIcon()) { // to allow text buttons on web switchboard. always add graphic switches on web
+            beanButton.setText(switchLabel);
+            beanButton.setBackground(switchColor); // only the color is visible TODO get access to JButton?
+            beanButton.setOpaque(true);
+        }
+        if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
+            beanIcon.showSwitchIcon(state);
+            beanIcon.setLabel(switchLabel);
+            beanKey.showSwitchIcon(state);
+            beanKey.setLabel(switchLabel);
+            beanSymbol.showSwitchIcon(state);
+            beanSymbol.setLabel(switchLabel);
         }
     }
 
@@ -709,30 +719,25 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
         }
         _bname.setUserName(newUserName);
-        if (!newUserName.equals("")) { // TODO always true remove
-            if (oldName == null || oldName.equals("")) {
-                if (!nbhm.inUse(_label, _bname)) {
-                    return; // no problem, so stop
-                }
-                String msg = Bundle.getMessage("UpdateToUserName", _editor.getSwitchTypeName(), newUserName, _label);
-                int optionPane = JOptionPane.showConfirmDialog(null,
-                        msg, Bundle.getMessage("UpdateToUserNameTitle"),
-                        JOptionPane.YES_NO_OPTION);
-                if (optionPane == JOptionPane.YES_OPTION) {
-                    //This will update the bean reference from the systemName to the userName
-                    try {
-                        nbhm.updateBeanFromSystemToUser(_bname);
-                    } catch (JmriException ex) {
-                        // We should never get an exception here as we already check that the username is not valid
-                    }
-                }
-
-            } else {
-                nbhm.renameBean(oldName, newUserName, _bname);
+        if (oldName == null || oldName.equals("")) {
+            if (!nbhm.inUse(_label, _bname)) {
+                return; // no problem, so stop
             }
+            String msg = Bundle.getMessage("UpdateToUserName", _editor.getSwitchTypeName(), newUserName, _label);
+            int optionPane = JOptionPane.showConfirmDialog(null,
+                    msg, Bundle.getMessage("UpdateToUserNameTitle"),
+                    JOptionPane.YES_NO_OPTION);
+            if (optionPane == JOptionPane.YES_OPTION) {
+                //This will update the bean reference from the systemName to the userName
+                try {
+                    nbhm.updateBeanFromSystemToUser(_bname);
+                } catch (JmriException ex) {
+                    // We should never get an exception here as we already check that the username is not valid
+                }
+            }
+
         } else {
-            //This will update the bean reference from the old userName to the SystemName
-            nbhm.updateBeanFromUserToSystem(_bname);
+            nbhm.renameBean(oldName, newUserName, _bname);
         }
     }
 
@@ -827,6 +832,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 default:
                     log.error("invalid char in Switchboard Button \"{}\". State not set.", _label);
             }
+        }
+    }
+
+    /**
+     * Only for lights. Used for All Off/All On.
+     * Skips unconnected switch icons.
+     *
+     * @param state On = 1, Off = 0
+     */
+    public void switchLight(int state) {
+        if (!_uname.equals("unconnected")) {
+            getLight().setState(state);
         }
     }
 
@@ -974,6 +991,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String tag = "tag";
         private int labelX = 16;
         private int labelY = 53;
+        private float textAlign = 0.0f;
+        private int textSize = 12;
         private float ropOffset = 0f;
         private RescaleOp rop;
 
@@ -988,7 +1007,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             try {
                 image1 = ImageIO.read(new File(filepath1));
                 image2 = ImageIO.read(new File(filepath2));
-                image = image1;
+                image = image2;
             } catch (IOException ex) {
                 log.error("error reading image from {}-{}", filepath1, filepath2, ex);
             }
@@ -1039,18 +1058,21 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param x horizontal offset from top left corner, positive to the
          *          right
          * @param y vertical offset from top left corner, positive down
+         * @param align one of: JComponent.LEFT_ALIGNMENT (0.0f), CENTER_ALIGNMENT (0.5f),
+         *              RIGHT_ALIGNMENT (1.0f)
          */
-        protected void positionLabel(int x, int y) {
+        protected void positionLabel(int x, int y, float align, int fontsize) {
             labelX = x;
             labelY = y;
-            this.repaint();
+            textAlign = align;
+            textSize = fontsize;
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            Graphics2D g2d = (Graphics2D)g;
-            g2d.drawImage(image, rop, 0, 0); // dim switch if unconnected TODO scale image to fit panel?
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.drawImage(image, rop, 0, 0); // dim switch if unconnected
             //g.drawImage(image, 0, 0, null);
             g.setFont(getFont());
             if (ropOffset > 0f) {
@@ -1058,6 +1080,13 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else {
                 g.setColor(_editor.getDefaultTextColorAsColor());
             }
+            g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
+            if (textAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
+                FontMetrics metrics = g.getFontMetrics();
+                // Determine the X coordinate for the text, icon width ~ 75-80px
+                labelX = (78 - metrics.stringWidth(tag)) / 2;
+            }
+            this.repaint();
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
         }
 

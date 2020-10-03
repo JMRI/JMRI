@@ -68,7 +68,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("rows", "" + p.getRows());
         panel.setAttribute("total", "" + p.getTotal()); // total number of items displayed
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
-//        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Uditor by Servlet
+//        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Editor by Servlet
 //        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); / not user-settable
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());

@@ -56,30 +56,46 @@ body {
     line-height: 20px;
 }
 
-.beanswitch.text { /* SwitchBoard (Panel) interactive button symbols default */
+.beanswitch {
     position: static;
     float: left;
-    padding: 4px;
-    /* border: 5px; */
-    /* color: white; */
-    /* background: grey; */
-    margin: 6px;
+    margin: 2px;
+    padding: 1px;
+    border: 1px solid lightGrey;
+    overflow: hidden;
+}
+
+.beanswitch.button { /* SwitchBoard (Panel) interactive button symbols default */
+    border: 2px solid white; /* border changes colors with state */
+    background-color: lightGrey;
     text-align: center;
-    /* width: 20%; /* later changed by beanswitch using column count */
+    border-radius: 10px; /* mimick JButtons */
     /* add more BeanSwitch stuff */
 }
 
-.beanswitch#symcss0 { /* TODO EBR demo addition div in text node */
-    position: relative;
-    border: 3px solid #73AD21;
-    top: 50%;
-    width: 100%;
-    text-align: center;
+.beanswitch:hover {
+    margin: 2px;
 }
 
-div.button {
-    float: left;
-    background: red;
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+canvas:hover {
+    margin: -1px;
+}
+
+span.lightswitch {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+    background-color: lightgray;
+}
+
+span.lightswitch:hover {
+    background-color: yellow;
 }
 
 #panel-area {

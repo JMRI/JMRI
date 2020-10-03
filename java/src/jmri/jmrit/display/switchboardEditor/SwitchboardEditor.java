@@ -1,19 +1,11 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -55,6 +47,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.css.RGBColor;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display.switchBoard items to a
@@ -66,7 +59,7 @@ import org.slf4j.LoggerFactory;
  * All created objects are put insite a GridLayout grid. No special use of the
  * LayeredPane layers. Inspired by Oracle JLayeredPane demo.
  * <p>
- * The "switchlist" List keeps track of all the objects added to the target
+ * The "switchesOnBoard" LinkedHashMap keeps track of all the objects added to the target
  * frame for later manipulation. May be used in an update to store mixed
  * switchboards with more than 1 connection and more than 1 bean type/range.
  * <p>
@@ -101,6 +94,8 @@ public class SwitchboardEditor extends Editor {
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeBottom + 1, rangeTop, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
+    JButton allOnButton;
+    JButton allOffButton;
     private TargetPane switchboardLayeredPane; // JLayeredPane
     static final String TURNOUT = Bundle.getMessage("Turnouts");
     static final String SENSOR = Bundle.getMessage("Sensors");
@@ -151,15 +146,11 @@ public class SwitchboardEditor extends Editor {
     private static final String SWITCHTYPE_COMMAND = "switchshape";
 
     /**
-     * List of names/labels of all switches currently displayed. Refreshed
-     * during {@link #updatePressed()}
+     * To count number of displayed beanswitches, this array hold all beanswitches to be displayed
+     * until the GridLayout is configured, using the number of items to be placed.
+     * Accounts for "hide unconnected" setting.
      */
-    private final List<String> switchlist = new ArrayList<>();
-    /**
-     * List with copies of BeanSwitch objects currently displayed to display on
-     * Web Server. Created by {@link #getSwitches()}
-     */
-    protected ArrayList<BeanSwitch> _switches = new ArrayList<>();
+    private final Map<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
     /**
      * Ctor
@@ -294,19 +285,18 @@ public class SwitchboardEditor extends Editor {
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
-            help2.setVisible(!hideUnconnected() && (switchlist.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
         });
         checkboxPane.add(hideUnconnected);
         add(checkboxPane);
 
         switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
-        // TODO do some calculation from JPanel size, icon size and determine optimal cols/rows
-        // Add at least 1 switch to pane to create switchList: done later, would be deleted soon
+        // Add at least 1 switch to pane to create switchList: done later, would be deleted soon if added now
+        // see UpdatePressed()
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
         super.getTargetFrame().setSize(550, 330); // width x height
-        // TODO: Add component listener to handle frame resizing event
 
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
@@ -328,20 +318,51 @@ public class SwitchboardEditor extends Editor {
             updatePressed();
             setDirty();
         });
+        allOnButton = new JButton(Bundle.getMessage("AllOn"));
+        allOnButton.addActionListener((ActionEvent event) -> {
+            switchAllLights(jmri.Light.ON);
+        });
+        allOffButton = new JButton(Bundle.getMessage("AllOff"));
+        allOffButton.addActionListener((ActionEvent event) -> {
+            switchAllLights(jmri.Light.OFF);
+        });
         updatePanel.add(updateButton);
+        updatePanel.add(allOnButton);
+        updatePanel.add(allOffButton);
+
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.PAGE_AXIS));
         contentPane.add(updatePanel);
 
         setupEditorPane(); // re-layout all the toolbar items
-        updatePressed();   // refresh default Switchboard, updates all buttons
+        updatePressed();   // refresh default Switchboard, rebuilds and resizes all switches
         pack();
+
+        // component listener handles frame resizing event
+        super.getTargetFrame().addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                //log.debug("PANEL RESIZED");
+                resizeInFrame();
+            }
+        });
+
+    }
+
+    /**
+     * Just repaint the Switchboard target panel.
+     */
+    public void resizeInFrame() {
+        super.getTargetFrame().getSize();
+        switchboardLayeredPane.setSize(getWidth(), height);
+        switchboardLayeredPane.repaint();
     }
 
     /**
      * Create a new set of switches after removing the current array.
      * <p>
-     * Called by Update button click and automatically after loading a panel
+     * Called by Update button click, and automatically after loading a panel
      * from XML (with all saved options set).
+     * TODO add a call from/listener for Switchboard JPanel WindowResize() event
      */
     public void updatePressed() {
         log.debug("update _hideUnconnected = {}", _hideUnconnected);
@@ -359,8 +380,9 @@ public class SwitchboardEditor extends Editor {
         // update selected address range
         int range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue() + 1;
         if (range > unconnectedRangeLimit && !hideUnconnected()) {
+            // fixed maximum number of items on a Switchboard to prevent memory overflow
             range = unconnectedRangeLimit;
-            maxSpinner.setValue((Integer) minSpinner.getValue() + range - 1); // fixed maximum number of items on a Switchboard to prevent memory overflow
+            maxSpinner.setValue((Integer) minSpinner.getValue() + range - 1);
         }
         // check for extreme number of items
         log.debug("address range = {}", range);
@@ -377,36 +399,82 @@ public class SwitchboardEditor extends Editor {
             }
         }
         // if range is confirmed, go ahead with switchboard update
-        for (int i = switchlist.size() - 1; i >= 0; i--) {
+        for (int i = switchesOnBoard.size() - 1; i >= 0; i--) {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
-        switchlist.clear(); // reset list
-        log.debug("switchlist cleared, size is now: {}", 0); // always 0 at this point
+        switchesOnBoard.clear(); // reset
+        log.debug("switchesOnBoard cleared, size is now: {}", 0); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
-        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) rows.getValue() % range, 1),
-                (Integer) rows.getValue())); // vertical, horizontal
-        log.debug("adding range for manu index {}", beanManuNames.getSelectedIndex());
-        addSwitchRange((Integer) minSpinner.getValue(),
+        log.debug("creating range for manu index {}", beanManuNames.getSelectedIndex());
+
+        // fill switchesOnBoard LinkedHashMap
+        createSwitchRange((Integer) minSpinner.getValue(),
                 (Integer) maxSpinner.getValue(),
                 beanTypeList.getSelectedIndex(),
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
+
+        // calculation using JPanel size, user range, icon proportions to determine optimal cols/rows
+        // beanswitch icons & web canvas W:H proportions range from 1.5 (3:2) to 0.7 (1:1.5), assume squares for now
+        final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile? EBR
+        // find cell matrix that allows largest size icons
+        double paneEffectiveWidth = Math.ceil(switchboardLayeredPane.getWidth()/cellProportion);
+        double paneHeight = switchboardLayeredPane.getHeight();
+        int columnsFinder = 1;
+        double rowsFinder = 1;
+        float zoomNew = 0.1f; // start value
+        float zoomOld = 0.0f;
+        double totalDisplayed = getTotal(); // not counting unconnected items if set to be hidden
+
+        if (switchesOnBoard.size() >= unconnectedRangeLimit) {
+            log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
+        }
+
+        while (zoomNew > zoomOld) {
+            columnsFinder++;
+            rowsFinder = Math.ceil(totalDisplayed/columnsFinder);
+            zoomOld = zoomNew; // remember for comparison
+            zoomNew = (float) Math.max(paneEffectiveWidth/columnsFinder, paneHeight/rowsFinder);
+        }
+        // do some calculations, repeated in panel.js for web display
+
+        // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
+        // Math.max(0.001,... to prevent 0 width in case 0 items are connected
+        // 1/Math.ceil($total/$rows) to account for unused tiles:
+        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
+
+        log.debug("CELL SIZE optimum found: CxR = {}x{}, ZOOM = {}", columnsFinder, rowsFinder, zoomNew);
+
+        // TODO once the autocalc works, hide the Update button on the Switchboard Editor pane
+        //setRows(rowsFinder);
+        //switchboardLayeredPane.setLayout(new GridLayout(columnsFinder,rowsFinder));
+        //       param: GridLayout(vertical, horizontal), at least 1x1
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) rows.getValue() % range, 1),
+                (Integer) rows.getValue())); // param: GridLayout(vertical, horizontal), at least 1x1
+
+        // add switches to LayeredPane
+        for (BeanSwitch bs : switchesOnBoard.values()) {
+            switchboardLayeredPane.add(bs);
+        }
+
         // update the title at the bottom of the switchboard to match (no) layout control
         if (beanManuNames.getSelectedItem() != null && beanTypeList.getSelectedItem() != null) {
             border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
                     beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
         }
-        help3.setVisible(switchlist.size() == 0); // show/hide help3 warning
-        help2.setVisible(switchlist.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
+        help3.setVisible(switchesOnBoard.size() == 0); // show/hide help3 warning
+        help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
         switchboardLayeredPane.repaint();
+        // hide AllOn/Off buttons unless type is Light
+        allOnButton.setVisible(beanTypeList.getSelectedIndex() == 2);
+        allOffButton.setVisible(beanTypeList.getSelectedIndex() == 2);
     }
 
     /**
-     * From default or user entry in Editor, fill the _targetpane with a series
-     * of Switches.
+     * From default or user entry in Editor, create a LinkedHashMap of Switches.
      * <p>
      * Items in range that can connect to existing beans in JMRI are active. The
      * others are greyed out. Option to later connect (new) beans to switches.
@@ -421,7 +489,7 @@ public class SwitchboardEditor extends Editor {
      *                    selected in Type comboBox, choose either a JButton
      *                    showing the name or (to do) a graphic image
      */
-    private void addSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
+    private void createSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
         log.debug("_hideUnconnected = {}", hideUnconnected());
         String name;
         BeanSwitch _switch;
@@ -459,19 +527,20 @@ public class SwitchboardEditor extends Editor {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
             }
-            switchboardLayeredPane.add(_switch);
-            switchlist.add(name); // add to total number of switches on JLayeredPane
+            //switchboardLayeredPane.add(_switch);
+            switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
             log.debug("Added switch {}", name);
             // keep total number of switches below practical total of 400 (20 x 20 items)
-            if (switchlist.size() >= unconnectedRangeLimit) {
+            if (switchesOnBoard.size() >= unconnectedRangeLimit) {
                 log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
                 break;
             }
+            // was already checked in first counting loop in init()
         }
     }
 
     /**
-     * Create the setup pane for the top of the frame. From layeredpane demo
+     * Create the setup pane for the top of the frame. From layeredpane demo.
      */
     private JPanel createControlPanel() {
         JPanel controls = new JPanel();
@@ -607,7 +676,7 @@ public class SwitchboardEditor extends Editor {
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
-            help2.setVisible(!hideUnconnected() && (switchlist.size() != 0)); // and show/hide instruction line unless no items on board
+            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
         });
         hideUnconnectedBox.setSelected(hideUnconnected());
         // autoItemRange item
@@ -746,11 +815,11 @@ public class SwitchboardEditor extends Editor {
     }
 
     public String getActiveSwitchColor() {
-        return ColorUtil.colorToColorName(defaultInactiveColor);
+        return ColorUtil.colorToColorName(defaultActiveColor);
     }
 
     public String getInactiveSwitchColor() {
-        return ColorUtil.colorToColorName(defaultActiveColor);
+        return ColorUtil.colorToColorName(defaultInactiveColor);
     }
 
     public String getUnknownSwitchColor() {
@@ -1089,11 +1158,28 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * @deprecated since 4.21.1
+     * Load Switchboard rownum spinner.
+     *
+     * @param rws the number of switches to display per row (as text)
+     */
+    public void setRows(int rws) {
+        rows.setValue(rws);
+    }
+
+    /**
+     * @deprecated since 4.21.2, replaced by getRows because that is what it holds
      */
     @Deprecated
     public int getColumns() {
-        return (Integer) rows.getValue();
+        return getRows();
+    }
+
+    /**
+     * @deprecated since 4.21.2, replaced by setRows because that is what it holds
+     */
+    @Deprecated
+    public void setColumns(int rws) {
+        setRows(rws);
     }
 
     /**
@@ -1102,17 +1188,8 @@ public class SwitchboardEditor extends Editor {
      * @return the total number of switches displayed
      */
     public int getTotal() {
-        log.debug("Total = {}", (Integer) switchlist.size());
-        return (Integer) switchlist.size();
-    }
-
-    /**
-     * Load Switchboard column spinner.
-     *
-     * @param cols the number of switches to display per row (as text)
-     */
-    public void setColumns(int rws) {
-        rows.setValue(rws);
+        log.debug("Total = {}", (Integer) switchesOnBoard.size());
+        return (Integer) switchesOnBoard.size();
     }
 
     // all content loaded from file.
@@ -1144,7 +1221,7 @@ public class SwitchboardEditor extends Editor {
         log.debug("InitView done");
     }
 
-    protected Manager getManager(char typeChar) {
+    protected Manager<?> getManager(char typeChar) {
         switch (typeChar) {
             case 'T': // Turnout
                 return InstanceManager.turnoutManagerInstance();
@@ -1320,22 +1397,24 @@ public class SwitchboardEditor extends Editor {
      * @return beanSwitch switch object with the given name
      */
     protected BeanSwitch getSwitch(String sName) {
-        for (int i = 0; i < switchlist.size(); i++) {
-            log.debug("comparing switch {} to {}", switchlist.get(i), sName);
-            if (switchlist.get(i).equals(sName)) {
-                return (BeanSwitch) switchboardLayeredPane.getComponent(i);
-            } else {
-                log.warn("switch {} not found on panel", sName);
-            }
+        if (switchesOnBoard.containsKey(sName)) {
+            return switchesOnBoard.get(sName);
         }
+        log.warn("switch {} not found on panel", sName);
         return null;
     }
 
+    /**
+     * List with copies of BeanSwitch objects currently displayed to transfer to
+     * Web Server for display.
+     */
     public List<BeanSwitch> getSwitches() {
-        _switches.clear(); // reset list
-        log.debug("N = {}", switchlist.size());
-        for (int i = 0; i < switchlist.size(); i++) {
-            _switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
+        ArrayList<BeanSwitch> _switches = new ArrayList<>();
+        log.debug("N = {}", switchesOnBoard.size());
+        //for (int i = 0; i < switchesOnBoard.size(); i++) {
+        for (String bs : switchesOnBoard.keySet()) {
+            _switches.add((BeanSwitch) switchesOnBoard.get(bs));
+            //_switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
         }
         return _switches;
     }
@@ -1392,6 +1471,17 @@ public class SwitchboardEditor extends Editor {
             });
         }
         return report;
+    }
+
+    /**
+     * Set connected Lights (only).
+     *
+     * @param on state to set Light.ON or Light.OFF
+     */
+    public void switchAllLights(int on) {
+        for (BeanSwitch bs : switchesOnBoard.values()) {
+                bs.switchLight(on);
+            }
     }
 
     private final static Logger log = LoggerFactory.getLogger(SwitchboardEditor.class);

@@ -1025,10 +1025,24 @@ function processPanelXML($returnedData, $success, $xhr) {
         $inactiveColor = $gPanel.inactivecolor;
         $rows = Number($gPanel.rows);
         $total = Number($gPanel.total);
-        $swWidthPx = Math.ceil(0.8*($gPanel.panelwidth)*$rows/$total) + "px"; // calculate from jmri rows number, 90pc to fit on screen
-        $swHeightPx = Math.ceil(0.9*$gPanel.panelheight/$rows) + "px";
-        //set short notice
-        $("#panel-area").append("<div id='name' class='show'>" + $gPanel.name + "</div>");
+        // do some calculations
+        $swWidth = Math.ceil(0.95*($gPanel.panelwidth)*Math.max(0.001, Math.min(1, 1/(Math.ceil($total/$rows)))));
+        // calculate from jmri rows number, 95pc to fit on screen
+        // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
+        // Math.max(0.001,... to prevent 0 width in case 0 items are connected
+        // 1/Math.ceil($total/$rows) to account for unused tiles:
+        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
+        $swHeight = Math.ceil(0.9*$gPanel.panelheight/Math.max(0.001, $rows)); // 0.9 to leave room for the Switchboard name label at top
+        // Math.max(0.001,... to prevent 0 division in case 0 items are connected
+        // add short banner at top
+        var onOffSpans = "";
+        if ($gPanel.type == "L") {
+            // TODO add handlers to switch on/off, I18N
+            //onOffSpans = "<span id='allOff' class='clickable lightswitch'>All Off</span><span id='allOn' class='clickable lightswitch'>All On</span>";
+            //$(#onOff).bind(UPEVENT, $handleClick);
+        }
+        $("#panel-area").append("<div id='name' class='show'>&nbsp;Switchboard &quot;" + $gPanel.name + "&quot; (conn: " +
+        $gPanel.connection + ",  type: " + $gPanel.type + ")" + onOffSpans + "</div>"); // TODO I18N
     }
 
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
@@ -1386,86 +1400,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
                             break;
-//                        case "beanswitch" : // all Switchboard BeanSwitches are this type // TODO EBR
-//                            jmri_logging = true;
-//                            $widget['name'] = $widget.label; // normalize name
-//                            $widget['text'] = $widget.label; // use label as initial button text
-//                            $widget.styles['width'] = $swWidthPx;
-//                            $widget.styles['height'] = $swHeightPx;
-//
-//                            if (typeof $widget["systemName"] === "undefined")
-//                                $widget["systemName"] = $widget.name;
-//                            switch  ($widget['type']) {
-//                                case "T" :
-//                                    $widget.jsonType = "turnout"; // JSON object type
-//                                    jmri.getTurnout($widget["systemName"]); // switch follows the state on the layout
-//                                    break;
-//                                case "S" :
-//                                    $widget.jsonType = "sensor"; // JSON object type
-//                                    jmri.getSensor($widget["systemName"]);
-//                                    break;
-//                                default :
-//                                    $widget.jsonType = "light"; // JSON object type
-//                                    jmri.getLight($widget["systemName"]);
-//                            }
-//
-//                            switch ($widget.shape) {
-//                                case "symbol" :
-//                                case "icon" :
-//                                case "drawing" :
-//                                    // experiment with different settings for symbol/icon
-//                                    $widget['text' + UNKNOWN] = $widget.text; // show state changes in color, not label?
-//                                    $widget['text2'] = $(this).find('activeText').attr('text'); //$widget.text;
-//                                    $widget['text4'] = $(this).find('inactiveText').attr('text'); //$widget.text;
-//                                    $widget['text8'] = $(this).find('inconsistentText').attr('text');
-//                                    $widget.styles['border'] = "1px solid black"
-//                                    //$widget.styles['border-radius'] = "30px" // draws a circle
-//                                    // $gWidgets grows as it is created, so can't use that to get total number of items
-//
-//                                    // add a canvas to the text label
-//                                    $widget['canvas'] = " width='" + $swWidthPx + "' height='" + $swHeightPx +
-//                                    "' style='border:1px solid #000000;'";
-//                                    break;
-//                                case "button" :
-//                                default :
-//                                    // set each state's text (only applied when shape is button)
-//                                    $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
-//                                    $widget['text2'] = $(this).find('activeText').attr('text');
-//                                    $widget['text4'] = $(this).find('inactiveText').attr('text');
-//                                    $widget['text8'] = $(this).find('inconsistentText').attr('text');
-//                                    $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
-//                                    $widget.styles['border-radius'] = "8px" // mimick JButtons
-//                                    //$widget.classes += " button ";
-//                            }
-//                            // common settings for all beanswitches
-//                            $widget.classes += " " + $widget.shape + " ";
-//                            // colors
-//                            // values from Editor via SwitchboardServlet
-//                            $widget['swColor' + UNKNOWN] = 'LightGray'; // unknown = gray
-//                            $widget['swColor2'] = $activeColor; // active = red
-//                            $widget['swColor4'] = $inactiveColor;  // inactive = green
-//                            $widget['swColor8'] = 'Gray'; // inconsistent
-//
-//                            $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
-//                            $widget.styles['color'] = $widget.text['color']; // use jmri color
-//                            // CSS properties
-//                            $("#panel-area>#" + $widget.id).css(
-//                            {position: 'relative', float: 'left'});
-//
-//                            if (jmri_logging) {
-//                                log.log("case beanswitch " + $widget.widgetType);
-//                                $logProperties($widget);
-//                            }
-//
-//                            // connect to Bean
-//                            if ($widget.connected == "true") {
-//                            	//$hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
-//                            	//$("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
-//                                $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
-//                                $widget.styles['background-color'] = $widget['swColor' + UNKNOWN];
-//                                $widget.classes += " " + $widget.jsonType + " clickable ";
-//                            }
-//                            break;
                     }
 
                     $widget['safeName'] = $safeName($widget.name);
@@ -1869,19 +1803,22 @@ function processPanelXML($returnedData, $success, $xhr) {
                     }
                     break;
 
-                case "beanswitch" : // Switchboard BeanSwitches have no x,y // TODO EBR
-                    $widget['styles'] = {}; //$getTextCSSFromObj($widget); // required?
-                    jmri_logging = true;
+                case "switch" : // Switchboard BeanSwitches have no x,y // TODO EBR
+                    $widget['styles'] = {};
                     $widget['name'] = $widget.label; // normalize name
                     $widget['text'] = $widget.label; // use label as initial button text
-                    $widget.styles['width'] = $swWidthPx;
-                    $widget.styles['height'] = $swHeightPx;
-                    $widget.styles['margin'] = "8px";
-                    $widget.styles['padding'] = "5px";
+                    $widget.styles['width'] = $swWidth + "px";
+                    $widget.styles['height'] = $swHeight + "px";
+                    // colors
+                    // values from Editor via SwitchboardServlet
+                    $widget['swColor' + UNKNOWN] = 'LightGray'; // unknown
+                    $widget['swColor2'] = $activeColor; // active = red
+                    $widget['swColor4'] = $inactiveColor;  // inactive = green
+                    $widget['swColor8'] = 'Gray'; // inconsistent
 
                     if (typeof $widget["systemName"] === "undefined")
                         $widget["systemName"] = $widget.name;
-                    switch  ($widget['type']) {
+                    switch ($widget['type']) {
                         case "T" :
                             $widget.jsonType = "turnout"; // JSON object type
                             jmri.getTurnout($widget["systemName"]); // switch follows the state on the layout
@@ -1895,19 +1832,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                             jmri.getLight($widget["systemName"]);
                     }
 
+                    var canvas = "";
                     switch ($widget.shape) {
                         case "symbol" :
                         case "icon" :
                         case "drawing" :
                             // experiment with different settings for symbol/icon
-                            $widget['text' + UNKNOWN] = $widget.text; // show state changes in color, not label?
+                            $widget['text' + UNKNOWN] = $widget.text; // show state changes in color, not in label?
                             $widget['text2'] = $(this).find('activeText').attr('text'); //$widget.text;
                             $widget['text4'] = $(this).find('inactiveText').attr('text'); //$widget.text;
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
-                            $widget.styles['border'] = "1px solid black"
-                            // add a canvas to the text label
-                            $widget['canvas'] = " width='" + $swWidthPx + "' height='" + $swHeightPx +
-                            "' style='border:1px solid #000000;'";
+                            // add a canvas to the text label, reduce canvas HxW to fit inside the div
+                            canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
+                                ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
                             break;
                         case "button" :
                         default :
@@ -1916,54 +1853,33 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['text2'] = $(this).find('activeText').attr('text');
                             $widget['text4'] = $(this).find('inactiveText').attr('text');
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
-                            $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
-                            $widget.styles['border-radius'] = "10px" // mimick JButtons
                     }
                     // common settings for all beanswitches
                     $widget.classes += " " + $widget.shape + " ";
-                    // colors
-                    // values from Editor via SwitchboardServlet
-                    $widget['swColor' + UNKNOWN] = 'LightGray'; // unknown = gray
-                    $widget['swColor2'] = $activeColor; // active = red
-                    $widget['swColor4'] = $inactiveColor;  // inactive = green
-                    $widget['swColor8'] = 'Gray'; // inconsistent
 
                     $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
+                    $widget.styles['border-color'] = $widget['swColor' + UNKNOWN];
                     $widget.styles['color'] = $widget.text['color']; // use jmri color
                     // CSS properties
-                    $("#panel-area>#" + $widget.id).css({position: 'relative', float: 'left'});
+                    //$("#panel-area>#" + $widget.id).css({position: 'relative', float: 'left'}); // overridden in css
 
-                    if (jmri_logging) {
-                        log.log("case beanswitch " + $widget.widgetType);
-                        $logProperties($widget);
-                    }
-
-                    // connect to Bean
                     if ($widget.connected == "true") {
-                        //$hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
-                        //$("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
                         $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
-                        $widget.styles['background-color'] = $widget['swColor' + UNKNOWN];
+                        $widget.styles['border-color'] = "black"; //$widget['swColor' + UNKNOWN];
                         $widget.classes += " " + $widget.jsonType + " clickable ";
                     }
 
                     $widget['safeName'] = $safeName($widget.name);
+                    $gWidgets[$widget.id] = $widget; // store widget in persistent array
 
-                    $gWidgets[$widget.id] = $widget; //store widget in persistent array
-
-                    switch ($widget.shape) {
-                        case"symbol" :
-                        case "icon" :
-                        case "drawing" :
-                            // add a local canvas EBR
-                            $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
-                                "'><canvas id=" + $widget.id + "c></canvas></div>");
-                                break;
-                        case "button" :
-                        default:
-                            // "button", put the text element on the page
-                            $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
+                    if ($widget.shape == "button") {
+                        // "button", put only the text element on the page
+                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
                             "'>" + $widget.text + "</div>");
+                    } else {
+                        // add a local canvas EBR
+                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
+                            "' role='img'>" + canvas + "</div>");
                     }
                     $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
                     break;
@@ -1980,14 +1896,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                     });
                     break;
             }
-            //add widget.id to whereUsed array to support updates
+            // add widget.id to whereUsed array to support updates
             if ($widget.systemName) {
                 if (!($widget.systemName in whereUsed)) {
                     whereUsed[$widget.systemName] = new Array();
                 }
                 whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
             }
-            //store occupancy sensors where-used
+            // store occupancy sensors where-used
             if ($gWidgets[$widget.id]) {
                 $store_occupancysensor($widget.id, $widget.occupancysensor);
                 $store_occupancysensor($widget.id, $widget.occupancysensorA);
@@ -3549,7 +3465,7 @@ function $getElementWidth($e) {
 var $setWidgetPosition = function(e) {
 
     var $id = e.attr('id');
-    var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
+    var $widget = $gWidgets[$id];  // look up the widget and get its panel properties
 
     if (isDefined($widget) && isDefined(e[0])) {
         //don't bother if widget not found (never called for beanswitch)
@@ -3786,11 +3702,11 @@ var $setWidgetState = function($id, $newState, data) {
                     $drawSlip($widget);
                 }
                 break;
-            case "beanswitch" : // Switchboard EBR
+            case "switch" : // Switchboard EBR
                 if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") {
                     if ($widget.shape == "button") { // update div css
                         $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
-                        $('div#' + $id).css({"background-color": $widget['swColor' + $newState]});
+                        $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
                     } else { // icon, symbol, slider (drawing) are directly drawn on canvas
                         $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
                         $drawWidgetSymbol($id, $widget.shape, $newState);
@@ -3977,47 +3893,146 @@ var $preloadWidgetImages = function($widget) {
     }
 };
 
-// draw symbol on the beanswitch widget canvas EBR
+// draw symbol on the beanswitch widget canvas
 var $drawWidgetSymbol = function(id, shape, state) {
-    switch (shape) {
-        case "symbol" :
-        default :
-            // draw on $widget canvas
-            var canvas = document.getElementById(id + "c");
-            if (canvas === null) {
-                return; // no canvas created (shape = "buttons")
-            }
-            var ctx = canvas.getContext("2d");
-            ctx.save();
-            ctx.clearRect(0, 0, canvas.width, canvas.height); //  for text and moving items
-
-            ctx.fillStyle = $inactiveColor;
-            if (state == "2") ctx.fillStyle = $activeColor; // simple change in color
-            // TODO EBR add draw methods
-            switch (shape) {
-                case "symbol" :
-                default :
-                    // circle
-                    ctx.beginPath();
-                    ctx.arc(canvas.width/2, canvas.height/2, 30, 0, 2 * Math.PI);
-                    ctx.fill();
-                    //ctx.stroke();
-            }
-            // fill
-            //ctx.fillRect(30, 30, 80, 80);
-            // line
-            //ctx.moveTo(10, 10);
-            //ctx.lineTo(30, 30);
-            //ctx.stroke();
-
-            // draw label text
-            ctx.restore();
-            ctx.fillStyle = $gWidgets[id].styles['color']; // text color
-            ctx.font = "14px Arial";
-            ctx.textAlign = 'center';
-            ctx.fillText($gWidgets[id].text, (canvas.width/2), 10);
-            ctx.restore(); // restore color and width back to default
+    // draw on $widget canvas
+    var canvas = document.getElementById(id + "c");
+    if (canvas === null) {
+        return; // no canvas created (shape = "buttons")
     }
+    var ctx = canvas.getContext("2d");
+    ctx.save();
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //  for text and moving items
+
+    ctx.fillStyle = (state == "2" ? $activeColor : $inactiveColor);
+    // simple change in color
+    ctx.strokeStyle = "black";
+    ctx.translate(canvas.width/2, canvas.height/2); // origin in center of canvas, easy!
+    var radius = Math.min(canvas.width * 0.3, canvas.height * 0.3);
+
+    switch (shape) {
+        // draw methods EBR
+        case "icon" : // slider, 1 type
+            ctx.beginPath(); // the sliderspace
+            ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
+            ctx.lineCap = "round";
+            ctx.lineWidth = radius;
+            ctx.moveTo(-radius/2, 0);
+            ctx.lineTo(radius/2, 0);
+            ctx.stroke();
+            ctx.beginPath(); // the knob
+            var knobX = (state == "2" ? radius/2 : -radius/2)
+            ctx.arc(knobX, 0, radius/2, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            break;
+        case "drawing" : // Maerklin Keyboard
+            // red = upper rounded rect
+            ctx.fillStyle = (state == "2" ? $activeColor : "pink");
+            ctx.fillRect(-0.5*radius, -1.1*radius, radius, radius/3);
+            // + rounded outline
+            ctx.lineJoin = "round";
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = (state == "2" ? $activeColor : "pink");
+            ctx.strokeRect(-0.5*radius, -1.1*radius, radius, radius/3);
+            // green = lower rounded rect
+            ctx.fillStyle = (state == "4" ? $inactiveColor : "lightgreen");
+            ctx.fillRect(-0.5*radius, 1.1*radius, radius, radius/-3);
+            // + rounded outline
+            ctx.lineJoin = "round";
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = (state == "4" ? $inactiveColor : "lightgreen");
+            ctx.strokeRect(-0.5*radius, 1.1*radius, radius, radius/-3);
+            // add round LED at top
+            var grd = ctx.createRadialGradient(-3, -1.4*radius, 15, 5, -1.5*radius, 0);
+            grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
+            grd.addColorStop(1, "white");
+            ctx.fillStyle = grd;
+            ctx.arc(0, -1.4*radius, radius/6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 0.2;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+            break;
+        case "symbol" :
+            switch ($gWidgets[id].type) {
+                case "L" : // light
+                    // line (wire) at back
+                    ctx.beginPath();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.moveTo(-0.4 * canvas.width, 0);
+                    ctx.lineTo(0.4 * canvas.width, 0);
+                    ctx.stroke();
+                    // filled circle
+                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
+                    grd.addColorStop(0, (state == "2" ? "yellow" : "lightgray"));
+                    grd.addColorStop(1, "white");
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.stroke();
+                    // cross
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(radius * -0.74, radius * -0.74); // 1/2*sin(45 deg)
+                    ctx.lineTo(radius * 0.74, radius * 0.74);
+                    ctx.stroke();
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(radius * -0.74, radius * 0.74); // 1/2*sin(45 deg)
+                    ctx.lineTo(radius * 0.74, radius * -0.74);
+                    ctx.stroke();
+                    break;
+                case "S" : // sensor
+                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
+                    grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
+                    grd.addColorStop(1, "white");
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.stroke();
+                    break;
+                case "T" : // turnout, orientation as JMRI
+                default :
+                    ctx.beginPath();
+                    ctx.lineWidth = "10";
+                    // points, at the back
+                    ctx.strokeStyle = "lightgray";
+                    ctx.moveTo(-0.4 * canvas.width, -20);
+                    ctx.lineTo(0.1 * canvas.width, 10);
+                    ctx.lineTo(-0.4 * canvas.width, 10);
+                    ctx.stroke();
+                    // active line, start with new color
+                    var endy = (state == "2" ? "10" : "-20");
+                    ctx.beginPath();
+                    ctx.strokeStyle = $activeColor;
+                    ctx.moveTo(0.4 * canvas.width, 10);
+                    ctx.lineTo(0.1 * canvas.width, 10);
+                    ctx.lineTo(-0.4 * canvas.width, endy);
+                    ctx.stroke();
+                    break;
+            }
+        default :
+            // only render label
+    }
+
+    // draw label text
+    ctx.restore(); // resets origin and stroke&fill
+    ctx.fillStyle = $gWidgets[id].styles['color']; // text color
+    ctx.font = "14px Arial";
+    if (shape == "drawing") { // text centered between Maerklin buttons
+        ctx.textAlign = 'center';
+        ctx.fillText($gWidgets[id].text, canvas.width/2, (0.5*canvas.height + 0.3*radius));
+    } else {
+        ctx.textAlign = 'left';
+        ctx.fillText($gWidgets[id].text, 10, 13);
+    }
+    ctx.restore(); // restore color and width back to default
 };
 
 // determine widget "family" for broadly grouping behaviors
@@ -4042,7 +4057,6 @@ var $getWidgetFamily = function($widget, $element) {
         case "fastclock" :
         case "BlockContentsIcon" :
         case "reportericon" :
-        //case "beanswitch" :
             return "text";
             break;
         case "positionablelabel" :
@@ -4070,7 +4084,7 @@ var $getWidgetFamily = function($widget, $element) {
             return "drawn";
             break;
         case "beanswitch" :
-            return "beanswitch";
+            return "switch";
             break;
     }
     log.log("unknown widget type of '" + $widget.widgetType +"'");
@@ -4216,10 +4230,6 @@ function updateBlockSensorState(blockName, sensorName, sensorState) {
     if (isDefined(blockName)) {
         var $blk = $gBlks[blockName];
         if (isDefined($blk)) {
-//             log.log("blockName: " + blockName
-//                 + ", sensorName: " + sensorName
-//                 + ", sensorState: " + sensorState);
-//             $logProperties($blk);
             if (isDefined($blk.occupancysensor)
                 && ($blk.occupancysensor == sensorName)) {
                 $blk.state = sensorState;
@@ -4339,7 +4349,7 @@ $(document).ready(function() {
             			if (value.data.icon !== null) {
             				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
             			} else {
-            				value = value.data.name; 						//if roster icon not set, just show the name
+            				value = value.data.name; // if roster icon not set, just show the name
             			}
             		}
             	}
@@ -4358,7 +4368,7 @@ $(document).ready(function() {
             			if (value.data.icon !== null) {
             				value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
             			} else {
-            				value = value.data.name; //if roster icon not set, just show the name
+            				value = value.data.name; // if roster icon not set, just show the name
             			}
             		}
             	}
@@ -4401,6 +4411,9 @@ $(document).ready(function() {
         }, 500);
     }
 });
+
+//------------------------------------------- end of main -------------------------------------------
+
 
 // Add a widget to store fastclock rate
 function getRateFactor() {
