@@ -83,7 +83,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 }
             }
-            sysNameList = null;
             sysNameList = new ArrayList<>();
             // and add them back in
             getManager().getNamedBeanSet().forEach(b -> {

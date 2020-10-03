@@ -92,7 +92,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
             }
         }
-        sysNameList = null;
         sysNameList = getManager().getNamedBeanSet().stream().map(
             e -> e.getSystemName()).collect( java.util.stream.Collectors.toList() );
         // and add them back in

@@ -56,6 +56,9 @@ public class Maintenance {
     /**
      * get a String List of System Names for a given manager.
      * <p>
+     * This is NOT a live list, so has to be called each time through.
+     * Do NOT cache the result of this call for later use.
+     * <p>
      * TODO: Ideally a future refactor will use the getNamedBeanSet directly.
      * @param mgr the Manager to get the system names for.
      * @return List of system names.
