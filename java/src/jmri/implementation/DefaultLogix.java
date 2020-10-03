@@ -588,8 +588,16 @@ public class DefaultLogix extends AbstractNamedBean
                                 }
                                 break;
                             case LISTENER_TYPE_SIGNALMAST:
-                                listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,  // NOI18N
-                                        namedBean, varType, conditional);
+                                if (varType == Conditional.Type.SIGNAL_MAST_LIT) {
+                                    listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                } else if (varType == Conditional.Type.SIGNAL_MAST_HELD) {
+                                    listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                } else {
+                                    listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                }
                                 break;
                             case LISTENER_TYPE_OBLOCK:
                                 listener = new JmriTwoStatePropertyListener("state", LISTENER_TYPE_OBLOCK,  // NOI18N
