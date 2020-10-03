@@ -179,7 +179,13 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         } else {
             turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "SignalMast_Long", turnoutName, _queryType._text, _signalMastHandle.getBean().getAspect());
+        String aspect;
+        if ((_signalMastHandle != null) && (_signalMastHandle.getBean() != null)) {
+            aspect = _signalMastHandle.getBean().getAspect();
+        } else {
+            aspect = "";
+        }
+        return Bundle.getMessage(locale, "SignalMast_Long", turnoutName, _queryType._text, aspect);
     }
     
     /** {@inheritDoc} */

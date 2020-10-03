@@ -78,7 +78,7 @@ public class ImportExpressionSignalHeadTest extends ImportExpressionComplexTestB
                     case Succeed4: signalHead.setAppearance(me.successAppearance); break;
                     default: throw new RuntimeException("Unknown enum: "+e.name());
                 }
-                System.out.format("setNamedBeanState: %s, %s, %s%n", me.name(), setup.name(), signalHead.getAppearanceKey());
+//                System.out.format("setNamedBeanState: %s, %s, %s%n", me.name(), setup.name(), signalHead.getAppearanceKey());
                 break;
                 
             case IsLit:

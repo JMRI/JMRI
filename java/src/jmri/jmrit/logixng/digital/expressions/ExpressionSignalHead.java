@@ -179,7 +179,13 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         } else {
             turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "SignalHead_Long", turnoutName, _queryType._text, _signalHeadHandle.getBean().getAppearanceName(_signalHeadAppearance));
+        String appearence;
+        if ((_signalHeadHandle != null) && (_signalHeadHandle.getBean() != null)) {
+            appearence = _signalHeadHandle.getBean().getAppearanceName(_signalHeadAppearance);
+        } else {
+            appearence = "";
+        }
+        return Bundle.getMessage(locale, "SignalHead_Long", turnoutName, _queryType._text, appearence);
     }
     
     /** {@inheritDoc} */
