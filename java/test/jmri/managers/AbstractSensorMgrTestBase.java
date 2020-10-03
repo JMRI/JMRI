@@ -185,6 +185,12 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     @Override
     public void testAutoSystemNames() {
     }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+    }
 
     /**
      * Number of sensor to test. Made a separate method so it can be overridden
