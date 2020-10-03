@@ -93,6 +93,11 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public static final String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
     /**
+     * Property of changed state.
+     */
+    public static final String PROPERTY_STATE = "state";
+
+    /**
      * User's identification for the item. Bound parameter so manager(s) can
      * listen to changes. Any given user name must be unique within the layout.
      * Must not match the system name.
