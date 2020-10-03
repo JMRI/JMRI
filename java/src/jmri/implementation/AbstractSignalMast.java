@@ -126,6 +126,19 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
 
+    boolean disablePermissiveSignalMastLogic = false;
+    @Override
+    public void setPermissiveSmlDisabled(boolean disabled) {
+        disablePermissiveSignalMastLogic = disabled;
+    }
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public boolean isPermissiveSmlDisabled() {
+        return disablePermissiveSignalMastLogic;
+    }
+
     protected void configureSignalSystemDefinition(String name) {
         systemDefn = InstanceManager.getDefault(jmri.SignalSystemManager.class).getSystem(name);
         if (systemDefn == null) {
@@ -171,7 +184,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     @Override
     public String getMastType() { return mastType; }
     @Override
-    public void setMastType(@Nonnull String type) { 
+    public void setMastType(@Nonnull String type) {
         Objects.requireNonNull(type, "MastType cannot be null");
         mastType = type;
     }

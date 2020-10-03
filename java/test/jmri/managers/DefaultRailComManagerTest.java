@@ -131,6 +131,16 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
         l = getManager();
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @AfterEach
     @Override

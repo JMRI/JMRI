@@ -53,6 +53,11 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return getNameToTest1();
+    }
 
     @Test
     public void testGetSystemPrefix() {
