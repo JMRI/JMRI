@@ -14,7 +14,6 @@ import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.*;
-import jmri.jmrit.logixng.tools.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -162,6 +161,9 @@ public class ImportConditional {
                     Conditional c = (Conditional)nb;
                     newExpression = getConditionalExpression(cv, c);
                     break;
+                case CLOCK:
+                    newExpression = getFastClockExpression(cv);
+                    break;
                 case WARRANT:
                     Warrant w = (Warrant)nb;
                     newExpression = getWarrantExpression(cv, w);
@@ -170,7 +172,6 @@ public class ImportConditional {
                     OBlock b = (OBlock)nb;
                     newExpression = getOBlockExpression(cv, b);
                     break;
-
                 default:
                     newExpression = null;
                     log.warn("Unexpected type in ImportConditional.doImport(): {} -> {}", cv.getType(), cv.getType().getItemType());
@@ -435,12 +436,100 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getSignalHeadExpression(@Nonnull ConditionalVariable cv, SignalHead s) throws JmriException {
-        return null;
+        ExpressionSignalHead expression =
+                new ExpressionSignalHead(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setSignalHead(s);
+        
+        ExpressionSignalHead.QueryType appearence =
+                cv.isNegated() ? ExpressionSignalHead.QueryType.NotAppearance
+                : ExpressionSignalHead.QueryType.Appearance;
+        
+        switch (cv.getType()) {
+            case SIGNAL_HEAD_RED:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.RED);
+                break;
+            case SIGNAL_HEAD_YELLOW:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.YELLOW);
+                break;
+            case SIGNAL_HEAD_GREEN:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.GREEN);
+                break;
+            case SIGNAL_HEAD_DARK:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.DARK);
+                break;
+            case SIGNAL_HEAD_FLASHRED:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.FLASHRED);
+                break;
+            case SIGNAL_HEAD_FLASHYELLOW:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.FLASHYELLOW);
+                break;
+            case SIGNAL_HEAD_FLASHGREEN:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.FLASHGREEN);
+                break;
+            case SIGNAL_HEAD_LUNAR:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.LUNAR);
+                break;
+            case SIGNAL_HEAD_FLASHLUNAR:
+                expression.setQueryType(appearence);
+                expression.setAppearance(SignalHead.FLASHLUNAR);
+                break;
+            case SIGNAL_HEAD_LIT:
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotLit : ExpressionSignalHead.QueryType.Lit);
+                break;
+            case SIGNAL_HEAD_HELD:
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalHead.QueryType.NotHeld : ExpressionSignalHead.QueryType.Held);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadSignalHeadType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     
     private DigitalExpressionBean getSignalMastExpression(@Nonnull ConditionalVariable cv, SignalMast sm) throws JmriException {
-        return null;
+        ExpressionSignalMast expression =
+                new ExpressionSignalMast(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setSignalMast(sm);
+        
+        ExpressionSignalMast.QueryType aspect =
+                cv.isNegated() ? ExpressionSignalMast.QueryType.NotAspect
+                : ExpressionSignalMast.QueryType.Aspect;
+        
+        switch (cv.getType()) {
+            case SIGNAL_MAST_ASPECT_EQUALS:
+                expression.setQueryType(aspect);
+                expression.setAspect(cv.getDataString());
+                break;
+            case SIGNAL_MAST_LIT:
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotLit : ExpressionSignalMast.QueryType.Lit);
+                break;
+            case SIGNAL_MAST_HELD:
+                expression.setQueryType(cv.isNegated() ? ExpressionSignalMast.QueryType.NotHeld : ExpressionSignalMast.QueryType.Held);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadSignalHeadType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     
@@ -491,6 +580,11 @@ public class ImportConditional {
         expression.setTriggerOnChange(cv.doTriggerActions());
         
         return expression;
+    }
+    
+    
+    private DigitalExpressionBean getFastClockExpression(@Nonnull ConditionalVariable cv) throws JmriException {
+        return null;
     }
     
     
