@@ -21,7 +21,7 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
@@ -66,7 +66,7 @@
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -448,7 +448,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
         </ul>
 
     <h3>Signals</h3>

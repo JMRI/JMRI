@@ -169,27 +169,18 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Register any orphan Sensors when a new Serial Node is created.
      * @param node node to register sensors for.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // Iterate through list containing names of all Sensors
-        SerialNode tNode = null;
-        for (String sName : getSystemNameList()) {
-            if (sName == null) {
-                log.error("System Name null during register Sensor");
-            } else {
-                log.debug("System Name is {}", sName);
-                if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
-                    // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
-                    if (tNode == node) {
-                        // This sensor is for this new Serial Node - register it
-                        Sensor s = getBySystemName(sName);
-                        if (s != null) {
-                            node.registerSensor(s, SerialAddress.getBitFromSystemName(sName, getSystemPrefix()));
-                        } else {
-                            log.error("Sensor {} not found by its system name", sName);
-                        }
-                    }
+        SerialNode tNode;
+        for (Sensor s : getNamedBeanSet()) {
+            String sName = s.getSystemName();
+            log.debug("System Name is {}", sName);
+            if (sName.startsWith(getSystemNamePrefix())) { // multichar prefix
+                // This is a Sensor
+                tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
+                if (tNode == node) {
+                    // This sensor is for this new Serial Node - register it                    
+                    node.registerSensor(s, SerialAddress.getBitFromSystemName(sName, getSystemPrefix()));
                 }
             }
         }

@@ -48,7 +48,6 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     private int newCmdCode = -1;
     private int newAddrCode = -1;
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void processForPollReq(SerialReply l) {
         // process the POLL_REQ and update/create sensors as needed
         if ((l.getElement(0) & 0xFF) == Constants.POLL_REQ) {
@@ -65,24 +64,14 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 
                     if (newHouseCode != null && (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
                         // some sort of 'global' command, process for all matching the house code
-                        List<String> sensors = getSystemNameList();
-                        for (int ii = 0; ii < sensors.size(); ii++) {
-                            String sName = sensors.get(ii);
+                        getNamedBeanSet().forEach(sensorInSet -> {                        
+                            String sName = sensorInSet.getSystemName();
                             if (newHouseCode.compareTo(tc.getAdapterMemo().getSerialAddress().houseCodeFromSystemName(sName)) == 0) {
                                 try {
-                                    sensor = provideSensor(sName);
-                                } catch(java.lang.IllegalArgumentException iae){
-                                    // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
-                                    if (log.isDebugEnabled()) {
-                                        log.debug("Attempt access sensor {} failed", sName);
-                                    }
-                                    throw iae;
-                                }
-                                try {
                                     if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-                                        sensor.setKnownState(Sensor.INACTIVE);
+                                        sensorInSet.setKnownState(Sensor.INACTIVE);
                                     } else {
-                                        sensor.setKnownState(Sensor.ACTIVE);
+                                        sensorInSet.setKnownState(Sensor.ACTIVE);
                                     }
                                 } catch (jmri.JmriException e) {
                                     if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
@@ -92,7 +81,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                                     }
                                 }
                             }
-                        }
+                        });
                     } else {
                         // was not a global command, so might be a sensor
                         if (newAddrCode > 0) {
@@ -101,9 +90,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
                                 sensor = provideSensor(sysName);
                             } catch(java.lang.IllegalArgumentException iae){
                                 // if provideSensor fails, it will throw an IllegalArgumentException, so catch that,log it if debugging is enabled, and then re-throw it.
-                                if (log.isDebugEnabled()) {
-                                    log.debug("Attempt access sensor {} failed", sysName);
-                                }
+                                log.debug("Attempt access sensor {} failed", sysName);
                                 throw iae;
                             }
                             if (newCmdCode == X10Sequence.FUNCTION_ON || newCmdCode == X10Sequence.FUNCTION_BRIGHT || newCmdCode == X10Sequence.FUNCTION_STATUS_ON) {

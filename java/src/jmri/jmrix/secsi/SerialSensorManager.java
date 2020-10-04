@@ -148,32 +148,23 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * Register any orphan Sensors when a new Serial Node is created.
      * @param node node to register.
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         log.debug("registering node {}", node.getNodeAddress());
-        // get list containing all Sensors
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
         // Iterate through the sensors
-        SerialNode tNode = null;
-        while (iter.hasNext()) {
-            String sName = iter.next();
-            if (sName == null) {
-                log.error("System name null during register Sensor");
-            } else {
-                log.debug("system name is {}", sName);
-                if ((sName.startsWith(getSystemPrefix())) && (sName.charAt(getSystemPrefix().length()) == 'S')) { // multichar prefix
-                    // This is a Sensor
-                    tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
-                    if (tNode == node) {
-                        // This sensor is for this new Serial Node - register it
-                        log.debug("register sensor on node {}", node.getNodeAddress());
-                        node.registerSensor(getBySystemName(sName),
-                                (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
-                    }
+        getNamedBeanSet().forEach(sensorInSet -> {
+            String sName = sensorInSet.getSystemName();
+            log.debug("system name is {}", sName);
+            if (sName.startsWith(getSystemNamePrefix())) { // multichar prefix
+                // This is a Sensor
+                SerialNode tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
+                if (tNode == node) {
+                    // This sensor is for this new Serial Node - register it
+                    log.debug("register sensor on node {}", node.getNodeAddress());
+                    node.registerSensor(sensorInSet,
+                            (SerialAddress.getBitFromSystemName(sName, getSystemPrefix()) - 1));
                 }
             }
-        }
+        });
     }
 
     /**

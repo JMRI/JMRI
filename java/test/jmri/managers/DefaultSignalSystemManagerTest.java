@@ -50,6 +50,7 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLoad() {
         DefaultSignalSystemManager d = (DefaultSignalSystemManager)l;
 
@@ -58,9 +59,14 @@ public class DefaultSignalSystemManagerTest extends AbstractManagerTestBase<jmri
         set.forEach((b) -> {
             d.deregister(b);
         });
+        
+        Assert.assertTrue(d.getNamedBeanSet().isEmpty());
 
         d.load();
         Assert.assertTrue(d.getSystemNameList().size() >= 2);
+        Assert.assertTrue(d.getNamedBeanSet().size() >= 2);
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
     }
 
     @Test
