@@ -6,19 +6,19 @@
 
         <h4>Acela CTI</h4>
             <ul>
-                <li>Fixed issue unable to initialise adapter</li>
+                <li></li>
             </ul>
-
+        
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -26,12 +26,12 @@
 
         <h4>DCC++</h4>
             <ul>
-                <li>Only send function refreshes if required (version < 3)</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
             <ul>
-                <li>Improved System Name validation for Sensors and Reporters, must contain at least 1 number.</li>
+                <li></li>
             </ul>
 
         <h4>Direct</h4>
@@ -41,7 +41,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Improved System Name validation for Turnouts, Sensors and Reporters, must contain at least 1 number.</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -51,8 +51,7 @@
 
         <h4>IPOCSMR</h4>
             <ul>
-                <li>Initial support added.</li>
-                <li>Turnouts, Lights (on/off) and Sensors</li>
+                <li></li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -62,8 +61,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
-              configure these boards.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -78,12 +76,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed a bug that caused an erroneous ERROR message on operating MQTT Lights</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -103,17 +101,12 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
-            </ul>
-            
-        <h4>Pi</h4>
-            <ul>
-                <li>Improved System Name validation for Turnouts and Sensors, numeric from 0 - 999</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
             <ul>
-                <li>Improved System Name validation for Standalone sensors, must contain at least 1 number.</li>
+                <li></li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -133,7 +126,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li>Improved System Name validation for Turnouts and Sensors, must contain at least 1 number.</li>
+                <li></li>
             </ul>
 
         <h4>TMCC</h4>
@@ -144,11 +137,6 @@
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
                 <li></li>
-            </ul>
-            
-        <h4>XPA</h4>
-            <ul>
-                <li>Improved System Name validation for Turnouts, must be numeric.</li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -208,8 +196,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added "LokSound 5 micro E24 DCC" and "LokSound 5 micro KATO".</li>
-                <li>Replaced incorrectly-named "LokPilot 5 micro DCC Next18" with "LokPilot 5 Micro Next18 DCC".</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -267,12 +254,9 @@
                 <li></li>
             </ul>
 
-        <a id="diy" name="diy"></a>
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li>LocoIO programming using the Public_Domain_HDL_LocoIO decoder definition has been significantly
-                  expanded. This update requires JMRI 4.21.2 or later. Because of the included improvements you are
-                  advised to start with new Roster Entries for your LocoIO boards. Help files have been updated.</li>
+                <li></li>
             </ul>
 
         <h4>QSI</h4>
@@ -292,7 +276,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Diesel fix sound slections, Genesis OEM Diesel add models</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -304,7 +288,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -359,13 +343,7 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li>The CTC tool no longer uses an external XML file, CTCSystem.xml, for retaining
-            its configuration.  The configuration is now part of the standard PanelPro data file.
-            This change eliminates issues with data consistency between the JMRI tables and
-            the CTC configuration.  The CTC Editor File menu has an menu item to import an
-            existing CTCSystem.xml file so that the configuration will be included in
-            Panels &rArr; Store Panels.
-            </li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -400,8 +378,13 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
-          in copying conditionals. See the updated help files for details.</li>
+          <li></li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
@@ -431,7 +414,7 @@
             <ul>
                 <li></li>
             </ul>
-
+   
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -450,12 +433,12 @@
             <li></li>
         </ul>
 
-    <h3>Routes</h3>
+    <h3>Routes</h3>    
         <a id="Routes" name="Routes"></a>
        <ul>
             <li></li>
        </ul>
-
+       
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -465,8 +448,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
-                end JMRI and then request that the underlying OS shutdown or restart itself</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -488,7 +470,7 @@
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -496,7 +478,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -556,48 +538,16 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>The "Location Following" (sound follows loco) with occupancy sensors and JMRI Blocks
-            now also works with a RosterEntry or RosterId as Block value.</li>
-        </ul>
-
-   <h3>Meters and MeterFrames</h3>
-        <a id="Meters" name="Meters"></a>
-        <ul>
-            <li>jmri.MultiMeter is split into jmri.Meter.</li>
-            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
-            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
-            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
-            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
-        </ul>
-
-   <h3>AbstractProxyManager</h3>
-        <a id="Proxy" name="Proxy"></a>
-        <ul>
-            <li>AbstractProxyManager can now automatically create system specific managers.</li>
-            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
-			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
-			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
-			already exists. This works as long as the system specific manager doesn't need to have
-			system specific knowledge of the named beans.</li>
-            <li>This means that, for example, the user may create a Jython script that creates a Meter
-			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
-			manager is automatically created.</li>
-			<li>Once a specific connection needs to store specific data about meters, a connection
-			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
-            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
-                action required, but developers need to be online the first time
-                they build using Maven.</li>
-            <li>An option (disablePermissiveSignalMastLogic) has been added to SignalMasts and SignalMastLogic
-                to enable conditional permissive aspects.  See the jmri.SignalMast Javadoc for details.
+            <li></li>
         </ul>
 
