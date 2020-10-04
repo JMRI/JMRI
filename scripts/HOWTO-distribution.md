@@ -176,13 +176,13 @@ git push github
         git checkout master
         git pull 
         cp jmri4.21.2.shtml jmri4.21.3.shtml
-        $EDITOR jmri4.21.2.shtml
+        $EDITOR jmri4.21.3.shtml
         (edit the new release note accordingly)
             change numbers throughout
             move new warnings to old (see below)
             remove old-version change notes
-        git add jmri4.21.2.shtml
-        git commit -m"start new 4.21.2 release note" jmri4.21.2.shtml
+        git add jmri4.21.3.shtml
+        git commit -m"start new 4.21.3 next release note" jmri4.21.3.shtml
         git push github
         cd ../../(local JMRI copy)
 ```
@@ -271,7 +271,7 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
 
 ```
-The release-4.21.3 branch has been created. 
+The release-4.21.2 branch has been created. 
 
 Maintainers, please set the (next series) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
@@ -309,13 +309,13 @@ If you're developing any additional (post-4.21.2) changes that you want in the J
 ================================================================================
 ## Capture A Profile
 
-- On your local machine, open jvisualvm. Do 
+- On your local machine, open jvisualvm. (If you have multiple displays, you may have to disconnect them) Do 
 
     ant clean tests
     unsetenv JMRI_OPTIONS
     ant alltest
     
-and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.21.3" Github issue so that historical resource usage info is available.
+and attach jvisualvm to the AllTest class when it appears. When that's done, put a screen-shot of the four monitor graphs into the "Create Test Release 4.21.2" Github issue so that historical resource usage info is available.
 
 ================================================================================
 ## Put Files Out For Checking
@@ -424,16 +424,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
-
 [Release notes](https://jmri.org/releasenotes/jmri4.21.2.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.21.3+R6ede87265.dmg](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R6ede87265.dmg) | 77b392c3b7d650df822e0b642c786a829d3937dd9b32a02bc02e1378fd8ecc9f
-[JMRI.4.21.3+R6ede87265.exe](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R6ede87265.exe) | 9410e05e9eb9df0e7afc720c0888a68178a0dc6012c740bda3fafe627fe27c85
-[JMRI.4.21.3+R6ede87265.tgz](https://github.com/JMRI/JMRI/releases/download/v4.21.3/JMRI.4.21.3+R6ede87265.tgz) | 925207153a2f3d027de55cb63a222fb5cfaa13b79bbec42d0d3011a451948746
+[JMRI.4.21.2+R4558b1c10.dmg](https://github.com/JMRI/JMRI/releases/download/v4.21.2/JMRI.4.21.2+R4558b1c10.dmg) | ebe812a971429a77e5a4245c9faa92c33d418cef07bbd9bd0f519ace1ec59ffb
+[JMRI.4.21.2+R4558b1c10.exe](https://github.com/JMRI/JMRI/releases/download/v4.21.2/JMRI.4.21.2+R4558b1c10.exe) | a8caba15505c8c86d2b3cca63ac6a4af000123d2eebd1778075220b9cf176d83
+[JMRI.4.21.2+R4558b1c10.tgz](https://github.com/JMRI/JMRI/releases/download/v4.21.2/JMRI.4.21.2+R4558b1c10.tgz) | b888278563e8fa4b7edf8e5f9b112f49f737d4604f6295e172801d29ed2f5d06
 
 ```
 
