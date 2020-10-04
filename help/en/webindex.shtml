@@ -405,12 +405,6 @@
 <ul>
      
 <li>
-<a href="package/jmri/jmrit/ctc/CTC.shtml#menuEditFind">Find and Replace... </a>
-<ul></ul>
-</li>
-
-     
-<li>
 <a href="package/jmri/jmrit/ctc/CTC.shtml#menuEditFix">Fix Error(s)... </a>
 <ul></ul>
 </li>
@@ -424,19 +418,13 @@
 <ul>
      
 <li>
-<a href="package/jmri/jmrit/ctc/CTC.shtml#menuFile">Exit without saving </a>
+<a href="package/jmri/jmrit/ctc/CTC.shtml#menuFile">Import </a>
 <ul></ul>
 </li>
 
      
 <li>
 <a href="package/jmri/jmrit/ctc/CTC.shtml#menuFile">New </a>
-<ul></ul>
-</li>
-
-     
-<li>
-<a href="package/jmri/jmrit/ctc/CTC.shtml#menuFile">Save </a>
 <ul></ul>
 </li>
 

@@ -86,6 +86,16 @@ public class ConcentratorSensorManager extends RfidSensorManager {
         super.dispose();
     }
 
+    /**
+     * Validates to contain at least 1 number.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class);
 
 }

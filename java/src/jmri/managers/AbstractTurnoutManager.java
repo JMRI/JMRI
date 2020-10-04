@@ -53,14 +53,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     public Turnout provideTurnout(@Nonnull String name) {
         log.debug("provide turnout {}", name);
         Turnout result = getTurnout(name);
-        if (result == null) {
-            if (name.startsWith(getSystemPrefix() + typeLetter())) {
-                result = newTurnout(name, null);
-            } else {
-                result = newTurnout(makeSystemName(name), null);
-            }
-        }
-        return result;
+        return result == null ? newTurnout(makeSystemName(name, true), null) : result;
     }
 
     /** {@inheritDoc} */
@@ -85,9 +78,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.error("Invalid system name for turnout: {} needed {}{} followed by a suffix",
+            log.error("Invalid system name for Turnout: {} needed {}{} followed by a suffix",
                     systemName, getSystemPrefix(), typeLetter());
-            throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
+            throw new IllegalArgumentException("Invalid system name for Turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
         }
 

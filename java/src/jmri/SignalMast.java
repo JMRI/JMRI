@@ -77,10 +77,10 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
     public SignalAppearanceMap getAppearanceMap();
 
     /**
-     * Set the specific mast type for this mast. 
+     * Set the specific mast type for this mast.
      * This is the
      * type that appears in the SystemName and filename, i.e. "SL-3-high"
-     * for the 
+     * for the
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
      * @param type mast type.
@@ -91,13 +91,13 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
      * Get the specific mast type for this mast.
      * This is the
      * type that appears in the SystemName and filename, i.e. "SL-3-high"
-     * for the 
+     * for the
      * <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-3-high.xml">AAR-1946/appearance-SL-3-high.xml</a>
      * definition.
      * @return mast type.
      */
     public String getMastType();
-    
+
     /**
      * Get if signal mast is lit or dark. Changes to this property can be
      * listened to using the property {@literal Lit}.
@@ -119,6 +119,16 @@ public interface SignalMast extends NamedBean {  // to eventually be Signal
     public boolean getHeld();
 
     public void setHeld(boolean newHeld);
+
+    /**
+     * Determine if the permissive SML logic should be disabled.  The default will be
+     * false which means that automatic permissive processing is allowed.  Prototypical
+     * CTC designs frequently require an additional action, such as Call-On, to enable permissive aspects.
+     * @return true if permissive SML is disabled.
+     */
+    public boolean isPermissiveSmlDisabled();
+
+    public void setPermissiveSmlDisabled(boolean disabled);
 
     public boolean isAspectDisabled(String aspect);
 

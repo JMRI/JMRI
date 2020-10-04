@@ -128,7 +128,14 @@ public interface LightManager extends ProvidingManager<Light> {
      * @return true if valid; false otherwise
      */
     @CheckReturnValue
-    public boolean validSystemNameConfig(@Nonnull String systemName);
+    public default boolean validSystemNameConfig(@Nonnull String systemName){
+        try {
+            validateSystemNameFormat(systemName);
+            return true;
+        } catch (jmri.NamedBean.BadSystemNameException ex) {
+            return false;
+        }
+    }
 
     /**
      * Convert the system name to a normalized alternate name.
