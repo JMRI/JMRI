@@ -128,17 +128,13 @@
 
     </indexitem>
     <indexitem text="Edit menu " target="package.jmri.jmrit.ctc.CTC_menuEditFind">
-     <indexitem text="Find and Replace... " target="package.jmri.jmrit.ctc.CTC_menuEditFind"/>
-
      <indexitem text="Fix Error(s)... " target="package.jmri.jmrit.ctc.CTC_menuEditFix"/>
 
     </indexitem>
     <indexitem text="File menu " target="package.jmri.jmrit.ctc.CTC_menuFile">
-     <indexitem text="Exit without saving " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
+     <indexitem text="Import " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
      <indexitem text="New " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
-
-     <indexitem text="Save " target="package.jmri.jmrit.ctc.CTC_menuFile"/>
 
     </indexitem>
    </indexitem>
@@ -765,13 +761,13 @@
  <indexitem text="Wangrow - Hardware, Connection, Tools " target="html.hardware.nce.Wangrow"/>
 
  <indexitem text="Warrants " target="html.tools.WarrantsIntro">
-   <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
+  <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
 
-   <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
+  <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
 
-   <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
+  <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
 
-   <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
+  <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
 
  </indexitem>
  <indexitem text="Web Access to JMRI " target="html.web.index"/>

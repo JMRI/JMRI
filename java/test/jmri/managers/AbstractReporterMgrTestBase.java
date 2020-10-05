@@ -185,6 +185,12 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
     @Override
     public void testAutoSystemNames() {
     }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+    }
 
     /**
      * Number of Reporter to test. Made a separate method so it can be overridden

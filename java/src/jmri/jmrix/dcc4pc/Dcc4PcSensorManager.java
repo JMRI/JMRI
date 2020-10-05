@@ -1135,6 +1135,18 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: Custom validation for Dcc4PcSensorManager could be improved.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
+    
     @Override
     public void dispose() {
         stopPolling();

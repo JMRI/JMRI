@@ -45,6 +45,16 @@ public class DefaultConditionalManagerTest extends AbstractManagerTestBase<jmri.
         Assert.assertTrue(c1.getUserName().equals("Foo"));
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() throws Exception {

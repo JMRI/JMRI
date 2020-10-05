@@ -6,47 +6,13 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.TreeSet;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import java.util.*;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import jmri.Conditional;
 import jmri.Conditional.Operator;
-import jmri.ConditionalAction;
-import jmri.ConditionalManager;
-import jmri.ConditionalVariable;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.Logix;
-import jmri.LogixManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.Route;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.Turnout;
+import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -106,7 +72,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
          * Override to filter out the LRoutes from the rest of Logix.
          */
         @Override
-        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         protected synchronized void updateNameList() {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
@@ -118,19 +83,15 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                     }
                 }
             }
-            List<String> list = getManager().getSystemNameList();
             sysNameList = new ArrayList<>();
             // and add them back in
-            for (int i = 0; i < list.size(); i++) {
-                String sysName = list.get(i);
-                if (sysName.startsWith(getLogixSystemPrefix())) {
-                    sysNameList.add(sysName);
-                    getBySystemName(sysName).addPropertyChangeListener(this);
+            getManager().getNamedBeanSet().forEach(b -> {
+                if (b.getSystemName().startsWith(getLogixSystemPrefix())) {
+                    sysNameList.add(b.getSystemName());
+                    b.addPropertyChangeListener(this);
                 }
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("updateNameList: sysNameList size= {}", sysNameList.size());
-            }
+            });
+            log.debug("updateNameList: sysNameList size= {}", sysNameList.size());
         }
 
         @Override

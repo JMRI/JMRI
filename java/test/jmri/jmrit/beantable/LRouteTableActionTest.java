@@ -65,8 +65,7 @@ public class LRouteTableActionTest {
             _lRouteTable._outputList.get(3 * i + 1).setIncluded(true);
         }
         _lRouteTable.createPressed(null);
-        java.util.List<String> l = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNameList();
-        assertEquals("Logix Count", 1, l.size());
+        assertEquals("Logix Count", 1, InstanceManager.getDefault(jmri.LogixManager.class).getNamedBeanSet().size());
 
         _lRouteTable.m.setValueAt(Bundle.getMessage("ButtonEdit"), 0,
                 LRouteTableAction.LBeanTableDataModel.EDITCOL);

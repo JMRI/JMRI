@@ -42,6 +42,16 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         Assert.assertNotNull("iM created",im);
         Assert.assertEquals("correct system name","IMiM",im.getSystemName());
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     public void setUp() {

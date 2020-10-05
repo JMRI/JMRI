@@ -141,9 +141,7 @@ public class UsbLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        log.debug("*    UsbLightManager.getEntryToolTip() called");
-        // TODO: Why doesn't this work?!?
-        return null; //BundleBundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(UsbLightManager.class);

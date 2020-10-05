@@ -6,9 +6,9 @@
 
         <h4>Acela CTI</h4>
             <ul>
-                <li>Fixed issue unable to initialise adapter</li>
+                <li></li>
             </ul>
-
+        
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
@@ -21,12 +21,12 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
             <ul>
-                <li>Only send function refreshes if required (version < 3)</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -51,8 +51,7 @@
 
         <h4>IPOCSMR</h4>
             <ul>
-                <li>Initial support added.</li>
-                <li>Turnouts, Lights (on/off) and Sensors</li>
+                <li></li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -73,11 +72,12 @@
                   "Voltage/Current Meter" tool. Further information may be found at the
                   <a href="../html/hardware/loconet/DigitraxMeters.shtml">
                       Digitrax "Meters"</a> web page.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -87,12 +87,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed a bug that caused an erroneous ERROR message on operating MQTT Lights</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -112,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -207,8 +207,7 @@
 
         <h4>ESU</h4>
             <ul>
-                <li>Added "LokSound 5 micro E24 DCC" and "LokSound 5 micro KATO".</li>
-                <li>Replaced incorrectly-named "LokPilot 5 micro DCC Next18" with "LokPilot 5 Micro Next18 DCC".</li>
+                <li></li>
             </ul>
 
         <h4>Hornby</h4>
@@ -266,12 +265,9 @@
                 <li></li>
             </ul>
 
-        <a id="diy" name="diy"></a>
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li>LocoIO programming using the Public_Domain_HDL_LocoIO decoder definition has been significantly
-                  expanded. This update requires JMRI 4.21.2 or later. Because of the included improvements you are
-                  advised to start with new Roster Entries for your LocoIO boards. Help files have been updated.</li>
+                <li></li>
             </ul>
 
         <h4>QSI</h4>
@@ -291,7 +287,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Diesel fix sound slections, Genesis OEM Diesel add models</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -396,6 +392,12 @@
           <li></li>
         </ul>
 
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
@@ -457,8 +459,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
-                end JMRI and then request that the underlying OS shutdown or restart itself</li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -488,7 +491,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -587,9 +590,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
-            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
-                action required, but developers need to be online the first time
-                they build using Maven.</li>
+            <li></li>
         </ul>
 

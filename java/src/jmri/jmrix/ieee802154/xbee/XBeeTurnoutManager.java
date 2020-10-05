@@ -231,7 +231,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getEntryToolTip() {
-        return Bundle.getMessage("AddOutputEntryToolTip");
+        return Bundle.getMessage("AddTurnoutEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeTurnoutManager.class);
