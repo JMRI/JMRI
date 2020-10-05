@@ -291,19 +291,20 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
     public LnPredefinedMeters getPredefinedMeters() {
         if (getDisabled()) {
+            log.warn("Aborting getPredefinedMeters account is disabled!");
             return null;
         }
-        switch (getSlotManager().commandStationType) {
-            case COMMAND_STATION_USB_DCS240_ALONE:
-            case COMMAND_STATION_DCS240:
-            case COMMAND_STATION_DCS210:
-            case COMMAND_STATION_USB_DCS52_ALONE:
-            case COMMAND_STATION_DCS052:
-                break;
-            default:
-                // The command station does not support these meters
-                return null;
-        }
+//        switch (getSlotManager().commandStationType) {
+//            case COMMAND_STATION_USB_DCS240_ALONE:
+//            case COMMAND_STATION_DCS240:
+//            case COMMAND_STATION_DCS210:
+//            case COMMAND_STATION_USB_DCS52_ALONE:
+//            case COMMAND_STATION_DCS052:
+//                break;
+//            default:
+//                // The command station does not support these meters
+//                return null;
+//        }
         if (predefinedMeters == null) {
             predefinedMeters = new LnPredefinedMeters(this);
         }
