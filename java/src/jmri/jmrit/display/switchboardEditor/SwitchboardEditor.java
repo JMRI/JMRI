@@ -30,6 +30,8 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import com.sun.jna.StringArray;
 import jmri.ConfigureManager;
@@ -80,29 +82,27 @@ public class SwitchboardEditor extends Editor {
     private transient boolean panelChanged = false;
 
     // Switchboard items
-    private JPanel navBarPanel = null;
     ImageIcon iconPrev = new ImageIcon("resources/icons/misc/gui3/LafLeftArrow_m.gif");
     private final JLabel prev = new JLabel(iconPrev);
     ImageIcon iconNext = new ImageIcon("resources/icons/misc/gui3/LafRightArrow_m.gif");
     private final JLabel next = new JLabel(iconNext);
     private final int rangeBottom = 1;
     private final int rangeTop = 100000; // for MERG etc where thousands = node number, total number on board limited to unconnectedRangeLimit anyway
-    private final int unconnectedRangeLimit = 400;
-    private final int rangeSizeWarning = 250;
-    private final int initialMax = 24;
+    private final static int unconnectedRangeLimit = 400;
+    private final static int rangeSizeWarning = 250;
+    private final static int initialMax = 24;
     private final JSpinner minSpinner = new JSpinner(new SpinnerNumberModel(rangeBottom, rangeBottom, rangeTop - 1, 1));
     private final JSpinner maxSpinner = new JSpinner(new SpinnerNumberModel(initialMax, rangeBottom + 1, rangeTop, 1));
     private final JCheckBox hideUnconnected = new JCheckBox(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBox autoItemRange = new JCheckBox(Bundle.getMessage("CheckBoxAutoItemRange"));
-    JButton allOnButton;
-    JButton allOffButton;
+    private JButton allOnButton;
+    private JButton allOffButton;
     private TargetPane switchboardLayeredPane; // JLayeredPane
     static final String TURNOUT = Bundle.getMessage("Turnouts");
     static final String SENSOR = Bundle.getMessage("Sensors");
     static final String LIGHT = Bundle.getMessage("Lights");
     private final String[] beanTypeStrings = {TURNOUT, SENSOR, LIGHT};
     private JComboBox<String> beanTypeList;
-    JSpinner rows = new JSpinner(new SpinnerNumberModel(3, 1, 25, 1)); // number of rows on switchboard
     private final String[] switchShapeStrings = {
         Bundle.getMessage("Buttons"),
         Bundle.getMessage("Sliders"),
@@ -123,6 +123,10 @@ public class SwitchboardEditor extends Editor {
     private final Color defaultUnknownColor = Color.WHITE;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
+    private int rows = 3;
+    private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile? EBR
+    JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    // number of rows displayed on switchboard, disabled when autoRows is on TODO hide?
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
     // saved state of options when panel was loaded or created
@@ -135,15 +139,12 @@ public class SwitchboardEditor extends Editor {
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
     private final JCheckBoxMenuItem autoItemRangeBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoItemRange"));
     private final JCheckBoxMenuItem showToolTipBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxShowTooltips"));
+    private final JCheckBoxMenuItem autoRowsBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxAutoRows"));
+    private final JCheckBoxMenuItem showUserNameBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxUserName"));
     private final JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
     private final JRadioButtonMenuItem scrollNone = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
     private final JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
-
-    // Action commands
-    private static final String LAYER_COMMAND = "layer";
-    private static final String MANU_COMMAND = "manufacturer";
-    private static final String SWITCHTYPE_COMMAND = "switchshape";
 
     /**
      * To count number of displayed beanswitches, this array hold all beanswitches to be displayed
@@ -218,8 +219,10 @@ public class SwitchboardEditor extends Editor {
         beanSetupPane.add(beanTypeTitle);
         beanTypeList = new JComboBox<String>(beanTypeStrings);
         beanTypeList.setSelectedIndex(0); // select bean type in comboBox
-        beanTypeList.setActionCommand(LAYER_COMMAND);
-        beanTypeList.addActionListener(this);
+        beanTypeList.addActionListener((ActionEvent event) -> {
+            updatePressed();
+            setDirty();
+        });
         beanSetupPane.add(beanTypeList);
 
         // add connection selection comboBox
@@ -246,8 +249,10 @@ public class SwitchboardEditor extends Editor {
             beanManuPrefixes.add(manuPrefix); // add to list (as only item)
         }
         beanManuNames.setSelectedIndex(0); // defaults to Internal on init()
-        beanManuNames.setActionCommand(MANU_COMMAND);
-        beanManuNames.addActionListener(this);
+        beanManuNames.addActionListener((ActionEvent event) -> {
+            updatePressed();
+            setDirty();
+        });
         beanSetupPane.add(beanManuNames);
         add(beanSetupPane);
 
@@ -258,13 +263,26 @@ public class SwitchboardEditor extends Editor {
         switchShapePane.add(switchShapeTitle);
         switchShapeList = new JComboBox<>(switchShapeStrings);
         switchShapeList.setSelectedIndex(0); // select Button choice in comboBox
-        switchShapeList.setActionCommand(SWITCHTYPE_COMMAND);
-        switchShapeList.addActionListener(this);
+        switchShapeList.addActionListener((ActionEvent event) -> {
+            updatePressed();
+            setDirty();
+        });
         switchShapePane.add(switchShapeList);
         // add column spinner
         JLabel rowsLabel = new JLabel(Bundle.getMessage("NumberOfRows"));
         switchShapePane.add(rowsLabel);
-        switchShapePane.add(rows);
+        rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
+        rowsSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                if (!autoRowsBox.isSelected()) { // spinner is disabled when autoRows is on, but just in case
+                    rows = (Integer) rowsSpinner.getValue();
+                    updatePressed();
+                    setDirty();
+                }
+            }
+        });
+        switchShapePane.add(rowsSpinner);
         add(switchShapePane);
 
         JPanel checkboxPane = new JPanel();
@@ -286,13 +304,15 @@ public class SwitchboardEditor extends Editor {
             setHideUnconnected(hideUnconnected.isSelected());
             hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
             help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            updatePressed();
+            setDirty();
         });
         checkboxPane.add(hideUnconnected);
         add(checkboxPane);
 
         switchboardLayeredPane.setLayout(new GridLayout(3, 8)); // initial layout params
         // Add at least 1 switch to pane to create switchList: done later, would be deleted soon if added now
-        // see UpdatePressed()
+        // see updatePressed()
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
@@ -314,7 +334,6 @@ public class SwitchboardEditor extends Editor {
         JPanel updatePanel = new JPanel();
         JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
         updateButton.addActionListener((ActionEvent event) -> {
-            log.debug("Update clicked");
             updatePressed();
             setDirty();
         });
@@ -335,7 +354,6 @@ public class SwitchboardEditor extends Editor {
 
         setupEditorPane(); // re-layout all the toolbar items
         updatePressed();   // refresh default Switchboard, rebuilds and resizes all switches
-        pack();
 
         // component listener handles frame resizing event
         super.getTargetFrame().addComponentListener(new ComponentAdapter() {
@@ -345,7 +363,6 @@ public class SwitchboardEditor extends Editor {
                 resizeInFrame();
             }
         });
-
     }
 
     /**
@@ -355,6 +372,14 @@ public class SwitchboardEditor extends Editor {
         super.getTargetFrame().getSize();
         switchboardLayeredPane.setSize(getWidth(), height);
         switchboardLayeredPane.repaint();
+        if (autoRowsBox.isSelected()) { // check if autoRows is active
+            int oldRows = rows;
+            rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
+            if (rows != oldRows) {
+                rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                updatePressed(); // redraw if rows value changed
+            }
+        }
     }
 
     /**
@@ -362,7 +387,7 @@ public class SwitchboardEditor extends Editor {
      * <p>
      * Called by Update button click, and automatically after loading a panel
      * from XML (with all saved options set).
-     * TODO add a call from/listener for Switchboard JPanel WindowResize() event
+     * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
     public void updatePressed() {
         log.debug("update _hideUnconnected = {}", _hideUnconnected);
@@ -403,8 +428,8 @@ public class SwitchboardEditor extends Editor {
             // deleting items starting from 0 will result in skipping the even numbered items
             switchboardLayeredPane.remove(i);
         }
-        switchesOnBoard.clear(); // reset
-        log.debug("switchesOnBoard cleared, size is now: {}", 0); // always 0 at this point
+        switchesOnBoard.clear(); // reset beanswitches LinkedHashMap
+        log.debug("switchesOnBoard cleared, size is now: 0"); // always 0 at this point
         switchboardLayeredPane.setSize(width, height);
 
         log.debug("creating range for manu index {}", beanManuNames.getSelectedIndex());
@@ -416,44 +441,13 @@ public class SwitchboardEditor extends Editor {
                 beanManuPrefixes.get(beanManuNames.getSelectedIndex()),
                 switchShapeList.getSelectedIndex());
 
-        // calculation using JPanel size, user range, icon proportions to determine optimal cols/rows
-        // beanswitch icons & web canvas W:H proportions range from 1.5 (3:2) to 0.7 (1:1.5), assume squares for now
-        final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile? EBR
-        // find cell matrix that allows largest size icons
-        double paneEffectiveWidth = Math.ceil(switchboardLayeredPane.getWidth()/cellProportion);
-        double paneHeight = switchboardLayeredPane.getHeight();
-        int columnsFinder = 1;
-        double rowsFinder = 1;
-        float zoomNew = 0.1f; // start value
-        float zoomOld = 0.0f;
-        double totalDisplayed = getTotal(); // not counting unconnected items if set to be hidden
-
-        if (switchesOnBoard.size() >= unconnectedRangeLimit) {
-            log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
+        if (autoRowsBox.isSelected()) {
+            rows = autoRows(cellProportion); // TODO: specific proportion value for Type/Shape choice?
         }
-
-        while (zoomNew > zoomOld) {
-            columnsFinder++;
-            rowsFinder = Math.ceil(totalDisplayed/columnsFinder);
-            zoomOld = zoomNew; // remember for comparison
-            zoomNew = (float) Math.max(paneEffectiveWidth/columnsFinder, paneHeight/rowsFinder);
-        }
-        // do some calculations, repeated in panel.js for web display
-
-        // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
-        // Math.max(0.001,... to prevent 0 width in case 0 items are connected
-        // 1/Math.ceil($total/$rows) to account for unused tiles:
-        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
-
-        log.debug("CELL SIZE optimum found: CxR = {}x{}, ZOOM = {}", columnsFinder, rowsFinder, zoomNew);
-
-        // TODO once the autocalc works, hide the Update button on the Switchboard Editor pane
-        //setRows(rowsFinder);
-        //switchboardLayeredPane.setLayout(new GridLayout(columnsFinder,rowsFinder));
-        //       param: GridLayout(vertical, horizontal), at least 1x1
-        switchboardLayeredPane.setLayout(new GridLayout(Math.max((Integer) rows.getValue() % range, 1),
-                (Integer) rows.getValue())); // param: GridLayout(vertical, horizontal), at least 1x1
-
+        // disable the Rows spinner & Update button on the Switchboard Editor pane
+        // param: GridLayout(vertical, horizontal), at least 1x1
+        switchboardLayeredPane.setLayout(new GridLayout(rows, (getTotal() + rows - 1) / rows));
+        log.debug("SLP grid set, rows was {}", rows);
         // add switches to LayeredPane
         for (BeanSwitch bs : switchesOnBoard.values()) {
             switchboardLayeredPane.add(bs);
@@ -527,7 +521,6 @@ public class SwitchboardEditor extends Editor {
                 // set switch to display current bean state
                 _switch.displayState(nb.getState());
             }
-            //switchboardLayeredPane.add(_switch);
             switchesOnBoard.put(name, _switch); // add to LinkedHashMap of switches for later placement on JLayeredPane
             log.debug("Added switch {}", name);
             // keep total number of switches below practical total of 400 (20 x 20 items)
@@ -546,7 +539,7 @@ public class SwitchboardEditor extends Editor {
         JPanel controls = new JPanel();
 
         // navigation top row and range to set
-        navBarPanel = new JPanel();
+        JPanel navBarPanel = new JPanel();
         navBarPanel.setLayout(new BoxLayout(navBarPanel, BoxLayout.X_AXIS));
 
         navBarPanel.add(prev);
@@ -577,6 +570,8 @@ public class SwitchboardEditor extends Editor {
             if (value >= (Integer) maxSpinner.getValue() - 1) {
                 maxSpinner.setValue(value + 1);
             }
+            updatePressed();
+            setDirty();
         });
         navBarPanel.add(minSpinner);
         navBarPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("UpTo"))));
@@ -591,6 +586,8 @@ public class SwitchboardEditor extends Editor {
             if (value <= (Integer) minSpinner.getValue() + 1) {
                 minSpinner.setValue(value - 1);
             }
+            updatePressed();
+            setDirty();
         });
         navBarPanel.add(maxSpinner);
 
@@ -686,10 +683,38 @@ public class SwitchboardEditor extends Editor {
             autoItemRange.setSelected(autoItemRange()); // also (un)check the box on the editor
         });
         autoItemRangeBox.setSelected(autoItemRange());
+        // auto rows item
+        _optionMenu.add(autoRowsBox);
+        autoRowsBox.addActionListener((ActionEvent event) -> {
+            if (autoRowsBox.isSelected()) {
+                log.debug("autoRows was turned ON");
+                int oldRows = rows;
+                rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
+                // TODO: specific proportion value for Type/Shape choice?
+                rowsSpinner.setEnabled(false);
+                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
+                // hide rowsSpinner + rowsLabel?
+                if (rows != oldRows) {
+                    rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                    updatePressed(); // redraw if rows value changed
+                }
+            } else {
+                log.debug("autoRows was turned OFF");
+                rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
+                rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
+                rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
+            }
+        });
         // show tooltip item
         _optionMenu.add(showToolTipBox);
         showToolTipBox.addActionListener((ActionEvent e) -> setAllShowToolTip(showToolTipBox.isSelected()));
         showToolTipBox.setSelected(showToolTip());
+        // show user name on switches item
+        _optionMenu.add(showUserNameBox);
+        showUserNameBox.addActionListener((ActionEvent e) -> {
+            updatePressed();
+        });
+        showUserNameBox.setSelected(showUserName().equals("yes"));
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -936,6 +961,47 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
+     * Determine optimal cols/rows using JPanel size, user range, icon proportions of beanswitch icons &
+     * web canvas W:H proportions range from 1.5 (3:2) to 0.7 (1:1.5), assume squares for now.
+     *
+     * @return amount of rows on current target pane size/proportions for biggest tiles
+     */
+    int autoRows(float cellProp) {
+        // find cell matrix that allows largest size icons
+        double paneEffectiveWidth = Math.ceil(super.getTargetFrame().getWidth() / cellProp);
+        log.debug("paneEffectiveWidth: {}", paneEffectiveWidth);
+        double paneHeight = super.getTargetFrame().getHeight();
+        int columnsNum = 1;
+        int rowsNum = 1;
+        float tileSize = 0.1f; // start value
+        float tileSizeOld = 0.0f;
+        int totalDisplayed = ((getTotal() > 0) ? (getTotal()) : 1);
+        // if all items unconnected and set to be hidden, use 1
+        if (totalDisplayed >= unconnectedRangeLimit) {
+            log.warn("switchboards are limited to {} items", unconnectedRangeLimit);
+        }
+
+        while (tileSize > tileSizeOld) {
+            rowsNum = (totalDisplayed + columnsNum - 1) / columnsNum; // int roundup
+            tileSizeOld = tileSize; // store for comparison
+            tileSize = (float) Math.min(paneEffectiveWidth / columnsNum, paneHeight / rowsNum);
+            log.debug("Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize), String.format("%.2f", tileSizeOld));
+            if (tileSize <= tileSizeOld) break;
+            columnsNum++;
+        }
+        //columnsNum--; // we ended 1 too high in while loop, 1 step back
+        //rowsNum = (totalDisplayed + columnsNum - 1) / columnsNum; // recalc rows from cols
+
+        // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
+        // Math.ceil($total/$cols) to account for unused tiles in grid:
+        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
+        // calculations repeated in panel.js for web display
+        log.debug("CELL SIZE optimum found: CxR = {}x{}, size = {}", columnsNum, rowsNum, tileSizeOld);
+
+        return rowsNum;
+    }
+
+    /**
      * Allow external reset of dirty bit.
      */
     public void resetDirty() {
@@ -1048,7 +1114,8 @@ public class SwitchboardEditor extends Editor {
             case "S":
                 type = SENSOR;
                 break;
-            default: // Turnouts
+            case "T": // Turnouts
+            default:
                 type = TURNOUT;
         }
         try {
@@ -1149,21 +1216,32 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Store Switchboard column spinner.
+     * Store Switchboard rowsnum spinner or turn on autoRows option.
      *
-     * @return the number of switches to display per row
+     * @return the number of switches to display per row or 0 if autoRowsBox (menu-setting) is selected
      */
     public int getRows() {
-        return (Integer) rows.getValue();
+        if (autoRowsBox.isSelected()) {
+            return 0;
+        } else {
+            return rows;
+        }
     }
 
     /**
-     * Load Switchboard rownum spinner.
+     * Load Switchboard rowsnum spinner.
      *
-     * @param rws the number of switches to display per row (as text)
+     * @param rws the number of switches to display per row (as text) or 0 te activate autoRowsBox setting
      */
     public void setRows(int rws) {
-        rows.setValue(rws);
+        if (rws > 0) {
+            rowsSpinner.setValue(rws); // rows is set via rowsSpinner
+        } else {
+            autoRowsBox.setSelected(rws == 0);
+            rowsSpinner.setEnabled(false);
+            rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
+            rows = autoRows(cellProportion); // recalculate, TODO: specific proportion value for Type/Shape choice?
+        }
     }
 
     /**
@@ -1195,6 +1273,14 @@ public class SwitchboardEditor extends Editor {
     // all content loaded from file.
     public void loadComplete() {
         log.debug("loadComplete");
+    }
+
+    public String showUserName() {
+        return (showUserNameBox.isSelected() ? "yes" : "no");
+    }
+
+    public void setShowUserName(Boolean on) {
+        showUserNameBox.setSelected(on);
     }
 
     /**
@@ -1315,7 +1401,7 @@ public class SwitchboardEditor extends Editor {
     @Override
     public void mouseExited(MouseEvent event) {
         setToolTip(null);
-        _targetPanel.repaint(); // needed for ToolTip
+        _targetPanel.repaint(); // needed for ToolTip on targetPane
     }
 
     /**
@@ -1414,7 +1500,6 @@ public class SwitchboardEditor extends Editor {
         //for (int i = 0; i < switchesOnBoard.size(); i++) {
         for (String bs : switchesOnBoard.keySet()) {
             _switches.add((BeanSwitch) switchesOnBoard.get(bs));
-            //_switches.add((BeanSwitch) switchboardLayeredPane.getComponent(i));
         }
         return _switches;
     }

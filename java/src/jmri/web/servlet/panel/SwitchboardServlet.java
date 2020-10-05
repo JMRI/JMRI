@@ -65,6 +65,8 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         panel.setAttribute("shape", editor.getSwitchShape());
         panel.setAttribute("rows", Integer.toString(editor.getRows()));
         panel.setAttribute("total", Integer.toString(editor.getTotal()));
+        panel.setAttribute("showusername", editor.showUserName());
+
         panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
         panel.setAttribute("activecolor", editor.getActiveSwitchColor());
         panel.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
@@ -85,7 +87,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
 
         Element text = new Element("text");
         text.setAttribute("color", editor.getDefaultTextColor());
-        text.setAttribute("content", "For now, Switchboards only present buttons in JMRI WebServer.");
+        text.setAttribute("content", "Configure Switchboards for JMRI WebServer in JMRI Panels.");
         // TODO update as symbol shape display is developed
         panel.addContent(text);
 
@@ -114,14 +116,11 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                                 log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
                             }
                         }
-                        // read shared attribs
+                        // read shared attribs to use in beanswitch
                         e.setAttribute("textcolor", editor.getDefaultTextColor());
-//                        e.setAttribute("activecolor", editor.getActiveSwitchColor());
-//                        e.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
                         e.setAttribute("type", editor.getSwitchType());
                         e.setAttribute("connection", editor.getSwitchManu());
                         e.setAttribute("shape", editor.getSwitchShape());
-                        e.setAttribute("rows", Integer.toString(editor.getRows()));
                         // process and add
                         parsePortableURIs(e);
                         panel.addContent(e);

@@ -60,6 +60,7 @@
       <xs:attribute name="columns" type="xs:int"></xs:attribute> <!-- deprecated 4.21.2, replaced by rows -->
       <xs:attribute name="rows" type="xs:int"/>
       <xs:attribute name="total" type="xs:int"/>
+      <xs:attribute name="showusername" type="yesNoType" default="no"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
 <!--      <xs:attribute name="activecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->
 <!--      <xs:attribute name="inactivecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->

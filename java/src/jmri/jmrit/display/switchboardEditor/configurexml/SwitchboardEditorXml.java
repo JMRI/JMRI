@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Handle configuration for {@link SwitchboardEditor} panes.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @author Egbert Broerse Copyright (c) 2017
+ * @author Egbert Broerse Copyright (c) 2017, 2020
  */
 public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
@@ -67,6 +67,7 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("shape", p.getSwitchShape());
         panel.setAttribute("rows", "" + p.getRows());
         panel.setAttribute("total", "" + p.getTotal()); // total number of items displayed
+        panel.setAttribute("showusername", "" + p.showUserName());
         panel.setAttribute("defaulttextcolor", p.getDefaultTextColor());
 //        panel.setAttribute("activecolor", p.getActiveSwitchColor()); not needed, fetched directly from Editor by Servlet
 //        panel.setAttribute("inactivecolor", p.getInactiveSwitchColor()); / not user-settable
@@ -252,7 +253,13 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        panel.setColumns(rows);
+        panel.setRows(rows); // if 0, autoRows is selected (handled in Editor)
+
+        value = true;
+        if ((a = shared.getAttribute("showusername")) != null && a.getValue().equals("no")) {
+            value = false;
+        }
+        panel.setShowUserName(value);
 
         Color defaultTextColor = Color.BLACK;
         if (shared.getAttribute("defaulttextcolor") != null) {

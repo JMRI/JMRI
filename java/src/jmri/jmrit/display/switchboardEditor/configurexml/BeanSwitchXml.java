@@ -29,6 +29,7 @@ public class BeanSwitchXml extends AbstractXmlAdapter {
         Element element = new Element("beanswitch");
         // include attributes
         element.setAttribute("label", bs.getNameString());
+        element.setAttribute("username", bs.getUserNameString());
         if (bs.getNamedBean() != null) {
             element.setAttribute("connected", "true");
         } else {

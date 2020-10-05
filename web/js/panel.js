@@ -24,6 +24,7 @@
  *  TODO:    ditto for sensorIcons with text
  *  TODO: add support for slipturnouticon (one2beros)
  *  TODO: handle (and test) disableWhenOccupied for layoutslip
+ *  TODO: handle ShowUserName on web labels
  *
  *  DONE: draw dashed curves
  *  DONE: handle drawn ellipse (see LMRC APB)
@@ -44,10 +45,12 @@ var $gPts = {};             //array of all points, key="pointname.pointtype" (us
 var $gBlks = {};            //array of all blocks, key="blockname" (used for layoutEditor panels)
 var $gCtx;                  //persistent context of canvas layer
 var $gDashArray = [12, 12]; //on,off of dashed lines
-var $rows = 1;              //persistent storage of shared switchboard property number of rows
+var $rows = 1;              //persistent storage of shared switchboard property number of rows, if 0 use autoRows
 var $total = 1;             //persistent storage of shared switchboard property total number of items displayed
+var $autoRows = 0;
 var $activeColor = 'red';
 var $inactiveColor = 'gray';
+var $showUserName = 'no';
 var DOWNEVENT = 'touchstart mousedown';  //check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
 var SIZE = 3;               //default factor for circles
@@ -1006,8 +1009,8 @@ function processPanelXML($returnedData, $success, $xhr) {
     if ($gPanel.paneltype == "LayoutPanel") {
         $("#panel-area").prepend("<canvas id='panelCanvas' width=" + $gPanel.panelwidth + "px height=" +
             $gPanel.panelheight + "px style='position:absolute;z-index:2;'>");
-        var canvas = document.getElementById("panelCanvas");
-        $gCtx = canvas.getContext("2d");
+        var $canvas = document.getElementById("panelCanvas");
+        $gCtx = $canvas.getContext("2d");
         $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
         $gCtx.lineWidth = $gPanel.sidetrackwidth;
 
@@ -1019,28 +1022,42 @@ function processPanelXML($returnedData, $success, $xhr) {
     var $swWidthPx;
     var $swHeightPx;
     if ($gPanel.paneltype == "Switchboard") {
+        $("#panel-area").width("100%"); // reset to fill the (mobile) screen
+        $("#panel-area").height("100%"); // reset to fill the (mobile) screen
         // set background color from panel attribute
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
         $activeColor = $gPanel.activecolor;
         $inactiveColor = $gPanel.inactivecolor;
-        $rows = Number($gPanel.rows);
+        $showUserName = $gPanel.showusername;
         $total = Number($gPanel.total);
-        // do some calculations
-        $swWidth = Math.ceil(0.95*($gPanel.panelwidth)*Math.max(0.001, Math.min(1, 1/(Math.ceil($total/$rows)))));
-        // calculate from jmri rows number, 95pc to fit on screen
-        // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
-        // Math.max(0.001,... to prevent 0 width in case 0 items are connected
-        // 1/Math.ceil($total/$rows) to account for unused tiles:
-        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
-        $swHeight = Math.ceil(0.9*$gPanel.panelheight/Math.max(0.001, $rows)); // 0.9 to leave room for the Switchboard name label at top
-        // Math.max(0.001,... to prevent 0 division in case 0 items are connected
-        // add short banner at top
+        $rows = Number($gPanel.rows);
+        if ($rows == 0) { // automatically choose grid showing largest tiles using flexbox
+            $("#panel-area").css({display: "flex", 'flex-flow': "row wrap"})
+            $autoRows = 1; // TODO needed to draw switches?
+            $rows = autoRows(window.screen.width, window.screen.height - 200); // use (mobile) screen size, leave space for header
+            // check browser window (window.innerWidth) size vs whole screen (window.screen.width)
+            $swWidth = Math.ceil(0.95*Math.min(window.screen.width, window.innerWidth)*Math.max(0.01, Math.min(1, 1/(Math.ceil($total/$rows)))));
+            $swWidth = Math.max(Math.min($swWidth, 200), 70); // catch extreme width result
+            $swHeight = Math.ceil(0.9*Math.min(window.screen.height, window.innerHeight)/Math.max(0.01, $rows));
+            $swHeight = Math.max($swHeight, 90); // minimum height to display labels
+            // 0.9 to leave room for the Switchboard name label at top
+        } else {
+           $swWidth = Math.ceil(0.95*($gPanel.panelwidth)*Math.max(0.01, Math.min(1, 1/(Math.ceil($total/$rows)))));
+            // calculate from jmri rows number, 95pc to fit on screen
+            // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
+            // Math.max(0.001,... to prevent 0 width in case 0 items are connected
+            // 1/Math.ceil($total/$rows) to account for unused tiles:
+            // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
+            $swHeight = Math.ceil(0.9*$gPanel.panelheight/Math.max(0.01, $rows));
+            // Math.max(0.001,... to prevent 0 division in case 0 items are connected
+        }
         var onOffSpans = "";
         if ($gPanel.type == "L") {
             // TODO add handlers to switch on/off, I18N
             //onOffSpans = "<span id='allOff' class='clickable lightswitch'>All Off</span><span id='allOn' class='clickable lightswitch'>All On</span>";
             //$(#onOff).bind(UPEVENT, $handleClick);
         }
+        // add short banner at top
         $("#panel-area").append("<div id='name' class='show'>&nbsp;Switchboard &quot;" + $gPanel.name + "&quot; (conn: " +
         $gPanel.connection + ",  type: " + $gPanel.type + ")" + onOffSpans + "</div>"); // TODO I18N
     }
@@ -1053,7 +1070,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             $widget['scale'] = "1"; //default to no scale
             $widget['degrees'] = 0; //default to no rotation
             $widget['rotation'] = 0; // default to no rotation
-            //convert attributes to an object array
+            // convert attributes to an object array
             $(this.attributes).each(function() {
                 $widget[this.name] = this.value;
             });
@@ -1804,13 +1821,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                     break;
 
                 case "switch" : // Switchboard BeanSwitches have no x,y // TODO EBR
-                    $widget['styles'] = {};
+                    $widget['styles'] = {}; // clear built-in styles
                     $widget['name'] = $widget.label; // normalize name
                     $widget['text'] = $widget.label; // use label as initial button text
                     $widget.styles['width'] = $swWidth + "px";
                     $widget.styles['height'] = $swHeight + "px";
-                    // colors
-                    // values from Editor via SwitchboardServlet
+                    // colors, values from Editor via SwitchboardServlet
                     $widget['swColor' + UNKNOWN] = 'LightGray'; // unknown
                     $widget['swColor2'] = $activeColor; // active = red
                     $widget['swColor4'] = $inactiveColor;  // inactive = green
@@ -1832,36 +1848,35 @@ function processPanelXML($returnedData, $success, $xhr) {
                             jmri.getLight($widget["systemName"]);
                     }
 
-                    var canvas = "";
+                    var $canvas = "";
                     switch ($widget.shape) {
                         case "symbol" :
                         case "icon" :
                         case "drawing" :
                             // experiment with different settings for symbol/icon
                             $widget['text' + UNKNOWN] = $widget.text; // show state changes in color, not in label?
-                            $widget['text2'] = $(this).find('activeText').attr('text'); //$widget.text;
-                            $widget['text4'] = $(this).find('inactiveText').attr('text'); //$widget.text;
-                            $widget['text8'] = $(this).find('inconsistentText').attr('text');
-                            // add a canvas to the text label, reduce canvas HxW to fit inside the div
-                            canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
-                                ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
-                            break;
-                        case "button" :
-                        default :
-                            // set each state's text (only applied when shape is button)
-                            $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
                             $widget['text2'] = $(this).find('activeText').attr('text');
                             $widget['text4'] = $(this).find('inactiveText').attr('text');
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                            // add a canvas to the text label, reduce canvas HxW to fit inside the div
+                            $canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
+                                ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
+                            $widget.styles['background'] = 'transparent';
+                            break;
+                        case "button" : // mimick java switchboard buttons
+                        default :
+                            // set each state's text (only applied when shape is button)
+                            $widget['text' + UNKNOWN] = getSwitchButtonLabel($(this).find('unknownText').attr('text'), $widget.username);
+                            $widget['text2'] = getSwitchButtonLabel($(this).find('activeText').attr('text'), $widget.username);
+                            $widget['text4'] = getSwitchButtonLabel($(this).find('inactiveText').attr('text'), $widget.username);
+                            $widget['text8'] = getSwitchButtonLabel($(this).find('inconsistentText').attr('text'), $widget.username);
                     }
                     // common settings for all beanswitches
                     $widget.classes += " " + $widget.shape + " ";
-
                     $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
-                    $widget.styles['border-color'] = $widget['swColor' + UNKNOWN];
+
                     $widget.styles['color'] = $widget.text['color']; // use jmri color
-                    // CSS properties
-                    //$("#panel-area>#" + $widget.id).css({position: 'relative', float: 'left'}); // overridden in css
+                    // other CSS properties set in css, class .beanswitch
 
                     if ($widget.connected == "true") {
                         $widget['text'] = $widget.text0; // add UNKNOWN state to label of connected switches
@@ -1873,13 +1888,13 @@ function processPanelXML($returnedData, $success, $xhr) {
                     $gWidgets[$widget.id] = $widget; // store widget in persistent array
 
                     if ($widget.shape == "button") {
-                        // "button", put only the text element on the page
+                        // "button", put only the text (system + user name) element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
                             "'>" + $widget.text + "</div>");
                     } else {
                         // add a local canvas EBR
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes +
-                            "' role='img'>" + canvas + "</div>");
+                            "' role='img'>" + $canvas + "</div>");
                     }
                     $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
                     break;
@@ -2318,23 +2333,23 @@ function $drawIcon($widget) {
         $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
     }
 
-    //additional naming for indicator*icon widgets to reflect occupancy
+    // additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
     //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
                 "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
 
-        $("#panel-area").append($imgHtml);  //put the html in the panel
+        $("#panel-area").append($imgHtml); // put the html in the panel
 
-        $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
+        $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
 
         //add overlay text if specified, one layer above, and copy attributes (except background-color)
         if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
 			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
-			$.extend(ovlCSS, $widget.styles); //append the styles from the widget
-			delete ovlCSS['background-color'];  //clear the background color
+			$.extend(ovlCSS, $widget.styles); // append the styles from the widget
+			delete ovlCSS['background-color'];  // clear the background color
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
@@ -2343,8 +2358,8 @@ function $drawIcon($widget) {
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
 
-//draw a turntable (pass in widget)
-//from jmri.jmrit.display.layoutEditor.layoutTurntable
+// draw a turntable (pass in widget)
+// from jmri.jmrit.display.layoutEditor.layoutTurntable
 function $drawTurntable($widget) {
     $logProperties($widget);
 
@@ -3714,7 +3729,7 @@ var $setWidgetState = function($id, $newState, data) {
                 }
                 break;
         }
-        $gWidgets[$id].state = $newState;  //update the persistent widget to the new state
+        $gWidgets[$id].state = $newState;  // update the persistent widget to the new state
     }
 };
 
@@ -3896,19 +3911,19 @@ var $preloadWidgetImages = function($widget) {
 // draw symbol on the beanswitch widget canvas
 var $drawWidgetSymbol = function(id, shape, state) {
     // draw on $widget canvas
-    var canvas = document.getElementById(id + "c");
-    if (canvas === null) {
+    var $canvas = document.getElementById(id + "c");
+    if ($canvas === null) {
         return; // no canvas created (shape = "buttons")
     }
-    var ctx = canvas.getContext("2d");
+    var ctx = $canvas.getContext("2d");
     ctx.save();
-    ctx.clearRect(0, 0, canvas.width, canvas.height); //  for text and moving items
+    ctx.clearRect(0, 0, $canvas.width, $canvas.height); //  for text and moving items
 
     ctx.fillStyle = (state == "2" ? $activeColor : $inactiveColor);
     // simple change in color
     ctx.strokeStyle = "black";
-    ctx.translate(canvas.width/2, canvas.height/2); // origin in center of canvas, easy!
-    var radius = Math.min(canvas.width * 0.3, canvas.height * 0.3);
+    ctx.translate($canvas.width/2, $canvas.height/2); // origin in center of canvas, easy!
+    var radius = Math.min($canvas.width * 0.3, $canvas.height * 0.3);
 
     switch (shape) {
         // draw methods EBR
@@ -3963,8 +3978,8 @@ var $drawWidgetSymbol = function(id, shape, state) {
                     // line (wire) at back
                     ctx.beginPath();
                     ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
-                    ctx.moveTo(-0.4 * canvas.width, 0);
-                    ctx.lineTo(0.4 * canvas.width, 0);
+                    ctx.moveTo(-0.4 * $canvas.width, 0);
+                    ctx.lineTo(0.4 * $canvas.width, 0);
                     ctx.stroke();
                     // filled circle
                     var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
@@ -4003,17 +4018,17 @@ var $drawWidgetSymbol = function(id, shape, state) {
                     ctx.lineWidth = "10";
                     // points, at the back
                     ctx.strokeStyle = "lightgray";
-                    ctx.moveTo(-0.4 * canvas.width, -20);
-                    ctx.lineTo(0.1 * canvas.width, 10);
-                    ctx.lineTo(-0.4 * canvas.width, 10);
+                    ctx.moveTo(-0.4 * $canvas.width, -20);
+                    ctx.lineTo(0.1 * $canvas.width, 10);
+                    ctx.lineTo(-0.4 * $canvas.width, 10);
                     ctx.stroke();
                     // active line, start with new color
                     var endy = (state == "2" ? "10" : "-20");
                     ctx.beginPath();
                     ctx.strokeStyle = $activeColor;
-                    ctx.moveTo(0.4 * canvas.width, 10);
-                    ctx.lineTo(0.1 * canvas.width, 10);
-                    ctx.lineTo(-0.4 * canvas.width, endy);
+                    ctx.moveTo(0.4 * $canvas.width, 10);
+                    ctx.lineTo(0.1 * $canvas.width, 10);
+                    ctx.lineTo(-0.4 * $canvas.width, endy);
                     ctx.stroke();
                     break;
             }
@@ -4027,7 +4042,7 @@ var $drawWidgetSymbol = function(id, shape, state) {
     ctx.font = "14px Arial";
     if (shape == "drawing") { // text centered between Maerklin buttons
         ctx.textAlign = 'center';
-        ctx.fillText($gWidgets[id].text, canvas.width/2, (0.5*canvas.height + 0.3*radius));
+        ctx.fillText($gWidgets[id].text, $canvas.width/2, (0.5*$canvas.height + 0.3*radius));
     } else {
         ctx.textAlign = 'left';
         ctx.fillText($gWidgets[id].text, 10, 13);
@@ -4170,8 +4185,6 @@ function updateWidgets(name, state, data) {
         $.each(whereUsed[name], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
-//    } else {
-//      log.log("system name " + name + " not found, can't set state to " + state);
     }
     //update all widgets based on the element that changed, using username
     if (whereUsed[data.userName]) {
@@ -4179,8 +4192,6 @@ function updateWidgets(name, state, data) {
         $.each(whereUsed[data.userName], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
         });
-//    } else {
-//      log.log("userName " + name + " not found, can't set state to " + state);
     }
 }
 
@@ -4595,7 +4606,38 @@ function getNextSlipState(slipWidget) {
             break;
         }
     }   // switch (slipWidget.side)
-    //log.log("  result:" + result);
     return result;
-}   // function getNextSlipState(slipWidget)
+}
+
+// used to find largest tiles on Switchboard screen
+function autoRows(screenwidth, screenheight) {
+    // calculations repeated from SwitchboardEditor for web display
+    // find cell matrix that allows largest size icons
+    var $cellProp = 1; // assume square tiles prop 1:1 to keep it simple for now
+    var $paneEffectiveWidth = Math.ceil(screenwidth / $cellProp);
+    var $columnsNum = 1;
+    var $rowsNum = 1;
+    var $tileSize = 0.1; // start value
+    var $tileSizeOld = 0;
+    var $totalDisplayed = Math.max($total, 1); // if all items unconnected and set to be hidden, use 1
+    while ($tileSize > $tileSizeOld) {
+        $rowsNum = ($totalDisplayed + $columnsNum - 1) / $columnsNum; // roundup int
+        $tileSizeOld = $tileSize; // store for comparison
+        $tileSize = Math.min($paneEffectiveWidth / $columnsNum, screenheight / $rowsNum);
+        if ($tileSize <= $tileSizeOld) {
+            break;
+        }
+        $columnsNum++;
+    }
+    return $rowsNum;
+}
+
+function getSwitchButtonLabel(label, subLabel) {
+    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
+        return label;
+    } else {
+        subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
+        return label + " (" + subLabel + ")"; // TODO show on 2 lines of text
+    }
+}
 

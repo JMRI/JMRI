@@ -56,45 +56,45 @@ body {
     line-height: 20px;
 }
 
-.beanswitch {
+.beanswitch { /* SwitchBoard (Panel) interactive button/symbols */
     position: static;
     float: left;
     margin: 2px;
     padding: 1px;
-    border: 1px solid lightGrey;
+    border: 1px solid lightGray;
     overflow: hidden;
 }
 
-.beanswitch.button { /* SwitchBoard (Panel) interactive button symbols default */
+.beanswitch.button { /* SwitchBoard (Panel) interactive button default */
     border: 2px solid white; /* border changes colors with state */
-    background-color: lightGrey;
+    background-color: lightGray;
     text-align: center;
     border-radius: 10px; /* mimick JButtons */
-    /* add more BeanSwitch stuff */
+    box-shadow: 1px 1px gray;
 }
 
-.beanswitch:hover {
+.beanswitch:hover { /* on Switchboard */
     margin: 2px;
 }
 
-canvas {
+canvas { /* Switchboard beanswitch */
     display: block;
     width: 100%;
     height: 100%;
 }
 
-canvas:hover {
+canvas:hover { /* Switchboard beanswitch */
     margin: -1px;
 }
 
-span.lightswitch {
+span.lightswitch { /* on Switchboard */
     border: 1px solid black;
     border-radius: 5px;
     padding: 2px;
     background-color: lightgray;
 }
 
-span.lightswitch:hover {
+span.lightswitch:hover { /* on Switchboard */
     background-color: yellow;
 }
 
