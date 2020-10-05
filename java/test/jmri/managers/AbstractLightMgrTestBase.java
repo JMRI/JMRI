@@ -118,6 +118,12 @@ public abstract class AbstractLightMgrTestBase extends AbstractProvidingManagerT
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+    }
 
     /**
      * Number of light to test. Made a separate method so it can be overridden
