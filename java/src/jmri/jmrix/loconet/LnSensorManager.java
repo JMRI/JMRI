@@ -129,7 +129,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                     default:
                         break;
                 }
-
+            //$FALL-THROUGH$
             default:  // here we didn't find an interesting command
                 return;
         }
@@ -350,7 +350,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 int restingTime) {
             this.sm = sm;
             this.tc = tc;
-            this.restingTime = java.time.Duration.ofMillis((long)restingTime);
+            this.restingTime = java.time.Duration.ofMillis(restingTime);
         }
 
         /**
