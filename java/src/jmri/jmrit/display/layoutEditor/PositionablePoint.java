@@ -26,7 +26,6 @@ import jmri.jmrit.signalling.SignallingGuiTools;  // temporary
  * <p>
  * As an Edge Connector, this is a semi-transparent connection to a remote
  * TrackSeqment via another Edge Connector object.
- * See the {@Link getConnection2()} method for how this works.
  * <p>
  * Signal names are saved here at a Block Boundary anchor point by the tool Set
  * Signals at Block Boundary. PositionablePoint does nothing with these signal

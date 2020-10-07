@@ -348,6 +348,7 @@ public class TrackSegmentView extends LayoutTrackView {
 
     /**
      * @param index If negative, this is index from the end i.e. -1 is the last element
+     * @return Reference to the indexed control point
      */
     public Point2D getBezierControlPoint(int index) {
         Point2D result = getCoordsCenter();
@@ -1717,6 +1718,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * Get state. "active" means that the object is still displayed, and should
      * be stored.
+     * @return true if active
      */
     public boolean isActive() {
         return active;
@@ -3181,6 +3183,7 @@ public class TrackSegmentView extends LayoutTrackView {
      * The 0 (none) and 1 through 5 arrow decorations are keyed to 
      * files like program:resources/icons/decorations/ArrowStyle1.png
      * et al.
+     * @return Style number
      */
     public int getArrowStyle() {
         return arrowStyle;

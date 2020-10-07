@@ -280,9 +280,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return "LayoutTurnout " + getName();
     }
 
-    /**
-     * Accessor methods
-     */
+    // 
+    // Accessor methods
+    //
     public int getVersion() {
         return version;
     }
@@ -1896,6 +1896,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     * @return true if active
      */
     public boolean isActive() {
         return turnout.isActive();

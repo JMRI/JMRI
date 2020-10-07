@@ -151,7 +151,7 @@ public interface LayoutModels {
      * <p>
      * The octagonal (8) directions are: North, North-East, East,
      * South-East, South, South-West, West and North-West; see
-     * @link{jmri.Path} for more on this.
+     * {@link jmri.Path} for more on this.
      *
      * <p>
      * This method must eventually be in terms _other_ than
