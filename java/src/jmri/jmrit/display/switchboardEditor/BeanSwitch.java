@@ -115,9 +115,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-        beanIcon = new IconSwitch(iconOnPath, iconOffPath);
-        beanKey = new IconSwitch(keyOnPath, keyOffPath);
-        beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-on-s.png", rootPath + beanTypeChar + "-off-s.png");
+
+        int r = _editor.getTileSize()/2; // max WxH of canvas inside cell, used as relative unit to draw
+        log.debug("BeanSwitch graphic tilesize/2  r = {}", r);
+        beanIcon = new IconSwitch(iconOnPath, iconOffPath, r);
+        beanKey = new IconSwitch(keyOnPath, keyOffPath, r);
+        beanSymbol = new IconSwitch(rootPath + beanTypeChar + "-on-s.png", rootPath + beanTypeChar + "-off-s.png", r);
 
         // look for bean to connect to by name
         log.debug("beanconnect = {}, beantype = {}", beanManuPrefix, beanTypeChar);
@@ -128,7 +131,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } catch (IllegalArgumentException e) {
             log.error("invalid bean name= \"{}\" in Switchboard Button", switchName);
         }
-        int r = Math.round(Math.min(this.getWidth() / 2, this.getHeight() / 2)); // relative unit to draw
         // attach shape specific code to this beanSwitch
         switch (_shape) {
             case 1: // slider shape
@@ -150,10 +152,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // not actually used
                 _icon = true;
-                beanIcon.setPreferredSize(_editor.getTileSize());
-                beanIcon.setLabel(switchLabel, _uLabel);
-                beanIcon.positionLabel(r, r/5, Component.CENTER_ALIGNMENT, r/5); // provide x, y offset, depending on image size and free space
-                beanSymbol.positionSubLabel(r, 3*r/4, Component.CENTER_ALIGNMENT, r/8); // smaller text (system name)
+                beanIcon.setPreferredSize(new Dimension(2*r, 2*r));
+                beanIcon.setLabels(switchLabel, _uLabel);
+                beanIcon.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, 14);
+                beanIcon.positionSubLabel(0, r/2, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
                 if (_editor.showToolTip()) {
                     beanIcon.setToolTipText(switchTooltip);
                 }
@@ -178,12 +180,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // TODO when web server supports graphic keyboard switches: replace true by false;
+                _text = true; // not really used for Switchboards
                 _icon = true;
-                beanKey.setPreferredSize(new Dimension(_editor.getTileSize()));
-                beanKey.setLabel(switchLabel, _uLabel);
-                beanKey.positionLabel(r, 3*r/8, Component.CENTER_ALIGNMENT, r/5);
-                beanSymbol.positionSubLabel(r, r/2, Component.CENTER_ALIGNMENT, r/8); // smaller text (system name)
+                beanKey.setPreferredSize(new Dimension(new Dimension(2*r, 2*r)));
+                beanKey.setLabels(switchLabel, _uLabel);
+                beanKey.positionLabel(0, 0, Component.CENTER_ALIGNMENT, 14);
+                beanKey.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
@@ -211,16 +213,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // web server supports in-browser drawn switches
                 _icon = true; // panel.js assigns only text OR icon for a single class such as BeanSwitch
-                beanSymbol.setPreferredSize(_editor.getTileSize());
-                beanSymbol.setLabel(switchLabel, _uLabel);
+                beanSymbol.setPreferredSize(new Dimension(2*r, 2*r));
+                beanSymbol.setLabels(switchLabel, _uLabel);
                 switch (beanTypeChar) {
                     case 'T' :
-                        beanSymbol.positionLabel(r, r/7, Component.CENTER_ALIGNMENT, r/5);
-                        beanSymbol.positionSubLabel(r, 7*r/8, Component.CENTER_ALIGNMENT, r/8);
+                        beanSymbol.positionLabel(0, -3*r/4, Component.CENTER_ALIGNMENT, 14);
+                        beanSymbol.positionSubLabel(0, 7*r/8, Component.CENTER_ALIGNMENT, 8);
                     case 'S' :
                     case 'L' :
-                        beanSymbol.positionLabel(r, r/7, Component.CENTER_ALIGNMENT, r/5);
-                        beanSymbol.positionSubLabel(r, 7*r/8, Component.CENTER_ALIGNMENT, r/8);
+                        beanSymbol.positionLabel(0, r/-2, Component.CENTER_ALIGNMENT, 14);
+                        beanSymbol.positionSubLabel(0, 7*r/8, Component.CENTER_ALIGNMENT, 8);
 
                 }
                 if (_editor.showToolTip()) {
@@ -232,7 +234,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 this.setBorder(BorderFactory.createLineBorder(_editor.getDefaultBackgroundColor(), 3));
                 this.add(beanSymbol);
                 break;
-            default: // 0 = "Button" shape
+            case 0: // 0 = "Button" shape
+            default:
                 log.debug("create Button");
                 beanButton.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
@@ -495,11 +498,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
         if (isIcon() && beanIcon != null && beanKey != null && beanSymbol != null) {
             beanIcon.showSwitchIcon(state);
-            beanIcon.setLabel(switchLabel, _uLabel);
+            beanIcon.setLabels(switchLabel, _uLabel);
             beanKey.showSwitchIcon(state);
-            beanKey.setLabel(switchLabel, _uLabel);
+            beanKey.setLabels(switchLabel, _uLabel);
             beanSymbol.showSwitchIcon(state);
-            beanSymbol.setLabel(switchLabel, _uLabel);
+            beanSymbol.setLabels(switchLabel, _uLabel);
         }
     }
 
@@ -1042,6 +1045,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private float textAlign = 0.0f;
         private float subTextAlign = 0.0f;
         private float ropOffset = 0f;
+        private int r = 10; // radius of circle fitting inside tile rect in px drawing units
         private RescaleOp rop;
 
         /**
@@ -1050,15 +1054,17 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param filepath1 the ON image
          * @param filepath2 the OFF image
          */
-        public IconSwitch(String filepath1, String filepath2) {
-            // resize to maximum 100
+        public IconSwitch(String filepath1, String filepath2, int drawingRadius) {
+            // load image files
             try {
                 image1 = ImageIO.read(new File(filepath1));
                 image2 = ImageIO.read(new File(filepath2));
-                image = image2;
+                image = image2; // start off as showing inactive/closed
             } catch (IOException ex) {
                 log.error("error reading image from {}-{}", filepath1, filepath2, ex);
             }
+            if (drawingRadius > 10) r = drawingRadius;
+            log.debug("radius={} size={}", r, getWidth());
         }
 
         public void setOpacity(float offset) {
@@ -1096,7 +1102,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param sName string to display (system name)
          * @param uName secondary string to display (user name)
          */
-        protected void setLabel(String sName, String uName) {
+        protected void setLabels(String sName, String uName) {
             tag = sName;
             subTag = uName;
             this.repaint();
@@ -1129,7 +1135,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-            g2d.drawImage(image, rop, 0, 0); // dim switch if unconnected
+            g.translate(r, r); // set origin to center
+            int imgZoom = Math.min(2*r/image.getWidth(), 2*r/image.getHeight());
+            g2d.drawImage(image, rop, image.getWidth()/-2, image.getHeight()/-2); // center bitmap
             //g.drawImage(image, 0, 0, null);
             g.setFont(getFont());
             if (ropOffset > 0f) {
@@ -1137,23 +1145,23 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else {
                 g.setColor(_editor.getDefaultTextColorAsColor());
             }
+
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
             if (textAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
                 FontMetrics metrics = g.getFontMetrics();
-                // Determine the X coordinate for the text, icon width ~ 75-80px
-                labelX = (78 - metrics.stringWidth(tag)) / 2;
+                labelX = metrics.stringWidth(tag) / -2;
             }
-            this.repaint();
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
+
             if (showUserName) {
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
                 if (subTextAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
-                    FontMetrics metrics = g.getFontMetrics();
-                    // Determine the X coordinate for the text, icon width ~ 75-80px
-                    subLabelX = (78 - metrics.stringWidth(subTag)) / 2;
+                    FontMetrics metrics2 = g.getFontMetrics();
+                    subLabelX = metrics2.stringWidth(subTag) / -2;
                 }
-                g.drawString(subTag, subLabelX, subLabelY); // draw useer name at bottom
+                g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
             }
+            this.repaint();
         }
 
     }

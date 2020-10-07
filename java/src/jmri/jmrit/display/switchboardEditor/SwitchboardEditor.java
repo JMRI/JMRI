@@ -122,7 +122,8 @@ public class SwitchboardEditor extends Editor {
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
     private int rows = 3;
-    private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile? EBR
+    private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
+    private int _tileSize = 100;
     JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     // number of rows displayed on switchboard, disabled when autoRows is on
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
@@ -691,7 +692,7 @@ public class SwitchboardEditor extends Editor {
                 log.debug("autoRows was turned ON");
                 int oldRows = rows;
                 rows = autoRows(cellProportion); // recalculates rows x columns and redraws pane
-                // TODO: specific proportion value per Type/Shape choice?
+                // sets _tileSize TODO: specific proportion value per Type/Shape choice?
                 rowsSpinner.setEnabled(false);
                 rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
                 // hide rowsSpinner + rowsLabel?
@@ -704,6 +705,11 @@ public class SwitchboardEditor extends Editor {
                 rowsSpinner.setValue(rows); // autoRows turned off, copy current value in spinner
                 rowsSpinner.setEnabled(true); // show rowsSpinner + rowsLabel?
                 rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
+                // calculate tile size
+                int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
+                int maxW = super.getTargetFrame().getWidth()/colNum; // int division
+                int maxH = super.getTargetFrame().getHeight()/rows;
+                _tileSize = Math.round(Math.min(maxW, maxH)); // store for tile graphics
             }
         });
         // show tooltip item
@@ -993,11 +999,12 @@ public class SwitchboardEditor extends Editor {
 
 
         // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
-        // Math.ceil($total/$cols) to account for unused tiles in grid:
-        // include RxC unused cells in calc: for 22 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
-        // calculations repeated in panel.js for web display
+        // rows = (total + columns - 1) / columns (int roundup) to account for unused tiles in grid:
+        // for 23 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
+        // similar calculations repeated in panel.js for web display
         log.debug("CELL SIZE optimum found: CxR = {}x{}, size = {}", columnsNum, rowsNum, tileSizeOld);
 
+        _tileSize = Math.round(tileSize); // store for tile graphics
         return rowsNum;
     }
 
@@ -1474,7 +1481,7 @@ public class SwitchboardEditor extends Editor {
 
     @Override
     protected void paintTargetPanel(Graphics g) {
-        // Shapes not available from switchboardEditor
+        // Switch shapes not directly available from switchboardEditor
     }
 
     /**
@@ -1492,7 +1499,7 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * List with copies of BeanSwitch objects currently displayed to transfer to
+     * Get a list with copies of BeanSwitch objects currently displayed to transfer to
      * Web Server for display.
      */
     public List<BeanSwitch> getSwitches() {
@@ -1558,10 +1565,8 @@ public class SwitchboardEditor extends Editor {
         return report;
     }
 
-    public Dimension getTileSize() {
-        //int cols = (Math.max(getTotal(), 1) + rows - 1) / rows;
-        //int Square = Math.round(super.getTargetFrame().getHeight() / rows);
-        return new Dimension(200, 200) ;
+    public int getTileSize() {
+        return _tileSize; // initially 100
     }
 
     /**

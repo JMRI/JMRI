@@ -50,6 +50,7 @@ var $total = 1;             //persistent storage of shared switchboard property 
 var $autoRows = 0;
 var $activeColor = 'red';
 var $inactiveColor = 'gray';
+var $unknownColor = 'gray';
 var $showUserName = 'no';
 var DOWNEVENT = 'touchstart mousedown';  //check both touch and mouse events
 var UPEVENT = 'touchend mouseup';
@@ -1056,10 +1057,9 @@ function processPanelXML($returnedData, $success, $xhr) {
             //$(#onOff).bind(UPEVENT, $handleClick);
         }
         // add short banner at top of Swb
-        $("#panel-area").append("<div id='name' class='show'>&nbsp;Switchboard &quot;" + $gPanel.name + "&quot; (conn: " +
-        $gPanel.connection + ",  type: " + $gPanel.type + ")" + onOffSpans + "</div>"); // TODO I18N
-
-        // TODO what is needed to draw unconnected switches?
+        $("#panel-area").append("<div id='name' class='show' style='color: " + $gPanel.defaulttextcolor +
+            ";'>&nbsp;Switchboard &quot;" + $gPanel.name + "&quot; (conn: " +
+            $gPanel.connection + ",  type: " + $gPanel.type + ")" + onOffSpans + "</div>"); // TODO I18N
     }
 
     // process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
@@ -1962,7 +1962,7 @@ function processPanelXML($returnedData, $success, $xhr) {
     }
 
     $drawAllDrawnWidgets(); // draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
-    $drawUnconnectedSwitchIcons(); // draw icon first time TODO EBR make them show up
+    $drawUnconnectedSwitchIcons(); // draw icon first time
     $("#activity-alert").addClass("hidden").removeClass("show");
 }
 
@@ -3731,7 +3731,7 @@ var $setWidgetState = function($id, $newState, data) {
                     } else { // icon, symbol, slider (drawing) are directly drawn on canvas
                         $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
                         $drawWidgetSymbol($id, $newState);
-                    } // TODO for newly created items, rebuild widget to activate json binding
+                    } // for newly created items, reload web page to activate json binding
                 }
                 break;
         }
@@ -4045,7 +4045,7 @@ var $drawWidgetSymbol = function(id, state) {
 
     // draw label (system name + state) text
     ctx.restore(); // resets origin and stroke&fill
-    ctx.fillStyle = $gPanel.defaulttextcolor; // text color
+    ctx.fillStyle = (state == "0" ? $unknownColor : $gPanel.defaulttextcolor); // simple change in color
     ctx.font = "16px Arial";
     if (shape == "drawing") { // text centered between Maerklin buttons
         ctx.textAlign = 'center';
@@ -4200,7 +4200,7 @@ var $drawUnconnectedSwitchIcons = function() {
         switch ($widget.widgetFamily) {
             case 'switch' :
                 if ((typeof $widget['shape'] !== "undefined") && ($widget.shape != "button")) {
-                    $drawWidgetSymbol($id, INACTIVE); // draw first time UNKNOWN?
+                    $drawWidgetSymbol($id, UNKNOWN); // draw first time UNKNOWN = 0
                 }
                 break;
         }
