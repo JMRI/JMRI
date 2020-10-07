@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import jmri.CommandStation;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -35,6 +36,29 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
         scm.setSprogMode(SprogMode.SERVICE);
         scm.configureCommandStation();
         Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
+        tc.dispose();
+    }
+
+    @Test
+    public void configureAndGetOPSCSTest() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        scm.setSprogMode(SprogMode.OPS);
+        scm.configureCommandStation();
+        Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
+        tc.dispose();
+    }
+
+    @Test
+    public void whenConfigureManagersCalled_CommandStationIsInitialized() {
+        SprogTrafficController tc = new SprogTrafficControlScaffold(scm);
+        scm.setSprogTrafficController(tc);
+        scm.setSprogMode(SprogMode.OPS);
+        scm.configureManagers();
+        Assert.assertNotNull("Command Station", scm.getCommandStation());
+        Assert.assertNotNull("Command Station", scm.get(CommandStation.class));
         tc.dispose();
     }
 

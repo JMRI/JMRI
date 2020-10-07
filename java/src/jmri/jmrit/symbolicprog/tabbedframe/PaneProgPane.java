@@ -2420,9 +2420,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ArrayList<JPanel> panelList = new ArrayList<>();
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove components
         removeAll();

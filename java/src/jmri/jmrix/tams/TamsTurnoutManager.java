@@ -48,6 +48,18 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         t.setUserName(userName);
         return t;
     }
+    
+    /**
+     * Validates to contain at least 1 number . . .
+     * <p>
+     * TODO: check validateIntegerSystemNameFormat if min / max values are known.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+    }
 
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {

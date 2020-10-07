@@ -115,7 +115,7 @@
     <ul class="snav">
         <li><a href="#CMRI">CMRI</a></li>
         <li><a href="#serial">Serial</a></li>
-        <li><a href="#multiple">RS485</a></li>
+        <li><a href="#multi">RS485</a></li>
     </ul>
  
 
@@ -158,7 +158,7 @@
     <li>
     Be sure to set the communication speed (baud rate) the same in your arduino sketch and in
     the JMRI <a href="../cmri/CMRI.shtml#L215">CMRI system connection</a>.  The baud rate will only 
-    be seen on the JMRI Preferences->Connections window if you check the box for "additional 
+    be visible on the JMRI Preferences->Connections window if you check the box for "Additional
     Connection Settings."
     </li>
     <li>
@@ -235,6 +235,10 @@
     converter, also available from multiple sources.
     </p>
     
+    <p>See <a href="http://www.motorhomesites.org.uk/control-single-turnout-with-rs485-and-cmri/" target="_blank">
+    Stephen Brackstone again </a>for a good description of how to do this setup.
+    </p>
+    
     <p>Then include a RS-485 library in your arduino sketch (for example, 
     <a href="https://github.com/madleech/Auto485" target="_blank">
     this one by Michael Adams</a>).  Make sure each arduino is assigned a different CMRI node
@@ -264,7 +268,7 @@
     
     <ul>
     <li>Block occupancy detectors: Connect an arduino to several block occupancy detectors and define JMRI sensors to report whether blocks are occupied.
-    layut panels will show tracks changing color as blocks go fromunoccuied to occupied and back again.</li>
+    layut panels will show tracks changing color as blocks go from unoccupied to occupied and back again.</li>
     <li>Location detectors: Connect an arduino to a "point" sensor such as a photooptical module, infrared module, Hall effect reader, RFID reader,
     etc.  Define a JMRI sensor that goes active when the physical sensor is active and use this to control routes,
     Logix, or other JMRI "triggered" action.</li>

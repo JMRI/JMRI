@@ -32,7 +32,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     protected List<Track> tracksList = new ArrayList<>();
     protected int _sort = SORTBYNAME;
     protected String _trackType = "";
-    protected boolean _showPoolColumn = false;
     protected JTable _table;
 
     // Defines the columns
@@ -56,7 +55,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     protected static final int PLANPICKUP_COLUMN = 17;
     protected static final int ALT_TRACK_COLUMN = 18;
     protected static final int ORDER_COLUMN = 19;
-    protected static final int EDIT_COLUMN = 20;
+    protected static final int REPORTER_COLUMN = 20;
+    protected static final int EDIT_COLUMN = 21;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -81,11 +81,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         // and add them back in
         for (Track track : tracksList) {
             track.addPropertyChangeListener(this);
-        }
-        if (_location.hasPools() && !_showPoolColumn) {
-            _showPoolColumn = true;
-            fireTableStructureChanged();
-            initTable();
         }
     }
 
@@ -137,6 +132,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
         tcm.getColumn(ORDER_COLUMN)
                 .setPreferredWidth(Math.max(50, new JLabel(getColumnName(ORDER_COLUMN)).getPreferredSize().width + 10));
+        tcm.getColumn(REPORTER_COLUMN).setPreferredWidth(70);
         tcm.getColumn(EDIT_COLUMN).setPreferredWidth(80);
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(new ButtonRenderer());
         tcm.getColumn(EDIT_COLUMN).setCellEditor(new ButtonEditor(new JButton()));
@@ -157,6 +153,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN), _location.hasOrderRestrictions());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN), Setup.isRfidEnabled() && _location.hasReporters());
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), Setup.isShowTrackMovesEnabled());
     }
@@ -214,6 +211,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Bundle.getMessage("AlternateTrack");
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
+            case REPORTER_COLUMN:
+                return Bundle.getMessage("Reporters");
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit"); // titles above all columns
             default:
@@ -225,44 +224,26 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case ID_COLUMN:
-                return String.class;
             case NAME_COLUMN:
-                return String.class;
             case LENGTH_COLUMN:
-                return String.class;
             case USED_LENGTH_COLUMN:
-                return String.class;
             case RESERVED_COLUMN:
-                return String.class;
             case MOVES_COLUMN:
-                return String.class;
             case LOCOS_COLUMN:
-                return String.class;
             case CARS_COLUMN:
-                return String.class;
             case PICKUPS_COLUMN:
-                return String.class;
             case SETOUT_COLUMN:
-                return String.class;
             case SCHEDULE_COLUMN:
-                return String.class;
             case RESTRICTION_COLUMN:
-                return String.class;
             case LOAD_COLUMN:
-                return String.class;
             case SHIP_COLUMN:
-                return String.class;
             case ROAD_COLUMN:
-                return String.class;
             case DESTINATION_COLUMN:
-                return String.class;
             case POOL_COLUMN:
-                return String.class;
             case PLANPICKUP_COLUMN:
-                return String.class;
             case ALT_TRACK_COLUMN:
-                return String.class;
             case ORDER_COLUMN:
+            case REPORTER_COLUMN:
                 return String.class;
             case EDIT_COLUMN:
                 return JButton.class;
@@ -352,6 +333,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return "";
             case ORDER_COLUMN:
                 return track.getServiceOrder();
+            case REPORTER_COLUMN:
+                return track.getReporterName();
             case EDIT_COLUMN:
                 return Bundle.getMessage("ButtonEdit");
             default:
@@ -453,7 +436,9 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                         e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.PLANNEDPICKUPS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
-                        e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY))) {
+                        e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.TRACK_REPORTER_PROPERTY))) 
+            {
             setColumnsVisible();
         }
     }

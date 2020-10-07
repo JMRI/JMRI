@@ -156,8 +156,7 @@
             connection settings.</p>
 
             <p><input type="submit" name="button" id="button"
-            value="Delete Connection"> will delete all the
-            connection settings.</p>
+            value="X"> will delete this connection.</p>
           </td>
         </tr>
       </table>

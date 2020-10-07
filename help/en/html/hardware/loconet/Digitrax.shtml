@@ -390,11 +390,11 @@
         "L1", "L2", ... Most users should be able to use the
         default "Connection Prefix" value provided by the JMRI
         tools.
-
-          <p>It is recommended that all connections for LocoNet
-          hardware use a prefix that begins with "L", as other
-          characters are normally associated with other hardware
-          connection types.</p>
+        <br>
+        It is recommended that all connections for LocoNet
+        hardware use a prefix that begins with "L", as other
+        characters are normally associated with other hardware
+        connection types.
         </li>
 
         <li>When a JMRI tool is configured for more than one
@@ -407,13 +407,16 @@
         needs.</li>
 
         <li>Some adapters may have addition configuration options,
-        which may be shown by checking the "Additional Connection
-        Settings". This may show additional settings which may be
-        made for some adapter types. These include, but are not
-        limited to, the options listed here.
+        which appear by checking the "Additional Connection
+        Settings". This may show additional settings applicable for
+        some adapter types. These include, but are not limited to,
+        the options listed here.
+        <br>
+        <img src="images/LoconetAdditionalSettings.png" alt="Connection Settings Additional settings"
+             width="515" height="219">
 
           <ul>
-            <li>The "Baud Rate" setting. When multiple settings are
+            <li>The "Baud rate" setting. When multiple settings are
             available, this must be set to match the needs of the
             particular hardware adapter specified in the "System
             Connection" setting. This setting will be pre-set and
@@ -427,27 +430,34 @@
             <a href="LocoBuffer.shtml">LocoBuffer</a> pages for
             more information.</li>
 
-            <li>The <a href="#TurnoutCmdHandling">"Command Station
-            Turnout Command Rejection and JMRI Turnout Command
-            Handling"</a> settings are described <a href=
-            "#TurnoutCmdHandling">below</a>.</li>
+            <li>The "(Serial) Connection Uses" selection determines how
+              "flow control" is implemented in software. This
+              selection should be configured for "hardware flow
+              control" unless you later consistently get a JMRI
+              console message about the LocoBuffer control leads
+              being improperly set up, in which case you might want
+              to try to bypass that by selecting "no flow control".<br>
+              This box will be blank if you've selected
+              LocoBuffer-USB, PR3, PR4 or MS100.</li>
 
-            <li>The "Transponding Present" allows you indicate whether
+            <li>Packetizer Type lets you choose Normal (recommended) or Strict.</li>
+
+            <li>"Transponding Present" allows you indicate whether
                 certain special hardware is present and configured.
                 If you have LocoNet-attached boards that configure
                 in "ops mode", or if you have Digitrax Transponding
                 installed, set this to "Yes". Otherwise, set it to
                 "No". </li>
 
-            <li>The "Connection Uses" selection determines how
-            "flow control" is implemented in software. This
-            selection should be configured for "hardware flow
-            control" unless you later consistently get a JMRI
-            console message about the LocoBuffer control leads
-            being improperly set up, in which case you might want
-            to try to bypass that by selecting "no flow control".
-            This box will be blank if you've selected
-            LocoBuffer-USB, PR3, PR4 or MS100.</li>
+            <li>The <a href="#TurnoutCmdHandling">"Command Station
+              Turnout Command Rejection and JMRI Turnout Command
+              Handling"</a> settings are described <a href="#TurnoutCmdHandling">below</a>.
+            </li>
+
+            <li>Output Interval sets a configurable (minimum) interval for all turnout outputs
+              that are part of a Route or Output Matrix Signal Mast on this same connection.<br>
+              Use the [Reset] button to restore the default of 250 ms.
+              No restart is required after a change.</li>
           </ul>
         </li>
 
@@ -687,7 +697,7 @@
             LocoNet switch commands. The retry mechanism described
             above for the "Normal" mode is enabled.</li>
 
-            <li>Once Only - This disables the JMRI retry mechanism
+            <li>One Only - This disables the JMRI retry mechanism
             for rejected switch commands. JMRI will not retry any
             LocoNet switch command messages. The amount of delay
             between any two JMRI-generated switch commands sent to
@@ -1052,6 +1062,8 @@
             <li><a href=
             "../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">
             Download Sounds</a></li>
+            
+            <li><a href="./DigitraxMeters.shtml">Voltage and Current Meters</a></li>
           </ul>
         </li>
 

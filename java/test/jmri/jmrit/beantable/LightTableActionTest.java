@@ -534,7 +534,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         Light created = lightManager.provideLight("IL444");
         Assert.assertEquals("1 Control", 1, created.getLightControlList().size());
-        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 msec. when ISS2 goes Active.",
+        Assert.assertEquals("Correct Light Control Type and Settings", "ON for 20 ms when ISS2 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
 
@@ -573,7 +573,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // light edit frame closes
 
         // light should now be updaed to S1
-        Assert.assertEquals("Correct Light Control Type", "ON for 777 msec. when ISS1 goes Active.",
+        Assert.assertEquals("Correct Light Control Type", "ON for 777 ms when ISS1 goes Active.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
     }

@@ -43,6 +43,15 @@ public class CircuitBuilderTest {
     }
 
     @Test
+    public void testOpenCBWindow() {
+        getCPEandCB();
+
+        cb.openCBWindow();
+        cb.closeCBWindow();
+    }
+
+
+    @Test
     public void testEditCircuitFrame() {
         getCPEandCB();
 
@@ -175,6 +184,7 @@ public class CircuitBuilderTest {
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NeedDataTitle"));
         JButtonOperator ok = new JButtonOperator(jdo, "OK");
         ok.push();
+        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
     }
 
     void getCPEandCB() {
@@ -189,6 +199,7 @@ public class CircuitBuilderTest {
         Assert.assertNotNull("exists", cpe );
         cb = cpe.getCircuitBuilder();
         Assert.assertNotNull("exists", cb );
+        jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
     }
 
     @BeforeEach

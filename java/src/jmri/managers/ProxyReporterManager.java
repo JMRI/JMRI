@@ -11,7 +11,7 @@ import jmri.ReporterManager;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
+public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {
         super();

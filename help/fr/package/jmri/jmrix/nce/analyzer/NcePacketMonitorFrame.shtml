@@ -180,8 +180,7 @@
       d&eacute;limitent chaque paire de
       caract&egrave;res hexad&eacute;cimaux<br>
       Exemple: P 03 68 6B<br>
-      Trois paquets d'octets suivants des octets 0x03, 0x68, 0x6B 
-      <!--#include virtual ="/Footer" --></p>
+      Trois paquets d'octets suivants des octets 0x03, 0x68, 0x6B</p>
 
       <h2>Affichage mode verbeux:</h2>Les Modes d'affichage Verbeux
       sont destin&eacute;s &aacute; permettre aux humains

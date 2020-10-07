@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -54,7 +55,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     @Test
     public void testProvideFailure() {
         Assert.assertThrows(IllegalArgumentException.class, () -> l.provideTurnout(""));
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+        JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
@@ -74,6 +75,28 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+    
+    @Test
+    public void testProvideWithoutWithPrefix() throws IllegalArgumentException {
+        Turnout psa = l.provide(""+getSystemNameWithNoPrefix());
+        Turnout psb = l.provide(l.getSystemPrefix()+"T"+getSystemNameWithNoPrefix());
+        Assert.assertTrue("Provide Without then With Prefix", psa == psb);
+    }
+
+    @Test
+    public void testProvideWithWithoutPrefix() throws IllegalArgumentException {
+        Turnout psa = l.provide(l.getSystemPrefix()+"T"+getSystemNameWithNoPrefix());
+        Turnout psb = l.provide(""+getSystemNameWithNoPrefix());
+        Assert.assertTrue("Provide With then Without Prefix", psa == psb);
+    }
+    
+    @Test
+    public void testProvideFailWithPrefix() throws IllegalArgumentException {
+        
+        Assert.assertThrows(IllegalArgumentException.class, () -> l.provide(l.getSystemPrefix()+"T"));
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for Turnout: ");
+        
     }
 
     @Test
@@ -134,10 +157,27 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
          Assert.assertEquals("closed text", Bundle.getMessage("TurnoutStateClosed"), l.getClosedText());
     }
 
-    @Disabled("Turnout managers doesn't support auto system names")
+    @Test
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval());
+        l.getMemo().setOutputInterval(21);
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
+        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
+    }
+
+    @Disabled("Turnout managers don't support auto system names")
     @Test
     @Override
     public void testAutoSystemNames() {
+    }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
 
     /**

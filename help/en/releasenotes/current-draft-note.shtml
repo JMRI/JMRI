@@ -4,6 +4,11 @@
           <li></li>
         </ul>
 
+        <h4>Acela CTI</h4>
+            <ul>
+                <li></li>
+            </ul>
+        
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
@@ -16,7 +21,7 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
@@ -44,6 +49,11 @@
                 <li></li>
             </ul>
 
+        <h4>IPOCSMR</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>JMRI Simple Server/JMRI Client</h4>
             <ul>
                 <li></li>
@@ -51,16 +61,23 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li><a href="https://www.jmri.org/help/en/html/hardware/loconet/Digitrax.shtml#deviceBoardId">
-                    Instructions</a> detailing how to change the Board ID (Board 
-                    Address) of certain Digitrax LocoNet-based devices using 
-                    JMRI have been added to the Digitrax hardware page.</li>
-                <li>Fixed a problem in the PM4Announce script</li>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
+              <li>LocoNet support for "Voltage/Current Meters" has been extended to 
+                  include support for multiple sources of meter information, and 
+                  to include automatic discovery of LocoNet devices which support 
+                  voltage and current reporting.  Each discovered device is identified  
+                  by its device type and serial number.  These "friendly" identifiers
+                  appear in the "Voltage Meter" and "Current Meter" menus in the 
+                  "Voltage/Current Meter" tool. Further information may be found at the
+                  <a href="../html/hardware/loconet/DigitraxMeters.shtml">
+                      Digitrax "Meters"</a> web page.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -75,9 +92,7 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li>MQTT Turnouts now support MONITORING and EXACT feedback modes</li>
-                <li>When status UNKNOWN or INCONSISTENT is received from MQTT and the turnout operating mode is MONITORING or EXACT, the layout is now updated with this status</li>
-                <li>When EXACT feedback mode is selected, two different MQTT topics will be used - one for commands and one for state</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -162,8 +177,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li>
-                </li>
+                <li></li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -273,8 +287,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>
-                </li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -338,8 +351,20 @@
             <li></li>
         </ul>
 
+    <h3>CTC Tool</h3>
+        <a id="PE-CTC" name="PE-CTC"></a>
+        <ul>
+            <li></li>
+        </ul>
+
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
+        <ul>
+             <li></li>
+        </ul>
+
+    <h3>Dispatcher System</h3>
+        <a id="Dispatcher_System" name="Dispatcher_System"></a>
         <ul>
              <li></li>
         </ul>
@@ -373,12 +398,16 @@
           <li></li>
         </ul>
 
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
+        </ul>
+
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Fixed problem where operations database was always saved when exiting JMRI.</li>
-            <li>Fixed problem with Panel name for train icons.</li>
-            <li>Fixed problem with track move count when track has an alternate track.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -386,11 +415,6 @@
         <ul>
             <li></li>
         </ul>
-        <h4>CTC Tool</h4>
-            <a id="PE-CTC" name="PE-CTC"></a>
-            <ul>
-                <li></li>
-            </ul>
 
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
@@ -426,6 +450,12 @@
             <li></li>
         </ul>
 
+    <h3>Routes</h3>    
+        <a id="Routes" name="Routes"></a>
+       <ul>
+            <li></li>
+       </ul>
+       
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -435,9 +465,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Some internal refactoring that should help with the long term
-            maintenance of JMRI has been done. This may cause some scripts to
-            fail until classes or methods are renamed in those scripts.</li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -447,8 +477,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>
-                </li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -532,28 +561,41 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>VSD now supports the "Location Following" (sound follows loco) with occupancy
-                sensors and JMRI Blocks. See the 
-				<a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#VSDLocations">
-                documentation</a> for details.</li>
+            <li></li>
+        </ul>
+
+   <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li>jmri.MultiMeter is split into jmri.Meter.</li>
+            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
+            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
+            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
+            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
+            <li>LocoNet supports discoverr of the sources of voltage and current 
+                data and makes them available in the "Voltage/Current Meter" tool.</li>
+            
+        </ul>
+
+   <h3>AbstractProxyManager</h3>
+        <a id="Proxy" name="Proxy"></a>
+        <ul>
+            <li>AbstractProxyManager can now automatically create system specific managers.</li>
+            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
+			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
+			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
+			already exists. This works as long as the system specific manager doesn't need to have
+			system specific knowledge of the named beans.</li>
+            <li>This means that, for example, the user may create a Jython script that creates a Meter
+			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
+			manager is automatically created.</li>
+			<li>Once a specific connection needs to store specific data about meters, a connection
+			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The jmri.jmrix.SystemConnectionMemo class has become a jmri.SystemConnectionMemo
-                interface and a jmri.jmrix.DefaultSystemConnectionMemo class. This may
-                require changes to scripts.  If you have a script that references
-                jmri.jmrix.SystemConnectionMemo, please change it to either
-                jmri.SystemConnectionMemo or jmri.jmrix.DefaultSystemConnectionMemo
-                (it's easier to have you just try the two than to explain which 
-                one will work in which case)</li>
-            <li>Added PR automation to check for a comment in the release note when a PR
-                is opened, and to ensure that somebody has been assigned to the PR.</li>
-            <li>The jmri.JmriPlugin class is deprecated without a replacement. If you depend on
-	              on this class, please <a href="https://github.com/JMRI/JMRI/issues/new">raise an issue on GitHub</a>
-		            so we can discuss how to meet your requirements through other means.</li>
-            <li>"Display Message Log" has been removed from the Debug Menu. Use the
-                "System Console" from the Help Menu to view log messages.</li>
+            <li></li>
         </ul>
 

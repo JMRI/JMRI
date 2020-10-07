@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.19.8ish+jake+20200616T1804Z+R0e5345596e on Tue Jun 16 11:04:57 PDT 2020-->
-  <decoderIndex version="1012">
+  <!--Written by JMRI version 4.21.2ish+heap+20200926T2211Z+R4de08d1 on Sun Sep 27 08:12:40 AEST 2020-->
+  <decoderIndex version="1020">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7677,31 +7677,31 @@
         </model>
       </family>
       <family name="ESU LokPilot 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilot5.xml">
-        <model model="LokPilot 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
+        <model model="LokPilot 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554600">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokPilot 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
+        <model model="LokPilot 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554602">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokPilot 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
+        <model model="LokPilot 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777390">
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
-        <model model="LokPilot 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
+        <model model="LokPilot 5 micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777391">
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
-        <model model="LokPilot 5 micro Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
+        <model model="LokPilot 5 micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554604">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokPilot 5 micro DCC Next18" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+        <model model="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokPilot 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
+        <model model="LokPilot 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554609">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokPilot 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
+        <model model="LokPilot 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554610">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokPilot 5 Fx micro" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
+        <model model="LokPilot 5 Fx micro" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554611">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -7734,9 +7734,11 @@
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
           <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 Fx micro DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
+        <model model="LokPilot 5 Fx micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554612">
           <output name="1,37" label="|" />
           <!-- suppress unused item -->
           <output name="1,38" label="|" />
@@ -7769,13 +7771,44 @@
           <!-- suppress unused item -->
           <output name="2,20" label="|" />
           <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+        <model model="LokPilot 5 Fx micro Next18" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554616">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokPilot 5 MKL DCC" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+        <model model="LokPilot 5 Fx micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554617">
+          <output name="1,37" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,38" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,39" label="|" />
+          <!-- suppress unused item -->
+          <output name="1,40" label="|" />
+          <!-- suppress unused item -->
+          <output name="4,1" label="|" />
+          <!-- suppress unused item -->
           <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554601">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokPilot 5 MKL DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554608">
+          <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model show="no" model="LokPilot 5 micro DCC Next18" replacementModel="LokPilot 5 Micro Next18 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554605">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
@@ -8234,6 +8267,16 @@
           <size length="25.5" width="15.5" height="4.5" units="mm" />
           <!-- connector="NEM651, 21MTC, Plux12, wires" -->
         </model>
+        <model model="Pullman Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777378">
+          <output name="1" label="Head|Lights" />
+          <output name="2" label="Red|Light" />
+          <output name="3" label="Cab|Light" />
+          <output name="4" label="Destination|Light" />
+          <output name="5" label="Panel|Light" />
+          <output name="6" label="High|Beam" />
+          <output name="7" label="Cargo|Light" />
+          <output name="8" label="Interior|Light" />
+        </model>
         <model model="MBW Silberling" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777360">
           <output name="1" label="|White" />
           <output name="2" label="Front|Red" />
@@ -8289,32 +8332,38 @@
         </model>
       </family>
       <family name="ESU LokSound 5" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound5.xml">
-        <model model="LokSound 5" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
+        <model model="LokSound 5" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554582">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound 5 DCC" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
+        <model model="LokSound 5 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="1.5A" extFnsESU="V5" productID="33554588">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound 5 micro" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554587">
+        <model model="LokSound 5 micro" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554587">
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
-        <model model="LokSound 5 micro DCC" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554590">
+        <model model="LokSound 5 micro DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="33554590">
           <size length="25.5" width="10.6" height="4.5" units="mm" />
         </model>
-        <model model="LokSound 5 micro DCC Direct" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
+        <model model="LokSound 5 micro DCC Direct" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777370">
           <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
-        <model model="LokSound 5 L" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
+        <model model="LokSound 5 micro E24 DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777404">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
+        </model>
+        <model model="LokSound 5 L" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554589">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokSound 5 L DCC" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554592">
+        <model model="LokSound 5 L DCC" maxFnNum="31" numOuts="20" maxMotorCurrent="3A" extFnsESU="V5" productID="33554592">
           <size length="51.8" width="25.4" height="14" units="mm" />
         </model>
-        <model model="LokSound 5 XL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
+        <model model="LokSound 5 XL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554591">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
         </model>
-        <model model="LokSound 5 MKL" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
+        <model model="LokSound 5 MKL" maxFnNum="31" numOuts="20" maxMotorCurrent="5A" extFnsESU="V5" productID="33554598">
           <size length="51.0" width="40.0" height="14.0" units="mm" />
+        </model>
+        <model model="LokSound 5 micro KATO" maxFnNum="31" numOuts="20" maxMotorCurrent="0.75A" extFnsESU="V5" productID="16777405">
+          <size length="21.0" width="10.6" height="4.0" units="mm" />
         </model>
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <!-- Copyright (C) JMRI 2019 All rights reserved -->
@@ -8770,7 +8819,7 @@
         </model>
       </family>
       <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81" file="ESU_LokSoundV3_5.xml">
-        <model model="LokSound V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
+        <model model="LokSound V3.5" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -8862,7 +8911,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokSound Micro V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
+        <model model="LokSound Micro V3.5" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
           <output name="1" label="Front|Light" maxcurrent="180mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -8954,7 +9003,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
+        <model model="LokSoundXL V3.5" maxFnNum="15" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -9046,7 +9095,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+        <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -9121,7 +9170,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+        <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" maxFnNum="15" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
           <output name="1" label="Front|Light" maxcurrent="250mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -9195,7 +9244,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model show="no" model="LokSoundXL Version 3.5" replacementModel="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+        <model show="no" model="LokSoundXL Version 3.5" replacementModel="LokSoundXL V3.5" maxFnNum="15" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
           <output name="1" label="Front|Light" maxcurrent="600mA">
             <label xml:lang="fr">Feux|avant</label>
             <label xml:lang="it">Luci|Frontali</label>
@@ -11854,6 +11903,11 @@
           <output name="2" label="B - Amarillo" />
           <output name="3" label="C - Verde" />
           <output name="4" label="D - Marron" />
+        </model>
+      </family>
+      <family name="LGB MFX decoder" mfg="LGB" file="LGB_v3_MFX.xml">
+        <model model="LGB MFX 27-pin sound decoder." lowVersionID="3" highVersionID="3" maxInputVolts="24V" maxMotorCurrent="2.0A, peak=2.5A" maxTotalCurrent="0.8A" formFactor="LGB" numOuts="0" numFns="32" productID="199">
+          <size length="25" width="11" height="2" units="mm" />
         </model>
       </family>
       <family name="Locomotive Decoders" mfg="LaisDCC" comment="LaisDCC decoder range" lowVersionID="02" highVersionID="06" file="LaisDcc.xml">
@@ -15409,6 +15463,13 @@
           <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
           <size length="0.70" width="0.34" height="0.12" units="inches" />
         </model>
+        <model model="N12SR 4 function" numOuts="4" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="N">
+          <output name="1" label="White" connection="wire" maxcurrent="40 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="40 mA" />
+          <output name="3" label="Pad 3" connection="wire" maxcurrent="40 mA" />
+          <output name="4" label="Pad 4" connection="wire" maxcurrent="40 mA" />
+          <size length="0.60" width="0.34" height="0.11" units="inches" />
+        </model>
         <model model="N12SRP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1A (peak=1.25A)" formFactor="N">
           <output name="1" label="White" connection="plug" maxcurrent="40 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="40 mA" />
@@ -15434,6 +15495,13 @@
           <output name="3" label="Pad 3" connection="solder" maxcurrent="50 mA" />
           <output name="4" label="Pad 4" connection="solder" maxcurrent="50 mA" />
           <size length="1.15" width="0.34" height="0.12" units="inches" />
+        </model>
+        <model model="Next18" numOuts="4" numFns="8" maxMotorCurrent=".75A (peak=1.2A)" formFactor="Next18">
+          <output name="1" label="Pin 8" connection="plug" />
+          <output name="2" label="Pin 17" connection="plug" />
+          <output name="3" label="Pin 3" connection="plug" />
+          <output name="4" label="Pin 12" connection="plug" />
+          <size length=".595" width="0.390" units="inches" />
         </model>
         <model model="N12A0" numOuts="2" numFns="5" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Atlas N-Scale GP40-2, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, Trainmaster &amp; many others">
           <output name="1" label="LED 1" connection="solder" />
@@ -15463,6 +15531,18 @@
           <output name="1" label="LED 1" connection="solder" />
           <output name="2" label="LED 2" connection="solder" />
           <size length="2.65" width="0.37" height="0.12" units="inches" />
+        </model>
+        <model model="N14A0" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP40-2, CW40-8, U25B, U23B, B23-7, 30-7, 36-7, GP38, SD25, TRAINMASTER">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
+        </model>
+        <model model="N14A3" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Atlas GP39-2, Intermountain SD40-2">
+          <output name="1" label="LED 1" connection="solder" />
+          <output name="2" label="LED 2" connection="solder" />
+          <output name="3" label="Pad 3" connection="solder" />
+          <output name="4" label="Pad 4" connection="solder" />
         </model>
         <model model="N14K1" numOuts="4" numFns="8" formFactor="N" connector="DropIn" comment="for Ath F45,FP45,kato ES44,AC4400,C30-7,SD40-2,SD40,SD45,SD70MAC">
           <output name="1" label="LED 1" connection="solder" />
@@ -15633,14 +15713,15 @@
         <model model="HDL LocoIO v1.54" productID="154" />
         <!--filtering model specific options relies on new exclude/include support in compositeValType-->
         <model model="HDL LocoIO v1.53" productID="153" />
-        <!--Docs: 1.50-1.52 users should update to 1.53, same options-->
+        <model model="HDL LocoIO v1.52" productID="152" />
+        <!--HDL Docs: 1.50-1.51 users should update to 1.53 or higher, same options-->
         <model model="HDL LocoIO v1.49" productID="149" />
         <model model="HDL LocoIO v1.48" productID="148" />
-        <!--Docs: 1.47 users should update to 1.48, same options-->
+        <!--HDL Docs: 1.47 users should update to 1.48, same options-->
         <model model="HDL LocoIO v1.46" productID="146" />
         <model model="HDL LocoIO v1.45" productID="145" />
         <model model="HDL LocoIO v1.44" productID="144" />
-        <!--Docs: 1.43 users should update to 1.44, same options-->
+        <!--HDL Docs: 1.43 users should update to 1.44, same options-->
         <model model="HDL LocoIO v1.42" productID="142" />
         <model model="HDL LocoIO v1.41" productID="141" />
         <model model="HDL LocoIO v1.40" productID="140" />
@@ -15651,7 +15732,7 @@
         <model model="HDL LocoServo v1.03" productID="103" />
         <model model="HDL LocoServo v1.02" productID="102" />
         <model model="HDL LocoServo v1.01" productID="101">
-          <!--TODO LocoServer uses ports 5-12 for 2-4 servo's with special position/timing settings-->
+          <!--LocoServo uses ports 5-12 for 2-4 servo's with special position/timing settings-->
         </model>
         <model model="HDL LocoBooster v3" productID="003">
           <!--LocoBooster only allows config of ports 1-4 (and special ports 5-6)-->
@@ -15659,6 +15740,10 @@
         <model model="HDL LocoBooster v4" productID="004">
           <!--LocoBooster v4 and up support Opcode2 on ports 1-6 -->
         </model>
+        <model model="HDL LocoBooster v5" productID="005" />
+        <!--<model model="HDL LocoRCD v2.0" productID="200"/> TODO edit copy of 211-->
+        <model model="HDL LocoRCD2 v2.10" productID="210" />
+        <model model="HDL LocoRCD2 v2.11" productID="211" />
         <model model="Original LocoIO" productID="135" />
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
@@ -19590,782 +19675,139 @@
           <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
       </family>
-      <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders" file="SoundTraxx_Tsu2_Diesel.xml">
+      <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami 2 Diesel decoders" file="SoundTraxx_Tsu2_Diesel.xml">
         <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="276" comment="Model 885001">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="310" comment="Model 885021">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 GE Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="277" comment="Model 885002">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 Alco Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="278" comment="Model 885003">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 Baldwin Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="279" comment="Model 885004">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-2200 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="280" comment="Model 885005">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="311" comment="Model 885022">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="281" comment="Model 885006">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="282" comment="Model 885007">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="283" comment="Model 885008">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="284" comment="Model 885009">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="312" comment="Model 885023">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="285" comment="Model 885010">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="286" comment="Model 885011">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="287" comment="Model 885012">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="284" comment="Model 885809">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="312" comment="Model 885823">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="285" comment="Model 885810">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="286" comment="Model 885811">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="287" comment="Model 885812">
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="292" comment="Model 885017">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="314" comment="Model 885025">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="294" comment="Model 885019">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="295" comment="Model 885020">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="74" width="17" height="5" units="mm" />
         </model>
         <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="313" comment="Model 885024">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="74" width="17" height="5" units="mm" />
         </model>
         <model model="TSU-PNP GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="289" comment="Model 885014">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="74" width="17" height="5" units="mm" />
         </model>
         <model model="TSU-PNP Alco Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="290" comment="Model 885015">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="74" width="17" height="5" units="mm" />
         </model>
         <model model="TSU-PNP Baldwin Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="291" comment="Model 885016">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamic|Brakes">
-            <label xml:lang="it">Freni|Dinamici</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Straight|to 8" />
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="HEP|Mode" />
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="74" width="17" height="5" units="mm" />
         </model>
+        <model model="TSU-PNP8 EMD Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="320" comment="Model 885813">
+          <size length="74" width="17" height="5" units="mm" />
+        </model>
+        <model model="TSU-PNP8 EMD-2 Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="324" comment="Model 885824">
+          <size length="74" width="17" height="5" units="mm" />
+        </model>
+        <model model="TSU-PNP8 GE Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="321" comment="Model 885814">
+          <size length="74" width="17" height="5" units="mm" />
+        </model>
+        <model model="TSU-PNP8 Alco Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="322" comment="Model 885815">
+          <size length="74" width="17" height="5" units="mm" />
+        </model>
+        <model model="TSU-PNP8 Baldwin Diesels" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="323" comment="Model 885816">
+          <size length="74" width="17" height="5" units="mm" />
+        </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamic|Brakes">
+          <label xml:lang="it">Freni|Dinamici</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Straight|to 8" />
+        <output name="10" label="General|Service" />
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="HEP|Mode" />
+        <output name="14" label="Ind/Train|Brake" />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -20394,6 +19836,7 @@
           <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
           <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
@@ -20431,6 +19874,10 @@
         <model model="TSU-GN2200 GP38-2 w/DB/beacon2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="843" comment="Model T0203.006B" />
         <model model="TSU-GN2200 GP38-2 w/ditch" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="845" comment="Model T0203.009B" />
         <model model="TSU-GN2200 GP38-2 w/srobe" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="852" comment="Model T0203.010B" />
+        <model model="TSU-GN2208 GP38-2 w/ditch" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="919" comment="Model 8T0203.009" />
+        <model model="TSU-GN2208 GP38-2 w/gyra" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="918" comment="Model 8T0203.008" />
+        <model model="TSU-GN2208 GP38-2 w/srobe" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="920" comment="Model 8T0203.012" />
+        <model model="TSU-GN2208 GP38-2W" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="917" comment="Model 8T0203.001" />
         <model model="TSU-GN2200 GP39-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="828" comment="Model T0202.001B" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe1" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="829" comment="Model T0202.002B" />
         <model model="TSU-GN2200 GP39-2 w/ beacon/strobe2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="830" comment="Model T0205.001B" />
@@ -20450,6 +19897,7 @@
         <model model="TSU-GN2208 SDF40-2 w/beacon" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="854" comment="Model 8T0207.002" />
         <model model="TSU-GN2208 SDF40-2 w/beacon 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="928" comment="Model 8T0207.003" />
         <model model="TSU-GN2200 SDP45/F45 w/beacon" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="820" comment="Model T0206.003B" />
+        <model model="TSU-GN2208 SDP45/SD45-2/F45/FP45" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="912" comment="Model 8T0206.003" />
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005" />
         <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?" />
         <model model="TSU-GN2200 SD60I" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="804" comment="Model T0302.003B" />
@@ -20525,147 +19973,53 @@
           <functionlabel num="27" lockable="true">RPM-</functionlabel>
         </functionlabels>
       </family>
-      <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami2 Electric decoders" file="SoundTraxx_Tsu2_Electric.xml">
+      <family name="Tsunami2 Electric" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami2 Electric decoders" file="SoundTraxx_Tsu2_Electric.xml">
         <model model="TSU-1100 Electric" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="296" comment="Model 886001">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-2200 Electric" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="297" comment="Model 886002">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM Electric" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="298" comment="Model 886003">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 Electric" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="330" comment="Model 886003">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 Electric" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="299" comment="Model 886005">
-          <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Airhorn| ">
+          <label xml:lang="it">Tromba| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Pneum|Doors">
+          <label xml:lang="it">Porte|Pneum</label>
+        </output>
+        <output name="8" label="Short|Horn">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Pantograph| ">
+          <label xml:lang="it">Pantografo| </label>
+        </output>
+        <output name="10" label="General|Service" />
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="Stop|Bell">
+          <label xml:lang="it">Fermare|Campana</label>
+        </output>
+        <output name="14" label="Ind/Train|Brake" />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -20692,40 +20046,36 @@
           <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
           <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
         </functionlabels>
       </family>
-      <family name="Tsunami2 Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam.xml">
+      <family name="Tsunami2 Steam" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" comment="These are the -retail- version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam.xml">
         <model model="TSU-1100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="272" comment="Model 884001">
-          <versionCV lowVersionID="71" />
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="315" comment="Model 884006">
-          <versionCV lowVersionID="71" />
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-2200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="273" comment="Model 884002">
-          <versionCV lowVersionID="71" />
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="316" comment="Model 884007">
-          <versionCV lowVersionID="71" />
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="274" comment="Model 884003">
-          <versionCV lowVersionID="71" />
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam-2" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="317" comment="Model 884008">
-          <versionCV lowVersionID="71" />
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="TSU-21PNEM8 Steam-2" numOuts="8" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="324" comment="Model 884808">
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
-          <versionCV lowVersionID="71" />
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="318" comment="Model 884009">
-          <versionCV lowVersionID="71" />
-          <size length="35" width="18" height="6" units="mm" />
+          <size length="69" width="30.5" height="14" units="mm" />
         </model>
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
@@ -20788,6 +20138,7 @@
           <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
           <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
           <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+          <functionlabel num="28" lockable="true">FX7,8 Output</functionlabel>
         </functionlabels>
       </family>
       <family name="Tsunami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel.xml">

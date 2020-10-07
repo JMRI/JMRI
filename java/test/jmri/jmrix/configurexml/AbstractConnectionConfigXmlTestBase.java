@@ -77,6 +77,12 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
           Assert.assertEquals("Manufacturer", cc.getAdapter().getManufacturer(),e.getAttribute("manufacturer").getValue());
        }
        Assert.assertEquals("disabled", cc.getAdapter().getDisabled(), e.getAttribute("disabled").getValue().equals("yes"));
+       testReconnectXml(cc,e);
+    }
+    
+    protected void testReconnectXml(ConnectionConfig cc,Element e){
+        Assert.assertEquals("reconnectMaxAttempts", cc.getAdapter().getReconnectMaxAttempts(), (int) Integer.valueOf( e.getAttribute("reconnectMaxAttempts").getValue()));
+        Assert.assertEquals("reconnectMaxInterval", cc.getAdapter().getReconnectMaxInterval(), (int) Integer.valueOf(e.getAttribute("reconnectMaxInterval").getValue()));
     }
 
     /**

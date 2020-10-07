@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base (and partial implementation) for classes persisting the status
- * of serial port adapters.
+ * of connections.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  */
@@ -46,6 +46,10 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         } else {
             e.setAttribute("disabled", "no");
         }
+        
+        e.setAttribute("reconnectMaxInterval",String.valueOf(adapter.getReconnectMaxInterval()));
+        e.setAttribute("reconnectMaxAttempts",String.valueOf(adapter.getReconnectMaxAttempts()));
+        
         saveOptions(e, adapter);
     }
 
@@ -111,6 +115,21 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
                 }
             }
         }
+        
+        if (shared.getAttribute("reconnectMaxInterval") != null) {
+            String reconnectI = shared.getAttribute("reconnectMaxInterval").getValue();
+            if ((reconnectI!=null) && (!reconnectI.isEmpty() )) {
+                adapter.setReconnectMaxInterval(Integer.parseInt(reconnectI));
+            }
+        }
+        
+        if (shared.getAttribute("reconnectMaxAttempts") != null) {
+            String reconnectA = shared.getAttribute("reconnectMaxAttempts").getValue();
+            if ((reconnectA!=null) && (!reconnectA.isEmpty() )) {
+                adapter.setReconnectMaxAttempts(Integer.parseInt(reconnectA));
+            }
+        }
+        
     }
     
     
@@ -218,6 +237,20 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
             }
         }
         return null;
+    }
+
+    /**
+     * Store the outputInterval in a connection element for persistence.
+     *
+     * @param adapter the adapter for which properties are stored
+     * @param e the "connection" element being filled
+     */
+    protected void setOutputInterval(PortAdapter adapter, Element e) {
+        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
+        } else {
+            e.setAttribute("turnoutInterval", "0");
+        }
     }
 
     // initialize logging

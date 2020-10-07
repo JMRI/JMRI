@@ -163,6 +163,7 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
      * Configure the common managers for Can connections. This puts the common
      * manager config in one place.
      */
+    @Override
     public void configureManagers() {
         if (manager != null) {
             manager.configureManagers();
@@ -247,6 +248,15 @@ public class CanSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
     @Override
     public boolean isRestartRequired() {
         return super.isRestartRequired() || protocolOptionsChanged;
+    }
+    
+    /**
+     * Custom interval of 100ms.
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDefaultOutputInterval(){
+        return 100;
     }
 
     /**

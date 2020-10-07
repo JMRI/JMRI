@@ -41,7 +41,7 @@ public class SimpleTimebaseTest {
         Date then = p.getTime();
         long delta = then.getTime() - now.getTime();
         Assert.assertTrue("delta ge zero", delta >= 0);
-        Assert.assertTrue("delta lt 100 msec (nominal value)", delta < 100);
+        Assert.assertTrue("delta lt 100 ms (nominal value)", delta < 100);
         p.dispose();
     }
 

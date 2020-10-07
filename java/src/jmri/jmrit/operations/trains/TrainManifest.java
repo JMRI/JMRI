@@ -203,17 +203,18 @@ public class TrainManifest extends TrainCommon {
                         }
                         String trainDeparts = "";
                         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+                            int emptyCars = train.getNumberEmptyCarsInTrain(rl);
                             // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
                             trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringTrainDepartsLoads(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), cars - emptyCars, emptyCars,
+                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
                                             train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
                                             train.getTrainWeight(rl), train.getTrainTerminatesName(), train.getName()});
                         } else {
                             // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
                             trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringTrainDepartsCars(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
+                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl), train.getTrainLength(rl),
                                             Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
                                             train.getTrainTerminatesName(), train.getName()});
                         }

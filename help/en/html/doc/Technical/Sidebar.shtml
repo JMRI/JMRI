@@ -46,7 +46,7 @@
 				<ul class="navigation">
 				<li><a href="/JavaDoc/doc/index-files/index-1.html">Name Index</a></li>
 				<li><a href="/JavaDoc/doc/index.html">Packages</a></li>
-				<li><a href="/JavaDoc/doc/allclasses-frame.html">Classes</a></li>
+				<li><a href="/JavaDoc/doc/allclasses-index.html">Classes</a></li>
 				</ul>
 			</ul>
 		</dd>
@@ -72,7 +72,7 @@
 			<ul class="navigation">
 			<li><a href="Help.shtml">Providing Help using JavaHelp</a></li>
 			<li><a href="WebSite.shtml">The JMRI Web Site</a></li>
-                        <li><a href="webupdate/UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
+                        <li><a href="UpdatingDocs.shtml">Updating JMRI Web and Help</a></li>
                         <li><a href="Help.shtml#hwhelp">Creating Help for New Hardware</a></li>
 			<li><a href="Javadoc.shtml">Program Documentation Using Javadoc</a></li>
 			</ul>

@@ -32,6 +32,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testLocoNetMessages() {
         // send messages for 21, 22
         // notify the Ln that somebody else changed it...
@@ -59,6 +60,13 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         testList.add("LT21");
         testList.add("LT22");
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
+        
+        Assert.assertEquals("2 Turnouts in nambedbeanset",2,l.getNamedBeanSet().size());
+        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT21")));
+        Assert.assertTrue(l.getNamedBeanSet().contains(l.getBySystemName("LT22")));
+        
     }
 
     @Test

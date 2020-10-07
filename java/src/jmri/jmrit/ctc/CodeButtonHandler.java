@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * by setting the internal sensor (automatically created) "IS:PRECONDITIONING_ENABLED" to active.
  * Any other value inactivates this feature.  For example, the user can create a toggle
  * switch to activate / inactivate it.
- * 
+ *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019, 2020
  */
 public class CodeButtonHandler {
@@ -45,14 +45,14 @@ public class CodeButtonHandler {
     private final IndicationLockingSignals _mIndicationLockingSignals;
     private final CodeButtonSimulator _mCodeButtonSimulator;
     private LockedRoute _mLockedRoute = null;
-    
+
     private static final Sensor _mPreconditioningEnabledSensor = initializePreconditioningEnabledSensor();
     private static class PreconditioningData {
         public boolean  _mCodeButtonPressed = false;    // If false, values in these don't matter:
         public int      _mSignalDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;   // Safety:
         public int      _mSwitchDirectionLeverWas = CTCConstants.OUTOFCORRESPONDENCE;
     }
-    
+
     private static Sensor initializePreconditioningEnabledSensor() {
         Sensor returnValue = InstanceManager.sensorManagerInstance().newSensor("IS:PRECONDITIONING_ENABLED", null); // NOI18N
         int knownState = returnValue.getKnownState();
@@ -64,15 +64,15 @@ public class CodeButtonHandler {
         return returnValue;
     }
     private PreconditioningData _mPreconditioningData = new PreconditioningData();
-    
+
     public CodeButtonHandler(   boolean turnoutLockingOnlyEnabled,                              // If this is NOT an O.S. section, but only a turnout lock, then this is true.
                                 LockedRoutesManager lockedRoutesManager,
                                 String userIdentifier,
                                 int uniqueID,
-                                String codeButtonInternalSensor,                                // Required
+                                NBHSensor codeButtonInternalSensor,                             // Required
                                 int codeButtonDelayInMilliseconds,                              // If 0, REAL code button, if > 0, tower operations (simulated code button).
-                                String osSectionOccupiedExternalSensor,                         // Required, if ACTIVE prevents turnout, lock or call on from occuring.
-                                String osSectionOccupiedExternalSensor2,                        // Optional, if ACTIVE prevents turnout, lock or call on from occuring.
+                                NBHSensor osSectionOccupiedExternalSensor,                      // Required, if ACTIVE prevents turnout, lock or call on from occuring.
+                                NBHSensor osSectionOccupiedExternalSensor2,                     // Optional, if ACTIVE prevents turnout, lock or call on from occuring.
                                 SignalDirectionIndicatorsInterface signalDirectionIndicators,   // Required
                                 SignalDirectionLever signalDirectionLever,
                                 SwitchDirectionIndicators switchDirectionIndicators,
@@ -96,17 +96,17 @@ public class CodeButtonHandler {
         _mTrafficLocking = trafficLocking;
         _mTurnoutLock = turnoutLock;
         _mIndicationLockingSignals = indicationLockingSignals;
-        _mCodeButtonInternalSensor = new NBHSensor("CodeButtonHandler", userIdentifier, "codeButtonSensor", codeButtonInternalSensor, false);
+        _mCodeButtonInternalSensor = codeButtonInternalSensor;
         _mCodeButtonInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCodeButtonInternalSensorPropertyChangeListener = (PropertyChangeEvent e) -> { codeButtonStateChange(e); };
         _mCodeButtonInternalSensor.addPropertyChangeListener(_mCodeButtonInternalSensorPropertyChangeListener);
 
         _mOSSectionOccupiedExternalSensorPropertyChangeListener = (PropertyChangeEvent e) -> { osSectionPropertyChangeEvent(e); };
-        _mOSSectionOccupiedExternalSensor = new NBHSensor("CodeButtonHandler", userIdentifier, "osSectionOccupiedExternalSensor", osSectionOccupiedExternalSensor, false);
+        _mOSSectionOccupiedExternalSensor = osSectionOccupiedExternalSensor;
         _mOSSectionOccupiedExternalSensor.addPropertyChangeListener(_mOSSectionOccupiedExternalSensorPropertyChangeListener);
 
 // NO property change for this, only used for turnout locking:
-        _mOSSectionOccupiedExternalSensor2 = new NBHSensor("CodeButtonHandler", userIdentifier, "osSectionOccupiedExternalSensor2", osSectionOccupiedExternalSensor2, true);
+        _mOSSectionOccupiedExternalSensor2 = osSectionOccupiedExternalSensor2;
 
         if (codeButtonDelayInMilliseconds > 0) { // SIMULATED code button:
             _mCodeButtonSimulator = new CodeButtonSimulator(codeButtonDelayInMilliseconds,
@@ -188,7 +188,7 @@ public class CodeButtonHandler {
             }
         }
     }
-    
+
     private void doCodeButtonPress() {
         if (_mSignalDirectionIndicators.isRunningTime()) return;    // If we are running time, IGNORE all requests from the user:
         possiblyAllowLockChange();                              // MUST unlock first, otherwise if dispatcher wanted to unlock and change switch state, it wouldn't!
@@ -344,7 +344,7 @@ appropriately for the back to train route for this feature to activate."
     private boolean trafficLockingValid(int presentSignalDirectionLever) {
 // If asking for a route and it indicates an error (a conflict), DO NOTHING!
         if (_mTrafficLocking != null) {
-            TrafficLockingInfo trafficLockingInfo = _mTrafficLocking.valid(presentSignalDirectionLever);
+            TrafficLockingInfo trafficLockingInfo = _mTrafficLocking.valid(presentSignalDirectionLever, _mFleeting.isFleetingEnabled());
             _mLockedRoute = trafficLockingInfo._mLockedRoute;   // Can be null! This is the bread crumb trail when running time expires.
             return trafficLockingInfo._mReturnStatus;
         }

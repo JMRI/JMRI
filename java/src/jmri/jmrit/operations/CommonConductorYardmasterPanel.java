@@ -436,15 +436,18 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 for (Car car : carList) {
                     // determine if car is a pick up from the right track
                     // caboose or FRED is placed at end of the train
-                    // passenger trains are already blocked in the car list
+                    // passenger trains are already blocked in the car list and
+                    // are added to the end of the train.
                     if (car.getTrack() != null &&
                             car.getRouteLocation() == rl &&
                             car.getRouteDestination() != rl &&
                             (!Setup.isSortByTrackNameEnabled() || car.getTrackName().equals(track.getName())) &&
-                            ((car.getRouteDestination() == rld && !car.isCaboose() && !car.hasFred()) ||
+                            ((car.getRouteDestination() == rld &&
+                                    !car.isCaboose() &&
+                                    !car.hasFred() &&
+                                    !car.isPassenger()) ||
                                     (rld == routeList.get(routeList.size() - 1) &&
-                                            (car.isCaboose() || car.hasFred())) ||
-                                    car.isPassenger())) {
+                                            (car.isCaboose() || car.hasFred() || car.isPassenger())))) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
                         pickupPane.setVisible(true);

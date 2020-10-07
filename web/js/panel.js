@@ -3260,7 +3260,7 @@ function $point_subtract(p1, p2) {
 
 function $point_distance(p1, p2) {
     var delta = $point_subtract(p1, p2);
-    return Math.hypot(p1, p2);
+    return Math.hypot(delta[0], delta[1]);
 }
 
 function $point_midpoint(p1, p2) {

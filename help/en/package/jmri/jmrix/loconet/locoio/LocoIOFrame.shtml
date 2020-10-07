@@ -29,17 +29,22 @@
 
       <h1>Configure LocoIO (deprecated)</h1>
 
-      <p>The dedicated LocoNet LocoIO programmer tool is no longer
-      supported as of JMRI version 3.</p>
-
-      <p>You're still welcome to use it for the original boards, but please
-      consider switching over to configuring your LocoIO boards
-      with <a href=
-      "../../apps/DecoderPro/index.shtml">DecoderPro</a>. There's a
+      <p>Users of JMRI version 4.0 and above should configure LocoIO boards
+      using <a href=
+      "../../apps/DecoderPro/index.shtml">DecoderPro</a> and the
       <a href=
       "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">
-      Decoder Definition</a> for the basic LocoIO device in the
-      "Public Domain and DIY" category.</p>
+      Public_Domain_HDL_LocoIO Decoder Definition</a> in the
+      "Public Domain and DIY" category.<br>
+      Supports a wide range of LocoIO devices up to rev 1.54 LocoIO/LocoBooster/LocoRCD/LocoServo hardware
+      since 2020 with JMRI 4.21.2.
+      </p>
+
+      <p>The LocoIO programmer tool still found in the LocoNet menubar is no longer
+        supported from JMRI version 3.</p>
+
+      See the <a href="../../../../../html/hardware/loconet/LocoIO.shtml">LocoIO Help</a> for further
+      instructions.
 
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

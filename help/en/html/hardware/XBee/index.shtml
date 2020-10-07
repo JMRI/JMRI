@@ -293,9 +293,16 @@
         needs.</li>
 
         <li>The XBee adapter "Additional Connection Settings"
-        provides access to the Baud rate for the connection. Make
-        sure the selected Baud rate matches the port speed setting
-        of your XBee.</li>
+        provides access to:
+          <ul>
+            <li>The Baud rate for the connection.<br>
+            Make sure the selected Baud rate matches the port speed
+            setting of your XBee.</li>
+            <li>Output Interval<br>
+            Default: 250 milliseconds, intended for debugging/advanced
+            users</li>
+          </ul>
+        </li>
 
         <li>The "Configure XBee Nodes" button opens the <a href=
         "XBeeNodeConfigurationTool.shtml">XBee Node Configuration

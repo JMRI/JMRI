@@ -68,7 +68,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
-    /** {@inheritDoc} 
+    /** {@inheritDoc}
      * Special handling for numeric argument, which is treated as the suffix of a new system name
     */
     @Override
@@ -135,9 +135,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      *
      * @param systemName the system name to use for the new Sensor
      * @param userName   the optional user name to use for the new Sensor
-     * @return a new Sensor
+     * @return the new Sensor or null if unsuccessful
      */
-    @Nonnull
     abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
 
     /**
@@ -279,7 +278,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);

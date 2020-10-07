@@ -26,12 +26,12 @@ public class XpaMessage implements jmri.jmrix.Message {
     }
 
     // create a new one, given a string containing the message.
-    public XpaMessage(String S) {
-        if (S.length() < 1) {
+    public XpaMessage(String s) {
+        if (s.length() < 1) {
             log.error("zero length string in call to ctor");
         }
-        _nDataChars = S.length();
-        _dataChars = S.getBytes();
+        _nDataChars = s.length();
+        _dataChars = s.getBytes();
     }
 
     // create a new one with default MAX_SIZE
@@ -116,32 +116,40 @@ public class XpaMessage implements jmri.jmrix.Message {
      Get a message which sends an "Idle" (zero speed) command
      to a specific locomotive on the layout.
      */
-    static XpaMessage getIdleMsg(int Address) {
-        return new XpaMessage("ATDT#" + Address + "*5;");
+    static XpaMessage getIdleMsg(int address) {
+        return new XpaMessage("ATDT#" + address + "*5;");
     }
 
-    /*
-     Get a message for an "Increase Speed" command
-     to a specific locomotive on the layout.  To make
-     calculations easy, this uses a single speed step increase
+    /**
+     * Get a message for an "Increase Speed" command
+     * to a specific locomotive on the layout.  To make
+     * calculations easy, this uses a single speed step increase.
+     *
+     * @param address   throttle loco address for message
+     * @param steps     amount of speed steps to change to increase
+     * @return message for the requested change
      */
-    static XpaMessage getIncSpeedMsg(int Address, int steps) {
-        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
-        String Message;
+    static XpaMessage getIncSpeedMsg(int address, int steps) {
+        StringBuilder buf = new StringBuilder("ATDT#" + address + "*");
+        String message;
         for (int i = 0; i < steps; i++) {
             buf.append("3");
         }
-        Message = buf.toString() + ";";
-        return new XpaMessage(Message);
+        message = buf.toString() + ";";
+        return new XpaMessage(message);
     }
 
-    /*
-     Get a message for a "Decrease Speed" command
-     to a specific locomotive on the layout.  To make
-     calculations easy, this uses a single speed step increase
+    /**
+     * Get a message for a "Decrease Speed" command
+     * to a specific locomotive on the layout.  To make
+     * calculations easy, this uses a single speed step decrease.
+     *
+     * @param address   throttle loco address for message
+     * @param steps     amount of speed steps to change to decrease
+     * @return message for the requested change
      */
-    static XpaMessage getDecSpeedMsg(int Address, int steps) {
-        StringBuilder buf = new StringBuilder("ATDT#" + Address + "*");
+    static XpaMessage getDecSpeedMsg(int address, int steps) {
+        StringBuilder buf = new StringBuilder("ATDT#" + address + "*");
         String Message;
         for (int i = 0; i < steps; i++) {
             buf.append("1");
@@ -154,42 +162,42 @@ public class XpaMessage implements jmri.jmrix.Message {
      Get a message for a "Direction Forward" command
      to a specific locomotive on the layout.
      */
-    static XpaMessage getDirForwardMsg(int Address) {
-        return new XpaMessage("ATDT#" + Address + "*52;");
+    static XpaMessage getDirForwardMsg(int address) {
+        return new XpaMessage("ATDT#" + address + "*52;");
     }
 
     /*
      Get a message for a "Direction Reverse" command
      to a specific locomotive on the layout.
      */
-    static XpaMessage getDirReverseMsg(int Address) {
-        return new XpaMessage("ATDT#" + Address + "*58;");
+    static XpaMessage getDirReverseMsg(int address) {
+        return new XpaMessage("ATDT#" + address + "*58;");
     }
 
     /*
      Get a message which sends a "Toggle Function" command
      to a specific locomotive on the layout.
      */
-    static XpaMessage getFunctionMsg(int Address, int Function) {
-        return new XpaMessage("ATDT#" + Address + "**" + Function + ";");
+    static XpaMessage getFunctionMsg(int address, int function) {
+        return new XpaMessage("ATDT#" + address + "**" + function + ";");
     }
 
     // Switch Commands
 
     /*
-     Get a message for a "Switch Possition Normal" command
+     Get a message for a "Switch Position Normal" command
      to a specific accessory decoder on the layout.
      */
-    static XpaMessage getSwitchNormalMsg(int Address) {
-        return new XpaMessage("ATDT#" + Address + "#3;");
+    static XpaMessage getSwitchNormalMsg(int address) {
+        return new XpaMessage("ATDT#" + address + "#3;");
     }
 
     /*
-     Get a message for a "Switch Possition Reverse" command
+     Get a message for a "Switch Position Reverse" command
      to a specific accessory decoder on the layout.
      */
-    static XpaMessage getSwitchReverseMsg(int Address) {
-        return new XpaMessage("ATDT#" + Address + "#1;");
+    static XpaMessage getSwitchReverseMsg(int address) {
+        return new XpaMessage("ATDT#" + address + "#1;");
     }
 
     // Xpa Device Settings

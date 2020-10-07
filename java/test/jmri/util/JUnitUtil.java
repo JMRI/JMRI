@@ -38,9 +38,6 @@ import org.junit.Assert;
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
-import apps.SystemConsole;
-import apps.util.Log4JUtil;
-
 /**
  * Common utility methods for working with JUnit.
  * <p>
@@ -81,20 +78,36 @@ public class JUnitUtil {
     static final public int DEFAULT_RELEASETHREAD_DELAY = 50;
     
     /**
+     * Default standard time step (in mSec) when looping in a waitFor operation.
+     */    
+    static final private int DEFAULT_WAITFOR_DELAY_STEP = 5;
+
+    /**
      * Standard time step (in mSec) when looping in a waitFor operation.
      * <p>
      * Public in case modification is needed from a test or script.
+     * This value is always reset to {@value #DEFAULT_WAITFOR_DELAY_STEP}
+     * during setUp().
      */    
-    static final public int WAITFOR_DELAY_STEP = 5;
+    static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
+
+    /**
+     * Default maximum time to wait before failing a waitFor operation.
+     * <p>
+     * The default value is really long, but that only matters when the test
+     * is failing anyway, and some of the LayoutEditor/SignalMastLogic tests
+     * are slow. But too long will cause CI jobs to time out before this logs
+     * the error....
+     */    
+    static final private int DEFAULT_WAITFOR_MAX_DELAY = 10000;
+
     /**
      * Maximum time to wait before failing a waitFor operation.
-     * The default value is really long, but that only matters when the test is failing anyway, 
-     * and some of the LayoutEditor/SignalMastLogic tests are slow. But too long will cause CI jobs
-     * to time out before this logs the error....
      * <p>
      * Public in case modification is needed from a test or script.
+     * This value is always reset to {@value #DEFAULT_WAITFOR_MAX_DELAY} during setUp().
      */    
-    static final public int WAITFOR_MAX_DELAY = 10000;
+    static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
      * When true, prints each setUp method to help identify which tests include a failure.
@@ -168,11 +181,7 @@ public class JUnitUtil {
             // init logging if needed
             isLoggingInitialized = true;
             String filename = System.getProperty("jmri.log4jconfigfilename", "tests.lcf");
-            Log4JUtil.initLogging(filename);
-        }
-
-        if (SystemConsole.isCreated()) {
-            SystemConsole.getInstance().open();
+            TestingLoggerConfiguration.initLogging(filename);
         }
 
         // need to do this each time
@@ -256,6 +265,9 @@ public class JUnitUtil {
      * be present in the {@code @Before} routine.
      */
     public static void setUp() {
+        WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
+        WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
+        
         // all the setup for a MockInstanceManager applies
         setUpLoggingAndCommonProperties();
 
@@ -278,7 +290,7 @@ public class JUnitUtil {
             long duration = System.currentTimeMillis() - checkTestDurationStartTime;
             if (duration > checkTestDurationMax) {
                 // test too long, log that
-                System.err.println("Test in "+getTestClassName()+" duration "+duration+" msec exceeded limit "+checkTestDurationMax);
+                System.err.println("Test in "+getTestClassName()+" duration "+duration+" ms exceeded limit "+checkTestDurationMax);
             }
         }
         // Log and/or check the use of setUp and tearDown
@@ -338,10 +350,6 @@ public class JUnitUtil {
         // Optionally, check that the Swing queue is idle
         //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
-        // remove SystemConsole log appenders so test framework output is not included
-        if (SystemConsole.isCreated()) {
-            SystemConsole.getInstance().close();
-        }
     }
 
     /**
@@ -475,7 +483,7 @@ public class JUnitUtil {
      * this will have to do.
      * <p>
      *
-     * @param time Delay in msec
+     * @param time Delay in milliseconds
      */
     static public void waitFor(int time) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
@@ -1076,20 +1084,6 @@ public class JUnitUtil {
             f.set(new jmri.Application(), null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             log.error("Failed to reset jmri.Application static field", x);
-        }
-    }
-
-    /*
-     * Use reflection to reset the apps.AppsBase instance
-     */
-    public static void resetAppsBase() {
-        try {
-            Class<?> c = apps.AppsBase.class;
-            Field f = c.getDeclaredField("preInit");
-            f.setAccessible(true);
-            f.set(null, false);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset apps.AppsBase static preInit field", x);
         }
     }
 

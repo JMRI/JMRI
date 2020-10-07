@@ -31,6 +31,11 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public String getSystemName(int i) {
         return "MTX0A;+N123E3" + i;
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "+6";
+    }
 
     @Override
     protected int getNumToTest1() {
@@ -74,8 +79,15 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         }
 
         try {
+            l.provideTurnout("X;+N15E6");
+            Assert.fail("X No hw name Should have thrown an exception");
+        } catch (IllegalArgumentException e) {
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: X;+N15E6");
+        }
+        
+        try {
             l.provideTurnout("MTX;+N15E6");
-            Assert.fail("X Should have thrown an exception");
+            Assert.fail("X hw name Should have thrown an exception");
         } catch (IllegalArgumentException e) {
             JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: X;+N15E6");
         }
@@ -182,7 +194,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MT++N156E78");
             Assert.fail("++ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
+            JUnitAppender.assertErrorMessageStartsWith("Did not find usabl");
         }
     }
 
@@ -191,35 +203,35 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MT--N156E78");
             Assert.fail("-- Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
+            JUnitAppender.assertErrorMessageStartsWith("Did not find usabl");
         }
 
         try {
             l.provideTurnout("MTN156E+80");
             Assert.fail("E+ Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("Did not find");
         }
 
         try {
             l.provideTurnout("MTN156+E77");
             Assert.fail("+E Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("Did not find");
         }
 
         try {
             l.provideTurnout("MTXLKJK;XLKJK");
             Assert.fail("LKJK Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("Did not find");
         }
 
         try {
             l.provideTurnout("MT+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Wrong number of events");
+            JUnitAppender.assertErrorMessageStartsWith("Wrong number of events");
         }
     }
 
@@ -290,7 +302,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         try {
             Assert.assertNull("null", l.getNextValidAddress("", "M"));
         } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: Address Too Short? : ", ex.getMessage());
+            Assert.assertEquals("Address Too Short? : ", ex.getMessage());
         }
     }
 
@@ -334,11 +346,6 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         Assert.assertEquals("ZZZZZZZZZ2T+10", "ZZZZZZZZZT+10", l.createSystemName("+10", "ZZZZZZZZZ"));
         
-        try {
-            Assert.assertEquals("MTT", null, l.createSystemName("S", "M"));
-        } catch (JmriException ex) {
-            Assert.assertEquals("java.lang.IllegalArgumentException: Wrong number of events in address: S", ex.getMessage());
-        }
     }
 
     @Test
@@ -353,6 +360,19 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testAutoSystemNames() {
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
     }
+    
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() {
+        Assert.assertEquals("default outputInterval", 100, l.getOutputInterval());
+        l.getMemo().setOutputInterval(21);
+        Assert.assertEquals("new outputInterval in memo", 21, l.getMemo().getOutputInterval()); // set & get in memo
+        Assert.assertEquals("new outputInterval via manager", 21, l.getOutputInterval()); // get via turnoutManager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval()); // interval stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 50, l.getMemo().getOutputInterval()); // get from memo
+    }
+
     
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;

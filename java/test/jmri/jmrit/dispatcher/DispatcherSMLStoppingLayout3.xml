@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>21</minor>
+    <test>2</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>Occ East</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>Occ East Switch</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>Occ North</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>Occ South 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>Occ South 2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+      <userName>Occ West</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+      <userName>Occ West Switch</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS11</systemName>
+      <userName>Dir South 2 Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS12</systemName>
+      <userName>Dir South 2 Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS13</systemName>
+      <userName>Dir South 1 Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS14</systemName>
+      <userName>Dir South 1 Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS15</systemName>
+      <userName>Dir East Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS16</systemName>
+      <userName>Dir East Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS17</systemName>
+      <userName>Dir North Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS18</systemName>
+      <userName>Dir North Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS19</systemName>
+      <userName>Dir West Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS20</systemName>
+      <userName>Dir West Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS30</systemName>
+      <userName>Stop South 1 Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS31</systemName>
+      <userName>Stop South 1 Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS32</systemName>
+      <userName>Stop North Rev</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS33</systemName>
+      <userName>Stop North Fwd</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <userName>East Turnout</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>West Turnout</userName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="1:08 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0001)</systemName>
+      <userName>East-North</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0002)</systemName>
+      <userName>North-East</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0003)</systemName>
+      <userName>North-West</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0004)</systemName>
+      <userName>Sw-East-Cont</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0005)</systemName>
+      <userName>Sw-East-Div</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0006)</systemName>
+      <userName>Sw-West-Cont</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0007)</systemName>
+      <userName>Sw-West-Div</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:basic:one-low($0008)</systemName>
+      <userName>West-North</userName>
+      <properties>
+        <property>
+          <key>intermediateSignal</key>
+          <value class="java.lang.Boolean">true</value>
+        </property>
+      </properties>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>Block South 1</userName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>Block South 2</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>Block West Switch</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>Block North</userName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>Block West</userName>
+    </block>
+    <block systemName="IB:AUTO:0006">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>Block East</userName>
+    </block>
+    <block systemName="IB:AUTO:0007">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>Block East Switch</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="609.6" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>Block South 1</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ South 1</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="2">
+          <turnout systemName="West Turnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0007">
+        <beansetting setting="2">
+          <turnout systemName="East Turnout" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0002" length="609.6" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>Block South 2</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ South 2</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0003">
+        <beansetting setting="4">
+          <turnout systemName="West Turnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0007">
+        <beansetting setting="4">
+          <turnout systemName="East Turnout" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0003" length="609.6" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>Block West Switch</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ West Switch</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0001">
+        <beansetting setting="2">
+          <turnout systemName="West Turnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0002">
+        <beansetting setting="4">
+          <turnout systemName="West Turnout" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0005" />
+    </block>
+    <block systemName="IB:AUTO:0004" length="609.6" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>Block North</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ North</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0005" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0006" />
+    </block>
+    <block systemName="IB:AUTO:0005" length="609.6" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>Block West</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ West</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0003" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0004" />
+    </block>
+    <block systemName="IB:AUTO:0006" length="609.6" curve="0">
+      <systemName>IB:AUTO:0006</systemName>
+      <userName>Block East</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ East</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0004" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0007" />
+    </block>
+    <block systemName="IB:AUTO:0007" length="609.6" curve="0">
+      <systemName>IB:AUTO:0007</systemName>
+      <userName>Block East Switch</userName>
+      <permissive>no</permissive>
+      <occupancysensor>Occ East Switch</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0001">
+        <beansetting setting="2">
+          <turnout systemName="East Turnout" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB:AUTO:0002">
+        <beansetting setting="4">
+          <turnout systemName="East Turnout" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0006" />
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml" blockrouting="yes">
+    <layoutblock systemName="ILB1" occupancysensor="Occ South 1" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>Block South 1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupancysensor="Occ South 2" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>Block South 2</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupancysensor="Occ West Switch" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>Block West Switch</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupancysensor="Occ North" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>Block North</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupancysensor="Occ West" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>Block West</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" occupancysensor="Occ East" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB6</systemName>
+      <userName>Block East</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" occupancysensor="Occ East Switch" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>Block East Switch</userName>
+    </layoutblock>
+  </layoutblocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY:AUTO:0001" userName="Section South 1" creationtype="userdefined" fstopsensorname="Stop South 1 Fwd" rstopsensorname="Stop South 1 Rev" fsensorname="Dir South 1 Fwd" rsensorname="Dir South 1 Rev">
+      <systemName>IY:AUTO:0001</systemName>
+      <userName>Section South 1</userName>
+      <blockentry sName="IB:AUTO:0001" order="0" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0001" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0007" toblock="IB:AUTO:0001" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0003" userName="Section East" creationtype="userdefined" fsensorname="Dir East Fwd" rsensorname="Dir East Rev">
+      <systemName>IY:AUTO:0003</systemName>
+      <userName>Section East</userName>
+      <blockentry sName="IB:AUTO:0007" order="0" />
+      <blockentry sName="IB:AUTO:0006" order="1" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0007" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0002" toblock="IB:AUTO:0007" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0006" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0005" userName="Section West" creationtype="userdefined" fsensorname="Dir West Fwd" rsensorname="Dir West Rev">
+      <systemName>IY:AUTO:0005</systemName>
+      <userName>Section West</userName>
+      <blockentry sName="IB:AUTO:0005" order="0" />
+      <blockentry sName="IB:AUTO:0003" order="1" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0003" direction="8" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0002" toblock="IB:AUTO:0003" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0006" userName="Section North" creationtype="userdefined" fstopsensorname="Stop North Fwd" rstopsensorname="Stop North Rev" fsensorname="Dir North Fwd" rsensorname="Dir North Rev">
+      <systemName>IY:AUTO:0006</systemName>
+      <userName>Section North</userName>
+      <blockentry sName="IB:AUTO:0004" order="0" />
+      <entrypoint fromblock="IB:AUTO:0006" toblock="IB:AUTO:0004" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0005" toblock="IB:AUTO:0004" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0007" userName="Section South 2" creationtype="userdefined" fsensorname="Dir South 2 Fwd" rsensorname="Dir South 2 Rev">
+      <systemName>IY:AUTO:0007</systemName>
+      <userName>Section South 2</userName>
+      <blockentry sName="IB:AUTO:0002" order="0" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0002" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0007" toblock="IB:AUTO:0002" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0008" userName="West-North:North-East" creationtype="userdefined">
+      <systemName>IY:AUTO:0008</systemName>
+      <userName>West-North:North-East</userName>
+      <blockentry sName="IB:AUTO:0004" order="0" />
+      <entrypoint fromblock="IB:AUTO:0005" toblock="IB:AUTO:0004" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0006" toblock="IB:AUTO:0004" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0009" userName="North-West:Sw-East-Cont" creationtype="userdefined">
+      <systemName>IY:AUTO:0009</systemName>
+      <userName>North-West:Sw-East-Cont</userName>
+      <blockentry sName="IB:AUTO:0005" order="0" />
+      <blockentry sName="IB:AUTO:0003" order="1" />
+      <blockentry sName="IB:AUTO:0001" order="2" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0007" toblock="IB:AUTO:0001" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0010" userName="North-East:Sw-West-Cont" creationtype="userdefined">
+      <systemName>IY:AUTO:0010</systemName>
+      <userName>North-East:Sw-West-Cont</userName>
+      <blockentry sName="IB:AUTO:0006" order="0" />
+      <blockentry sName="IB:AUTO:0007" order="1" />
+      <blockentry sName="IB:AUTO:0001" order="2" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0006" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0001" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0012" userName="Sw-West-Cont:West-North" creationtype="userdefined">
+      <systemName>IY:AUTO:0012</systemName>
+      <userName>Sw-West-Cont:West-North</userName>
+      <blockentry sName="IB:AUTO:0003" order="0" />
+      <blockentry sName="IB:AUTO:0005" order="1" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0003" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0013" userName="East-North:North-West" creationtype="userdefined">
+      <systemName>IY:AUTO:0013</systemName>
+      <userName>East-North:North-West</userName>
+      <blockentry sName="IB:AUTO:0004" order="0" />
+      <entrypoint fromblock="IB:AUTO:0006" toblock="IB:AUTO:0004" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0005" toblock="IB:AUTO:0004" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0015" userName="North-West:Sw-East-Div" creationtype="userdefined">
+      <systemName>IY:AUTO:0015</systemName>
+      <userName>North-West:Sw-East-Div</userName>
+      <blockentry sName="IB:AUTO:0005" order="0" />
+      <blockentry sName="IB:AUTO:0003" order="1" />
+      <blockentry sName="IB:AUTO:0002" order="2" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0007" toblock="IB:AUTO:0002" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0016" userName="Sw-West-Div:West-North" creationtype="userdefined">
+      <systemName>IY:AUTO:0016</systemName>
+      <userName>Sw-West-Div:West-North</userName>
+      <blockentry sName="IB:AUTO:0003" order="0" />
+      <blockentry sName="IB:AUTO:0005" order="1" />
+      <entrypoint fromblock="IB:AUTO:0002" toblock="IB:AUTO:0003" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0017" userName="Sw-East-Cont:East-North" creationtype="userdefined">
+      <systemName>IY:AUTO:0017</systemName>
+      <userName>Sw-East-Cont:East-North</userName>
+      <blockentry sName="IB:AUTO:0007" order="0" />
+      <blockentry sName="IB:AUTO:0006" order="1" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0007" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0006" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0001" userName="South-CW">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>South-CW</userName>
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+    <transit systemName="IZ:AUTO:0002" userName="South-West-CW">
+      <systemName>IZ:AUTO:0002</systemName>
+      <userName>South-West-CW</userName>
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
+  </transits>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+    <signalmastlogic source="East-North">
+      <sourceSignalMast>East-North</sourceSignalMast>
+      <destinationMast destination="North-West">
+        <destinationSignalMast>North-West</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>East-North:North-West</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir North Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="North-East">
+      <sourceSignalMast>North-East</sourceSignalMast>
+      <destinationMast destination="Sw-West-Cont">
+        <destinationSignalMast>Sw-West-Cont</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>North-East:Sw-West-Cont</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>Block South 1</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>Block East</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>Block East Switch</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <turnouts>
+          <turnout>
+            <turnoutName>East Turnout</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir South 1 Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir East Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Sw-West-Div">
+        <destinationSignalMast>Sw-West-Div</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <lockTurnouts>no</lockTurnouts>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="North-West">
+      <sourceSignalMast>North-West</sourceSignalMast>
+      <destinationMast destination="Sw-East-Cont">
+        <destinationSignalMast>Sw-East-Cont</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>North-West:Sw-East-Cont</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir South 1 Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+      <destinationMast destination="Sw-East-Div">
+        <destinationSignalMast>Sw-East-Div</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>North-West:Sw-East-Div</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir South 2 Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Sw-East-Cont">
+      <sourceSignalMast>Sw-East-Cont</sourceSignalMast>
+      <destinationMast destination="East-North">
+        <destinationSignalMast>East-North</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>Sw-East-Cont:East-North</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir East Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Stop South 1 Fwd</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Sw-West-Cont">
+      <sourceSignalMast>Sw-West-Cont</sourceSignalMast>
+      <destinationMast destination="West-North">
+        <destinationSignalMast>West-North</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>Sw-West-Cont:West-North</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>Block West Switch</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+          <block>
+            <blockName>Block West</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <turnouts>
+          <turnout>
+            <turnoutName>West Turnout</turnoutName>
+            <turnoutState>closed</turnoutState>
+          </turnout>
+        </turnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir South 1 Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="Sw-West-Div">
+      <sourceSignalMast>Sw-West-Div</sourceSignalMast>
+      <destinationMast destination="West-North">
+        <destinationSignalMast>West-North</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>yes</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>Sw-West-Div:West-North</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <sensors>
+          <sensor>
+            <sensorName>Dir South 2 Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+    <signalmastlogic source="West-North">
+      <sourceSignalMast>West-North</sourceSignalMast>
+      <destinationMast destination="North-East">
+        <destinationSignalMast>North-East</destinationSignalMast>
+        <comment />
+        <enabled>yes</enabled>
+        <allowAutoMaticSignalMastGeneration>no</allowAutoMaticSignalMastGeneration>
+        <useLayoutEditor>no</useLayoutEditor>
+        <useLayoutEditorTurnouts>yes</useLayoutEditorTurnouts>
+        <useLayoutEditorBlocks>yes</useLayoutEditorBlocks>
+        <associatedSection>West-North:North-East</associatedSection>
+        <lockTurnouts>no</lockTurnouts>
+        <blocks>
+          <block>
+            <blockName>Block North</blockName>
+            <blockState>unoccupied</blockState>
+          </block>
+        </blocks>
+        <sensors>
+          <sensor>
+            <sensorName>Dir North Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+          <sensor>
+            <sensorName>Dir West Rev</sensorName>
+            <sensorState>inActive</sensorState>
+          </sensor>
+        </sensors>
+      </destinationMast>
+    </signalmastlogic>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Aug 26 12:25:03 EDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test Layout" x="253" y="64" windowheight="596" windowwidth="1170" panelheight="430" panelwidth="950" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Test Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <sensoricon sensor="Occ North" x="540" y="40" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ South 1" x="550" y="330" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ West Switch" x="390" y="330" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ West" x="330" y="330" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ East Switch" x="700" y="330" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ East" x="770" y="330" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir East Fwd" x="760" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir East Rev" x="780" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir North Fwd" x="550" y="60" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir North Rev" x="530" y="60" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir South 1 Fwd" x="540" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir South 1 Rev" x="560" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir South 2 Fwd" x="540" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir South 2 Rev" x="560" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Occ South 2" x="550" y="220" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir West Fwd" x="320" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Dir West Rev" x="340" y="350" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Stop South 1 Fwd" x="540" y="370" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Stop South 1 Rev" x="560" y="370" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Stop North Fwd" x="530" y="80" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Stop North Rev" x="550" y="80" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <signalmasticon signalmast="Sw-West-Cont" x="425" y="276" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Sw-West-Div" x="445" y="246" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="North-West" x="279" y="304" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="West-North" x="305" y="276" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="East-North" x="779" y="304" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="North-East" x="805" y="276" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Sw-East-Cont" x="659" y="304" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Sw-East-Div" x="639" y="274" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <layoutturnout ident="TO1" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="700.0" ycen="300.0" xa="720.0" ya="300.0" xb="680.0" yb="300.0" xc="660.0" yc="270.0" xd="720.0" yd="300.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="East Turnout" blockname="Block East Switch" connectaname="T7" connectbname="T8" connectcname="T9">
+      <signalBMast>Sw-East-Cont</signalBMast>
+      <signalCMast>Sw-East-Div</signalCMast>
+    </layoutturnout>
+    <layoutturnout ident="TO2" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="300.0" xa="380.0" ya="300.0" xb="420.0" yb="300.0" xc="440.0" yc="270.0" xd="380.0" yd="300.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="West Turnout" blockname="Block West Switch" connectaname="T1" connectbname="T8" connectcname="T9">
+      <signalBMast>Sw-West-Cont</signalBMast>
+      <signalCMast>Sw-West-Div</signalCMast>
+    </layoutturnout>
+    <tracksegment ident="T1" blockname="Block West" connect1name="TO2" type1="TURNOUT_A" connect2name="A1" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="Block North" connect1name="A1" type1="POS_POINT" connect2name="A2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="Block North" connect1name="A2" type1="POS_POINT" connect2name="A3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="Block North" connect1name="A3" type1="POS_POINT" connect2name="A4" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="Block North" connect1name="A4" type1="POS_POINT" connect2name="A5" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="Block North" connect1name="A5" type1="POS_POINT" connect2name="A6" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T7" blockname="Block East" connect1name="A6" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T8" blockname="Block South 1" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="Block South 2" connect1name="TO2" type1="TURNOUT_C" connect2name="TO1" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="A1" type="ANCHOR" x="300.0" y="300.0" connect1name="T1" connect2name="T2" eastboundsignalmast="North-West" westboundsignalmast="West-North" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="ANCHOR" x="200.0" y="300.0" connect1name="T2" connect2name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="ANCHOR" x="200.0" y="100.0" connect1name="T3" connect2name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="ANCHOR" x="900.0" y="100.0" connect1name="T4" connect2name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="ANCHOR" x="900.0" y="300.0" connect1name="T5" connect2name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="ANCHOR" x="800.0" y="300.0" connect1name="T6" connect2name="T7" eastboundsignalmast="East-North" westboundsignalmast="North-East" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri Sep 11 10:34:34 EDT 2020</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Sep 11 10:35:22 EDT 2020</date>
+      <filename>/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/java/test/jmri/jmrit/dispatcher/DispatcherSMLStoppingLayout3.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Tue Sep 01 09:39:56 EDT 2020</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Sep 01 09:59:08 EDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Sep 11 13:08:33 EDT 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.21.2ish+sg+2020-09-11T14:28:43Z+Rd65433a on Fri Sep 11 13:08:33 EDT 2020-->
+</layout-config>

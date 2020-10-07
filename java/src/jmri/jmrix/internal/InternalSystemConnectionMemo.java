@@ -122,6 +122,39 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         return turnoutManager;
     }
 
+    public InternalMeterManager getMeterManager() {
+        InternalMeterManager meterManager = (InternalMeterManager) classObjectMap.get(MeterManager.class);
+        if (meterManager == null) {
+            log.debug("Create InternalMeterManager by request", getSystemPrefix());
+            meterManager = new InternalMeterManager(this);
+            // special due to ProxyManager support
+            InstanceManager.setMeterManager(meterManager);
+        }
+        return meterManager;
+    }
+
+    public InternalAnalogIOManager getAnalogIOManager() {
+        InternalAnalogIOManager analogIOManager = (InternalAnalogIOManager) classObjectMap.get(AnalogIOManager.class);
+        if (analogIOManager == null) {
+            log.debug("Create InternalAnalogIOManager by request", getSystemPrefix());
+            analogIOManager = new InternalAnalogIOManager(this);
+            // special due to ProxyManager support
+            InstanceManager.setAnalogIOManager(analogIOManager);
+        }
+        return analogIOManager;
+    }
+
+    public InternalStringIOManager getStringIOManager() {
+        InternalStringIOManager stringIOManager = (InternalStringIOManager) classObjectMap.get(StringIOManager.class);
+        if (stringIOManager == null) {
+            log.debug("Create InternalStringIOManager by request", getSystemPrefix());
+            stringIOManager = new InternalStringIOManager(this);
+            // special due to ProxyManager support
+            InstanceManager.setStringIOManager(stringIOManager);
+        }
+        return stringIOManager;
+    }
+
     public DefaultPowerManager getPowerManager() {
         return (DefaultPowerManager) classObjectMap.computeIfAbsent(PowerManager.class, (Class c) -> {
             log.debug("Create DefaultPowerManager by request");

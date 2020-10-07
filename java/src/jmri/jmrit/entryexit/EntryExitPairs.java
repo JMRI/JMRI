@@ -274,7 +274,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Override
     @CheckReturnValue
     public int getObjectCount() {
-        return getNamedBeanList().size(); // not efficient
+        return getNamedBeanSet().size();
     }
 
     /** {@inheritDoc} */
@@ -282,6 +282,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
+        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         return getEntryExitList();
     }
 
@@ -294,6 +295,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList");
         List<DestinationPoints> beanList = new ArrayList<>();
         for (Source e : nxpair.values()) {
             List<String> uidList = e.getDestinationUniqueId();

@@ -757,6 +757,7 @@ public abstract class AbstractMRTrafficController {
         rcvException = false;
         connectionError = false;
         xmtException = false;
+        threadStopRequest = false;
         try {
             istream = p.getInputStream();
             ostream = p.getOutputStream();
@@ -837,6 +838,7 @@ public abstract class AbstractMRTrafficController {
             log.warn("disconnectPort: disconnect called from non-connected AbstractPortController");
         }
         controller = null;
+        threadStopRequest=true;
     }
 
     /**

@@ -22,7 +22,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.palette.DecoratorPanel.AJSpinner;
+import jmri.jmrit.display.palette.TextItemPanel.AJSpinner;
 import jmri.util.swing.JmriColorChooser;
 
 /**
@@ -38,10 +38,10 @@ public class ColorDialog extends JDialog implements ChangeListener {
     public static final int STRUT = 6;
 
     public static final int ONLY = 0;
-    public static final int BORDER = DecoratorPanel.BORDER; // (= 1)
-    public static final int MARGIN = DecoratorPanel.MARGIN; // (= 2)
-    public static final int FWIDTH = DecoratorPanel.FWIDTH; // (= 3)
-    public static final int FHEIGHT = DecoratorPanel.FHEIGHT;   // (= 4)
+    public static final int BORDER = 1; // (= 1)
+    public static final int MARGIN = 2; // (= 2)
+    public static final int FWIDTH = 3; // (= 3)
+    public static final int FHEIGHT = 4;   // (= 4)
     public static final int FONT = 5;
     public static final int TEXT = 6;
 
@@ -97,14 +97,14 @@ public class ColorDialog extends JDialog implements ChangeListener {
                     title = "SetBorderSizeColor";
                     _saveColor = _util.getBorderColor();
                     SpinnerNumberModel model = new SpinnerNumberModel(_util.getBorderSize(), 0, 100, 1);
-                    JPanel p = makePanel(DecoratorPanel.makeSpinPanel("borderSize", new AJSpinner(model, BORDER), this));
+                    JPanel p = makePanel(TextItemPanel.makeSpinPanel("borderSize", new AJSpinner(model, BORDER), this));
                     panel.add(p);
                     break;
                 case MARGIN:
                     title = "SetMarginSizeColor";
                     _saveColor = _util.getBackground();
                     model = new SpinnerNumberModel(_util.getMargin(), 0, 100, 1);
-                    p = makePanel(DecoratorPanel.makeSpinPanel("marginSize", new AJSpinner(model, MARGIN), this));
+                    p = makePanel(TextItemPanel.makeSpinPanel("marginSize", new AJSpinner(model, MARGIN), this));
                     panel.add(p);
                     break;
                 case FONT:
@@ -165,10 +165,10 @@ public class ColorDialog extends JDialog implements ChangeListener {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             SpinnerNumberModel model = new SpinnerNumberModel(_util.getFixedWidth(), 0, 1000, 1);
-            panel.add(DecoratorPanel.makeSpinPanel("fixedWidth", new AJSpinner(model, FWIDTH), this));
+            panel.add(TextItemPanel.makeSpinPanel("fixedWidth", new AJSpinner(model, FWIDTH), this));
             panel.add(Box.createHorizontalStrut(STRUT));
             model = new SpinnerNumberModel(_util.getFixedHeight(), 0, 1000, 1);
-            panel.add(DecoratorPanel.makeSpinPanel("fixedHeight", new AJSpinner(model, FHEIGHT), this));
+            panel.add(TextItemPanel.makeSpinPanel("fixedHeight", new AJSpinner(model, FHEIGHT), this));
             return panel;
         }
 

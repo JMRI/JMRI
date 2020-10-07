@@ -23,8 +23,9 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * get from the layout.
      *
      */
-    private String baseStationType;
-    private String codeBuildDate;
+    private String stationType;
+    private String build;
+    private String version = "0.0.0";
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = 0;
 
@@ -37,20 +38,28 @@ public class DCCppCommandStation implements jmri.CommandStation {
         adaptermemo = memo;
     }
 
-    public void setBaseStationType(String s) {
- baseStationType = s;
+    public void setStationType(String s) {
+        stationType = s;
     }
     
-    public String getBaseStationType() {
- return baseStationType;
+    public String getStationType() {
+        return stationType;
     }
 
-    public void setCodeBuildDate(String s) {
- codeBuildDate = s;
+    public void setBuild(String s) {
+        build = s;
     }
 
-    public String getCodeBuildDate() {
- return codeBuildDate;
+    public String getBuild() {
+        return build;
+    }
+
+    public void setVersion(String s) {
+        version = s;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     /**
@@ -70,9 +79,10 @@ public class DCCppCommandStation implements jmri.CommandStation {
         // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
         // V1.0/V1.1/V1.2 Simplified
         // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
-        
-        baseStationType = l.getStatusVersionString();
-        codeBuildDate = l.getStatusBuildDateString();
+
+        setStationType(l.getStationType());
+        setBuild(l.getBuildString());
+        setVersion(l.getVersion());
     }
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
@@ -104,7 +114,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * @return version string.
      */
     public String getVersionString() {
-        return(baseStationType + ": BUILD " + codeBuildDate);
+        return(stationType + ": BUILD " + build);
     }
 
     /**
@@ -118,6 +128,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
      */
     public boolean isOpsModePossible() {
         return true;
+    }
+
+    /**
+     * Does this command station require JMRI to send periodic function refresh packets?
+     * @return true if required, false if not
+     */
+    public boolean isFunctionRefreshRequired() {
+        boolean ret = true;
+        try {
+            //command stations starting with 3 handle their own function refresh
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
     }
 
     // A few utility functions

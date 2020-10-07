@@ -25,8 +25,8 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
     /**
      * JMRIClient turnouts use the turnout number on the remote host.
-     * @param number turnout number.
-     * @param memo system connection.
+     * @param number turnout number
+     * @param memo system connection
      */
     public JMRIClientTurnout(int number, JMRIClientSystemConnectionMemo memo) {
         super(memo.getSystemPrefix() + "T" + number);
@@ -86,24 +86,25 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted packet
-    // to the server.
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void forwardCommandChangeToLayout(int s) {
+    protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
-        if ((s & Turnout.CLOSED) != 0) {
+        if ((newState & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
+            if ((newState & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                log.error("Cannot command both CLOSED and THROWN {}", newState);
                 return;
             } else {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 
@@ -125,9 +126,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton {}{}", _pushButtonLockout ? "Lock" : "Unlock", prefix, _number);
-        }
+        log.debug("Send command to {} Pushbutton {}{}", (_pushButtonLockout ? "Lock" : "Unlock"), prefix, _number);
     }
 
     protected void sendMessage(boolean closed) {
@@ -167,6 +166,3 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
     private final static Logger log = LoggerFactory.getLogger(JMRIClientTurnout.class);
 
 }
-
-
-

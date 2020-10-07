@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" allowResetDefaults="no">
   <!-- made from the ESU_LokSoundV3_0.file -->
   <!-- ver2 CV213 defined multiple times, fixed to 219,222,225,228,231,234 -->
   <!-- also added CV52,121,122,123,124 -->
@@ -42,9 +42,13 @@
   <version author="Dave Heap" version="13" lastUpdated="20171008"/>
   <!-- ver14 add new functionlabel with translation -->
   <version author="Ronald Kuhn" version="14" lastUpdated="20171215"/>
+    <!-- ver15 updates for F0-F15 -->
+    <version author="Dave Heap" version="15" lastUpdated="20200807"/>
+    <!-- ver16 disable Reset to Defaults -->
+    <version author="Dave Heap" version="16" lastUpdated="20200818"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81">
-      <model model="LokSound V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
+      <model model="LokSound V3.5" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
         <output name="1" label="Front|Light" maxcurrent="250mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
@@ -136,7 +140,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokSound Micro V3.5" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
+      <model model="LokSound Micro V3.5" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
         <output name="1" label="Front|Light" maxcurrent="180mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
@@ -228,7 +232,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
+      <model model="LokSoundXL V3.5" maxFnNum="15" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes" productID="16777230,16777236,16777252">
         <output name="1" label="Front|Light" maxcurrent="600mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
@@ -320,7 +324,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+      <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" maxFnNum="15" numOuts="6" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
         <output name="1" label="Front|Light" maxcurrent="250mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
@@ -395,7 +399,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+      <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" maxFnNum="15" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
         <output name="1" label="Front|Light" maxcurrent="250mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
@@ -469,7 +473,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model show="no" model="LokSoundXL Version 3.5" replacementModel="LokSoundXL V3.5" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
+      <model show="no" model="LokSoundXL Version 3.5" replacementModel="LokSoundXL V3.5" maxFnNum="15" numOuts="8" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
         <output name="1" label="Front|Light" maxcurrent="600mA">
           <label xml:lang="fr">Feux|avant</label>
           <label xml:lang="it">Luci|Frontali</label>
