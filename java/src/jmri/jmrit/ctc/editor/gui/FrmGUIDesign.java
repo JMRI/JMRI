@@ -181,12 +181,6 @@ public class FrmGUIDesign extends javax.swing.JFrame {
         _mGUIDesign_FleetingToggleSwitch.setText(Bundle.getMessage("LableDlgGUIFleeting"));
 
         _mGUIDesign_AnalogClockEtc.setText(Bundle.getMessage("LableDlgGUIClock"));
-        _mGUIDesign_AnalogClockEtc.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mGUIDesign_AnalogClockEtcActionPerformed(evt);
-            }
-        });
 
         _mGUIDesign_CreateTrackPieces.setText(Bundle.getMessage("LableDlgGUITrack")
         );
@@ -350,10 +344,6 @@ public class FrmGUIDesign extends javax.swing.JFrame {
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }//GEN-LAST:event__mSaveAndCloseActionPerformed
-
-    private void _mGUIDesign_AnalogClockEtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIDesign_AnalogClockEtcActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__mGUIDesign_AnalogClockEtcActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton _mAllSignals;

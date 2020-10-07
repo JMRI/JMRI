@@ -168,6 +168,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * Configure the common managers for LocoNet connections. This puts the
      * common manager config in one place.
      */
+    @Override
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
@@ -212,12 +213,13 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
 
         InstanceManager.setDefault(ClockControl.class, cc);
 
-        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
-
         getIdTagManager();
 
         // register this SystemConnectionMemo to connect to rest of system
         register();
+
+        // This must be done after the memo is registered
+        getPredefinedMeters();
     }
 
     public LnPowerManager getPowerManager() {
@@ -285,11 +287,28 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new LnLightManager(this));
     }
 
-    public LnMultiMeter getMultiMeter() {
+    protected LnPredefinedMeters predefinedMeters;
+
+    public LnPredefinedMeters getPredefinedMeters() {
         if (getDisabled()) {
+            log.warn("Aborting getPredefinedMeters account is disabled!");
             return null;
         }
-        return (LnMultiMeter) classObjectMap.computeIfAbsent(MultiMeter.class,(Class c) -> new LnMultiMeter(this));
+//        switch (getSlotManager().commandStationType) {
+//            case COMMAND_STATION_USB_DCS240_ALONE:
+//            case COMMAND_STATION_DCS240:
+//            case COMMAND_STATION_DCS210:
+//            case COMMAND_STATION_USB_DCS52_ALONE:
+//            case COMMAND_STATION_DCS052:
+//                break;
+//            default:
+//                // The command station does not support these meters
+//                return null;
+//        }
+        if (predefinedMeters == null) {
+            predefinedMeters = new LnPredefinedMeters(this);
+        }
+        return predefinedMeters;
     }
 
     @Override
@@ -349,6 +368,9 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         if (lt != null){
             lt.dispose();
             lt = null;
+        }
+        if (predefinedMeters != null) {
+            predefinedMeters.dispose();
         }
         super.dispose();
     }

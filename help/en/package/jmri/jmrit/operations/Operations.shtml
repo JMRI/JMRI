@@ -2986,14 +2986,18 @@
    three "door" tracks, and set the minimum track length for the two end doors to 44'. Now the program can only steal
    space from the center door. Placing a 50' boxcar at either end door, prevents the program from placing a car at the
    center door. If a 40' boxcar is first placed at the center door, only 40' cars are then allowed at the end doors.
-   
+
    <a name="AlternateTrack" id="AlternateTrack"></a>
    <h4>Alternate Track or "Off Spot"</h4>
-   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur or the edit
-   schedule windows. The program when it finds a spur full will send cars to the track you specify as the alternate
-   track. The alternate track feature can be used to create an "Off Spot" track for your cars. Once you specify a track
-   as an alternate, only cars destined for the spur will be placed on the alternate track. You can also use the same
-   alternate track for several spurs.
+   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
+   or the edit schedule windows. The program when it finds a spur full will send cars to the track
+   you specify as the alternate track. The alternate track feature can be used to create an "Off
+   Spot" track for your cars. Once you specify a track as an alternate, only cars destined for the
+   spur will be placed on the alternate track. You can also use the same alternate track for several
+   spurs. Normally the alternate track is a
+   <a href="#Yards">yard</a> track type, but you can also use an
+   <a href="#Interchange">interchange</a>, or <a href="#Sidings">spur</a> type track if you want
+   more control over the car's movement or load.
 
    <p>
     Normally during the train build process, the program will check the alternate track for cars after assigning cars

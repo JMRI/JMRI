@@ -83,15 +83,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     @Override
     public String getColumnName(int col) {
-        if (log.isDebugEnabled()) {
-            log.debug("getColumnName {}", col);
-        }
+        log.debug("getColumnName {}", col);
         return Bundle.getMessage(headers[col]); // I18N
     }
 
     @Override
     public Class<?> getColumnClass(int col) {
-        // if (log.isDebugEnabled()) log.debug("getColumnClass "+col);
+        // log.debug("getColumnClass {}", col;
         switch (headers[col]) {
             case "Value":
                 return JTextField.class;
@@ -106,9 +104,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (log.isDebugEnabled()) {
-            log.debug("isCellEditable {}", col);
-        }
+        log.debug("isCellEditable {}", col);
         if (headers[col].equals("Value")) {
             return true;
         } else if (headers[col].equals("Read")) {
@@ -146,9 +142,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     public void setState(int row, int val) {
-        if (log.isDebugEnabled()) {
-            log.debug("setState row: {} val: {}", row, val);
-        }
+        log.debug("setState row: {} val: {}", row, val);
         (rowVector.elementAt(row)).setState(val);
     }
 
@@ -167,7 +161,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     @Override
     public Object getValueAt(int row, int col) {
-        // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
+        // log.debug("getValueAt {} {}", row, col;
         if (row >= rowVector.size()) {
             log.debug("row index greater than row vector size");
             return "Error";
@@ -224,9 +218,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (log.isDebugEnabled()) {
-            log.debug("setvalueAt {} {} {}", row, col, value);
-        }
+        log.debug("setvalueAt {} {} {}", row, col, value);
         setFileDirty(true);
     }
 
@@ -262,9 +254,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // get the values for the VariableValue ctor
         _df = df;
         String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
-        if (log.isDebugEnabled()) {
-            log.debug("Starting to setRow \"{}\"", name);
-        }
+        log.debug("Starting to setRow \"{}\"", name);
         String item = (e.getAttribute("item") != null
                 ? e.getAttribute("item").getValue()
                 : null);
@@ -386,13 +376,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
         // set to default value if specified (CV load may later override this)
         if (setDefaultValue(e, v)) {
-            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE);  // correct for transition to "edited"
+            _cvModel.getCvByNumber(CV).setState(VariableValue.FROMFILE); // correct for transition to "edited"
         }
     }
 
     /**
      * If there are any modifier elements, process them by e.g. setting
      * attributes on the VariableValue.
+     *
      * @param e Element that's source of info
      * @param variable Variable to load
      */
@@ -465,7 +456,8 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Recursively walk the child compositeChoice elements, working through the
      * compositeChoiceGroup elements as needed.
      * <p>
-     * Adapted from handleEnumValChildren for use in LocoIO.
+     * Adapted from handleEnumValChildren for use in LocoIO Legacy tool.
+     *
      * @param e Element that's source of info
      * @param var Variable to load
      */
@@ -538,6 +530,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Recursively walk the child enumChoice elements, working through the
      * enumChoiceGroup elements as needed.
+     *
      * @param e Element that's source of info
      * @param var Variable to load
      */
@@ -877,6 +870,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Configure from a constant. This is like setRow (which processes a
      * variable Element).
+     *
      * @param e element to set.
      */
     @SuppressFBWarnings(value = "NP_LOAD_OF_KNOWN_NULL_VALUE",
@@ -884,9 +878,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
         String stdname = e.getAttribute("item").getValue();
-        if (log.isDebugEnabled()) {
-            log.debug("Starting to setConstant \"{}\"", stdname);
-        }
+        log.debug("Starting to setConstant \"{}\"", stdname);
 
         String name = LocaleSelector.getAttribute(e, "label");
         if (name == null || name.equals("")) {
@@ -902,7 +894,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _writeButtons.addElement(bw);
 
         // config read button as a dummy - there's really nothing to read
-        JButton br = new JButton("Read");
+        JButton br = new JButton("Read"); // NOI18N
         _readButtons.addElement(br);
 
         // no CV references are added here
@@ -913,9 +905,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int defaultVal = 0;
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("Found default value: {} for {}", val, stdname);
-            }
+            log.debug("Found default value: {} for {}", val, stdname);
             defaultVal = Integer.parseInt(val);
         }
 
@@ -932,9 +922,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         // set to default value if specified (CV load will later override this)
         if ((a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) {
-                log.debug("Found default value: {} for {}", val, name);
-            }
+            log.debug("Found default value: {} for {}", val, name);
             v.setIntValue(defaultVal);
         }
     }
@@ -961,13 +949,13 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int row = getRowCount();
 
         // config write button
-        JButton bw = new JButton("Write");
+        JButton bw = new JButton(Bundle.getMessage("ButtonWrite"));
         bw.setActionCommand("W" + row);
         bw.addActionListener(this);
         _writeButtons.addElement(bw);
 
         // config read button
-        JButton br = new JButton("Read");
+        JButton br = new JButton(Bundle.getMessage("ButtonRead"));
         br.setActionCommand("R" + row);
         br.addActionListener(this);
         _readButtons.addElement(br);
@@ -1073,9 +1061,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /**
      * Returns the (first) variable that matches a given name string.
      * <p>
-     * Searches
-     * first for "item", the true name, but if none found will attempt to find a
-     * matching "label". In that case, only the default language is checked.
+     * Searches first for "item", the true name, but if none found will attempt
+     * to find a matching "label". In that case, only the default language is
+     * checked.
+     *
      * @param name search string.
      * @return first matching variable found.
      */
@@ -1107,9 +1096,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove buttons
         for (int i = 0; i < _writeButtons.size(); i++) {

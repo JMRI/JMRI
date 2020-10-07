@@ -6,9 +6,9 @@
 
         <h4>Acela CTI</h4>
             <ul>
-                <li>Fixed issue unable to initialise adapter</li>
+                <li></li>
             </ul>
-
+        
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
@@ -21,7 +21,7 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
@@ -51,8 +51,7 @@
 
         <h4>IPOCSMR</h4>
             <ul>
-                <li>Initial support added.</li>
-                <li>Turnouts, Lights (on/off) and Sensors</li>
+                <li></li>
             </ul>
 
         <h4>JMRI Simple Server/JMRI Client</h4>
@@ -62,12 +61,23 @@
 
         <h4>LocoNet</h4>
             <ul>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
+              <li>LocoNet support for "Voltage/Current Meters" has been extended to 
+                  include support for multiple sources of meter information, and 
+                  to include automatic discovery of LocoNet devices which support 
+                  voltage and current reporting.  Each discovered device is identified  
+                  by its device type and serial number.  These "friendly" identifiers
+                  appear in the "Voltage Meter" and "Current Meter" menus in the 
+                  "Voltage/Current Meter" tool. Further information may be found at the
+                  <a href="../html/hardware/loconet/DigitraxMeters.shtml">
+                      Digitrax "Meters"</a> web page.</li>
                 <li></li>
             </ul>
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -77,12 +87,12 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
             <ul>
-                <li>Fixed a bug that caused an erroneous ERROR message on operating MQTT Lights</li>
+                <li></li>
             </ul>
 
         <h4>MRC</h4>
@@ -102,7 +112,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a></h4>
             <ul>
-                <li>Default Output Interval reduced to 100ms.</li>
+                <li></li>
             </ul>
 
         <h4>RFID</h4>
@@ -277,7 +287,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Diesel fix sound slections, Genesis OEM Diesel add models</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -379,7 +389,20 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
+          in copying conditionals. See the updated help files for details.</li>
+          
+          <li>Fixed a couple of bugs there Logix wasn't correctly listening on
+          signal head lunar state, signal head flash lunar state, signal mast
+          lit state and signal mast held state. See PR #9059.</li>
+          
           <li></li>
+        </ul>
+
+    <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li></li>
         </ul>
 
     <h3>Operations</h3>
@@ -443,8 +466,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>new scripts ShutdownOS.py and RestartOS.py which can be called to safely
-                end JMRI and then request that the underlying OS shutdown or restart itself</li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -474,7 +498,7 @@
 
 	    <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Better set row height in table.</li>
             </ul>
 
     	<h4>Simple Signal Logic</h4>
@@ -541,6 +565,35 @@
             <li></li>
         </ul>
 
+   <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li>jmri.MultiMeter is split into jmri.Meter.</li>
+            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
+            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
+            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
+            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
+            <li>LocoNet supports discoverr of the sources of voltage and current 
+                data and makes them available in the "Voltage/Current Meter" tool.</li>
+            
+        </ul>
+
+   <h3>AbstractProxyManager</h3>
+        <a id="Proxy" name="Proxy"></a>
+        <ul>
+            <li>AbstractProxyManager can now automatically create system specific managers.</li>
+            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
+			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
+			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
+			already exists. This works as long as the system specific manager doesn't need to have
+			system specific knowledge of the named beans.</li>
+            <li>This means that, for example, the user may create a Jython script that creates a Meter
+			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
+			manager is automatically created.</li>
+			<li>Once a specific connection needs to store specific data about meters, a connection
+			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
+        </ul>
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
@@ -549,5 +602,6 @@
                 action required, but developers need to be online the first time
                 they build using Maven.</li>
             <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
+            <li></li>
         </ul>
 
