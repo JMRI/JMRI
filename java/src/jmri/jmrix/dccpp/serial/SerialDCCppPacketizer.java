@@ -49,6 +49,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     public SerialDCCppPacketizer(final DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
+        cs = pCommandStation; //remember this for later
     }
 
     /**
