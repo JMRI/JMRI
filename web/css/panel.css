@@ -67,7 +67,7 @@ body {
 
 .beanswitch.button { /* SwitchBoard (Panel) interactive button default */
     border: 2px solid white; /* border changes colors with state */
-    background-color: lightGray;
+    /*background-color: lightGray;*/
     text-align: center;
     border-radius: 10px; /* mimick JButtons */
     box-shadow: 1px 1px gray;

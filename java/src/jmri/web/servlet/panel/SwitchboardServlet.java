@@ -1,5 +1,6 @@
 package jmri.web.servlet.panel;
 
+import java.awt.*;
 import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +9,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.jmrit.display.switchboardEditor.BeanSwitch;
 import jmri.server.json.JSON;
+import jmri.util.ColorUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -72,18 +74,17 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         panel.setAttribute("inactivecolor", editor.getInactiveSwitchColor());
         log.debug("webserver Switchboard panel attribs ready");
 
-        Element bgColor = new Element("backgroundColor");
-        if (editor.getBackgroundColor() == null) { // default to light grey
-            bgColor.setAttribute("red", Integer.toString(192));
-            bgColor.setAttribute("green", Integer.toString(192));
-            bgColor.setAttribute("blue", Integer.toString(192));
+        Element color = new Element("backgroundColor");
+        if (editor.getBackgroundColor() == null) {
+            color.setAttribute("red", Integer.toString(192));
+            color.setAttribute("green", Integer.toString(192));
+            color.setAttribute("blue", Integer.toString(192));
         } else {
-            bgColor.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
-            bgColor.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
-            bgColor.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
+            color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));
+            color.setAttribute("green", Integer.toString(editor.getBackgroundColor().getGreen()));
+            color.setAttribute("blue", Integer.toString(editor.getBackgroundColor().getBlue()));
         }
-        panel.addContent(bgColor);
-        log.debug("beanswitch shape = {}", editor.getSwitchShape());
+        panel.addContent(color);
 
         Element text = new Element("text");
         text.setAttribute("color", editor.getDefaultTextColor());
@@ -100,19 +101,15 @@ public class SwitchboardServlet extends AbstractPanelServlet {
                     Element e = ConfigXmlManager.elementFromObject(sub);
                     if (e != null) {
                         log.debug("element name: {}", e.getName());
-                        try {
-                            e.setAttribute("label", sub.getNameString());
-                            e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-                            if (sub.getNamedBean() == null) {
-                                e.setAttribute("connected", "false");
-                                log.debug("switch {} NOT connected", sub.getNameString());
-                            } else {
+                        e.setAttribute("label", sub.getNameString()); // either the system name or the label
+                        e.setAttribute("connected", "false");
+                        if (sub.getNamedBean() == null) { // skip unconnected switch
+                            log.debug("switch {} NOT connected", sub.getNameString()); // use label instead
+                        } else {
+                            try {
+                                e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
                                 e.setAttribute("connected", "true"); // activate click action via class
-                            }
-                        } catch (NullPointerException ex) {
-                            if (sub.getNamedBean() == null) {
-                                log.debug("{} {} does not have an associated NamedBean", e.getName(), e.getAttribute(JSON.NAME));
-                            } else {
+                            } catch (NullPointerException ex) {
                                 log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
                             }
                         }

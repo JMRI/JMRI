@@ -48,10 +48,10 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());
-//        panel.setAttribute("x", "" + posn.x);
-//        panel.setAttribute("y", "" + posn.y);
-//        panel.setAttribute("height", "" + size.height);
-//        panel.setAttribute("width", "" + size.width);
+        //panel.setAttribute("x", "" + posn.x); // managed vie Prefsmanager
+        //panel.setAttribute("y", "" + posn.y);
+        //panel.setAttribute("height", "" + size.height);
+        //panel.setAttribute("width", "" + size.width);
         panel.setAttribute("editable", "" + (p.isEditable() ? "yes" : "no"));
         panel.setAttribute("showtooltips", "" + (p.showToolTip() ? "yes" : "no"));
         panel.setAttribute("controlling", "" + (p.allControlling() ? "yes" : "no"));

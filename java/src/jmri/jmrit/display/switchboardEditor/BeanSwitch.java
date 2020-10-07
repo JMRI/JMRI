@@ -128,6 +128,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } catch (IllegalArgumentException e) {
             log.error("invalid bean name= \"{}\" in Switchboard Button", switchName);
         }
+        int r = Math.round(Math.min(this.getWidth() / 2, this.getHeight() / 2)); // relative unit to draw
         // attach shape specific code to this beanSwitch
         switch (_shape) {
             case 1: // slider shape
@@ -149,9 +150,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // not actually used
                 _icon = true;
+                beanIcon.setPreferredSize(_editor.getTileSize());
                 beanIcon.setLabel(switchLabel, _uLabel);
-                beanIcon.positionLabel(18, 45, Component.CENTER_ALIGNMENT, 14); // provide x, y offset, depending on image size and free space
-                beanSymbol.positionSubLabel(18, 65, Component.CENTER_ALIGNMENT, 10); // smaller text (system name)
+                beanIcon.positionLabel(r, r/5, Component.CENTER_ALIGNMENT, r/5); // provide x, y offset, depending on image size and free space
+                beanSymbol.positionSubLabel(r, 3*r/4, Component.CENTER_ALIGNMENT, r/8); // smaller text (system name)
                 if (_editor.showToolTip()) {
                     beanIcon.setToolTipText(switchTooltip);
                 }
@@ -178,9 +180,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // TODO when web server supports graphic keyboard switches: replace true by false;
                 _icon = true;
+                beanKey.setPreferredSize(new Dimension(_editor.getTileSize()));
                 beanKey.setLabel(switchLabel, _uLabel);
-                beanKey.positionLabel(12, 60, Component.CENTER_ALIGNMENT, 14);
-                beanSymbol.positionSubLabel(12, 80, Component.CENTER_ALIGNMENT, 10); // smaller text (system name)
+                beanKey.positionLabel(r, 3*r/8, Component.CENTER_ALIGNMENT, r/5);
+                beanSymbol.positionSubLabel(r, r/2, Component.CENTER_ALIGNMENT, r/8); // smaller text (system name)
                 // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
@@ -208,9 +211,18 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 });
                 _text = true; // web server supports in-browser drawn switches
                 _icon = true; // panel.js assigns only text OR icon for a single class such as BeanSwitch
+                beanSymbol.setPreferredSize(_editor.getTileSize());
                 beanSymbol.setLabel(switchLabel, _uLabel);
-                beanSymbol.positionLabel(30, 20, Component.CENTER_ALIGNMENT, 14); // provide x, y offset, depending on image size and free space
-                beanSymbol.positionSubLabel(30, 60, Component.CENTER_ALIGNMENT, 10); // smaller text (system name)
+                switch (beanTypeChar) {
+                    case 'T' :
+                        beanSymbol.positionLabel(r, r/7, Component.CENTER_ALIGNMENT, r/5);
+                        beanSymbol.positionSubLabel(r, 7*r/8, Component.CENTER_ALIGNMENT, r/8);
+                    case 'S' :
+                    case 'L' :
+                        beanSymbol.positionLabel(r, r/7, Component.CENTER_ALIGNMENT, r/5);
+                        beanSymbol.positionSubLabel(r, 7*r/8, Component.CENTER_ALIGNMENT, r/8);
+
+                }
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
                 }
@@ -251,7 +263,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // connect to object or dim switch
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
-                // to dim unconnected symbols TODO make them see through, now icons are just white
+                // to dim unconnected symbols TODO make them see through, now icons just become bleak
 //                float dim = 100f;
 //                switch (_shape) {
 //                    case 0:
@@ -421,7 +433,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     /**
      * Get the label of this switch.
      *
-     * @return display name plus current state
+     * @return display name including current state
      */
     public String getNameString() {
         return _label;
@@ -470,7 +482,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 log.warn("SwitchState INCONSISTENT");
         }
         if (getNamedBean() == null) {
-            switchLabel = _label; // unconnected doesn't show state using : and ?
+            switchLabel = _label; // unconnected, doesn't show state using : and ?
             log.debug("Switch label {} state {}, disconnected", switchLabel, state);
         } else {
             log.debug("Switch label {} state: {}, connected", switchLabel, state);
@@ -653,7 +665,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (_editor.isEditable()) {
             // add tristate option if turnout has feedback
             if (namedBean != null) {
-                //addTristateEntry(switchPopup); // switches don't do anything with this property
+                //addTristateEntry(switchPopup); // beanswitches don't do anything with this property
                 addEditUserName(switchPopup);
                 switch (beanTypeChar) {
                     case 'T':
@@ -769,7 +781,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         } else {
             nbhm.renameBean(oldName, newUserName, _bname); // will pick up name change in label
         }
-        _editor.updatePressed(); // but we must redraw whole switchboard
+        _editor.updatePressed(); // but we must redraw whole board
     }
 
     private boolean inverted = false;
@@ -1023,12 +1035,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         private String subTag = "";
         private int labelX = 16;
         private int labelY = 53;
-        private float textAlign = 0.0f;
-        private int textSize = 12;
         private int subLabelX = 16;
         private int subLabelY = 53;
-        private float subTextAlign = 0.0f;
+        private int textSize = 12;
         private int subTextSize = 10;
+        private float textAlign = 0.0f;
+        private float subTextAlign = 0.0f;
         private float ropOffset = 0f;
         private RescaleOp rop;
 
@@ -1134,11 +1146,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             this.repaint();
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
             if (showUserName) {
-                g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(textSize - 4, 6)));
-                if (textAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
+                g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
+                if (subTextAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
                     FontMetrics metrics = g.getFontMetrics();
                     // Determine the X coordinate for the text, icon width ~ 75-80px
-                    subLabelX = (78 - metrics.stringWidth(tag)) / 2;
+                    subLabelX = (78 - metrics.stringWidth(subTag)) / 2;
                 }
                 g.drawString(subTag, subLabelX, subLabelY); // draw useer name at bottom
             }
