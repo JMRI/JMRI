@@ -2,6 +2,7 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 
+import jmri.JmriException;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitAppender;
@@ -79,15 +80,15 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     
     @Test
     public void testProvideWithoutWithPrefix() throws IllegalArgumentException {
-        Turnout psa = l.provide(""+getSystemNameWithNoPrefix());
-        Turnout psb = l.provide(l.getSystemPrefix()+"T"+getSystemNameWithNoPrefix());
+        Turnout psa = l.provide(""+getASystemNameWithNoPrefix());
+        Turnout psb = l.provide(l.getSystemPrefix()+"T"+getASystemNameWithNoPrefix());
         Assert.assertTrue("Provide Without then With Prefix", psa == psb);
     }
 
     @Test
     public void testProvideWithWithoutPrefix() throws IllegalArgumentException {
-        Turnout psa = l.provide(l.getSystemPrefix()+"T"+getSystemNameWithNoPrefix());
-        Turnout psb = l.provide(""+getSystemNameWithNoPrefix());
+        Turnout psa = l.provide(l.getSystemNamePrefix()+getASystemNameWithNoPrefix());
+        Turnout psb = l.provide(""+getASystemNameWithNoPrefix());
         Assert.assertTrue("Provide With then Without Prefix", psa == psb);
     }
     
@@ -175,9 +176,44 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     }
     
     @Test
-    public void TestGetEntryToolTip(){
+    public void testGetEntryToolTip(){
         Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
         Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
+    }
+    
+    @Test
+    public void testGetNextValidAddress() throws JmriException {
+        
+        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
+            return;
+        }
+        
+        Assert.assertNotNull("next valid before OK", l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
+    
+        Assert.assertNotEquals("requesting ignore existing does not return same", 
+                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),true),
+                l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false));
+        
+        Turnout t =  l.provideTurnout(getASystemNameWithNoPrefix());
+        Assert.assertNotNull("exists", t);
+        
+        String nextValidAddr = l.getNextValidAddress(getASystemNameWithNoPrefix(), l.getSystemPrefix(),false);
+        Turnout nextValid =  l.provideTurnout(nextValidAddr);
+        Assert.assertNotNull("exists", nextValid);
+        Assert.assertNotEquals(nextValid, t);
+        
+    }
+    
+    @Test
+    public void testIncorrectGetNextValidAddress() {
+        if (!l.allowMultipleAdditions(l.getSystemNamePrefix())){
+            return;
+        }
+        boolean contains = Assert.assertThrows(JmriException.class,
+            ()->{
+                l.getNextValidAddress("NOTANINCREMENTABLEADDRESS", l.getSystemPrefix(),false);
+            }).getMessage().contains("NOTANINCREMENTABLEADDRESS");
+        Assert.assertTrue("Exception contained incorrect address", contains);
     }
 
     /**
