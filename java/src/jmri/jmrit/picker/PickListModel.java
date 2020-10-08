@@ -79,15 +79,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
     }
 
     /**
-     * No longer needed. Now done in BeanTableDataModel.
-     *
-     * @deprecated since Jan 1, 2014, marked as such May 1, 2017
-     */
-    @Deprecated
-    public void init() {
-    }
-
-    /**
      * If table has been sorted table row no longer is the same as array index.
      *
      * @param index row of table
@@ -123,7 +114,6 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         makePickList();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void makePickList() {
         // Don't know who is added or deleted so remove all name change listeners
         if (_pickList != null) {
@@ -131,14 +121,10 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
                 _pickList.get(i).removePropertyChangeListener(this);
             }
         }
-        List<String> systemNameList = getManager().getSystemNameList();
         TreeSet<E> ts = new TreeSet<>(new NamedBeanComparator<>());
+        ts.addAll(getManager().getNamedBeanSet());
 
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            ts.add(getBySystemName(iter.next()));
-        }
-        _pickList = new ArrayList<>(systemNameList.size());
+        _pickList = new ArrayList<>(getManager().getNamedBeanSet().size());
 
         Iterator<E> it = ts.iterator();
         while (it.hasNext()) {
@@ -149,9 +135,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         for (int i = 0; i < _pickList.size(); i++) {
             _pickList.get(i).addPropertyChangeListener(this);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("_pickList has {} beans", _pickList.size());
-        }
+        log.debug("_pickList has {} beans", _pickList.size());
     }
 
     /** {@inheritDoc} */

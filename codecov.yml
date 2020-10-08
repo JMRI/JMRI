@@ -16,3 +16,9 @@ coverage:
         threshold: 20%
   
 # see https://docs.codecov.io/docs/codecov-yaml#section-default-yaml for defaults
+
+
+github_checks:
+    annotations: false
+
+# see https://docs.codecov.io/docs/github-checks-beta

@@ -72,6 +72,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList getNamedBeanList references
     public void testDelete() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -91,8 +92,11 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals(0, l.getNamedBeanList().size());
         Assert.assertEquals(0, l.getNamedBeanSet().size());
         Assert.assertEquals(0, l.getSystemNameList().size());
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Assert.assertEquals(0, l.getObjectCount());
+        
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getNamedBeanList");
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
+        
     }
 
     @Test
@@ -184,6 +188,12 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
     @Test
     @Override
     public void testAutoSystemNames() {
+    }
+    
+    @Test
+    public void TestGetEntryToolTip(){
+        Assert.assertNotNull("getEntryToolTip not null", l.getEntryToolTip());
+        Assert.assertTrue("Entry ToolTip Contains text",(l.getEntryToolTip().length()>5));
     }
 
     /**

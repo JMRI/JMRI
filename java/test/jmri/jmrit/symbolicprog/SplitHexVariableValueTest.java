@@ -100,32 +100,37 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddre
+    } // mask is ignored by splitAddress tests
+
+    @Override
+    @Test
+    public void testVariableValueTwinMask() {
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableFromCV() {
-    }     // low CV is upper part of address
+    } // low CV is upper part of address
 
     @Override
     @Test
     public void testVariableValueRead() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testWriteSynch2() {
-    }        // programmer synch is different
+    } // programmer synch is different
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs

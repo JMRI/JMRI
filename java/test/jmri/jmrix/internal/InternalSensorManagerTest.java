@@ -139,11 +139,13 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testOrderVsSorted() {
         Sensor s4 = l.provideSensor("IS4");
         Sensor s2 = l.provideSensor("IS2");
         
         List<String> sortedList = l.getSystemNameList();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
         SortedSet<Sensor> beanSet = l.getNamedBeanSet();
         
         Assert.assertEquals("sorted list length", 2, sortedList.size());
@@ -190,16 +192,21 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
+    @SuppressWarnings("deprecation") // getSystemNameList references
     public void testUnmodifiable() {
         l.provideSensor("IS1");
         l.provideSensor("IS2");
         
         List<String> nameList = l.getSystemNameList();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("getSystemNameList");
 
         try {
             nameList.add("Foo");
             Assert.fail("Should have thrown");
         } catch (UnsupportedOperationException e) { /* this is OK */}
+        
+        java.util.SortedSet<Sensor> set = l.getNamedBeanSet();
+        Assert.assertThrows(UnsupportedOperationException.class, () -> set.add(null));
 
     }
 
@@ -275,6 +282,16 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Property foo cannot be silenced.");
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     private static class CountingPropertyChangeListener implements PropertyChangeListener {
 

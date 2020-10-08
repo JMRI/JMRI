@@ -128,15 +128,15 @@ public class AbstractAnalogIOTest {
         private boolean _cutOutOfBoundsValues = false;
         
         MyAbstractAnalogIO() {
-            super("IVMySystemName");
+            super("IVMySystemName", true);
         }
 
         MyAbstractAnalogIO(String sysName) {
-            super(sysName);
+            super(sysName, true);
         }
 
         MyAbstractAnalogIO(double min, double max, boolean cutOutOfBoundsValues) {
-            super("IVMySystemName");
+            super("IVMySystemName", true);
             _min = min;
             _max = max;
             _cutOutOfBoundsValues = cutOutOfBoundsValues;

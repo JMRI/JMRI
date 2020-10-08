@@ -36,18 +36,6 @@ public class ExportEngines extends XmlFile {
     }
 
     /**
-     * Sets the delimiter for the CSV export. Does nothing, left in place to
-     * avoid API breakage during deprecation period.
-     *
-     * @param delimiter ignored
-     * @deprecated since 4.19.4 without replacement
-     */
-    @Deprecated
-    public void setDeliminter(String delimiter) {
-        // nothing to do
-    }
-
-    /**
      * Store the all of the operation Engine objects in the default place,
      * including making a backup if needed
      */

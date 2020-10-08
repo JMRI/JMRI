@@ -14,6 +14,8 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 import jmri.beans.VetoableChangeSupport;
 import jmri.SystemConnectionMemo;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 
@@ -320,6 +322,41 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
 
     /**
+     * Try to create a system manager. If this proxy manager is able to create
+     * a system manager, the concrete class must implement this method.
+     *
+     * @param memo the system connection memo for this connection
+     * @return the new manager or null if it's not possible to create the manager
+     */
+    protected Manager<E> createSystemManager(@Nonnull SystemConnectionMemo memo) {
+        return null;
+    }
+    
+    /**
+     * Try to create a system manager.
+     *
+     * @param systemPrefix the system prefix
+     * @return the new manager or null if it's not possible to create the manager
+     */
+    private Manager<E> createSystemManager(@Nonnull String systemPrefix) {
+        Manager<E> m = null;
+        
+        ConnectionConfigManager manager = InstanceManager.getNullableDefault(ConnectionConfigManager.class);
+        if (manager == null) return null;
+        
+        ConnectionConfig connections[] = manager.getConnections();
+        
+        for (ConnectionConfig connection : connections) {
+            if (systemPrefix.equals(connection.getAdapter().getSystemPrefix())) {
+                m = createSystemManager(connection.getAdapter().getSystemConnectionMemo());
+            }
+            if (m != null) break;
+        }
+//        if (m == null) throw new RuntimeException("Manager not created");
+        return m;
+    }
+    
+    /**
      * {@inheritDoc}
      * <p>
      * Forwards the register request to the matching system.
@@ -327,6 +364,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     public void register(@Nonnull E s) {
         Manager<E> m = getManager(s.getSystemName());
+        if (m == null) {
+            String systemPrefix = Manager.getSystemPrefix(s.getSystemName());
+            m = createSystemManager(systemPrefix);
+        }
         if (m != null) {
             m.register(s);
         } else {
@@ -497,7 +538,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
-        // jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
+        jmri.util.LoggingUtil.deprecationWarning(log, "getSystemNameList");
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         list.forEach(e -> retval.add(e.getSystemName()));
@@ -509,7 +550,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @Nonnull
     public List<E> getNamedBeanList() {
-        // jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
+        jmri.util.LoggingUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         mgrs.forEach(m -> tl.addAll(m.getNamedBeanSet()));

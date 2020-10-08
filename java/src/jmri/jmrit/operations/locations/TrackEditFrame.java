@@ -266,7 +266,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         JPanel readerPanel = new JPanel();
         if (Setup.isRfidEnabled()) {
             readerPanel.setLayout(new GridBagLayout());
-            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReporter")));
             ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
             readerSelector = new NamedBeanComboBox<>(reporterManager);
             readerSelector.setAllowNull(true);

@@ -1,7 +1,10 @@
 package jmri.jmrix.openlcb;
 
 
+import java.beans.PropertyVetoException;
+
 import jmri.Light;
+import jmri.ProvidingManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -23,6 +26,11 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Override
     public String getSystemName(int i) {
         throw new UnsupportedOperationException("olcb lights need 2 addresses");
+    }
+    
+    @Override
+    public String getSystemNameWithNoPrefix() {
+        return "x0102030405060701;x0102030405060702";
     }
     
     public String getSystemName(int on, int off) {
@@ -109,6 +117,15 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Light t = l.provideLight("ML01.02.03.04.05.06.07.0" + getNumToTest1() + ";01.02.03.04.05.06.07.0" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
+    }
+    
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
+        String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
+        testRegisterDuplicateSystemName(l, s1, s2);
     }
 
     @Override

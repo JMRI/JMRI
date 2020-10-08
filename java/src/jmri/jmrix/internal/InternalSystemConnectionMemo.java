@@ -122,6 +122,17 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
         return turnoutManager;
     }
 
+    public InternalMeterManager getMeterManager() {
+        InternalMeterManager meterManager = (InternalMeterManager) classObjectMap.get(MeterManager.class);
+        if (meterManager == null) {
+            log.debug("Create InternalMeterManager by request", getSystemPrefix());
+            meterManager = new InternalMeterManager(this);
+            // special due to ProxyManager support
+            InstanceManager.setMeterManager(meterManager);
+        }
+        return meterManager;
+    }
+
     public InternalAnalogIOManager getAnalogIOManager() {
         InternalAnalogIOManager analogIOManager = (InternalAnalogIOManager) classObjectMap.get(AnalogIOManager.class);
         if (analogIOManager == null) {

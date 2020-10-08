@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import java.beans.PropertyVetoException;
+
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
@@ -22,6 +24,11 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     public String getSystemName(int i) {
         return "MTX010203040506070" + i + ";X010203040506070" + (i - 1);
+    }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "X0102030405060702;X0102030405060701";
     }
 
     @Test
@@ -54,6 +61,15 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // check
         Assert.assertNotNull("real object returned ", t);
         Assert.assertSame("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+    
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        String s1 = l.makeSystemName("x0102030405060701;x0102030405060702");
+        String s2 = l.makeSystemName("x0102030405060703;x0102030405060704");
+        testRegisterDuplicateSystemName(l, s1, s2);
     }
     
     @Test

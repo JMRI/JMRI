@@ -44,6 +44,11 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
     public String getSystemName(int n) {
         return "PTB" + n;
     }
+    
+    @Override
+    protected String getSystemNameWithNoPrefix() {
+        return "B2";
+    }
 
     @Test
     public void testAsAbstractFactory() {

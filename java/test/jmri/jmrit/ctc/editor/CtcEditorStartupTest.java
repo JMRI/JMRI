@@ -15,24 +15,15 @@ import org.junit.jupiter.api.*;
 public class CtcEditorStartupTest {
 
     @Test
-    public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new CtcEditorStartup();
-// new EventTool().waitNoEvent(1000);
-    }
-
-    @Test
     public void testGetTitle() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("CTC Editor", new CtcEditorStartup().getTitle(CtcEditorAction.class, Locale.US));  // NOI18N
-// new EventTool().waitNoEvent(1000);
     }
 
     @Test
     public void testGetClass() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull(new CtcEditorStartup().getActionClasses());
-// new EventTool().waitNoEvent(1000);
     }
 
     @BeforeEach

@@ -174,14 +174,6 @@ public class DCCppSystemConnectionMemo extends DefaultSystemConnectionMemo {
         }
     }
 
-    public MultiMeter getMultiMeter() {
-        return get(MultiMeter.class);
-    }
-
-    public void setMultiMeter(MultiMeter m) {
-        store(m,MultiMeter.class);
-    }
-
     @Override
     @Nonnull
     protected ResourceBundle getActionModelResourceBundle() {
