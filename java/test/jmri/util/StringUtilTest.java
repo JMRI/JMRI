@@ -477,6 +477,17 @@ public class StringUtilTest {
         Assert.assertEquals("255,256,257", "FF 00 01 ", StringUtil.hexStringFromInts(new int[] {255,256,257}) );
     }
     
+    @Test
+    public void testIncrementLastNumberInString(){
+        Assert.assertEquals("zero length str", null, StringUtil.incrementLastNumberInString("",7) );
+        Assert.assertEquals("no number in str", null, StringUtil.incrementLastNumberInString("NoNumberInString",1) );
+        Assert.assertEquals("123 0", "123", StringUtil.incrementLastNumberInString("123",0 ));
+        Assert.assertEquals("ABC123DEF 2", "ABC125DEF", StringUtil.incrementLastNumberInString("ABC123DEF",2) );
+        Assert.assertEquals("ABC99DEF 1", "ABC100DEF", StringUtil.incrementLastNumberInString("ABC99DEF",1) );
+        Assert.assertEquals("123ABC456 1", "123ABC457", StringUtil.incrementLastNumberInString("123ABC456",1) );
+        Assert.assertEquals("123ABC0001 1", "123ABC0002", StringUtil.incrementLastNumberInString("123ABC0001",1) );
+    }
+    
     @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
