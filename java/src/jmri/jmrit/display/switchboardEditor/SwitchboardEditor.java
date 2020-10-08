@@ -669,14 +669,7 @@ public class SwitchboardEditor extends Editor {
             log.debug("border title updated");
         });
         controllingBox.setSelected(allControlling());
-        // hideUnconnected item
-        _optionMenu.add(hideUnconnectedBox);
-        hideUnconnectedBox.addActionListener((ActionEvent event) -> {
-            setHideUnconnected(hideUnconnectedBox.isSelected());
-            hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
-            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
-        });
-        hideUnconnectedBox.setSelected(hideUnconnected());
+
         // autoItemRange item
         _optionMenu.add(autoItemRangeBox);
         autoItemRangeBox.addActionListener((ActionEvent event) -> {
@@ -684,6 +677,9 @@ public class SwitchboardEditor extends Editor {
             autoItemRange.setSelected(autoItemRange()); // also (un)check the box on the editor
         });
         autoItemRangeBox.setSelected(autoItemRange());
+
+        _optionMenu.addSeparator();
+
         // auto rows item
         _optionMenu.add(autoRowsBox);
         autoRowsBox.setSelected(true); // default on
@@ -721,7 +717,16 @@ public class SwitchboardEditor extends Editor {
         showUserNameBox.addActionListener((ActionEvent e) -> {
             updatePressed();
         });
-        showUserNameBox.setSelected(showUserName().equals("yes"));
+        showUserNameBox.setSelected(true); // default on
+
+        // hideUnconnected item
+        _optionMenu.add(hideUnconnectedBox);
+        hideUnconnectedBox.addActionListener((ActionEvent event) -> {
+            setHideUnconnected(hideUnconnectedBox.isSelected());
+            hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
+            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+        });
+        hideUnconnectedBox.setSelected(hideUnconnected());
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -739,10 +744,13 @@ public class SwitchboardEditor extends Editor {
         scrollGroup.add(scrollVertical);
         scrollMenu.add(scrollVertical);
         scrollVertical.addActionListener((ActionEvent event) -> setScroll(SCROLL_VERTICAL));
+
+        JMenu colorMenu = new JMenu(Bundle.getMessage("Colors"));
+        _optionMenu.add(colorMenu);
+
         // add background color menu item
         JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
-        _optionMenu.add(backgroundColorMenuItem);
-
+        colorMenu.add(backgroundColorMenuItem);
         backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("SetBackgroundColor", ""),
@@ -767,8 +775,7 @@ public class SwitchboardEditor extends Editor {
 
         // add text color menu item
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
-        _optionMenu.add(textColorMenuItem);
-
+        colorMenu.add(textColorMenuItem);
         textColorMenuItem.addActionListener((ActionEvent event) -> {
             Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("DefaultTextColor", ""),

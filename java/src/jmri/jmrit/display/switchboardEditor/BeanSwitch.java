@@ -155,7 +155,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 beanIcon.setPreferredSize(new Dimension(2*r, 2*r));
                 beanIcon.setLabels(switchLabel, _uLabel);
                 beanIcon.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, 14);
-                beanIcon.positionSubLabel(0, r/2, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
+                beanIcon.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
                 if (_editor.showToolTip()) {
                     beanIcon.setToolTipText(switchTooltip);
                 }
@@ -184,8 +184,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 _icon = true;
                 beanKey.setPreferredSize(new Dimension(new Dimension(2*r, 2*r)));
                 beanKey.setLabels(switchLabel, _uLabel);
-                beanKey.positionLabel(0, 0, Component.CENTER_ALIGNMENT, 14);
-                beanKey.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
+                beanKey.positionLabel(0, r/8, Component.CENTER_ALIGNMENT, 14);
+                beanKey.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
@@ -217,12 +217,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 beanSymbol.setLabels(switchLabel, _uLabel);
                 switch (beanTypeChar) {
                     case 'T' :
-                        beanSymbol.positionLabel(0, -3*r/4, Component.CENTER_ALIGNMENT, 14);
-                        beanSymbol.positionSubLabel(0, 7*r/8, Component.CENTER_ALIGNMENT, 8);
+                        beanSymbol.positionLabel(0, -3*r/5, Component.CENTER_ALIGNMENT, 14);
+                        beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
                     case 'S' :
                     case 'L' :
-                        beanSymbol.positionLabel(0, r/-2, Component.CENTER_ALIGNMENT, 14);
-                        beanSymbol.positionSubLabel(0, 7*r/8, Component.CENTER_ALIGNMENT, 8);
+                        beanSymbol.positionLabel(0, r/-3, Component.CENTER_ALIGNMENT, 14);
+                        beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
 
                 }
                 if (_editor.showToolTip()) {
