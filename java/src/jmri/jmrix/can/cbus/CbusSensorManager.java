@@ -7,7 +7,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -5,7 +5,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.jmrix.tmcc.Bundle;
 import jmri.managers.AbstractTurnoutManager;
 
 import org.slf4j.Logger;
