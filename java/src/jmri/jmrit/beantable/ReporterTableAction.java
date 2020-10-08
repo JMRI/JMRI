@@ -370,24 +370,17 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // Add some entry pattern checking, before assembling sName and handing it to the ReporterManager
         String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameReporter"));
-        String errorMessage = null;
+        String errorMessage;
         String uName = userNameTextField.getText();
         for (int x = 0; x < numberOfReporters; x++) {
             try {
-                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix);
+                curAddress = reporterManager.getNextValidAddress(curAddress, reporterPrefix, false);
             } catch (jmri.JmriException ex) {
                 displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);
                 return;
-            }
-            if (curAddress == null) {
-                log.debug("Error converting HW or getNextValidAddress");
-                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBarLabel.setForeground(Color.red);
-                // The next address returned an error, therefore we stop this attempt and go to the next address.
-                break;
             }
 
             // Compose the proposed system name from parts:
@@ -431,14 +424,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
             // end of for loop creating rangeCheckBox of Reporters
         }
-        // provide feedback to uName
-        if (errorMessage == null) {
-            statusBarLabel.setText(statusMessage);
-            statusBarLabel.setForeground(Color.gray);
-        } else {
-            statusBarLabel.setText(errorMessage);
-            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
-        }
+        // provide success feedback to uName
+        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setForeground(Color.gray);        
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         removePrefixBoxListener(prefixBox);
