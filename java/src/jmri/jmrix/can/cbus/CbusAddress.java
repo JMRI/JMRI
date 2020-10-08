@@ -321,7 +321,7 @@ public class CbusAddress {
         if (address == null || address.isEmpty()) {
             throw new IllegalArgumentException("No Address passed ");
         }
-        address=address.toUpperCase().trim();
+        // address=address.toUpperCase().trim();
         for (String s : invalidChars) {
             if (address.contains(s)) {
                 throw new jmri.NamedBean.BadSystemNameException(Locale.getDefault(), "InvalidSystemNameCharacter",address,s);

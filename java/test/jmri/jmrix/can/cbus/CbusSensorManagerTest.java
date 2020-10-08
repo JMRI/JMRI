@@ -67,14 +67,14 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor(name1);
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"MS+N1E77;-N1E45\" contains invalid character \"M\".");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: ms+n1e77;-n1e45");
         }
         String name2 = "msxabcdef;xfedcba";
         try {
             l.provideSensor(name2);
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: System name \"MSXABCSEF;XFEDCBA\" contains invalid character \"M\".");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: msxabcdef;xfedcba");
         }
     }
 

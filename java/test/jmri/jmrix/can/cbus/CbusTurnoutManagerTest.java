@@ -242,7 +242,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout(name);
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: System name \"MT+N1E77;-N1E45\" contains invalid character \"M\".");
+            JUnitAppender.assertErrorMessage("Invalid system name for Turnout: Wrong number of events in address: mt+n1e77;-n1e45");
         }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);

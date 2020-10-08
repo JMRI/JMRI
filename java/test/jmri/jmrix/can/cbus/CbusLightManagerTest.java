@@ -74,14 +74,14 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight(name1);
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"MLXABCDEF;XFEDCBA\" contains invalid character \"L\".");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: mlxabcdef;xfedcba");
         }
         String name2 = "ml+n1e77;-n1e45";
         try {
             l.provideLight(name2);
             Assert.fail("Expected exception not thrown");
         } catch (IllegalArgumentException ex) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name \"ml+n1e77;-n1e45\" contains invalid character \"M\".");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: ml+n1e77;-n1e45");
         }
     }
 
