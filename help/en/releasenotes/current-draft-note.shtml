@@ -597,6 +597,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
+            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
             <li></li>
         </ul>
 
