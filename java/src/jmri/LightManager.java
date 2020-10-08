@@ -109,6 +109,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getByUserName(@Nonnull String s);
 
     /**
@@ -119,6 +120,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getBySystemName(@Nonnull String s);
 
     /**
@@ -180,5 +182,21 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
+    
+    /**
+     * Get the Next valid hardware address.
+     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
+     * <p>
+     * System-specific methods may want to override getIncrement() rather than this one.
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @param ignoreInitialExisting false to return the starting address if it 
+     *                          does not exist, else true to force an increment.
+     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     */
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
 
 }

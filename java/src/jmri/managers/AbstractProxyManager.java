@@ -196,7 +196,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
-        Manager manager = getManager(systemName);
+        Manager<E> manager = getManager(systemName);
         if (manager == null) {
             manager = getDefaultManager();
         }
@@ -212,7 +212,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     public NameValidity validSystemNameFormat(@Nonnull String systemName) {
-        Manager m = getManager(systemName);
+        Manager<E> m = getManager(systemName);
         return m == null ? NameValidity.INVALID : m.validSystemNameFormat(systemName);
     }
 
@@ -270,7 +270,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      * @return a valid system name for this connection
      * @throws JmriException if systemName cannot be created
      */
-    String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
+    String createSystemName(String curAddress, String prefix, Class<?> managerType) throws JmriException {
         for (Manager<E> m : mgrs) {
             if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
                 try {
@@ -289,6 +289,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
     }
 
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
         for (Manager<E> m : mgrs) {
             log.debug("NextValidAddress requested for {}", curAddress);
@@ -301,6 +302,31 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
                             return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
                         case 'R':
                             return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                        default:
+                            return null;
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        return null;
+    }
+    
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting, char typeLetter) throws jmri.JmriException {
+        for (Manager<E> m : mgrs) {
+            log.debug("NextValidAddress requested for {}", curAddress);
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
+                try {
+                    switch (typeLetter) { // use #getDefaultManager() instead?
+                        case 'T':
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'S':
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'L':
+                            return ((LightManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
+                        case 'R':
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix, ignoreInitialExisting);
                         default:
                             return null;
                     }
