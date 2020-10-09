@@ -497,6 +497,10 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.DARK;
                             break;
+                        case SIGNAL_HEAD_LUNAR:
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
+                            signalAspect = SignalHead.LUNAR;
+                            break;
                         case SIGNAL_HEAD_FLASHRED:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHRED;
@@ -508,6 +512,10 @@ public class DefaultLogix extends AbstractNamedBean
                         case SIGNAL_HEAD_FLASHGREEN:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHGREEN;
+                            break;
+                        case SIGNAL_HEAD_FLASHLUNAR:
+                            varListenerType = LISTENER_TYPE_SIGNALHEAD;
+                            signalAspect = SignalHead.FLASHLUNAR;
                             break;
                         case SIGNAL_HEAD_LIT:
                         case SIGNAL_HEAD_HELD:
@@ -580,8 +588,16 @@ public class DefaultLogix extends AbstractNamedBean
                                 }
                                 break;
                             case LISTENER_TYPE_SIGNALMAST:
-                                listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,  // NOI18N
-                                        namedBean, varType, conditional);
+                                if (varType == Conditional.Type.SIGNAL_MAST_LIT) {
+                                    listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                } else if (varType == Conditional.Type.SIGNAL_MAST_HELD) {
+                                    listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                } else {
+                                    listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,  // NOI18N
+                                            namedBean, varType, conditional);
+                                }
                                 break;
                             case LISTENER_TYPE_OBLOCK:
                                 listener = new JmriTwoStatePropertyListener("state", LISTENER_TYPE_OBLOCK,  // NOI18N

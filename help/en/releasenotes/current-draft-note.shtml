@@ -389,6 +389,13 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
+          in copying conditionals. See the updated help files for details.</li>
+          
+          <li>Fixed a couple of bugs there Logix wasn't correctly listening on
+          signal head lunar state, signal head flash lunar state, signal mast
+          lit state and signal mast held state. See PR #9059.</li>
+          
           <li></li>
         </ul>
 
@@ -590,6 +597,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
+            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
             <li></li>
         </ul>
 
