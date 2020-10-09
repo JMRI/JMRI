@@ -145,7 +145,7 @@
                 <li><a href="#frmSWDL">Switch direction lever</a></li>
                 <li><a href="#frmCO">Call On</a></li>
                 <li><a href="#frmTRL">Traffic locking</a></li>
-                <li><a href="#frmTol">Turnout locking</a></li>
+                <li><a href="#frmTUL">Turnout locking</a></li>
                 <li><a href="#frmIL">Indication locking</a></li>
               </ol>
             </li>
@@ -662,9 +662,11 @@
         </p>
 
         <p>
-        <strong>Block</strong>: Required for signal masts.  Choose from the blocks defined in your system already.
-        You <strong>must</strong> manually check in JMRI the "Permissive" checkbox for this block in order for call
-        on to work for this block, which is outside the scope of this editor.
+        <strong>Block</strong>: Required for signal masts.  Choose from the blocks defined
+        in your system.  The selected block must have the <strong>Permissive</strong> checkbox
+        enabled.  If it is not, a dialog will be displayed which will offer to set the value.
+        Select <strong>Yes</strong> to have it set.  If you select <strong>No</strong>,
+        you will need to do it yourself.  If you don't, Call-On will not work.
         </p>
 
         <p>
@@ -781,7 +783,183 @@
 
         <a name="frmTUL" id="frmTUL"></a>
         <h4>Turnout locking</h4>
+        <p>There are 3 types of turnouts on a layout</p>
+        <dl>
+          <dt>Controlled</dt>
+            <dd>
+            Controlled turnouts have levers and indicators on the panel.  These are defined
+            using the <strong>Switch direction indicators</strong> and the <strong>Switch
+            direction lever</strong> sections.
+            </dd>
+          <dt>Uncontrolled</dt>
+            <dd>
+            Uncontrolled turnouts do not have levers and indicators on the panel, but have been
+            assigned to a <strong><em>special</em></strong> O.S. section using <strong>Turnout locking</strong>.
+            </dd>
+          <dt>Unknown</dt>
+            <dd>
+            All other turnouts.
+            </dd>
+        </dl>
+
         <p>
+        If the turnout position can be changed using local controls, there is a risk that the
+        dispatcher can authorize a train movement that can cause issues.  The goal is to detect those
+        changes and take corrective action.
+        </p>
+
+        <p>
+        If the known state of a turnout is different than the CTC required state, a turnout command will
+        be issued to return the turnout to the CTC state.  Depending on the hardware used to change
+        the turnout position, a typical reaction might be that the turnout has started moving and then
+        reverses direction.  This is typical for Tortoise switch machines.
+        </p>
+
+        <p>
+        A related requirement is that the dispatcher may need to grant local control of turnouts.
+        This frequently occurs where switching actions need to occur.  Once local control has been
+        granted, the CTC machine needs to prevent dispacher actions with the exception of revoking
+        local control.
+        </p>
+
+        <p>
+        Another use for local control is having control of turnouts even if the computer is
+        not running.  This provides a backup mechanism to computer failures.  It also requires
+        that alternative procedures are available for dispatching, such as "captain may I"
+        and magnet boards.
+        </p>
+
+        <p>Some possible scenarios:</p>
+        <ol>
+          <li>The turnout image on a JMRI panel is clicked.</li>
+          <li>The JMRI turnout table state is changed.</li>
+          <li>The switch machine is configured to respond to throttle turnout commands.</li>
+          <li>A local control panel is directly wired to switch machines.</li>
+        </ol>
+
+        <p>
+        Items 1 and 2 are local to the JMRI environment.  The CTC machine will see the change and take
+        corrective action.  3 and 4 are external to JMRI.  Detection of these items will depend on
+        turnout state feedback.  If feedback has not been implemented, turnout locking will have no value.
+        </p>
+
+        <h5>Feedback</h5>
+        <p>
+        Feedback depends on the hardware used to change turnout positions.  A Tortoise switch machine
+        can do either 1 or 2 sensor feedback but requires other hardware to convert the TTL logic
+        state change to a sensor message.  A Digitrax DS64 running on a LocoNet can handle both
+        the local switch button and generate a feedback message.
+
+        <h5>Configuration</h5>
+        <p>
+        To configure turnout locking, select an O.S. section from the list, click on the <strong>Enable</strong> check box
+        and select <strong>Edit</strong> under the <em>Turnout Locking:</em> label.  The form contains two sensor
+        entries for the lever and indicator icons, 4 entries for turnouts, and 3 options.  The
+        <strong>Lock Implementation</strong> is fixed.  There are also 4 options for Feedback different.
+        </p>
+
+        <p>The <strong>When locked, switch state is Closed</strong> option indicates whether the turnout should be
+        set to Closed or Thrown when the dispatcher regains control of the turnout.
+        </p>
+
+        <p>There are 4 locking styles.</p>
+          <h6>Controlled turnout with locking and unlocking</h6>
+          <p>
+          The turnout belongs to the O.S. section and will have Switch direction levers and indicators.
+          The <strong>Enable GUI Icons</strong> option is selected so that the locking lever and indicator icons are added
+          to the CTC panel.
+          </p>
+
+          <p>
+          This is the typical case, and requires nothing special be done.  The O.S. Section
+          <strong>must be</strong> unoccupied in order for a turnout to be unlocked or locked.
+          Depending on the available feedback, the local turnout changes might not be reported
+          to JMRI.  If that is the case, the dispatcher should use the CTC controls to set the
+          turnout to the desired state.
+          </p>
+
+          <h6>Controlled turnout with no unlocking</h6>
+          <p>
+          The turnout belongs to the O.S. section and will have Switch direction levers and indicators.
+          The <strong>Enable GUI Icons</strong> option is <strong>NOT</strong> selected so that the
+          turnout locking lever and indicator icons arre not on the panel.  The turnout cannot be unlocked
+          since there are no icons.  This makes the turnout permanently under dispatcher control.
+          </p>
+
+          <h6>Uncontrolled turnout with locking and unlocking</h6>
+          <p>
+          Create a special O.S. section that contains the turnout <strong>as if</strong> it was an O.S. Section.  Use a switch number
+          that is higher than the highest value that will used on the CTC machine, or for safety, use values starting with
+          1001.  For the GUI column #, use the proper number to create both the Code Button and the lock/unlock toggle
+          switch in the proper place.
+          </p>
+
+          <p>
+          However, <strong>do not</strong> check any features except the Turnout Locking check box for this fake O.S.
+          section.  This is how this is differentiated from the above true O.S. Section lock.
+          </p>
+
+          <p>
+          When configuring the Code Button, you will be required to enter an occupancy sensor.  Enter the
+          occupancy sensor for the block <Strong>containing</Strong> the turnout to be locked.
+          </p>
+
+          <p>
+          On the Turnout Locking screen, select the turnout, the <strong>No Dispatcher control of switch</strong>
+          and the <strong>Enable GUI Icons</strong> options.  Since the dispatcher has no direct control of
+          the turnout, the turnout will be forced to the state based on the <strong>When locked, switch
+          state is "Closed"</strong> setting.  The default is Closed, uncheck for Thrown.
+          </p>
+
+          <h6>Uncontrolled turnout with no unlocking</h6>
+          <p>
+          The special O.S. section and turnout locking are defined as above with one exception.  The
+          <strong>Enable GUI Icons</strong> option is NOT selected.  This makes the uncontrolled turnout
+          locked for the duration of the CTC session.  This is used for uncontrolled turnouts that must always be
+          in a known state during the CTC session, but have other uses when not running CTC.  For example,
+          a turnout to facilitate re-staging.
+          </p>
+
+        <h5>Feedback Different</h5>
+        <p>
+        Normally, the feedback value matches the commanded value.  JMRI allows for both being backwards, and in order to
+        fix that, you put a check the "Inverted" column in the Turnout Table in JMRI.  However, in case the feedback value
+        is different than the commanded value, then you put a check in that column.  The following table lists the possibilities:
+        </p>
+        <table>
+            <tr>
+                <th>Command:</th>
+                <th>Feedback:</th>
+                <th>JMRI Turnout inverted checked:</th>
+                <th>CTC Editor feedbacks different checked:</th>
+            </tr>
+            <tr>
+                <td>Normal</td>
+                <td>Normal</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Reversed</td>
+                <td>Reversed</td>
+                <td>Yes</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Normal</td>
+                <td>Reversed</td>
+                <td>No</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Reversed</td>
+                <td>Normal</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+        </table>
+<!--         <p> -->
+<!--
         <strong>Background:</strong>
         On my layout for main line turnouts, I have a local push button for each DS-54 and DS-64 that locally requests
         the turnout to "flip" the other way.  By locally, I mean no computer involvement.  I originally designed it
@@ -796,7 +974,9 @@
         <p>
         <strong>How "Lock implementation: Greg's" works in this situation (the ONLY supported possibility at this time):</strong>
         </p>
+ -->
         <p>
+<!--
         If the JMRI software monitored the LocoNet network for turnout commands, the switch could not
         be locked properly, because the local button generates no messages to LocoNet.  However, with the
         feedback available (INDIRECT), what my software does is when it sees a feedback message that disagrees
@@ -809,6 +989,8 @@
         the switch going 1/2 way, a train going over the switch would derail, and you'd be correct.  But
         since my layout has the push buttons right next to the switch it controls, hopefully an operator
         won't attempt to purposely derail a train.
+ -->
+<!--
         </p>
         <p>
         There are two main situations that need to be considered separately:
@@ -859,6 +1041,8 @@
         purpose of this on the prototype is safety: so that the Dispatcher does not accidentally unlock an unoccupied block and leave
         it that way, thereby possibly causing a derailment sometime in the future, or for signals to not clear into this block
         </p>
+ -->
+<!--
         <p>
         Feedbacks different check boxes:
         </p>
@@ -899,6 +1083,7 @@
                 <td>Yes</td>
             </tr>
         </table>
+ -->
 
         <a name="frmIL" id="frmIL"></a>
         <h4>Indication locking</h4>

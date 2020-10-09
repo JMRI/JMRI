@@ -450,13 +450,13 @@ public class CtcEditorSignalMastsTest {
         jcbo = new JComboBoxOperator(rules, 11);
         jcbo.setSelectedItem("B-Right-Approach");
 
-        // Add this...
+        // Add this...; reply yes to permissive warning
         JButtonOperator jbAddToEnd = new JButtonOperator(rules, Bundle.getMessage("TextDlgCOAddInstructions"));
+        Thread btnAddRow = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonYes"), "btnAddRow");  // NOI18N
         jbAddToEnd.doClick();
-        if (DELAY > 0) {
-            new EventTool().waitNoEvent(DELAY);
-        }
-        if (PAUSE) JUnitUtil.waitFor(2000);
+        JUnitUtil.waitFor(() -> {
+            return !(btnAddRow.isAlive());
+        }, "btnAddRow finished");  // NOI18N
 
         // Edit row
         jloRules.clickOnItem(0, 1);
