@@ -79,7 +79,7 @@
         <a href="images/webServerMenubar.png"><img src="images/webServerMenubar.png"
         alt="Web Server Panel screenshot" width="250" height="90"></a>
         </li>
-        <li>Each of these categories has its own JavaScript code file, e.g., <code>/web/js/Panel.js</code>, plus
+        <li>Each category has its own JavaScript code file, e.g., <code>/web/js/Panel.js</code>, plus
         supporting "Servlets" to connect to JMRI, as documented in the <a
         href="https://www.jmri.org/JavaDoc/doc/jmri/web/server/package-summary.html">Web Server Javadoc</a>.</li>
       </ul>
@@ -88,25 +88,48 @@
       <a id="exampleA" name="exampleA"></a><h3>A. From JMRI to the browser</h3>
 
       <p>We assume JMRI and Web Server are running and the user has a browser pointing to
-      <code>http://localhost:12080</code>.<br>
-      Configuration and current state of panel items is carried out inside the
-      <code>jmri/jmrit/display/xPanelEditor.java</code> code. This means that creating a panel, and listening for
-      changes on the layout mast all be set up first in the JMRI application. A graphical control panel needs to be
-      loaded in JMRI to show up in the JMRI web browser drop down (it is OK if a panel is hidden in JMRI UI).</p>
+      <code>http://localhost:12080</code> as set in JMRI Web Server preferences.<br>
+      Configuration and current state of panel items is handled by the
+      <code>jmri/jmrit/display/xPanelEditor.java</code> code. This means that creating a panel and items like
+      Turnouts connected to the layout, and listening for changes has been completed first in the JMRI application.
+      A graphical control panel needs to be loaded in JMRI for it to show up in the JMRI web browser drop down (it is
+      OK if a panel is hidden in JMRI UI).</p>
 
       <a href="images/webservletsexample_A.png"><img src="images/webservletsexample_A.png"
-      alt="Web Server Sequence Diagram A (draft)" width="598" height="270"></a>
+      alt="Web Server Sequence Diagram A (draft)" width="471" height="231"></a>
 
       <ol>
-        <li>The User uses the mouse to click the "Panel" combo on the screen.</li>
+        <li>To open a panel the User uses the mouse to click the "Panel" combo on the menu bar.</li>
 
-        <li>The web browser responds by asking Web Server to produce the panel by sending a GET request.</li>
+        <li>The web browser responds by asking Web Server to produce the panel by sending a GET request together with
+          a <code>/panel/"name"</code> URL.</li>
+
+        <li>This starts the <code>/web/js/panel.js</code> JavaScript code.</li>
+
+        <li>The main method in <code>panel.js</code> is <code>$(document).ready(function() {</code> (around line
+          4361).<br>
+          It ends with a call to the <code>requestPanelXML(panelName);</code> method:<br>
+          <code><br>
+          3887 var requestPanelXML = function(panelName) {<br>
+          3888  &nbsp;&nbsp;&nbsp;$.ajax({<br>
+          3889  &nbsp;&nbsp;&nbsp;type: "GET",<br>
+          3890  &nbsp;&nbsp;&nbsp;url: "/panel/" + panelName + "?format=xml", [...]<br>
+          3891  &nbsp;&nbsp;&nbsp;success: function(data, textStatus, jqXHR) {<br>
+          3892  &nbsp;&nbsp;&nbsp;processPanelXML(data, textStatus, jqXHR);<br>
+          3892  &nbsp;&nbsp;&nbsp;setTitle($gPanel["name"]); } [...]<br>
+          </code><br>
+          Here, line 3888 sends an <a href="https://www.w3schools.com/xml/ajax_intro.asp">AJAX</a> (Asynchronous
+          JavaScript
+          And XML) <code>GET XMLHttpRequest</code>code> for the panel to be retrieved by its name to the JMRI
+          PanelServlet.
+        </li>
 
         <li>The connection between web server and JMRI categories is handled by <strong>servlets</strong> in
-          <code>JMRI/java/src/jmri/web/servlet/</code>, pieces of code interacting with the
+          <code>JMRI/java/src/jmri/web/servlet/</code>, pieces of Java code interacting with the
           web server. The extended HttpServlet <code>jmri/web/servlet/panel/AbstractPanelServlet.java</code> links
-          the web server requests to the information kept in Java. The <code>doGet()</code> method in response
-          starts <code>panel.js</code> to answer the request.</li>
+          the web server requests to the information kept in Java. The <code>doGet()</code> HttpServer message calls in
+          <code>panel.js</code> to answer the request.</li>
+
         <li>
           In the case of Switchboards the <code>/jmri/web/servlet/panel/SwitchboardServlet.java</code> contains methods
           such as:
@@ -114,45 +137,34 @@
             <li><code>String getPanelType()</code></li>
             <li><code>String getXmlPanel(String name)</code></li>
           </ul>
-          That second method pulls information from SwitchboardEditor and individual BeanSwitches placed on that
-          panel:<br>
+          When you want to develop new features on web panels, that second method needs to be expanded to include them
+          when pulling new information from SwitchboardEditor and individual BeanSwitches placed on that panel:<br>
           <code><br>
-            1 protected void doGet(HttpServletRequest request, HttpServletResponse response) {<br>
-            2 &nbsp;&nbsp;String getXmlPanel(String name) {<br>
-            3 &nbsp;&nbsp;&nbsp;&nbsp;SwitchboardEditor editor = (SwitchboardEditor) getEditor(name);<br>
-            4 &nbsp;&nbsp;&nbsp;&nbsp;Element panel = new Element("panel");<br>
-            5 &nbsp;&nbsp;&nbsp;&nbsp;panel.setAttribute("shape", editor.getSwitchShape());<br>
-            6 &nbsp;&nbsp;&nbsp;&nbsp;Element bgColor = new Element("backgroundColor");<br>
-            7 &nbsp;&nbsp;&nbsp;&nbsp;bgColor.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));<br>
-            8 &nbsp;&nbsp;&nbsp;&nbsp;panel.addContent(bgColor);<br>
+            40   protected String getXmlPanel(String name) {<br>
+            41 &nbsp;&nbsp;&nbsp;SwitchboardEditor editor = (SwitchboardEditor) getEditor(name);<br>
+            42 &nbsp;&nbsp;&nbsp;&nbsp;Element panel = new Element("panel");<br>
+            43 &nbsp;&nbsp;&nbsp;&nbsp;panel.setAttribute("shape", editor.getSwitchShape());<br>
+            44 &nbsp;&nbsp;&nbsp;&nbsp;Element color = new Element("backgroundColor");<br>
+            45 &nbsp;&nbsp;&nbsp;&nbsp;color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));<br>
+            46 &nbsp;&nbsp;&nbsp;&nbsp;panel.addContent(color);<br>
           </code><br>
-          Lines 6-8 allow us to later from <code>panel.js</code> call e.g.,
-          <code>{backgroundColor: $gPanel.backgroundcolor}</code>
-        </li>
-
-        <li>The result is an xml <code>out.outputString(doc)</code> in reply to the web server request.
-        </li>
-
-        <li>The main method in panel.js is <code>$(document).ready(function() {</code> (around line 4151) (re)loads
-          the xml page and ends with <code>requestPanelXML(panelName);</code>.</li>
-
-        <li>This sends an <a href="https://www.w3schools.com/xml/ajax_intro.asp">AJAX</a> (Asynchronous JavaScript
-          And XML) GET XMLHttpRequest for the panel to be retrieved by its name to the JMRI PanelServlet
-          (see <code>panel.js</code> around line 3849).
+          Line 5 allows us to later from <code>panel.js</code> call e.g.,<br>
+          <code>1018   $("#panel-area").css({'background-color': $gPanel.backgroundcolor});</code>
         </li>
 
         <li>From the Java code running JMRI, specific information is written out to an xml "snapshot" for both the
-        panel (frame) and the individual objects:
+        panel (JFrame) and the individual objects placed on that panel, so called 'Positionables':
           <ul>
             <li>The complete panel is "stored" by the <code>store(object)</code> method in
               <code>jmri/jmrit/display/switchboardEditor/configurexml/SwitchboardEditorXml.java</code>:<br>
               <code><br>
-              public Element store(Object o) {<br>
-              &nbsp;&nbsp;SwitchboardEditor p = (SwitchboardEditor) o;<br>
-              &nbsp;&nbsp;Element panel = new Element("switchboardeditor");<br>
-              &nbsp;&nbsp;JFrame frame = p.getTargetFrame();<br>
-              &nbsp;&nbsp;panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");<br>
-              &nbsp;&nbsp;panel.setAttribute("name", "" + frame.getTitle());<br>
+              41 public Element store(Object o) {<br>
+              42&nbsp;&nbsp;SwitchboardEditor p = (SwitchboardEditor) o;<br>
+              43&nbsp;&nbsp;Element panel = new Element("switchboardeditor");<br>
+              44&nbsp;&nbsp;JFrame frame = p.getTargetFrame();<br>
+              45&nbsp;&nbsp;panel.setAttribute("name", "" + frame.getTitle());<br>
+              46&nbsp;&nbsp;panel.setAttribute("class",
+                "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");<br>
                 [...]<br></code><br>
               followed by a for-each loop:<br>
                 <code><br>
@@ -174,31 +186,49 @@
               }<br></code><br>
             </li>
           </ul>
+        The result is an xml <code>out.outputString(doc)</code> in reply to the web server request.
         </li>
 
-        <li>To process the response returned for the <code>requestPanelXML</code> command, the JavaScript code in
-          <code>/web/js/panel.js</code> contains the function
-          <code>processPanelXML($returnedData, $success, $xhr)</code> (around line 983) that renders from
-          the xml data in <code>$xml</code> an object-based web panel client-side, ready to forward to the browser.<br>
-          Among a lot of other properties, it sets the background color from the <code>panel</code> attribute:<br>
+        <li>To process the xml response returned for the <code>requestPanelXML</code> command, the JavaScript code in
+          <code>/web/js/panel.js</code> contains the function<br>
+          <code>processPanelXML($returnedData, $success, $xhr)</code> (around line 983)<br>
+          that renders from
+          the xml data in <code>$xml</code> an object-based web panel html, ready to forward to the browser and
+          display client-side using CSS and HTML5.<br>
+          Among a lot of other properties, the background color is set from the <code>panel</code> attribute:<br>
           <code><br>$("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});<br></code><br>
           where <code>$()</code> invokes jQuery as a selector (a function that returns a set of elements found in the
           DOM of the web page).<br>
-          After the attributes of the main panel such as color, size and position are copied from JMRI, all
-          individual elements in the panel xml are processed in a for-each loop, drawing them on screen, and building
-          a persistent array of <code>$widget</code>s:<br>
+          After the attributes of the main panel such as color, size and position are copied from the xml, all
+          individual elements in the panel xml are processed in a for-each loop, building a persistent array of
+          <code>$widget</code> arrays:<br>
           <code><br>
-            1 $panel.contents().each(<br>
-            2 &nbsp;&nbsp;function() {<br>
-            3 &nbsp;&nbsp;&nbsp;&nbsp;var $widget = new Array();
+          1066 $panel.contents().each(<br>
+          1067 &nbsp;&nbsp;function() {<br>
+          1068 &nbsp;&nbsp;&nbsp;&nbsp;var $widget = new Array();
           <br></code>
           <br>
-          The properties of each (positionable) item are stored as an array forming the widget web object
-          e.g.,:<br>
-          <code><br>case "beanswitch" :<br>
-          &nbsp;&nbsp;$widget['text8'] = $(this).find('inconsistentText').attr('text');<br>
-          </code><br>
+          In such an array the attributes of each (positionable) item are copied in 1-on-1 from the xml, filling the
+          basic widget web object:<br>
+          <code>
+          1074  $(this.attributes).each(function() {<br>
+          1075  &nbsp;&nbsp;$widget[this.name] = this.value;<br>
+          1076  });<br>
+          </code>
         </li>
+
+        <li>
+          Next, every <code>$widget</code> array if enriched by extra fields, either using attributes shared on the
+          panel, like<br>
+          <code>1496 var $cr = $gPanel.turnoutcirclesize * SIZE;</code><br>
+          with attributes of one of the elements:
+          <code>1868 $widget['text8'] = $(this).find('inconsistentText').attr('text');</code><br>
+          or with copies of other  elements already present in the $widget array, for example:<br>
+          <code><br>case "beanswitch" :<br>
+          &nbsp;&nbsp;$widget['name'] = $widget.label;</code><br>
+          which creates a 'name' item in the array and copies in the <code>label</code> item.
+        </li>
+
         <li>Next, the HTML is written:<br>
           <code><br>
           $("#panel-area").append("&lt;div id=" + $widget.id + "r class='" +<br>
@@ -227,11 +257,10 @@
           and the separate PositionableItems like LayoutTurnout, CPE SensorIcon and Switchboard Beanswitch.
         </li>
 
-        <li>Once the page is ready and all of <code>panel.js</code> has run, the main method
-        <code>$(document).ready(function()</code> is run (around line 4148), allowing calls to all widgets on the
-        page frame via:
-        <code>updateWidgets(name, state, data)</code>, effectively sending out <code>setWidgetState(widgetId,
-        state, data)</code> which will update the shape displayed on screen, e.g., when a sensor on the layout
+        <li>Now that the <code>$(document).ready(function()</code> main method is running, it will listen for
+        changes, and depending on the type (object) will start
+        <code>updateWidgets(name, state, data)</code>, which in turn calls <code>setWidgetState(widgetId,
+        state, data)</code> to update the shape displayed on screen, e.g., when a sensor on the layout
         changes state.
         </li>
 
@@ -258,8 +287,7 @@
       <a id="exampleB" name="exampleB"></a><h3>B. From the browser to JMRI</h3>
 
       <a href="images/webservletsexample_B.png"><img src="images/webservletsexample_B.png"
-      alt="Web Server Sequence Diagram A (draft)" width="598" height="186"></a>
-
+      alt="Web Server Sequence Diagram A (draft)" width="471" height="201"></a>
 
       <p>Note: Web click events are only enabled if a panel is configured (in JMRI xPanelEditor) to allow control.</p>
       <ol>
@@ -286,12 +314,13 @@
         <li>The <code>$handleClick(e)</code> function in <code>panel.js</code> (around line 1934) updates the widgets
           involved:
           <ul>
-            <li>Text based widgets are told how to change the &lt;div&gt; item that's already displayed on screen: get by
-              their ID, update contents e.g., show an On label instead of Off.</li>
+            <li>Text based widgets are told how to change the &lt;div&gt; item that's already displayed on screen:
+              fetch them by their ID, update their contents e.g., show an ON label instead of OFF.</li>
             <li>Icon-based widget are redrawn to reflect changes to state or occupancy by drawing on the graphical
               "canvas"</li>
             <li>It is also possible to swap styles on a div using CSS, for example to change the style of
-              a widget to a new style called "css4" (4 represents the <code>int</code> value for Inactive and Thrown):<br>
+              a widget from "css2" to a new style called "css4" (where 4 represents the <code>int</code> value for
+              Inactive and Thrown):<br>
               <br>
               <code>var $reDrawIcon = function($widget) {<br>
                 &nbsp;&nbsp;$('div#' + $id).css($widget['css' + $newState]);<br></code><br>

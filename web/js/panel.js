@@ -3834,7 +3834,7 @@ var $getNextState = function($widget) {
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
-//                      log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
+                        // log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
                     }
                 }
                 if (typeof $nextState === "undefined")
@@ -3851,7 +3851,7 @@ var $getNextState = function($widget) {
                     var s = k.substr(4); //extract the state from current icon var
                     //look for next icon value, skipping Held, Dark and Unknown
                     if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
-                  && s !='Unlit' && s !=  'Unknown') {
+                    && s !='Unlit' && s !=  'Unknown') {
                         if (typeof $firstState === "undefined")
                             $firstState = s;  // remember the first state (for last one)
                         if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
@@ -3888,10 +3888,10 @@ var requestPanelXML = function(panelName) {
     $("#activity-alert").addClass("show").removeClass("hidden");
     $.ajax({
         type: "GET",
-        url: "/panel/" + panelName + "?format=xml", //request proper url
+        url: "/panel/" + panelName + "?format=xml", // request proper url
         success: function(data, textStatus, jqXHR) {
             processPanelXML(data, textStatus, jqXHR);          
-            setTitle($gPanel["name"]);  //set final title once load completes, helps with testing  
+            setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
         },
         error: function( jqXHR, textStatus, errorThrown) {
             alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
@@ -3957,7 +3957,7 @@ var $drawWidgetSymbol = function(id, state) {
             ctx.fillRect(-0.5*radius, -1.1*radius, radius, radius/3);
             // + rounded outline
             ctx.lineJoin = "round";
-            ctx.lineWidth = 10;
+            ctx.lineWidth = radius/5;
             ctx.strokeStyle = (state == "2" ? $activeColor : "pink");
             ctx.strokeRect(-0.5*radius, -1.1*radius, radius, radius/3);
             // green = lower rounded rect
@@ -4000,11 +4000,11 @@ var $drawWidgetSymbol = function(id, state) {
                     ctx.stroke();
                     // cross
                     ctx.lineWidth = 1;
-                    ctx.moveTo(radius * -0.74, radius * -0.74); // 1/2*sin(45 deg)
+                    ctx.moveTo(radius * -0.74, radius * -0.74);
                     ctx.lineTo(radius * 0.74, radius * 0.74);
                     ctx.stroke();
                     ctx.lineWidth = 1;
-                    ctx.moveTo(radius * -0.74, radius * 0.74); // 1/2*sin(45 deg)
+                    ctx.moveTo(radius * -0.74, radius * 0.74);
                     ctx.lineTo(radius * 0.74, radius * -0.74);
                     ctx.stroke();
                     break;
@@ -4021,47 +4021,58 @@ var $drawWidgetSymbol = function(id, state) {
                     break;
                 case "T" : // turnout, orientation as JMRI
                 default :
-                    ctx.beginPath();
-                    ctx.lineWidth = "10";
+                    ctx.lineWidth = radius/2.9;
                     // points, at the back
                     ctx.strokeStyle = "lightgray";
-                    ctx.moveTo(-0.4 * $canvas.width, -20);
-                    ctx.lineTo(0.1 * $canvas.width, 10);
+                    // -angled turnout shape
+                    //ctx.moveTo(-0.4 * $canvas.width, -20);
+                    //ctx.lineTo(0.1 * $canvas.width, 10);
+                    //ctx.lineTo(-0.4 * $canvas.width, 10);
+                    // -curved turnout shape
+                    ctx.moveTo(0.4 * $canvas.width, 10);
                     ctx.lineTo(-0.4 * $canvas.width, 10);
                     ctx.stroke();
+                    ctx.beginPath();
+                        ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    ctx.stroke();
                     // active line, start with new color
-                    var endy = (state == "2" ? "10" : "-20");
                     ctx.beginPath();
                     ctx.strokeStyle = $activeColor;
-                    ctx.moveTo(0.4 * $canvas.width, 10);
-                    ctx.lineTo(0.1 * $canvas.width, 10);
-                    ctx.lineTo(-0.4 * $canvas.width, endy);
+                    // -angled turnout shape
+                    //var endY = (state == "2" ? "10" : "-20");
+                    //ctx.moveTo(0.4 * $canvas.width, 10);
+                    //ctx.lineTo(0.1 * $canvas.width, 10);
+                    //ctx.lineTo(-0.4 * $canvas.width, endY);
+                    // -curved turnout shape
+                    if (state == "2") {
+                        ctx.moveTo(0.4 * $canvas.width, 10);
+                        ctx.lineTo(-0.4 * $canvas.width, 10);
+                    } else {
+                        ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    }
                     ctx.stroke();
                     break;
             }
-        default :
+            default :
             // only render label
     }
 
     // draw label (system name + state) text
-    ctx.restore(); // resets origin and stroke&fill
+    //ctx.restore(); // resets origin and stroke&fill
     ctx.fillStyle = (state == "0" ? $unknownColor : $gPanel.defaulttextcolor); // simple change in color
     ctx.font = "16px Arial";
-    if (shape == "drawing") { // text centered between Maerklin buttons
-        ctx.textAlign = 'center';
-        ctx.fillText($gWidgets[id].text, $canvas.width/2, (0.5*$canvas.height + 0.1*radius));
+    ctx.textAlign = 'center';
+    if (shape == "drawing") { // text centered vertically between Maerklin buttons
+        ctx.fillText($gWidgets[id].text, 0, 0);
     } else {
-        ctx.textAlign = 'left';
-        ctx.fillText($gWidgets[id].text, 10, 13);
+        ctx.fillText($gWidgets[id].text, 0, -0.5 * $canvas.height + 16); // +16 for text size below top
     }
     // draw sublabel (user name) text
     ctx.font = "italic 10px Arial";
     if (shape == "drawing") { // text centered between Maerklin buttons
-        ctx.textAlign = 'center';
-        ctx.fillText($gWidgets[id].username, $canvas.width/2, (0.95*$canvas.height));
+        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
     } else {
-        ctx.textAlign = 'left';
-        ctx.fillText($gWidgets[id].username, 10, 0.9*$canvas.height);
+        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
     }
     ctx.restore(); // restore color and width back to default
 };

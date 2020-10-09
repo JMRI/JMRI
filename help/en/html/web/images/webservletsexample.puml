@@ -9,7 +9,7 @@ participant SwitchboardXml
 participant BeanSwitchXml
 end box
 box /jmri/web/servlet/panel/
-participant panelServlet.java
+participant xPanelServlet.java
 end box
 box "Web Server /web/" #LightBlue
 participant panel.js
@@ -28,34 +28,38 @@ activate Sensor
 activate Switchboard
 activate BeanSwitch
 activate panel.js
+activate JSONSocketSrv
 activate browser
 
 == A. Initial Web Panel Display ==
 User -> Mouse: click
 Mouse -> browser: mouseUp()
-browser -> jQuery: "Show Panel"
-activate jQuery
-jQuery -> panel.js: getPanel()
-panel.js -> panelServlet.java: processPanelXml
-activate panelServlet.java
-panelServlet.java -> SwitchboardXml: store()
+browser -> JSONSocketSrv: "Show Panel"
+JSONSocketSrv -> panel.js: getPanel()
+panel.js -> xPanelServlet.java: requestPanelXML
+activate xPanelServlet.java
+xPanelServlet.java -> SwitchboardXml: xEditor#store()
 activate SwitchboardXml
 SwitchboardXml -> Switchboard: editor.getBgColor()
 Switchboard -> SwitchboardXml: BgColor="Red"
 SwitchboardXml -> panel.js: XmlDataStream
 deactivate SwitchboardXml
-panelServlet.java -> BeanSwitchXml: store()
-deactivate panelServlet.java
+xPanelServlet.java -> BeanSwitchXml: BeanSwitch#store()
+deactivate xPanelServlet.java
 activate BeanSwitchXml
 BeanSwitchXml -> BeanSwitch: bs.getLabel()
 BeanSwitch -> BeanSwitchXml: label="IS4+"
 BeanSwitchXml -> panel.js: XmlDataStream
 deactivate BeanSwitchXml
-
+panel.js -> panel.js: processPanelXml
+panel.js -> jQuery: $("#activity-alert")...
+activate jQuery
+jQuery -> browser: <div class=hide>
+deactivate jQuery
 panel.js -> browser: HTML5 <panel>
 browser -> panel.css: css4?
 activate panel.css
-panel.css -> browser: "css4"
+panel.css -> browser: css4
 deactivate panel.css
 browser -> div: ID#4,Green
 activate div #00bb00
@@ -64,16 +68,28 @@ div -> User: Hi, I'm here
 User -> Mouse: click
 Mouse -> browser: mousUp(x,y)
 browser -> jQuery: clicked(divID4)
+activate jQuery
 jQuery -> panel.js: handleClick()
-panel.js -> JSONSocketSrv: setObject(#4)
-JSONSocketSrv -> Sensor: setState(4)
-Sensor -> BeanSwitch: Inactive
+deactivate jQuery
+panel.js -> panel.js: sendElementChange($4)
+panel.js -> JSONSocketSrv: jmri.setObject($4)
+JSONSocketSrv -> Sensor: setState($4, 8)
+Sensor -> BeanSwitch: newState=Inactive
 BeanSwitch -> JSONSocketSrv: IS4=Inactive
 JSONSocketSrv -> panel.js: handleChange(IS4)
-panel.js -> jQuery: div#4=8
+panel.js -> panel.js: updateWidgets($4, 8)
+panel.js -> jQuery: div$4=8
+activate jQuery
+jQuery -> browser: div$4:Red
+deactivate jQuery
+browser -> panel.css: css8?
+activate panel.css
+panel.css -> browser: css8
+deactivate panel.css
 deactivate div
-jQuery -> div: divID#4:Red
+browser -> div: ID#4,Green
 activate div #dd0000
+div -> user: I'm Red
 @enduml
 
 this file is input for PlantUML to produce PNG images for help/en/html/web Help
