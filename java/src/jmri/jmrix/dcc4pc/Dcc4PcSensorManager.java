@@ -71,6 +71,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * This extracts the board id out from the system name.
+     * @param systemName including system prefix and type letter.
      */
     void extractBoardID(String systemName) {
         if (systemName.contains(":")) {
