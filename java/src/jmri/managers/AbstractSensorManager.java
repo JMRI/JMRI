@@ -226,7 +226,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     /** {@inheritDoc} */
     @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSensorManager.class);
