@@ -525,7 +525,7 @@
       <ourAspect>Výstraha</ourAspect>
       <ourAspect>Rychlost 40 a výstraha</ourAspect>
       <ourAspect>Rychlost 60 a opakovaná výstraha</ourAspect>
-      <ourAspect>Rychlost 80 a výstraha</ourAspect>
+      <ourAspect>Rychlost 80 a opakovaná výstraha</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Opakovaná očekávej 40</advancedAspect>
