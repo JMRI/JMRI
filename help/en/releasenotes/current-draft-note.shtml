@@ -78,7 +78,12 @@
                   "Voltage/Current Meter" tool. Further information may be found at the
                   <a href="../html/hardware/loconet/DigitraxMeters.shtml">
                       Digitrax "Meters"</a> web page.</li>
-                <li></li>
+                <li>Start-up "Interrogation" of LocoNet Sensor and Turnout state
+                    has re-worked to provide better operation for LocoNet connections
+                    with large numbers of Sensors and/or Turnouts.  The JMRI 
+                    interrogation mechanism now implements a minimum delay from
+                    the last Sensor Report, Turnout Report or Interrogate Query 
+                    message before sending the next Interrogate Query message.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -607,6 +612,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
+            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
             <li></li>
         </ul>
 
