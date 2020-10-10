@@ -172,7 +172,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             initialize();
             if (_train != null && _train.getRoute() != null) {
                 textTrainName.setText(_train.getIconName());
-                RouteLocation rl = _train.getCurrentLocation();
+                RouteLocation rl = _train.getCurrentRouteLocation();
                 if (rl != null) {
                     textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
                     textTrainRouteLocationCommentPane.setText(rl.getComment());

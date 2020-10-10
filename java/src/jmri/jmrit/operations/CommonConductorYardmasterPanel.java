@@ -267,7 +267,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                 MessageFormat.format(Bundle.getMessage("WantAddCarsToTrain?"), new Object[]{_train.getName()}),
                 Bundle.getMessage("AddCarsToTrain?"),
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            new CarsTableFrame(false, _train.getCurrentLocation().getName(), null);
+            new CarsTableFrame(false, _train.getCurrentRouteLocation().getName(), null);
         }
     }
 
@@ -621,7 +621,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
                     .getTrainTerminatesName()});
         }
-        if (rl != _train.getCurrentLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+        if (rl != _train.getCurrentRouteLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
             return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
                     .getName()});
         }

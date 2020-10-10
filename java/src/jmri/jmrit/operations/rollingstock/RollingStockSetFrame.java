@@ -410,7 +410,7 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
                         boolean foundDes = false;
                         for (RouteLocation rlocation : routeSequence) {
                             if (train.isTrainEnRoute() && !foundTrainLoc) {
-                                if (train.getCurrentLocation() == rlocation) {
+                                if (train.getCurrentRouteLocation() == rlocation) {
                                     foundTrainLoc = true;
                                 } else {
                                     continue;
