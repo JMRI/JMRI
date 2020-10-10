@@ -1,24 +1,15 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
+import javax.swing.*;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -45,10 +36,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     private final JButton beanButton;
     private final int _shape;
-    private final String _label;
+    private final String _switchSysName;
     private String _uName = "unconnected";
     private String _uLabel = ""; // for display, empty if userName == null
-    private Boolean showUserName = false;
+    private final Boolean showUserName;
     protected String switchLabel;
     protected String switchButtonLabel;
     protected String switchTooltip;
@@ -85,7 +76,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public BeanSwitch(int index, NamedBean bean, String switchName, int shapeChoice, SwitchboardEditor editor) {
         log.debug("Name = [{}]", switchName);
-        _label = switchName;
+        _switchSysName = switchName;
+        sysNameTextBox.setText(switchName); // setting name here allows test of AddNew()
         _editor = editor;
         _bname = bean;
         showUserName = (_editor.showUserName().equals("yes"));
@@ -100,16 +92,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
 
         beanButton = new JButton();
-        beanButton.setText(getSwitchButtonLabel(_label + ": ?")); // initial text to display
+        beanButton.setText(getSwitchButtonLabel(_switchSysName + ": ?")); // initial text to display
 
         switchTooltip = switchName + " (" + _uName + ")";
         this.setLayout(new BorderLayout()); // makes JButtons expand to the whole grid cell
         _shape = shapeChoice;
         String beanManuPrefix = _editor.getSwitchManu(); // connection/manufacturer prefix i.e. M for MERG
-        beanTypeChar = _label.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
+        beanTypeChar = _switchSysName.charAt(beanManuPrefix.length()); // bean type, i.e. L, usually at char(1)
         // check for space char which might be caused by connection name > 2 chars and/or space in name
         if (beanTypeChar != 'T' && beanTypeChar != 'S' && beanTypeChar != 'L') { // add if more bean types are supported
-            log.error("invalid char in Switchboard Button \"{}\". Check connection name.", _label);
+            log.error("invalid char in Switchboard Button \"{}\". Check connection name.", _switchSysName);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSwitchAddFailed"),
                     Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -260,6 +252,19 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (_editor.showToolTip()) {
                     beanButton.setToolTipText(switchTooltip);
                 }
+                beanButton.addComponentListener(new ComponentAdapter() {
+                    @Override
+                    public void componentResized(ComponentEvent e) {
+                        if (showUserName && beanButton.getHeight() < 50) {
+                            beanButton.setVerticalAlignment(JLabel.TOP);
+                        } else {
+                            beanButton.setVerticalAlignment(JLabel.CENTER); //default
+                        }
+                    }
+                });
+
+
+                beanButton.setMargin(new Insets(4, 1, 2, 1));
                 this.add(beanButton);
                 break;
         }
@@ -288,19 +293,19 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             _control = true;
             switch (beanTypeChar) {
                 case 'T':
-                    getTurnout().addPropertyChangeListener(this, _label, "Switchboard Editor Turnout Switch");
+                    getTurnout().addPropertyChangeListener(this, _switchSysName, "Switchboard Editor Turnout Switch");
                     if (getTurnout().canInvert()) {
                         this.setInverted(getTurnout().getInverted()); // only add and set when supported by object/connection
                     }
                     break;
                 case 'S':
-                    getSensor().addPropertyChangeListener(this, _label, "Switchboard Editor Sensor Switch");
+                    getSensor().addPropertyChangeListener(this, _switchSysName, "Switchboard Editor Sensor Switch");
                     if (getSensor().canInvert()) {
                         this.setInverted(getSensor().getInverted()); // only add and set when supported by object/connection
                     }
                     break;
                 default: // light
-                    getLight().addPropertyChangeListener(this, _label, "Switchboard Editor Light Switch");
+                    getLight().addPropertyChangeListener(this, _switchSysName, "Switchboard Editor Light Switch");
                 // Lights do not support Invert
             }
         }
@@ -323,9 +328,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public void setNamedBean(@Nonnull NamedBean bean) {
         try {
-            namedBean = nbhm.getNamedBeanHandle(_label, bean);
+            namedBean = nbhm.getNamedBeanHandle(_switchSysName, bean);
         } catch (IllegalArgumentException e) {
-            log.error("invalid bean name= \"{}\" in Switchboard Button", _label);
+            log.error("invalid bean name= \"{}\" in Switchboard Button", _switchSysName);
         }
         _uName = bean.getUserName();
         if (_uName == null) {
@@ -381,7 +386,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             default: // Light, Sensor
                 _state = "+";         // 1 char abbreviation for StateOff not clear
         }
-        return _label + ": " + _state;
+        return _switchSysName + ": " + _state;
     }
 
     /**
@@ -399,7 +404,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             default: // Light, Sensor
                 _state = "-";         // 1 char abbreviation for StateOff not clear
         }
-        return _label + ": " + _state;
+        return _switchSysName + ": " + _state;
     }
 
     /**
@@ -409,11 +414,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * @return text to show on unknown state (used on all types of objects)
      */
     public String getUnknownText() {
-        return _label + ": ?";
+        return _switchSysName + ": ?";
     }
 
     public String getInconsistentText() {
-        return _label + ": X";
+        return _switchSysName + ": X";
     }
 
     /**
@@ -439,7 +444,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * @return display name including current state
      */
     public String getNameString() {
-        return _label;
+        return _switchSysName;
     }
 
     public String getUserNameString() {
@@ -450,7 +455,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (!showUserName || _uLabel.equals("")) {
             return label;
         } else {
-            String subLabel = _uLabel.substring(0, (Math.min(_uLabel.length(), 25))); // reasonable max. to display on tile
+            String subLabel = _uLabel.substring(0, (Math.min(_uLabel.length(), 35))); // reasonable max. to display 2 lines on tile
             return "<html><center>" + label + "</center><br><center><i>" + subLabel + "</i></center></html>"; // 2 lines of text
         }
     }
@@ -482,10 +487,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             default:
                 switchLabel = getInconsistentText();
                 switchColor = Color.WHITE;
-                log.warn("SwitchState INCONSISTENT");
+                //log.warn("SwitchState INCONSISTENT"); // normal for unconnected switchboard
         }
         if (getNamedBean() == null) {
-            switchLabel = _label; // unconnected, doesn't show state using : and ?
+            switchLabel = _switchSysName; // unconnected, doesn't show state using : and ?
             log.debug("Switch label {} state {}, disconnected", switchLabel, state);
         } else {
             log.debug("Switch label {} state: {}, connected", switchLabel, state);
@@ -549,7 +554,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) {
-            log.debug("property change: {} {} is now: {}", _label, e.getPropertyName(), e.getNewValue());
+            log.debug("property change: {} {} is now: {}", _switchSysName, e.getPropertyName(), e.getNewValue());
         }
         // when there's feedback, transition through inconsistent icon for better animation
         if (getTristate()
@@ -579,10 +584,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 if (newUserName == null || newUserName.equals("")) {
                     newUserName = Bundle.getMessage("NoUserName"); // longer for tooltip
                 }
-                beanButton.setToolTipText(_label + " (" + newUserName + ")");
-                beanIcon.setToolTipText(_label + " (" + newUserName + ")");
-                beanKey.setToolTipText(_label + " (" + newUserName + ")");
-                beanSymbol.setToolTipText(_label + " (" + newUserName + ")");
+                beanButton.setToolTipText(_switchSysName + " (" + newUserName + ")");
+                beanIcon.setToolTipText(_switchSysName + " (" + newUserName + ")");
+                beanKey.setToolTipText(_switchSysName + " (" + newUserName + ")");
+                beanSymbol.setToolTipText(_switchSysName + " (" + newUserName + ")");
                 log.debug("User Name changed to {}", newUserName);
             }
         }
@@ -598,24 +603,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
     public void mouseExited(MouseEvent e) {
         //super.mouseExited(e);
-    }
-
-    /**
-     * Process mouseClick on this switch.
-     *
-     * @param e    the event heard
-     * @param name ID of this button (identical to name of suggested bean
-     *             object)
-     */
-    public void operate(MouseEvent e, String name) {
-        log.debug("Button {} clicked", name);
-        //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
-        //    return;
-        //}
-        if (namedBean == null || e.isMetaDown()) { // || e.isAltDown() || !buttonLive() || getMomentary()) {
-            return;
-        }
-        alternateOnClick();
     }
 
     void cleanup() {
@@ -687,7 +674,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             } else {
                 // show option to attach a new bean
                 switchPopup.add(connectNewMenu);
-                connectNewMenu.addActionListener((java.awt.event.ActionEvent e1) -> connectNew(_label));
+                connectNewMenu.addActionListener((java.awt.event.ActionEvent e1) -> connectNew(_switchSysName));
             }
         }
         // display the popup
@@ -708,7 +695,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     javax.swing.JCheckBoxMenuItem invertItem = null;
 
     void addInvert(JPopupMenu popup) {
-        invertItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("MenuInvertItem", _label));
+        invertItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("MenuInvertItem", _switchSysName));
         invertItem.setSelected(getInverted());
         popup.add(invertItem);
         invertItem.addActionListener((java.awt.event.ActionEvent e) -> setBeanInverted(invertItem.isSelected()));
@@ -722,7 +709,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         String oldName = _uName;
         // show input dialog
         String newUserName = (String) JOptionPane.showInputDialog(null,
-                Bundle.getMessage("EnterNewName", _label),
+                Bundle.getMessage("EnterNewName", _switchSysName),
                 Bundle.getMessage("EditNameTitle", ""), JOptionPane.PLAIN_MESSAGE, null, null, oldName);
         if (newUserName == null) { // user cancelled
             log.debug("NewName dialog returned Null, cancelled");
@@ -765,10 +752,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
         _bname.setUserName(newUserName);
         if (oldName == null || oldName.equals("")) {
-            if (!nbhm.inUse(_label, _bname)) {
+            if (!nbhm.inUse(_switchSysName, _bname)) {
                 return; // no problem, so stop
             }
-            String msg = Bundle.getMessage("UpdateToUserName", _editor.getSwitchTypeName(), newUserName, _label);
+            String msg = Bundle.getMessage("UpdateToUserName", _editor.getSwitchTypeName(), newUserName, _switchSysName);
             int optionPane = JOptionPane.showConfirmDialog(null,
                     msg, Bundle.getMessage("UpdateToUserNameTitle"),
                     JOptionPane.YES_NO_OPTION);
@@ -805,13 +792,13 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public void setBeanInverted(boolean set) {
         switch (beanTypeChar) {
             case 'T':
-                if (getTurnout().canInvert()) { // if supported
+                if (getTurnout() != null && getTurnout().canInvert()) { // if supported
                     this.setInverted(set);
                     getTurnout().setInverted(set);
                 }
                 break;
             case 'S':
-                if (getSensor().canInvert()) { // if supported
+                if (getSensor() != null && getSensor().canInvert()) { // if supported
                     this.setInverted(set);
                     getSensor().setInverted(set);
                 }
@@ -820,16 +807,40 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 // Lights cannot be inverted, so never called
                 return;
             default:
-                log.error("Invert item: cannot parse bean name. userName = {}", _label);
+                log.error("Invert item: cannot parse bean name. userName = {}", _switchSysName);
         }
     }
 
+    /**
+     * Process mouseClick on this switch, passing in name for debug.
+     *
+     * @param e    the event heard
+     * @param name ID of this button (identical to name of suggested bean
+     *             object)
+     */
+    public void operate(MouseEvent e, String name) {
+        log.debug("Button {} clicked", name);
+        //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
+        //    return;
+        //}
+        if (namedBean == null || e == null || e.isMetaDown()) {
+            return;
+        }
+        alternateOnClick();
+    }
+
+    /**
+     * Process mouseClick on this switch.
+     * Similar to {@link #operate(MouseEvent, String)}.
+     *
+     * @param e the event heard
+     */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         log.debug("Switch clicked");
         //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
         //    return;
         //}
-        if (namedBean == null || e.isMetaDown()) { //|| e.isAltDown() || !buttonLive() || getMomentary()) {
+        if (namedBean == null || e == null || e.isMetaDown()) {
             return;
         }
         alternateOnClick();
@@ -876,7 +887,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
                     break;
                 default:
-                    log.error("invalid char in Switchboard Button \"{}\". State not set.", _label);
+                    log.error("invalid char in Switchboard Button \"{}\". State not set.", _switchSysName);
             }
         }
     }
@@ -898,7 +909,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     JmriJFrame addFrame = null;
-    JTextField sysName = new JTextField(12);
+    JTextField sysNameTextBox = new JTextField(12);
     JTextField userName = new JTextField(15);
 
     /**
@@ -909,8 +920,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     protected void connectNew(String systemName) {
         log.debug("Request new bean");
-        sysName.setText(systemName);
-        userName.setText("");
+        userName.setText(""); // only available on unconnected switches, so no useful content yet
         // provide etc.
         if (addFrame == null) {
             addFrame = new JmriJFrame(Bundle.getMessage("ConnectNewMenu", ""), false, true);
@@ -919,7 +929,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
             ActionListener okListener = this::okAddPressed;
             ActionListener cancelListener = this::cancelAddPressed;
-            AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysName, userName, "ButtonOK", okListener, cancelListener);
+            AddNewDevicePanel switchConnect = new AddNewDevicePanel(sysNameTextBox, userName, "ButtonOK", okListener, cancelListener);
             switchConnect.setSystemNameFieldIneditable(); // prevent user interference with switch label
             switchConnect.setOK(); // activate OK button on Add new device pane
             addFrame.add(switchConnect);
@@ -929,9 +939,11 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     }
 
     protected void cancelAddPressed(ActionEvent e) {
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+            addFrame.dispose();
+            addFrame = null;
+        }
     }
 
     protected void okAddPressed(ActionEvent e) {
@@ -941,72 +953,97 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (user.trim().equals("")) {
             user = null;
         }
-        String sName = sysName.getText(); // can't be changed, but pick it up from panel
-
-        addFrame.setVisible(false);
-        addFrame.dispose();
-        addFrame = null;
-
-        switch (sName.charAt(manuPrefix.length())) {
+        // systemName can't be changed, fixed
+        if (addFrame != null) {
+            addFrame.setVisible(false);
+            addFrame.dispose();
+            addFrame = null;
+        }
+        switch (_switchSysName.charAt(manuPrefix.length())) {
             case 'T':
                 Turnout t;
                 try {
                     // add turnout to JMRI (w/appropriate manager)
-                    t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+                    t = InstanceManager.turnoutManagerInstance().provideTurnout(_switchSysName);
                     t.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sName);
+                    handleCreateException(_switchSysName);
                     return; // without creating
                 }
-                nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(sName);
+                nb = jmri.InstanceManager.turnoutManagerInstance().getTurnout(_switchSysName);
                 break;
             case 'S':
                 Sensor s;
                 try {
                     // add Sensor to JMRI (w/appropriate manager)
-                    s = InstanceManager.sensorManagerInstance().provideSensor(sName);
+                    s = InstanceManager.sensorManagerInstance().provideSensor(_switchSysName);
                     s.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sName);
+                    handleCreateException(_switchSysName);
                     return; // without creating
                 }
-                nb = jmri.InstanceManager.sensorManagerInstance().getSensor(sName);
+                nb = jmri.InstanceManager.sensorManagerInstance().getSensor(_switchSysName);
                 break;
             case 'L':
                 Light l;
                 try {
                     // add Light to JMRI (w/appropriate manager)
-                    l = InstanceManager.lightManagerInstance().provideLight(sName);
+                    l = InstanceManager.lightManagerInstance().provideLight(_switchSysName);
                     l.setUserName(user);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sName);
+                    handleCreateException(_switchSysName);
                     return; // without creating
                 }
-                nb = jmri.InstanceManager.lightManagerInstance().getLight(sName);
+                nb = jmri.InstanceManager.lightManagerInstance().getLight(_switchSysName);
                 break;
             default:
-                log.error("connectNew - OKpressed: cannot parse bean name. sName = {}", sName);
+                log.error("connectNew - okAddPressed: cannot parse bean name. sName = {}", _switchSysName);
                 return;
         }
         if (nb == null) {
-            log.warn("failed to connect switch to item {}", sName);
+            log.warn("failed to connect switch to item {}", _switchSysName);
         } else {
             // set switch on Switchboard to display current state of just connected bean
             log.debug("sName state: {}", nb.getState());
             try {
-                if (_editor.getSwitch(sName) == null) {
-                    log.warn("failed to update switch to state of {}", sName);
+                if (_editor.getSwitch(_switchSysName) == null) {
+                    log.warn("failed to update switch to state of {}", _switchSysName);
                 } else {
                     _editor.updatePressed();
                 }
             } catch (NullPointerException npe) {
-                handleCreateException(sName);
+                handleCreateException(_switchSysName);
                 // exit without updating
             }
         }
+    }
+
+    /**
+     * Chack the switch label currently displayed.
+     * Used in test.
+     *
+     * @return line 1 of the label of this switch
+     */
+    protected String getIconLabel() {
+        switch (_shape) {
+            case 0 : // button
+                String lbl = beanButton.getText();
+                if (!lbl.startsWith("<")) {
+                    return lbl;
+                } else { // 2 line label, "<html><center>" + label + "</center>..."
+                    return lbl.substring(14, lbl.indexOf("</center>"));
+                }
+            case 1:
+                return beanIcon.getIconLabel();
+            case 2:
+                return beanKey.getIconLabel();
+            case 3:
+                return beanSymbol.getIconLabel();
+        }
+        return "";
     }
 
     void handleCreateException(String sysName) {
@@ -1106,6 +1143,10 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             tag = sName;
             subTag = uName;
             this.repaint();
+        }
+
+        private String getIconLabel() {
+            return tag;
         }
 
         /**

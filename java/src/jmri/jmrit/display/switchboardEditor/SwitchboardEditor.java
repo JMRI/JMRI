@@ -121,7 +121,7 @@ public class SwitchboardEditor extends Editor {
     private final Color defaultUnknownColor = Color.WHITE;
     private boolean _hideUnconnected = false;
     private boolean _autoItemRange = true;
-    private int rows = 3;
+    private int rows = 4; // matches initial autoRows pref for default pane size
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
     JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
@@ -131,8 +131,8 @@ public class SwitchboardEditor extends Editor {
     // saved state of options when panel was loaded or created
     private transient boolean savedEditMode = true;
     private transient boolean savedControlLayout = true; // menu option to turn this off
-    private final int height = 300;
-    private final int width = 300;
+    private final int height = 455;
+    private final int width = 544;
 
     private final JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxControlling"));
     private final JCheckBoxMenuItem hideUnconnectedBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxHideUnconnected"));
@@ -317,7 +317,7 @@ public class SwitchboardEditor extends Editor {
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
-        super.getTargetFrame().setSize(550, 330); // width x height
+        super.getTargetFrame().setSize(width + 6, height + 25); // width x height
 
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
@@ -370,8 +370,8 @@ public class SwitchboardEditor extends Editor {
      * Just repaint the Switchboard target panel.
      */
     public void resizeInFrame() {
-        super.getTargetFrame().getSize();
-        switchboardLayeredPane.setSize(getWidth(), height);
+        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
         switchboardLayeredPane.repaint();
         if (autoRowsBox.isSelected()) { // check if autoRows is active
             int oldRows = rows;
@@ -401,7 +401,6 @@ public class SwitchboardEditor extends Editor {
         }
         log.debug("update _editable = {}", _editable);
         setVisible(_editable); // show/hide editor
-        log.debug("update _controlLayout = {}", allControlling());
 
         // update selected address range
         int range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue() + 1;
@@ -444,6 +443,7 @@ public class SwitchboardEditor extends Editor {
 
         if (autoRowsBox.isSelected()) {
             rows = autoRows(cellProportion); // TODO: specific proportion value per Type/Shape choice?
+            log.debug("autoRows() called in updatePressed(). Rows = {}", rows);
         }
         // disable the Rows spinner & Update button on the Switchboard Editor pane
         // param: GridLayout(vertical, horizontal), at least 1x1
@@ -555,6 +555,8 @@ public class SwitchboardEditor extends Editor {
                 if (_autoItemRange) {
                     setMaxSpinner(Math.max((oldMax - range), range));   // set new max (only if auto)
                 }
+                updatePressed();
+                setDirty();
                 log.debug("new prev range = {}, newMin ={}, newMax ={}", range, getMinSpinner(), getMaxSpinner());
             }
         });
@@ -599,12 +601,14 @@ public class SwitchboardEditor extends Editor {
                 int oldMin = getMinSpinner();
                 int oldMax = getMaxSpinner();
                 int range = Math.max(oldMax - oldMin + 1, 1); // make sure range > 0
-                log.debug("nxt range was {}, oldMin ={}, oldMax ={}", range, oldMin, oldMax);
+                log.debug("next range was {}, oldMin ={}, oldMax ={}", range, oldMin, oldMax);
                 setMaxSpinner(Math.min((oldMax + range), rangeTop));               // first set new max
                 if (_autoItemRange) {
                     setMinSpinner(Math.min(oldMin + range, rangeTop - range + 1)); // set new min (only if auto)
                 }
-                log.debug("new nxt range = {}, newMin ={}, newMax ={}", range, getMinSpinner(), getMaxSpinner());
+                updatePressed();
+                setDirty();
+                log.debug("new next range = {}, newMin ={}, newMax ={}", range, getMinSpinner(), getMaxSpinner());
             }
         });
         next.setToolTipText(Bundle.getMessage("NextToolTip", Bundle.getMessage("CheckBoxAutoItemRange")));
@@ -624,11 +628,15 @@ public class SwitchboardEditor extends Editor {
     }
 
     private void setMinSpinner(int value) {
-        minSpinner.setValue(value);
+        if (value >= rangeBottom && value < rangeTop) { // allows to set above MaxSpinner temporarily
+            minSpinner.setValue(value);
+        }
     }
 
     private void setMaxSpinner(int value) {
-        maxSpinner.setValue(value);
+        if (value > rangeBottom && value <= rangeTop) { // allows to set above MinSpinner temporarily
+            maxSpinner.setValue(value);
+        }
     }
 
     private void setupEditorPane() {
@@ -703,8 +711,8 @@ public class SwitchboardEditor extends Editor {
                 rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
                 // calculate tile size
                 int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
-                int maxW = super.getTargetFrame().getWidth()/colNum; // int division
-                int maxH = super.getTargetFrame().getHeight()/rows;
+                int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, 2x3px for border
+                int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // 25px for footer
                 _tileSize = Math.round(Math.min(maxW, maxH)); // store for tile graphics
             }
         });
@@ -725,6 +733,8 @@ public class SwitchboardEditor extends Editor {
             setHideUnconnected(hideUnconnectedBox.isSelected());
             hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
             help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            updatePressed();
+            setDirty();
         });
         hideUnconnectedBox.setSelected(hideUnconnected());
 
@@ -982,9 +992,9 @@ public class SwitchboardEditor extends Editor {
      */
     int autoRows(float cellProp) {
         // find cell matrix that allows largest size icons
-        double paneEffectiveWidth = Math.ceil(super.getTargetFrame().getWidth() / cellProp);
-        log.debug("paneEffectiveWidth: {}", paneEffectiveWidth);
-        double paneHeight = super.getTargetFrame().getHeight();
+        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp);
+        log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
+        double paneHeight = super.getTargetFrame().getHeight() - 25; // 25px for footer
         int columnsNum = 1;
         int rowsNum = 1;
         float tileSize = 0.1f; // start value
@@ -1000,10 +1010,11 @@ public class SwitchboardEditor extends Editor {
             tileSizeOld = tileSize; // store for comparison
             tileSize = (float) Math.min(paneEffectiveWidth / columnsNum, paneHeight / rowsNum);
             //log.debug("Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize), String.format("%.2f", tileSizeOld));
-            if (tileSize <= tileSizeOld) break;
+            if (tileSize <= tileSizeOld) {
+                break;
+            }
             columnsNum++;
         }
-
 
         // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
         // rows = (total + columns - 1) / columns (int roundup) to account for unused tiles in grid:
@@ -1256,6 +1267,7 @@ public class SwitchboardEditor extends Editor {
             rowsSpinner.setEnabled(false);
             rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
             rows = autoRows(cellProportion); // recalculate, TODO: specific proportion value for Type/Shape choice?
+            rowsSpinner.setValue(rows);
         }
     }
 
@@ -1331,7 +1343,7 @@ public class SwitchboardEditor extends Editor {
             case 'L': // Light
                 return InstanceManager.lightManagerInstance();
             default:
-                log.error("Unexpected bean type character \"{}\" found.", typeChar);
+                log.error("Unsupported bean type character \"{}\" found.", typeChar);
                 return null;
         }
     }
@@ -1380,11 +1392,7 @@ public class SwitchboardEditor extends Editor {
             x *= 5;
             y *= 5;
         }
-        if (_selectionGroup != null) {
-            for (Positionable comp : _selectionGroup) {
-                moveItem(comp, x, y);
-            }
-        }
+
         repaint();
     }
 
@@ -1536,7 +1544,6 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     public void setNextLocation(Positionable obj) {
-        obj.setLocation(0, 0);
     }
 
     /**
@@ -1552,11 +1559,10 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     protected void showPopUp(Positionable p, MouseEvent event) {
-        _currentSelection = null;
     }
 
     protected ArrayList<Positionable> getSelectionGroup() {
-        return _selectionGroup;
+        return null;
     }
 
     @Override

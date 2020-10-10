@@ -60,7 +60,7 @@
       <h2><a id="example" name="example"></a>Technical Example: Behind the scenes of Web Server Panels</h2>
 
       <a href="images/WebServerFlow.png"><img src="images/WebServerFlow.png" alt="Web Server Data Flow Diagram"
-      width="270" height="509" align="right"></a>
+      width="341" height="640" align="right" title="Simplified Web Server Flow (by EB)"></a>
 
       <p>This chapter shows an overview of how JMRI Web Server operates between the JMRI application and the Web
       Browser to demonstrate what code is involved, using Panels as an example.</p>

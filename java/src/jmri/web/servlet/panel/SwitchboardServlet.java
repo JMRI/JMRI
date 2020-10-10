@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
  * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
- * @author Egbert Broerse (C) 2017 -- based on ControlPanelServlet.java by Randall Wood
+ * @author Egbert Broerse (C) 2017, 2020 -- based on ControlPanelServlet.java by Randall Wood
  */
 @WebServlet(name = "SwitchboardServlet",
         urlPatterns = {"/panel/Switchboard"})
