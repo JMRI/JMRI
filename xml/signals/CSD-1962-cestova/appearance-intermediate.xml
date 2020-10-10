@@ -531,8 +531,8 @@
       <advancedAspect>Opakovaná očekávej 40</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
       <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
-      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
-      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a opakovaná očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Opakovaná očekávej 60</advancedAspect>
