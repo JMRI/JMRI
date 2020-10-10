@@ -107,7 +107,7 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Opatrně na přivolávací návěst</advancedAspect>
-      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     
     <aspectMapping>
