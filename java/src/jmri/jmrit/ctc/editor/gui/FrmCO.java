@@ -580,6 +580,17 @@ public class FrmCO extends javax.swing.JFrame {
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(blockName);
         if (block != null) {
             blockHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(blockName, block);
+
+            // Check for permissive setting
+            if (!block.getPermissiveWorking()) {
+                int response = JOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("WarnDlgCOBlockNotPermissive"),
+                        Bundle.getMessage("WarningTitle"),
+                        JOptionPane.YES_NO_OPTION);
+                if (response == 0) {
+                    block.setPermissiveWorking(true);
+                }
+            }
         }
         newCallOnData._mExternalBlock = blockHandle;
 
@@ -705,4 +716,6 @@ public class FrmCO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FrmCO.class);
 }

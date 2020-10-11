@@ -62,6 +62,7 @@ public class FrmTUL extends javax.swing.JFrame {
     private boolean _mTUL_ExternalTurnoutFeedbackDifferentOrig;
     private boolean _mTUL_NoDispatcherControlOfSwitchOrig;
     private boolean _mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig;
+    private boolean _mTUL_GUI_IconsEnabledOrig;
     private CodeButtonHandlerData.LOCK_IMPLEMENTATION _mTUL_LockImplementationOrig;
     private String _mTUL_AdditionalExternalTurnout1Orig;
     private boolean _mTUL_AdditionalExternalTurnout1FeedbackDifferentOrig;
@@ -74,6 +75,7 @@ public class FrmTUL extends javax.swing.JFrame {
         _mTUL_ExternalTurnoutOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnout.getHandleName();
         _mTUL_ExternalTurnoutFeedbackDifferentOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent;
         _mTUL_NoDispatcherControlOfSwitchOrig = _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch;
+        _mTUL_GUI_IconsEnabledOrig = _mCodeButtonHandlerData._mTUL_GUI_IconsEnabled;
         _mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig = _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed;
         _mTUL_LockImplementationOrig = _mCodeButtonHandlerData._mTUL_LockImplementation;
         _mTUL_AdditionalExternalTurnout1Orig = _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1.getHandleName();
@@ -89,6 +91,7 @@ public class FrmTUL extends javax.swing.JFrame {
         if (_mTUL_ExternalTurnoutFeedbackDifferentOrig != _mTUL_ExternalTurnoutFeedbackDifferent.isSelected()) return true;
         if (_mTUL_NoDispatcherControlOfSwitchOrig != _mTUL_NoDispatcherControlOfSwitch.isSelected()) return true;
         if (_mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig != _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected()) return true;
+        if (_mTUL_GUI_IconsEnabledOrig != _mTUL_GUI_IconsEnabled.isSelected()) return true;
         if (_mTUL_LockImplementationOrig != CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation)) return true;
         if (!_mTUL_AdditionalExternalTurnout1Orig.equals(_mTUL_AdditionalExternalTurnout1.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout1FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout1FeedbackDifferent.isSelected()) return true;
@@ -116,8 +119,17 @@ public class FrmTUL extends javax.swing.JFrame {
         CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorLockToggle, "Sensor", _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.getHandleName(), false);   // NOI18N
         CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorUnlockedIndicator, "Sensor", _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName(), false);   // NOI18N
         _mTUL_ExternalTurnoutFeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent);
+        _mTUL_GUI_IconsEnabled.setSelected(_mCodeButtonHandlerData._mTUL_GUI_IconsEnabled);
         _mTUL_NoDispatcherControlOfSwitch.setSelected(_mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch);
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setSelected(_mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed);
+        _mTUL_NoDispatcherControlOfSwitchActionPerformed(null);     // Enable/Disable _mTUL_ndcos_WhenLockedSwitchStateIsClosed
+
+        // The CTCv1 import process can create empty NBHSensors.
+        if (!_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle.valid()) {
+            // Use reapply patterns to fix the sensors
+            jButton2ActionPerformed(null);
+        }
+
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
         _mTUL_AdditionalExternalTurnout2FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2FeedbackDifferent);
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
@@ -166,12 +178,9 @@ public class FrmTUL extends javax.swing.JFrame {
         _mTUL_DispatcherInternalSensorUnlockedIndicator = new javax.swing.JComboBox<>();
         _mTUL_NoDispatcherControlOfSwitch = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
-        _mTUL_ndcos_WhenLockedSwitchStateIsClosed = new javax.swing.JCheckBox();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        _mTUL_GUI_IconsEnabled = new javax.swing.JCheckBox();
+        _mLabelDlgTULGUIEnable = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton2 = new javax.swing.JRadioButton();
@@ -183,6 +192,8 @@ public class FrmTUL extends javax.swing.JFrame {
         _mTUL_AdditionalExternalTurnout1 = new javax.swing.JComboBox<>();
         _mTUL_AdditionalExternalTurnout2 = new javax.swing.JComboBox<>();
         _mTUL_AdditionalExternalTurnout3 = new javax.swing.JComboBox<>();
+        _mLabelDlgTULClosed = new javax.swing.JLabel();
+        _mTUL_ndcos_WhenLockedSwitchStateIsClosed = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTUL"));
@@ -201,6 +212,7 @@ public class FrmTUL extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText(Bundle.getMessage("LabelDlgTULSensor"));
 
         _mTUL_DispatcherInternalSensorLockToggle.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -209,23 +221,31 @@ public class FrmTUL extends javax.swing.JFrame {
 
         jLabel4.setText(Bundle.getMessage("InfoDlgTULFeedback"));
 
+        _mTUL_ActualTurnoutPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         _mTUL_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelDlgTULToName"));
 
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText(Bundle.getMessage("LabelDlgTULInd"));
 
         _mTUL_DispatcherInternalSensorUnlockedIndicator.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         _mTUL_NoDispatcherControlOfSwitch.setText(" ");
+        _mTUL_NoDispatcherControlOfSwitch.setToolTipText(Bundle.getMessage("TipDlgTULNoDisp"));
+        _mTUL_NoDispatcherControlOfSwitch.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mTUL_NoDispatcherControlOfSwitchActionPerformed(evt);
+            }
+        });
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel7.setText(Bundle.getMessage("LabelDlgTULNoDisp"));
 
-        _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setText(" ");
+        _mTUL_GUI_IconsEnabled.setText(" ");
+        _mTUL_GUI_IconsEnabled.setToolTipText(Bundle.getMessage("TipDlgTULGUIEnable"));
 
-        jLabel8.setText(Bundle.getMessage("LabelDlgTULClosed"));
-
-        jLabel9.setText(Bundle.getMessage("InfoDlgTULChecked"));
-
-        jLabel10.setText(Bundle.getMessage("InfoDlgTULConfig"));
+        _mLabelDlgTULGUIEnable.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        _mLabelDlgTULGUIEnable.setText(Bundle.getMessage("LabelDlgTULGUIEnable"));
 
         jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -235,23 +255,17 @@ public class FrmTUL extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText(Bundle.getMessage("ButtonDlgTULJust"));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         _mTUL_LockImplementation.add(jRadioButton1);
         jRadioButton1.setText(Bundle.getMessage("LabelDlgTULGregs"));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText(Bundle.getMessage("InfoDlgTULLock"));
 
         _mTUL_LockImplementation.add(jRadioButton2);
         jRadioButton2.setText(Bundle.getMessage("LabelDlgTULOther"));
         jRadioButton2.setEnabled(false);
 
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText(Bundle.getMessage("LabelDlgTULToOpt"));
 
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setText(" ");
@@ -288,43 +302,29 @@ public class FrmTUL extends javax.swing.JFrame {
             }
         });
 
+        _mLabelDlgTULClosed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        _mLabelDlgTULClosed.setText(Bundle.getMessage("LabelDlgTULClosed"));
+
+        _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setText(" ");
+        _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setToolTipText(Bundle.getMessage("TipDlgTULClosed"));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(35, 35, 35)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel6)))
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(_mTUL_ActualTurnoutPrompt, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                .addGap(71, 71, 71)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel11)
+                    .addComponent(_mTUL_ActualTurnoutPrompt)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel7)
+                    .addComponent(_mLabelDlgTULGUIEnable))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(_mSaveAndClose)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_NoDispatcherControlOfSwitch)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_ndcos_WhenLockedSwitchStateIsClosed)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(_mTUL_AdditionalExternalTurnout3, 0, 133, Short.MAX_VALUE)
@@ -340,11 +340,22 @@ public class FrmTUL extends javax.swing.JFrame {
                             .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent)
                             .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent)
                             .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(100, 100, 100)
-                        .addComponent(jButton2))
                     .addComponent(_mTUL_DispatcherInternalSensorLockToggle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(_mSaveAndClose))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(_mTUL_NoDispatcherControlOfSwitch)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(_mLabelDlgTULClosed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(_mTUL_ndcos_WhenLockedSwitchStateIsClosed))
+                    .addComponent(_mTUL_GUI_IconsEnabled)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -377,28 +388,26 @@ public class FrmTUL extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_NoDispatcherControlOfSwitch)
+                    .addComponent(_mTUL_GUI_IconsEnabled)
+                    .addComponent(_mLabelDlgTULGUIEnable))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_ndcos_WhenLockedSwitchStateIsClosed)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(_mTUL_NoDispatcherControlOfSwitch)
+                    .addComponent(_mLabelDlgTULClosed)
+                    .addComponent(_mTUL_ndcos_WhenLockedSwitchStateIsClosed))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jRadioButton1)
                     .addComponent(jRadioButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(_mSaveAndClose)
                     .addComponent(jButton2))
-                .addGap(18, 18, 18)
-                .addComponent(_mSaveAndClose)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -433,6 +442,7 @@ public class FrmTUL extends javax.swing.JFrame {
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent = _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected();
 
         // Other fields
+        _mCodeButtonHandlerData._mTUL_GUI_IconsEnabled = _mTUL_GUI_IconsEnabled.isSelected();
         _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch = _mTUL_NoDispatcherControlOfSwitch.isSelected();
         _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed = _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected();
         _mCodeButtonHandlerData._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation);
@@ -454,11 +464,6 @@ public class FrmTUL extends javax.swing.JFrame {
         CommonSubs.populateJComboBoxWithBeans(_mTUL_DispatcherInternalSensorUnlockedIndicator, "Sensor", temp._mTUL_DispatcherInternalSensorUnlockedIndicator.getHandleName(), false);   // NOI18N
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//         _mTUL_DispatcherInternalSensorLockToggle.setText("");
-//         _mTUL_DispatcherInternalSensorUnlockedIndicator.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void _mTUL_ExternalTurnoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_ExternalTurnoutActionPerformed
         _mCurrentExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
@@ -478,6 +483,13 @@ public class FrmTUL extends javax.swing.JFrame {
         _mCurrentAdditionalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
         initializeAll4LockedTurnoutJComboBoxesAndSupportingData();
     }//GEN-LAST:event__mTUL_AdditionalExternalTurnout3ActionPerformed
+
+    private void _mTUL_NoDispatcherControlOfSwitchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mTUL_NoDispatcherControlOfSwitchActionPerformed
+        // enable/disable _mTUL_ndcos_WhenLockedSwitchStateIsClosed based on NDCOS selection
+        boolean ndcpos = _mTUL_NoDispatcherControlOfSwitch.isSelected();
+        _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setEnabled(ndcpos);
+        _mLabelDlgTULClosed.setEnabled(ndcpos);
+    }//GEN-LAST:event__mTUL_NoDispatcherControlOfSwitchActionPerformed
 
     private void initializeAll4LockedTurnoutJComboBoxesAndSupportingData() {
         if (_mIgnoreActionEvent) return;    // Process ONLY when the user selectes an item in the combo box (even if the same one), otherwise forget it.
@@ -563,6 +575,8 @@ public class FrmTUL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel _mLabelDlgTULClosed;
+    private javax.swing.JLabel _mLabelDlgTULGUIEnable;
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel _mTUL_ActualTurnoutPrompt;
     private javax.swing.JComboBox<String> _mTUL_AdditionalExternalTurnout1;
@@ -575,20 +589,17 @@ public class FrmTUL extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> _mTUL_DispatcherInternalSensorUnlockedIndicator;
     private javax.swing.JComboBox<String> _mTUL_ExternalTurnout;
     private javax.swing.JCheckBox _mTUL_ExternalTurnoutFeedbackDifferent;
+    private javax.swing.JCheckBox _mTUL_GUI_IconsEnabled;
     private javax.swing.ButtonGroup _mTUL_LockImplementation;
     private javax.swing.JCheckBox _mTUL_NoDispatcherControlOfSwitch;
     private javax.swing.JCheckBox _mTUL_ndcos_WhenLockedSwitchStateIsClosed;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
