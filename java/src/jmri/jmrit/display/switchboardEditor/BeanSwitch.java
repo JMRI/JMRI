@@ -211,11 +211,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     case 'T' :
                         beanSymbol.positionLabel(0, -3*r/5, Component.CENTER_ALIGNMENT, 14);
                         beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
+                        break;
                     case 'S' :
                     case 'L' :
+                    default :
                         beanSymbol.positionLabel(0, r/-3, Component.CENTER_ALIGNMENT, 14);
                         beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
-
                 }
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
@@ -271,12 +272,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // connect to object or dim switch
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
-                // to dim unconnected symbols TODO make them see through, now icons just become bleak
-//                float dim = 100f;
-//                switch (_shape) {
-//                    case 0:
-//                        beanButton.setEnabled(false);
-//                        break;
+                // to dim unconnected symbols TODO make graphics see through, now icons just become bleak
+                float dim = 100f;
+                switch (_shape) {
+                    case 0:
+                        beanButton.setEnabled(false);
+                        break;
 //                    case 1:
 //                        beanIcon.setOpacity(dim);
 //                        break;
@@ -284,9 +285,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 //                        beanKey.setOpacity(dim);
 //                        break;
 //                    case 3:
-//                    default:
+                    default:
 //                        beanSymbol.setOpacity(dim);
-//                }
+                }
                 displayState(0); // show unconnected as unknown/greyed
             }
         } else {
@@ -1177,7 +1178,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
             g.translate(r, r); // set origin to center
-            int imgZoom = Math.min(2*r/image.getWidth(), 2*r/image.getHeight());
+            //int imgZoom = Math.min(2*r/image.getWidth(), 2*r/image.getHeight()); // how to enlarge icon on painting?
             g2d.drawImage(image, rop, image.getWidth()/-2, image.getHeight()/-2); // center bitmap
             //g.drawImage(image, 0, 0, null);
             g.setFont(getFont());

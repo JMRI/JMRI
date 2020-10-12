@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
-import org.openqa.selenium.remote.server.handler.interactions.MouseUp;
 
 /**
  * Test simple functioning of SwitchboardEditor

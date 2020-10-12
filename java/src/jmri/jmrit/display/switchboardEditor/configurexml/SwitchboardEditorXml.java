@@ -43,8 +43,8 @@ public class SwitchboardEditorXml extends AbstractXmlAdapter {
         Element panel = new Element("switchboardeditor");
 
         JFrame frame = p.getTargetFrame();
-        Dimension size = frame.getSize();
-        Point posn = frame.getLocation();
+        //Dimension size = frame.getSize();
+        //Point posn = frame.getLocation();
 
         panel.setAttribute("class", "jmri.jmrit.display.switchboardEditor.configurexml.SwitchboardEditorXml");
         panel.setAttribute("name", "" + frame.getTitle());

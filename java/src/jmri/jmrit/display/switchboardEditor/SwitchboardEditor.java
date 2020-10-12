@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.LinkedHashMap;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -146,11 +145,11 @@ public class SwitchboardEditor extends Editor {
     private final JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
     /**
-     * To count number of displayed beanswitches, this array hold all beanswitches to be displayed
-     * until the GridLayout is configured, using the number of items to be placed.
-     * Accounts for "hide unconnected" setting.
+     * To count number of displayed beanswitches, this array holds all beanswitches to be displayed
+     * until the GridLayout is configured, used to determine the total number of items to be placed.
+     * Accounts for "hide unconnected" setting, so it can be empty.
      */
-    private final Map<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
+    private final LinkedHashMap<String, BeanSwitch> switchesOnBoard = new LinkedHashMap<>();
 
     /**
      * Ctor
@@ -298,12 +297,12 @@ public class SwitchboardEditor extends Editor {
         checkboxPane.add(autoItemRange);
         autoItemRange.setToolTipText(Bundle.getMessage("AutoItemRangeTooltip"));
         // hideUnconnected checkbox on panel
-        hideUnconnected.setSelected(hideUnconnected());
+        hideUnconnected.setSelected(_hideUnconnected);
         log.debug("hideUnconnectedBox set to {}", hideUnconnected.isSelected());
         hideUnconnected.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnected.isSelected());
-            hideUnconnectedBox.setSelected(hideUnconnected()); // also (un)check the box on the menu
-            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            hideUnconnectedBox.setSelected(_hideUnconnected); // also (un)check the box on the menu
+            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
@@ -317,7 +316,8 @@ public class SwitchboardEditor extends Editor {
 
         // provide a JLayeredPane to place the switches on
         super.setTargetPanel(switchboardLayeredPane, makeFrame(name));
-        super.getTargetFrame().setSize(width + 6, height + 25); // width x height
+        super.getTargetFrame().setSize(550, 330); // width x height
+        //super.getTargetFrame().setSize(width + 6, height + 25); // width x height
 
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
@@ -368,6 +368,7 @@ public class SwitchboardEditor extends Editor {
 
     /**
      * Just repaint the Switchboard target panel.
+     * Fired on componentResized(e) event.
      */
     public void resizeInFrame() {
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
@@ -377,7 +378,7 @@ public class SwitchboardEditor extends Editor {
             int oldRows = rows;
             rows = autoRows(cellProportion); // if it suggests a different value for rows, call updatePressed()
             if (rows != oldRows) {
-                rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                //rowsSpinner.setValue(rows); // updatePressed will update rows spinner in  display, but will not propagate when disabled
                 updatePressed(); // redraw if rows value changed
             }
         }
@@ -391,20 +392,16 @@ public class SwitchboardEditor extends Editor {
      * Switchboard JPanel WindowResize() event is handled by resizeInFrame()
      */
     public void updatePressed() {
-        log.debug("update _hideUnconnected = {}", _hideUnconnected);
-        if (_hideUnconnected && !hideUnconnected.isSelected()){
-            hideUnconnected.setSelected(true);
-        }
-        log.debug("update _autoItemRange = {}", _autoItemRange);
+        log.debug("updatePressed START _tileSize = {}", _tileSize);
+
         if (_autoItemRange && !autoItemRange.isSelected()){
             autoItemRange.setSelected(true);
         }
-        log.debug("update _editable = {}", _editable);
         setVisible(_editable); // show/hide editor
 
         // update selected address range
         int range = (Integer) maxSpinner.getValue() - (Integer) minSpinner.getValue() + 1;
-        if (range > unconnectedRangeLimit && !hideUnconnected()) {
+        if (range > unconnectedRangeLimit && !_hideUnconnected) {
             // fixed maximum number of items on a Switchboard to prevent memory overflow
             range = unconnectedRangeLimit;
             maxSpinner.setValue((Integer) minSpinner.getValue() + range - 1);
@@ -444,11 +441,12 @@ public class SwitchboardEditor extends Editor {
         if (autoRowsBox.isSelected()) {
             rows = autoRows(cellProportion); // TODO: specific proportion value per Type/Shape choice?
             log.debug("autoRows() called in updatePressed(). Rows = {}", rows);
+            rowsSpinner.setValue(rows);
         }
         // disable the Rows spinner & Update button on the Switchboard Editor pane
         // param: GridLayout(vertical, horizontal), at least 1x1
-        switchboardLayeredPane.setLayout(new GridLayout(rows, (getTotal() + rows - 1) / rows));
-        log.debug("SLP grid set, rows was {}", rows);
+        switchboardLayeredPane.setLayout(new GridLayout(Math.max(rows, 1), 1));//(getTotal() + rows - 1) / rows));
+
         // add switches to LayeredPane
         for (BeanSwitch bs : switchesOnBoard.values()) {
             switchboardLayeredPane.add(bs);
@@ -466,6 +464,13 @@ public class SwitchboardEditor extends Editor {
         // hide AllOn/Off buttons unless type is Light
         allOnButton.setVisible(beanTypeList.getSelectedIndex() == 2);
         allOffButton.setVisible(beanTypeList.getSelectedIndex() == 2);
+
+        // must repaint again to fit inside frame
+        Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
+        switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
+        switchboardLayeredPane.repaint();
+
+        log.debug("updatePressed END _tileSize = {}", _tileSize);
     }
 
     /**
@@ -485,7 +490,7 @@ public class SwitchboardEditor extends Editor {
      *                    showing the name or (to do) a graphic image
      */
     private void createSwitchRange(int min, int max, int beanType, String manuPrefix, int switchShape) {
-        log.debug("_hideUnconnected = {}", hideUnconnected());
+        log.debug("_hideUnconnected = {}", _hideUnconnected);
         String name;
         BeanSwitch _switch;
         NamedBean nb;
@@ -512,7 +517,7 @@ public class SwitchboardEditor extends Editor {
                     log.error("addSwitchRange: cannot parse bean name. manuPrefix = {}; i = {}", manuPrefix, i);
                     return;
             }
-            if (nb == null && hideUnconnected()) {
+            if (nb == null && _hideUnconnected) {
                 continue; // skip i
             }
             _switch = new BeanSwitch(i, nb, name, switchShape, this); // add button instance i
@@ -650,8 +655,8 @@ public class SwitchboardEditor extends Editor {
         innerBorderPanel.add(new JTextArea(Bundle.getMessage("Help1")));
         // help2 explains: dimmed icons = unconnected
         innerBorderPanel.add(help2);
-        if (!hideUnconnected()) {
-            help2.setVisible(false); // hide this text when hideUnconnected() is set to true from menu or checkbox
+        if (!_hideUnconnected) {
+            help2.setVisible(false); // hide this text when _hideUnconnected is set to true from menu or checkbox
         }
         // help3 warns: no icons to show on switchboard
         help3.setForeground(Color.red);
@@ -701,7 +706,7 @@ public class SwitchboardEditor extends Editor {
                 rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOffTooltip"));
                 // hide rowsSpinner + rowsLabel?
                 if (rows != oldRows) {
-                    rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
+                    //rowsSpinner.setValue(rows); // update display, but will not propagate when disabled
                     updatePressed(); // redraw if rows value changed
                 }
             } else {
@@ -711,8 +716,8 @@ public class SwitchboardEditor extends Editor {
                 rowsSpinner.setToolTipText(Bundle.getMessage("RowsSpinnerOnTooltip"));
                 // calculate tile size
                 int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
-                int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, 2x3px for border
-                int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // 25px for footer
+                int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, subtract 2x3px for border
+                int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // -25px for footer
                 _tileSize = Math.round(Math.min(maxW, maxH)); // store for tile graphics
             }
         });
@@ -729,14 +734,14 @@ public class SwitchboardEditor extends Editor {
 
         // hideUnconnected item
         _optionMenu.add(hideUnconnectedBox);
+        hideUnconnectedBox.setSelected(_hideUnconnected);
         hideUnconnectedBox.addActionListener((ActionEvent event) -> {
             setHideUnconnected(hideUnconnectedBox.isSelected());
-            hideUnconnected.setSelected(hideUnconnected()); // also (un)check the box on the editor
-            help2.setVisible(!hideUnconnected() && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
+            hideUnconnected.setSelected(_hideUnconnected); // also (un)check the box on the editor
+            help2.setVisible(!_hideUnconnected && (switchesOnBoard.size() != 0)); // and show/hide instruction line unless no items on board
             updatePressed();
             setDirty();
         });
-        hideUnconnectedBox.setSelected(hideUnconnected());
 
         // Show/Hide Scroll Bars
         JMenu scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable"));
@@ -766,20 +771,20 @@ public class SwitchboardEditor extends Editor {
                                  Bundle.getMessage("SetBackgroundColor", ""),
                                  defaultBackgroundColor);
             if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
-               // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
-               if (desiredColor.equals(defaultTextColor)) {
-                  int retval = JOptionPane.showOptionDialog(null,
+                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
+                if (desiredColor.equals(defaultTextColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
                                Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
                                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                  log.debug("Retval: {}", retval);
-                  if (retval != 0) {
-                     return;
-                  }
-               }
-               defaultBackgroundColor = desiredColor;
-               setBackgroundColor(desiredColor);
-               setDirty(true);
-               switchboardLayeredPane.repaint();
+                    if (retval != 0) {
+                        return;
+                    }
+                }
+                defaultBackgroundColor = desiredColor;
+                setBackgroundColor(desiredColor);
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
            }
         });
 
@@ -791,20 +796,19 @@ public class SwitchboardEditor extends Editor {
                                  Bundle.getMessage("DefaultTextColor", ""),
                                  defaultTextColor);
             if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
-               // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
-               if (desiredColor.equals(defaultBackgroundColor)) {
-                  int retval = JOptionPane.showOptionDialog(null,
-                  Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                  new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                  log.debug("Retval: {}", retval);
-                  if (retval != 0) {
-                     return;
-                  }
-               }
-               defaultTextColor = desiredColor;
-               setDirty(true);
-               switchboardLayeredPane.repaint();
-               JmriColorChooser.addRecentColor(desiredColor);
+                // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
+                if (desiredColor.equals(defaultBackgroundColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                    Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval != 0) {
+                        return;
+                    }
+                }
+                defaultTextColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
             }
         });
 
@@ -992,9 +996,9 @@ public class SwitchboardEditor extends Editor {
      */
     int autoRows(float cellProp) {
         // find cell matrix that allows largest size icons
-        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp);
-        log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
-        double paneHeight = super.getTargetFrame().getHeight() - 25; // 25px for footer
+        double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp); // -2x3px for border
+        //log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
+        double paneHeight = super.getTargetFrame().getHeight() - 25; // -25px for footer
         int columnsNum = 1;
         int rowsNum = 1;
         float tileSize = 0.1f; // start value
@@ -1009,20 +1013,43 @@ public class SwitchboardEditor extends Editor {
             rowsNum = (totalDisplayed + columnsNum - 1) / columnsNum; // int roundup
             tileSizeOld = tileSize; // store for comparison
             tileSize = (float) Math.min(paneEffectiveWidth / columnsNum, paneHeight / rowsNum);
-            //log.debug("Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize), String.format("%.2f", tileSizeOld));
-            if (tileSize <= tileSizeOld) {
+            //log.debug("C>R Cols {} x Rows {}, tileSize {} was {}", columnsNum, rowsNum, String.format("%.2f", tileSize),
+            //        String.format("%.2f", tileSizeOld));
+            if (tileSize < tileSizeOld) {
+                rowsNum = (totalDisplayed + columnsNum - 2) / (columnsNum - 1);
                 break;
             }
             columnsNum++;
         }
 
+        // start over stepping columns instead of rows
+        int columnsNumC = 1;
+        int rowsNumC = 1;
+        float tileSizeC = 0.1f;
+        float tileSizeCOld = 0.0f;
+        while (tileSizeC > tileSizeCOld) {
+            columnsNumC = (totalDisplayed + rowsNumC - 1) / rowsNumC; // int roundup
+            tileSizeCOld = tileSizeC; // store for comparison
+            tileSizeC = (float) Math.min(paneEffectiveWidth / columnsNumC, paneHeight / rowsNumC);
+            //log.debug("R>C Cols {} x Rows {}, tileSizeC {} was {}", columnsNumC, rowsNumC, String.format("%.2f", tileSizeC),
+            //        String.format("%.2f", tileSizeCOld));
+            if (tileSizeC < tileSizeCOld) {
+                rowsNumC--;
+                break;
+            }
+            rowsNumC++;
+        }
+
+        if (tileSizeC > tileSize) { // we must choose the largest solution
+            rowsNum = rowsNumC;
+        }
         // Math.min(1,... to prevent >100% width calc (when hide unconnected selected)
         // rows = (total + columns - 1) / columns (int roundup) to account for unused tiles in grid:
         // for 23 switches we need at least 24 tiles (4x6, 3x8, 2x12 etc)
         // similar calculations repeated in panel.js for web display
-        log.debug("CELL SIZE optimum found: CxR = {}x{}, size = {}", columnsNum, rowsNum, tileSizeOld);
+        //log.debug("CELL SIZE optimum found: CxR = {}x{}, tileSize = {}", ((totalDisplayed + rowsNum - 1) / rowsNum), rowsNum, tileSize);
 
-        _tileSize = Math.round(tileSize); // store for tile graphics
+        _tileSize = Math.round((float) paneHeight / rowsNum); // recalculate tileSize from rowNum, store for tile graphics
         return rowsNum;
     }
 
@@ -1293,7 +1320,6 @@ public class SwitchboardEditor extends Editor {
      * @return the total number of switches displayed
      */
     public int getTotal() {
-        log.debug("Total = {}", switchesOnBoard.size());
         return switchesOnBoard.size();
     }
 
