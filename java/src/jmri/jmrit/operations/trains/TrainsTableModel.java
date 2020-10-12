@@ -332,7 +332,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
-                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation() &&
+                if (train.getCurrentRouteLocation() == train.getTrainTerminatesRouteLocation() &&
                         trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
                     return Bundle.getMessage("Terminate");
                 }

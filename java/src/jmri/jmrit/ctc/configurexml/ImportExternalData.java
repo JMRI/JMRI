@@ -228,6 +228,10 @@ public class ImportExternalData {
         cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(oldCBHD._mTUL_DispatcherInternalSensorUnlockedIndicator, true);
         cbhd._mTUL_NoDispatcherControlOfSwitch = oldCBHD._mTUL_NoDispatcherControlOfSwitch;
         cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = oldCBHD._mTUL_ndcos_WhenLockedSwitchStateIsClosed;
+
+        // Use the lock toggle to set the GUI icons boolean
+        cbhd._mTUL_GUI_IconsEnabled = cbhd._mTUL_DispatcherInternalSensorLockToggle.valid() ? true : false;
+
         cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.valueOf(oldCBHD._mTUL_LockImplementation.toString());
 
         cbhd._mTUL_AdditionalExternalTurnout1 = loadTurnout(oldCBHD._mTUL_AdditionalExternalTurnout1, oldCBHD._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
