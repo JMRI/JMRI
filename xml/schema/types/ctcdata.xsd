@@ -255,6 +255,7 @@
               <xs:element type="xs:string" name="TUL_DispatcherInternalSensorUnlockedIndicator"/>
               <xs:element type="xs:string" name="TUL_NoDispatcherControlOfSwitch"/>
               <xs:element type="xs:string" name="TUL_ndcos_WhenLockedSwitchStateIsClosed"/>
+              <xs:element type="xs:string" name="TUL_GUI_IconsEnabled" minOccurs="0"/>
               <xs:element type="xs:string" name="TUL_LockImplementation"/>
               <xs:element name="TUL_AdditionalExternalTurnouts">
                 <xs:complexType>

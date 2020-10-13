@@ -57,6 +57,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * SEE EXAMPLES BELOW CarManager carManager = InstanceManager.getDefault(CarManager.class); EngineManager
      * engineManager = InstanceManager.getDefault(EngineManager.class);
      */
+    
+    // The release date for JMRI operations 10/29/2008
 
     public static final String NONE = "";
 
@@ -458,7 +460,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 }
                 // start recording time after finding where the train is
                 if (!trainLocFound && isTrainEnRoute()) {
-                    if (rl == getCurrentLocation()) {
+                    if (rl == getCurrentRouteLocation()) {
                         trainLocFound = true;
                         // add travel time
                         minutes = Setup.getTravelTime();
@@ -675,18 +677,18 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Train's current route location name
      */
     public String getCurrentLocationName() {
-        if (getCurrentLocation() == null) {
+        if (getCurrentRouteLocation() == null) {
             return NONE;
         }
-        return getCurrentLocation().getName();
+        return getCurrentRouteLocation().getName();
     }
 
     /**
-     * Get train's current location
+     * Get train's current route location
      *
      * @return Train's current route location
      */
-    public RouteLocation getCurrentLocation() {
+    public RouteLocation getCurrentRouteLocation() {
         if (getRoute() == null) {
             return null;
         }
@@ -714,9 +716,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Name of the location that is the number of stops away from the train's current location.
      */
     public String getNextLocationName(int number) {
-        RouteLocation rl = getCurrentLocation();
+        RouteLocation rl = getCurrentRouteLocation();
         while (number-- > 0) {
-            rl = getNextLocation(rl);
+            rl = getNextRouteLocation(rl);
             if (rl == null) {
                 return NONE;
             }
@@ -724,7 +726,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return rl.getName();
     }
 
-    public RouteLocation getNextLocation(RouteLocation currentRouteLocation) {
+    public RouteLocation getNextRouteLocation(RouteLocation currentRouteLocation) {
         if (getRoute() == null) {
             return null;
         }
@@ -893,7 +895,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return true if train has departed
      */
     public boolean isTrainEnRoute() {
-        return !getCurrentLocationName().equals(NONE) && getTrainDepartsRouteLocation() != getCurrentLocation();
+        return !getCurrentLocationName().equals(NONE) && getTrainDepartsRouteLocation() != getCurrentRouteLocation();
     }
 
     /**
@@ -1868,7 +1870,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The number of cars currently in the train
      */
     public int getNumberCarsInTrain() {
-        return getNumberCarsInTrain(getCurrentLocation());
+        return getNumberCarsInTrain(getCurrentRouteLocation());
     }
 
     /**
@@ -1971,7 +1973,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return The train length at the train's current location
      */
     public int getTrainLength() {
-        return getTrainLength(getCurrentLocation());
+        return getTrainLength(getCurrentRouteLocation());
     }
 
     /**
@@ -2015,7 +2017,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return Train's weight in tons.
      */
     public int getTrainWeight() {
-        return getTrainWeight(getCurrentLocation());
+        return getTrainWeight(getCurrentRouteLocation());
     }
 
     public int getTrainWeight(RouteLocation routeLocation) {
@@ -2083,7 +2085,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     @Nonnull
     public String getCabooseRoadAndNumber() {
         String cabooseRoadNumber = NONE;
-        RouteLocation rl = getCurrentLocation();
+        RouteLocation rl = getCurrentRouteLocation();
         List<Car> cars = InstanceManager.getDefault(CarManager.class).getByTrainList(this);
         for (Car car : cars) {
             if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose()) {
@@ -2348,64 +2350,64 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _leg3CabooseRoad;
     }
 
-    public void setSecondLegStartLocation(RouteLocation rl) {
+    public void setSecondLegStartRouteLocation(RouteLocation rl) {
         _leg2Start = rl;
     }
 
-    public RouteLocation getSecondLegStartLocation() {
+    public RouteLocation getSecondLegStartRouteLocation() {
         return _leg2Start;
     }
 
     public String getSecondLegStartLocationName() {
-        if (getSecondLegStartLocation() == null) {
+        if (getSecondLegStartRouteLocation() == null) {
             return NONE;
         }
-        return getSecondLegStartLocation().getName();
+        return getSecondLegStartRouteLocation().getName();
     }
 
-    public void setThirdLegStartLocation(RouteLocation rl) {
+    public void setThirdLegStartRouteLocation(RouteLocation rl) {
         _leg3Start = rl;
     }
 
-    public RouteLocation getThirdLegStartLocation() {
+    public RouteLocation getThirdLegStartRouteLocation() {
         return _leg3Start;
     }
 
     public String getThirdLegStartLocationName() {
-        if (getThirdLegStartLocation() == null) {
+        if (getThirdLegStartRouteLocation() == null) {
             return NONE;
         }
-        return getThirdLegStartLocation().getName();
+        return getThirdLegStartRouteLocation().getName();
     }
 
-    public void setSecondLegEndLocation(RouteLocation rl) {
+    public void setSecondLegEndRouteLocation(RouteLocation rl) {
         _end2Leg = rl;
     }
 
     public String getSecondLegEndLocationName() {
-        if (getSecondLegEndLocation() == null) {
+        if (getSecondLegEndRouteLocation() == null) {
             return NONE;
         }
-        return getSecondLegEndLocation().getName();
+        return getSecondLegEndRouteLocation().getName();
     }
 
-    public RouteLocation getSecondLegEndLocation() {
+    public RouteLocation getSecondLegEndRouteLocation() {
         return _end2Leg;
     }
 
-    public void setThirdLegEndLocation(RouteLocation rl) {
+    public void setThirdLegEndRouteLocation(RouteLocation rl) {
         _leg3End = rl;
     }
 
-    public RouteLocation getThirdLegEndLocation() {
+    public RouteLocation getThirdLegEndRouteLocation() {
         return _leg3End;
     }
 
     public String getThirdLegEndLocationName() {
-        if (getThirdLegEndLocation() == null) {
+        if (getThirdLegEndRouteLocation() == null) {
             return NONE;
         }
-        return getThirdLegEndLocation().getName();
+        return getThirdLegEndRouteLocation().getName();
     }
 
     /**
@@ -3055,18 +3057,15 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _printed;
     }
 
-    protected RouteLocation _trainIconRl = null; // saves the icon current route
-                                                 // location
-
     /**
      * Sets the panel position for the train icon for the current route location.
      *
      * @return true if train coordinates can be set
      */
     public boolean setTrainIconCoordinates() {
-        if (Setup.isTrainIconCordEnabled()) {
-            _trainIconRl.setTrainIconX(_trainIcon.getX());
-            _trainIconRl.setTrainIconY(_trainIcon.getY());
+        if (Setup.isTrainIconCordEnabled() && getCurrentRouteLocation() != null &&_trainIcon != null) {
+            getCurrentRouteLocation().setTrainIconX(_trainIcon.getX());
+            getCurrentRouteLocation().setTrainIconY(_trainIcon.getY());
             return true;
         }
         return false;
@@ -3087,7 +3086,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     public void move() {
         log.debug("Move train ({})", getName());
-        if (getRoute() == null || getCurrentLocation() == null) {
+        if (getRoute() == null || getCurrentRouteLocation() == null) {
             setBuilt(false); // break terminate loop
             return;
         }
@@ -3095,8 +3094,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             log.error("ERROR attempt to move train ({}) that hasn't been built", getName());
             return;
         }
-        RouteLocation rl = getCurrentLocation();
-        RouteLocation rlNext = getNextLocation(rl);
+        RouteLocation rl = getCurrentRouteLocation();
+        RouteLocation rlNext = getNextRouteLocation(rl);
 
         setCurrentLocation(rlNext);
 
@@ -3118,13 +3117,13 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     public boolean move(String locationName) {
         log.info("Move train ({}) to location ({})", getName(), locationName);
-        if (getRoute() == null || getCurrentLocation() == null) {
+        if (getRoute() == null || getCurrentRouteLocation() == null) {
             return false;
         }
         List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
             RouteLocation rl = routeList.get(i);
-            if (getCurrentLocation() == rl) {
+            if (getCurrentRouteLocation() == rl) {
                 for (int j = i + 1; j < routeList.size(); j++) {
                     rl = routeList.get(j);
                     if (rl.getName().equals(locationName)) {
@@ -3155,12 +3154,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return false;
         }
         log.debug("Move train ({}) to location ({})", getName(), rl.getName());
-        if (getRoute() == null || getCurrentLocation() == null) {
+        if (getRoute() == null || getCurrentRouteLocation() == null) {
             return false;
         }
         boolean foundCurrent = false;
         for (RouteLocation xrl : getRoute().getLocationsBySequenceList()) {
-            if (getCurrentLocation() == xrl) {
+            if (getCurrentRouteLocation() == xrl) {
                 foundCurrent = true;
             }
             if (xrl == rl) {
@@ -3193,8 +3192,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public void loadTrainIcon() {
-        if (getCurrentLocation() != null) {
-            moveTrainIcon(getCurrentLocation());
+        if (getCurrentRouteLocation() != null) {
+            moveTrainIcon(getCurrentRouteLocation());
         }
     }
 
@@ -3207,7 +3206,6 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      */
     @SuppressWarnings("null")
     protected void moveTrainIcon(RouteLocation rl) {
-        _trainIconRl = rl;
         // create train icon if at departure or if program has been restarted
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null) {
             createTrainIcon(rl);
@@ -3342,7 +3340,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 }
             }
             if (editor != null) {
+                try {
                 _trainIcon = editor.addTrainIcon(getIconName());
+                } catch (Exception e) {
+                    log.error("Error placing train ({}) icon on panel ({}) {}", getName(), Setup.getPanelName(), e);
+                    return;
+                }
                 _trainIcon.setTrain(this);
                 if (getIconName().length() > 9) {
                     _trainIcon.setFont(_trainIcon.getFont().deriveFont(8.f));
@@ -3383,16 +3386,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return;
         }
         // set color based on train direction at current location
-        if (_trainIconRl.getTrainDirection() == RouteLocation.NORTH) {
+        if (getCurrentRouteLocation().getTrainDirection() == RouteLocation.NORTH) {
             _trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
         }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.SOUTH) {
+        if (getCurrentRouteLocation().getTrainDirection() == RouteLocation.SOUTH) {
             _trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
         }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.EAST) {
+        if (getCurrentRouteLocation().getTrainDirection() == RouteLocation.EAST) {
             _trainIcon.setLocoColor(Setup.getTrainIconColorEast());
         }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.WEST) {
+        if (getCurrentRouteLocation().getTrainDirection() == RouteLocation.WEST) {
             _trainIcon.setLocoColor(Setup.getTrainIconColorWest());
         }
     }
@@ -3491,12 +3494,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if ((a = e.getAttribute(Xml.DESCRIPTION)) != null) {
             _description = a.getValue();
         }
-        // The release date for JMRI operations 10/29/2008
         if ((a = e.getAttribute(Xml.DEPART_HOUR)) != null) {
             String hour = a.getValue();
             if ((a = e.getAttribute(Xml.DEPART_MINUTE)) != null) {
                 String minute = a.getValue();
-                setDepartureTime(hour, minute);
+                _departureTime = hour + ":" + minute;
             }
         }
 
@@ -3928,8 +3930,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
         }
         // build list of locations that this train skips
-        if (getCurrentLocation() != null) {
-            e.setAttribute(Xml.CURRENT, getCurrentLocation().getId());
+        if (getCurrentRouteLocation() != null) {
+            e.setAttribute(Xml.CURRENT, getCurrentRouteLocation().getId());
         }
         if (getDepartureTrack() != null) {
             e.setAttribute(Xml.DEPARTURE_TRACK, getDepartureTrack().getId());
@@ -4079,11 +4081,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             e.setAttribute(Xml.LEG2_ROAD, getSecondLegEngineRoad());
             e.setAttribute(Xml.LEG2_MODEL, getSecondLegEngineModel());
             e.setAttribute(Xml.LEG2_CABOOSE_ROAD, getSecondLegCabooseRoad());
-            if (getSecondLegStartLocation() != null) {
-                e.setAttribute(Xml.LEG2_START, getSecondLegStartLocation().getId());
+            if (getSecondLegStartRouteLocation() != null) {
+                e.setAttribute(Xml.LEG2_START, getSecondLegStartRouteLocation().getId());
             }
-            if (getSecondLegEndLocation() != null) {
-                e.setAttribute(Xml.LEG2_END, getSecondLegEndLocation().getId());
+            if (getSecondLegEndRouteLocation() != null) {
+                e.setAttribute(Xml.LEG2_END, getSecondLegEndRouteLocation().getId());
             }
         }
         if (getThirdLegOptions() != NO_CABOOSE_OR_FRED) {
@@ -4092,11 +4094,11 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             e.setAttribute(Xml.LEG3_ROAD, getThirdLegEngineRoad());
             e.setAttribute(Xml.LEG3_MODEL, getThirdLegEngineModel());
             e.setAttribute(Xml.LEG3_CABOOSE_ROAD, getThirdLegCabooseRoad());
-            if (getThirdLegStartLocation() != null) {
-                e.setAttribute(Xml.LEG3_START, getThirdLegStartLocation().getId());
+            if (getThirdLegStartRouteLocation() != null) {
+                e.setAttribute(Xml.LEG3_START, getThirdLegStartRouteLocation().getId());
             }
-            if (getThirdLegEndLocation() != null) {
-                e.setAttribute(Xml.LEG3_END, getThirdLegEndLocation().getId());
+            if (getThirdLegEndRouteLocation() != null) {
+                e.setAttribute(Xml.LEG3_END, getThirdLegEndRouteLocation().getId());
             }
         }
         return e;
