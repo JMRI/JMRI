@@ -87,14 +87,15 @@ canvas:hover { /* Switchboard beanswitch */
     margin: -1px;
 }
 
-span.lightswitch { /* on Switchboard */
+span.lightswitch { /* All On/All Off on Switchboard */
     border: 1px solid black;
     border-radius: 5px;
-    padding: 2px;
-    background-color: lightgray;
+    padding: 1px;
+    background-color: white;
+    box-shadow: 1px 1px gray;
 }
 
-span.lightswitch:hover { /* on Switchboard */
+span.lightswitch:hover { /* Switchboard */
     background-color: yellow;
     cursor: pointer;
 }

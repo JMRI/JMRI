@@ -108,9 +108,9 @@ var jmri = null;
 
 var jmri_logging = false;
 
-//
-//  debug functions
-//
+/******************************************************************
+*  ======= Debug functions =======
+*/
 
 // log object properties
 function $logProperties(obj) {
@@ -133,860 +133,30 @@ function isDefined(x) {
     return (typeof x !== "undefined");
 }
 
-//
-//  Decoration classes
-//
+/******************************************************************
+*  ======= Primary functions =======
+*/
 
-class Decoration {
-    constructor($widget) {
-        //log.log("Decoration.constructor(...)");
-        $logProperties(this.$widget);
-        this.$widget = $widget;
-    }
-    getEndPoints() {
-        [this.ep1, this.ep2] = $getEndPoints(this.$widget);
-        //log.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
-    }
-    getAngles() {
-        var $widget = this.$widget;
-        if ($widget.bezier == "yes") {
-            this.getBezierAngles();
-        } else if ($widget.circle == "yes") {
-            this.getCircleAngles();
-        } else if ($widget.arc == "yes") {
-            this.getArcAngles();
-        } else {
-            this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, this.ep1);
-            this.stopAngleRAD = this.startAngleRAD;
-        }
-        //log.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
-    }
-    getBezierAngles() {
-        var $widget = this.$widget;
-        var $cps = $widget.controlpoints;   // get the control points
-        var $cp0 = $cps[0];
-        var $cpN = $cps[$cps.length - 1];
-        var cp0 = $getLayoutPoint($cp0);
-        var cpN = $getLayoutPoint($cpN);
-        this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, this.ep1);
-        this.stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, cpN);
-    }
-    getCircleAngles() {
-        var $widget = this.$widget;
-        var extentAngleDEG = $widget.angle;
-        if (extentAngleDEG == 0) {
-            extentAngleDEG = 90;
-        }
-        var startAngleRAD, stopAngleRAD;
-        // Convert angle to radiants in order to speed up math
-        var halfAngleRAD = $toRadians(extentAngleDEG) / 2;
-        // Compute arc's chord
-        var a = this.ep2[0] - this.ep1[0];
-        var o = this.ep2[1] - this.ep1[1];
-        var chord = Math.hypot(a, o);
-        // Make sure chord is not null
-        // In such a case (ep1 == ep2), there is no arc to draw
-        if (chord > 0) {
-            var midAngleRAD = Math.atan2(a, o);
-            startAngleRAD = (Math.PI / 2) - (midAngleRAD + halfAngleRAD);
-            stopAngleRAD = (Math.PI / 2) - (midAngleRAD - halfAngleRAD);
-        }
-        this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
-    }
-    getArcAngles() {
-        var startAngleRAD, stopAngleRAD;
-        if (this.ep1[0] < this.ep2[0]) {
-            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD ONE ####");
-                startAngleRAD = 0; stopAngleRAD = Math.PI / 2;
-            } else {                            //log.log("#### QUAD TWO ####");
-                startAngleRAD = -Math.PI / 2; stopAngleRAD = 0;
-            }
-        } else {
-            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD THREE ####");
-                startAngleRAD = Math.PI / 2; stopAngleRAD = Math.PI;
-            } else {                            //log.log("#### QUAD FOUR ####");
-                startAngleRAD = Math.PI; stopAngleRAD = -Math.PI / 2;
-            }
-        }
-        this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
-    }
-
-    draw() {
-        this.getEndPoints();
-        this.getAngles();
-    }
-
-    getArcParams(rw, rh, tp1, tp2) {
-        var x, y;
-        if (rw < 0) {
-            rw = -rw;
-            if (rh < 0) {                   //log.log("**** QUAD ONE ****");
-                x = tp1[0]; y = tp2[1];
-                rh = -rh;
-            } else {                        //log.log("**** QUAD TWO ****");
-                x = tp2[0]; y = tp1[1];
-            }
-        } else {
-            if (rh < 0) {                   //log.log("**** QUAD THREE ****");
-                x = tp2[0]; y = tp1[1];
-                rh = -rh;
-            } else {                        //log.log("**** QUAD FOUR ****");
-                x = tp1[0]; y = tp2[1];
-            }
-        }
-        return [x, y, rw, rh];
-    }
-}   // class Decoration
-
-class ArrowDecoration extends Decoration {
-    constructor($widget, $arrow) {
-        super($widget);
-        //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
-        this.style = Number($arrow.attr('style'));
-        this.end = $arrow.attr('end');
-        this.direction = $arrow.attr('direction');
-        this.color = $arrow.attr('color');
-        this.linewidth = Number($arrow.attr('linewidth'));
-        this.length = Number($arrow.attr('length'));
-        this.gap = Number($arrow.attr('gap'));
-        //log.log("arrow: {end:" + this.end + ", dir: " + this.direction + "}");
-    }
-    draw() {
-        super.draw();
-        $gCtx.save();   // save current line width and color
-        // set color and width
-        $gCtx.strokeStyle = this.color;
-        $gCtx.fillStyle = this.color;
-        $gCtx.lineWidth = this.linewidth;
-        this.drawArrowStart();
-        this.drawArrowStop();
-        $gCtx.restore();        // restore color and width back to default
-    }
-    drawArrowStart() {
-        var angleRAD = this.startAngleRAD;
-        if (this.$widget.flip == "yes") {
-            angleRAD = this.stopAngleRAD;
-        }
-        this.offset = 1;        // draw the start arrows
-        if ((this.end == "start") || (this.end == "both")) {
-            if ((this.direction == "in") || (this.direction == "both")) {
-                this.drawArrowIn(this.ep1, Math.PI + angleRAD);
-            }
-            if ((this.direction == "out") || (this.direction == "both")) {
-                this.drawArrowOut(this.ep1, Math.PI + angleRAD);
-            }
-        }
-    }
-    drawArrowStop() {
-        var angleRAD = this.stopAngleRAD;
-        if (this.$widget.flip == "yes") {
-            angleRAD = this.startAngleRAD;
-        }
-        this.offset = 1;        // draw the stop arrows
-        if ((this.end == "stop") || (this.end == "both")) {
-            if ((this.direction == "in") || (this.direction == "both")) {
-                this.drawArrowIn(this.ep2, angleRAD);
-            }
-            if ((this.direction == "out") || (this.direction == "both")) {
-                this.drawArrowOut(this.ep2, angleRAD);
-            }
-        }
-    }
-    drawArrowIn(ep, angleRAD) {
-        $gCtx.save();
-        $gCtx.translate(ep[0], ep[1]);
-        $gCtx.rotate(angleRAD);
-
-        switch (this.style) {
-            default:
-                this.style = 0;
-            case 0:
-                break;
-            case 1:
-                this.drawArrow1In();
-                break;
-            case 2:
-                this.drawArrow2In();
-                break;
-            case 3:
-                this.drawArrow3In();
-                break;
-            case 4:
-                this.drawArrow4In();
-                break;
-            case 5:
-                this.drawArrow5In();
-        }
-        $gCtx.restore();
-    }   // drawArrowIn
-
-    drawArrowOut(ep, angleRAD) {
-        $gCtx.save();
-        $gCtx.translate(ep[0], ep[1]);
-        $gCtx.rotate(angleRAD);
-
-        switch (this.style) {
-            default:
-                this.style = 0;
-            case 0:
-                break;
-            case 1:
-                this.drawArrow1Out();
-                break;
-            case 2:
-                this.drawArrow2Out();
-                break;
-            case 3:
-                this.drawArrow3Out();
-                break;
-            case 4:
-                this.drawArrow4Out();
-                break;
-            case 5:
-                this.drawArrow5Out();
-        }
-        $gCtx.restore();
-    }   // drawArrowIn
-
-    drawArrow1In() {
-        var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0];
-        var p3 = [this.offset + this.length, +this.length];
-
-        $drawLineP(p1, p2);
-        $drawLineP(p2, p3);
-        this.offset += this.length + this.gap;
-    }
-
-    drawArrow1Out() {
-        var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0];
-        var p3 = [this.offset, +this.length];
-
-        $drawLineP(p1, p2);
-        $drawLineP(p2, p3);
-        this.offset += this.length + this.gap;
-    }
-
-    drawArrow2In() {
-        var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0];
-        var p3 = [this.offset + this.length, +this.length];
-        var p4 = [this.offset + this.linewidth + this.gap + this.length, -this.length];
-        var p5 = [this.offset + this.linewidth + this.gap, 0];
-        var p6 = [this.offset + this.linewidth + this.gap + this.length, +this.length];
-
-        $drawLineP(p1, p2);
-        $drawLineP(p2, p3);
-        $drawLineP(p4, p5);
-        $drawLineP(p5, p6);
-        this.offset += this.length + (2 * (this.linewidth + this.gap));
-    }
-
-    drawArrow2Out() {
-        var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0];
-        var p3 = [this.offset, +this.length];
-        var p4 = [this.offset + this.linewidth + this.gap, -this.length];
-        var p5 = [this.offset + this.linewidth + this.gap + this.length, 0];
-        var p6 = [this.offset + this.linewidth + this.gap, +this.length];
-
-        $drawLineP(p1, p2);
-        $drawLineP(p2, p3);
-        $drawLineP(p4, p5);
-        $drawLineP(p5, p6);
-        this.offset += this.length + (2 * (this.linewidth + this.gap));
-    }
-
-    drawArrow3In() {
-        var p1 = [this.offset + this.length, -this.length];
-        var p2 = [this.offset, 0];
-        var p3 = [this.offset + this.length, +this.length];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.lineTo(p3[0], p3[1]);
-        $gCtx.closePath();
-        if (this.linewidth > 1) {
-            $gCtx.fill();
-        } else {
-            $gCtx.stroke();
-        }
-        this.offset += this.length + this.gap;
-    }
-
-    drawArrow3Out() {
-        var p1 = [this.offset, -this.length];
-        var p2 = [this.offset + this.length, 0];
-        var p3 = [this.offset, +this.length];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.lineTo(p3[0], p3[1]);
-        $gCtx.closePath();
-        if (this.linewidth > 1) {
-            $gCtx.fill();
-        } else {
-            $gCtx.stroke();
-        }
-        this.offset += this.length + this.gap;
-    }
-
-    drawArrow4In() {
-        var p1 = [this.offset, 0];
-        var p2 = [this.offset + (4 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0];
-        var p4 = [this.offset + (4 * this.length), +this.length];
-
-        $drawLineP(p1, p3);
-        $drawLineP(p2, p3);
-        $drawLineP(p3, p4);
-        this.offset += (3 * this.length) + this.gap;
-    }
-
-    drawArrow4Out() {
-        var p1 = [this.offset, 0];
-        var p2 = [this.offset + (2 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0];
-        var p4 = [this.offset + (2 * this.length), +this.length];
-
-        $drawLineP(p1, p3);
-        $drawLineP(p2, p3);
-        $drawLineP(p3, p4);
-        this.offset += (3 * this.length) + this.gap;
-    }
-
-    drawArrow5In() {
-        var p1 = [this.offset, 0];
-        var p2 = [this.offset + (4 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0];
-        var p4 = [this.offset + (4 * this.length), +this.length];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p4[0], p4[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.lineTo(p3[0], p3[1]);
-        $gCtx.closePath();
-        if (this.linewidth > 1) {
-            $gCtx.fill();
-        } else {
-            $gCtx.stroke();
-        }
-        $drawLineP(p1, p3);
-        this.offset += (3 * this.length) + this.gap;
-    }
-
-    drawArrow5Out() {
-        var p1 = [this.offset, 0];
-        var p2 = [this.offset + (2 * this.length), -this.length];
-        var p3 = [this.offset + (3 * this.length), 0];
-        var p4 = [this.offset + (2 * this.length), +this.length];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p4[0], p4[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.lineTo(p3[0], p3[1]);
-        $gCtx.closePath();
-        if (this.linewidth > 1) {
-            $gCtx.fill();
-        } else {
-            $gCtx.stroke();
-        }
-        $drawLineP(p1, p3);
-        this.offset += (3 * this.length) + this.gap;
-    }
-}   // class ArrowDecoration
-
-class BridgeDecoration extends Decoration {
-    constructor($widget, $bridge) {
-        super($widget);
-        //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
-        this.side = $bridge.attr('side');
-        this.end = $bridge.attr('end');
-        this.color = $bridge.attr('color');
-        this.linewidth = Number($bridge.attr('linewidth'));
-        this.approachwidth = Number($bridge.attr('approachwidth'));
-        this.deckwidth = Number($bridge.attr('deckwidth'));
-    }
-    draw() {
-        super.draw();
-        var $widget = this.$widget;
-        $gCtx.save();   // save current line width and color
-        // set color and width
-        $gCtx.strokeStyle = this.color;
-        $gCtx.fillStyle = this.color;
-        $gCtx.lineWidth = this.linewidth;
-        if ($widget.circle == "yes") {
-            this.drawBridgeCircle();
-        } else if ($widget.arc == "yes") {
-            this.drawBridgeArc();
-        } else if ($widget.bezier == "yes") {
-            this.drawBridgeBezier();
-        } else {
-            this.drawBridgeStrait();
-        }
-        this.drawBridgeEnds();
-        $gCtx.restore();        // restore color and width back to default
-    }   // draw()
-
-    drawBridgeCircle() {
-        var $widget = this.$widget;
-        var halfWidth = this.deckwidth / 2;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        var v = [0, +halfWidth];
-        if ($widget.flip == "yes") {
-            v = [0, -halfWidth];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-        }
-        if ((this.side == "right") || (this.side == "both")) {
-            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle);
-            }
-        }
-        if ((this.side == "left") || (this.side == "both")) {
-            var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle);
-            }
-        }
-    }
-    drawBridgeArc() {   //draw arc of ellipse
-        var $widget = this.$widget;
-        var tp1 = this.ep1, tp2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        if ($widget.flip == "yes") {
-            [tp1, tp2] = [tp2, tp1];
-            startAngleRAD += Math.PI;
-            stopAngleRAD += Math.PI;
-        }
-        var halfWidth = this.deckwidth / 2;
-        var x, y;
-        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
-        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
-
-        rw -= halfWidth;    rh -= halfWidth;
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
-        }
-        rw += this.deckwidth;  rh += this.deckwidth;
-        if ((this.side == "left") || (this.side == "both")) {
-            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
-        }
-    }   // drawBridgeArc()
-
-    drawBridgeBezier() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var points = [[ep1[0], ep1[1]]];    // first point
-        var $cps = $widget.controlpoints;   // get the control points
-        $cps.each(function( idx, elem ) {   // control points
-            points.push($getLayoutPoint(elem));
-        });
-        points.push([ep2[0], ep2[1]]);  // last point
-        var halfWidth = this.deckwidth / 2;
-        if (((this.side == "left") || (this.side == "both"))) {
-            $drawBezier(points, this.color, this.linewidth, -halfWidth);
-        }
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawBezier(points, this.color, this.linewidth, +halfWidth);
-        }
-    }
-    drawBridgeStrait() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var halfWidth = this.deckwidth / 2;
-        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
-        }
-        if (((this.side == "left") || (this.side == "both"))) {
-            $drawLineP($point_subtract(ep1, vector), $point_subtract(ep2, vector));
-        }
-    }
-    drawBridgeEnds() {
-        if ((this.end == "entry") || (this.end == "both")) {
-            this.drawBridgeEntry();
-        }
-        if ((this.end == "exit") || (this.end == "both")) {
-            this.drawBridgeExit();
-       }
-    }
-    drawBridgeEntry() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        var halfWidth = this.deckwidth / 2;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
-        if ($widget.flip == "yes") {
-            [isRight, isLeft] = [isLeft, isRight];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-        }
-        var p1, p2;
-        if (isRight) {
-            p1 = [-this.approachwidth, +this.approachwidth + halfWidth];
-            p2 = [0, +halfWidth];
-            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            $drawLineP(p1, p2);
-        }
-        if (isLeft) {
-            p1 = [-this.approachwidth, -this.approachwidth - halfWidth];
-            p2 = [0, -halfWidth];
-            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
-            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
-            $drawLineP(p1, p2);
-        }
-    }
-    drawBridgeExit() {
-        var $widget = this.$widget;
-        var ep2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        var halfWidth = this.deckwidth / 2;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
-        if ($widget.flip == "yes") {
-            [isRight, isLeft] = [isLeft, isRight];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-        }
-        var p1, p2;
-        if (isRight) {
-            p1 = [+this.approachwidth, +this.approachwidth + halfWidth];
-            p2 = [0, +halfWidth];
-            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            $drawLineP(p1, p2);
-        }
-        if (isLeft) {
-            p1 = [+this.approachwidth, -this.approachwidth - halfWidth];
-            p2 = [0, -halfWidth];
-            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
-            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
-            $drawLineP(p1, p2);
-        }
-    }
-}   // BridgeDecoration
-
-class BumperDecoration extends Decoration {
-    constructor($widget, $bumper) {
-        super($widget);
-        //<bumper end="stop" color="#000000" linewidth="2" length="16" />
-        this.end = $bumper.attr('end');
-        this.color = $bumper.attr('color');
-        this.linewidth = Number($bumper.attr('linewidth'));
-        this.length = Number($bumper.attr('length'));
-    }
-    draw() {
-        super.draw();
-        $gCtx.save();   // save current line width and color
-        // set color and width
-        $gCtx.strokeStyle = this.color;
-        $gCtx.fillStyle = this.color;
-        $gCtx.lineWidth = this.linewidth;
-        var $widget = this.$widget;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        if ($widget.flip == "yes") {
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-        }
-        var bumperLength = this.length;
-        var halfLength = bumperLength / 2;
-        // common points
-        var p1 = [0, -halfLength], p2 = [0, +halfLength];
-        if ((this.end == "start") || (this.end == "both")) {
-            var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
-            var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
-            $drawLineP(p1, p2);   // draw cross tie
-        }
-        if ((this.end == "stop") || (this.end == "both")) {
-            var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
-            var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
-            $drawLineP(p1, p2);   // draw cross tie
-        }
-        $gCtx.restore();        // restore color and width back to default
-    }
-}   //  class BumperDecoration
-
-class TunnelDecoration extends Decoration {
-    constructor($widget, $tunnel) {
-        super($widget);
-        //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
-        this.side = $tunnel.attr('side');
-
-        this.end = $tunnel.attr('end');
-        this.color = $tunnel.attr('color');
-        this.linewidth = Number($tunnel.attr('linewidth'));
-        this.entrancewidth = Number($tunnel.attr('entrancewidth'));
-        this.floorwidth = Number($tunnel.attr('floorwidth'));
-    }
-    draw() {
-        super.draw();
-        var $widget = this.$widget;
-        $gCtx.save();   // save current line width and color
-        // set color and width
-        $gCtx.strokeStyle = this.color;
-        $gCtx.fillStyle = this.color;
-        $gCtx.lineWidth = this.linewidth;
-        $gCtx.setLineDash([6, 4]);
-        if ($widget.circle == "yes") {
-            this.drawTunnelCircle();
-        } else if ($widget.arc == "yes") {
-            this.drawTunnelArc();
-        } else if ($widget.bezier == "yes") {
-            this.drawTunnelBezier();
-        } else {
-            this.drawTunnelStrait();
-        }
-        $gCtx.setLineDash([]);
-        this.drawTunnelEnds();
-        $gCtx.restore();        // restore color and width back to default
-    }   // draw()
-
-    drawTunnelCircle() {
-        var $widget = this.$widget;
-        var halfWidth = this.floorwidth / 2;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        var v = [0, +halfWidth];
-        if ($widget.flip == "yes") {
-            v = [0, -halfWidth];
-            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
-        }
-        if ((this.side == "right") || (this.side == "both")) {
-            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle);
-            }
-        }
-        if ((this.side == "left") || (this.side == "both")) {
-            var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
-            var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
-            if ($widget.flip == "yes") {
-                $drawArcP(tp2, tp1, $widget.angle);
-            } else {
-                $drawArcP(tp1, tp2, $widget.angle);
-            }
-        }
-    }
-    drawTunnelArc() {   //draw arc of ellipse
-        var $widget = this.$widget;
-        var tp1 = this.ep1, tp2 = this.ep2;
-        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
-        if ($widget.flip == "yes") {
-            [tp1, tp2] = [tp2, tp1];
-            startAngleRAD += Math.PI;
-            stopAngleRAD += Math.PI;
-        }
-        var halfWidth = this.floorwidth / 2;
-        var x, y;
-        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
-        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
-
-        rw -= halfWidth;    rh -= halfWidth;
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
-        }
-        rw += this.floorwidth;  rh += this.floorwidth;
-        if ((this.side == "left") || (this.side == "both")) {
-            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
-        }
-    }   // drawTunnelArc()
-
-    drawTunnelBezier() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var points = [[ep1[0], ep1[1]]];    // first point
-        var $cps = $widget.controlpoints;   // get the control points
-        $cps.each(function( idx, elem ) {   // control points
-            points.push($getLayoutPoint(elem));
-        });
-        points.push([ep2[0], ep2[1]]);  // last point
-        var halfWidth = this.floorwidth / 2;
-        if (((this.side == "left") || (this.side == "both"))) {
-            $drawBezier(points, this.color, this.linewidth, -halfWidth);
-        }
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawBezier(points, this.color, this.linewidth, +halfWidth);
-        }
-    }
-    drawTunnelStrait() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1, ep2 = this.ep2;
-        var halfWidth = this.floorwidth / 2;
-        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
-        if ((this.side == "right") || (this.side == "both")) {
-            $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
-        }
-        if (((this.side == "left") || (this.side == "both"))) {
-            $drawLineP($point_subtract(ep1, vector), $point_subtract(ep2, vector));
-        }
-    }
-    drawTunnelEnds() {
-        if ((this.end == "entry") || (this.end == "both")) {
-            this.drawTunnelEntry();
-        }
-        if ((this.end == "exit") || (this.end == "both")) {
-            this.drawTunnelExit();
-       }
-    }
-    drawTunnelEntry() {
-        var $widget = this.$widget;
-        var ep1 = this.ep1;
-        var angleRAD = this.startAngleRAD;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
-        if ($widget.flip == "yes") {
-            [isRight, isLeft] = [isLeft, isRight];  // swap left and right
-            angleRAD = this.stopAngleRAD;
-        }
-
-        $gCtx.save();
-        $gCtx.translate(ep1[0], ep1[1]);
-        $gCtx.rotate(angleRAD);
-
-        if (isRight) {
-            this.drawTunnelEntryRight();
-        }
-        if (isLeft) {
-            this.drawTunnelEntryLeft();
-        }
-        $gCtx.restore();
-    }
-    drawTunnelEntryRight() {
-        var halfWidth = this.floorwidth / 2;
-        var halfEntranceWidth = this.entrancewidth / 2;
-        var halfFloorWidth = this.floorwidth / 2;
-        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-        var p1, p2, p3, p4, p5, p6, p7;
-        p1 = [0, 0];
-        p2 = [0, +halfFloorWidth];
-        p3 = [0, +halfEntranceWidth];
-        p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
-        p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-        p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-        p7 = [-halfDiffWidth, 0];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-        $gCtx.lineTo(p5[0], p5[1]);
-        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-        $gCtx.closePath();
-        $gCtx.stroke();
-    }
-    drawTunnelEntryLeft() {
-        var halfWidth = this.floorwidth / 2;
-        var halfEntranceWidth = this.entrancewidth / 2;
-        var halfFloorWidth = this.floorwidth / 2;
-        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-        var p1, p2, p3, p4, p5, p6, p7;
-        p1 = [0, 0];
-        p2 = [0, -halfFloorWidth];
-        p3 = [0, -halfEntranceWidth];
-        p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
-        p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-        p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-        p7 = [-halfDiffWidth, 0];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-        $gCtx.lineTo(p5[0], p5[1]);
-        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-        $gCtx.closePath();
-        $gCtx.stroke();
-    }
-    drawTunnelExit() {
-        var $widget = this.$widget;
-        var ep2 = this.ep2;
-        var angleRAD = this.stopAngleRAD;
-        var isRight = ((this.side == "right") || (this.side == "both"));
-        var isLeft = ((this.side == "left") || (this.side == "both"));
-        if ($widget.flip == "yes") {
-            [isRight, isLeft] = [isLeft, isRight];
-            angleRAD = this.startAngleRAD;
-        }
-
-        var halfWidth = this.floorwidth / 2;
-        var halfEntranceWidth = this.entrancewidth / 2;
-        var halfFloorWidth = this.floorwidth / 2;
-        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-
-        var p1, p2, p3, p4, p5, p6, p7;
-
-        $gCtx.save();
-        $gCtx.translate(ep2[0], ep2[1]);
-        $gCtx.rotate(angleRAD);
-
-        if (isRight) {
-            this.drawTunnelExitRight();
-        }
-        if (isLeft) {
-            this.drawTunnelExitLeft();
-        }
-        $gCtx.restore();
-    }
-    drawTunnelExitRight() {
-        var halfWidth = this.floorwidth / 2;
-        var halfEntranceWidth = this.entrancewidth / 2;
-        var halfFloorWidth = this.floorwidth / 2;
-        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-        var p1, p2, p3, p4, p5, p6, p7;
-        p1 = [0, 0];
-        p2 = [0, +halfFloorWidth];
-        p3 = [0, +halfEntranceWidth];
-        p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
-        p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-        p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
-        p7 = [halfDiffWidth, 0];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-        $gCtx.lineTo(p5[0], p5[1]);
-        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-        $gCtx.closePath();
-        $gCtx.stroke();
-    }
-    drawTunnelExitLeft() {
-        var halfWidth = this.floorwidth / 2;
-        var halfEntranceWidth = this.entrancewidth / 2;
-        var halfFloorWidth = this.floorwidth / 2;
-        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
-        var p1, p2, p3, p4, p5, p6, p7;
-        p1 = [0, 0];
-        p2 = [0, -halfFloorWidth];
-        p3 = [0, -halfEntranceWidth];
-        p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
-        p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-        p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
-        p7 = [halfDiffWidth, 0];
-
-        $gCtx.beginPath();
-        $gCtx.moveTo(p1[0], p1[1]);
-        $gCtx.lineTo(p2[0], p2[1]);
-        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
-        $gCtx.lineTo(p5[0], p5[1]);
-        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
-        $gCtx.closePath();
-        $gCtx.stroke();
-    }
-}
+// request the panel xml from the server, and set up callback to process the response
+var requestPanelXML = function(panelName) {
+    $("#activity-alert").addClass("show").removeClass("hidden");
+    $.ajax({
+        type: "GET",
+        url: "/panel/" + panelName + "?format=xml", // request proper url
+        success: function(data, textStatus, jqXHR) {
+            processPanelXML(data, textStatus, jqXHR);
+            setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
+        },
+        error: function( jqXHR, textStatus, errorThrown) {
+            alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
+            textStatus + " - " + errorThrown);
+            window.location = window.location.pathname;
+        },
+        async: true,
+        timeout: 15000, // very long timeout, since this can be a slow process for complicated panels
+        dataType: "xml"
+    });
+};
 
 // process the response returned for the requestPanelXML command
 function processPanelXML($returnedData, $success, $xhr) {
@@ -1053,7 +223,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         var onOffSpans = "";
         if ($gPanel.type == "L") {
             // handlers to switch on/off, I18N
-            onOffSpans = "<span id='allOff' class='lightswitch'>All Off</span><span id='allOn' class='lightswitch'>All On</span>";
+            onOffSpans = "&nbsp;<span id='allOff' class='lightswitch'>All Off</span>&nbsp;<span id='allOn' class='lightswitch'>All On</span>";
             // handlers added later
         }
         // add short banner at top of Swb
@@ -1966,10 +1136,10 @@ function processPanelXML($returnedData, $success, $xhr) {
     }
 
     $drawAllDrawnWidgets(); // draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
-    $drawUnconnectedSwitchIcons(); // draw icon first time
+    $drawAllSwitchIcons(); // draw icon first time
 
     $("#activity-alert").addClass("hidden").removeClass("show");
-}
+} // end of processPanelXML
 
 function $store_occupancysensor(id, sensor) {
     if (id && sensor) {
@@ -1979,6 +1149,10 @@ function $store_occupancysensor(id, sensor) {
         occupancyNames[sensor][occupancyNames[sensor].length] = id;
     }
 }
+
+/******************************************************************
+*  ======= Click Handling functions =======
+*/
 
 // perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
@@ -2157,6 +1331,999 @@ function $handleClickAllOff(e) {
         }
     });
 };
+// End of Click Handling functions
+
+
+/******************************************************************
+*  ======= (Control) Panel functions =======
+*/
+
+//draw an icon-type widget (pass in widget)
+function $drawIcon($widget) {
+    var $hoverText = "";
+    if (typeof $widget.hoverText !== "undefined") {
+        $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "'";
+    }
+    if ($hoverText == "" && typeof $widget.name !== "undefined") { //if name available, use it as hover text if still blank
+        $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
+    }
+
+    // additional naming for indicator*icon widgets to reflect occupancy
+    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+    //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
+    if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
+        $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
+                "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
+
+        $("#panel-area").append($imgHtml); // put the html in the panel
+
+        $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
+
+        //add overlay text if specified, one layer above, and copy attributes (except background-color)
+        if (typeof $widget.text !== "undefined") {
+            $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
+			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
+			$.extend(ovlCSS, $widget.styles); // append the styles from the widget
+			delete ovlCSS['background-color'];  // clear the background color
+            $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
+        }
+    } else {
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+    }
+    $setWidgetPosition($("#panel-area #" + $widget.id));
+}
+
+//draw the analog clock (pass in widget), called on each update of clock
+function $drawClock($widget) {
+    var $fs = $widget.scale * 100;  //scale percentage, used for text
+    var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
+    var $h = "";
+    $h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr + ":1</div>";  //add the text
+    $h += "<img class='clockface' src='/web/images/clockface.png' />";              //add the clockface
+    $h += "<img class='clockhourhand' src='/web/images/clockhourhand.png' />";      //add the hour hand
+    $h += "<img class='clockminutehand' src='/web/images/clockminutehand.png' />";  //add the minute hand
+    $("#panel-area>#" + $widget.id).html($h); //set the html for the widget
+
+    var hours = $widget.state.split(':')[0];    //extract hours from format "H:MM AM"
+    var mins = $widget.state.split(':')[1].split(' ')[0]; //extract minutes
+    var hdegree = hours * 30 + (mins / 2);
+    var hrotate = "rotate(" + hdegree + "deg)";
+    $("div.fastclock>img.clockhourhand").css({"transform": hrotate}); //set rotation for hour hand
+    var mdegree = mins * 6;
+    var mrotate = "rotate(" + mdegree + "deg)";
+    $("div.fastclock>img.clockminutehand").css({"transform": mrotate}); //set rotation for minute hand
+}
+
+// end of Control Panel functions
+
+
+//build and return CSS array from attributes passed in
+var $getTextCSSFromObj = function($widget) {
+    var $retCSS = {};
+    $retCSS['color'] = '';  //only clear attributes
+    $retCSS['background-color'] = '';
+    if (typeof $widget.red !== "undefined") {
+        $retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
+    }
+    //check for new hasBackground element, ignore background colors unless set to yes
+    if (typeof $widget.hasBackground !== "undefined" && $widget.hasBackground == "yes") {
+        $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
+    }
+    if (typeof $widget.hasBackground === "undefined" && $widget.redBack !== "undefined") {
+        $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
+    }
+    if (typeof $widget.size !== "undefined") {
+        $retCSS['font-size'] = $widget.size + "px ";
+    }
+    if (typeof $widget.fontname !== "undefined") {
+        $retCSS['font-family'] = $widget.fontname;
+    }
+    if (typeof $widget.margin !== "undefined") {
+        $retCSS['padding'] = $widget.margin + "px ";
+    }
+    if (typeof $widget.borderSize !== "undefined") {
+        $retCSS['border-width'] = $widget.borderSize + "px ";
+    }
+    if (typeof $widget.redBorder !== "undefined") {
+        $retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";
+        $retCSS['border-style'] = 'solid';
+    }
+    if (typeof $widget.fixedWidth !== "undefined") {
+        $retCSS['width'] = $widget.fixedWidth + "px ";
+    }
+    if (typeof $widget.fixedHeight !== "undefined") {
+        $retCSS['height'] = $widget.fixedHeight + "px ";
+    }
+    if (typeof $widget.justification !== "undefined") {
+        if ($widget.justification == "centre") {
+            $retCSS['text-align'] = "center";
+        } else {
+            $retCSS['text-align'] = $widget.justification;
+        }
+    }
+    if (typeof $widget.style !== "undefined") {
+        switch ($widget.style) { //set font based on style attrib from xml
+            case "1":
+                $retCSS['font-weight'] = 'bold';
+                break;
+            case "2":
+                $retCSS['font-style'] = 'italic';
+                break;
+            case "3":
+                $retCSS['font-weight'] = 'bold';
+                $retCSS['font-style'] = 'italic';
+                break;
+        }
+    }
+
+    return $retCSS;
+};
+
+//get width of an html element by wrapping a copy in a div, then getting width of div
+function $getElementWidth($e) {
+    o = $e.clone();
+    o.wrap('<div></div>').css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden'}).appendTo($('body'));
+    w = o.width();
+    o.remove();
+    return w;
+}
+
+//place widget in correct position, rotation, z-index and scale. (pass in dom element, to simplify calling from e.load())
+var $setWidgetPosition = function(e) {
+
+    var $id = e.attr('id');
+    var $widget = $gWidgets[$id];  // look up the widget and get its panel properties
+
+    if (isDefined($widget) && isDefined(e[0])) {
+        //don't bother if widget not found (never called for beanswitch)
+        var $height = 0;
+        var $width  = 0;
+        // use html5 original sizes if available
+        if (typeof e[0].naturalHeight !== "undefined") {
+            $height = e[0].naturalHeight * $widget.scale;
+        } else {
+            $height = e.height() * $widget.scale;
+        }
+        if (typeof e[0].naturalWidth !== "undefined") {
+            $width = e[0].naturalWidth * $widget.scale;
+        } else {
+            $width = e.width() * $widget.scale;
+        }
+        if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
+            $width = $getElementWidth(e) * $widget.scale;
+        }
+
+        // calculate x and y adjustment needed to keep upper left of bounding box in the same spot
+        // adapted to match JMRI's NamedIcon.rotate(). Note: transform-origin set in .css file
+        var tx = 0;
+        var ty = 0;
+
+        if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1)) { // only calc offset if needed
+
+            var $rad = $toRadians($widget.degrees);
+
+            if (0 <= $widget.degrees && $widget.degrees < 90
+                    || -360 < $widget.degrees && $widget.degrees <= -270) {
+                tx = $height * Math.sin($rad);
+                ty = 0.0;
+            } else if (90 <= $widget.degrees && $widget.degrees < 180
+                    || -270 < $widget.degrees && $widget.degrees <= -180) {
+                tx = $height * Math.sin($rad) - $width * Math.cos($rad);
+                ty = -$height * Math.cos($rad);
+            } else if (180 <= $widget.degrees && $widget.degrees < 270
+                    || -180 < $widget.degrees && $widget.degrees <= -90) {
+                tx = -$width * Math.cos($rad);
+                ty = -$width * Math.sin($rad) - $height * Math.cos($rad);
+            } else /* if (270<=$widget.degrees && $widget.degrees<360) */{
+                tx = 0.0;
+                ty = -$width * Math.sin($rad);
+            }
+        }
+        // position widget to adjusted position, set z-index, then set rotation
+        e.css({
+            position : 'absolute',
+            left : (parseInt($widget.x) + tx) + 'px',
+            top : (parseInt($widget.y) + ty) + 'px',
+            zIndex : $widget.level
+        });
+        if ($widget.degrees !== 0) {
+            var $rot = "rotate(" + $widget.degrees + "deg)";
+            e.css({
+                "transform" : $rot
+            });
+        }
+        // set new height and width if scale specified
+        if ($widget.scale != 1 && $height > 0) {
+            e.css({
+                height : $height + 'px',
+                width : $width + 'px'
+            });
+        }
+        // if this is an image that's rotated or scaled, set callback to
+        // reposition on every icon load, as the icons can be different sizes.
+        if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0)) {
+            e.unbind('load');
+            e.load(function() {
+                $setWidgetPosition($(this));
+            });
+        }
+
+    }
+};
+
+// reDraw an icon-based widget to reflect changes to state or occupancy
+var $reDrawIcon = function($widget) {
+    // additional naming for indicator*icon widgets to reflect occupancy
+    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+    // set image src to requested state's image, if defined
+    if ($widget['icon' + $indicator + ($widget.state + "")]) {
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);
+    } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
+        $('img#' + $widget.id).attr('src', $widget['defaulticon']);
+    } else {
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+    }
+};
+
+// set new value for widget, showing proper icon, return widgets changed
+var $setWidgetState = function($id, $newState, data) {
+    var $widget = $gWidgets[$id];
+
+    // if undefined widget this must be a slip
+    if (isUndefined($widget)) {
+        // does it have "l" or "r" suffix?
+        if ($id.endsWith("l") || $id.endsWith("r")) {
+            if (jmri_logging) {
+                log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
+            }
+
+            // remove suffix
+            var slipID = $id.slice(0, -1);
+            // get the slip widget
+            $widget = $gWidgets[slipID];
+
+            // convert current slip state to current turnout states
+            var $stateA, $stateB;
+            //[$stateA, $stateB] = getTurnoutStatesForSlip($widget);
+            //[$stateA, $stateB] = [$widget.turnout.state, $widget.turnoutB.state];
+            [$stateA, $stateB] = [$widget.stateA, $widget.stateB];
+            $widget.state = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
+            if (jmri_logging) {
+                log.log("#### 3360 Slip " + $widget.name +
+                    " before: " + slipStateToString($widget.state) +
+                    ", stateA: " + turnoutStateToString($stateA) +
+                    ", stateB: " + turnoutStateToString($stateB));
+            }
+
+            // change appropriate turnout state
+            if ($id.endsWith("r")) {
+                if ($stateA != $newState) {
+                    if (jmri_logging) {
+                        log.log("#### 3370 Changed r slip " + $widget.name +
+                            " $stateA from " + turnoutStateToString($stateA) +
+                            " to " + turnoutStateToString($newState));
+                    }
+                    $stateA = $newState;
+                    $widget.stateA = $stateA;
+                }
+            } else if ($id.endsWith("l")) {
+                if ($stateB != $newState) {
+                    if (jmri_logging) {
+                        log.log("#### 3379 Changed l slip " + $widget.name +
+                            " $stateB from " + turnoutStateToString($stateB) +
+                            " to " + turnoutStateToString($newState));
+                    }
+                    $stateB = $newState;
+                    $widget.stateB = $stateB;
+                }
+            }
+
+            // turn turnout states back into slip state
+            $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
+            if (jmri_logging) {
+                log.log("#### 3390 Slip " + $widget.name +
+                    " after: " + slipStateToString($newState) +
+                    ", stateA: " + turnoutStateToString($stateA) +
+                    ", stateB: " + turnoutStateToString($stateB));
+            }
+
+            if ($widget.state != $newState) {
+               if (jmri_logging) {
+                   log.log("#### 3398 Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
+                       " to " + slipStateToString($newState));
+               }
+            }
+            //jmri_logging = false;
+
+            // set $id to slip id
+            $id = slipID;
+        } else if ($id.startsWith("TUR")) {
+            //log.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
+            $logProperties(data);
+
+            var turntableID = $id.split(".")[0];
+            $widget = $gWidgets[turntableID];
+            $widget['activeRayID'] = $id;
+            $widget['activeRayTurnout'] = data.name;
+            $widget['activeRayState'] = turnoutStateToString($newState);
+            $drawTurntable($widget);
+            return;
+        } else {
+            if (jmri_logging) {
+            	log.log("$setWidgetState unknown $id: '" + $id + "'.");
+            }
+            return;
+        }
+    } else if ($widget.widgetType == 'layoutSlip') {
+        if (jmri_logging) {
+            log.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
+                "); (was " + slipStateToString($widget.state) + ")");
+        }
+        // JMRI doesn't send slip states, it sends slip turnout states
+        // so ignore this (incorrect) slip state change
+        return;
+    }
+
+    if ($widget.state !== $newState) { // don't bother if already this value
+        if (jmri_logging) {
+            log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
+        }
+        $widget.state = $newState;
+
+        //override the state with idTag's "name" in a very specific circumstance
+        if (($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) &&
+        		$widget.widgetFamily == "icon" && data.value !== null && data.value.type == "idTag") {
+        	$widget.state = data.value.data.name;
+        }
+
+        switch ($widget.widgetFamily) {
+            case "icon" :
+               	$reDrawIcon($widget)
+                break;
+            case "text" :
+                if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
+                    if ($widget.widgetType == "fastclock") {
+                        $drawClock($widget);
+                    } else {  //set memory/block/reporter text or html to new value from server, clearing "null"
+                        if ($newState == null) {
+                            $('div#' + $id).text("");
+                        } else if ($newState.startsWith("<html>")) {
+                            $('div#' + $id).html($newState);
+                        } else {
+                            $('div#' + $id).text($newState);
+                        }
+                    }
+                } else {
+                    if (typeof $widget['text' + $newState] !== "undefined") {
+                        $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
+                    }
+                    if (typeof $widget['css' + $newState] !== "undefined") {
+                        $('div#' + $id).css($widget['css' + $newState]); // set css to new state's css
+                    }
+                }
+                break;
+            case "drawn" :
+                if ($widget.widgetType == "layoutturnout") {
+                    $drawTurnout($widget);
+                } else if ($widget.widgetType == 'layoutSlip') {
+                    $drawSlip($widget);
+                }
+                break;
+            case "switch" : // Switchboard
+                if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") {
+                    if ($widget.shape == "button") { // update div css
+                        $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
+                        $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
+                    } else { // icon, symbol, slider (drawing) are directly drawn on canvas
+                        $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
+                        $drawWidgetSymbol($id, $newState);
+                    } // for newly created items, reload web page to activate json binding
+                }
+                break;
+        }
+        $gWidgets[$id].state = $newState;  // update the persistent widget to the new state
+    }
+};
+
+//return a unique ID # when called
+var $gUnique = function() {
+    if (typeof $gUnique.id === 'undefined') {
+        $gUnique.id = 0;
+    }
+    $gUnique.id++;
+    return $gUnique.id;
+};
+
+//clean up a name, for example to use as an id
+var $safeName = function($name) {
+    if (typeof $name === "undefined") {
+        return "unique-" + $gUnique();
+    } else {
+        return $name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
+    }
+};
+
+//send request for state change
+var sendElementChange = function(type, name, state) {
+    //log.log("Sending JMRI " + type + " '" + name + "' state '" + state + "'.");
+    jmri.setObject(type, name, state);
+};
+
+//show unexpected ajax errors
+$(document).ajaxError(function(event, xhr, opt, exception) {
+    if (xhr.statusText != "abort" && xhr.status != 0) {
+        var $msg = "AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText;
+        $('div#messageText').text($msg);
+        $("#activity-alert").addClass("show").removeClass("hidden");
+        $('dvi#workingMessage').position({within: "window"});
+        log.log($msg);
+        return;
+    }
+    if (xhr.statusText == "timeout") {
+        var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
+        log.log($msg);
+        // TODO: need to recover somehow
+    }
+});
+
+//clear out whitespace from xml, function adapted from
+//http://stackoverflow.com/questions/1539367/remove-whitespace-and-line-breaks-between-html-elements-using-jquery/3103269#3103269
+jQuery.fn.xmlClean = function() {
+    this.contents().filter(function() {
+        if (this.nodeType != 3) {
+            $(this).xmlClean();
+            return false;
+        }
+        else {
+            return !/\S/.test(this.nodeValue);
+        }
+    }).remove();
+}
+
+// handle the toggling (or whatever) of the "next" state for the passed-in widget
+var $getNextState = function($widget) {
+    var $nextState = undefined;
+    $logProperties($widget);
+    if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
+        switch ($widget.clickmode * 1) {          //   logic based on SignalHeadIcon.java
+            case 0 :
+                switch ($widget.state * 1) {  // (* 1 is to insure numeric comparisons)
+                    case RED:
+                    case FLASHRED:
+                        $nextState = YELLOW;
+                        break;
+                    case YELLOW:
+                    case FLASHYELLOW:
+                        $nextState = GREEN;
+                        break;
+                    default: //also catches GREEN and FLASHGREEN
+                        $nextState = RED;
+                        break;
+                }
+            case 1 :
+                // TODO: handle lit/unlit toggle
+                // getSignalHead().setLit(!getSignalHead().getLit());
+                break;
+            case 2 :
+                // getSignalHead().setHeld(!getSignalHead().getHeld());
+                $nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
+                break;
+            case 3: // loop through all elements, finding iconX and get "next one", skipping special ones
+                var $firstState = undefined;
+                var $currentState = undefined;
+                for (k in $widget) {
+                    var s = k.substr(4) * 1; //extract the state from current icon var, insure it is treated as numeric
+                    //get valid value, name starts with 'icon', but not the HELD or DARK ones
+                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD && k != 'icon' + DARK) {
+                        if (typeof $firstState === "undefined")
+                            $firstState = s;  //remember the first state (for last one)
+                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
+                            $nextState = s; //last one was the current, so this one must be next
+                        if (s == $widget.state)
+                            $currentState = s;
+                        // log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
+                    }
+                }
+                if (typeof $nextState === "undefined")
+                    $nextState = $firstState;  // if still not set, start over
+        } //end of switch
+
+    } else if ($widget.widgetType == 'signalmasticon') { // special case for signalmasticons
+        //loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
+        switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
+            case 0 :
+                var $firstState = undefined;
+                var $currentState = undefined;
+                for (k in $widget) {
+                    var s = k.substr(4); //extract the state from current icon var
+                    //look for next icon value, skipping Held, Dark and Unknown
+                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
+                    && s !='Unlit' && s !=  'Unknown') {
+                        if (typeof $firstState === "undefined")
+                            $firstState = s;  // remember the first state (for last one)
+                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
+                            $nextState = s; // last one was the current, so this one must be next
+                        if (s == $widget.state)
+                            $currentState = s;
+                    }
+                };
+                if (typeof $nextState === "undefined")
+                    $nextState = $firstState;  // if still not set, start over
+                break;
+
+            case 1 :
+                //TODO: handle lit/unlit states
+                break;
+
+            case 2 :
+                //toggle between stop and held state
+                $nextState = ($widget.state == "Held" ? "Stop" : "Held");
+                break;
+
+            }; //end of switch clickmode
+    } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4
+        $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
+    }
+
+    if (typeof $nextState === "undefined")
+        $nextState = $widget.state;  //default to no change
+    return $nextState;
+};
+
+// preload all images referred to by the widget
+var $preloadWidgetImages = function($widget) {
+    for (k in $widget) {
+        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] !== "yes") {
+        //if attribute names starts with 'icon', it's an image, so preload it
+            $("<img src='" + $widget[k] + "'/>");
+        }
+    }
+};
+
+// determine widget "family" for broadly grouping behaviors
+// note: not-yet-supported widgets are commented out here so as to return undefined
+var $getWidgetFamily = function($widget, $element) {
+
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
+            && typeof $widget.text !== "undefined") {
+        return "text";  //special case to distinguish text vs. icon labels
+    }
+    if ($widget.widgetType == "sensoricon" && $widget.icon == "no") {
+        return "text";  //special case to distinguish text vs. icon labels
+    }
+    if ($widget.widgetType == "memoryicon" && $($element).find('memorystate').length == 0) {
+        return "text";  //if no memorystate icons, treat as text
+    }
+    switch ($widget.widgetType) {
+        case "locoicon" :
+        case "trainicon" :
+        case "memoryComboIcon" :
+        case "memoryInputIcon" :
+        case "fastclock" :
+        case "BlockContentsIcon" :
+        case "reportericon" :
+            return "text";
+            break;
+        case "positionablelabel" :
+        case "linkinglabel" :
+        case "turnouticon" :
+        case "sensoricon" :
+        case "LightIcon" :
+        case "multisensoricon" :
+        case "signalheadicon" :
+        case "signalmasticon" :
+        case "indicatortrackicon" :
+        case "indicatorturnouticon" :
+        case "memoryicon" :
+            return "icon";
+            break;
+        case 'layoutSlip' :
+        case "layoutturnout" :
+        case "tracksegment" :
+        case "positionablepoint" :
+        case "backgroundColor" :
+        case "layoutblock" :
+        case "levelxing" :
+        case "layoutturntable" :
+        case "layoutShape" :
+            return "drawn";
+            break;
+        case "beanswitch" :
+            return "switch";
+            break;
+    }
+    log.log("unhandled widget type of '" + $widget.widgetType +"' id = "+$widget.id);
+    return; //unrecognized widget returns undefined
+};
+
+function listPanels(name) {
+    $.ajax({
+        url: "/panel/?format=json",
+        data: {},
+        success: function(data, textStatus, jqXHR) {
+            if (data.length !== 0) {
+                $.each(data, function(index, value) {
+                    $gPanelList[value.data.userName] = value.data.name;
+                });
+            }
+            if (name === null || typeof (panelName) === undefined) {
+                if (data.length !== 0) {
+                    $("#panel-list").empty();
+                    $("#activity-alert").addClass("hidden").removeClass("show");
+                    $("#panel-list").addClass("show").removeClass("hidden");
+                    $.each(data, function(index, value) {
+                        $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.data.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.data.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.data.userName + "</div></a></div></div>");
+                        // (12 / col-lg-#) % index + 1
+                        if (4 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
+                        }
+                        // (12 / col-md-#) % index + 1
+                        if (3 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
+                        }
+                        // (12 / col-sm-#) % index + 1
+                        if (2 % (index + 1)) {
+                            $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
+                        }
+                    });
+                    // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. TODO Fix it
+                } else {
+                    $("#activity-alert").addClass("hidden").removeClass("show");
+                    $("#warning-no-panels").addClass("show").removeClass("hidden");
+                }
+            }
+        }
+    });
+}
+
+function resizeThumbnails() {
+    tallest = 0;
+    $(".thumbnail-image").each(function() {
+        thisHeight = $("img", this).height();
+        if (thisHeight > tallest) {
+            tallest = thisHeight;
+        }
+    });
+    $(".thumbnail-image").each(function() {
+        $(this).height(tallest);
+    });
+}
+
+$(window).resize(function() {
+    resizeThumbnails();
+});
+
+//-----------------------------------------javascript processing starts here (main) ---------------------------------------------
+$(document).ready(function() {
+    // get panel name if passed as a parameter
+    var panelName = getParameterByName("name");
+    // get panel name if part of the path
+    if (panelName === null || typeof (panelName) === undefined) {
+        var path = $(location).attr('pathname');
+        path = path.split("/");
+        if (path.length > 3) {
+            panelName = path[path.length - 2] + "/" + path[path.length - 1];
+        }
+    }
+    // setup the functional menu items
+    $("#navbar-panel-reload > a").attr("href", location.href);
+    $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
+    // show panel thumbnails if no panel name
+    listPanels(panelName);
+    if (panelName === null || typeof (panelName) === undefined) {
+        $("#panel-list").addClass("show").removeClass("hidden");
+        $("#panel-area").addClass("hidden").removeClass("show");
+        // hide the Show XML menu when listing panels
+        $("#navbar-panel-xml").addClass("hidden").removeClass("show");
+    } else {
+        jmri = $.JMRI({
+            didReconnect: function() {
+                // if a reconnect is triggered, reload the page - it is the
+                // simplest method to refresh every object in the panel
+                log.log("Reloading at reconnect");
+                location.reload(false);
+            },
+            light: function(name, state, data) {
+                updateWidgets(name, state, data);
+            },
+            block: function(name, value, data) {
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; //for idTags, use the value in userName instead
+            		} else if (value.type == "reporter") {
+            			value = value.data.value;    //for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name; // if roster icon not set, just show the name
+            			}
+            		}
+            	}
+                updateWidgets(name, value, data);
+            },
+            layoutBlock: function(name, value, data) {
+                setBlockColor(name, data.blockColor);
+            },
+            memory: function(name, value, data) {
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; // for idTags, use the value in userName instead
+            		} else if (value.type == "reporter"){
+            			value = value.data.value;    // for reporters, use the value in data instead
+            		} else if (value.type == "rosterEntry") {
+            			if (value.data.icon !== null) {
+            				value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
+            			} else {
+            				value = value.data.name; // if roster icon not set, just show the name
+            			}
+            		}
+            	}
+                updateWidgets(name, value, data);
+            },
+            reporter: function(name, value, data) {
+                updateWidgets(name, value, data);
+            },
+            route: function(name, state, data) {
+                updateWidgets(name, state, data);
+            },
+            sensor: function(name, state, data) {
+                updateOccupancy(name, state, data);
+                updateWidgets(name, state, data);
+            },
+            signalHead: function(name, state, data) {
+                updateWidgets(name, state, data);
+            },
+            signalMast: function(name, state, data) {
+                updateWidgets(name, state, data);
+            },
+            turnout: function(name, state, data) {
+                updateWidgets(name, state, data);
+            }
+        });
+        $("#panel-list").addClass("hidden").removeClass("show");
+        $("#panel-area").addClass("show").removeClass("hidden");
+
+        // include name of panel in page title. Will be updated to userName later
+        setTitle("Loading " + panelName + "...");
+
+        //get updates to fast clock rate
+        getRateFactor();
+
+        // request actual xml of panel, and process it on return
+        // uses setTimeout simply to not block other JavaScript since
+        // requestPanelXML has a long timeout
+        setTimeout(function() {
+            requestPanelXML(panelName);
+        }, 500);
+    }
+});
+
+//------------------------------------------- end of main -------------------------------------------
+
+// Add Widget to store fastclock rate
+function getRateFactor() {
+	$widget = new Array();
+	$widget.jsonType = "memory";
+	$widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
+	$widget['id'] = $widget['name'];
+	$widget['safeName'] = $widget['name'];
+	$widget['systemName'] = $widget['name'];
+	$widget['state'] = "1.0";
+	$gWidgets[$widget.id] = $widget;
+	if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
+		whereUsed[$widget.systemName] = new Array();
+	}
+	whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+}
+
+/******************************************************************
+*  ======= Switchboard functions =======
+*/
+
+// Draw symbol on the beanswitch widget canvas
+var $drawWidgetSymbol = function(id, state) {
+    // draw on $widget canvas
+    var $canvas = document.getElementById(id + "c");
+    var shape = $gWidgets[id].shape;
+    if (shape == "button" || typeof $canvas === null) {
+        return; // no canvas created (shape = "buttons")
+    }
+    var ctx = $canvas.getContext("2d");
+    ctx.save();
+    // backgroundcolor shows through by inherit
+    ctx.clearRect(0, 0, $canvas.width, $canvas.height); //  for alternating text and 'moving' items
+
+    ctx.fillStyle = (state == "2" ? $activeColor : $inactiveColor); // simple change in color
+    ctx.strokeStyle = "black";
+    ctx.translate($canvas.width/2, $canvas.height/2); // origin in center of canvas, easy!
+    var radius = Math.min($canvas.width * 0.3, $canvas.height * 0.3);
+
+    switch (shape) {
+        // draw methods
+        case "icon" : // slider, 1 shape for all switchtypes (S, T, L)
+            ctx.beginPath(); // the sliderspace
+            ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
+            ctx.lineCap = "round";
+            ctx.lineWidth = radius;
+            ctx.moveTo(-radius/2, 0);
+            ctx.lineTo(radius/2, 0);
+            ctx.stroke();
+            ctx.beginPath(); // the knob
+            var knobX = (state == "2" ? radius/2 : -radius/2)
+            ctx.arc(knobX, 0, radius/2, 0, 2 * Math.PI);
+            ctx.fillStyle = "white";
+            ctx.fill();
+            ctx.strokeStyle = "black";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            break;
+        case "drawing" : // Maerklin Keyboard, 1 shape for all switchtypes (S, T, L)
+            // red = upper rounded rect
+            ctx.fillStyle = (state == "2" ? $activeColor : "pink");
+            ctx.fillRect(-0.5*radius, -1.1*radius, radius, radius/3);
+            // + rounded outline
+            ctx.lineJoin = "round";
+            ctx.lineWidth = radius/5;
+            ctx.strokeStyle = (state == "2" ? $activeColor : "pink");
+            ctx.strokeRect(-0.5*radius, -1.1*radius, radius, radius/3);
+            // green = lower rounded rect
+            ctx.fillStyle = (state == "4" ? $inactiveColor : "lightgreen");
+            ctx.fillRect(-0.5*radius, 1.1*radius, radius, radius/-3);
+            // + rounded outline
+            ctx.lineJoin = "round";
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = (state == "4" ? $inactiveColor : "lightgreen");
+            ctx.strokeRect(-0.5*radius, 1.1*radius, radius, radius/-3);
+            // add round LED at top
+            var grd = ctx.createRadialGradient(-0.1*radius, -1.4*radius, 0.5*radius, 0.1*radius, -1.6*radius, 0);
+            grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
+            grd.addColorStop(1, "white");
+            ctx.fillStyle = grd;
+            ctx.arc(0, -1.55*radius, radius/6, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.lineWidth = 0.2;
+            ctx.strokeStyle = "black";
+            ctx.stroke();
+            break;
+        case "symbol" : // Mimic classic icons as vector drawing, specific shape per switchtype (S, T, L)
+            switch ($gWidgets[id].type) {
+                case "L" : // light
+                    // line (wire) at back
+                    ctx.beginPath();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.moveTo(-0.4 * $canvas.width, 0);
+                    ctx.lineTo(0.4 * $canvas.width, 0);
+                    ctx.stroke();
+                    // filled circle
+                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
+                    grd.addColorStop(0, (state == "2" ? "yellow" : "lightgray"));
+                    grd.addColorStop(1, "white");
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.stroke();
+                    // cross
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(radius * -0.74, radius * -0.74);
+                    ctx.lineTo(radius * 0.74, radius * 0.74);
+                    ctx.stroke();
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(radius * -0.74, radius * 0.74);
+                    ctx.lineTo(radius * 0.74, radius * -0.74);
+                    ctx.stroke();
+                    break;
+                case "S" : // sensor
+                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
+                    grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
+                    grd.addColorStop(1, "white");
+                    ctx.fillStyle = grd;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
+                    ctx.stroke();
+                    break;
+                case "T" : // turnout, orientation on screen same as JMRI
+                default :
+                    ctx.lineWidth = radius/2.9;
+                    // points, at the back
+                    ctx.strokeStyle = "lightgray";
+                    // --angled turnout shape
+                    //ctx.moveTo(-0.4 * $canvas.width, -20);
+                    //ctx.lineTo(0.1 * $canvas.width, 10);
+                    //ctx.lineTo(-0.4 * $canvas.width, 10);
+                    // --curved turnout shape
+                    ctx.moveTo(0.4 * $canvas.width, 10);
+                    ctx.lineTo(-0.4 * $canvas.width, 10);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    // --up to here
+                    ctx.stroke();
+                    // active line, start with new color
+                    ctx.beginPath();
+                    ctx.strokeStyle = $activeColor;
+                    // --angled turnout shape
+                    //var endY = (state == "2" ? "10" : "-20");
+                    //ctx.moveTo(0.4 * $canvas.width, 10);
+                    //ctx.lineTo(0.1 * $canvas.width, 10);
+                    //ctx.lineTo(-0.4 * $canvas.width, endY);
+                    // --curved turnout shape
+                    if (state == "2") {
+                        ctx.moveTo(0.4 * $canvas.width, 10);
+                        ctx.lineTo(-0.4 * $canvas.width, 10);
+                    } else {
+                        ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    }
+                    // --up to here
+                    ctx.stroke();
+                    break;
+            }
+            default :
+            // only render label
+    }
+
+    // draw label (system name + state) text
+    //ctx.restore(); // resets origin and stroke&fill
+    ctx.fillStyle = (state == "0" ? $unknownColor : $gPanel.defaulttextcolor); // simple change in color
+    ctx.font = "16px Arial";
+    ctx.textAlign = 'center';
+    if (shape == "drawing") { // text centered vertically between Maerklin buttons
+        ctx.fillText($gWidgets[id].text, 0, 0);
+    } else {
+        ctx.fillText($gWidgets[id].text, 0, -0.5 * $canvas.height + 16); // +16 for text size below top
+    }
+    // draw sublabel (user name) text
+    ctx.font = "italic 10px Arial";
+    if (shape == "drawing") { // text centered between Maerklin buttons
+        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
+    } else {
+        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
+    }
+    ctx.restore(); // restore color and width back to default
+};
+
+// used to find largest tiles on Switchboard screen
+function autoRows(screenwidth, screenheight) {
+    // calculations repeated from SwitchboardEditor for web display
+    // find cell matrix that allows largest size icons
+    var $cellProp = 1; // assume square tiles prop 1:1 to keep it simple for now
+    var $paneEffectiveWidth = Math.ceil(screenwidth / $cellProp);
+    var $columnsNum = 1;
+    var $rowsNum = 1;
+    var $tileSize = 0.1; // start value
+    var $tileSizeOld = 0;
+    var $totalDisplayed = Math.max($total, 1); // if all items unconnected and set to be hidden, use 1
+    while ($tileSize > $tileSizeOld) {
+        $rowsNum = ($totalDisplayed + $columnsNum - 1) / $columnsNum; // roundup int
+        $tileSizeOld = $tileSize; // store for comparison
+        $tileSize = Math.min(($paneEffectiveWidth / $columnsNum), ((screenheight - 90) / $rowsNum));
+        // screenheight-90px to leave room for menubar
+        if ($tileSize <= $tileSizeOld) {
+            break;
+        }
+        $columnsNum++;
+    }
+    return $rowsNum;
+}
+
+function getSwitchButtonLabel(label, subLabel) {
+    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
+        return label;
+    } else {
+        subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
+        return label + " (" + subLabel + ")"; // will wrap but TODO show on 2 lines of text
+    }
+}
+// End of Swichboard functions
+
+
+/******************************************************************
+*  ======= Layout Editor functions =======
+*/
 
 //draw a Tracksegment (pass in widget)
 function $drawTrackSegment($widget) {
@@ -2331,62 +2498,6 @@ function $drawDecorations($widget) {
         $widget.tunnel.draw();
     }
 }   // $drawDecorations
-
-//draw the analog clock (pass in widget), called on each update of clock
-function $drawClock($widget) {
-    var $fs = $widget.scale * 100;  //scale percentage, used for text
-    var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
-    var $h = "";
-    $h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr + ":1</div>";  //add the text
-    $h += "<img class='clockface' src='/web/images/clockface.png' />";              //add the clockface
-    $h += "<img class='clockhourhand' src='/web/images/clockhourhand.png' />";      //add the hour hand
-    $h += "<img class='clockminutehand' src='/web/images/clockminutehand.png' />";  //add the minute hand
-    $("#panel-area>#" + $widget.id).html($h); //set the html for the widget
-
-    var hours = $widget.state.split(':')[0];    //extract hours from format "H:MM AM"
-    var mins = $widget.state.split(':')[1].split(' ')[0]; //extract minutes
-    var hdegree = hours * 30 + (mins / 2);
-    var hrotate = "rotate(" + hdegree + "deg)";
-    $("div.fastclock>img.clockhourhand").css({"transform": hrotate}); //set rotation for hour hand
-    var mdegree = mins * 6;
-    var mrotate = "rotate(" + mdegree + "deg)";
-    $("div.fastclock>img.clockminutehand").css({"transform": mrotate}); //set rotation for minute hand
-}
-
-//draw an icon-type widget (pass in widget)
-function $drawIcon($widget) {
-    var $hoverText = "";
-    if (typeof $widget.hoverText !== "undefined") {
-        $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "'";
-    }
-    if ($hoverText == "" && typeof $widget.name !== "undefined") { //if name available, use it as hover text if still blank
-        $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
-    }
-
-    // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
-        $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
-
-        $("#panel-area").append($imgHtml); // put the html in the panel
-
-        $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
-
-        //add overlay text if specified, one layer above, and copy attributes (except background-color)
-        if (typeof $widget.text !== "undefined") {
-            $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
-			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
-			$.extend(ovlCSS, $widget.styles); // append the styles from the widget
-			delete ovlCSS['background-color'];  // clear the background color
-            $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
-        }
-    } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
-    }
-    $setWidgetPosition($("#panel-area #" + $widget.id));
-}
 
 // draw a turntable (pass in widget)
 // from jmri.jmrit.display.layoutEditor.layoutTurntable
@@ -3240,7 +3351,7 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
 
         $gCtx.restore();        // restore color and width back to default
     }
-}   //$drawArc
+}
 
 function $drawArcP(pt1, pt2, degrees) {
     $drawArc(pt1[0], pt1[1], pt2[0], pt2[1], degrees);
@@ -3253,9 +3364,7 @@ function $drawEllipse(x, y, rw, rh, startAngleRAD, stopAngleRAD)
     $gCtx.stroke();
 }
 
-//
 //  $drawBezier
-//
 var bezier1st = true;
 function $drawBezier(points, $color, $width, displacement) {
     $gCtx.save();   // save current line width and color
@@ -3434,731 +3543,6 @@ var $getObjFromXML = function(e) {
     return $widget;
 };
 
-//build and return CSS array from attributes passed in
-var $getTextCSSFromObj = function($widget) {
-    var $retCSS = {};
-    $retCSS['color'] = '';  //only clear attributes
-    $retCSS['background-color'] = '';
-    if (typeof $widget.red !== "undefined") {
-        $retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
-    }
-    //check for new hasBackground element, ignore background colors unless set to yes
-    if (typeof $widget.hasBackground !== "undefined" && $widget.hasBackground == "yes") {
-        $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
-    }
-    if (typeof $widget.hasBackground === "undefined" && $widget.redBack !== "undefined") {
-        $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
-    }
-    if (typeof $widget.size !== "undefined") {
-        $retCSS['font-size'] = $widget.size + "px ";
-    }
-    if (typeof $widget.fontname !== "undefined") {
-        $retCSS['font-family'] = $widget.fontname;
-    }
-    if (typeof $widget.margin !== "undefined") {
-        $retCSS['padding'] = $widget.margin + "px ";
-    }
-    if (typeof $widget.borderSize !== "undefined") {
-        $retCSS['border-width'] = $widget.borderSize + "px ";
-    }
-    if (typeof $widget.redBorder !== "undefined") {
-        $retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";
-        $retCSS['border-style'] = 'solid';
-    }
-    if (typeof $widget.fixedWidth !== "undefined") {
-        $retCSS['width'] = $widget.fixedWidth + "px ";
-    }
-    if (typeof $widget.fixedHeight !== "undefined") {
-        $retCSS['height'] = $widget.fixedHeight + "px ";
-    }
-    if (typeof $widget.justification !== "undefined") {
-        if ($widget.justification == "centre") {
-            $retCSS['text-align'] = "center";
-        } else {
-            $retCSS['text-align'] = $widget.justification;
-        }
-    }
-    if (typeof $widget.style !== "undefined") {
-        switch ($widget.style) { //set font based on style attrib from xml
-            case "1":
-                $retCSS['font-weight'] = 'bold';
-                break;
-            case "2":
-                $retCSS['font-style'] = 'italic';
-                break;
-            case "3":
-                $retCSS['font-weight'] = 'bold';
-                $retCSS['font-style'] = 'italic';
-                break;
-        }
-    }
-
-    return $retCSS;
-};
-
-//get width of an html element by wrapping a copy in a div, then getting width of div
-function $getElementWidth($e) {
-    o = $e.clone();
-    o.wrap('<div></div>').css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden'}).appendTo($('body'));
-    w = o.width();
-    o.remove();
-    return w;
-}
-
-//place widget in correct position, rotation, z-index and scale. (pass in dom element, to simplify calling from e.load())
-var $setWidgetPosition = function(e) {
-
-    var $id = e.attr('id');
-    var $widget = $gWidgets[$id];  // look up the widget and get its panel properties
-
-    if (isDefined($widget) && isDefined(e[0])) {
-        //don't bother if widget not found (never called for beanswitch)
-        var $height = 0;
-        var $width  = 0;
-        // use html5 original sizes if available
-        if (typeof e[0].naturalHeight !== "undefined") {
-            $height = e[0].naturalHeight * $widget.scale;
-        } else {
-            $height = e.height() * $widget.scale;
-        }
-        if (typeof e[0].naturalWidth !== "undefined") {
-            $width = e[0].naturalWidth * $widget.scale;
-        } else {
-            $width = e.width() * $widget.scale;
-        }
-        if ($widget.widgetFamily == "text") {  //special handling to get width of free-floating text
-            $width = $getElementWidth(e) * $widget.scale;
-        }
-
-        // calculate x and y adjustment needed to keep upper left of bounding box in the same spot
-        // adapted to match JMRI's NamedIcon.rotate(). Note: transform-origin set in .css file
-        var tx = 0;
-        var ty = 0;
-
-        if ($height > 0 && ($widget.degrees !== 0 || $widget.scale != 1)) { // only calc offset if needed
-
-            var $rad = $toRadians($widget.degrees);
-
-            if (0 <= $widget.degrees && $widget.degrees < 90
-                    || -360 < $widget.degrees && $widget.degrees <= -270) {
-                tx = $height * Math.sin($rad);
-                ty = 0.0;
-            } else if (90 <= $widget.degrees && $widget.degrees < 180
-                    || -270 < $widget.degrees && $widget.degrees <= -180) {
-                tx = $height * Math.sin($rad) - $width * Math.cos($rad);
-                ty = -$height * Math.cos($rad);
-            } else if (180 <= $widget.degrees && $widget.degrees < 270
-                    || -180 < $widget.degrees && $widget.degrees <= -90) {
-                tx = -$width * Math.cos($rad);
-                ty = -$width * Math.sin($rad) - $height * Math.cos($rad);
-            } else /* if (270<=$widget.degrees && $widget.degrees<360) */{
-                tx = 0.0;
-                ty = -$width * Math.sin($rad);
-            }
-        }
-        // position widget to adjusted position, set z-index, then set rotation
-        e.css({
-            position : 'absolute',
-            left : (parseInt($widget.x) + tx) + 'px',
-            top : (parseInt($widget.y) + ty) + 'px',
-            zIndex : $widget.level
-        });
-        if ($widget.degrees !== 0) {
-            var $rot = "rotate(" + $widget.degrees + "deg)";
-            e.css({
-                "transform" : $rot
-            });
-        }
-        // set new height and width if scale specified
-        if ($widget.scale != 1 && $height > 0) {
-            e.css({
-                height : $height + 'px',
-                width : $width + 'px'
-            });
-        }
-        // if this is an image that's rotated or scaled, set callback to
-        // reposition on every icon load, as the icons can be different sizes.
-        if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0)) {
-            e.unbind('load');
-            e.load(function() {
-                $setWidgetPosition($(this));
-            });
-        }
-
-    }
-};
-
-// reDraw an icon-based widget to reflect changes to state or occupancy
-var $reDrawIcon = function($widget) {
-    // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    // set image src to requested state's image, if defined
-    if ($widget['icon' + $indicator + ($widget.state + "")]) {
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);
-    } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
-        $('img#' + $widget.id).attr('src', $widget['defaulticon']);
-    } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
-    }
-};
-
-// set new value for widget, showing proper icon, return widgets changed
-var $setWidgetState = function($id, $newState, data) {
-    var $widget = $gWidgets[$id];
-
-    // if undefined widget this must be a slip
-    if (isUndefined($widget)) {
-        // does it have "l" or "r" suffix?
-        if ($id.endsWith("l") || $id.endsWith("r")) {
-            if (jmri_logging) {
-                log.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
-            }
-
-            // remove suffix
-            var slipID = $id.slice(0, -1);
-            // get the slip widget
-            $widget = $gWidgets[slipID];
-
-            // convert current slip state to current turnout states
-            var $stateA, $stateB;
-            //[$stateA, $stateB] = getTurnoutStatesForSlip($widget);
-            //[$stateA, $stateB] = [$widget.turnout.state, $widget.turnoutB.state];
-            [$stateA, $stateB] = [$widget.stateA, $widget.stateB];
-            $widget.state = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
-            if (jmri_logging) {
-                log.log("#### 3360 Slip " + $widget.name +
-                    " before: " + slipStateToString($widget.state) +
-                    ", stateA: " + turnoutStateToString($stateA) +
-                    ", stateB: " + turnoutStateToString($stateB));
-            }
-
-            // change appropriate turnout state
-            if ($id.endsWith("r")) {
-                if ($stateA != $newState) {
-                    if (jmri_logging) {
-                        log.log("#### 3370 Changed r slip " + $widget.name +
-                            " $stateA from " + turnoutStateToString($stateA) +
-                            " to " + turnoutStateToString($newState));
-                    }
-                    $stateA = $newState;
-                    $widget.stateA = $stateA;
-                }
-            } else if ($id.endsWith("l")) {
-                if ($stateB != $newState) {
-                    if (jmri_logging) {
-                        log.log("#### 3379 Changed l slip " + $widget.name +
-                            " $stateB from " + turnoutStateToString($stateB) +
-                            " to " + turnoutStateToString($newState));
-                    }
-                    $stateB = $newState;
-                    $widget.stateB = $stateB;
-                }
-            }
-
-            // turn turnout states back into slip state
-            $newState = getSlipStateForTurnoutStates($widget, $stateA, $stateB);
-            if (jmri_logging) {
-                log.log("#### 3390 Slip " + $widget.name +
-                    " after: " + slipStateToString($newState) +
-                    ", stateA: " + turnoutStateToString($stateA) +
-                    ", stateB: " + turnoutStateToString($stateB));
-            }
-
-            if ($widget.state != $newState) {
-               if (jmri_logging) {
-                   log.log("#### 3398 Changing slip " + $widget.name + " from " + slipStateToString($widget.state) +
-                       " to " + slipStateToString($newState));
-               }
-            }
-            //jmri_logging = false;
-
-            // set $id to slip id
-            $id = slipID;
-        } else if ($id.startsWith("TUR")) {
-            //log.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
-            $logProperties(data);
-
-            var turntableID = $id.split(".")[0];
-            $widget = $gWidgets[turntableID];
-            $widget['activeRayID'] = $id;
-            $widget['activeRayTurnout'] = data.name;
-            $widget['activeRayState'] = turnoutStateToString($newState);
-            $drawTurntable($widget);
-            return;
-        } else {
-            if (jmri_logging) {
-            	log.log("$setWidgetState unknown $id: '" + $id + "'.");
-            }
-            return;
-        }
-    } else if ($widget.widgetType == 'layoutSlip') {
-        if (jmri_logging) {
-            log.log("#### $setWidgetState(slip " + $id + ", " + slipStateToString($newState) +
-                "); (was " + slipStateToString($widget.state) + ")");
-        }
-        // JMRI doesn't send slip states, it sends slip turnout states
-        // so ignore this (incorrect) slip state change
-        return;
-    }
-
-    if ($widget.state !== $newState) { // don't bother if already this value
-        if (jmri_logging) {
-            log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
-        }
-        $widget.state = $newState;
-
-        //override the state with idTag's "name" in a very specific circumstance
-        if (($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) &&
-        		$widget.widgetFamily == "icon" && data.value !== null && data.value.type == "idTag") {
-        	$widget.state = data.value.data.name;
-        }
-
-        switch ($widget.widgetFamily) {
-            case "icon" :
-               	$reDrawIcon($widget)
-                break;
-            case "text" :
-                if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
-                    if ($widget.widgetType == "fastclock") {
-                        $drawClock($widget);
-                    } else {  //set memory/block/reporter text or html to new value from server, clearing "null"
-                        if ($newState == null) {
-                            $('div#' + $id).text("");
-                        } else if ($newState.startsWith("<html>")) {
-                            $('div#' + $id).html($newState);
-                        } else {
-                            $('div#' + $id).text($newState);
-                        }
-                    }
-                } else {
-                    if (typeof $widget['text' + $newState] !== "undefined") {
-                        $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
-                    }
-                    if (typeof $widget['css' + $newState] !== "undefined") {
-                        $('div#' + $id).css($widget['css' + $newState]); // set css to new state's css
-                    }
-                }
-                break;
-            case "drawn" :
-                if ($widget.widgetType == "layoutturnout") {
-                    $drawTurnout($widget);
-                } else if ($widget.widgetType == 'layoutSlip') {
-                    $drawSlip($widget);
-                }
-                break;
-            case "switch" : // Switchboard EBR
-                if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") {
-                    if ($widget.shape == "button") { // update div css
-                        $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
-                        $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
-                    } else { // icon, symbol, slider (drawing) are directly drawn on canvas
-                        $widget.text = $widget['text' + $newState]; // set text in Widget to new state's text
-                        $drawWidgetSymbol($id, $newState);
-                    } // for newly created items, reload web page to activate json binding
-                }
-                break;
-        }
-        $gWidgets[$id].state = $newState;  // update the persistent widget to the new state
-    }
-};
-
-//return a unique ID # when called
-var $gUnique = function() {
-    if (typeof $gUnique.id === 'undefined') {
-        $gUnique.id = 0;
-    }
-    $gUnique.id++;
-    return $gUnique.id;
-};
-
-//clean up a name, for example to use as an id
-var $safeName = function($name) {
-    if (typeof $name === "undefined") {
-        return "unique-" + $gUnique();
-    } else {
-        return $name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
-    }
-};
-
-//send request for state change
-var sendElementChange = function(type, name, state) {
-    //log.log("Sending JMRI " + type + " '" + name + "' state '" + state + "'.");
-    jmri.setObject(type, name, state);
-};
-
-//show unexpected ajax errors
-$(document).ajaxError(function(event, xhr, opt, exception) {
-    if (xhr.statusText != "abort" && xhr.status != 0) {
-        var $msg = "AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText;
-        $('div#messageText').text($msg);
-        $("#activity-alert").addClass("show").removeClass("hidden");
-        $('dvi#workingMessage').position({within: "window"});
-        log.log($msg);
-        return;
-    }
-    if (xhr.statusText == "timeout") {
-        var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
-        log.log($msg);
-        // TODO: need to recover somehow
-    }
-});
-
-//clear out whitespace from xml, function adapted from
-//http://stackoverflow.com/questions/1539367/remove-whitespace-and-line-breaks-between-html-elements-using-jquery/3103269#3103269
-jQuery.fn.xmlClean = function() {
-    this.contents().filter(function() {
-        if (this.nodeType != 3) {
-            $(this).xmlClean();
-            return false;
-        }
-        else {
-            return !/\S/.test(this.nodeValue);
-        }
-    }).remove();
-}
-
-// handle the toggling (or whatever) of the "next" state for the passed-in widget
-var $getNextState = function($widget) {
-    var $nextState = undefined;
-    $logProperties($widget);
-    if ($widget.widgetType == 'signalheadicon') { //special case for signalheadicons
-        switch ($widget.clickmode * 1) {          //   logic based on SignalHeadIcon.java
-            case 0 :
-                switch ($widget.state * 1) {  // (* 1 is to insure numeric comparisons)
-                    case RED:
-                    case FLASHRED:
-                        $nextState = YELLOW;
-                        break;
-                    case YELLOW:
-                    case FLASHYELLOW:
-                        $nextState = GREEN;
-                        break;
-                    default: //also catches GREEN and FLASHGREEN
-                        $nextState = RED;
-                        break;
-                }
-            case 1 :
-                // TODO: handle lit/unlit toggle
-                // getSignalHead().setLit(!getSignalHead().getLit());
-                break;
-            case 2 :
-                // getSignalHead().setHeld(!getSignalHead().getHeld());
-                $nextState = ($widget.state * 1 == HELD ? RED : HELD);  //toggle between red and held states
-                break;
-            case 3: // loop through all elements, finding iconX and get "next one", skipping special ones
-                var $firstState = undefined;
-                var $currentState = undefined;
-                for (k in $widget) {
-                    var s = k.substr(4) * 1; //extract the state from current icon var, insure it is treated as numeric
-                    //get valid value, name starts with 'icon', but not the HELD or DARK ones
-                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD && k != 'icon' + DARK) {
-                        if (typeof $firstState === "undefined")
-                            $firstState = s;  //remember the first state (for last one)
-                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
-                            $nextState = s; //last one was the current, so this one must be next
-                        if (s == $widget.state)
-                            $currentState = s;
-                        // log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
-                    }
-                }
-                if (typeof $nextState === "undefined")
-                    $nextState = $firstState;  // if still not set, start over
-        } //end of switch
-
-    } else if ($widget.widgetType == 'signalmasticon') { // special case for signalmasticons
-        //loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
-        switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
-            case 0 :
-                var $firstState = undefined;
-                var $currentState = undefined;
-                for (k in $widget) {
-                    var s = k.substr(4); //extract the state from current icon var
-                    //look for next icon value, skipping Held, Dark and Unknown
-                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
-                    && s !='Unlit' && s !=  'Unknown') {
-                        if (typeof $firstState === "undefined")
-                            $firstState = s;  // remember the first state (for last one)
-                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
-                            $nextState = s; // last one was the current, so this one must be next
-                        if (s == $widget.state)
-                            $currentState = s;
-                    }
-                };
-                if (typeof $nextState === "undefined")
-                    $nextState = $firstState;  // if still not set, start over
-                break;
-
-            case 1 :
-                //TODO: handle lit/unlit states
-                break;
-
-            case 2 :
-                //toggle between stop and held state
-                $nextState = ($widget.state == "Held" ? "Stop" : "Held");
-                break;
-
-            }; //end of switch clickmode
-    } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4
-        $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
-    }
-
-    if (typeof $nextState === "undefined")
-        $nextState = $widget.state;  //default to no change
-    return $nextState;
-};
-
-// request the panel xml from the server, and set up callback to process the response
-var requestPanelXML = function(panelName) {
-    $("#activity-alert").addClass("show").removeClass("hidden");
-    $.ajax({
-        type: "GET",
-        url: "/panel/" + panelName + "?format=xml", // request proper url
-        success: function(data, textStatus, jqXHR) {
-            processPanelXML(data, textStatus, jqXHR);          
-            setTitle($gPanel["name"]);  // set final title once load completes, helps with testing
-        },
-        error: function( jqXHR, textStatus, errorThrown) {
-            alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " +
-            textStatus + " - " + errorThrown);
-            window.location = window.location.pathname;
-        },
-        async: true,
-        timeout: 15000, // very long timeout, since this can be a slow process for complicated panels
-        dataType: "xml"
-    });
-};
-
-// preload all images referred to by the widget
-var $preloadWidgetImages = function($widget) {
-    for (k in $widget) {
-        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] !== "yes") {
-        //if attribute names starts with 'icon', it's an image, so preload it
-            $("<img src='" + $widget[k] + "'/>");
-        }
-    }
-};
-
-// Draw symbol on the beanswitch widget canvas EBR
-var $drawWidgetSymbol = function(id, state) {
-    // draw on $widget canvas
-    var $canvas = document.getElementById(id + "c");
-    var shape = $gWidgets[id].shape;
-    if (shape == "button" || typeof $canvas === null) {
-        return; // no canvas created (shape = "buttons")
-    }
-    var ctx = $canvas.getContext("2d");
-    ctx.save();
-    // backgroundcolor shows through by inherit
-    ctx.clearRect(0, 0, $canvas.width, $canvas.height); //  for alternating text and 'moving' items
-
-    ctx.fillStyle = (state == "2" ? $activeColor : $inactiveColor); // simple change in color
-    ctx.strokeStyle = "black";
-    ctx.translate($canvas.width/2, $canvas.height/2); // origin in center of canvas, easy!
-    var radius = Math.min($canvas.width * 0.3, $canvas.height * 0.3);
-
-    switch (shape) {
-        // draw methods EBR
-        case "icon" : // slider, 1 shape for all switchtypes (S, T, L)
-            ctx.beginPath(); // the sliderspace
-            ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
-            ctx.lineCap = "round";
-            ctx.lineWidth = radius;
-            ctx.moveTo(-radius/2, 0);
-            ctx.lineTo(radius/2, 0);
-            ctx.stroke();
-            ctx.beginPath(); // the knob
-            var knobX = (state == "2" ? radius/2 : -radius/2)
-            ctx.arc(knobX, 0, radius/2, 0, 2 * Math.PI);
-            ctx.fillStyle = "white";
-            ctx.fill();
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            break;
-        case "drawing" : // Maerklin Keyboard, 1 shape for all switchtypes (S, T, L)
-            // red = upper rounded rect
-            ctx.fillStyle = (state == "2" ? $activeColor : "pink");
-            ctx.fillRect(-0.5*radius, -1.1*radius, radius, radius/3);
-            // + rounded outline
-            ctx.lineJoin = "round";
-            ctx.lineWidth = radius/5;
-            ctx.strokeStyle = (state == "2" ? $activeColor : "pink");
-            ctx.strokeRect(-0.5*radius, -1.1*radius, radius, radius/3);
-            // green = lower rounded rect
-            ctx.fillStyle = (state == "4" ? $inactiveColor : "lightgreen");
-            ctx.fillRect(-0.5*radius, 1.1*radius, radius, radius/-3);
-            // + rounded outline
-            ctx.lineJoin = "round";
-            ctx.lineWidth = 10;
-            ctx.strokeStyle = (state == "4" ? $inactiveColor : "lightgreen");
-            ctx.strokeRect(-0.5*radius, 1.1*radius, radius, radius/-3);
-            // add round LED at top
-            var grd = ctx.createRadialGradient(-0.1*radius, -1.4*radius, 0.5*radius, 0.1*radius, -1.6*radius, 0);
-            grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
-            grd.addColorStop(1, "white");
-            ctx.fillStyle = grd;
-            ctx.arc(0, -1.55*radius, radius/6, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.lineWidth = 0.2;
-            ctx.strokeStyle = "black";
-            ctx.stroke();
-            break;
-        case "symbol" : // Mimic classic icons as vector drawing, specific shape per switchtype (S, T, L)
-            switch ($gWidgets[id].type) {
-                case "L" : // light
-                    // line (wire) at back
-                    ctx.beginPath();
-                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
-                    ctx.moveTo(-0.4 * $canvas.width, 0);
-                    ctx.lineTo(0.4 * $canvas.width, 0);
-                    ctx.stroke();
-                    // filled circle
-                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
-                    grd.addColorStop(0, (state == "2" ? "yellow" : "lightgray"));
-                    grd.addColorStop(1, "white");
-                    ctx.fillStyle = grd;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
-                    ctx.fill();
-                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
-                    ctx.stroke();
-                    // cross
-                    ctx.lineWidth = 1;
-                    ctx.moveTo(radius * -0.74, radius * -0.74);
-                    ctx.lineTo(radius * 0.74, radius * 0.74);
-                    ctx.stroke();
-                    ctx.lineWidth = 1;
-                    ctx.moveTo(radius * -0.74, radius * 0.74);
-                    ctx.lineTo(radius * 0.74, radius * -0.74);
-                    ctx.stroke();
-                    break;
-                case "S" : // sensor
-                    var grd = ctx.createRadialGradient(0, 0, 1.5 * radius, 8, -8, 4);
-                    grd.addColorStop(0, (state == "2" ? $activeColor : "lightgray"));
-                    grd.addColorStop(1, "white");
-                    ctx.fillStyle = grd;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, radius, 0, 2 * Math.PI);
-                    ctx.fill();
-                    ctx.lineWidth = (state == "2" ? "3" : "1"); // thinner outline if Off
-                    ctx.stroke();
-                    break;
-                case "T" : // turnout, orientation as JMRI
-                default :
-                    ctx.lineWidth = radius/2.9;
-                    // points, at the back
-                    ctx.strokeStyle = "lightgray";
-                    // --angled turnout shape
-                    //ctx.moveTo(-0.4 * $canvas.width, -20);
-                    //ctx.lineTo(0.1 * $canvas.width, 10);
-                    //ctx.lineTo(-0.4 * $canvas.width, 10);
-                    // --curved turnout shape
-                    ctx.moveTo(0.4 * $canvas.width, 10);
-                    ctx.lineTo(-0.4 * $canvas.width, 10);
-                    ctx.stroke();
-                    ctx.beginPath();
-                    ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
-                    // --up to here
-                    ctx.stroke();
-                    // active line, start with new color
-                    ctx.beginPath();
-                    ctx.strokeStyle = $activeColor;
-                    // --angled turnout shape
-                    //var endY = (state == "2" ? "10" : "-20");
-                    //ctx.moveTo(0.4 * $canvas.width, 10);
-                    //ctx.lineTo(0.1 * $canvas.width, 10);
-                    //ctx.lineTo(-0.4 * $canvas.width, endY);
-                    // --curved turnout shape
-                    if (state == "2") {
-                        ctx.moveTo(0.4 * $canvas.width, 10);
-                        ctx.lineTo(-0.4 * $canvas.width, 10);
-                    } else {
-                        ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
-                    }
-                    // --up to here
-                    ctx.stroke();
-                    break;
-            }
-            default :
-            // only render label
-    }
-
-    // draw label (system name + state) text
-    //ctx.restore(); // resets origin and stroke&fill
-    ctx.fillStyle = (state == "0" ? $unknownColor : $gPanel.defaulttextcolor); // simple change in color
-    ctx.font = "16px Arial";
-    ctx.textAlign = 'center';
-    if (shape == "drawing") { // text centered vertically between Maerklin buttons
-        ctx.fillText($gWidgets[id].text, 0, 0);
-    } else {
-        ctx.fillText($gWidgets[id].text, 0, -0.5 * $canvas.height + 16); // +16 for text size below top
-    }
-    // draw sublabel (user name) text
-    ctx.font = "italic 10px Arial";
-    if (shape == "drawing") { // text centered between Maerklin buttons
-        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
-    } else {
-        ctx.fillText($gWidgets[id].username, 0, 0.4 * $canvas.height);
-    }
-    ctx.restore(); // restore color and width back to default
-};
-
-// determine widget "family" for broadly grouping behaviors
-// note: not-yet-supported widgets are commented out here so as to return undefined
-var $getWidgetFamily = function($widget, $element) {
-
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
-            && typeof $widget.text !== "undefined") {
-        return "text";  //special case to distinguish text vs. icon labels
-    }
-    if ($widget.widgetType == "sensoricon" && $widget.icon == "no") {
-        return "text";  //special case to distinguish text vs. icon labels
-    }
-    if ($widget.widgetType == "memoryicon" && $($element).find('memorystate').length == 0) {
-        return "text";  //if no memorystate icons, treat as text
-    }
-    switch ($widget.widgetType) {
-        case "locoicon" :
-        case "trainicon" :
-        case "memoryComboIcon" :
-        case "memoryInputIcon" :
-        case "fastclock" :
-        case "BlockContentsIcon" :
-        case "reportericon" :
-            return "text";
-            break;
-        case "positionablelabel" :
-        case "linkinglabel" :
-        case "turnouticon" :
-        case "sensoricon" :
-        case "LightIcon" :
-        case "multisensoricon" :
-        case "signalheadicon" :
-        case "signalmasticon" :
-        case "indicatortrackicon" :
-        case "indicatorturnouticon" :
-        case "memoryicon" :
-            return "icon";
-            break;
-        case 'layoutSlip' :
-        case "layoutturnout" :
-        case "tracksegment" :
-        case "positionablepoint" :
-        case "backgroundColor" :
-        case "layoutblock" :
-        case "levelxing" :
-        case "layoutturntable" :
-        case "layoutShape" :
-            return "drawn";
-            break;
-        case "beanswitch" :
-            return "switch";
-            break;
-    }
-    log.log("unhandled widget type of '" + $widget.widgetType +"' id = "+$widget.id);
-    return; //unrecognized widget returns undefined
-};
-
 //redraw all "drawn" elements for given block (called after color change)
 function $redrawBlock(blockName) {
     //log.log("redrawing all tracks for block " + blockName);
@@ -4231,7 +3615,7 @@ var $drawAllIconWidgets = function() {
 };
 
 // draw all beanswitch icons first time
-var $drawUnconnectedSwitchIcons = function() {
+var $drawAllSwitchIcons = function() {
     jQuery.each($gWidgets, function($id, $widget) {
         switch ($widget.widgetFamily) {
             case 'switch' :
@@ -4325,191 +3709,9 @@ function setBlockColor(blockName, newColor) {
     $redrawBlock(blockName);
 }
 
-function listPanels(name) {
-    $.ajax({
-        url: "/panel/?format=json",
-        data: {},
-        success: function(data, textStatus, jqXHR) {
-            if (data.length !== 0) {
-                $.each(data, function(index, value) {
-                    $gPanelList[value.data.userName] = value.data.name;
-                });
-            }
-            if (name === null || typeof (panelName) === undefined) {
-                if (data.length !== 0) {
-                    $("#panel-list").empty();
-                    $("#activity-alert").addClass("hidden").removeClass("show");
-                    $("#panel-list").addClass("show").removeClass("hidden");
-                    $.each(data, function(index, value) {
-                        $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.data.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.data.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.data.userName + "</div></a></div></div>");
-                        // (12 / col-lg-#) % index + 1
-                        if (4 % (index + 1)) {
-                            $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");
-                        }
-                        // (12 / col-md-#) % index + 1
-                        if (3 % (index + 1)) {
-                            $("#panel-list").append("<div class=\"clearfix visible-md\"></div>");
-                        }
-                        // (12 / col-sm-#) % index + 1
-                        if (2 % (index + 1)) {
-                            $("#panel-list").append("<div class=\"clearfix visible-sm\"></div>");
-                        }
-                    });
-                    // resizeThumbnails(); // sometimes gets .thumbnail sizes too small under image. Why?
-                } else {
-                    $("#activity-alert").addClass("hidden").removeClass("show");
-                    $("#warning-no-panels").addClass("show").removeClass("hidden");
-                }
-            }
-        }
-    });
-}
-
-function resizeThumbnails() {
-    tallest = 0;
-    $(".thumbnail-image").each(function() {
-        thisHeight = $("img", this).height();
-        if (thisHeight > tallest) {
-            tallest = thisHeight;
-        }
-    });
-    $(".thumbnail-image").each(function() {
-        $(this).height(tallest);
-    });
-}
-
-$(window).resize(function() {
-    resizeThumbnails();
-});
-
-//-----------------------------------------javascript processing starts here (main) ---------------------------------------------
-$(document).ready(function() {
-    // get panel name if passed as a parameter
-    var panelName = getParameterByName("name");
-    // get panel name if part of the path
-    if (panelName === null || typeof (panelName) === undefined) {
-        var path = $(location).attr('pathname');
-        path = path.split("/");
-        if (path.length > 3) {
-            panelName = path[path.length - 2] + "/" + path[path.length - 1];
-        }
-    }
-    // setup the functional menu items
-    $("#navbar-panel-reload > a").attr("href", location.href);
-    $("#navbar-panel-xml > a").attr("href", location.href + "?format=xml");
-    // show panel thumbnails if no panel name
-    listPanels(panelName);
-    if (panelName === null || typeof (panelName) === undefined) {
-        $("#panel-list").addClass("show").removeClass("hidden");
-        $("#panel-area").addClass("hidden").removeClass("show");
-        // hide the Show XML menu when listing panels
-        $("#navbar-panel-xml").addClass("hidden").removeClass("show");
-    } else {
-        jmri = $.JMRI({
-            didReconnect: function() {
-                // if a reconnect is triggered, reload the page - it is the
-                // simplest method to refresh every object in the panel
-                log.log("Reloading at reconnect");
-                location.reload(false);
-            },
-            light: function(name, state, data) {
-                updateWidgets(name, state, data);
-            },
-            block: function(name, value, data) {
-            	if (value !== null) {
-            		if (value.type == "idTag") {
-            			value = value.data.userName; //for idTags, use the value in userName instead
-            		} else if (value.type == "reporter") {
-            			value = value.data.value;    //for reporters, use the value in data instead
-            		} else if (value.type == "rosterEntry") {
-            			if (value.data.icon !== null) {
-            				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
-            			} else {
-            				value = value.data.name; // if roster icon not set, just show the name
-            			}
-            		}
-            	}
-                updateWidgets(name, value, data);
-            },
-            layoutBlock: function(name, value, data) {
-                setBlockColor(name, data.blockColor);
-            },
-            memory: function(name, value, data) {
-            	if (value !== null) {
-            		if (value.type == "idTag") {
-            			value = value.data.userName; // for idTags, use the value in userName instead
-            		} else if (value.type == "reporter"){
-            			value = value.data.value;    // for reporters, use the value in data instead
-            		} else if (value.type == "rosterEntry") {
-            			if (value.data.icon !== null) {
-            				value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
-            			} else {
-            				value = value.data.name; // if roster icon not set, just show the name
-            			}
-            		}
-            	}
-                updateWidgets(name, value, data);
-            },
-            reporter: function(name, value, data) {
-                updateWidgets(name, value, data);
-            },
-            route: function(name, state, data) {
-                updateWidgets(name, state, data);
-            },
-            sensor: function(name, state, data) {
-                updateOccupancy(name, state, data);
-                updateWidgets(name, state, data);
-            },
-            signalHead: function(name, state, data) {
-                updateWidgets(name, state, data);
-            },
-            signalMast: function(name, state, data) {
-                updateWidgets(name, state, data);
-            },
-            turnout: function(name, state, data) {
-                updateWidgets(name, state, data);
-            }
-        });
-        $("#panel-list").addClass("hidden").removeClass("show");
-        $("#panel-area").addClass("show").removeClass("hidden");
-
-        // include name of panel in page title. Will be updated to userName later
-        setTitle("Loading " + panelName + "...");
-
-        //get updates to fast clock rate
-        getRateFactor();
-
-        // request actual xml of panel, and process it on return
-        // uses setTimeout simply to not block other JavaScript since
-        // requestPanelXML has a long timeout
-        setTimeout(function() {
-            requestPanelXML(panelName);
-        }, 500);
-    }
-});
-
-//------------------------------------------- end of main -------------------------------------------
-
-
-// Add a widget to store fastclock rate
-function getRateFactor() {
-	$widget = new Array();
-	$widget.jsonType = "memory";
-	$widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
-	$widget['id'] = $widget['name'];
-	$widget['safeName'] = $widget['name'];
-	$widget['systemName'] = $widget['name'];
-	$widget['state'] = "1.0";
-	$gWidgets[$widget.id] = $widget;
-	if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
-		whereUsed[$widget.systemName] = new Array();
-	}
-	whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
-}
-
 // convert turnout state to string
 function turnoutStateToString(state) {
-    result = "UKNONWN"
+    result = "UKNOWN"
     switch (state) {
         case 2:
             result = "CLOSED";
@@ -4565,7 +3767,7 @@ function getTurnoutStatesForSlipState(slipWidget, slipState) {
         }
     }
     return results;
-}   // function getTurnoutStatesForSlipState
+}
 
 function getTurnoutStatesForSlip(slipWidget) {
     return getTurnoutStatesForSlipState(slipWidget, slipWidget.state);
@@ -4673,37 +3875,859 @@ function getNextSlipState(slipWidget) {
     }   // switch (slipWidget.side)
     return result;
 }
+// ======= End of Layout Editor functions =======
 
-// used to find largest tiles on Switchboard screen
-function autoRows(screenwidth, screenheight) {
-    // calculations repeated from SwitchboardEditor for web display
-    // find cell matrix that allows largest size icons
-    var $cellProp = 1; // assume square tiles prop 1:1 to keep it simple for now
-    var $paneEffectiveWidth = Math.ceil(screenwidth / $cellProp);
-    var $columnsNum = 1;
-    var $rowsNum = 1;
-    var $tileSize = 0.1; // start value
-    var $tileSizeOld = 0;
-    var $totalDisplayed = Math.max($total, 1); // if all items unconnected and set to be hidden, use 1
-    while ($tileSize > $tileSizeOld) {
-        $rowsNum = ($totalDisplayed + $columnsNum - 1) / $columnsNum; // roundup int
-        $tileSizeOld = $tileSize; // store for comparison
-        $tileSize = Math.min(($paneEffectiveWidth / $columnsNum), ((screenheight - 90) / $rowsNum));
-        // screenheight-90px to leave room for menubar
-        if ($tileSize <= $tileSizeOld) {
-            break;
+/******************************************************************
+*  ======= Layout Editor Decoration classes
+*/
+
+class Decoration {
+    constructor($widget) {
+        //log.log("Decoration.constructor(...)");
+        $logProperties(this.$widget);
+        this.$widget = $widget;
+    }
+    getEndPoints() {
+        [this.ep1, this.ep2] = $getEndPoints(this.$widget);
+        //log.log("ep1 = {" + this.ep1[0] + "," + this.ep1[1] + "}, ep2 = {" + this.ep2[0] + "," + this.ep2[1] + "}");
+    }
+    getAngles() {
+        var $widget = this.$widget;
+        if ($widget.bezier == "yes") {
+            this.getBezierAngles();
+        } else if ($widget.circle == "yes") {
+            this.getCircleAngles();
+        } else if ($widget.arc == "yes") {
+            this.getArcAngles();
+        } else {
+            this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, this.ep1);
+            this.stopAngleRAD = this.startAngleRAD;
         }
-        $columnsNum++;
+        //log.log("startAngleDEG: " + $toDegrees(this.startAngleRAD) + ", stopAngleDEG: " + $toDegrees(this.stopAngleRAD) + ".");
     }
-    return $rowsNum;
-}
+    getBezierAngles() {
+        var $widget = this.$widget;
+        var $cps = $widget.controlpoints;   // get the control points
+        var $cp0 = $cps[0];
+        var $cpN = $cps[$cps.length - 1];
+        var cp0 = $getLayoutPoint($cp0);
+        var cpN = $getLayoutPoint($cpN);
+        this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, this.ep1);
+        this.stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, cpN);
+    }
+    getCircleAngles() {
+        var $widget = this.$widget;
+        var extentAngleDEG = $widget.angle;
+        if (extentAngleDEG == 0) {
+            extentAngleDEG = 90;
+        }
+        var startAngleRAD, stopAngleRAD;
+        // Convert angle to radiants in order to speed up math
+        var halfAngleRAD = $toRadians(extentAngleDEG) / 2;
+        // Compute arc's chord
+        var a = this.ep2[0] - this.ep1[0];
+        var o = this.ep2[1] - this.ep1[1];
+        var chord = Math.hypot(a, o);
+        // Make sure chord is not null
+        // In such a case (ep1 == ep2), there is no arc to draw
+        if (chord > 0) {
+            var midAngleRAD = Math.atan2(a, o);
+            startAngleRAD = (Math.PI / 2) - (midAngleRAD + halfAngleRAD);
+            stopAngleRAD = (Math.PI / 2) - (midAngleRAD - halfAngleRAD);
+        }
+        this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
+    }
+    getArcAngles() {
+        var startAngleRAD, stopAngleRAD;
+        if (this.ep1[0] < this.ep2[0]) {
+            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD ONE ####");
+                startAngleRAD = 0; stopAngleRAD = Math.PI / 2;
+            } else {                            //log.log("#### QUAD TWO ####");
+                startAngleRAD = -Math.PI / 2; stopAngleRAD = 0;
+            }
+        } else {
+            if (this.ep1[1] < this.ep2[1]) {    //log.log("#### QUAD THREE ####");
+                startAngleRAD = Math.PI / 2; stopAngleRAD = Math.PI;
+            } else {                            //log.log("#### QUAD FOUR ####");
+                startAngleRAD = Math.PI; stopAngleRAD = -Math.PI / 2;
+            }
+        }
+        this.startAngleRAD = startAngleRAD; this.stopAngleRAD = stopAngleRAD;
+    }
 
-function getSwitchButtonLabel(label, subLabel) {
-    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
-        return label;
-    } else {
-        subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
-        return label + " (" + subLabel + ")"; // TODO show on 2 lines of text
+    draw() {
+        this.getEndPoints();
+        this.getAngles();
+    }
+
+    getArcParams(rw, rh, tp1, tp2) {
+        var x, y;
+        if (rw < 0) {
+            rw = -rw;
+            if (rh < 0) {                   //log.log("**** QUAD ONE ****");
+                x = tp1[0]; y = tp2[1];
+                rh = -rh;
+            } else {                        //log.log("**** QUAD TWO ****");
+                x = tp2[0]; y = tp1[1];
+            }
+        } else {
+            if (rh < 0) {                   //log.log("**** QUAD THREE ****");
+                x = tp2[0]; y = tp1[1];
+                rh = -rh;
+            } else {                        //log.log("**** QUAD FOUR ****");
+                x = tp1[0]; y = tp2[1];
+            }
+        }
+        return [x, y, rw, rh];
+    }
+}   // class Decoration
+
+class ArrowDecoration extends Decoration {
+    constructor($widget, $arrow) {
+        super($widget);
+        //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
+        this.style = Number($arrow.attr('style'));
+        this.end = $arrow.attr('end');
+        this.direction = $arrow.attr('direction');
+        this.color = $arrow.attr('color');
+        this.linewidth = Number($arrow.attr('linewidth'));
+        this.length = Number($arrow.attr('length'));
+        this.gap = Number($arrow.attr('gap'));
+        //log.log("arrow: {end:" + this.end + ", dir: " + this.direction + "}");
+    }
+    draw() {
+        super.draw();
+        $gCtx.save();   // save current line width and color
+        // set color and width
+        $gCtx.strokeStyle = this.color;
+        $gCtx.fillStyle = this.color;
+        $gCtx.lineWidth = this.linewidth;
+        this.drawArrowStart();
+        this.drawArrowStop();
+        $gCtx.restore();        // restore color and width back to default
+    }
+    drawArrowStart() {
+        var angleRAD = this.startAngleRAD;
+        if (this.$widget.flip == "yes") {
+            angleRAD = this.stopAngleRAD;
+        }
+        this.offset = 1;        // draw the start arrows
+        if ((this.end == "start") || (this.end == "both")) {
+            if ((this.direction == "in") || (this.direction == "both")) {
+                this.drawArrowIn(this.ep1, Math.PI + angleRAD);
+            }
+            if ((this.direction == "out") || (this.direction == "both")) {
+                this.drawArrowOut(this.ep1, Math.PI + angleRAD);
+            }
+        }
+    }
+    drawArrowStop() {
+        var angleRAD = this.stopAngleRAD;
+        if (this.$widget.flip == "yes") {
+            angleRAD = this.startAngleRAD;
+        }
+        this.offset = 1;        // draw the stop arrows
+        if ((this.end == "stop") || (this.end == "both")) {
+            if ((this.direction == "in") || (this.direction == "both")) {
+                this.drawArrowIn(this.ep2, angleRAD);
+            }
+            if ((this.direction == "out") || (this.direction == "both")) {
+                this.drawArrowOut(this.ep2, angleRAD);
+            }
+        }
+    }
+    drawArrowIn(ep, angleRAD) {
+        $gCtx.save();
+        $gCtx.translate(ep[0], ep[1]);
+        $gCtx.rotate(angleRAD);
+
+        switch (this.style) {
+            default:
+                this.style = 0;
+            case 0:
+                break;
+            case 1:
+                this.drawArrow1In();
+                break;
+            case 2:
+                this.drawArrow2In();
+                break;
+            case 3:
+                this.drawArrow3In();
+                break;
+            case 4:
+                this.drawArrow4In();
+                break;
+            case 5:
+                this.drawArrow5In();
+        }
+        $gCtx.restore();
+    }   // drawArrowIn
+
+    drawArrowOut(ep, angleRAD) {
+        $gCtx.save();
+        $gCtx.translate(ep[0], ep[1]);
+        $gCtx.rotate(angleRAD);
+
+        switch (this.style) {
+            default:
+                this.style = 0;
+            case 0:
+                break;
+            case 1:
+                this.drawArrow1Out();
+                break;
+            case 2:
+                this.drawArrow2Out();
+                break;
+            case 3:
+                this.drawArrow3Out();
+                break;
+            case 4:
+                this.drawArrow4Out();
+                break;
+            case 5:
+                this.drawArrow5Out();
+        }
+        $gCtx.restore();
+    }   // drawArrowIn
+
+    drawArrow1In() {
+        var p1 = [this.offset + this.length, -this.length];
+        var p2 = [this.offset, 0];
+        var p3 = [this.offset + this.length, +this.length];
+
+        $drawLineP(p1, p2);
+        $drawLineP(p2, p3);
+        this.offset += this.length + this.gap;
+    }
+
+    drawArrow1Out() {
+        var p1 = [this.offset, -this.length];
+        var p2 = [this.offset + this.length, 0];
+        var p3 = [this.offset, +this.length];
+
+        $drawLineP(p1, p2);
+        $drawLineP(p2, p3);
+        this.offset += this.length + this.gap;
+    }
+
+    drawArrow2In() {
+        var p1 = [this.offset + this.length, -this.length];
+        var p2 = [this.offset, 0];
+        var p3 = [this.offset + this.length, +this.length];
+        var p4 = [this.offset + this.linewidth + this.gap + this.length, -this.length];
+        var p5 = [this.offset + this.linewidth + this.gap, 0];
+        var p6 = [this.offset + this.linewidth + this.gap + this.length, +this.length];
+
+        $drawLineP(p1, p2);
+        $drawLineP(p2, p3);
+        $drawLineP(p4, p5);
+        $drawLineP(p5, p6);
+        this.offset += this.length + (2 * (this.linewidth + this.gap));
+    }
+
+    drawArrow2Out() {
+        var p1 = [this.offset, -this.length];
+        var p2 = [this.offset + this.length, 0];
+        var p3 = [this.offset, +this.length];
+        var p4 = [this.offset + this.linewidth + this.gap, -this.length];
+        var p5 = [this.offset + this.linewidth + this.gap + this.length, 0];
+        var p6 = [this.offset + this.linewidth + this.gap, +this.length];
+
+        $drawLineP(p1, p2);
+        $drawLineP(p2, p3);
+        $drawLineP(p4, p5);
+        $drawLineP(p5, p6);
+        this.offset += this.length + (2 * (this.linewidth + this.gap));
+    }
+
+    drawArrow3In() {
+        var p1 = [this.offset + this.length, -this.length];
+        var p2 = [this.offset, 0];
+        var p3 = [this.offset + this.length, +this.length];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.lineTo(p3[0], p3[1]);
+        $gCtx.closePath();
+        if (this.linewidth > 1) {
+            $gCtx.fill();
+        } else {
+            $gCtx.stroke();
+        }
+        this.offset += this.length + this.gap;
+    }
+
+    drawArrow3Out() {
+        var p1 = [this.offset, -this.length];
+        var p2 = [this.offset + this.length, 0];
+        var p3 = [this.offset, +this.length];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.lineTo(p3[0], p3[1]);
+        $gCtx.closePath();
+        if (this.linewidth > 1) {
+            $gCtx.fill();
+        } else {
+            $gCtx.stroke();
+        }
+        this.offset += this.length + this.gap;
+    }
+
+    drawArrow4In() {
+        var p1 = [this.offset, 0];
+        var p2 = [this.offset + (4 * this.length), -this.length];
+        var p3 = [this.offset + (3 * this.length), 0];
+        var p4 = [this.offset + (4 * this.length), +this.length];
+
+        $drawLineP(p1, p3);
+        $drawLineP(p2, p3);
+        $drawLineP(p3, p4);
+        this.offset += (3 * this.length) + this.gap;
+    }
+
+    drawArrow4Out() {
+        var p1 = [this.offset, 0];
+        var p2 = [this.offset + (2 * this.length), -this.length];
+        var p3 = [this.offset + (3 * this.length), 0];
+        var p4 = [this.offset + (2 * this.length), +this.length];
+
+        $drawLineP(p1, p3);
+        $drawLineP(p2, p3);
+        $drawLineP(p3, p4);
+        this.offset += (3 * this.length) + this.gap;
+    }
+
+    drawArrow5In() {
+        var p1 = [this.offset, 0];
+        var p2 = [this.offset + (4 * this.length), -this.length];
+        var p3 = [this.offset + (3 * this.length), 0];
+        var p4 = [this.offset + (4 * this.length), +this.length];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p4[0], p4[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.lineTo(p3[0], p3[1]);
+        $gCtx.closePath();
+        if (this.linewidth > 1) {
+            $gCtx.fill();
+        } else {
+            $gCtx.stroke();
+        }
+        $drawLineP(p1, p3);
+        this.offset += (3 * this.length) + this.gap;
+    }
+
+    drawArrow5Out() {
+        var p1 = [this.offset, 0];
+        var p2 = [this.offset + (2 * this.length), -this.length];
+        var p3 = [this.offset + (3 * this.length), 0];
+        var p4 = [this.offset + (2 * this.length), +this.length];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p4[0], p4[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.lineTo(p3[0], p3[1]);
+        $gCtx.closePath();
+        if (this.linewidth > 1) {
+            $gCtx.fill();
+        } else {
+            $gCtx.stroke();
+        }
+        $drawLineP(p1, p3);
+        this.offset += (3 * this.length) + this.gap;
+    }
+}   // class ArrowDecoration
+
+class BridgeDecoration extends Decoration {
+    constructor($widget, $bridge) {
+        super($widget);
+        //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
+        this.side = $bridge.attr('side');
+        this.end = $bridge.attr('end');
+        this.color = $bridge.attr('color');
+        this.linewidth = Number($bridge.attr('linewidth'));
+        this.approachwidth = Number($bridge.attr('approachwidth'));
+        this.deckwidth = Number($bridge.attr('deckwidth'));
+    }
+    draw() {
+        super.draw();
+        var $widget = this.$widget;
+        $gCtx.save();   // save current line width and color
+        // set color and width
+        $gCtx.strokeStyle = this.color;
+        $gCtx.fillStyle = this.color;
+        $gCtx.lineWidth = this.linewidth;
+        if ($widget.circle == "yes") {
+            this.drawBridgeCircle();
+        } else if ($widget.arc == "yes") {
+            this.drawBridgeArc();
+        } else if ($widget.bezier == "yes") {
+            this.drawBridgeBezier();
+        } else {
+            this.drawBridgeStrait();
+        }
+        this.drawBridgeEnds();
+        $gCtx.restore();        // restore color and width back to default
+    }   // draw()
+
+    drawBridgeCircle() {
+        var $widget = this.$widget;
+        var halfWidth = this.deckwidth / 2;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var v = [0, +halfWidth];
+        if ($widget.flip == "yes") {
+            v = [0, -halfWidth];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        if ((this.side == "right") || (this.side == "both")) {
+            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+        }
+        if ((this.side == "left") || (this.side == "both")) {
+            var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+        }
+    }
+    drawBridgeArc() {   //draw arc of ellipse
+        var $widget = this.$widget;
+        var tp1 = this.ep1, tp2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        if ($widget.flip == "yes") {
+            [tp1, tp2] = [tp2, tp1];
+            startAngleRAD += Math.PI;
+            stopAngleRAD += Math.PI;
+        }
+        var halfWidth = this.deckwidth / 2;
+        var x, y;
+        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
+        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
+
+        rw -= halfWidth;    rh -= halfWidth;
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+        rw += this.deckwidth;  rh += this.deckwidth;
+        if ((this.side == "left") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+    }   // drawBridgeArc()
+
+    drawBridgeBezier() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var points = [[ep1[0], ep1[1]]];    // first point
+        var $cps = $widget.controlpoints;   // get the control points
+        $cps.each(function( idx, elem ) {   // control points
+            points.push($getLayoutPoint(elem));
+        });
+        points.push([ep2[0], ep2[1]]);  // last point
+        var halfWidth = this.deckwidth / 2;
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawBezier(points, this.color, this.linewidth, -halfWidth);
+        }
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawBezier(points, this.color, this.linewidth, +halfWidth);
+        }
+    }
+    drawBridgeStrait() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var halfWidth = this.deckwidth / 2;
+        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
+        }
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawLineP($point_subtract(ep1, vector), $point_subtract(ep2, vector));
+        }
+    }
+    drawBridgeEnds() {
+        if ((this.end == "entry") || (this.end == "both")) {
+            this.drawBridgeEntry();
+        }
+        if ((this.end == "exit") || (this.end == "both")) {
+            this.drawBridgeExit();
+       }
+    }
+    drawBridgeEntry() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var halfWidth = this.deckwidth / 2;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        var p1, p2;
+        if (isRight) {
+            p1 = [-this.approachwidth, +this.approachwidth + halfWidth];
+            p2 = [0, +halfWidth];
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            $drawLineP(p1, p2);
+        }
+        if (isLeft) {
+            p1 = [-this.approachwidth, -this.approachwidth - halfWidth];
+            p2 = [0, -halfWidth];
+            p1 = $point_add($point_rotate(p1, startAngleRAD), ep1);
+            p2 = $point_add($point_rotate(p2, startAngleRAD), ep1);
+            $drawLineP(p1, p2);
+        }
+    }
+    drawBridgeExit() {
+        var $widget = this.$widget;
+        var ep2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var halfWidth = this.deckwidth / 2;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        var p1, p2;
+        if (isRight) {
+            p1 = [+this.approachwidth, +this.approachwidth + halfWidth];
+            p2 = [0, +halfWidth];
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            $drawLineP(p1, p2);
+        }
+        if (isLeft) {
+            p1 = [+this.approachwidth, -this.approachwidth - halfWidth];
+            p2 = [0, -halfWidth];
+            p1 = $point_add($point_rotate(p1, stopAngleRAD), ep2);
+            p2 = $point_add($point_rotate(p2, stopAngleRAD), ep2);
+            $drawLineP(p1, p2);
+        }
+    }
+}   // BridgeDecoration
+
+class BumperDecoration extends Decoration {
+    constructor($widget, $bumper) {
+        super($widget);
+        //<bumper end="stop" color="#000000" linewidth="2" length="16" />
+        this.end = $bumper.attr('end');
+        this.color = $bumper.attr('color');
+        this.linewidth = Number($bumper.attr('linewidth'));
+        this.length = Number($bumper.attr('length'));
+    }
+    draw() {
+        super.draw();
+        $gCtx.save();   // save current line width and color
+        // set color and width
+        $gCtx.strokeStyle = this.color;
+        $gCtx.fillStyle = this.color;
+        $gCtx.lineWidth = this.linewidth;
+        var $widget = this.$widget;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        if ($widget.flip == "yes") {
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        var bumperLength = this.length;
+        var halfLength = bumperLength / 2;
+        // common points
+        var p1 = [0, -halfLength], p2 = [0, +halfLength];
+        if ((this.end == "start") || (this.end == "both")) {
+            var p1 = $point_add($point_rotate(p1, startAngleRAD), this.ep1);
+            var p2 = $point_add($point_rotate(p2, startAngleRAD), this.ep1);
+            $drawLineP(p1, p2);   // draw cross tie
+        }
+        if ((this.end == "stop") || (this.end == "both")) {
+            var p1 = $point_add($point_rotate(p1, stopAngleRAD), this.ep2);
+            var p2 = $point_add($point_rotate(p2, stopAngleRAD), this.ep2);
+            $drawLineP(p1, p2);   // draw cross tie
+        }
+        $gCtx.restore();        // restore color and width back to default
+    }
+}   //  class BumperDecoration
+
+class TunnelDecoration extends Decoration {
+    constructor($widget, $tunnel) {
+        super($widget);
+        //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
+        this.side = $tunnel.attr('side');
+
+        this.end = $tunnel.attr('end');
+        this.color = $tunnel.attr('color');
+        this.linewidth = Number($tunnel.attr('linewidth'));
+        this.entrancewidth = Number($tunnel.attr('entrancewidth'));
+        this.floorwidth = Number($tunnel.attr('floorwidth'));
+    }
+    draw() {
+        super.draw();
+        var $widget = this.$widget;
+        $gCtx.save();   // save current line width and color
+        // set color and width
+        $gCtx.strokeStyle = this.color;
+        $gCtx.fillStyle = this.color;
+        $gCtx.lineWidth = this.linewidth;
+        $gCtx.setLineDash([6, 4]);
+        if ($widget.circle == "yes") {
+            this.drawTunnelCircle();
+        } else if ($widget.arc == "yes") {
+            this.drawTunnelArc();
+        } else if ($widget.bezier == "yes") {
+            this.drawTunnelBezier();
+        } else {
+            this.drawTunnelStrait();
+        }
+        $gCtx.setLineDash([]);
+        this.drawTunnelEnds();
+        $gCtx.restore();        // restore color and width back to default
+    }   // draw()
+
+    drawTunnelCircle() {
+        var $widget = this.$widget;
+        var halfWidth = this.floorwidth / 2;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        var v = [0, +halfWidth];
+        if ($widget.flip == "yes") {
+            v = [0, -halfWidth];
+            [startAngleRAD, stopAngleRAD] = [stopAngleRAD, startAngleRAD];
+        }
+        if ((this.side == "right") || (this.side == "both")) {
+            var tp1 = $point_add(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_add(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+        }
+        if ((this.side == "left") || (this.side == "both")) {
+            var tp1 = $point_subtract(ep1, $point_rotate(v, startAngleRAD));
+            var tp2 = $point_subtract(ep2, $point_rotate(v, stopAngleRAD));
+            if ($widget.flip == "yes") {
+                $drawArcP(tp2, tp1, $widget.angle);
+            } else {
+                $drawArcP(tp1, tp2, $widget.angle);
+            }
+        }
+    }
+    drawTunnelArc() {   //draw arc of ellipse
+        var $widget = this.$widget;
+        var tp1 = this.ep1, tp2 = this.ep2;
+        var startAngleRAD = this.startAngleRAD, stopAngleRAD = this.stopAngleRAD;
+        if ($widget.flip == "yes") {
+            [tp1, tp2] = [tp2, tp1];
+            startAngleRAD += Math.PI;
+            stopAngleRAD += Math.PI;
+        }
+        var halfWidth = this.floorwidth / 2;
+        var x, y;
+        var rw = tp2[0] - tp1[0], rh = tp2[1] - tp1[1];
+        [x, y, rw, rh] = this.getArcParams(rw, rh, tp1, tp2);
+
+        rw -= halfWidth;    rh -= halfWidth;
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+        rw += this.floorwidth;  rh += this.floorwidth;
+        if ((this.side == "left") || (this.side == "both")) {
+            $drawEllipse(x, y, rw, rh, Math.PI + stopAngleRAD, startAngleRAD);
+        }
+    }   // drawTunnelArc()
+
+    drawTunnelBezier() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var points = [[ep1[0], ep1[1]]];    // first point
+        var $cps = $widget.controlpoints;   // get the control points
+        $cps.each(function( idx, elem ) {   // control points
+            points.push($getLayoutPoint(elem));
+        });
+        points.push([ep2[0], ep2[1]]);  // last point
+        var halfWidth = this.floorwidth / 2;
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawBezier(points, this.color, this.linewidth, -halfWidth);
+        }
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawBezier(points, this.color, this.linewidth, +halfWidth);
+        }
+    }
+    drawTunnelStrait() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1, ep2 = this.ep2;
+        var halfWidth = this.floorwidth / 2;
+        var vector = $point_orthogonal($point_normalizeTo($point_subtract(ep2, ep1), halfWidth));
+        if ((this.side == "right") || (this.side == "both")) {
+            $drawLineP($point_add(ep1, vector), $point_add(ep2, vector));
+        }
+        if (((this.side == "left") || (this.side == "both"))) {
+            $drawLineP($point_subtract(ep1, vector), $point_subtract(ep2, vector));
+        }
+    }
+    drawTunnelEnds() {
+        if ((this.end == "entry") || (this.end == "both")) {
+            this.drawTunnelEntry();
+        }
+        if ((this.end == "exit") || (this.end == "both")) {
+            this.drawTunnelExit();
+       }
+    }
+    drawTunnelEntry() {
+        var $widget = this.$widget;
+        var ep1 = this.ep1;
+        var angleRAD = this.startAngleRAD;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];  // swap left and right
+            angleRAD = this.stopAngleRAD;
+        }
+
+        $gCtx.save();
+        $gCtx.translate(ep1[0], ep1[1]);
+        $gCtx.rotate(angleRAD);
+
+        if (isRight) {
+            this.drawTunnelEntryRight();
+        }
+        if (isLeft) {
+            this.drawTunnelEntryLeft();
+        }
+        $gCtx.restore();
+    }
+    drawTunnelEntryRight() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, +halfFloorWidth];
+        p3 = [0, +halfEntranceWidth];
+        p4 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth];
+        p5 = [-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p6 = [-halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p7 = [-halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
+    }
+    drawTunnelEntryLeft() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, -halfFloorWidth];
+        p3 = [0, -halfEntranceWidth];
+        p4 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth];
+        p5 = [-halfEntranceWidth - halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p6 = [-halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p7 = [-halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
+    }
+    drawTunnelExit() {
+        var $widget = this.$widget;
+        var ep2 = this.ep2;
+        var angleRAD = this.stopAngleRAD;
+        var isRight = ((this.side == "right") || (this.side == "both"));
+        var isLeft = ((this.side == "left") || (this.side == "both"));
+        if ($widget.flip == "yes") {
+            [isRight, isLeft] = [isLeft, isRight];
+            angleRAD = this.startAngleRAD;
+        }
+
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+
+        var p1, p2, p3, p4, p5, p6, p7;
+
+        $gCtx.save();
+        $gCtx.translate(ep2[0], ep2[1]);
+        $gCtx.rotate(angleRAD);
+
+        if (isRight) {
+            this.drawTunnelExitRight();
+        }
+        if (isLeft) {
+            this.drawTunnelExitLeft();
+        }
+        $gCtx.restore();
+    }
+    drawTunnelExitRight() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, +halfFloorWidth];
+        p3 = [0, +halfEntranceWidth];
+        p4 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth];
+        p5 = [halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p6 = [halfFloorWidth, +halfEntranceWidth - halfDiffWidth];
+        p7 = [halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
+    }
+    drawTunnelExitLeft() {
+        var halfWidth = this.floorwidth / 2;
+        var halfEntranceWidth = this.entrancewidth / 2;
+        var halfFloorWidth = this.floorwidth / 2;
+        var halfDiffWidth = halfEntranceWidth - halfFloorWidth;
+        var p1, p2, p3, p4, p5, p6, p7;
+        p1 = [0, 0];
+        p2 = [0, -halfFloorWidth];
+        p3 = [0, -halfEntranceWidth];
+        p4 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth];
+        p5 = [halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p6 = [halfFloorWidth, -halfEntranceWidth + halfDiffWidth];
+        p7 = [halfDiffWidth, 0];
+
+        $gCtx.beginPath();
+        $gCtx.moveTo(p1[0], p1[1]);
+        $gCtx.lineTo(p2[0], p2[1]);
+        $gCtx.quadraticCurveTo(p3[0], p3[1], p4[0], p4[1]);
+        $gCtx.lineTo(p5[0], p5[1]);
+        $gCtx.quadraticCurveTo(p6[0], p6[1], p7[0], p7[1]);
+        $gCtx.closePath();
+        $gCtx.stroke();
     }
 }
-

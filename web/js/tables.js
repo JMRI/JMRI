@@ -6,6 +6,7 @@
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
+ * TODO I18N titles and headers
  */
 
 var jmri = null;
@@ -206,7 +207,7 @@ $(document).ready(function () {
 
 	// replace title with the table type
 	document.title = "JMRI Tables: " + $("html").data("table-type") + "s"; // TODO I18N using Bundle
-	//$("h1.title").text($("html").data("table-type") + "s"); // TODO I18N (-s for plural won't work in all languages)
+	$("#table-type").text($("html").data("table-type") + "s"); // TODO I18N (-s for plural won't work in all languages)
 
 	jmri = $.JMRI({
 		// when we get the hello message, send a websocket list request which
