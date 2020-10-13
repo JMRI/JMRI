@@ -449,11 +449,13 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     public void dispose() {
-        _table.getRowSorter().setSortKeys(null);
-        if (isDirty()) {
-            OperationsPanel.cacheState(_table);
-            OperationsPanel.saveTableState();
-            setDirty(false);
+        if (_table != null) {
+            _table.getRowSorter().setSortKeys(null);
+            if (isDirty()) {
+                OperationsPanel.cacheState(_table);
+                OperationsPanel.saveTableState();
+                setDirty(false);
+            }
         }
         removePropertyChangeTracks();
         if (_location != null) {
