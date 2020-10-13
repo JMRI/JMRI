@@ -107,21 +107,20 @@
         <li>This starts the <code>/web/js/panel.js</code> JavaScript code.</li>
 
         <li>The main method in <code>panel.js</code> is <code>$(document).ready(function() {</code> (around line
-          4361).<br>
+          2000).<br>
           It ends with a call to the <code>requestPanelXML(panelName);</code> method:<br>
           <code><br>
-          3887 var requestPanelXML = function(panelName) {<br>
-          3888  &nbsp;&nbsp;&nbsp;$.ajax({<br>
-          3889  &nbsp;&nbsp;&nbsp;type: "GET",<br>
-          3890  &nbsp;&nbsp;&nbsp;url: "/panel/" + panelName + "?format=xml", [...]<br>
-          3891  &nbsp;&nbsp;&nbsp;success: function(data, textStatus, jqXHR) {<br>
-          3892  &nbsp;&nbsp;&nbsp;processPanelXML(data, textStatus, jqXHR);<br>
-          3892  &nbsp;&nbsp;&nbsp;setTitle($gPanel["name"]); } [...]<br>
+          141 var requestPanelXML = function(panelName) {<br>
+          142  &nbsp;&nbsp;&nbsp;$.ajax({<br>
+          143  &nbsp;&nbsp;&nbsp;type: "GET",<br>
+          144  &nbsp;&nbsp;&nbsp;url: "/panel/" + panelName + "?format=xml", [...]<br>
+          145  &nbsp;&nbsp;&nbsp;success: function(data, textStatus, jqXHR) {<br>
+          146  &nbsp;&nbsp;&nbsp;processPanelXML(data, textStatus, jqXHR);<br>
+          147  &nbsp;&nbsp;&nbsp;setTitle($gPanel["name"]); } [...]<br>
           </code><br>
-          Here, line 3888 sends an <a href="https://www.w3schools.com/xml/ajax_intro.asp">AJAX</a> (Asynchronous
-          JavaScript
-          And XML) <code>GET XMLHttpRequest</code>code> for the panel to be retrieved by its name to the JMRI
-          PanelServlet.
+          Here, line 142 sends an <a href="https://www.w3schools.com/xml/ajax_intro.asp">AJAX</a> (Asynchronous
+          JavaScript And XML)
+          <code>GET XMLHttpRequest</code>code> for the panel to be retrieved by its name to the JMRI PanelServlet.
         </li>
 
         <li>The connection between web server and JMRI categories is handled by <strong>servlets</strong> in
@@ -146,10 +145,12 @@
             43 &nbsp;&nbsp;&nbsp;&nbsp;panel.setAttribute("shape", editor.getSwitchShape());<br>
             44 &nbsp;&nbsp;&nbsp;&nbsp;Element color = new Element("backgroundColor");<br>
             45 &nbsp;&nbsp;&nbsp;&nbsp;color.setAttribute("red", Integer.toString(editor.getBackgroundColor().getRed()));<br>
-            46 &nbsp;&nbsp;&nbsp;&nbsp;panel.addContent(color);<br>
+            46 &nbsp;&nbsp;&nbsp;&nbsp;[...]
+            47 &nbsp;&nbsp;&nbsp;&nbsp;panel.addContent(color);<br>
           </code><br>
-          Line 5 allows us to later from <code>panel.js</code> call e.g.,<br>
-          <code>1018   $("#panel-area").css({'background-color': $gPanel.backgroundcolor});</code>
+          Line 45 allows us to later from <code>panel.js</code> call e.g.,<br>
+          <code>979   $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," +
+            $widget.blue + ")"});</code>
         </li>
 
         <li>From the Java code running JMRI, specific information is written out to an xml "snapshot" for both the
@@ -191,7 +192,7 @@
 
         <li>To process the xml response returned for the <code>requestPanelXML</code> command, the JavaScript code in
           <code>/web/js/panel.js</code> contains the function<br>
-          <code>processPanelXML($returnedData, $success, $xhr)</code> (around line 983)<br>
+          <code>processPanelXML($returnedData, $success, $xhr)</code> (around line 160)<br>
           that renders from
           the xml data in <code>$xml</code> an object-based web panel html, ready to forward to the browser and
           display client-side using CSS and HTML5.<br>
@@ -203,26 +204,26 @@
           individual elements in the panel xml are processed in a for-each loop, building a persistent array of
           <code>$widget</code> arrays:<br>
           <code><br>
-          1066 $panel.contents().each(<br>
-          1067 &nbsp;&nbsp;function() {<br>
-          1068 &nbsp;&nbsp;&nbsp;&nbsp;var $widget = new Array();
+          236 $panel.contents().each(<br>
+          237 &nbsp;&nbsp;function() {<br>
+          238 &nbsp;&nbsp;&nbsp;&nbsp;var $widget = new Array();
           <br></code>
           <br>
           In such an array the attributes of each (positionable) item are copied in 1-on-1 from the xml, filling the
           basic widget web object:<br>
           <code>
-          1074  $(this.attributes).each(function() {<br>
-          1075  &nbsp;&nbsp;$widget[this.name] = this.value;<br>
-          1076  });<br>
+          244  $(this.attributes).each(function() {<br>
+          245  &nbsp;&nbsp;$widget[this.name] = this.value;<br>
+          246  });<br>
           </code>
         </li>
 
         <li>
           Next, every <code>$widget</code> array if enriched by extra fields, either using attributes shared on the
           panel, like<br>
-          <code>1496 var $cr = $gPanel.turnoutcirclesize * SIZE;</code><br>
+          <code>666 var $cr = $gPanel.turnoutcirclesize * SIZE;</code><br>
           with attributes of one of the elements:
-          <code>1868 $widget['text8'] = $(this).find('inconsistentText').attr('text');</code><br>
+          <code>1039 $widget['text8'] = $(this).find('inconsistentText').attr('text');</code><br>
           or with copies of other  elements already present in the $widget array, for example:<br>
           <code><br>case "beanswitch" :<br>
           &nbsp;&nbsp;$widget['name'] = $widget.label;</code><br>
@@ -292,7 +293,7 @@
       <p>Note: Web click events are only enabled if a panel is configured (in JMRI xPanelEditor) to allow control.</p>
       <ol>
       <li>To perform regular click-handling, a <code>mouseup()</code> function is hooked up to widgets in
-        <code>/web/js/panel.js</code> (around line 1896):
+        <code>/web/js/panel.js</code> (around line 1120):
           <ul>
             <li>a state toggle function for all non-momentary clickable widgets:<br>
               <code>$('.clickable:not(.momentary)').bind(UPEVENT, $handleClick);<br></code></li>
@@ -311,7 +312,7 @@
               system.</li>
           </ul>
         </li>
-        <li>The <code>$handleClick(e)</code> function in <code>panel.js</code> (around line 1934) updates the widgets
+        <li>The <code>$handleClick(e)</code> function in <code>panel.js</code> (around line 1160) updates the widgets
           involved:
           <ul>
             <li>Text based widgets are told how to change the &lt;div&gt; item that's already displayed on screen:
@@ -329,7 +330,7 @@
           The actual CSS styling code for the element is taken from <code>web/css/panel.css</code> file by he user's
           browser.
         </li>
-        <li>Via <code>sendElementChange()</code> (around line 3719) a call is made to <code>jmri.setObject(type,
+        <li>Via <code>sendElementChange</code> (around line 1750) a call is made to <code>jmri.setObject(type,
           name, state);</code>, where <code>jmri</code> represents the JMRI WebSocket on this server</li>
         <li><code>setObject()</code> in <code>/web/js/jquery.jmri.js</code> <a href="https://jquery.com">jQuery
           JavaScript Library</a> instructs JMRI to set for example a Light to "On" via a Post message:<br>
@@ -343,7 +344,7 @@
       </ol>
 
       <p><strong>What to Code:</strong> Specify the response to user action by adding an <code>if(...)</code> block to
-      the <code>$setWidgetState(id, newState, data)</code> function (near line 3553).</p>
+      the <code>$setWidgetState(id, newState, data)</code> function (near line 1570).</p>
 
       <p><strong>Where to Code:</strong> <code>$handleClick()</code> function in <code>jmri/web/js/panel.js</code></p>
 

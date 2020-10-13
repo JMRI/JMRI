@@ -2121,6 +2121,39 @@ function getRateFactor() {
 *  ======= Switchboard functions =======
 */
 
+// used to find largest tiles on Switchboard screen
+function autoRows(screenwidth, screenheight) {
+    // calculations repeated from SwitchboardEditor for web display
+    // find cell matrix that allows largest size icons
+    var $cellProp = 1; // assume square tiles prop 1:1 to keep it simple for now
+    var $paneEffectiveWidth = Math.ceil(screenwidth / $cellProp);
+    var $columnsNum = 1;
+    var $rowsNum = 1;
+    var $tileSize = 0.1; // start value
+    var $tileSizeOld = 0;
+    var $totalDisplayed = Math.max($total, 1); // if all items unconnected and set to be hidden, use 1
+    while ($tileSize > $tileSizeOld) {
+        $rowsNum = ($totalDisplayed + $columnsNum - 1) / $columnsNum; // roundup int
+        $tileSizeOld = $tileSize; // store for comparison
+        $tileSize = Math.min(($paneEffectiveWidth / $columnsNum), ((screenheight - 90) / $rowsNum));
+        // screenheight-90px to leave room for menubar
+        if ($tileSize <= $tileSizeOld) {
+            break;
+        }
+        $columnsNum++;
+    }
+    return $rowsNum;
+}
+
+function getSwitchButtonLabel(label, subLabel) {
+    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
+        return label;
+    } else {
+        subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
+        return label + " (" + subLabel + ")"; // will wrap but TODO show on 2 lines of text
+    }
+}
+
 // Draw symbol on the beanswitch widget canvas
 var $drawWidgetSymbol = function(id, state) {
     // draw on $widget canvas
@@ -2286,38 +2319,6 @@ var $drawWidgetSymbol = function(id, state) {
     ctx.restore(); // restore color and width back to default
 };
 
-// used to find largest tiles on Switchboard screen
-function autoRows(screenwidth, screenheight) {
-    // calculations repeated from SwitchboardEditor for web display
-    // find cell matrix that allows largest size icons
-    var $cellProp = 1; // assume square tiles prop 1:1 to keep it simple for now
-    var $paneEffectiveWidth = Math.ceil(screenwidth / $cellProp);
-    var $columnsNum = 1;
-    var $rowsNum = 1;
-    var $tileSize = 0.1; // start value
-    var $tileSizeOld = 0;
-    var $totalDisplayed = Math.max($total, 1); // if all items unconnected and set to be hidden, use 1
-    while ($tileSize > $tileSizeOld) {
-        $rowsNum = ($totalDisplayed + $columnsNum - 1) / $columnsNum; // roundup int
-        $tileSizeOld = $tileSize; // store for comparison
-        $tileSize = Math.min(($paneEffectiveWidth / $columnsNum), ((screenheight - 90) / $rowsNum));
-        // screenheight-90px to leave room for menubar
-        if ($tileSize <= $tileSizeOld) {
-            break;
-        }
-        $columnsNum++;
-    }
-    return $rowsNum;
-}
-
-function getSwitchButtonLabel(label, subLabel) {
-    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
-        return label;
-    } else {
-        subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
-        return label + " (" + subLabel + ")"; // will wrap but TODO show on 2 lines of text
-    }
-}
 // End of Swichboard functions
 
 
@@ -3878,7 +3879,7 @@ function getNextSlipState(slipWidget) {
 // ======= End of Layout Editor functions =======
 
 /******************************************************************
-*  ======= Layout Editor Decoration classes
+*  ======= Layout Editor Decoration classes =======
 */
 
 class Decoration {
@@ -4731,3 +4732,5 @@ class TunnelDecoration extends Decoration {
         $gCtx.stroke();
     }
 }
+
+// End of Layout Editor Decoration classes =======
