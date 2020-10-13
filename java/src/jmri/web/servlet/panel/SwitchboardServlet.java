@@ -86,13 +86,8 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         }
         panel.addContent(color);
 
-        Element text = new Element("text");
-        text.setAttribute("color", editor.getDefaultTextColor());
-        text.setAttribute("content", "Configure Switchboards for JMRI WebServer in JMRI Panels.");
-        // TODO update as symbol shape display is developed
-        panel.addContent(text);
 
-        // include switches, Bug: how to delete the old ones?
+        // include switches
         List<BeanSwitch> _switches = editor.getSwitches(); // call method in SwitchboardEditor
         log.debug("SwbServlet contains {} switches", _switches.size());
         for (BeanSwitch sub : _switches) {

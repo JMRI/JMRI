@@ -96,6 +96,7 @@ span.lightswitch { /* on Switchboard */
 
 span.lightswitch:hover { /* on Switchboard */
     background-color: yellow;
+    cursor: pointer;
 }
 
 #panel-area {

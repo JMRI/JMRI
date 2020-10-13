@@ -1052,9 +1052,9 @@ function processPanelXML($returnedData, $success, $xhr) {
         }
         var onOffSpans = "";
         if ($gPanel.type == "L") {
-            // TODO add handlers to switch on/off, I18N
-            //onOffSpans = "<span id='allOff' class='clickable lightswitch'>All Off</span><span id='allOn' class='clickable lightswitch'>All On</span>";
-            //$(#onOff).bind(UPEVENT, $handleClick);
+            // handlers to switch on/off, I18N
+            onOffSpans = "<span id='allOff' class='lightswitch'>All Off</span><span id='allOn' class='lightswitch'>All On</span>";
+            // handlers added later
         }
         // add short banner at top of Swb
         $("#panel-area").append("<div id='name' class='show' style='color: " + $gPanel.defaulttextcolor +
@@ -1089,7 +1089,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
             $widget['widgetFamily'] = $getWidgetFamily($widget, this);
             var $jc = "";
-            if (typeof($widget["class"]) !== "undefined") {
+            if (typeof $widget["class"] !== "undefined") {
                 var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
                 $jc = $ta[$ta.length - 1];
             }
@@ -1505,8 +1505,9 @@ function processPanelXML($returnedData, $success, $xhr) {
 	                                height: $cd + 'px'
 	                            });
                             }
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (typeof $widget["systemName"] === "undefined") {
                                 $widget["systemName"] = $widget.name;
+                            }
                             jmri.getTurnout($widget["systemName"]);
                             if ($widget["occupancysensorA"])
                                 jmri.getSensor($widget["occupancysensorA"]); //listen for occupancy changes
@@ -1617,7 +1618,7 @@ function processPanelXML($returnedData, $success, $xhr) {
 	                                    width: $cd + 'px', height: $cd + 'px'});
                             }
 
-                            // setup notifications (?)
+                            // set up notifications (?)
                             jmri.getTurnout($widget["turnout"]);
                             jmri.getTurnout($widget["turnoutB"]);
 
@@ -1790,7 +1791,7 @@ function processPanelXML($returnedData, $success, $xhr) {
 	                                            "alt='" + turnout + "'" +
 	                                            "></div>");
                                     }                                            
-                                    //setup notifications
+                                    //set up notifications
                                     jmri.getTurnout(turnout);
 
                                     // add turnout to whereUsed array (as $widget + 'r')
@@ -1837,25 +1838,25 @@ function processPanelXML($returnedData, $success, $xhr) {
                     $widget['swColor2'] = $activeColor; // active = red
                     $widget['swColor4'] = $inactiveColor;  // inactive = green
                     $widget['swColor8'] = 'Gray'; // inconsistent
-
-                    switch ($widget['type']) {
-                        case "T" :
-                            $widget.jsonType = "turnout"; // JSON object type
-                            jmri.getTurnout($widget["systemName"]); // switch follows state on layout
-                            break;
-                        case "S" :
-                            $widget.jsonType = "sensor"; // JSON object type
-                            jmri.getSensor($widget["systemName"]);
-                            break;
-                        case "L":
-                            $widget.jsonType = "light"; // JSON object type
-                            jmri.getLight($widget["systemName"]);
-                            break;
-                        // more types of NamedBeans?
-                        default :
-                            break; // skip
+                    if ($widget.connected == "true") {
+                        switch ($widget['type']) {
+                            case "T" :
+                                $widget.jsonType = "turnout"; // JSON object type
+                                jmri.getTurnout($widget["systemName"]); // switch follows state on layout
+                                break;
+                            case "S" :
+                                $widget.jsonType = "sensor"; // JSON object type
+                                jmri.getSensor($widget["systemName"]);
+                                break;
+                            case "L":
+                                $widget.jsonType = "light"; // JSON object type
+                                jmri.getLight($widget["systemName"]);
+                                break;
+                            // more types of NamedBeans?
+                            default :
+                                break; // skip
+                        }
                     }
-
                     var $canvas = "";
                     switch ($widget.shape) { // set each state's text
                         case "symbol" :
@@ -1959,10 +1960,14 @@ function processPanelXML($returnedData, $success, $xhr) {
 	        e.preventDefault(); //prevent double-firing (touch + click)
 	        sendElementChange($gWidgets[this.id].jsonType, $gWidgets[this.id].systemName, INACTIVE);  //send inactive on up
 	    });
+	    // Switchboard All Off/All On buttons
+        $(".lightswitch#allOff").bind(UPEVENT, $handleClickAllOff); // all Lights Off
+        $(".lightswitch#allOn").bind(UPEVENT, $handleClickAllOn); // all Lights On
     }
 
     $drawAllDrawnWidgets(); // draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
     $drawUnconnectedSwitchIcons(); // draw icon first time
+
     $("#activity-alert").addClass("hidden").removeClass("show");
 }
 
@@ -2134,6 +2139,24 @@ function $handleLinkingLabelClick(e) {
     }
     window.location = $url;  //navigate to the specified url
 }
+
+function $handleClickAllOn(e) {
+    //loop thru widgets, setting each connected light to CLOSED/2, when button on top of switchboard was clicked
+    jQuery.each($gWidgets, function($id, $widget) {
+        if ($widget.connected == "true") {
+            sendElementChange($widget.jsonType, $widget.systemName, CLOSED);
+        }
+    });
+};
+
+function $handleClickAllOff(e) {
+    //loop thru widgets, setting each connected light to THROWN/4, when button on top of switchboard was clicked
+    jQuery.each($gWidgets, function($id, $widget) {
+        if ($widget.connected == "true") {
+            sendElementChange($widget.jsonType, $widget.systemName, THROWN);
+        }
+    });
+};
 
 //draw a Tracksegment (pass in widget)
 function $drawTrackSegment($widget) {
@@ -3793,6 +3816,7 @@ jQuery.fn.xmlClean = function() {
         }
     }).remove();
 }
+
 // handle the toggling (or whatever) of the "next" state for the passed-in widget
 var $getNextState = function($widget) {
     var $nextState = undefined;
@@ -3934,7 +3958,7 @@ var $drawWidgetSymbol = function(id, state) {
 
     switch (shape) {
         // draw methods EBR
-        case "icon" : // slider, 1 type
+        case "icon" : // slider, 1 shape for all switchtypes (S, T, L)
             ctx.beginPath(); // the sliderspace
             ctx.strokeStyle = (state == "2" ? $inactiveColor : "darkgray");
             ctx.lineCap = "round";
@@ -3951,7 +3975,7 @@ var $drawWidgetSymbol = function(id, state) {
             ctx.lineWidth = 1;
             ctx.stroke();
             break;
-        case "drawing" : // Maerklin Keyboard
+        case "drawing" : // Maerklin Keyboard, 1 shape for all switchtypes (S, T, L)
             // red = upper rounded rect
             ctx.fillStyle = (state == "2" ? $activeColor : "pink");
             ctx.fillRect(-0.5*radius, -1.1*radius, radius, radius/3);
@@ -3979,7 +4003,7 @@ var $drawWidgetSymbol = function(id, state) {
             ctx.strokeStyle = "black";
             ctx.stroke();
             break;
-        case "symbol" :
+        case "symbol" : // Mimic classic icons as vector drawing, specific shape per switchtype (S, T, L)
             switch ($gWidgets[id].type) {
                 case "L" : // light
                     // line (wire) at back
@@ -4024,32 +4048,34 @@ var $drawWidgetSymbol = function(id, state) {
                     ctx.lineWidth = radius/2.9;
                     // points, at the back
                     ctx.strokeStyle = "lightgray";
-                    // -angled turnout shape
+                    // --angled turnout shape
                     //ctx.moveTo(-0.4 * $canvas.width, -20);
                     //ctx.lineTo(0.1 * $canvas.width, 10);
                     //ctx.lineTo(-0.4 * $canvas.width, 10);
-                    // -curved turnout shape
+                    // --curved turnout shape
                     ctx.moveTo(0.4 * $canvas.width, 10);
                     ctx.lineTo(-0.4 * $canvas.width, 10);
                     ctx.stroke();
                     ctx.beginPath();
-                        ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
+                    // --up to here
                     ctx.stroke();
                     // active line, start with new color
                     ctx.beginPath();
                     ctx.strokeStyle = $activeColor;
-                    // -angled turnout shape
+                    // --angled turnout shape
                     //var endY = (state == "2" ? "10" : "-20");
                     //ctx.moveTo(0.4 * $canvas.width, 10);
                     //ctx.lineTo(0.1 * $canvas.width, 10);
                     //ctx.lineTo(-0.4 * $canvas.width, endY);
-                    // -curved turnout shape
+                    // --curved turnout shape
                     if (state == "2") {
                         ctx.moveTo(0.4 * $canvas.width, 10);
                         ctx.lineTo(-0.4 * $canvas.width, 10);
                     } else {
                         ctx.arc(0.4 * $canvas.width, 10 - 1.5 * $canvas.width, 1.5 * $canvas.width, 0.5 * Math.PI, 0.675 * Math.PI);
                     }
+                    // --up to here
                     ctx.stroke();
                     break;
             }
@@ -4129,7 +4155,7 @@ var $getWidgetFamily = function($widget, $element) {
             return "switch";
             break;
     }
-    log.log("unknown widget type of '" + $widget.widgetType +"'");
+    log.log("unhandled widget type of '" + $widget.widgetType +"' id = "+$widget.id);
     return; //unrecognized widget returns undefined
 };
 
@@ -4138,7 +4164,6 @@ function $redrawBlock(blockName) {
     //log.log("redrawing all tracks for block " + blockName);
     //loop thru widgets, if block matches, redraw widget by proper method
     jQuery.each($gWidgets, function($id, $widget) {
-        ///log.log("  $id: " + $id);
         $logProperties($widget);
         if (($widget.blockname == blockName)
         || ($widget.blocknameac == blockName)
