@@ -38,9 +38,9 @@
     </revision>    
     <revision>
         <revnumber>4</revnumber>
-        <date>2020-09-25</date>
+        <date>2020-10-09</date>
         <authorinitials>PŠ</authorinitials>
-        <revremark>Speed map for insufficient break distance</revremark>
+        <revremark>Fix Speed map</revremark>
     </revision>    
   </revhistory>
 
@@ -103,6 +103,10 @@
       <advancedAspect>Stůj</advancedAspect>
       <ourAspect>Výstraha</ourAspect>
     </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Opatrně na přivolávací návěst</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+    </aspectMapping>
     
     <aspectMapping>
       <advancedAspect>Rychlost 40 a volno</advancedAspect>
@@ -135,23 +139,6 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Rychlost 60 a očekávej 60</advancedAspect>
-      <ourAspect>Očekávej 60</ourAspect>
-    </aspectMapping>
-    
-    <aspectMapping>
-      <advancedAspect>Opakovaná volno</advancedAspect>
-      <ourAspect>Volno</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Opakovaná výstraha</advancedAspect>
-      <ourAspect>Výstraha</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Opakovaná očekávej 40</advancedAspect>
-      <ourAspect>Očekávej 40</ourAspect>
-    </aspectMapping>
-    <aspectMapping>
-      <advancedAspect>Opakovaná očekávej 60</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
     
