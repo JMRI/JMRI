@@ -2,9 +2,8 @@ package jmri.jmrit.display.switchboardEditor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.LinkedHashMap;
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -718,7 +717,7 @@ public class SwitchboardEditor extends Editor {
                 int colNum = (((getTotal() > 0) ? (getTotal()) : 1) + rows - 1) / rows;
                 int maxW = (super.getTargetFrame().getWidth() - 10)/colNum; // int division, subtract 2x3px for border
                 int maxH = (super.getTargetFrame().getHeight() - 25)/rows; // -25px for footer
-                _tileSize = Math.round(Math.min(maxW, maxH)); // store for tile graphics
+                _tileSize = Math.min(maxW, maxH); // store for tile graphics
             }
         });
         // show tooltip item
@@ -1509,8 +1508,8 @@ public class SwitchboardEditor extends Editor {
     public List<BeanSwitch> getSwitches() {
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
         log.debug("N = {}", switchesOnBoard.size());
-        for (String bs : switchesOnBoard.keySet()) {
-            _switches.add(switchesOnBoard.get(bs));
+        for (Map.Entry<String, BeanSwitch> bs : switchesOnBoard.entrySet()) {
+            _switches.add(bs.getValue());
         }
         return _switches;
     }

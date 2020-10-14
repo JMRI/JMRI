@@ -172,12 +172,12 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                         }
                     }
                 });
-                _text = true; // not really used for Switchboards
+                _text = true; // not actually used for Switchboards
                 _icon = true;
                 beanKey.setPreferredSize(new Dimension(new Dimension(2*r, 2*r)));
                 beanKey.setLabels(switchLabel, _uLabel);
-                beanKey.positionLabel(0, r/8, Component.CENTER_ALIGNMENT, 14);
-                beanKey.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
+                beanKey.positionLabel(0, r/16, Component.CENTER_ALIGNMENT, 14);
+                beanKey.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
@@ -1190,16 +1190,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
 
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
-            if (textAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
-                FontMetrics metrics = g.getFontMetrics();
+            if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
+                FontMetrics metrics = g.getFontMetrics(); // figure out where the center of the string is
                 labelX = metrics.stringWidth(tag) / -2;
             }
             g.drawString(tag, labelX, labelY); // draw name on top of button image (vertical, horizontal offset from top left)
 
             if (showUserName) {
                 g.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, Math.max(subTextSize, 6)));
-                if (subTextAlign == Component.CENTER_ALIGNMENT) { // figure out where the center of the string is
-                    FontMetrics metrics2 = g.getFontMetrics();
+                if (Math.abs(subTextAlign - Component.CENTER_ALIGNMENT) < .0001) {
+                    FontMetrics metrics2 = g.getFontMetrics(); // figure out where the center of the string is
                     subLabelX = metrics2.stringWidth(subTag) / -2;
                 }
                 g.drawString(subTag, subLabelX, subLabelY); // draw user name at bottom
