@@ -153,13 +153,18 @@ public class ProxyLightManager extends AbstractProvidingProxyManager<Light>
         LightManager m = (LightManager) getManager(systemName);
         return (m == null) ? false : m.allowMultipleAdditions(systemName);
     }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     @Override

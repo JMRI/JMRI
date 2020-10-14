@@ -55,7 +55,7 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return getNameToTest1();
     }
 

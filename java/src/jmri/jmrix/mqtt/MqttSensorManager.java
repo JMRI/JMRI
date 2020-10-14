@@ -3,7 +3,6 @@ package jmri.jmrix.mqtt;
 import javax.annotation.*;
 
 import jmri.*;
-import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,43 +104,6 @@ public class MqttSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s == null) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next address.
-        int iName = 0;
-        try {
-            iName = Integer.parseInt(curAddress);
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage("Error", "Unable to convert " + curAddress + " to a valid Hardware Address", "" + ex, "", true, false);
-            return null;
-        }
-        //Check to determine if the systemName is in use, return null if it is,
-        //otherwise return the next valid address.
-        s = getBySystemName(prefix + typeLetter() + iName);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName = iName + 1;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
     }
 
     public void setParser(MqttContentParser<Sensor> parser) {

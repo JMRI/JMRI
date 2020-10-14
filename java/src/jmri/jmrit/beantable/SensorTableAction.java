@@ -199,7 +199,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         String errorMessage = null;
         for (int x = 0; x < numberOfSensors; x++) {
             try {
-                curAddress = InstanceManager.getDefault(SensorManager.class).getNextValidAddress(curAddress, sensorPrefix);
+                curAddress = InstanceManager.getDefault(SensorManager.class).getNextValidAddress(curAddress, sensorPrefix, false);
             } catch (jmri.JmriException ex) {
                 displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
@@ -207,17 +207,10 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 statusBarLabel.setForeground(Color.red);
                 return;
             }
-            if (curAddress == null) {
-                log.debug("Error converting HW or getNextValidAddress");
-                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBarLabel.setForeground(Color.red);
-                // The next address returned an error, therefore we stop this attempt and go to the next address.
-                break;
-            }
 
             // Compose the proposed system name from parts:
             sName = sensorPrefix + InstanceManager.getDefault(SensorManager.class).typeLetter() + curAddress;
-            Sensor s = null;
+            Sensor s;
             try {
                 s = InstanceManager.getDefault(SensorManager.class).provideSensor(sName);
             } catch (IllegalArgumentException ex) {
@@ -257,14 +250,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // end of for loop creating rangeBox of Sensors
         }
 
-        // provide feedback to user
-        if (errorMessage == null) {
-            statusBarLabel.setText(statusMessage);
-            statusBarLabel.setForeground(Color.gray);
-        } else {
-            statusBarLabel.setText(errorMessage);
-            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
-        }
+        // provide success feedback to user
+        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setForeground(Color.gray);
 
         p.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
         removePrefixBoxListener(prefixBox);

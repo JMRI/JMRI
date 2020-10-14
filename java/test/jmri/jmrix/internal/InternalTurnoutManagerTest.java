@@ -22,6 +22,11 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     public String getSystemName(int i) {
         return "IT" + i;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "My Turnout 6";
+    }
 
     @Test
     public void testAsAbstractFactory() {

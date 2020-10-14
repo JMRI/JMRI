@@ -22,7 +22,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "(0,0,0);(1,0,0);(1,1,0);(0,1,0)";
     }
 

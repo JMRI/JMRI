@@ -56,11 +56,19 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         };
     }
 
+    /**
+     * Multiple additions enabled for Internal Turnouts.
+     * {@inheritDoc}
+     */
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
+    /**
+     * No validation for Internal Turnouts.
+     * {@inheritDoc}
+     */
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return prefix + typeLetter() + curAddress;
