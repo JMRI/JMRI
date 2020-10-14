@@ -144,7 +144,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
             }
             textTrainName.setText(_train.getIconName());
             pCars.removeAll();
-            RouteLocation rl = _train.getCurrentLocation();
+            RouteLocation rl = _train.getCurrentRouteLocation();
             if (rl != null) {
                 textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
                         ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));

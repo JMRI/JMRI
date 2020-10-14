@@ -50,6 +50,7 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mTUL_ExternalTurnoutFeedbackDifferent = false;
         returnValue._mTUL_NoDispatcherControlOfSwitch = false;
         returnValue._mTUL_ndcos_WhenLockedSwitchStateIsClosed = true;
+        returnValue._mTUL_GUI_IconsEnabled = true;
         returnValue._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.GREGS;
         returnValue._mTUL_AdditionalExternalTurnout1 = new NBHTurnout("CodeButtonHandlerDataRoutines", "Empty _mTUL_AdditionalExternalTurnout1", "");
         returnValue._mTUL_AdditionalExternalTurnout1FeedbackDifferent = false;

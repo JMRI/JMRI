@@ -391,8 +391,8 @@ public class JsonUtil {
             data.put(JSON.TERMINATES_LOCATION, train.getTrainTerminatesName());
         }
         data.put(LOCATION, train.getCurrentLocationName());
-        if (train.getCurrentLocation() != null) {
-            data.put(JsonOperations.LOCATION_ID, train.getCurrentLocation().getId());
+        if (train.getCurrentRouteLocation() != null) {
+            data.put(JsonOperations.LOCATION_ID, train.getCurrentRouteLocation().getId());
         }
         data.put(JSON.STATUS, train.getStatus(locale));
         data.put(JSON.STATUS_CODE, train.getStatusCode());

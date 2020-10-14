@@ -131,6 +131,7 @@ at the top for "automatic" JMRI object verification.
     public NBHSensor            _mTUL_DispatcherInternalSensorUnlockedIndicator;
     public boolean              _mTUL_NoDispatcherControlOfSwitch;
     public boolean              _mTUL_ndcos_WhenLockedSwitchStateIsClosed;
+    public boolean              _mTUL_GUI_IconsEnabled;
     public LOCK_IMPLEMENTATION  _mTUL_LockImplementation;
     public NBHTurnout           _mTUL_AdditionalExternalTurnout1;
     public boolean              _mTUL_AdditionalExternalTurnout1FeedbackDifferent;
