@@ -1381,45 +1381,8 @@ public class SwitchboardEditor extends Editor {
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        int x = 0;
-        int y = 0;
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP:
-            case KeyEvent.VK_KP_UP:
-            case KeyEvent.VK_NUMPAD8:
-                y = -1;
-                break;
-            case KeyEvent.VK_DOWN:
-            case KeyEvent.VK_KP_DOWN:
-            case KeyEvent.VK_NUMPAD2:
-                y = 1;
-                break;
-            case KeyEvent.VK_LEFT:
-            case KeyEvent.VK_KP_LEFT:
-            case KeyEvent.VK_NUMPAD4:
-                x = -1;
-                break;
-            case KeyEvent.VK_RIGHT:
-            case KeyEvent.VK_KP_RIGHT:
-            case KeyEvent.VK_NUMPAD6:
-                x = 1;
-                break;
-            case KeyEvent.VK_D:
-            case KeyEvent.VK_DELETE:
-            case KeyEvent.VK_MINUS:
-            case KeyEvent.VK_A:
-            case KeyEvent.VK_INSERT:
-            case KeyEvent.VK_PLUS:
-                break;
-            default:
-                return;
-        }
-        if (e.isShiftDown()) {
-            x *= 5;
-            y *= 5;
-        }
-
         repaint();
+        // TODO select another switch using keypad? accessibility
     }
 
     @Override

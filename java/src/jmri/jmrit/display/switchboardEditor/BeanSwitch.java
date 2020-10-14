@@ -273,7 +273,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
                 // to dim unconnected symbols TODO make graphics see through, now icons just become bleak
-                float dim = 100f;
+                //float dim = 100f;
                 switch (_shape) {
                     case 0:
                         beanButton.setEnabled(false);
@@ -1043,8 +1043,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 return beanKey.getIconLabel();
             case 3:
                 return beanSymbol.getIconLabel();
+            default:
+                return "";
         }
-        return "";
     }
 
     void handleCreateException(String sysName) {
