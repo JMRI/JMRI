@@ -105,11 +105,10 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         Assert.assertEquals("Show User Name is No", "no", e.showUserName());
         e.setSwitchShape("symbol");
         Assert.assertEquals("Switch shape set to 'symbol'", "symbol", e.getSwitchShape());
-        Turnout to9 = ((TurnoutManager) e.getManager('T')).provideTurnout("IT9");
-        Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT9"));
-        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, 1, "test"));
+        ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // connect to item 1
+        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, 1, "test")); // to item 2
         e.setHideUnconnected(true); // speed up redraw
-        e.updatePressed(); // rebuild for new Turnout + symbol shape
+        e.updatePressed(); // rebuild for new Turnouts + symbol shape
         Assert.assertEquals("2 connected switches shown", 2, e.getTotal());
     }
 
