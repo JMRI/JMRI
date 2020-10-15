@@ -66,7 +66,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
      */
     public CbusReporter(String address, CanSystemConnectionMemo memo) {  // a human-readable Reporter number must be specified!
         super(memo.getSystemPrefix() + "R" + address);  // can't use prefix here, as still in construction
-        _number = Integer.valueOf(  address);
+        _number = Integer.parseInt(  address);
         _memo = memo;
         // At construction, register for messages
         tc = memo.getTrafficController(); // can be removed when former constructor removed
@@ -124,23 +124,23 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
         }
         if ((m.getElement(1) << 8) + m.getElement(2) == _number) { // correct reporter number
             if (m.getOpCode() == CbusConstants.CBUS_DDES && !getCbusReporterType().equals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC)  ) {
-                DdesReport(m);
+                ddesReport(m);
             } else {
-                ClassicRFIDReport(m);
+                classicRFIDReport(m);
             }
         }
     }
     
-    private void DdesReport(CanReply m) {
+    private void ddesReport(CanReply m) {
         int least_significant_bit = m.getElement(3) & 1;
         if ( least_significant_bit ==0 ) {
-            CanRc522Report(m);
+            canRc522Report(m);
         } else {
-            CanRcomReport(m);
+            canRcomReport(m);
         }
     }
 
-    private void ClassicRFIDReport(CanReply m) {
+    private void classicRFIDReport(CanReply m) {
         String buf = toClassicTag(m.getElement(3), m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
         log.debug("Reporter {} {} RFID tag read of tag: {}", this,getCbusReporterType(),buf);
         IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(buf);
@@ -149,7 +149,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     }
     
     // no DCC address correction to allow full 0-65535 range of tags on rolling stock
-    private void CanRc522Report(CanReply m){
+    private void canRc522Report(CanReply m){
         String tagId = String.valueOf((m.getElement(4)<<8)+ m.getElement(5));
         log.debug("Reporter {} RFID tag read of tag: {}",this, tagId);
         IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag("ID"+tagId);
@@ -160,7 +160,7 @@ public class CbusReporter extends AbstractRailComReporter implements CanListener
     }
     
     // DCC address correction 0-10239 range
-    private void CanRcomReport(CanReply m) {
+    private void canRcomReport(CanReply m) {
         int railcom_id = (m.getElement(3)>>4);
         log.warn("CANRCOM support still in development.");
         log.info("{} detected RailCom ID {}",this,railcom_id);
