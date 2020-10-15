@@ -59,6 +59,12 @@ public class MqttLightManager extends jmri.managers.AbstractLightManager {
     public boolean validSystemNameConfig(String systemName) {
         return true;
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
 
     /**
      * {@inheritDoc}

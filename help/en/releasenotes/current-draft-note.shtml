@@ -48,6 +48,12 @@
             <ul>
                 <li></li>
             </ul>
+            
+        <h4>Internal</h4>
+            <ul>
+                <li>Sensor, Turnout, Light and Reporter Address ranges do not have to be fully numeric, and will be incremented using the final number in an address.<br>
+                For example, a range can be created from "My Yard 77 Sensor 1" which would increment to "My Yard 77 Sensor 2"</li>
+            </ul>
 
         <h4>IPOCSMR</h4>
             <ul>
@@ -97,7 +103,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Added support for creating ranges of Turnouts and Lights.<br>
+                Sensor, Turnout and Light Address ranges do not have to be fully numeric,
+                and will be incremented using the final number in an address.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -465,7 +473,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Increased address validation for multiple hardware types.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -474,6 +482,8 @@
             <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
             <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
                 post on the JMRI Users Group for any assistance with updating.</li>
+            <li>The Manager method getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) has been
+            deprecated, please use getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting)</li>
         </ul>
 
     <h3>Signals</h3>

@@ -70,10 +70,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr;
         try {
-            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+            addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         } catch (java.lang.NumberFormatException e) {
-            log.error("failed to convert systemName '{}' to a turnout address", systemName);
-            return null;
+            throw new IllegalArgumentException("failed to convert systemName '"+systemName+"' to an Ecos turnout address");
         }
         Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
         t.setUserName(userName);
@@ -682,6 +681,18 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         }
     }
     
+    @Override
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        int iName;
+        try {
+                iName = Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) {
+                throw new JmriException("Hardware Address passed "+curAddress+" should be a number.");
+            }
+        return prefix + typeLetter() + iName;
+    }
+    
     /**
      * Validates to contain at least 1 number . . .
      * <p>
@@ -691,7 +702,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
-        return validateTrimmedMin1NumberSystemNameFormat(name,locale);
+        return validateSystemNameFormatOnlyNumeric(name, locale);
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosTurnoutManager.class);

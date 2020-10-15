@@ -24,7 +24,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "" + getNumToTest2();
     }
 
