@@ -127,7 +127,6 @@ public abstract class ImportExpressionComplexTestBase {
             setNamedBeanState(e, Setup.Succeed1);
             JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
-            if (1==1) return;
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
@@ -170,9 +169,6 @@ public abstract class ImportExpressionComplexTestBase {
         
         check.runTest("Logix is deactivated and LogixNG is not activated. Enum: "+e.name(), false);
 //        check.runTest("Logix is removed and LogixNG is not activated. Enum: "+e.name(), false);
-        
-        // REMOVE LATER!!!
-        if (1==1) return;
         
         // We want the conditionalNGs run immediately during this test
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
