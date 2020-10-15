@@ -80,7 +80,7 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertEquals("Column Header matches descriptor key",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
         Assert.assertEquals("Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
         Assert.assertEquals("Not Editable if null",false,nbpd.isEditable(null));
-        Assert.assertEquals("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,(String)nbpd.defaultValue);
+        Assert.assertEquals("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,nbpd.defaultValue);
         Assert.assertEquals("reporter property key set",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.propertyKey);
 
         Assert.assertEquals("Currently 2 options",2,((SelectionPropertyDescriptor)nbpd).getOptions().length);
