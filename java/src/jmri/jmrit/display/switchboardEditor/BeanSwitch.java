@@ -1092,6 +1092,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          *
          * @param filepath1 the ON image
          * @param filepath2 the OFF image
+         * @param drawingRadius max distance in px from center of switch canvas, unit used for relative scaling
          */
         public IconSwitch(String filepath1, String filepath2, int drawingRadius) {
             // load image files
@@ -1159,6 +1160,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
          * @param y vertical offset from top left corner, positive down
          * @param align one of: JComponent.LEFT_ALIGNMENT (0.0f), CENTER_ALIGNMENT (0.5f),
          *              RIGHT_ALIGNMENT (1.0f)
+         * @param fontsize size in points for label text display
          */
         protected void positionLabel(int x, int y, float align, int fontsize) {
             labelX = x;

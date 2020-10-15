@@ -122,7 +122,7 @@ public class SwitchboardEditor extends Editor {
     private int rows = 4; // matches initial autoRows pref for default pane size
     private final float cellProportion = 1.0f; // TODO analyse actual W:H per switch type/shape: worthwhile?
     private int _tileSize = 100;
-    JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
+    private JSpinner rowsSpinner = new JSpinner(new SpinnerNumberModel(rows, 1, 25, 1));
     // number of rows displayed on switchboard, disabled when autoRows is on
     private final JTextArea help2 = new JTextArea(Bundle.getMessage("Help2"));
     private final JTextArea help3 = new JTextArea(Bundle.getMessage("Help3", Bundle.getMessage("CheckBoxHideUnconnected")));
@@ -369,7 +369,7 @@ public class SwitchboardEditor extends Editor {
      * Just repaint the Switchboard target panel.
      * Fired on componentResized(e) event.
      */
-    public void resizeInFrame() {
+    private void resizeInFrame() {
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
         switchboardLayeredPane.setSize(new Dimension((int) frSize.getWidth() - 6, (int) frSize.getHeight() - 25));
         switchboardLayeredPane.repaint();
@@ -438,7 +438,7 @@ public class SwitchboardEditor extends Editor {
                 switchShapeList.getSelectedIndex());
 
         if (autoRowsBox.isSelected()) {
-            rows = autoRows(cellProportion); // TODO: specific proportion value per Type/Shape choice?
+            rows = autoRows(cellProportion); // TODO: use specific proportion value per Type/Shape choice?
             log.debug("autoRows() called in updatePressed(). Rows = {}", rows);
             rowsSpinner.setValue(rows);
         }
@@ -975,9 +975,9 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Control whether range of items is automatically limited.
+     * Control whether range of items is automatically preserved.
      *
-     * @param state true to calculate upper limit from lowest value set (default)
+     * @param state true to calculate upper limit from lowest value range value set (default)
      */
     public void setAutoItemRange(boolean state) {
         _autoItemRange = state;
@@ -988,12 +988,13 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Determine optimal cols/rows using JPanel size, user range, icon proportions of beanswitch icons &
+     * Determine optimal cols/rows inside JPanel using switch range, icon proportions of beanswitch icons +
      * web canvas W:H proportions range from 1.5 (3:2) to 0.7 (1:1.5), assume squares for now.
      *
-     * @return amount of rows on current target pane size/proportions for biggest tiles
+     * @param cellProp the W:H proportion of image, currently 1.0f for all shapes
+     * @return number of rows on current target pane size/proportions displaying biggest tiles
      */
-    int autoRows(float cellProp) {
+    private int autoRows(float cellProp) {
         // find cell matrix that allows largest size icons
         double paneEffectiveWidth = Math.ceil((super.getTargetFrame().getWidth() - 6)/ cellProp); // -2x3px for border
         //log.debug("paneEffectiveWidth: {}", paneEffectiveWidth); // compare to resizeInFrame()
@@ -1103,7 +1104,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Store Range minimum.
      *
-     * @return lowest address to show
+     * @return lowest address shown
      */
     public int getPanelMenuRangeMin() {
         return (int) minSpinner.getValue();
@@ -1112,7 +1113,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Store Range maximum.
      *
-     * @return highest address to show
+     * @return highest address shown
      */
     public int getPanelMenuRangeMax() {
         return (int) maxSpinner.getValue();
@@ -1282,7 +1283,7 @@ public class SwitchboardEditor extends Editor {
     /**
      * Load Switchboard rowsnum spinner.
      *
-     * @param rws the number of switches to display per row (as text) or 0 te activate autoRowsBox setting
+     * @param rws the number of switches displayed per row (as text) or 0 te activate autoRowsBox setting
      */
     public void setRows(int rws) {
         autoRowsBox.setSelected(rws == 0);
@@ -1298,7 +1299,8 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * @deprecated since 4.21.2, replaced by getRows because that is what it holds
+     * @return the number of switches displayed per row
+     * @deprecated since 4.21.2, replaced by {@link #getRows()} because that is what it holds
      */
     @Deprecated
     public int getColumns() {
@@ -1306,7 +1308,8 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * @deprecated since 4.21.2, replaced by setRows because that is what it holds
+     * @param rws the number of switches to display per row
+     * @deprecated since 4.21.2, replaced by {@link #setRows(int)} because that is what it holds
      */
     @Deprecated
     public void setColumns(int rws) {
@@ -1488,10 +1491,10 @@ public class SwitchboardEditor extends Editor {
     }
 
     /**
-     * Get a beanSwitch object from this switchBoard panel by a given name.
+     * Get a beanSwitch object from this SwitchBoard panel by a given name.
      *
      * @param sName name of switch label/connected bean
-     * @return beanSwitch switch object with the given name
+     * @return BeanSwitch switch object with the given name
      */
     protected BeanSwitch getSwitch(String sName) {
         if (switchesOnBoard.containsKey(sName)) {
@@ -1504,6 +1507,8 @@ public class SwitchboardEditor extends Editor {
     /**
      * Get a list with copies of BeanSwitch objects currently displayed to transfer to
      * Web Server for display.
+     *
+     * @return list of all BeanSwitch switch object
      */
     public List<BeanSwitch> getSwitches() {
         ArrayList<BeanSwitch> _switches = new ArrayList<>();
