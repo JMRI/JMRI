@@ -34,6 +34,9 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.swing.JTablePersistenceManager;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
+
+import jmri.util.swing.ComboBoxToolTipRenderer;
+
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -235,6 +238,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * 
+     * SYSNAMECOL returns the actual Bean, NOT the System Name.
+     * 
      * {@inheritDoc}
      */
     @Override
@@ -262,10 +268,26 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 b = getBySystemName(sysNameList.get(row));
                 Object value = b.getProperty(desc.propertyKey);
+                if (desc instanceof jmri.SelectionPropertyDescriptor){
+                    JComboBox<String> c = new JComboBox<>(((SelectionPropertyDescriptor) desc).getOptions());
+                    c.setSelectedItem(( value!=null ? value.toString() : desc.defaultValue.toString() ));
+                    c.addActionListener(this::comboBoxAction);
+                    ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
+                    c.setRenderer(renderer);
+                    renderer.setTooltips(((SelectionPropertyDescriptor) desc).getOptionToolTips());
+                    return c;
+                }
                 if (value == null) {
                     return desc.defaultValue;
                 }
                 return value;
+        }
+    }
+    
+    public void comboBoxAction(ActionEvent e) {
+        log.debug("Combobox change");
+        if (thistable != null && thistable.getCellEditor() != null) {
+            thistable.getCellEditor().stopCellEditing();
         }
     }
 
@@ -372,6 +394,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 if (desc == null) {
                     break;
                 }
+                if (value instanceof JComboBox) {
+                    value = (String) ((JComboBox<?>) value).getSelectedItem();
+                }                
                 NamedBean b = getBySystemName(sysNameList.get(row));
                 b.setProperty(desc.propertyKey, value);
         }
@@ -410,6 +435,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void configureTable(JTable table) {
         // Property columns will be invisible at start.
         setPropertyColumnsVisible(table, false);
+        
+        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
@@ -430,8 +458,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         MouseListener popupListener = new PopupListener();
         table.addMouseListener(popupListener);
         this.persistTable(table);
+        thistable = table;
 
     }
+    
+    private JTable thistable;
 
     protected void configValueColumn(JTable table) {
         // have the value column hold a button
