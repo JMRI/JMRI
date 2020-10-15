@@ -181,6 +181,8 @@ public class ImportConditional {
             if (newExpression != null) {
                 MaleSocket newExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(newExpression);
                 expression.getChild(i).connect(newExpressionSocket);
+            } else {
+                log.error("ImportConditional.doImport() did not created an expression for type: {} -> {}", cv.getType(), cv.getType().getItemType());
             }
         }
     }
@@ -589,7 +591,36 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getWarrantExpression(@Nonnull ConditionalVariable cv, Warrant w) throws JmriException {
-        return null;
+        ExpressionWarrant expression =
+                new ExpressionWarrant(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        expression.setWarrant(w);
+        
+        switch (cv.getType()) {
+            case ROUTE_FREE:
+                expression.setType(ExpressionWarrant.Type.ROUTE_FREE);
+                break;
+            case ROUTE_OCCUPIED:
+                expression.setType(ExpressionWarrant.Type.ROUTE_OCCUPIED);
+                break;
+            case ROUTE_ALLOCATED:
+                expression.setType(ExpressionWarrant.Type.ROUTE_ALLOCATED);
+                break;
+            case ROUTE_SET:
+                expression.setType(ExpressionWarrant.Type.ROUTE_SET);
+                break;
+            case TRAIN_RUNNING:
+                expression.setType(ExpressionWarrant.Type.TRAIN_RUNNING);
+                break;
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
+        }
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     

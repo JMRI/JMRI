@@ -1,14 +1,15 @@
 package jmri.jmrit.logixng.tools;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
-import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.*;
 import jmri.util.JUnitUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test import of Logix to LogixNG.
@@ -20,134 +21,105 @@ import jmri.util.JUnitUtil;
  * 
  * @author Daniel Bergqvist (C) 2020
  */
-public class ImportExpressionWarrantTest extends ImportExpressionComplexTestBase {
+public class ImportExpressionWarrantTest {
 
-    OBlockManager blkMgr;
     Warrant warrant;
-    OBlock block1;
-    OPath path1;
-    DccLocoAddress address;
+    private LogixManager logixManager;
+    private Logix logix;
+    private Conditional conditional;
+    private ArrayList<ConditionalVariable> variables;
+    private ArrayList<ConditionalAction> actions;
     ConditionalVariable cv;
     
-    private enum WarrantEnum {
-        ROUTE_FREE(Conditional.Type.ROUTE_FREE),
-        ROUTE_OCCUPIED(Conditional.Type.ROUTE_OCCUPIED),
-        ROUTE_ALLOCATED(Conditional.Type.ROUTE_ALLOCATED),
-        ROUTE_SET(Conditional.Type.ROUTE_SET),
-        TRAIN_RUNNING(Conditional.Type.TRAIN_RUNNING);
-        
-        private final Conditional.Type type;
-        
-        private WarrantEnum(Conditional.Type type) {
-            this.type = type;
-        }
-        
+    
+    @Test
+    public void testRouteFree() throws JmriException {
+        cv.setType(Conditional.Type.ROUTE_FREE);
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
     }
     
-    @Override
-    public Enum[] getEnums() {
-        return WarrantEnum.values();
+    @Test
+    public void testRouteOccupied() throws JmriException {
+        cv.setType(Conditional.Type.ROUTE_OCCUPIED);
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
     }
     
-    @Override
-    public void setNamedBeanState(Enum e, Setup setup) throws JmriException {
-        WarrantEnum me = WarrantEnum.valueOf(e.name());
-        
-        cv.setType(me.type);
-        
-        switch (me) {
-            case ROUTE_FREE:
-//                warrant._routeIsFree = expectSuccess;
-                break;
-            case ROUTE_OCCUPIED:
-//                warrant._routeIsOccupied = expectSuccess;
-                break;
-            case ROUTE_ALLOCATED:
-//                warrant._isAllocated = expectSuccess;
-                break;
-            case ROUTE_SET:
-//                warrant._hasRouteSet = expectSuccess;
-                break;
-            case TRAIN_RUNNING:
-                switch (setup) {
-                    case Init:
-                    case Fail1:
-                    case Fail2:
-                    case Fail3:
-                        warrant.stopWarrant(true);
-                        warrant.setRunMode(Warrant.MODE_NONE, address, null, null, false);
-                        break;
-                    case Succeed1:
-                    case Succeed2:
-                    case Succeed3:
-                    case Succeed4:
-                        warrant.stopWarrant(true);
-                        block1.setValue(OBlock.OCCUPIED);
-                        
-                        ArrayList<BlockOrder> orders = new ArrayList<>();
-                        orders.add(new BlockOrder(blkMgr.getOBlock("North"), "NorthToWest", "", "NorthWest"));
-                        BlockOrder viaOrder = new BlockOrder(blkMgr.getOBlock("West"), "SouthToNorth", "NorthWest", "SouthWest");
-                        orders.add(viaOrder);
-                        BlockOrder lastOrder = new BlockOrder(blkMgr.getOBlock("South"), "SouthToWest", "SouthWest", null);
-                        orders.add(lastOrder);
-                        
-                        warrant.setThrottleCommands(new ArrayList<>());
-                        warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
-                        warrant.addThrottleCommand(new ThrottleSetting(10, "Speed", "0.4", "North"));
-                        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "West"));
-                        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.5", "West"));
-                        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
-                        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
-                        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
-                        
-                        warrant.getSpeedUtil().setDccAddress("999(L)");
-                        warrant.setBlockOrders(orders);
-                        
-                        warrant.setRoute(false, orders);
-                        warrant.checkStartBlock();
-                        warrant.checkRoute();
-                        
-                        warrant.setTrainName("TestTrain");
-                        
-                        
-                        warrant.setRunMode(Warrant.MODE_RUN, address, null, null, false);
-                        break;
-//                    case Succeed3: warrant._runMode = Warrant.MODE_LEARN; break;
-//                    case Succeed4: warrant._runMode = Warrant.MODE_RUN; break;
-                    default: throw new RuntimeException("Unknown enum: "+e.name());
-                }
-                break;
-                
-            default:
-                throw new RuntimeException("Unknown enum: "+e.name());
-        }
+    @Test
+    public void testRouteAllocated() throws JmriException {
+        cv.setType(Conditional.Type.ROUTE_ALLOCATED);
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
     }
     
-    @Override
-    public ConditionalVariable newConditionalVariable() {
-        JUnitUtil.initDebugThrottleManager();
+    @Test
+    public void testRouteSet() throws JmriException {
+        cv.setType(Conditional.Type.ROUTE_SET);
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+    }
+    
+    @Test
+    public void testTrainRunning() throws JmriException {
+        cv.setType(Conditional.Type.TRAIN_RUNNING);
+        ImportLogix importLogix = new ImportLogix(logix);
+        importLogix.doImport();
+        Assert.assertNotNull(importLogix.getLogixNG().getConditionalNG(0));
+    }
+    
+    // The minimal setup for log4J
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initLogixNGManager();
+        
         
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
-        
         warrant = new Warrant("IW1", null);
-        warrant.setTrainName("T1");
-        InstanceManager.getDefault(WarrantManager.class).register(warrant);
-        blkMgr = new OBlockManager();
-        blkMgr.createNewOBlock("OB1", "West");
-        blkMgr.createNewOBlock("OB2", "East");
-        blkMgr.createNewOBlock("OB3", "North");
-        blkMgr.createNewOBlock("OB4", "South");
-        block1 = blkMgr.createNewOBlock("OB102", "c");
-        path1 = new OPath(block1, "path1");
-        block1.addPath(path1);
-        List<BlockOrder> orders = new ArrayList<>();
-        orders.add(new BlockOrder(block1, "path1", null, null));
-        warrant.setBlockOrders(orders);
-        block1.allocate(warrant);
-        address = new DccLocoAddress(300, true);
+        
+        logixManager = InstanceManager.getDefault(LogixManager.class);
+        ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
+        
+        logix = logixManager.createNewLogix("IX1", null);
+        
+        conditional = conditionalManager.createNewConditional("IX1C1", "First conditional");
+        logix.addConditional(conditional.getSystemName(), 0);
+        
+        conditional.setTriggerOnChange(true);
+        conditional.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
+        
+        variables = new ArrayList<>();
+        
         cv = new ConditionalVariable();
+        cv.setTriggerActions(true);
+        cv.setNegation(false);
+        cv.setNum1(0);
+        cv.setNum2(0);
+        cv.setOpern(Conditional.Operator.AND);
+        cv.setType(Conditional.Type.NONE);
         cv.setName("IW1");
-        return cv;
+        variables.add(cv);
+        conditional.setStateVariables(variables);
+        
+        actions = new ArrayList<>();
+        conditional.setAction(actions);
+    }
+
+    @After
+    public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
     }
     
 }

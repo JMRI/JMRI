@@ -8,8 +8,6 @@ import java.util.Locale;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.jmrit.logixng.Category;
