@@ -395,7 +395,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                     break;
                 }
                 if (value instanceof JComboBox) {
-                    value = (String) ((JComboBox<?>) value).getSelectedItem();
+                    value = ((JComboBox<?>) value).getSelectedItem();
                 }                
                 NamedBean b = getBySystemName(sysNameList.get(row));
                 b.setProperty(desc.propertyKey, value);
