@@ -321,8 +321,8 @@ public class SwitchboardEditor extends Editor {
         // set scrollbar initial state
         setScroll(SCROLL_NONE);
         scrollNone.setSelected(true);
-        super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
-                Color.black, new Color(255, 250, 210), Color.black));
+//        super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("Serif", Font.PLAIN, 12),
+//                Color.black, new Color(255, 250, 210), Color.black)); // TODO remove if not missed
         // register the resulting panel for later configuration
         ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm != null) {
