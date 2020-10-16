@@ -470,7 +470,8 @@ public abstract class FemaleSocketTestBase {
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
                 iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
-                Assert.assertEquals("category is correct for "+obj.getShortDescription(), entry.getKey(), obj.getCategory());
+                Assert.assertEquals("category is correct for "+((MaleSocket)obj).getObject().getClass().getName(), entry.getKey(), obj.getCategory());
+//                Assert.assertEquals("category is correct for "+obj.getShortDescription(), entry.getKey(), obj.getCategory());
             }
         }
     }

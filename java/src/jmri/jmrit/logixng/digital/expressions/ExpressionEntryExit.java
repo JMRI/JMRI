@@ -136,7 +136,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "DestinationPoints_Short");
+        return Bundle.getMessage(locale, "EntryExit_Short");
     }
 
     @Override
@@ -147,7 +147,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         } else {
             sensorName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "DestinationPoints_Long", sensorName, _is_IsNot.toString(), _entryExitState._text);
+        return Bundle.getMessage(locale, "EntryExit_Long", sensorName, _is_IsNot.toString(), _entryExitState._text);
     }
     
     /** {@inheritDoc} */

@@ -10,7 +10,7 @@ import jmri.jmrit.logixng.StringActionFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * The factory for DigitalAction classes.
+ * The factory for StringAction classes.
  */
 @ServiceProvider(service = StringActionFactory.class)
 public class Factory implements StringActionFactory {
@@ -19,6 +19,7 @@ public class Factory implements StringActionFactory {
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> stringActionClasses = new HashSet<>();
         stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringActionMemory.class));
+        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Many.class));
         return stringActionClasses;
     }
 

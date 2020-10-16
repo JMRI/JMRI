@@ -33,7 +33,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.ITEM;
     }
 
     /** {@inheritDoc} */

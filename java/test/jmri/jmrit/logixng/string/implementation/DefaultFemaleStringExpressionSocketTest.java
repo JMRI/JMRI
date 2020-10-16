@@ -98,14 +98,15 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.string.expressions.StringExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.string.expressions.StringExpressionMemory.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.string.expressions.Formula.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-//        classes.add(jmri.jmrix.loconet.logixng.StringExpressionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

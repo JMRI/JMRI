@@ -87,20 +87,24 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionTurnout.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionMemory.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionScript.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionThrottle.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionTurnout.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.actions.DoAnalogAction.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.Many.class);
         classes.add(jmri.jmrit.logixng.digital.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.digital.actions.IfThenElse.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.Many.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionTimer.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.Logix.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

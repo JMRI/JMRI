@@ -7,20 +7,15 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleSocketTestBase;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-
-import jmri.jmrit.logixng.*;
-
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -103,14 +98,15 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant.class);
         classes.add(jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.analog.expressions.Formula.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-//        classes.add(jmri.jmrix.loconet.logixng.AnalogExpressionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

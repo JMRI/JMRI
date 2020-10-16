@@ -15,9 +15,8 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 /**
@@ -93,10 +92,10 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.analog.actions.Many.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-//        classes.add(jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

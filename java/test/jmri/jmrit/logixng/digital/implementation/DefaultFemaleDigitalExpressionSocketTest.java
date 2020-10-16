@@ -99,14 +99,24 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionClock.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionConditional.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionEntryExit.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionLight.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionReference.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionScript.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSensor.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSignalHead.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSignalMast.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionTurnout.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionWarrant.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.expressions.And.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.Antecedent.class);
+        classes.add(jmri.jmrit.logixng.digital.expressions.Formula.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.Or.class);
         classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionTimer.class);
         map.put(Category.COMMON, classes);
