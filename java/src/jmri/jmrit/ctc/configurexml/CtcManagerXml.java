@@ -103,6 +103,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
             cbhdElement.addContent(storeSensor("TUL_DispatcherInternalSensorUnlockedIndicator", cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator));
             cbhdElement.addContent(storeBoolean("TUL_NoDispatcherControlOfSwitch", cbhd._mTUL_NoDispatcherControlOfSwitch));
             cbhdElement.addContent(storeBoolean("TUL_ndcos_WhenLockedSwitchStateIsClosed", cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed));
+            cbhdElement.addContent(storeBoolean("TUL_GUI_IconsEnabled", cbhd._mTUL_GUI_IconsEnabled));
             cbhdElement.addContent(storeInt("TUL_LockImplementation", cbhd._mTUL_LockImplementation.getInt()));
             cbhdElement.addContent(storeTULAdditionalTurnouts("TUL_AdditionalExternalTurnouts", cbhd));
 
@@ -434,6 +435,7 @@ public class CtcManagerXml extends jmri.managers.configurexml.AbstractNamedBeanM
                 cbhd._mTUL_DispatcherInternalSensorUnlockedIndicator = loadSensor(lvl1.getChild("TUL_DispatcherInternalSensorUnlockedIndicator"), true);
                 cbhd._mTUL_NoDispatcherControlOfSwitch = loadBoolean(lvl1.getChild("TUL_NoDispatcherControlOfSwitch"));
                 cbhd._mTUL_ndcos_WhenLockedSwitchStateIsClosed = loadBoolean(lvl1.getChild("TUL_ndcos_WhenLockedSwitchStateIsClosed"));
+                cbhd._mTUL_GUI_IconsEnabled = loadBoolean(lvl1.getChild("TUL_GUI_IconsEnabled"));
                 cbhd._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(loadInt(lvl1.getChild("TUL_LockImplementation")));
                 loadAdditionalTurnouts(lvl1.getChild("TUL_AdditionalExternalTurnouts"), cbhd);
 

@@ -305,7 +305,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             p.add(button);
             panel.add(p);
-            // TODO align button centered in GridLayout EBR
+            // TODO align button centered in GridLayout
             _iconPanel.add(panel);
         }
         this.add(_iconPanel, 0);

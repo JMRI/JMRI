@@ -59,7 +59,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             // connect to the TrafficController
             tc.addDCCppListener(~0, this);
 
-            if ((tc instanceof SerialDCCppPacketizer)) {
+            if ((tc instanceof SerialDCCppPacketizer) && tc.getCommandStation().isFunctionRefreshRequired()) {
                 serialDCCppTC = (SerialDCCppPacketizer) tc;
 
                 pauseRefreshButton.setSelected(!serialDCCppTC.isActiveRefresh());
@@ -82,7 +82,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 
         // Create the background function refreshing-related buttons and add
         // them to a panel. The panel however will only be added if the traffic
-        // controller is an instance of SerialDCCppPacketizer
+        // controller is an instance of SerialDCCppPacketizer and FunctionRefreshRequired by the command station
         final JLabel functionLabel = new JLabel(Bundle.getMessage("LabelFunctionRefresh"), SwingConstants.LEFT); // NOI18N
 
         pauseRefreshButton.setText(Bundle.getMessage("ButtonPauseRefresh")); // NOI18N

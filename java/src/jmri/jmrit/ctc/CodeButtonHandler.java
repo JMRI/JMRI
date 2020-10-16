@@ -183,9 +183,8 @@ public class CodeButtonHandler {
                                                                         // in case there is a multi-threading issue (yea, lock it would be better,
                                                                         // but this is good enough for now!)
                 }
-            } else {
-                doCodeButtonPress();
             }
+            doCodeButtonPress();
         }
     }
 
@@ -364,13 +363,9 @@ appropriately for the back to train route for this feature to activate."
 //      if (_mSignalDirectionIndicators.isNonfunctionalObject() && _mSignalDirectionLever == null && _mSwitchDirectionIndicators == null && _mSwitchDirectionLever == null) return true;
 //  If this is a normal O.S. section, then if either is occupied, DO NOT allow unlock.
 //  If this is NOT an O.S. section, but only a lock, AND the dispatcher is trying
-//  to UNLOCK this section, then EITHER OS section MUST be occupied:
-        if (_mTurnoutLock.getNewLockedState() == false) { // Trying to unlock:
-            if (!_mTurnoutLockingOnlyEnabled) { // Normal O.S. section:
-                if (isEitherOSSectionOccupied()) return false;
-            } else { // NOT an O.S. section:
-                if (!isEitherOSSectionOccupied()) return false; // Nothing occupied, NOT allowed.
-            }
+//  to UNLOCK or LOCK this section, occupancy is not considered:
+        if (!_mTurnoutLockingOnlyEnabled) { // Normal O.S. section:
+            if (isEitherOSSectionOccupied()) return false;
         }
         if (!_mTurnoutLock.tryingToChangeLockStatus()) return false;
         if (routeClearedAcross()) return false;

@@ -31,12 +31,12 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
     }
 
     /**
+     * No validation for Internal Reporters.
      * {@inheritDoc}
      */
     @Override
-    @Nonnull
-    public InternalSystemConnectionMemo getMemo() {
-        return (InternalSystemConnectionMemo) memo;
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return prefix + typeLetter() + curAddress;
     }
 
 }

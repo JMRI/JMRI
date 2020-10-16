@@ -21,7 +21,7 @@
 		
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>DCC++</h4>
@@ -48,6 +48,12 @@
             <ul>
                 <li></li>
             </ul>
+            
+        <h4>Internal</h4>
+            <ul>
+                <li>Sensor, Turnout, Light and Reporter Address ranges do not have to be fully numeric, and will be incremented using the final number in an address.<br>
+                For example, a range can be created from "My Yard 77 Sensor 1" which would increment to "My Yard 77 Sensor 2"</li>
+            </ul>
 
         <h4>IPOCSMR</h4>
             <ul>
@@ -61,12 +67,28 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+              <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
+              configure these boards.</li>
+              <li>LocoNet support for "Voltage/Current Meters" has been extended to 
+                  include support for multiple sources of meter information, and 
+                  to include automatic discovery of LocoNet devices which support 
+                  voltage and current reporting.  Each discovered device is identified  
+                  by its device type and serial number.  These "friendly" identifiers
+                  appear in the "Voltage Meter" and "Current Meter" menus in the 
+                  "Voltage/Current Meter" tool. Further information may be found at the
+                  <a href="../html/hardware/loconet/DigitraxMeters.shtml">
+                      Digitrax "Meters"</a> web page.</li>
+                <li>Start-up "Interrogation" of LocoNet Sensor and Turnout state
+                    has re-worked to provide better operation for LocoNet connections
+                    with large numbers of Sensors and/or Turnouts.  The JMRI 
+                    interrogation mechanism now implements a minimum delay from
+                    the last Sensor Report, Turnout Report or Interrogate Query 
+                    message before sending the next Interrogate Query message.</li>
             </ul>
 
         <h4>Maple</h4>
             <ul>
-                <li></li>
+                <li>Maple SerialSensor updated to support multiple Character system name prefixes.</li>
             </ul>
 
         <h4>Marklin CS2</h4>
@@ -81,7 +103,9 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>Added support for creating ranges of Turnouts and Lights.<br>
+                Sensor, Turnout and Light Address ranges do not have to be fully numeric,
+                and will be incremented using the final number in an address.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -121,7 +145,7 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>EStop for 28 Step mode is now sent correctly</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -378,6 +402,13 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
+          in copying conditionals. See the updated help files for details.</li>
+          
+          <li>Fixed a couple of bugs there Logix wasn't correctly listening on
+          signal head lunar state, signal head flash lunar state, signal mast
+          lit state and signal mast held state. See PR #9059.</li>
+          
           <li></li>
         </ul>
 
@@ -449,13 +480,17 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Increased address validation for multiple hardware types.</li>
         </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+                post on the JMRI Users Group for any assistance with updating.</li>
+            <li>The Manager method getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) has been
+            deprecated, please use getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting)</li>
         </ul>
 
     <h3>Signals</h3>
@@ -552,9 +587,43 @@
             <li></li>
         </ul>
 
+   <h3>Meters and MeterFrames</h3>
+        <a id="Meters" name="Meters"></a>
+        <ul>
+            <li>jmri.MultiMeter is split into jmri.Meter.</li>
+            <li>jmri.VoltageMeter and jmri.CurrentMeter is added.</li>
+            <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
+            <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
+            <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
+            <li>LocoNet supports discoverr of the sources of voltage and current 
+                data and makes them available in the "Voltage/Current Meter" tool.</li>
+            
+        </ul>
+
+   <h3>AbstractProxyManager</h3>
+        <a id="Proxy" name="Proxy"></a>
+        <ul>
+            <li>AbstractProxyManager can now automatically create system specific managers.</li>
+            <li>When a NamedBean is added to a proxy manager, there needs to be a system specific
+			manager for that bean unless the bean is for the internal manager. The ProxyMeterManager
+			and AbstractProxyManager automatically creates a new system specific manager if it doesn't
+			already exists. This works as long as the system specific manager doesn't need to have
+			system specific knowledge of the named beans.</li>
+            <li>This means that, for example, the user may create a Jython script that creates a Meter
+			for the LocoNet connection but doesn't need to create the LocoNet meter manager since that
+			manager is automatically created.</li>
+			<li>Once a specific connection needs to store specific data about meters, a connection
+			specific manager needs to be created, for example LnMeterManager for LocoNet.</li>
+        </ul>
+
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Windows launcher updated to honour return codes to shutdown or reboot host machine</li>
+            <li>The Ant version invoked by Maven was bumped to 1.10.8.  No user
+                action required, but developers need to be online the first time
+                they build using Maven.</li>
+            <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
             <li></li>
         </ul>
 

@@ -53,7 +53,7 @@ public class TrainIcon extends LocoIcon {
     public boolean showPopUp(JPopupMenu popup) {
         if (_train != null) {
             // first action is either "Move" or "Terminate" train
-            String actionText = (_train.getCurrentLocation() == _train.getTrainTerminatesRouteLocation())
+            String actionText = (_train.getCurrentRouteLocation() == _train.getTrainTerminatesRouteLocation())
                     ? Bundle.getMessage("Terminate") : Bundle.getMessage("Move");
             popup.add(new AbstractAction(actionText) {
                 @Override
@@ -131,7 +131,7 @@ public class TrainIcon extends LocoIcon {
             int pickupCars = 0;
             int dropCars = 0;
             String current = "     ";
-            if (_train.getCurrentLocation() == rl) {
+            if (_train.getCurrentRouteLocation() == rl) {
                 current = "-> "; // NOI18N
             }
             for (Car car : carList) {
@@ -197,7 +197,7 @@ public class TrainIcon extends LocoIcon {
             // determine where the train is in the route
             for (int r = 0; r < routeList.size(); r++) {
                 RouteLocation rl = routeList.get(r);
-                if (_train.getCurrentLocation() == rl) {
+                if (_train.getCurrentRouteLocation() == rl) {
                     log.debug("Train is at location {}", rl.getName());
                     // Is train at this route location?
                     if (rl == _rl) {
@@ -213,7 +213,7 @@ public class TrainIcon extends LocoIcon {
                                     .getMessage("MoveTrainTo"), new Object[]{_rl.getName()}), MessageFormat.format(
                                     Bundle.getMessage("MoveTrain"), new Object[]{_train.getIconName()}),
                                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                                while (_train.getCurrentLocation() != _rl) {
+                                while (_train.getCurrentRouteLocation() != _rl) {
                                     _train.move();
                                 }
                             }
@@ -235,7 +235,7 @@ public class TrainIcon extends LocoIcon {
     public void doMouseDragged(MouseEvent event) {
         log.debug("Mouse dragged, X={} Y={}", getX(), getY());
         if (_train != null) {
-            RouteLocation next = _train.getNextLocation(_train.getCurrentLocation());
+            RouteLocation next = _train.getNextRouteLocation(_train.getCurrentRouteLocation());
             if (next != null) {
                 Point nextPoint = next.getTrainIconCoordinates();
                 log.debug("Next location ({}), X={} Y={}", next.getName(), nextPoint.x, nextPoint.y);

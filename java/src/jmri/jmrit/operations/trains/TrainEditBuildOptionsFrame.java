@@ -630,8 +630,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             }
             numEngines1Box.setSelectedItem(_train.getSecondLegNumberEngines());
             modelEngine1Box.setSelectedItem(_train.getSecondLegEngineModel());
-            routePickup1Box.setSelectedItem(_train.getSecondLegStartLocation());
-            routeDrop1Box.setSelectedItem(_train.getSecondLegEndLocation());
+            routePickup1Box.setSelectedItem(_train.getSecondLegStartRouteLocation());
+            routeDrop1Box.setSelectedItem(_train.getSecondLegEndRouteLocation());
             roadEngine1Box.setSelectedItem(_train.getSecondLegEngineRoad());
             keep1Caboose.setSelected(true);
             remove1Caboose.setSelected((_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
@@ -682,8 +682,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             }
             numEngines2Box.setSelectedItem(_train.getThirdLegNumberEngines());
             modelEngine2Box.setSelectedItem(_train.getThirdLegEngineModel());
-            routePickup2Box.setSelectedItem(_train.getThirdLegStartLocation());
-            routeDrop2Box.setSelectedItem(_train.getThirdLegEndLocation());
+            routePickup2Box.setSelectedItem(_train.getThirdLegStartRouteLocation());
+            routeDrop2Box.setSelectedItem(_train.getThirdLegEndRouteLocation());
             roadEngine2Box.setSelectedItem(_train.getThirdLegEngineRoad());
             keep2Caboose.setSelected(true);
             remove2Caboose.setSelected((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE);
@@ -747,14 +747,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
         _train.setSecondLegOptions(options1);
         if (routePickup1Box.getSelectedItem() != null) {
-            _train.setSecondLegStartLocation((RouteLocation) routePickup1Box.getSelectedItem());
+            _train.setSecondLegStartRouteLocation((RouteLocation) routePickup1Box.getSelectedItem());
         } else {
-            _train.setSecondLegStartLocation(null);
+            _train.setSecondLegStartRouteLocation(null);
         }
         if (routeDrop1Box.getSelectedItem() != null) {
-            _train.setSecondLegEndLocation((RouteLocation) routeDrop1Box.getSelectedItem());
+            _train.setSecondLegEndRouteLocation((RouteLocation) routeDrop1Box.getSelectedItem());
         } else {
-            _train.setSecondLegEndLocation(null);
+            _train.setSecondLegEndRouteLocation(null);
         }
         _train.setSecondLegNumberEngines((String) numEngines1Box.getSelectedItem());
         _train.setSecondLegEngineModel((String) modelEngine1Box.getSelectedItem());
@@ -775,14 +775,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
         }
         _train.setThirdLegOptions(options2);
         if (routePickup2Box.getSelectedItem() != null) {
-            _train.setThirdLegStartLocation((RouteLocation) routePickup2Box.getSelectedItem());
+            _train.setThirdLegStartRouteLocation((RouteLocation) routePickup2Box.getSelectedItem());
         } else {
-            _train.setThirdLegStartLocation(null);
+            _train.setThirdLegStartRouteLocation(null);
         }
         if (routeDrop2Box.getSelectedItem() != null) {
-            _train.setThirdLegEndLocation((RouteLocation) routeDrop2Box.getSelectedItem());
+            _train.setThirdLegEndRouteLocation((RouteLocation) routeDrop2Box.getSelectedItem());
         } else {
-            _train.setThirdLegEndLocation(null);
+            _train.setThirdLegEndRouteLocation(null);
         }
         _train.setThirdLegNumberEngines((String) numEngines2Box.getSelectedItem());
         _train.setThirdLegEngineModel((String) modelEngine2Box.getSelectedItem());

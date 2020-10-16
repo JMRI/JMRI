@@ -312,7 +312,7 @@ public class CbusAddressTest {
     }
     
     @Test
-    public void testgetIncrement() {
+    public void testgetIncrement() throws jmri.JmriException {
         
         Assert.assertEquals("+N34E17;-N34E17","+N34E18;-N34E18",CbusAddress.getIncrement("+N34E17;-N34E17"));
         Assert.assertEquals("+N34E456;+N34E17","+N34E457;+N34E18",CbusAddress.getIncrement("+N34E456;+N34E17"));

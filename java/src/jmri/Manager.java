@@ -188,7 +188,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
      * should be overridden instead.
      *
-     * @param name the system name to validate
+     * @param name the system name, including system prefix and Type Letter to validate
      * @return the system name unchanged from its input so that this method can
      *         be chained or used as an parameter to another method
      * @throws BadSystemNameException if the name is not valid with error

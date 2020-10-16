@@ -56,10 +56,12 @@ public class BlockValueFile extends XmlFile {
      * @throws JDOMException on rootFromName if all methods fail
      * @throws IOException   if an I/O error occurs while reading a file
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void readBlockValues() throws JDOMException, IOException {
         log.debug("entered readBlockValues");
-        List<String> blocks = blockManager.getSystemNameList();
+        List<String> blocks = new ArrayList<>(blockManager.getNamedBeanSet().size());
+        blockManager.getNamedBeanSet().forEach(bean -> {
+            blocks.add(bean.getSystemName());
+        });
         // check if file exists
         if (checkFile(defaultFileName)) {
             // file is present,
@@ -144,11 +146,9 @@ public class BlockValueFile extends XmlFile {
      *
      * @throws IOException
      */
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void writeBlockValues() throws IOException {
         log.debug("entered writeBlockValues");
-        List<String> blocks = blockManager.getSystemNameList();
-        if (blocks.size() > 0) {
+        if (blockManager.getNamedBeanSet().size() > 0) {
             // there are blocks defined, create root element
             root = new Element("block_values");
             Document doc = newDocument(root, dtdLocation + "block-values.dtd");
@@ -164,14 +164,14 @@ public class BlockValueFile extends XmlFile {
 
             // save block values in xml format
             Element values = new Element("blockvalues");
-            for (String sname : blocks) {
-                Block b = blockManager.getBySystemName(sname);
+            
+            for (Block b : blockManager.getNamedBeanSet()) {
                 if (b != null) {
                     Object o = b.getValue();
                     if (o != null) {
                         // block has value, save it
                         Element val = new Element("block");
-                        val.setAttribute("systemname", sname);
+                        val.setAttribute("systemname", b.getSystemName());
                         if (o instanceof RosterEntry) {
                             val.setAttribute("value", ((BasicRosterEntry) o).getId());
                             val.setAttribute("valueClass", "jmri.jmrit.roster.RosterEntry");
@@ -186,7 +186,7 @@ public class BlockValueFile extends XmlFile {
                         valuesFound = true;
                     }
                 } else {
-                    log.error("Block {} was not found.", sname);
+                    log.error("Block null in blockManager.getNamedBeanSet()");
                 }
             }
             root.addContent(values);

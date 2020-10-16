@@ -631,16 +631,18 @@
    </p>
 
    <p>
-    Now you're ready to create your first train by pressing the <a href="#TrainEdit">Add</a> button
-    at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the route you
-    created for your first train. Leave all of the train checkboxes alone which means the train will
-    service all car and locomotive types. Leave the <a href="#TrainRequires">Optional Train
-     Requirements</a> for locomotives and caboose area alone for now. Save the train, close the window,
-    and return to the Trains window. Press the <a href="#BuildingTrains">Build</a> button for the
-    train. It should build. Now pressing the "Print" or "Preview" button will produce a Manifest for
-    your train. Review the Manifest and you should see that the train serviced all car types. If you
-    examine the <a href="#Cars">Cars</a> window you can see that cars are now assigned to your
-    train.
+    Now you're ready to create your first train by pressing the
+    <a href="#TrainEdit">Add</a> button at the bottom left of the
+    <a href="#Trains">Trains</a> window. Be sure to select the route you created for your first
+    train. Leave all of the train checkboxes alone which means the train will service all car and
+    locomotive types. Leave the
+    <a href="#TrainRequires">Optional Train Requirements</a> for locomotives and caboose area alone
+    for now. Save the train, close the window, and return to the Trains window. Press the
+    <a href="#BuildingTrains">Build</a> button for the train. It should build. Now pressing the
+    "Print" or "Preview" button will produce a Manifest for your train depending on the state of "Preview"
+    checkbox at the bottom of the "Trains" window. Review the Manifest and you should see that the
+    train serviced all car types. If you examine the
+    <a href="#Cars">Cars</a> window you can see that cars are now assigned to your train.
    </p>
 
    <p>
@@ -2616,6 +2618,13 @@
      href="#TrackDestinations">Track Destinations</a> from the "Tools" menu.
    </p>
 
+   <p>
+    The <a href="#BuildReports">build report</a> will provide a list of cars on the C/I track that
+    were previously set out by a train using the same route, or aren't allowed to be pulled due to
+    restrictions that you've added. The build report uses the term "Excluded" when detailing which
+    cars can't be pulled from the C/I track.
+   </p>
+
    <p>Given the complexity of this type of track, it is strongly recommended that you not use
     classification/interchange tracks until you get comfortable with how the program builds trains
     and you've read and can understand the train build reports.</p>
@@ -4100,13 +4109,16 @@
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
     that hasn't moved.</p>
 
-   <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-    selected shows all trains in your roster. When deselected, only trains that have the "Build"
-    checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
-    whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
-    checkbox when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was built by the program. Use
-    the "Print" or "Preview" button for a built train to see the <a href="#BuildReports">build report</a>. The program always
-    provides a "Report" button under the "Action" column for a train that fails to build.</p>
+   <p>
+    There are several checkboxes along the bottom of the Trains window. The "Show All" when selected
+    shows all trains in your roster. When deselected, only trains that have the "Build" checkbox
+    selected are shown. The "Messages" checkbox when selected will present a dialog box whenever a
+    train build failure occurs explaining why the train didn't build. The "Build Report" checkbox
+    when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was
+    built by the program. Use the "Print" or "Preview" button for a built train to see the <a
+     href="#BuildReports">build report</a>. The program always provides a "Report" button under the
+    "Action" column for a train that fails to build.
+   </p>
 
    <p>The "Preview" checkbox when selected, allows you to preview rather than printing your
     train's Manifest or <a href="#BuildReports">build report</a>.</p>
@@ -5137,14 +5149,16 @@
 
    <a name="BuildingTrains" id="BuildingTrains"></a>
    <h2>Building Trains</h2>
-   To build one train, press the "Build" button in the row for the desired train in the <a
-    href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train is
-   built. If you want to review how the train was built, select the "Build Reports" checkbox before
+   To build one train, press the "Build" button in the row for the desired train in the
+   <a href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train
+   is built depending on the state of the "Preview" checkbox located at the bottom of the "Trains"
+   window. If you want to review how the train was built, select the "Build Reports" checkbox before
    pressing the "Print" or "Preview" button for the desired train. If the "Preview" checkbox is
-   selected, the program will generate the <a href="#BuildReports">Build Report</a> and Manifest and present them in preview
-   windows. If you want to build several trains without having to press individual buttons for each
-   train, select the trains that you want built and press the "Build" button found at the bottom of
-   the trains window. The program will then build Manifests for all of the selected trains.
+   selected, the program will generate the
+   <a href="#BuildReports">Build Report</a> and Manifest and present them in preview windows. If you
+   want to build several trains without having to press individual buttons for each train, select
+   the trains that you want built and press the "Build" button found at the bottom of the trains
+   window. The program will then build Manifests for all of the selected trains.
 
    <p>If a train fails to build, the "Action" button will change its text to "Report". Pressing
     "Report" will print or preview the <a href="#BuildReports">build report</a> for this train. Whenever a train fails to build,
@@ -5187,12 +5201,13 @@
    <h2>Build Reports</h2>
    If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
    bottom of the train window, and then press the "Print" or "Preview" button for that train. The
-   program will then provide the train Manifest and build report for your viewing.
+   program will then provide the train Manifest and build report for your viewing. You can also access
+   a train build report from the Edit Trains window under Tools.
 
    <p>You can also find a copy of the train build report file in the "operations" directory in a
     subdirectory called "buildstatus". Each train build report has its own file with the .txt
-    extension and the name of the train as part of the file name. You can if you wish use a text
-    editor to view the train build report file.</p>
+    extension and the name of the train as part of the file name. You can if you wish use a 
+    <a href="#BuildReportDetails">text editor</a> to view the train build report file.</p>
 
    <p>
     When a train build fails for any reason, the train action button becomes "Report" which allows
@@ -5242,17 +5257,19 @@
    <a name="ReadingBuildReport" id="ReadingBuildReport"></a>
 
    <h3>Reading the Build Report</h3>
-   OperationsPro&trade; when building a train creates a <a href="#BuildReports">Build Report</a> and saves it to a file.
-   Normally you would access the build report from the <a href="#BuildingTrains">Trains</a> window
-   or from the edit train "Tools" menu. The train build report text files can be found in the
-   operations-&gt;buildstatus directory. The build report shows the steps the operations program
-   goes through while building a train. The first page provides the route the train will travel and
-   the number of car moves requested for each location. The report then shows the car type and
-   locomotive types that the train will service. By reading the various messages in the report you
-   can get an idea of steps the operations program goes through to build a train. When there's an
-   issue that the operation's build can't resolve, the build will fail. To understand why a build
-   failed, go to the last page of the build report and by working backwards from the last line, you
-   should be able to understand why a train failed to build.
+   OperationsPro&trade; when building a train creates a
+   <a href="#BuildReports">Build Report</a> and saves it to a file. Normally you would access the
+   build report from the
+   <a href="#BuildingTrains">Trains</a> window or from the edit train "Tools" menu. The train build
+   report text files can be found in the operations-&gt;buildstatus directory. The build report
+   shows the steps the operations program goes through while building a train. The first page
+   provides the route the train will travel and the number of car moves requested for each location.
+   The report then shows the car type and locomotive types that the train will service. By reading
+   the various messages in the report you can get an idea of steps the operations program goes
+   through to build a train. When there's an issue that the operation's build can't resolve, the
+   build will fail. To understand why a build failed, go to the last page of the build report and by
+   working backwards from the last line, you should be able to understand why a train failed to
+   build.
 
    <p>
     You can if you wish use a text editor instead of the print preview window. A text editor allows

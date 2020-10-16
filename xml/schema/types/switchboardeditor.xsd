@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
-
+<!-- This schema is part of JMRI. Copyright 2020.                     -->
 <!-- Need annotations                                                 -->
 <!-- Attributes need to get types right esp. for enumerated           -->
-<!-- Attributes need REQUIRED/IMPLIED  & defaults                    -->
+<!-- Attributes need REQUIRED/IMPLIED  & defaults                     -->
 <!-- need definitions for icon types; see also panel editor           -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:docbook="http://docbook.org/ns/docbook" xmlns:jmri="http://jmri.org/xml/schema/JMRIschema" xsi:schemaLocation="
                 http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
@@ -44,7 +44,6 @@
         <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
       </xs:attribute>
       <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
-      <!--<xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>-->
       <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="hide" type="yesNoType" default="no"></xs:attribute>
       <xs:attribute name="showcoordinates" type="yesNoType" default="no"></xs:attribute>
@@ -57,15 +56,32 @@
       <xs:attribute name="rangemax" type="xs:int" default="32"></xs:attribute>
       <xs:attribute name="type" type="xs:string"></xs:attribute>
       <xs:attribute name="connection" type="xs:string"></xs:attribute>
-      <xs:attribute name="shape" type="xs:string"></xs:attribute>
-      <xs:attribute name="columns" type="xs:int"></xs:attribute>
+      <xs:attribute name="shape" type="shapeType"></xs:attribute>
+      <xs:attribute name="columns" type="xs:int"></xs:attribute> <!-- deprecated 4.21.2, replaced by rows -->
+      <xs:attribute name="rows" type="xs:int"/>
+      <xs:attribute name="total" type="xs:int"/>
+      <xs:attribute name="showusername" type="yesNoType" default="no"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
+<!--      <xs:attribute name="activecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->
+<!--      <xs:attribute name="inactivecolor" type="screenColorType"/> fixed in Editor, not saved to disk-->
       <xs:attribute name="redBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="greenBackground" type="xs:int"></xs:attribute>
       <xs:attribute name="blueBackground" type="xs:int"></xs:attribute>
-      <xs:attribute name="state" type="xs:int"></xs:attribute>
-      <!--<xs:attribute name="shapeSelect" type="yesNoType" default="no"></xs:attribute>-->
 
     </xs:complexType>
+
+    <xs:simpleType name="shapeType">
+      <xs:annotation>
+        <xs:documentation>
+          Switchboard switch shape
+        </xs:documentation>
+      </xs:annotation>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="icon"/>
+        <xs:enumeration value="symbol"/>
+        <xs:enumeration value="drawing"/>
+        <xs:enumeration value="button"/>
+      </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

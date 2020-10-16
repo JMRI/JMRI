@@ -712,7 +712,7 @@
         <li><span class="since">Since 4.15.6</span>
         <strong>Save Location and Size</strong> - This item is only displayed
         when the <strong>Use old location and size logic for editor panels</strong>
-        option is enabled in <strong>Preferences >> Display</strong>.<br>
+        option is enabled in <strong>Preferences &gt; Display</strong>.<br>
 
         When this item is selected, the current panel window size and location
         replace the default size and location of the panel window.  If the panel

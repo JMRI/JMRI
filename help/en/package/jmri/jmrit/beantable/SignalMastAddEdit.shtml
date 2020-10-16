@@ -51,7 +51,7 @@
         the top as the Aspect line below for the correct appearance
         to be displayed in all possible scenarios.</li>
 
-        <li><b>Disabled</b>: checking this box for an Aspect will grey out
+        <li><b>Disabled</b>: checking this box for an Aspect will gray out
         the options and have JMRI skip it when changing the state
         of this mast</li>
 

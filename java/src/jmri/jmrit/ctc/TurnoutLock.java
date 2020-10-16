@@ -148,7 +148,10 @@ This routine DOES NOT modify the state of the switch, ONLY the lock!
     public void codeButtonPressed() {
         boolean newLockedState = getNewLockedState();
         if (newLockedState == _mLocked) return; // Nothing changed
-        if (_mNoDispatcherControlOfSwitch || newLockedState == true) { // No dispatcher control of switch, or LOCKING them, "normalize" the switch:
+//  The PROTOTYPE would not do this: Since the dispatcher CANNOT control the state of the switch, and
+//  our operating crews (for example: "brains go dead going down the stairs") MAY forget to normalize the switch
+//  for the main (for instance), we FORCE the state of the switch(s) to a known state (hopefully for the main)
+        if (_mNoDispatcherControlOfSwitch && newLockedState == true) { // No dispatcher control of switch and LOCKING them, "normalize" the switch:
             for (NBHTurnout turnout : _mTurnoutsMonitored) {
                 turnoutSetCommandedState(turnout, _m_ndcos_WhenLockedSwitchState);     // Make it so.
             }

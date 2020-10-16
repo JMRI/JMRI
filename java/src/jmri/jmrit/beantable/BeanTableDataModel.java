@@ -21,36 +21,13 @@ import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowSorter;
-import javax.swing.SwingWorker;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandleManager;
-import jmri.NamedBeanPropertyDescriptor;
-import jmri.UserPreferencesManager;
+
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -59,6 +36,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -103,7 +81,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         return propertyColumns.get(tgt);
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
@@ -115,7 +92,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
             }
         }
-        sysNameList = getManager().getSystemNameList();
+        sysNameList = getManager().getNamedBeanSet().stream().map(
+            e -> e.getSystemName()).collect( java.util.stream.Collectors.toList() );
         // and add them back in
         for (int i = 0; i < sysNameList.size(); i++) {
             // if object has been deleted, it's not here; ignore it
@@ -246,7 +224,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             case USERNAMECOL:
                 T b = getBySystemName(sysNameList.get(row));
                 uname = b.getUserName();
-                return ((uname == null) || uname.equals(""));
+                return ((uname == null) || uname.isEmpty());
             default:
                 NamedBeanPropertyDescriptor<?> desc = getPropertyColumnDescriptor(col);
                 if (desc == null) {
@@ -757,8 +735,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         nBean.setUserName(value);
         fireTableRowsUpdated(row, row);
-        if (!value.equals("")) {
-            if (oldName == null || oldName.equals("")) {
+        if (!value.isEmpty()) {
+            if (oldName == null || oldName.isEmpty()) {
                 if (!nbMan.inUse(sysNameList.get(row), nBean)) {
                     return;
                 }
@@ -800,11 +778,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         fireTableRowsUpdated(row, row);
     }
 
-    /*
+    /**
      * Determine whether it is safe to rename/remove a Block user name.
      * <p>The user name is used by the LayoutBlock to link to the block and
      * by Layout Editor track components to link to the layout block.
-     * @oaram changeType This will be Remove or Rename.
+     * @param changeType This will be Remove or Rename.
      * @param bean The affected bean.  Only the Block bean is of interest.
      * @param newName For Remove this will be empty, for Rename it will be the new user name.
      * @return true to continue with the user name change.
@@ -833,32 +811,27 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 Bundle.getMessage("BlockChangeUserName", oldName, newName),  // NOI18N
                 Bundle.getMessage("QuestionTitle"),  // NOI18N
                 JOptionPane.YES_NO_OPTION);
-        if (optionPane == JOptionPane.YES_OPTION) {
-            return true;
-        }
-        return false;
+        return optionPane == JOptionPane.YES_OPTION;
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void moveBean(int row, int column) {
         final T t = getBySystemName(sysNameList.get(row));
         String currentName = t.getUserName();
         T oldNameBean = getBySystemName(sysNameList.get(row));
 
-        if ((currentName == null) || currentName.equals("")) {
+        if ((currentName == null) || currentName.isEmpty()) {
             JOptionPane.showMessageDialog(null, Bundle.getMessage("MoveDialogErrorMessage"));
             return;
         }
 
         JComboBox<String> box = new JComboBox<>();
-        List<String> nameList = getManager().getSystemNameList();
-        for (int i = 0; i < nameList.size(); i++) {
-            T nb = getBySystemName(nameList.get(i));
+        getManager().getNamedBeanSet().forEach((T b) -> {
             //Only add items that do not have a username assigned.
-            if (nb.getDisplayName().equals(nameList.get(i))) {
-                box.addItem(nameList.get(i));
+            String userName = b.getUserName();
+            if (userName==null || userName.isEmpty()) {
+                box.addItem(b.getSystemName());
             }
-        }
+        });
 
         int retval = JOptionPane.showOptionDialog(null,
                 Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
@@ -901,7 +874,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         for (int i = 0; i < tcm.getColumnCount(false); i++) {
             TableColumn tc = tcm.getColumnByModelIndex(i);
             String columnName = table.getModel().getColumnName(i);
-            if (columnName != null && !columnName.equals("")) {
+            if (columnName != null && !columnName.isEmpty()) {
                 JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(table.getModel().getColumnName(i), tcm.isColumnVisible(tc));
                 menuItem.addActionListener(new HeaderActionListener(tc, tcm));
                 popupMenu.add(menuItem);
@@ -1025,7 +998,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
             int count = t.getListenerRefs().size();
             log.debug("Delete with {}", count);
-            if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
                 doDelete(t);
             } else {
                 final JDialog dialog = new JDialog();
