@@ -175,6 +175,20 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
     
     /**
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name, excluding Bean type-letter..
+     * @return the complete Reporter system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
+     */
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    
+    /**
      * {@inheritDoc}
      */
     @Override

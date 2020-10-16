@@ -266,19 +266,26 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      *
      * @param curAddress base address to use
      * @param prefix system prefix to use
-     * @param managerType BeanType manager (method is used for Turnout and Sensor Managers)
+     * @param beanType Bean Type for manager (method is used for Turnout and Sensor Managers)
      * @return a valid system name for this connection
      * @throws JmriException if systemName cannot be created
      */
-    String createSystemName(String curAddress, String prefix, Class<?> managerType) throws JmriException {
+    String createSystemName(String curAddress, String prefix, Class<?> beanType) throws JmriException {
         for (Manager<E> m : mgrs) {
-            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+            if (prefix.equals(m.getSystemPrefix()) && beanType.equals(m.getNamedBeanClass())) {
                 try {
-                    if (managerType == TurnoutManager.class) {
+                    if (beanType == Turnout.class) {
                         return ((TurnoutManager) m).createSystemName(curAddress, prefix);
-                    } else if (managerType == SensorManager.class) {
+                    } else if (beanType == Sensor.class) {
                         return ((SensorManager) m).createSystemName(curAddress, prefix);
-                    } else {
+                    } 
+                    else if (beanType == Light.class) {
+                        return ((LightManager) m).createSystemName(curAddress, prefix);
+                    }
+                    else if (beanType == Reporter.class) {
+                        return ((ReporterManager) m).createSystemName(curAddress, prefix);
+                    }
+                    else {
                         log.warn("createSystemName requested for incompatible Manager");
                     }
                 } catch (jmri.JmriException ex) {
@@ -287,6 +294,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             }
         }
         throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
+    }
+    
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+        return createSystemName(curAddress, prefix, getNamedBeanClass());
     }
 
     @SuppressWarnings("deprecation") // user warned by actual manager class
