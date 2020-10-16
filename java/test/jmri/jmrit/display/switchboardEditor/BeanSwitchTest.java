@@ -28,7 +28,7 @@ public class BeanSwitchTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            swe = new SwitchboardEditor("Bean Switch Test Layout");
+            swe = new SwitchboardEditor("Bean Switch Test Switchboard");
         }
     }
 
