@@ -11,9 +11,6 @@ import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.logixng.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This expression is a clock.
  * 
@@ -91,6 +88,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     }
     
     /** {@inheritDoc} */
+    @SuppressWarnings("deprecation")        // Date.getMinutes, Date.getHours
     @Override
     public boolean evaluate() {
         boolean result;
@@ -251,6 +249,6 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionClock.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionClock.class);
     
 }
