@@ -586,7 +586,21 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getFastClockExpression(@Nonnull ConditionalVariable cv) throws JmriException {
-        return null;
+        ExpressionClock expression =
+                new ExpressionClock(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        if (cv.getType() != Conditional.Type.FAST_CLOCK_RANGE) {
+            throw new InvalidConditionalVariableException(
+                    Bundle.getMessage("ConditionalBadConditionalType", cv.getType().toString()));
+        }
+        
+        expression.setType(ExpressionClock.Type.FastClock);
+        expression.setRange(ConditionalVariable.fixMidnight(cv.getNum1()), ConditionalVariable.fixMidnight(cv.getNum2()));
+        
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     

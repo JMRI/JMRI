@@ -132,9 +132,9 @@ public class ExpressionWarrant extends AbstractDigitalExpression
                 throw new UnsupportedOperationException("_type has unknown value: " + _type.name());
         }
         if (_is_IsNot == Is_IsNot_Enum.IS) {
-            return !result;
-        } else {
             return result;
+        } else {
+            return !result;
         }
     }
 

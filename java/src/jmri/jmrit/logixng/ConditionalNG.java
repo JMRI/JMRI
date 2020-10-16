@@ -86,8 +86,6 @@ public interface ConditionalNG extends Base, NamedBean {
     
     /**
      * Execute the ConditionalNG.
-     * This method must not be called directly. Use triggerExecute() instead
-     * to ensure that the call comes from the correct thread.
      */
     public void execute();
     

@@ -40,8 +40,8 @@ public abstract class ImportExpressionComplexTestBase {
     }
     
     private LogixManager logixManager;
-    private Logix logix;
-    private Conditional conditional;
+    protected Logix logix;
+    protected Conditional conditional;
     private ArrayList<ConditionalVariable> variables;
     private ArrayList<ConditionalAction> actions;
     private Turnout t1;
@@ -157,6 +157,7 @@ public abstract class ImportExpressionComplexTestBase {
         check.runTest("Logix is activated. Enum: "+e.name(), true);
         
         logix.deActivateLogix();
+        conditional = null;
         
         // Import the logix to LogixNG
         ImportLogix importLogix = new ImportLogix(logix);
