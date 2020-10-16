@@ -186,10 +186,6 @@ public abstract class ImportExpressionComplexTestBase {
     @Test
     public void testAll() throws JmriException {
         for (Enum e : getEnums()) {
-            if (e.name().startsWith("ROUTE_FREE")) continue;
-            if (e.name().startsWith("ROUTE_OCCUPIED")) continue;
-            if (e.name().startsWith("ROUTE_ALLOCATED")) continue;
-            if (e.name().startsWith("ROUTE_SET")) continue;
 //            if (e.name().startsWith("Memory")) continue;
 //            if (e.name().equals("MemoryEquals")) continue;
 //            if (e.name().equals("ConstantEquals")) continue;
