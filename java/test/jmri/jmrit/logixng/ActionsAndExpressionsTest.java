@@ -53,7 +53,7 @@ public class ActionsAndExpressionsTest {
             }
             
             if (!isRegistered) {
-                System.out.format("Class %s is not registered in the manager%n", file);
+                System.out.format("Class %s.%s is not registered in the manager%n", packageName, file);
                 errorsFound = true;
             }
             
@@ -66,7 +66,7 @@ public class ActionsAndExpressionsTest {
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
             if (configureXml == null) {
-                System.out.format("Class %s has no configurexml class%n", file);
+                System.out.format("Class %s.%s has no configurexml class%n", packageName, file);
                 errorsFound = true;
             }
             
@@ -79,7 +79,7 @@ public class ActionsAndExpressionsTest {
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
             if (configureSwing == null) {
-                System.out.format("Class %s has no swing class%n", file);
+                System.out.format("Class %s.%s has no swing class%n", packageName, file);
                 errorsFound = true;
             }
 //            Assert.assertNotNull(String.format("Class %s has no swing class%n", file), configureXml);
