@@ -308,10 +308,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
+                            log.log("TEST EBR sensor " + $(this).find('occupancysensor').text());// TODO remove logging EBR
                             if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
                                 $widget['occupancysensor'] = $(this).find('occupancysensor').text();
                                 $widget['occupancystate'] = UNKNOWN;
                                 jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                            }
+                            // CircuitBuilder Oblocks
+                            if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
+                                //$widget.jsonType = "block"; // JSON object type
+                                $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                // TODO errorsensor is also available, what icon?
                             }
                             break;
                         case "indicatorturnouticon" :
@@ -336,6 +345,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['occupancysensor'] = $(this).find('occupancysensor').text();
                                 $widget['occupancystate'] = UNKNOWN;
                                 jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                            }
+                            // CircuitBuilder Oblocks
+                            if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
+                                //$widget.jsonType = "block"; // JSON object type
+                                $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                // TODO errorsensor is also available, what icon?
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
@@ -3658,7 +3675,7 @@ function updateOccupancy(sensorName, state, data) {
 
 function updateOccupancySub(sensorName, state) {
     if (occupancyNames[sensorName]) {
-        //log.log("setting occupancies for sensor " + sensorName + " to " + state);
+        //log.log("setting occupancies for sensor {} to {}", sensorName, state);
         $.each(occupancyNames[sensorName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
 

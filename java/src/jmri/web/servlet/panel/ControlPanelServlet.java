@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -72,6 +73,17 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 } catch (Exception ex) {
                     log.error("Error storing panel element: {}", ex, ex);
                 }
+                // if required, add special stuff to positionable here to see in Web Server
+//                if (sub.getNamedBean() == null) { // skip unconnected switch
+//                    log.debug("switch {} NOT connected", sub.getNameString()); // use label instead
+//                } else {
+//                    try {
+//                        e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
+//                        e.setAttribute("connected", "true"); // activate click action via class
+//                    } catch (NullPointerException ex) {
+//                        log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
+//                    }
+//                }
             }
         }
 
