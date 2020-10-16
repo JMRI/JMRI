@@ -134,11 +134,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
+                    public void mouseReleased(MouseEvent me) { // for Windows
                         _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
+                        if (me.isPopupTrigger()) {
                             // display the popup:
-                            showPopUp(e);
+                            showPopUp(me);
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        _editor.setBoardToolTip(null); // ends tooltip if displayed
+                        if (me.isPopupTrigger()) {
+                            // display the popup:
+                            showPopUp(me);
                         }
                     }
                 });
@@ -164,11 +173,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
+                    public void mouseReleased(MouseEvent me) { // for Windows
                         _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
+                        if (me.isPopupTrigger()) {
                             // display the popup:
-                            showPopUp(e);
+                            showPopUp(me);
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        _editor.setBoardToolTip(null); // ends tooltip if displayed
+                        if (me.isPopupTrigger()) {
+                            // display the popup:
+                            showPopUp(me);
                         }
                     }
                 });
@@ -195,11 +213,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
+                    public void mouseReleased(MouseEvent me) { // for Windows
                         _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
+                        if (me.isPopupTrigger()) {
                             // display the popup:
-                            showPopUp(e);
+                            showPopUp(me);
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        _editor.setBoardToolTip(null); // ends tooltip if displayed
+                        if (me.isPopupTrigger()) {
+                            // display the popup:
+                            showPopUp(me);
                         }
                     }
                 });
@@ -237,11 +264,20 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
+                    public void mouseReleased(MouseEvent me) { // for Windows
                         _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
+                        if (me.isPopupTrigger()) {
                             // display the popup:
-                            showPopUp(e);
+                            showPopUp(me);
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        _editor.setBoardToolTip(null); // ends tooltip if displayed
+                        if (me.isPopupTrigger()) {
+                            // display the popup:
+                            showPopUp(me);
                         }
                     }
                 });
@@ -597,7 +633,15 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
     public void mousePressed(MouseEvent e) {
         _editor.setBoardToolTip(null); // ends tooltip if displayed
         if (e.isPopupTrigger()) {
-            // display the popup:
+            // display the popup on Mac/Linux:
+            showPopUp(e);
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        _editor.setBoardToolTip(null); // ends tooltip if displayed
+        if (e.isPopupTrigger() || e.isMetaDown() || e.isAltDown()) {
+            // display the popup on Windows:
             showPopUp(e);
         }
     }
