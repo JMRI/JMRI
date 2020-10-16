@@ -125,27 +125,27 @@ public abstract class ImportExpressionComplexTestBase {
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed1);
-            JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed2);
-            JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
             
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed3);
-            JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
             
             setNamedBeanState(e, Setup.Fail1);
             t1.setState(Turnout.CLOSED);
             // This should throw the turnout if Logix/LogixNG is activated
             setNamedBeanState(e, Setup.Succeed4);
-            JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
+            if (expectSuccess) JUnitUtil.waitFor(() -> t1.getState() == Turnout.THROWN);
             assertBoolean(message, expectSuccess, t1.getState() == Turnout.THROWN);
         };
         
