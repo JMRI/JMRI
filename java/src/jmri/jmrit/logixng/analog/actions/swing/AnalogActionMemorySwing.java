@@ -68,17 +68,19 @@ public class AnalogActionMemorySwing extends AbstractActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         AnalogActionMemory action = new AnalogActionMemory(systemName, userName);
-        try {
-            Memory memory = memoryBeanPanel.getNamedBean();
-            if (memory != null) {
-                NamedBeanHandle<Memory> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(memory.getDisplayName(), memory);
-                action.setMemory(handle);
+        if (memoryBeanPanel.hasBeanOrBeanName()) {
+            try {
+                Memory memory = memoryBeanPanel.getNamedBean();
+                if (memory != null) {
+                    NamedBeanHandle<Memory> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(memory.getDisplayName(), memory);
+                    action.setMemory(handle);
+                }
+    //            action.setMemoryOperation((MemoryOperation)stateComboBox.getSelectedItem());
+            } catch (JmriException ex) {
+                log.error("Cannot get NamedBeanHandle for memory", ex);
             }
-//            action.setMemoryOperation((MemoryOperation)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         return InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
     }
