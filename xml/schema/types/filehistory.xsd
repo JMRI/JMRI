@@ -30,7 +30,7 @@
     <xs:complexType name="FileHistoryType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a FileHistory implementation.
+          Define the XML structure for storing the contents of a FileHistory implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.revhistory.configurexml.FileHistoryXml</jmri:usingclass>

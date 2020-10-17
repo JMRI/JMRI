@@ -30,7 +30,7 @@
     <xs:complexType name="BlockManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a BlockManager implementation.
+          Define the XML structure for storing the contents of a BlockManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.configurexml.BlockManagerXml</jmri:usingclass>

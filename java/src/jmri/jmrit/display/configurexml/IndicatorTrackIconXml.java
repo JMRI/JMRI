@@ -45,10 +45,10 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b != null) {
             element.addContent(storeNamedBean("occupancyblock", b));
-            if (b.getBean().getNamedSensor() != null) { // required to show state in Web Server CPE
+            if (b.getBean().getNamedSensor() != null) { // required to show state in Web Server CPE, not read on load
                 element.addContent(storeNamedBean("occupancysensor", b.getBean().getNamedSensor()));
             }
-            if (b.getBean().getNamedErrorSensor() != null) { // optional for CPE
+            if (b.getBean().getNamedErrorSensor() != null) { // optional for CPE, not read on load
                 element.addContent(storeNamedBean("errorsensor", b.getBean().getNamedErrorSensor()));
             }
         }
