@@ -264,7 +264,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                 $jc = $ta[$ta.length - 1];
             }
             if ($widget.widgetFamily == "switch") {
-                $widget['classes'] = $widget.widgetType + " " + $jc; // rest of classes not used on a switch
+                $widget['classes'] = $widget.widgetType + " " + $jc; // rest of classes are not used on a switch
             } else {
                 $widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
             }
@@ -301,10 +301,16 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['icon2'] = $widget['icon' + UNKNOWN];
                             $widget['icon4'] = $widget['icon' + UNKNOWN];
                             $widget['icon8'] = $widget['icon' + UNKNOWN];
+                            $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url'); // Allocated
+                            $widget['icon32'] = $(this).find('iconmap').find('PositionTrack').attr('url'); // Not in use
+                            $widget['icon64'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
+                            $widget['icon128'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Error + Occupied
+                            $widget['icon132'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Error + Unoccupied
                             $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
                             $widget['iconOccupied2'] = $widget['iconOccupied' + UNKNOWN];
                             $widget['iconOccupied4'] = $widget['iconOccupied' + UNKNOWN];
                             $widget['iconOccupied8'] = $widget['iconOccupied' + UNKNOWN];
+                            $widget['iconOccupied128'] = $(this).find('iconmap').find('ErrorTrack').attr('url');
                             $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
@@ -314,13 +320,25 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
                             }
                             // CPE CircuitBuilder Oblocks
-                            if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
-                                //$widget.jsonType = "block"; // JSON object type
-                                jmri.getBlock($widget["occupancyblock"]); // listen for oblock changes, under development
+                            if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancyblock name and state
+                                $widget.jsonType = "oblock"; // JSON object type
+                                $widget['occupancyblock'] = $(this).find('occupancyblock').text();
+                                $widget['oblockstate'] = UNKNOWN;
+                                // add widget.id to whereUsed array to support updates from layout
+                                if (!($widget.occupancyblock in whereUsed)) {
+                                    whereUsed[$widget.occupancyblock] = new Array();
+                                }
+                                jmri.getOblock($widget["occupancyblock"]); // listen for oblock changes, under development
+                                whereUsed[$widget.occupancyblock][whereUsed[$widget.occupancyblock].length] = $widget.id;
+
                                 $widget['errorsensor'] = $(this).find('errorsensor').text();
                                 $widget['errorstate'] = UNKNOWN;
                                 jmri.getSensor($widget["errorsensor"]); // listen for error changes
-                                // TODO errorsensor is also available, which icon?
+                                // add widget.id to whereUsed array to support updates from layout
+                                if (!($widget.errorsensor in whereUsed)) {
+                                    whereUsed[$widget.errorsensor] = new Array();
+                                }
+                                whereUsed[$widget.errorsensor][whereUsed[$widget.errorsensor].length] = $widget.id;
                             }
                             break;
                         case "indicatorturnouticon" :
@@ -348,12 +366,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             // CPE CircuitBuilder Oblocks
                             if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
-                                //$widget.jsonType = "block"; // JSON object type
-                                jmri.getBlock($widget["occupancyblock"]); // listen for oblock changes, under development
+                                //$widget.jsonType = "oblock"; // JSON object type
+                                jmri.getOblock($widget["occupancyblock"]); // listen for oblock changes, under development
                                 $widget['errorsensor'] = $(this).find('errorsensor').text();
                                 $widget['errorstate'] = UNKNOWN;
                                 jmri.getSensor($widget["errorsensor"]); //listen for error changes
-                                // TODO errorsensor is also available, which icon?
+                                // TODO copy from indicatorTrackIcon to show extra states
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
@@ -1014,7 +1032,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     break;
 
                 case "switch" : // Switchboard BeanSwitches
-                    // they have no x,y // TODO EBR
+                    // they have no x,y
                     $widget['styles'] = {}; // clear built-in styles
                     $widget.styles['background-color'] = 'inherit'; // essential to color the switches
                     $widget['name'] = $widget.label; // normalize name from label
@@ -1159,14 +1177,6 @@ function processPanelXML($returnedData, $success, $xhr) {
     $("#activity-alert").addClass("hidden").removeClass("show");
 } // end of processPanelXML
 
-function $store_occupancysensor(id, sensor) {
-    if (id && sensor) {
-        if (!(sensor in occupancyNames)) {
-            occupancyNames[sensor] = new Array();
-        }
-        occupancyNames[sensor][occupancyNames[sensor].length] = id;
-    }
-}
 
 /******************************************************************
 *  ======= Click Handling functions =======
@@ -1243,7 +1253,7 @@ function $handleClick(e) {
         });
     } else {
         var $widget = $gWidgets[this.id];
-        var $newState = $getNextState($widget); //determine next state from current state
+        var $newState = $getNextState($widget); // determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
         //also send new state to related turnout
         if (isDefined($widget.turnoutB)) {
@@ -1332,7 +1342,7 @@ function $handleLinkingLabelClick(e) {
     window.location = $url;  //navigate to the specified url
 }
 
-function $handleClickAllOn(e) {
+function $handleClickAllOn(e) { // click button on Switchboards
     //loop thru widgets, setting each connected light to CLOSED/2, when button on top of switchboard was clicked
     jQuery.each($gWidgets, function($id, $widget) {
         if ($widget.connected == "true") {
@@ -1341,7 +1351,7 @@ function $handleClickAllOn(e) {
     });
 };
 
-function $handleClickAllOff(e) {
+function $handleClickAllOff(e) { // click button on Switchboards
     //loop thru widgets, setting each connected light to THROWN/4, when button on top of switchboard was clicked
     jQuery.each($gWidgets, function($id, $widget) {
         if ($widget.connected == "true") {
@@ -1349,6 +1359,7 @@ function $handleClickAllOff(e) {
         }
     });
 };
+
 // End of Click Handling functions
 
 
@@ -1367,8 +1378,8 @@ function $drawIcon($widget) {
     }
 
     // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : "");
-    //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
+    $indicator = (($widget.occupancysensor && $widget.occupancystate == ACTIVE) ? "Occupied" : "");
+    // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
                 "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
@@ -1377,7 +1388,7 @@ function $drawIcon($widget) {
 
         $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
 
-        //add overlay text if specified, one layer above, and copy attributes (except background-color)
+        // add overlay text if specified, one layer above, and copy attributes (except background-color)
         if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
 			ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
@@ -1571,8 +1582,14 @@ var $setWidgetPosition = function(e) {
 
 // reDraw an icon-based widget to reflect changes to state or occupancy
 var $reDrawIcon = function($widget) {
-    // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : "");
+    // additional naming for indicator*icon widgets to reflect occupancy, error
+    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : ""); // 0x04
+    if ($widget.errorsensor && $widget.errorstate == ACTIVE) { // 0x80, ignore Occupancy
+        $widget.state = "128"
+    }
+    if ($widget.occupancyblock && $widget.oblockstate) {
+        $widget.state = oblockstate;
+    }
     // set image src to requested state's image, if defined
     if ($widget['icon' + $indicator + ($widget.state + "")]) {
         $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);
@@ -1688,12 +1705,16 @@ var $setWidgetState = function($id, $newState, data) {
         }
         $widget.state = $newState;
 
-        //override the state with idTag's "name" in a very specific circumstance
+        // override the state with idTag's "name" in a very specific circumstance
         if (($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) &&
         		$widget.widgetFamily == "icon" && data.value !== null && data.value.type == "idTag") {
         	$widget.state = data.value.data.name;
         }
-
+        if ($widget.jsonType == "oblock" && $widget.widgetFamily == "icon" && value !== null) { // occupancyblock EBR
+        	$widget.state = value;
+        	$widget.oblockstate = value;
+        	console.log("OBLOCK value=" + value + " data=" + data); // EBR
+        }
         switch ($widget.widgetFamily) {
             case "icon" :
                	$reDrawIcon($widget)
@@ -1702,7 +1723,7 @@ var $setWidgetState = function($id, $newState, data) {
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory/block/reporter text or html to new value from server, clearing "null"
+                    } else { // set memory/block/reporter text or html to new value from server, clearing "null"
                         if ($newState == null) {
                             $('div#' + $id).text("");
                         } else if ($newState.startsWith("<html>")) {
@@ -1844,10 +1865,10 @@ var $getNextState = function($widget) {
                 }
                 if (typeof $nextState === "undefined")
                     $nextState = $firstState;  // if still not set, start over
-        } //end of switch
+        } //end of signalheadicon clickmode switch
 
     } else if ($widget.widgetType == 'signalmasticon') { // special case for signalmasticons
-        //loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
+        // loop through all elements, finding iconXXX and get next iconXXX, skipping special ones
         switch ($widget.clickmode * 1) {          //   logic based on SignalMastIcon.java
             case 0 :
                 var $firstState = undefined;
@@ -1878,7 +1899,7 @@ var $getNextState = function($widget) {
                 $nextState = ($widget.state == "Held" ? "Stop" : "Held");
                 break;
 
-            }; //end of switch clickmode
+            }; //end of signalmasticon clickmode switch
     } else {  // start with INACTIVE, then toggle to ACTIVE and back (same for turnout states: 2 <> 4
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }
@@ -2047,21 +2068,27 @@ $(document).ready(function() {
             block: function(name, value, data) {
             	if (value !== null) {
             		if (value.type == "idTag") {
-            			value = value.data.userName; //for idTags, use the value in userName instead
+            			value = value.data.userName; // for idTags, use the value in userName instead
             		} else if (value.type == "reporter") {
-            			value = value.data.value;    //for reporters, use the value in data instead
+            			value = value.data.value;    // for reporters, use the value in data instead
             		} else if (value.type == "rosterEntry") {
             			if (value.data.icon !== null) {
-            				value = "<html><img src='" + value.data.icon + "'></html>"; //for rosterEntries, create an image tag instead
+            				value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
             			} else {
             				value = value.data.name; // if roster icon not set, just show the name
             			}
-            		}
+            	    }
             	}
                 updateWidgets(name, value, data);
             },
-            oBlock: function(name, value, data) {
-                updateWidgets(name, state, data);
+            oblock: function(name, value, data) {
+                console.log("OBlock " + name + " value=" + value);
+                if (value !== null) {
+                     //TEST if OBlock will hear Block EBR
+                    $widget.occupancystate = value;
+                    $widget.oblockstate = value;
+                }
+                updateWidgets(name, value, data);
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
@@ -2090,6 +2117,7 @@ $(document).ready(function() {
             },
             sensor: function(name, state, data) {
                 updateOccupancy(name, state, data);
+                console.log("Sensor " + name + " state=" + state);
                 updateWidgets(name, state, data);
             },
             signalHead: function(name, state, data) {
@@ -3154,6 +3182,15 @@ function $third(value1, value2) {
     return $lerp(value1, value2, 1 / 3);
 }
 
+function $store_occupancysensor(id, sensor) {
+    if (id && sensor) {
+        if (!(sensor in occupancyNames)) {
+            occupancyNames[sensor] = new Array();
+        }
+        occupancyNames[sensor][occupancyNames[sensor].length] = id;
+    }
+}
+
 //store the various points defined with a Turnout (pass in widget)
 //see jmri.jmrit.display.layoutEditor.LayoutTurnout.java for background
 function $storeTurnoutPoints($widget) {
@@ -3695,6 +3732,14 @@ function updateOccupancySub(sensorName, state) {
             switch ($widget.widgetType) {
                 case 'indicatortrackicon' :
                 case 'indicatorturnouticon' :
+                    if ($widget.errorstate == ACTIVE) {
+                        state = 128;
+                    }
+                    console.log("updateOccupancySub for occupancyblock " + $widget.occupancyblock + " state=" + $widget.occupancystate);
+//                    if (state*1 > 127) {
+//                        console.log("STATE = " + state);
+//                        $widget.occupancystate = "128";
+//                    }
                     $reDrawIcon($widget);
                     break;
                 case 'layoutturnout' :

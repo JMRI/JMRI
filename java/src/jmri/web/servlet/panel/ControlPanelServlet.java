@@ -9,7 +9,6 @@ import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.server.json.JSON;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -80,24 +79,24 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 // where required, add special stuff to positionable here to see in Web Server
                 switch (e.getName()) {
                     case "indicatorturnouticon" :
-                        // if separate occsensor was set on icon, it was already copied to e as part of 'contents'
+                        // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
                         if (((IndicatorTurnoutIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
                             Element elem = new Element("occupancysensor");
                             elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedSensor().getName());
                             e.addContent(elem);
                             elem = new Element("errorsensor");
-                            e.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getErrorSensor().getDisplayName());
+                            e.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedErrorSensor().getName());
                             e.addContent(elem);
                         }
                         break;
                     case "indicatortrackicon" :
-                        // if separate occsensor was set on icon, it was already copied to e as part of 'contents'
+                        // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
                         if (((IndicatorTrackIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
                             Element elem = new Element("occupancysensor");
                             elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedSensor().getName());
                             e.addContent(elem);
                             elem = new Element("errorsensor");
-                            e.addContent(((IndicatorTrackIcon) sub).getOccBlock().getErrorSensor().getDisplayName());
+                            e.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedErrorSensor().getName());
                             e.addContent(elem);
                         }
                         break;

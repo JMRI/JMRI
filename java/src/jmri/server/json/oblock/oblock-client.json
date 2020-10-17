@@ -1,0 +1,68 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "jmri-json-oblock-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"oblock\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "System name of the oblock"
+        },
+        "userName": {
+            "type": "string",
+            "description": "If present, set the user name of the oblock"
+        },
+        "comment": {
+            "type": "string",
+            "description": "If present, set the comment for the oblock"
+        },
+        "value": {
+            "type": "string",
+            "description": "If present, sets the value of the oblock"
+        },
+        "speed": {
+            "type": [
+                "string"
+            ],
+            "description": "The authorized speed through the oblock; authorized values depend on signal system in use"
+        },
+        "curvature": {
+            "type": "integer",
+            "enum": [
+                0,
+                1,
+                2,
+                4
+            ],
+            "description": "Curvature of oblock; allowed values correspond to NONE, GRADUAL, TIGHT, SEVERE in that order"
+        },
+        "direction": {
+            "type": "integer",
+            "description": "Direction of oblock; see http://jmri.org/JavaDoc/doc/jmri/Path.html for possible values"
+        },
+        "length": {
+            "type": "number",
+            "description": "Length of oblock in millimeters"
+        },
+        "permissive": {
+            "type": "boolean",
+            "description": "true if oblock allows a train to enter it while occupied; false otherwise"
+        },
+        "speedLimit": {
+            "type": "number",
+            "description": "The maximum allowed speed for the oblock"
+        },
+        "denied": {
+            "type": "array",
+            "description": "List of names of oblocks that trains cannot enter this oblock from",
+            "items": {
+                "type": "string",
+                "description": "Name of a oblock that trains cannot enter this oblock from"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name"
+    ]
+}

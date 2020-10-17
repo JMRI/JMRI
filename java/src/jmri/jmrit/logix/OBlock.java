@@ -281,13 +281,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 } else {
                     setState(oldState & ~TRACK_ERROR);
                 }
+                log.debug("OBLOCK {} NEW STATE: {}", mSystemName, getState()); // TODO remove EBR
                 firePropertyChange("pathState", oldState, getState());
             }
         }
     }
 
     /**
-     * This block shares a turnout (e.g. a crossover) with another block.
+     * This oblock shares a turnout (e.g. a crossover) with another oblock.
      * Typically one JMRI turnout driving two switches where each switch is in a
      * different block.
      *
@@ -389,7 +390,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 msg = _warrant.getDisplayName();
             }
         }
-        log.trace("Path \"{}\" in block \"{}\" {}", path, getDisplayName(), (msg == null ? "not set" : " set in warrant " + msg));
+        log.trace("Path \"{}\" in oblock \"{}\" {}", path, getDisplayName(), (msg == null ? "not set" : " set in warrant " + msg));
         return msg;
     }
 
@@ -513,9 +514,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             _warrant = warrant;
             // firePropertyChange signaled in super.setState()
             setState(getState() | ALLOCATED);
-            log.debug("Allocate block \"{}\" to warrant \"{}\".", getDisplayName(), warrant.getDisplayName());
+            log.debug("Allocate oblock \"{}\" to warrant \"{}\".", getDisplayName(), warrant.getDisplayName());
         } else {
-            log.debug("Allocate block \"{}\" failed for warrant {}. err= {}",
+            log.debug("Allocate oblock \"{}\" failed for warrant {}. err= {}",
                     getDisplayName(), warrant.getDisplayName(), msg);
         }
         return msg;
@@ -653,7 +654,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /*
-     * Remove portal from block and stub all paths using this portal to be dead
+     * Remove portal from oblock and stub all paths using this portal to be dead
      * end spurs.
      *
      * @param portal the Portal to remove
@@ -666,12 +667,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 OPath path = (OPath) iter.next();
                 if (portal.equals(path.getFromPortal())) {
                     path.setFromPortal(null);
-                    log.debug("removed Portal {} from Path \"{}\" in block {}",
+                    log.debug("removed Portal {} from Path \"{}\" in oblock {}",
                             portal.getName(), path.getName(), getDisplayName());
                 }
                 if (portal.equals(path.getToPortal())) {
                     path.setToPortal(null);
-                    log.debug("removed Portal {} from Path \"{}\" in block {}",
+                    log.debug("removed Portal {} from Path \"{}\" in oblock {}",
                             portal.getName(), path.getName(), getDisplayName());
                 }
             }
@@ -680,7 +681,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 OPath path = (OPath) iter.next();
                 if (path.getFromPortal() == null && path.getToPortal() == null) {
                     removeOPath(path);
-                    log.debug("removed Path \"{}\" from block {}", path.getName(), getDisplayName());
+                    log.debug("removed Path \"{}\" from oblock {}", path.getName(), getDisplayName());
                 }
             }
             int oldSize = _portals.size();
@@ -718,7 +719,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     @Override
     public void setLength(float len) {
         float oldLen = getLengthMm();
-        if (oldLen > 0.0f) {   // if new block, paths also have length 0
+        if (oldLen > 0.0f) {   // if new oblock, paths also have length 0
             float ratio = getLengthMm() / oldLen;
             getPaths().forEach(path -> path.setLength(path.getLength() * ratio));
         }
