@@ -2,6 +2,7 @@ package jmri.jmrix.powerline;
 
 import java.util.Locale;
 import javax.annotation.Nonnull;
+import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
-    }
-
-    // to free resources when no longer used
-    @Override
-    public void dispose() {
-        super.dispose();
     }
 
     /**
@@ -94,13 +89,17 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         return false;
     }
 
+    /**
+     * TODO : Get this method working then enable multiple additions
+     * {@inheritDoc}
+     */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
-
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
+        log.warn("getNextValidAddress called but system does not yet support multiple additions");
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
         Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
-        if (s == null) {
+        if (s == null && !ignoreInitialExisting) {
             return curAddress;
         }
 
@@ -111,11 +110,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         try {
             iName = Integer.parseInt(curAddress.substring(1));
         } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("ErrorTitle"),
-                            Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
+            throw new JmriException("Unable to convert "+curAddress+" to a number after the house code");
         }
 
         //Check to determine if the systemName is in use, return null if it is,
@@ -129,7 +124,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
                     return houseCode + iName;
                 }
             }
-            return null;
+            throw new JmriException(Bundle.getMessage("InvalidNextValidTenInUse",getBeanTypeHandled(true),curAddress,houseCode + iName));
         } else {
             return houseCode + iName;
         }

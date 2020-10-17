@@ -155,68 +155,16 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
+    /**
+     * Default Sensor ensures a numeric only system name.
+     * {@inheritDoc} 
+     */
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        try {
-            Integer.parseInt(curAddress);
-        } catch (java.lang.NumberFormatException ex) {
-            log.warn("Hardware Address passed should be a number, was {}", curAddress);
-            throw new JmriException("Hardware Address passed should be a number");
-        }
-        return prefix + typeLetter() + curAddress;
-    }
-
-    /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        // If the hardware address passed does not already exist then this can
-        // be considered the next valid address.
-        String tmpSName;
-
-        try {
-            tmpSName = createSystemName(curAddress, prefix);
-        } catch (JmriException ex) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), null, "", true, false);
-            return null;
-        }
-        Sensor s = getBySystemName(tmpSName);
-        if (s == null) {
-            return curAddress;
-        }
-
-        // This bit deals with handling the curAddress, and how to get the next address.
-        int iName;
-        try {
-            iName = Integer.parseInt(curAddress);
-        } catch (NumberFormatException ex) {
-            log.error("Unable to convert {} Hardware Address to a number", curAddress);
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showErrorMessage(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
-            return null;
-        }
-
-        // Check to determine if the systemName is in use, return null if it is,
-        // otherwise return the next valid address.
-        s = getBySystemName(prefix + typeLetter() + iName);
-        if (s != null) {
-            for (int x = 1; x < 10; x++) {
-                iName++;
-                s = getBySystemName(prefix + typeLetter() + iName);
-                if (s == null) {
-                    return Integer.toString(iName);
-                }
-            }
-            // feedback when next address is also in use
-            log.warn("10 hardware addresses starting at {} already in use. No new Sensors added", curAddress);
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return prefix + typeLetter() + checkNumeric(curAddress);
     }
-
+    
     protected long sensorDebounceGoingActive = 0L;
     protected long sensorDebounceGoingInActive = 0L;
 
