@@ -160,7 +160,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
      * @return true if a bean is selected or a name is entered
      */
     public boolean hasBeanOrBeanName() {
-        return existingItem.isSelected() || !hardwareAddress.getText().isBlank();
+        return existingItem.isSelected() || !hardwareAddress.getText().trim().isEmpty();
     }
     
     /**
