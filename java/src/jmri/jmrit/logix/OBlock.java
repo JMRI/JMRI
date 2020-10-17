@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Additional states are defined to indicate status of the track and trains to
  * control panels. A jmri.Block has a PropertyChangeListener on the occupancy
- * sensor and the OBlock will pass state changes of the sensor on to its
- * warrant.
+ * sensor and the OBlock will pass state changes of the occ.sensor on to its
+ * Warrant.
  * <p>
  * Entrances (exits when train moves in opposite direction) to OBlocks have
  * Portals. A Portal object is a pair of OBlocks. Each OBlock has a list of its

@@ -308,19 +308,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
-                            log.log("TEST EBR sensor " + $(this).find('occupancysensor').text());// TODO remove logging EBR
                             if ($(this).find('occupancysensor')) {  // store the occupancy sensor name and state
                                 $widget['occupancysensor'] = $(this).find('occupancysensor').text();
                                 $widget['occupancystate'] = UNKNOWN;
-                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
                             }
-                            // CircuitBuilder Oblocks
+                            // CPE CircuitBuilder Oblocks
                             if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
                                 //$widget.jsonType = "block"; // JSON object type
-                                $widget['occupancysensor'] = $(this).find('occupancyblock').attr('occupancysensor');
-                                $widget['occupancystate'] = UNKNOWN;
-                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-                                // TODO errorsensor is also available, what icon?
+                                jmri.getBlock($widget["occupancyblock"]); // listen for oblock changes, under development
+                                $widget['errorsensor'] = $(this).find('errorsensor').text();
+                                $widget['errorstate'] = UNKNOWN;
+                                jmri.getSensor($widget["errorsensor"]); // listen for error changes
+                                // TODO errorsensor is also available, which icon?
                             }
                             break;
                         case "indicatorturnouticon" :
@@ -344,15 +344,16 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if ($(this).find('occupancysensor')) {  // store the occupancy sensor name and state
                                 $widget['occupancysensor'] = $(this).find('occupancysensor').text();
                                 $widget['occupancystate'] = UNKNOWN;
-                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                                jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
                             }
-                            // CircuitBuilder Oblocks
+                            // CPE CircuitBuilder Oblocks
                             if (typeof $widget['occupancyblock'] !== "undefined") { // extract the occupancy block name and state
                                 //$widget.jsonType = "block"; // JSON object type
-                                $widget['occupancysensor'] = $(this).find('occupancyblock').attr('occupancysensor');
-                                $widget['occupancystate'] = UNKNOWN;
-                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-                                // TODO errorsensor is also available, what icon?
+                                jmri.getBlock($widget["occupancyblock"]); // listen for oblock changes, under development
+                                $widget['errorsensor'] = $(this).find('errorsensor').text();
+                                $widget['errorstate'] = UNKNOWN;
+                                jmri.getSensor($widget["errorsensor"]); //listen for error changes
+                                // TODO errorsensor is also available, which icon?
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
@@ -1113,7 +1114,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                 }
                 whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
             }
-            // store occupancy sensors where-used
+            // store LayoutEditor occupancy sensors where-used
             if ($gWidgets[$widget.id]) {
                 $store_occupancysensor($widget.id, $widget.occupancysensor);
                 $store_occupancysensor($widget.id, $widget.occupancysensorA);
@@ -1361,12 +1362,12 @@ function $drawIcon($widget) {
     if (typeof $widget.hoverText !== "undefined") {
         $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "'";
     }
-    if ($hoverText == "" && typeof $widget.name !== "undefined") { //if name available, use it as hover text if still blank
+    if ($hoverText == "" && typeof $widget.name !== "undefined") { // if name available, use it as hover text if still blank
         $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
     }
 
     // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : "");
     //add the image to the panel area, with appropriate css classes and id (skip any unsupported)
     if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
@@ -1392,8 +1393,8 @@ function $drawIcon($widget) {
 
 //draw the analog clock (pass in widget), called on each update of clock
 function $drawClock($widget) {
-    var $fs = $widget.scale * 100;  //scale percentage, used for text
-    var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; //get the fast clock rate factor from its widget
+    var $fs = $widget.scale * 100;  // scale percentage, used for text
+    var $fcr = $gWidgets['IMRATEFACTOR'].state * 1; // get the fast clock rate factor from its widget
     var $h = "";
     $h += "<div class='clocktext' style='font-size:" + $fs + "%;' >" + $widget.state + "<br />" + $fcr + ":1</div>";  //add the text
     $h += "<img class='clockface' src='/web/images/clockface.png' />";              //add the clockface
@@ -1571,11 +1572,11 @@ var $setWidgetPosition = function(e) {
 // reDraw an icon-based widget to reflect changes to state or occupancy
 var $reDrawIcon = function($widget) {
     // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : "");
     // set image src to requested state's image, if defined
     if ($widget['icon' + $indicator + ($widget.state + "")]) {
         $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);
-    } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
+    } else if ($widget['defaulticon']) {  // if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']);
     } else {
         log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
@@ -2058,6 +2059,9 @@ $(document).ready(function() {
             		}
             	}
                 updateWidgets(name, value, data);
+            },
+            oBlock: function(name, value, data) {
+                updateWidgets(name, state, data);
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);

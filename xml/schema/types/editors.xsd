@@ -1876,7 +1876,6 @@
         </xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-        <xs:element name="errorsensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
 
         <xs:element name="iconmap" minOccurs="0" maxOccurs="1">
@@ -1993,7 +1992,6 @@
         <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancyblock" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="occupancysensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
-        <xs:element name="errorsensor" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
         <xs:element name="showTrainName" type="yesNoType" minOccurs="0" maxOccurs="1"></xs:element>
 
         <xs:element name="iconmaps" minOccurs="0" maxOccurs="1">

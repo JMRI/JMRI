@@ -5,6 +5,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 
+import jmri.jmrit.display.IndicatorTrackIcon;
+import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.server.json.JSON;
@@ -68,22 +70,42 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         log.debug("N elements: {}", contents.size());
         for (Positionable sub : contents) {
             if (sub != null) {
+                Element e = new Element("temp");
                 try {
-                    panel.addContent(positionableElement(sub));
+                    e = positionableElement(sub);
+
                 } catch (Exception ex) {
                     log.error("Error storing panel element: {}", ex, ex);
                 }
-                // if required, add special stuff to positionable here to see in Web Server
-//                if (sub.getNamedBean() == null) { // skip unconnected switch
-//                    log.debug("switch {} NOT connected", sub.getNameString()); // use label instead
-//                } else {
-//                    try {
-//                        e.setAttribute(JSON.ID, sub.getNamedBean().getSystemName());
-//                        e.setAttribute("connected", "true"); // activate click action via class
-//                    } catch (NullPointerException ex) {
-//                        log.debug("{} {} does not have a SystemName", e.getName(), e.getAttribute(JSON.NAME));
-//                    }
-//                }
+                // where required, add special stuff to positionable here to see in Web Server
+                switch (e.getName()) {
+                    case "indicatorturnouticon" :
+                        // if separate occsensor was set on icon, it was already copied to e as part of 'contents'
+                        if (((IndicatorTurnoutIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
+                            Element elem = new Element("occupancysensor");
+                            elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedSensor().getName());
+                            e.addContent(elem);
+                            elem = new Element("errorsensor");
+                            e.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getErrorSensor().getDisplayName());
+                            e.addContent(elem);
+                        }
+                        break;
+                    case "indicatortrackicon" :
+                        // if separate occsensor was set on icon, it was already copied to e as part of 'contents'
+                        if (((IndicatorTrackIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
+                            Element elem = new Element("occupancysensor");
+                            elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedSensor().getName());
+                            e.addContent(elem);
+                            elem = new Element("errorsensor");
+                            e.addContent(((IndicatorTrackIcon) sub).getOccBlock().getErrorSensor().getDisplayName());
+                            e.addContent(elem);
+                        }
+                        break;
+                    case "" :
+                    default :
+                        // nothing extra
+                }
+                panel.addContent(e);
             }
         }
 
