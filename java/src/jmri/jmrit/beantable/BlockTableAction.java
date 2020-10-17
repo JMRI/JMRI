@@ -207,6 +207,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     } else if (b.getCurvature() == Block.SEVERE) {
                         c.setSelectedItem(severeText);
                     }
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LENGTHCOL) {
                     double len = 0.0;
@@ -227,6 +228,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STATECOL) {
                     switch (b.getState()) {
@@ -247,6 +249,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = sensor.getDisplayName();
                     }
                     c.setSelectedItem(name);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
@@ -256,6 +259,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                         name = reporter.getDisplayName();
                     }
                     rs.setSelectedItem(name);
+                    rs.addActionListener(super::comboBoxAction);
                     return rs;
                 } else if (col == CURRENTREPCOL) {
                     return Boolean.valueOf(b.isReportingCurrent());
@@ -503,8 +507,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
             @Override
             public void configureTable(JTable table) {
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
                 jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
                 jmri.InstanceManager.getDefault(jmri.ReporterManager.class).addPropertyChangeListener(this);

@@ -3,8 +3,11 @@ package jmri.implementation;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.util.PhysicalLocation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,21 +31,17 @@ public class AbstractIdTagReporter extends AbstractReporter
         super(systemName, userName);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notify(IdTag id) {
         log.debug("Notify: {}",mSystemName);
         if (id != null) {
             log.debug("Tag: {}",id);
-            Reporter r;
-            if ((r = id.getWhereLastSeen()) != null) {
-                log.debug("Previous reporter: {}",r.getSystemName());
-                if (!(r.equals(this)) && r.getCurrentReport() == id
-                   && (r instanceof IdTagListener)) {
-                    log.debug("Notify previous");
-                    ((IdTagListener)r).notify(null);
-                } else {
-                    log.debug("Current report was: {}",r.getCurrentReport());
-                }
+            Reporter r = id.getWhereLastSeen();
+            if (r != null) {
+                notifyPreviousReporter(r,id);
             }
             id.setWhereLastSeen(this);
             log.debug("Seen here: {}",this.mSystemName);
@@ -50,27 +49,52 @@ public class AbstractIdTagReporter extends AbstractReporter
         setReport(id);
         setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
     }
+    
+    private void notifyPreviousReporter(Reporter r, IdTag id) {
+        log.debug("Previous reporter: {}",r.getSystemName());
+        if (!(r.equals(this)) && r.getCurrentReport() == id
+           && (r instanceof IdTagListener)) {
+            log.debug("Notify previous");
+            ((IdTagListener)r).notify(null);
+        } else {
+            log.debug("Current report was: {}",r.getCurrentReport());
+        }
+    }
 
     private int state = UNKNOWN;
 
+    /** {@inheritDoc} */
     @Override
     public void setState(int s) {
         state = s;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getState() {
         return state;
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public String describeState(int state) {
+        switch (state) {
+            case IdTag.SEEN:
+                return Bundle.getMessage("IdTagReporterStateSeen");
+            case IdTag.UNSEEN:
+                return Bundle.getMessage("IdTagReporterStateUnSeen");
+            default:
+                return super.describeState(state);
+        }
+    }
 
     // Methods to support PhysicalLocationReporter interface
+    
     /**
-     * getLocoAddress()
-     *
-     * get the locomotive address we're reporting about from the current report.
-     *
-     * Note: We ignore the string passed in, because IdTag Reporters don't send
-     * String type reports.
+     * Get the locomotive address we're reporting about from the current report.
+     * {@inheritDoc}
+     * @param rep ignored, IdTag Reporters don't send String type reports.
      */
     @Override
     public LocoAddress getLocoAddress(String rep) {
@@ -82,9 +106,7 @@ public class AbstractIdTagReporter extends AbstractReporter
         Pattern p = Pattern.compile("" + rm.getSystemPrefix() + rm.typeLetter() + "(\\d+)");
         Matcher m = p.matcher(cr.getTagID());
         if (m.find()) {
-            if(log.isDebugEnabled()) {
-                log.debug("Parsed address: {}", m.group(1));
-            }
+            log.debug("Parsed address: {}", m.group(1));
             // I have no idea what kind of loco address an Ecos reporter uses,
             // so we'll default to DCC for now.
             return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
@@ -94,10 +116,11 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     /**
-     * getDirection()
-     *
-     * Gets the direction (ENTER/EXIT) of the report. Because of the way 
+     * Gets the direction (ENTER/EXIT) of the report. 
+     * <p>
+     * Because of the way 
      * IdTag Reporters work, all reports are ENTER type.
+     * {@inheritDoc}
      */
     @Override
     public PhysicalLocationReporter.Direction getDirection(String rep) {
@@ -106,12 +129,13 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     /**
-     * getPhysicalLocation()
+     * Get the PhysicalLocation of the Reporter
      *
-     * Returns the PhysicalLocation of the Reporter
-     *
-     * Reports its own location, for now. Not sure if that's the right thing or
+     * Reports its own location, for now. 
+     * Not sure if that's the right thing or
      * not. NOT DONE YET
+     * 
+     * {@inheritDoc}
      */
     @Override
     public PhysicalLocation getPhysicalLocation() {
@@ -119,11 +143,10 @@ public class AbstractIdTagReporter extends AbstractReporter
     }
 
     /**
-     * getPhysicalLocation(String s)
+     * Get the PhysicalLocation of the Reporter.
      *
-     * Returns the PhysicalLocation of the Reporter
-     *
-     * Does not use the parameter s
+     * {@inheritDoc}
+     * @param s unused.
      */
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
