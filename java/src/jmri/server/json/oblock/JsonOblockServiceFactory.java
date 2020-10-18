@@ -9,9 +9,11 @@ import static jmri.server.json.oblock.JsonOblock.OBLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCKS;
 
 /**
+ * Copied from jmri/server/json/blocks.java
  *
  * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood Copyright 2018
+ * @author Egbert Broerse Copyright 2020
  */
 @ServiceProvider(service = JsonServiceFactory.class)
 public class JsonOblockServiceFactory implements JsonServiceFactory<JsonOblockHttpService, JsonOblockSocketService> {

@@ -17,7 +17,7 @@ import java.util.Locale;
  * Provides standard access for resource bundles in a package.
  *
  * Convention is to provide a subclass of this name in each package, working off
- * the local resource bundle name.
+ * the local resource bundle name.  Copied from jmri/server/json/blocks/
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1

@@ -379,7 +379,8 @@
                     jmri.socket.send("oblock", { name: name });
                 } else {
                     $.getJSON(jmri.url + "oblock/" + name, function (json) {
-                        jmri.oblock(json.data.name, json.data.value, json.data);
+                        //jmri.oblock(json.data.name, json.data.value, json.data);
+                        jmri.oblock(json.data.name, json.data.state, json.data); // copied from sensor EBR
                     });
                 }
             };
@@ -393,7 +394,7 @@
                         data: JSON.stringify({ value: value }),
                         contentType: "application/json; charset=utf-8",
                         success: function (json) {
-                            jmri.bolock(json.data.name, json.data.value, json.data);
+                            jmri.oblock(json.data.name, json.data.value, json.data);
                             jmri.getOblock(json.data.name, json.data.value);
                         }
                     });

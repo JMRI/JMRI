@@ -115,7 +115,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
     private List<Portal> _portals = new ArrayList<>();     // portals to this block
 
-    private Warrant _warrant;        // when not null, block is allocated to this warrant
+    private Warrant _warrant;        // when not null, oblock is allocated to this warrant
     private String _pathName;        // when not null, this is the allocated path
     protected long _entryTime;       // time when block became occupied
     private boolean _metric = false; // desired display mode
@@ -439,6 +439,21 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     public Font getMarkerFont() {
         return _markerFont;
+    }
+
+    /**
+     * Provide a general method for updating the Oblock status.
+     *
+     * @param v the new state
+     */
+    @Override
+    public void setState(int v) {
+        int old = getState();
+        super.setState(v);
+        // notify
+        // copied from Block to get proper listener in Web Server
+            log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // EBR test CPE
+            firePropertyChange("state", old, getState());
     }
 
     /**

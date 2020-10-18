@@ -320,6 +320,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
         // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
         try {
+            log.debug("Block {} setState {}", mSystemName, v); // EBR test CPE
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
             log.error("{} got exception during firePropertyChange({},{}) in thread {} {}: {}", getDisplayName(), old, _current,
@@ -332,8 +333,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * gathers a value from an adjacent Block. This can be overridden in a
      * subclass if e.g. you want to keep track of Blocks elsewhere, but make
      * sure you also eventually invoke the super.setValue() here.
-     * <p>
-     * @param value The new Object resident in this block, or null if none.
+     *
+     * @param value The new Object resident in this block, or null if none
      */
     public void setValue(Object value) {
         //ignore if unchanged

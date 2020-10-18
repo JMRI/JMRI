@@ -19,21 +19,28 @@ import jmri.server.json.sensor.JsonSensor;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static jmri.server.json.JSON.VALUE;
+//import static jmri.server.json.block.JsonBlock.BLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCKS;
 import static jmri.server.json.idtag.JsonIdTag.IDTAG;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 /**
+ * Copied from jmri/server/json/blocks.java
+ *
  * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018, 2019
+ * @author Egbert Broerse Copyright 2020
  */
 public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
 
-    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
-    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
-    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
+//    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+//    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
+//    private JsonRosterHttpService rosterService = new JsonRosterHttpService(mapper);
 
     public JsonOblockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -43,41 +50,45 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
     public ObjectNode doGet(OBlock oblock, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = this.getNamedBean(oblock, name, type, request);
         ObjectNode data = root.with(JSON.DATA);
+        log.debug("oblock.getState() = {}", oblock.getState());
         switch (oblock.getState()) {
-            case Block.UNDETECTED:
+            case OBlock.UNDETECTED:
             case NamedBean.UNKNOWN:
                 data.put(JSON.STATE, JSON.UNKNOWN);
                 break;
             default:
+                // add OBlock status, includes special values for Allocated 0x10, OutOfService 0x40 etc.
                 data.put(JSON.STATE, oblock.getState());
         }
-        // set block value based on type stored there
-        Object bv = oblock.getValue();
-        if (bv == null) {
-            data.putNull(VALUE);
-        } else if (bv instanceof jmri.IdTag) {
-            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
-            data.set(VALUE, idTagValue);
-        } else if (bv instanceof Reporter) {
-            ObjectNode reporterValue = reporterService.doGet((Reporter) bv, name, REPORTER, request);
-            data.set(VALUE, reporterValue);
-        } else if (bv instanceof BasicRosterEntry) {
-            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
-            data.set(VALUE, rosterValue);
-        } else {
-            // send string for types not explicitly handled
-            data.put(VALUE, bv.toString());
-        }
-        data.put(JsonSensor.SENSOR, oblock.getSensor() != null ? oblock.getSensor().getSystemName() : null);
-        data.put(JsonReporter.REPORTER, oblock.getReporter() != null ? oblock.getReporter().getSystemName() : null);
-        data.put(JSON.SPEED, oblock.getBlockSpeed());
-        data.put(JsonOblock.CURVATURE, oblock.getCurvature());
-        data.put(JSON.DIRECTION, oblock.getDirection());
-        data.put(JSON.LENGTH, oblock.getLengthMm());
-        data.put(JsonOblock.PERMISSIVE, oblock.getPermissiveWorking());
-        data.put(JsonOblock.SPEED_LIMIT, oblock.getSpeedLimit());
-        ArrayNode array = data.putArray(JsonOblock.DENIED);
-        oblock.getDeniedBlocks().forEach(array::add);
+        // set block value based on type stored there (? skip for now)
+//        Object bv = oblock.getValue();
+//        if (bv == null) {
+//            data.putNull(VALUE);
+//        } else if (bv instanceof jmri.IdTag) {
+//            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
+//            data.set(VALUE, idTagValue);
+//        } else if (bv instanceof Reporter) {
+//            ObjectNode reporterValue = reporterService.doGet((Reporter) bv, name, REPORTER, request);
+//            data.set(VALUE, reporterValue);
+//        } else if (bv instanceof BasicRosterEntry) {
+//            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
+//            data.set(VALUE, rosterValue);
+//        } else {
+//            // send string for types not explicitly handled
+//            data.put(VALUE, bv.toString());
+//        }
+//        data.put(JsonSensor.SENSOR, oblock.getSensor() != null ? oblock.getSensor().getSystemName() : null);
+        // add ErrorSensor state
+//        data.put(JsonSensor.SENSOR, oblock.getErrorSensor() != null ? oblock.getErrorSensor().getSystemName() : null);
+//        data.put(JsonReporter.REPORTER, oblock.getReporter() != null ? oblock.getReporter().getSystemName() : null);
+//        data.put(JSON.SPEED, oblock.getBlockSpeed());
+//        data.put(JsonOblock.CURVATURE, oblock.getCurvature());
+//        data.put(JSON.DIRECTION, oblock.getDirection());
+//        data.put(JSON.LENGTH, oblock.getLengthMm());
+//        data.put(JsonOblock.PERMISSIVE, oblock.getPermissiveWorking());
+//        data.put(JsonOblock.SPEED_LIMIT, oblock.getSpeedLimit());
+//        ArrayNode array = data.putArray(JsonOblock.DENIED);
+//        oblock.getDeniedBlocks().forEach(array::add);
         return root;
     }
 
@@ -122,37 +133,37 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 }
             }
         }
-        if (!data.path(JsonReporter.REPORTER).isMissingNode()) {
-            JsonNode node = data.path(JsonReporter.REPORTER);
-            if (node.isNull()) {
-                oblock.setReporter(null);
-            } else {
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
-                if (reporter != null) {
-                    oblock.setReporter(reporter);
-                } else {
-                    throw new JsonException(404,
-                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER,
-                                    node.asText()),
-                            request.id);
-                }
-            }
-        }
-        String text = data.findPath(JSON.SPEED).asText(oblock.getBlockSpeed());
-        try {
-            oblock.setBlockSpeed(text);
-        } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                    Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, text, JSON.SPEED, type),
-                    request.id);
-        }
-        oblock.setCurvature(data.path(JsonOblock.CURVATURE).asInt(oblock.getCurvature()));
-        oblock.setDirection(data.path(JSON.DIRECTION).asInt(oblock.getDirection()));
-        if (data.path(JSON.LENGTH).isNumber()) {
-            oblock.setLength(data.path(JSON.LENGTH).floatValue());
-        }
-        oblock.setPermissiveWorking(data.path(JsonOblock.PERMISSIVE).asBoolean(oblock.getPermissiveWorking()));
-        return this.doGet((OBlock) oblock, name, type, request);
+//        if (!data.path(JsonReporter.REPORTER).isMissingNode()) {
+//            JsonNode node = data.path(JsonReporter.REPORTER);
+//            if (node.isNull()) {
+//                oblock.setReporter(null);
+//            } else {
+//                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
+//                if (reporter != null) {
+//                    oblock.setReporter(reporter);
+//                } else {
+//                    throw new JsonException(404,
+//                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER,
+//                                    node.asText()),
+//                            request.id);
+//                }
+//            }
+//        }
+//        String text = data.findPath(JSON.SPEED).asText(oblock.getBlockSpeed());
+//        try {
+//            oblock.setBlockSpeed(text);
+//        } catch (JmriException ex) {
+//            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+//                    Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, text, JSON.SPEED, type),
+//                    request.id);
+//        }
+//        oblock.setCurvature(data.path(JsonOblock.CURVATURE).asInt(oblock.getCurvature()));
+//        oblock.setDirection(data.path(JSON.DIRECTION).asInt(oblock.getDirection()));
+//        if (data.path(JSON.LENGTH).isNumber()) {
+//            oblock.setLength(data.path(JSON.LENGTH).floatValue());
+//        }
+        //oblock.setPermissiveWorking(data.path(JsonOblock.PERMISSIVE).asBoolean(oblock.getPermissiveWorking()));
+        return this.doGet(oblock, name, type, request);
     }
 
     @Override
@@ -186,4 +197,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
     protected ProvidingManager<OBlock> getManager() {
         return InstanceManager.getDefault(OBlockManager.class);
     }
+
+    private final static Logger log = LoggerFactory.getLogger(JsonOblockHttpService.class);
+
 }

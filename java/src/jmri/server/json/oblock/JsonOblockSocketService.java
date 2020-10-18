@@ -5,8 +5,9 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonNamedBeanSocketService;
 
 /**
- *
- * @author mstevetodd Copyright (C) 2018 (copied from JsonMemorySocketService)
+ * Copied from jmri/server/json/blocks.java
+
+ * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood
  */
 public class JsonOblockSocketService extends JsonNamedBeanSocketService<OBlock, JsonOblockHttpService> {
@@ -14,4 +15,5 @@ public class JsonOblockSocketService extends JsonNamedBeanSocketService<OBlock, 
     public JsonOblockSocketService(JsonConnection connection) {
         super(connection, new JsonOblockHttpService(connection.getObjectMapper()));
     }
+
 }

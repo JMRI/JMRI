@@ -81,23 +81,30 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                     case "indicatorturnouticon" :
                         // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
                         if (((IndicatorTurnoutIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
-                            Element elem = new Element("occupancysensor");
-                            elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedSensor().getName());
-                            e.addContent(elem);
-                            elem = new Element("errorsensor");
-                            e.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedErrorSensor().getName());
-                            e.addContent(elem);
+                            Element elem = new Element("oblocksysname");
+                            elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName());
+                            log.debug("ITOT = {}", ((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName());                            e.addContent(elem);
+//                            elem = new Element("occupancysensor");
+//                            elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedSensor().getName());
+//                            e.addContent(elem);
+//                            elem = new Element("errorsensor");
+//                            e.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getNamedErrorSensor().getName());
+//                            e.addContent(elem);
                         }
                         break;
                     case "indicatortrackicon" :
                         // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
                         if (((IndicatorTrackIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
-                            Element elem = new Element("occupancysensor");
-                            elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedSensor().getName());
+                            Element elem = new Element("oblocksysname");
+                            elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getSystemName());
+                            log.debug("ITI = {}", ((IndicatorTrackIcon) sub).getOccBlock().getSystemName());
                             e.addContent(elem);
-                            elem = new Element("errorsensor");
-                            e.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedErrorSensor().getName());
-                            e.addContent(elem);
+//                            elem = new Element("occupancysensor");
+//                            elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedSensor().getName());
+//                            e.addContent(elem);
+//                            elem = new Element("errorsensor");
+//                            e.addContent(((IndicatorTrackIcon) sub).getOccBlock().getNamedErrorSensor().getName());
+//                            e.addContent(elem);
                         }
                         break;
                     case "" :
