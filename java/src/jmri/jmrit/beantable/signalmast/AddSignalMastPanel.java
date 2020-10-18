@@ -512,8 +512,8 @@ public class AddSignalMastPanel extends JPanel {
     }
 
     int issueNoUserNameGiven() {
-        return JOptionPane.showConfirmDialog(null, "No Username has been defined, this may cause issues when editing the mast later.\nAre you sure that you want to continue?",  // NOI18N
-                "No UserName Given",  // NOI18N
+        return JOptionPane.showConfirmDialog(null, Bundle.getMessage("SignalMastEmptyUserNameDialog"),  // NOI18N
+                Bundle.getMessage("SignalMastEmptyUserNameDialogTitle"),  // NOI18N
                 JOptionPane.YES_NO_OPTION);
     }
     
