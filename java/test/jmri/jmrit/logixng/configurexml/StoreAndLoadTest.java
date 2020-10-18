@@ -106,6 +106,11 @@ public class StoreAndLoadTest {
         Turnout turnout5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT5");
         turnout5.setCommandedState(Turnout.CLOSED);
 
+        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
+        Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
+
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         
         // Create an empty LogixNG
@@ -270,6 +275,24 @@ public class StoreAndLoadTest {
         MaleSocket socketLight = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight);
         socketOr.getChild(index++).connect(socketLight);
 
+        ExpressionMemory expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:11026", null);
+        expressionMemory.setMemory(memory1);
+        expressionMemory.setConstantValue("Some constant value");
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+        expressionMemory.setCaseInsensitive(true);
+        MaleSocket socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
+        socketOr.getChild(index++).connect(socketMemory);
+
+        expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:12026", null);
+        expressionMemory.setMemory(memory2);
+        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
+        expressionMemory.setCaseInsensitive(false);
+        socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
+        socketOr.getChild(index++).connect(socketMemory);
+
         ExpressionLight expressionLight2 = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00027", "My light");
         expressionLight2.setLight((Light)null);
         expressionLight2.set_Is_IsNot(Is_IsNot_Enum.IS);
@@ -409,11 +432,6 @@ public class StoreAndLoadTest {
         actionThrottle = new ActionThrottle(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10024", "My other throttle action");
         socketThrottle = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle);
         socketSecondMany.getChild(index++).connect(socketThrottle);
-
-        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
-        Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
-        Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
 
         AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"AE:AUTO:00003", null);
         analogExpressionMemory.setMemory(memory1);

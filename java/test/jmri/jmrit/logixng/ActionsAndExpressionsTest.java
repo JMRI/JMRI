@@ -21,13 +21,20 @@ import org.junit.Assert;
 /**
  * Test that all the action and expression classes are registed and have
  * configurexml and swing classes.
+ * <P>
+ * Requirements that this class checks for:
+ * 
+ * Each action and expression needs to
+ * * be registered in its manager
+ * * have a configurexml class
+ * * have a swing configurator class
+ * * have a test class for its swing configurator class
  * 
  * @author Daniel Bergqvist 2020
  */
 public class ActionsAndExpressionsTest {
     
-//    private boolean errorsFound = false;
-//    private int classesToCheck = 0;
+    private boolean errorsFound = false;
     
     
     private void checkFolder(Path path, String packageName, Map<Category, List<Class<? extends Base>>> registeredClasses, String[] classesToIgnore) {
@@ -47,9 +54,8 @@ public class ActionsAndExpressionsTest {
                 if (file.equals(c)) continue filesLoop;
             }
             
+            // Check that all actions and expressions is registered in its manager
             Set<Class<? extends Base>> setOfClasses = new HashSet<>();
-            
-//            classesToCheck++;
             boolean isRegistered = false;
             for (Map.Entry<Category, List<Class<? extends Base>>> entry : registeredClasses.entrySet()) {
                 for (Class<? extends Base> c : entry.getValue()) {
@@ -74,22 +80,28 @@ public class ActionsAndExpressionsTest {
 //            }
             Assert.assertTrue(String.format("Class %s is registred%n", file), isRegistered);
             
+            String fullConfigName;
+            
+            // Ignore this for now
+/*            
+            // Check that all actions and expressions has a xml class
             Object configureXml = null;
-            String fullConfigName = packageName + ".configurexml." + file + "Xml";
+            fullConfigName = packageName + ".configurexml." + file + "Xml";
             log.debug("getAdapter looks for {}", fullConfigName);
             try {
                 Class<?> configClass = Class.forName(fullConfigName);
                 configureXml = configClass.getDeclaredConstructor().newInstance();
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
-//            if (configureXml == null) {
-//                System.out.format("Class %s.%s has no configurexml class%n", packageName, file);
-//                errorsFound = true;
-//            }
-            
+            if (configureXml == null) {
+                System.out.format("Class %s.%s has no configurexml class%n", packageName, file);
+                errorsFound = true;
+            }
+*/            
             // Disable for now
 //            Assert.assertNotNull(String.format("Class %s has xml class%n", file), configureXml);
             
+            // Check that all actions and expressions has a swing class
             SwingConfiguratorInterface configureSwing = null;
             fullConfigName = packageName + ".swing." + file + "Swing";
             log.debug("getAdapter looks for {}", fullConfigName);
@@ -106,6 +118,25 @@ public class ActionsAndExpressionsTest {
 //                errorsFound = true;
 //            }
             Assert.assertNotNull(String.format("Class %s has swing class%n", file), configureSwing);
+            
+            // Ignore for now
+/*            
+            // Check that all actions and expressions has a test class for the swing class
+//            Class configureSwingTest = null;
+            fullConfigName = packageName + ".swing." + file + "SwingTest";
+            log.debug("getAdapter looks for {}", fullConfigName);
+            Class<?> configClass = null;
+            try {
+                configClass = Class.forName(fullConfigName);
+            } catch (ClassNotFoundException e) {
+            }
+            if (configClass == null) {
+                System.out.format("Class %s.%s has no test class for its swing class%n", packageName, file);
+                errorsFound = true;
+            }
+//            Assert.assertNotNull("The swing class has a test class", configClass);
+*/          
+            
 /*            
             System.out.format("Class: %s%n", packageName+"."+file);
             Level severity = Level.ERROR; // level at or above which we'll complain
@@ -195,9 +226,7 @@ public class ActionsAndExpressionsTest {
                 getStringExpressionClasses(),
                 new String[]{"AbstractStringExpression","Bundle","Factory"});
         
-//        System.out.format("Num classes checked: %d%n", classesToCheck);
-        
-//        Assert.assertFalse("No errors found", errorsFound);
+        Assert.assertFalse("No errors found", errorsFound);
     }
     
     // The minimal setup for log4J
