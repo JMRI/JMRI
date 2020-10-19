@@ -319,8 +319,8 @@ public class CbusPreferences extends PreferencesBean {
     }
     
     /**
-     * Set programming track mode
-     * @param state true if available
+     * Get the programming track mode
+     * @return 
      */
     public int getProgTrackMode() {
         return _progTrackMode;
@@ -328,7 +328,7 @@ public class CbusPreferences extends PreferencesBean {
     
     /**
      * Set programming track mode
-     * @param state true if available
+     * @param mode to be set
      */
     public void setProgTrackMode(int mode) {
         _progTrackMode = mode;

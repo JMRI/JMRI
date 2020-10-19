@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2020
  */
-public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame 
-        implements CanListener {
+public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame {
     
     protected static final int PROG_MODE = 0;     // Original SPROG Programnmer mode
     protected static final int CMD_MODE = 1;      // Original SPROG Command Station mode
