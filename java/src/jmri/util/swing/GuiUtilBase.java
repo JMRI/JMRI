@@ -40,9 +40,9 @@ public class GuiUtilBase {
             }
         }
 
-        Element childUrl = child.getChild("icon"); 
-        if ( childUrl != null) { // NOI18N
-            java.net.URL iconUrl =  FileUtil.findURL(childUrl.getText()); // NOI18N
+        Element childUrl = child.getChild("icon"); // NOI18N
+        if ( childUrl != null) {
+            java.net.URL iconUrl =  FileUtil.findURL(childUrl.getText());
             if (iconUrl!=null) {
                 icon = new ImageIcon(iconUrl);
             }
