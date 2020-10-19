@@ -320,7 +320,7 @@ public class CbusPreferences extends PreferencesBean {
     
     /**
      * Get the programming track mode
-     * @return 
+     * @return the mode
      */
     public int getProgTrackMode() {
         return _progTrackMode;
