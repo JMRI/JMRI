@@ -98,9 +98,9 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
     
 
     /**
-     * Switch the hardware to the requested operting mode
+     * Switch the hardware to the requested operating mode
      * 
-     * @param mode 
+     * @param mode mode requested
      */
     protected void setHardwareMode(int mode) {
         send.nVSET(csNode, PROP_CMD_STATION, mode);
