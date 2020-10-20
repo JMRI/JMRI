@@ -42,9 +42,10 @@ var $gPanelList = {};       //store list of available panels
 var $gPanel = {};           //store overall panel info
 var whereUsed = {};         //associative array of array of elements indexed by systemName or userName
 var occupancyNames = {};    //associative array of array of elements indexed by occupancy sensor name
+var $oblockNames = {};       //associative array of array of elements indexed by occupancy block name (CPE panels)
 var $gPts = {};             //array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {};            //array of all blocks, key="blockname" (used for layoutEditor panels)
-var $gOblks = {};            //array of all occupancyblocks, key="oblockname" (used for controlPanelEditor panels)
+//var $gOblks = {};           //array of all occupancyblocks, key="oblocksysname" (used for controlPanelEditor panels)
 var $gCtx;                  //persistent context of canvas layer
 var $gDashArray = [12, 12]; //on,off of dashed lines
 var $rows = 1;              //persistent storage of shared switchboard property number of rows, if 0 use autoRows
@@ -300,69 +301,71 @@ function processPanelXML($returnedData, $success, $xhr) {
                             break;
                         case "indicatortrackicon" :
                             $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                            $widget['icon2'] = $widget['icon' + UNKNOWN];
+                            $widget['icon2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // spare for occupied
                             $widget['icon4'] = $widget['icon' + UNKNOWN];
-                            $widget['icon8'] = $widget['icon' + UNKNOWN];
-                            $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url'); // Allocated
-                            $widget['icon32'] = $(this).find('iconmap').find('PositionTrack').attr('url'); // Not in use
+                            $widget['icon8'] = $widget['icon' + UNKNOWN]; // inconsistent
+                            $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url');
+                            $widget['icon32'] = $(this).find('iconmap').find('PositionTrack').attr('url'); // Running
                             $widget['icon64'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
-                            $widget['icon128'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Error + Occupied
-                            $widget['icon132'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Error + Unoccupied
+                            $widget['icon68'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
+                            $widget['icon80'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
+                            $widget['icon128'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
+                            $widget['icon144'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
+                            $widget['icon192'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
+
                             $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
-                            $widget['iconOccupied2'] = $widget['iconOccupied' + UNKNOWN];
-                            $widget['iconOccupied4'] = $widget['iconOccupied' + UNKNOWN];
-                            $widget['iconOccupied8'] = $widget['iconOccupied' + UNKNOWN];
+                            $widget['iconOccupied2'] = $(this).find('iconmap').find('AllocatedTrack').attr('url');
                             $widget['iconOccupied128'] = $(this).find('iconmap').find('ErrorTrack').attr('url');
                             $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
                             // CPE CircuitBuilder Oblocks
-                            if ($(this).find('occupancyblock')) { // extract the occupancyblock name and state
+                            if ($(this).find('oblocksysname').text() == "none") { // instead, store occupancy sensor name
+                               $widget['occupancyblock'] = "none"; // clear oblockname
+                               $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                               console.log("ITI SENSOR=" + $widget['occupancysensor']);
+                               $widget['occupancystate'] = UNKNOWN;
+                               //$widget.jsonType = "sensor"; // JSON object type
+                               jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
+                           } else if ($(this).find('oblocksysname').text()) { // extract the occupancyblock name and state
                                 $widget['oblocksysname'] = $(this).find('oblocksysname').text();
+                                $widget['occupancysensor'] = "none"; // clear occ.sensorname
                                 console.log("ITI OBLOCK =" + $widget['oblocksysname']);
                                 $widget['occupancystate'] = UNKNOWN;
-                                //$widget.jsonType = "oblock"; // JSON object type
                                 jmri.getOblock($widget["oblocksysname"]); // listen for oblock changes, fired by Block#setState(), under development
-                                // add widget.id to whereUsed array to support updates from layout
-                                //if (!($widget.occupancyblock in whereUsed)) {
-                                //    whereUsed[$widget.occupancyblock] = new Array();
-                                //}
-                                //$gOblks[$widget.occupancyblock] = $widget;
-                                //set widget occupancy sensor from block to speed affected changes later
-                                //if (typeof $gOblks[$widget.occupancyblock] !== "undefined") {
-                                    //$widget['occupancysensor'] = $gOblks[$widget.occupancyblock].occupancysensor;
-                                    //$widget['occupancystate'] = $gOblks[$widget.occupancyblock].state;
-                                    //$widget['errorsensor'] = $gOblks[$widget.occupancyblock].errorsensor;
-                                    //$widget['errorstate'] = $gOblks[$widget.occupancyblock].errorstate;
-                                //}
-                                //whereUsed[$widget.occupancyblock][whereUsed[$widget.occupancyblock].length] = $widget.id;
-
-//s
-                                //jmri.getSensor($widget["errorsensor"]); // listen for error changes
-                                // add widget.id to whereUsed array to support updates from layout
-//                                if (!($widget.errorsensor in whereUsed)) {
-//                                    whereUsed[$widget.errorsensor] = new Array();
-//                                }
-//                                whereUsed[$widget.errorsensor][whereUsed[$widget.errorsensor].length] = $widget.id;
-                            } else if ($(this).find('occupancysensor')) {  // store the occupancy sensor name and state (could be part of oblock)
-                                $widget['occupancysensor'] = $(this).find('occupancysensor').text();
-                                console.log("ITI SENSOR=" + $widget['occupancysensor']);
-                                $widget['occupancystate'] = UNKNOWN;
-                                $widget.jsonType = "sensor"; // JSON object type
-                                jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
+                                // add widget to $gOblks array to support updates from layout, needed?
+                                //$gOblks[$widget.oblocksysname] = $widget;
+                                // store ControlPanelEditor oblocks where-used
+                                $store_occupancyblock($widget.id, $widget.oblocksysname);
                             }
                             break;
                         case "indicatorturnouticon" :
                             $widget['name'] = $(this).find('turnout').text(); //normalize name
                             $widget.jsonType = 'turnout'; // JSON object type
                             $widget['icon' + UNKNOWN] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
-                            $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
-                            $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url'); // Clear + Closed
+                            $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url'); // Clear + Thrown
                             $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['icon16'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateClosed').attr('url'); // Allocated + Closed
+                            $widget['icon18'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateClosed').attr('url'); // Allocated + Closed
+                            $widget['icon20'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateThrown').attr('url'); // Allocated + Thrown
+                            $widget['icon34'] = $(this).find('iconmaps').find('PositionTrack').find('TurnoutStateClosed').attr('url'); // Running + Closed
+                            $widget['icon36'] = $(this).find('iconmaps').find('PositionTrack').find('TurnoutStateClosed').attr('url'); // Running + Thrown
+                            $widget['icon64'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateClosed').attr('url'); // Not in use + Closed
+                            $widget['icon66'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateClosed').attr('url'); // Not in use + Closed
+                            $widget['icon68'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateThrown').attr('url'); // Not in use + Thrown
+                            $widget['icon130'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateClosed').attr('url'); // Power Error + Closed
+                            $widget['icon132'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateThrown').attr('url'); // Power Error + Thrown
+                            $widget['icon146'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateClosed').attr('url'); // Power Error + Closed
+                            $widget['icon148'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateThrown').attr('url'); // Power Error + Thrown
                             $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
                             $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
                             $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
                             $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['iconOccupied18'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['iconOccupied20'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['iconOccupied130'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['iconOccupied130'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
                             $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
@@ -370,18 +373,21 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
                             // CPE CircuitBuilder Oblocks
-                            if ($(this).find('occupancyblock')) { // extract the occupancy block name and state
-                                $widget['oblocksysname'] = $(this).find('oblocksysname').text();
-                                console.log("ITOI OBLOCK =" + $widget['oblocksysname']);
-                                $widget['occupancystate'] = UNKNOWN;
-                                //$widget.jsonType = "oblock"; // JSON object type
-                                jmri.getOblock($widget["oblocksysname"]); // listen for oblock changes
-                                // TODO errorsensor is also available, what icon?
-                            } else if ($(this).find('occupancysensor')) {  // store the occupancy sensor name and state
+                            if ($(this).find('oblocksysname').text() == "none") { // instead, store occupancy sensor name
+                                $widget['occupancyblock'] = "none"; // clear oblockname
                                 $widget['occupancysensor'] = $(this).find('occupancysensor').text();
-                                console.log("ITOI SENSOR =" + $widget['oblocksysname']);
+                                console.log("ITOI SENSOR =" + $widget['occupancysensor']);
                                 $widget['occupancystate'] = UNKNOWN;
                                 jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes, also for oBlocks
+                            } else if ($(this).find('oblocksysname').text()) { // extract the occupancy block name and state
+                                $widget['oblocksysname'] = $(this).find('oblocksysname').text();
+                                $widget['occupancysensor'] = "none"; // clear oblockname
+                                console.log("ITOI OBLOCK =" + $widget['oblocksysname']);
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getOblock($widget["oblocksysname"]); // listen for oblock changes, fired by Block#setState(), under development
+                                // add widget to $gOblks array to support updates from layout, needed?
+                                // $gOblks[$widget.oblocksysname] = $widget;
+                                $store_occupancyblock($widget.id, $widget.oblocksysname);
                             }
                             jmri.getTurnout($widget["systemName"]);
                             break;
@@ -1142,8 +1148,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                 }
                 whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
             }
-            // store LayoutEditor occupancy sensors where-used
             if ($gWidgets[$widget.id]) {
+                // store LayoutEditor occupancy sensors where-used
                 $store_occupancysensor($widget.id, $widget.occupancysensor);
                 $store_occupancysensor($widget.id, $widget.occupancysensorA);
                 $store_occupancysensor($widget.id, $widget.occupancysensorB);
@@ -1388,11 +1394,17 @@ function $drawIcon($widget) {
     }
 
     // additional naming for indicator*icon widgets to reflect occupancy
-    $indicator = (($widget.occupancysensor && $widget.occupancystate == ACTIVE) ? "Occupied" : "");
+    $indicator = "";
+    if ($widget.occupancystate & 0x2 == 0x2) { // look only at bits 1-2
+        $indicator = "Occupied";
+        console.log("icon Occupied");
+    }
+    Ostate = $widget.occupancystate & 0xF9; // binary 11111001, discards (in)active bits in occupancy which we already used above
+    Istate = Ostate | $widget.state; // adds Turnout state back in to fetch TO state = position icon
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if (typeof $widget['icon' + $indicator + $widget.state] !== "undefined") {
+    if (typeof $widget['icon' + $indicator + (Istate + "")] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $indicator + $widget['state']] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + Istate] + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml); // put the html in the panel
 
@@ -1407,7 +1419,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", TOstate=" + $widget.state + ", occ=" + $widget.occupancystate + ", iconstate=" + Istate + " ["+$indicator+"] (icon" + $indicator + Istate + ")");
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -1592,21 +1604,23 @@ var $setWidgetPosition = function(e) {
 
 // reDraw an icon-based widget to reflect changes to state or occupancy
 var $reDrawIcon = function($widget) {
-    // additional naming for indicator*icon widgets to reflect occupancy, error
-    $indicator = ($widget.occupancysensor && ($widget.occupancystate == ACTIVE) ? "Occupied" : ""); // 0x04
-//    if ($widget.errorsensor && $widget.errorstate == ACTIVE) { // 0x80, ignore Occupancy
-//        $widget.state = "128"
-//    } // TODO clean up EBR
-//    if ($widget.occupancyblock && $widget.oblockstate) {
-//        $widget.state = oblockstate;
-//    }
+    console.log("REDRAWICON1 " + $widget.id);
+    // additional naming for indicator*icon widgets to reflect occupancy, error was already handled in updateOblocks()
+    $indicator = "";
+    if ($widget.occupancystate & 0x2 == 0x2) { // look only at bits 1-2
+        $indicator = "Occupied";
+        console.log("Occupied for oblock");
+    }
+    Ostate = $widget.occupancystate & 0xF9; // binary 11111001, discards (in)active bits
+    Istate = Ostate | $widget.state; // adds Turnout state back in to fetch TO state = position icon
+    console.log("REDRAWICON2 " + $widget.oblocksysname + " ISTATE=" + $indicator + Istate);
     // set image src to requested state's image, if defined
-    if ($widget['icon' + $indicator + ($widget.state + "")]) {
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "")]);
+    if ($widget['icon' + $indicator + Istate]) {
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + (Istate + "")]);
     } else if ($widget['defaulticon']) {  // if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']);
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate + ", iconstate=" + Istate + " ["+$indicator+"] (icon" + $indicator + Istate + ")");
     }
 };
 
@@ -1713,22 +1727,31 @@ var $setWidgetState = function($id, $newState, data) {
         if (jmri_logging) {
             log.log("JMRI changed " + $id + " (" + $widget.jsonType + " " + $widget.name + ") from state '" + $widget.state + "' to '" + $newState + "'.");
         }
-        $widget.state = $newState;
-
+        if (data.type == "sensor" && ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatortrackicon")) {
+            $widget.occupancystate = $newState;
+        } else {
+            $widget.state = $newState;
+        }
         // override the state with idTag's "name" in a very specific circumstance
         if (($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) &&
         		$widget.widgetFamily == "icon" && data.value !== null && data.value.type == "idTag") {
         	$widget.state = data.value.data.name;
         }
-        if ($widget.widgetFamily == "icon" && // occupancyblock EBR
-        ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatortrackicon")) {
-        	$widget.state = $newState;
-        	$widget.oblockstate = $newState;
-        	console.log("WIDGET " + $widget.id + " OBLOCK state=" + $newState); // EBR TODO add indicatorturnouticon
-        }
+
         switch ($widget.widgetFamily) {
             case "icon" :
-               	$reDrawIcon($widget)
+                if ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatortrackicon") {
+                    if ($widget.occupancysensor) {
+                        $widget.occupancystate = $newState;
+                        console.log("SET widget " + $widget.id + " to state=" + $newState);
+                    } else if ($widget.occupancyblock) { // expected for turnout
+                        // if defined, follow the occupancyblock and ignore any sensors, don't set widget.state (used for turnout state) EBR
+                        // only pick up the turnout state change, bits 0-4
+                        $widget.state = ($newState & 0xF) ;
+                        console.log("WARNING UNEXPECTED ITOI widget=" + $widget.id + " to state=" + $newState); // EBR TODO clean up
+                    }
+                }
+                $reDrawIcon($widget);
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
@@ -2077,7 +2100,8 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             block: function(name, value, data) {
-                console.log("HEARD BLOCK " + name + " value=" + value);
+                //console.log("HEARD BLOCK " + name + " value=" + value);
+                console.log("JSON BLOCK " + name + " state=" + data.state);
             	if (value !== null) {
             		if (value.type == "idTag") {
             			value = value.data.userName; // for idTags, use the value in userName instead
@@ -2094,13 +2118,10 @@ $(document).ready(function() {
                 updateWidgets(name, value, data);
             },
             oblock: function(name, state, data) { // data contains data.state.value
-                console.log("JSON OBLOCK " + name + " state=" + data.state);
+                console.log("HEARD JSON OBLOCK " + name + " state=" + data.state);
                 if (data.state !== null) {
-                    $widget.occupancystate = data.state;
-                    $widget.oblockstate = data.state;
+                    updateOblocks(name, data.state); // only for indicator(turnout)trackicon widgets
                 }
-                updateOblockStatus(name, data.state);
-                //updateWidgets(name, state, state); // EBR how to propogate? array?
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
@@ -2141,6 +2162,7 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             turnout: function(name, state, data) {
+                console.log("Turnout " + name + " state=" + state);
                 updateWidgets(name, state, data);
             }
         });
@@ -3205,6 +3227,15 @@ function $store_occupancysensor(id, sensor) {
     }
 }
 
+function $store_occupancyblock(id, oblock) {
+    if (id && oblock) {
+        if (!(oblock in $oblockNames)) {
+            $oblockNames[oblock] = new Array();
+        }
+        $oblockNames[oblock][$oblockNames[oblock].length] = id;
+    }
+}
+
 //store the various points defined with a Turnout (pass in widget)
 //see jmri.jmrit.display.layoutEditor.LayoutTurnout.java for background
 function $storeTurnoutPoints($widget) {
@@ -3463,7 +3494,7 @@ function $drawBezier(points, $color, $width, displacement) {
     }
 
     $gCtx.restore();        // restore color and width back to default
-}   // $drawBezier
+}
 
 //
 //plotBezier - recursive function to draw bezier curve
@@ -3730,7 +3761,6 @@ function updateOccupancy(sensorName, state, data) {
 
 function updateOccupancySub(sensorName, state) {
     if (occupancyNames[sensorName]) {
-        //log.log("setting occupancies for sensor {} to {}", sensorName, state);
         $.each(occupancyNames[sensorName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
 
@@ -3741,7 +3771,7 @@ function updateOccupancySub(sensorName, state) {
             updateBlockSensorState($widget.blockcname, sensorName, state);
             updateBlockSensorState($widget.blockdname, sensorName, state);
 
-            $widget.occupancystate = state; //set occupancy for the widget to the newstate
+            $widget.occupancystate = state; // set occupancy for the widget to the newstate
 
             switch ($widget.widgetType) {
                 case 'layoutturnout' :
@@ -3780,33 +3810,31 @@ function setBlockColor(blockName, newColor) {
     $redrawBlock(blockName);
 }
 
-function updateOblocks(oblockName, status, data) { // copied from updateOccupancy()
-    //handle oblocks by systemname
-    if (oblockNames[oblockName]) {
-        updateOblockSub(oblockName, status);
-    }
-}
-
-function updateOblockSub(oblockName, status) { // copied from updateOccupancySub()
-    if (oblockNames[oblockName]) {
-        log.log("setting status for oblock {} to {}", oblockName, status);
-        $.each(oblockNames[oblockName], function(index, widgetId) {
+function updateOblocks(oblockName, status) { // based on updateOccupancy()
+    // all oblocks are handled by their systemname
+    if ($oblockNames[oblockName]) {
+        $.each($oblockNames[oblockName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
-
-            updateOblockStatus($widget.oblockname, status);
-
-            $widget.oblockStatus = status; //set oblockstatus for the widget to the newstate
 
             switch ($widget.widgetType) {
                 case 'indicatortrackicon' :
-                case 'indicatorturnouticon' :
-                    if (status*1 > 127) { // ignore occupied
-                        console.log("STATE = " + status);
-                        $widget.occupancystate = "128";
+                case 'indicatorturnouticon' : // does not receive turnout state via oblock
+                    console.log("updateOblocks UNFILTERED " + oblockName + " on widget " + $widget.id + " state=" + status);
+                    if (status < 0x16) { // ignore (un)occupied
+                        // pass on as is
+                    } else if (status & 0x80 == 0x80) { // ErrorTrack, swallow DontUse, Allocated
+                        status = status & 0x8f;
+                    } else if (status & 0x40 == 0x40) { // DontUseTrack, swallow Allocated, ignore Occupied
+                        status = status & 0x40;
+                    } else if (status & 0x20 == 0x20) { // Running = occupied (via oblock)
+                        status = status & 0x2f; // keep Occupied
+                    } else if (status & 0x12 == 0x2) { // Occupied, swallow Allocated
+                        status = status & 0x2;
+                    } else if (status & 0x10 == 0x10) { // Allocated
+                        status = status & 0x1f;
                     }
-                    console.log("updateOccupancySub for oblock " + $widget.occupancyblock + "on " + $widget.id + " state=" + $widget.occupancystate);
-
-                    $widget.occupancystate = status; // also set occupancy for the widget to the newstate
+                    $widget.occupancystate = status; // set occupancy for the widget to the newocc.status
+                    console.log("updateOblocks FILTERED FOR " + oblockName + " on widget " + $widget.id + " status=" + $widget.occupancystate);
 
                     $reDrawIcon($widget);
                     break;
@@ -3814,15 +3842,6 @@ function updateOblockSub(oblockName, status) { // copied from updateOccupancySub
                     break; // shouldn't get here
             }
         });
-    }
-}
-
-function updateOblockStatus(oblockName, status) { // needed?
-    if (isDefined(oblockName)) {
-        var $oblk = $gOblks[oblockName];
-        if (isDefined($oblk)) {
-            $oblk.state = status;
-        }
     }
 }
 

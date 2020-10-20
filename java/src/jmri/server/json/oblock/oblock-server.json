@@ -20,6 +20,14 @@
             "type": "integer",
             "description": "The state of the oblock",
             "enum": [0, 1, 2, 4, 8, 16, 18, 20, 24, 32, 34, 36, 40, 64, 66, 68, 72, 128, 130, 132, 136]
+        },
+        "warrant": {
+            "type": ["string", "null"],
+            "description": "Allocated warrant for the oblock"
+        },
+        "train": {
+            "type": ["string", "null"],
+            "description": "Train in Warrant for the oblock"
         }
     },
     "additionalProperties": false,

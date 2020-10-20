@@ -18,6 +18,14 @@ public class JsonOblock {
      * {@value #OBLOCKS}
      */
     public static final String OBLOCKS = "oblocks"; // NOI18N
+    /**
+     * {@value #WARRANT}
+     */
+    public static final String WARRANT = "warrant"; // NOI18N
+    /**
+     * {@value #TRAIN}
+     */
+    public static final String TRAIN = "train"; // NOI18N
 //    /**
 //     * {@value #CURVATURE}
 //     */

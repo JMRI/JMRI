@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
@@ -60,7 +61,10 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 // add OBlock status, includes special values for Allocated 0x10, OutOfService 0x40 etc.
                 data.put(JSON.STATE, oblock.getState());
         }
-        // set block value based on type stored there (? skip for now)
+        data.put(JsonOblock.WARRANT, oblock.getWarrant() != null ? oblock.getWarrant().getDisplayName() : null); // add OBlock Warrant name
+        data.put(JsonOblock.TRAIN, oblock.getWarrant() != null ? oblock.getWarrant().getTrainName() : null); // add OBlock Warrant name
+
+        // set oblock value based on type stored there (? skip for now)
 //        Object bv = oblock.getValue();
 //        if (bv == null) {
 //            data.putNull(VALUE);
