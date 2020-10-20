@@ -305,24 +305,18 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             break;
                         case "indicatortrackicon" : // TODO clean up unused icon copies, carefully
-                            $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                            //$widget['icon2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // spare for occupied
-                            $widget['icon4'] = $widget['icon' + UNKNOWN];
-                            $widget['icon8'] = $widget['icon' + UNKNOWN]; // inconsistent
-                            $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url');
+                            $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url'); // clear via oblock
+                            $widget['icon2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // occupied via sensor
+                            $widget['icon4'] = $widget['icon' + UNKNOWN]; // clear via sensor
+                            $widget['icon8'] = $widget['icon' + UNKNOWN]; // status from sensor inconsistent
+                            $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url'); //
                             $widget['icon32'] = $(this).find('iconmap').find('PositionTrack').attr('url'); // Running
                             $widget['icon64'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
-                            $widget['icon68'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
-                            $widget['icon80'] = $(this).find('iconmap').find('DontUseTrack').attr('url'); // Not in use
                             $widget['icon128'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
-                            $widget['icon144'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
-                            $widget['icon192'] = $(this).find('iconmap').find('ErrorTrack').attr('url'); // Power Error
 
                             $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
                             $widget['iconOccupied2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
-                            //$widget['iconOccupied4'] = $(this).find('iconmap').find('PositionTrack').attr('url');
-                            $widget['iconOccupied16'] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
-                            //$widget['iconOccupied22'] = $(this).find('iconmap').find('PositionTrack').attr('url');
+                            $widget['iconOccupied16'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // Allocated + Occupied
                             $widget['iconOccupied32'] = $(this).find('iconmap').find('PositionTrack').attr('url');
                             $widget['iconOccupied128'] = $(this).find('iconmap').find('ErrorTrack').attr('url');
                             $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
@@ -341,9 +335,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['occupancysensor'] = "none"; // clear occ.sensorname
                                 console.log("ITI OBLOCK =" + $widget['oblocksysname']);
                                 $widget['occupancystate'] = UNKNOWN;
-                                jmri.getOblock($widget["oblocksysname"]); // listen for oblock changes, fired by Block#setState(), under development
-                                // add widget to $gOblks array to support updates from layout, needed?
-                                //$gOblks[$widget.oblocksysname] = $widget;
+                                jmri.getOblock($widget["oblocksysname"]); // listen for oblock changes via json, fired by Block#setState()
                                 // store ControlPanelEditor oblocks where-used
                                 $store_occupancyblock($widget.id, $widget.oblocksysname);
                             }
@@ -355,28 +347,36 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url'); // Clear + Closed
                             $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url'); // Clear + Thrown
                             $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
-                            $widget['icon16'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateClosed').attr('url'); // Allocated + Closed
+                            $widget['icon16'] = $(this).find('iconmaps').find('AllocatedTrack').find('BeanStateUnknown').attr('url'); // Allocated + ?
                             $widget['icon18'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateClosed').attr('url'); // Allocated + Closed
                             $widget['icon20'] = $(this).find('iconmaps').find('AllocatedTrack').find('TurnoutStateThrown').attr('url'); // Allocated + Thrown
+                            $widget['icon22'] = $(this).find('iconmaps').find('AllocatedTrack').find('BeanStateInconsistent').attr('url'); // Allocated + X
+                            $widget['icon32'] = $(this).find('iconmaps').find('AllocatedTrack').find('BeanStateUnknown').attr('url'); // Not in use + ?
                             $widget['icon34'] = $(this).find('iconmaps').find('PositionTrack').find('TurnoutStateClosed').attr('url'); // Running + Closed
                             $widget['icon36'] = $(this).find('iconmaps').find('PositionTrack').find('TurnoutStateThrown').attr('url'); // Running + Thrown
-                            $widget['icon64'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateClosed').attr('url'); // Not in use + Closed
+                            $widget['icon38'] = $(this).find('iconmaps').find('PositionTrack').find('BeanStateInconsistent').attr('url'); // Running + X
+                            $widget['icon64'] = $(this).find('iconmaps').find('DontUseTrack').find('BeanStateUnknown').attr('url'); // Not in use + ?
                             $widget['icon66'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateClosed').attr('url'); // Not in use + Closed
                             $widget['icon68'] = $(this).find('iconmaps').find('DontUseTrack').find('TurnoutStateThrown').attr('url'); // Not in use + Thrown
+                            $widget['icon70'] = $(this).find('iconmaps').find('DontUseTrack').find('BeanStateInconsistent').attr('url'); // Not in use + X
+                            $widget['icon128'] = $(this).find('iconmaps').find('ErrorTrack').find('BeanStateUnknown').attr('url'); // Power Error + ?
                             $widget['icon130'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateClosed').attr('url'); // Power Error + Closed
                             $widget['icon132'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateThrown').attr('url'); // Power Error + Thrown
-                            $widget['icon146'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateClosed').attr('url'); // Power Error + Closed
-                            $widget['icon148'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateThrown').attr('url'); // Power Error + Thrown
+                            $widget['icon134'] = $(this).find('iconmaps').find('ErrorTrack').find('BeanStateInconsistent').attr('url'); // Power Error + X
 
-                            $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
-                            $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
-                            $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url'); // 4 icons for
+                            $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url'); // occ.detect
+                            $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url'); // by senor
                             $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
-                            //$widget['iconOccupied16'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
-                            $widget['iconOccupied18'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
-                            $widget['iconOccupied20'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['iconOccupied16'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url'); // 4 icons for
+                            $widget['iconOccupied18'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url'); // occ.detect
+                            $widget['iconOccupied20'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url'); // by oblock
+                            $widget['iconOccupied22'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['iconOccupied128'] = $(this).find('iconmaps').find('ErrorTrack').find('BeanStateUnknown').attr('url');
                             $widget['iconOccupied130'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateClosed').attr('url');
                             $widget['iconOccupied132'] = $(this).find('iconmaps').find('ErrorTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['iconOccupied134'] = $(this).find('iconmaps').find('ErrorTrack').find('BeanStateInconsistent').attr('url');
+                            // no icons for Occupied + DontUseTrack
                             $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
                             $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
                             $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
@@ -3844,11 +3844,11 @@ function updateOblocks(oblockName, status) { // based on updateOccupancy()
                     if (status < 0x16) { // ignore (un)occupied
                         // pass on as is
                     } else if ((status & TRACK_ERROR) == TRACK_ERROR) { // ErrorTrack, swallow DontUse, Allocated 0x80
-                        status = (status & 0x8f);
+                        status = (status & 0x86);
                     } else if ((status & OUT_OF_SERVICE) == OUT_OF_SERVICE) { // DontUseTrack, swallow Allocated, ignore Occupied 0x40
                         status = (status & 0x40);
                     } else if ((status & RUNNING) == RUNNING) { // Running = occupied by train (via oblock) 0x20
-                        status = (status & 0x2f); // keep Occupied
+                        status = (status & 0x22); // keep Occupied bit
                     } else if ((status & 0x12) == 0x2) { // Occupied, swallow Allocated
                         status = (status & 0x2);
                     } else if ((status & ALLOCATED) == ALLOCATED) { // Allocated 0x10
