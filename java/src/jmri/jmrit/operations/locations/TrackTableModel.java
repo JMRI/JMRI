@@ -82,7 +82,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         updateList();
         initTable();
     }
-    
+
     private void updateList() {
         if (_location == null) {
             return;
@@ -141,7 +141,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         addTableColumnListeners();
     }
 
-    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" "Order" if they are
+    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned",
+    // "Pool" "Alternate" "Order" if they are
     // needed
     private void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
@@ -162,10 +163,12 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     }
 
     /*
-     * Persisting using JmriJTablePersistenceManager doesn't quite work since the same table name is used for each track
-     * type; spur, yard, interchange, and staging. Plus multiple edit locations can be open at the same time, again
-     * using the same table name. The goal is to have a single change affect every table for all edit locations.
-     * Therefore any changes to column width or position is saved when the edit location window is closed.
+     * Persisting using JmriJTablePersistenceManager doesn't quite work since the
+     * same table name is used for each track type; spur, yard, interchange, and
+     * staging. Plus multiple edit locations can be open at the same time, again
+     * using the same table name. The goal is to have a single change affect every
+     * table for all edit locations. Therefore any changes to column width or
+     * position is saved when the edit location window is closed.
      */
     private void addTableColumnListeners() {
         Enumeration<TableColumn> e = _table.getColumnModel().getColumns();
@@ -178,6 +181,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     /**
      * Table is dirty when a column is moved or width is changed.
+     * 
      * @param dirty set true if dirty
      */
     private void setDirty(boolean dirty) {
@@ -201,96 +205,97 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     @Override
     public String getColumnName(int col) {
         switch (col) {
-        case ID_COLUMN:
-            return Bundle.getMessage("Id");
-        case NAME_COLUMN:
-            return Bundle.getMessage("TrackName");
-        case LENGTH_COLUMN:
-            return Bundle.getMessage("Length");
-        case USED_LENGTH_COLUMN:
-            return Bundle.getMessage("Used");
-        case RESERVED_COLUMN:
-            return Bundle.getMessage("Reserved");
-        case MOVES_COLUMN:
-            return Bundle.getMessage("Moves");
-        case LOCOS_COLUMN:
-            return Bundle.getMessage("Engines");
-        case CARS_COLUMN:
-            return Bundle.getMessage("Cars");
-        case PICKUPS_COLUMN:
-            return Bundle.getMessage("Pickups");
-        case SETOUT_COLUMN:
-            return Bundle.getMessage("Drop");
-        case SCHEDULE_COLUMN:
-            return Bundle.getMessage("Schedule");
-        case RESTRICTION_COLUMN:
-            return Bundle.getMessage("Restrictions");
-        case LOAD_COLUMN:
-            return Bundle.getMessage("Load");
-        case SHIP_COLUMN:
-            return Bundle.getMessage("Ship");
-        case ROAD_COLUMN:
-            return Bundle.getMessage("Road");
-        case DESTINATION_COLUMN:
-            return Bundle.getMessage("Dest");
-        case POOL_COLUMN:
-            return Bundle.getMessage("Pool");
-        case PLANPICKUP_COLUMN:
-            return Bundle.getMessage("PlanPickUp");
-        case ALT_TRACK_COLUMN:
-            return Bundle.getMessage("AlternateTrack");
-        case ORDER_COLUMN:
-            return Bundle.getMessage("ServiceOrder");
-        case REPORTER_COLUMN:
-            return Bundle.getMessage("Reporters");
-        case EDIT_COLUMN:
-            return Bundle.getMessage("ButtonEdit"); // titles above all columns
-        default:
-            return "unknown"; // NOI18N
+            case ID_COLUMN:
+                return Bundle.getMessage("Id");
+            case NAME_COLUMN:
+                return Bundle.getMessage("TrackName");
+            case LENGTH_COLUMN:
+                return Bundle.getMessage("Length");
+            case USED_LENGTH_COLUMN:
+                return Bundle.getMessage("Used");
+            case RESERVED_COLUMN:
+                return Bundle.getMessage("Reserved");
+            case MOVES_COLUMN:
+                return Bundle.getMessage("Moves");
+            case LOCOS_COLUMN:
+                return Bundle.getMessage("Engines");
+            case CARS_COLUMN:
+                return Bundle.getMessage("Cars");
+            case PICKUPS_COLUMN:
+                return Bundle.getMessage("Pickups");
+            case SETOUT_COLUMN:
+                return Bundle.getMessage("Drop");
+            case SCHEDULE_COLUMN:
+                return Bundle.getMessage("Schedule");
+            case RESTRICTION_COLUMN:
+                return Bundle.getMessage("Restrictions");
+            case LOAD_COLUMN:
+                return Bundle.getMessage("Load");
+            case SHIP_COLUMN:
+                return Bundle.getMessage("Ship");
+            case ROAD_COLUMN:
+                return Bundle.getMessage("Road");
+            case DESTINATION_COLUMN:
+                return Bundle.getMessage("Dest");
+            case POOL_COLUMN:
+                return Bundle.getMessage("Pool");
+            case PLANPICKUP_COLUMN:
+                return Bundle.getMessage("PlanPickUp");
+            case ALT_TRACK_COLUMN:
+                return Bundle.getMessage("AlternateTrack");
+            case ORDER_COLUMN:
+                return Bundle.getMessage("ServiceOrder");
+            case REPORTER_COLUMN:
+                return Bundle.getMessage("Reporters");
+            case EDIT_COLUMN:
+                return Bundle.getMessage("ButtonEdit"); // titles above all
+                                                        // columns
+            default:
+                return "unknown"; // NOI18N
         }
     }
 
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-        case ID_COLUMN:
-        case NAME_COLUMN:
-        case SCHEDULE_COLUMN:
-        case RESTRICTION_COLUMN:
-        case LOAD_COLUMN:
-        case SHIP_COLUMN:
-        case ROAD_COLUMN:
-        case DESTINATION_COLUMN:
-        case POOL_COLUMN:
-        case PLANPICKUP_COLUMN:
-        case ALT_TRACK_COLUMN:
-        case ORDER_COLUMN:
-        case REPORTER_COLUMN:
-            return String.class;
-        case LENGTH_COLUMN:
-        case USED_LENGTH_COLUMN:
-        case RESERVED_COLUMN:
-        case MOVES_COLUMN:
-        case LOCOS_COLUMN:
-        case CARS_COLUMN:
-        case PICKUPS_COLUMN:
-        case SETOUT_COLUMN:
-            return Integer.class;
-        case EDIT_COLUMN:
-            return JButton.class;
-        default:
-            return null;
+            case ID_COLUMN:
+            case NAME_COLUMN:
+            case SCHEDULE_COLUMN:
+            case RESTRICTION_COLUMN:
+            case LOAD_COLUMN:
+            case SHIP_COLUMN:
+            case ROAD_COLUMN:
+            case DESTINATION_COLUMN:
+            case POOL_COLUMN:
+            case PLANPICKUP_COLUMN:
+            case ALT_TRACK_COLUMN:
+            case ORDER_COLUMN:
+            case REPORTER_COLUMN:
+                return String.class;
+            case LENGTH_COLUMN:
+            case USED_LENGTH_COLUMN:
+            case RESERVED_COLUMN:
+            case MOVES_COLUMN:
+            case LOCOS_COLUMN:
+            case CARS_COLUMN:
+            case PICKUPS_COLUMN:
+            case SETOUT_COLUMN:
+                return Integer.class;
+            case EDIT_COLUMN:
+                return JButton.class;
+            default:
+                return null;
         }
     }
 
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case EDIT_COLUMN:
-        case MOVES_COLUMN:
-            return true;
-        default:
-            return false;
+            case EDIT_COLUMN:
+            case MOVES_COLUMN:
+                return true;
+            default:
+                return false;
         }
     }
 
@@ -304,71 +309,72 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             return "ERROR track unknown " + row; // NOI18N
         }
         switch (col) {
-        case ID_COLUMN:
-            return track.getId();
-        case NAME_COLUMN:
-            return track.getName();
-        case LENGTH_COLUMN:
-            return track.getLength();
-        case USED_LENGTH_COLUMN:
-            return track.getUsedLength();
-        case RESERVED_COLUMN:
-            return track.getReserved();
-        case MOVES_COLUMN:
-            return track.getMoves();
-        case LOCOS_COLUMN:
-            return track.getNumberEngines();
-        case CARS_COLUMN:
-            return track.getNumberCars();
-        case PICKUPS_COLUMN:
-            return track.getPickupRS();
-        case SETOUT_COLUMN:
-            return track.getDropRS();
-        case SCHEDULE_COLUMN:
-            return track.getScheduleName();
-        case RESTRICTION_COLUMN:
-            return getRestrictions(track);
-        case LOAD_COLUMN:
-            return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
-                    track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                    (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
-        case SHIP_COLUMN:
-            return getModifiedString(track.getShipLoadNames().length, track.getShipLoadOption().equals(Track.ALL_LOADS),
-                    track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
-        case ROAD_COLUMN:
-            return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
-                    track.getRoadOption().equals(Track.INCLUDE_ROADS));
-        case DESTINATION_COLUMN: {
-            int size = track.getDestinationListSize();
-            if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
-                size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
+            case ID_COLUMN:
+                return track.getId();
+            case NAME_COLUMN:
+                return track.getName();
+            case LENGTH_COLUMN:
+                return track.getLength();
+            case USED_LENGTH_COLUMN:
+                return track.getUsedLength();
+            case RESERVED_COLUMN:
+                return track.getReserved();
+            case MOVES_COLUMN:
+                return track.getMoves();
+            case LOCOS_COLUMN:
+                return track.getNumberEngines();
+            case CARS_COLUMN:
+                return track.getNumberCars();
+            case PICKUPS_COLUMN:
+                return track.getPickupRS();
+            case SETOUT_COLUMN:
+                return track.getDropRS();
+            case SCHEDULE_COLUMN:
+                return track.getScheduleName();
+            case RESTRICTION_COLUMN:
+                return getRestrictions(track);
+            case LOAD_COLUMN:
+                return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
+                        track.getLoadOption().equals(Track.INCLUDE_LOADS)) +
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
+            case SHIP_COLUMN:
+                return getModifiedString(track.getShipLoadNames().length,
+                        track.getShipLoadOption().equals(Track.ALL_LOADS),
+                        track.getShipLoadOption().equals(Track.INCLUDE_LOADS));
+            case ROAD_COLUMN:
+                return getModifiedString(track.getRoadNames().length, track.getRoadOption().equals(Track.ALL_ROADS),
+                        track.getRoadOption().equals(Track.INCLUDE_ROADS));
+            case DESTINATION_COLUMN: {
+                int size = track.getDestinationListSize();
+                if (track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
+                    size = InstanceManager.getDefault(LocationManager.class).getNumberOfLocations() - size;
+                }
+                return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS),
+                        track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
             }
-            return getModifiedString(size, track.getDestinationOption().equals(Track.ALL_DESTINATIONS),
-                    track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS));
-        }
-        case POOL_COLUMN:
-            return track.getPoolName();
-        case PLANPICKUP_COLUMN:
-            if (track.getIgnoreUsedLengthPercentage() > 0) {
-                return track.getIgnoreUsedLengthPercentage() + "%";
-            }
-            return "";
-        case ALT_TRACK_COLUMN:
-            if (track.getAlternateTrack() != null) {
-                return track.getAlternateTrack().getName();
-            }
-            if (track.isAlternate()) {
-                return Bundle.getMessage("ButtonYes");
-            }
-            return "";
-        case ORDER_COLUMN:
-            return track.getServiceOrder();
-        case REPORTER_COLUMN:
-            return track.getReporterName();
-        case EDIT_COLUMN:
-            return Bundle.getMessage("ButtonEdit");
-        default:
-            return "unknown " + col; // NOI18N
+            case POOL_COLUMN:
+                return track.getPoolName();
+            case PLANPICKUP_COLUMN:
+                if (track.getIgnoreUsedLengthPercentage() > 0) {
+                    return track.getIgnoreUsedLengthPercentage() + "%";
+                }
+                return "";
+            case ALT_TRACK_COLUMN:
+                if (track.getAlternateTrack() != null) {
+                    return track.getAlternateTrack().getName();
+                }
+                if (track.isAlternate()) {
+                    return Bundle.getMessage("ButtonYes");
+                }
+                return "";
+            case ORDER_COLUMN:
+                return track.getServiceOrder();
+            case REPORTER_COLUMN:
+                return track.getReporterName();
+            case EDIT_COLUMN:
+                return Bundle.getMessage("ButtonEdit");
+            default:
+                return "unknown " + col; // NOI18N
         }
     }
 
@@ -406,14 +412,14 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
-        case EDIT_COLUMN:
-            editTrack(row);
-            break;
-        case MOVES_COLUMN:
-            setMoves(row, value);
-            break;
-        default:
-            break;
+            case EDIT_COLUMN:
+                editTrack(row);
+                break;
+            case MOVES_COLUMN:
+                setMoves(row, value);
+                break;
+            default:
+                break;
         }
     }
 

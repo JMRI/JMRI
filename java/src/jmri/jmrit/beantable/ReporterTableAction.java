@@ -4,14 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.annotation.Nonnull;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
@@ -42,7 +35,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
 
         // disable ourself if there is no primary Reporter manager available
         if (reporterManager == null) {
-            setEnabled(false);
+            super.setEnabled(false);
         }
     }
 
@@ -154,7 +147,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
              */
             @Override
             public int getColumnCount() {
-                return LASTREPORTCOL + 1;
+                return LASTREPORTCOL + getPropertyColumnCount() +1;
             }
 
             /**
@@ -278,20 +271,20 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         return "package.jmri.jmrit.beantable.ReporterTable";
     }
 
-    JmriJFrame addFrame = null;
-    JTextField hardwareAddressTextField = new JTextField(20);
-    JTextField userNameTextField = new JTextField(20);
-    ManagerComboBox<Reporter> prefixBox = new ManagerComboBox<>();
-    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
-    JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
-    JButton addButton;
-    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
-    String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
-    Manager<Reporter> connectionChoice = null;
-    jmri.UserPreferencesManager pref;
-    SystemNameValidator hardwareAddressValidator;
+    private JmriJFrame addFrame = null;
+    private final JTextField hardwareAddressTextField = new JTextField(20);
+    private final JTextField userNameTextField = new JTextField(20);
+    private final ManagerComboBox<Reporter> prefixBox = new ManagerComboBox<>();
+    private final SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    private final JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    private final JCheckBox rangeCheckBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    private final String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
+    private JButton addButton;
+    private final JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    private final String userNameError = this.getClass().getName() + ".DuplicateUserName"; // only used in this package
+    private Manager<Reporter> connectionChoice = null;
+    private jmri.UserPreferencesManager pref;
+    private SystemNameValidator hardwareAddressValidator;
 
     /**
      * {@inheritDoc}
