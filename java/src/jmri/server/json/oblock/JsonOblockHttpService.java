@@ -55,11 +55,11 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
         switch (oblock.getState()) {
             case OBlock.UNDETECTED:
             case NamedBean.UNKNOWN:
-                data.put(JSON.STATE, JSON.UNKNOWN);
+                data.put(JsonOblock.STATUS, JSON.UNKNOWN);
                 break;
             default:
                 // add OBlock status, includes special values for Allocated 0x10, OutOfService 0x40 etc.
-                data.put(JSON.STATE, oblock.getState());
+                data.put(JsonOblock.STATUS, oblock.getState());
         }
         data.put(JsonOblock.WARRANT, oblock.getWarrant() != null ? oblock.getWarrant().getDisplayName() : null); // add OBlock Warrant name
         data.put(JsonOblock.TRAIN, oblock.getWarrant() != null ? oblock.getWarrant().getTrainName() : null); // add OBlock Warrant name
@@ -106,8 +106,8 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 oblock.setValue(data.path(JSON.VALUE).asText());
             }
         }
-        int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
-        switch (state) {
+        int status = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
+        switch (status) {
             case JSON.ACTIVE:
                 oblock.setState(OBlock.OCCUPIED);
                 break;
@@ -117,8 +117,9 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
             case JSON.UNKNOWN:
                 // leave state alone in this case
                 break;
+            // TODO if used add staus NotInUse, PowerError, Allocated etc
             default:
-                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", OBLOCK, state),
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", OBLOCK, status),
                         request.id);
         }
         if (!data.path(JsonSensor.SENSOR).isMissingNode()) {

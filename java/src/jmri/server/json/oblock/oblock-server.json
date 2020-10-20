@@ -16,9 +16,9 @@
             "type": ["string", "null"],
             "description": "Comment for the oblock"
         },
-        "state": {
+        "status": {
             "type": "integer",
-            "description": "The state of the oblock",
+            "description": "The status of the oblock",
             "enum": [0, 1, 2, 4, 8, 16, 18, 20, 24, 32, 34, 36, 40, 64, 66, 68, 72, 128, 130, 132, 136]
         },
         "warrant": {
@@ -31,5 +31,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state"]
+    "required": ["name", "userName", "comment", "status"]
 }

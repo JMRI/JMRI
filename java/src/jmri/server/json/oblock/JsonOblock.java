@@ -21,6 +21,10 @@ public class JsonOblock {
     /**
      * {@value #WARRANT}
      */
+    public static final String STATUS = "status"; // NOI18N
+    /**
+     * {@value #WARRANT}
+     */
     public static final String WARRANT = "warrant"; // NOI18N
     /**
      * {@value #TRAIN}
