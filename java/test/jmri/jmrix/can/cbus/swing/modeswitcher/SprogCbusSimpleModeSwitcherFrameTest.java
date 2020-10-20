@@ -40,14 +40,14 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
 
         // Create global programer and matching preferences
         pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
-        pm.mySetGlobalProgrammerAvailable(true);
+        pm.setGlobalProgrammerAvailable(true);
         pm.setAddressedModePossible(false);
         preferences.setProgrammersAvailable(true, false);
         
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertTrue("Operating mode", f.mode == SprogCbusSimpleModeSwitcherFrame.PROG_MODE);
+        Assert.assertEquals(f.mode, SprogCbusSimpleModeSwitcherFrame.PROG_MODE);
     }
     
     @Test
@@ -55,15 +55,15 @@ public class SprogCbusSimpleModeSwitcherFrameTest extends jmri.util.JmriJFrameTe
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Create addressed programer and matching preferences
-        pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(AddressedProgrammerManager.class);
-        pm.mySetGlobalProgrammerAvailable(false);
+        pm = (CbusDccProgrammerManager)InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+        pm.setGlobalProgrammerAvailable(false);
         pm.setAddressedModePossible(true);
         preferences.setProgrammersAvailable(false, true);
         
         SprogCbusSimpleModeSwitcherFrame f = ((SprogCbusSimpleModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertTrue("Operating mode", f.mode == SprogCbusSimpleModeSwitcherFrame.CMD_MODE);
+        Assert.assertEquals(f.mode, SprogCbusSimpleModeSwitcherFrame.CMD_MODE);
     }
     
     @BeforeEach

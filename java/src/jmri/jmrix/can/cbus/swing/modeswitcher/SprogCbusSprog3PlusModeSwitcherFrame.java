@@ -19,7 +19,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     
     protected static final int PROG_OFF_MODE = 0; // Prog track off when not programming
     protected static final int PROG_ON_MODE = 1;  // Prog track follows main when not programming
-    protected static final int PROG_AR_MODE = 2;  // Prog track is auto-reverse power district
+    protected static final int PROG_AR_MODE = 2;  // Prog track is auto-reverse power district, no programming on progtrack
 
     private JRadioButton progOffButton;
     private JRadioButton progOnButton;
@@ -53,15 +53,19 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             mode = PROG_OFF_MODE;
             if (preferences.getProgTrackMode() == PROG_OFF_MODE) {
                 progOffButton.setSelected(true);
+                pm.setGlobalProgrammerAvailable(true);
             } else if (preferences.getProgTrackMode() == PROG_ON_MODE) {
                 progOnButton.setSelected(true);
                 mode = PROG_ON_MODE;
+                pm.setGlobalProgrammerAvailable(true);
             } else if (preferences.getProgTrackMode() == PROG_AR_MODE) {
                 progArButton.setSelected(true);
                 mode = PROG_AR_MODE;
+                pm.setGlobalProgrammerAvailable(false);
             } else {
                 // Default if inconsistent preference
                 progOffButton.setSelected(true);
+                pm.setGlobalProgrammerAvailable(true);
             }
             // Reset hardware mode and preferences in case there was any inconsistency
             setHardwareMode(mode);
@@ -73,14 +77,17 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
                     log.info("Setting prog track on when not programming");
                     mode = PROG_ON_MODE;
                     setHardwareMode(mode);
+                    pm.setGlobalProgrammerAvailable(true);
                 } else if (progArButton.isSelected()) {
                     log.info("Setting prog track to auto-reverse");
                     mode = PROG_AR_MODE;
                     setHardwareMode(mode);
+                    pm.setGlobalProgrammerAvailable(false);
                 } else {
                     log.info("Setting prog track off when not programming");
                     mode = PROG_OFF_MODE;
                     setHardwareMode(mode);
+                    pm.setGlobalProgrammerAvailable(true);
                 }
                 preferences.setProgTrackMode(mode);
             };

@@ -44,7 +44,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertTrue("Operating mode", f.mode == SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
+        Assert.assertEquals(f.mode, SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
     }
     
     @Test
@@ -57,7 +57,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertTrue("Operating mode", f.mode == SprogCbusSprog3PlusModeSwitcherFrame.PROG_ON_MODE);
+        Assert.assertEquals(f.mode, SprogCbusSprog3PlusModeSwitcherFrame.PROG_ON_MODE);
     }
     
     @Test
@@ -70,7 +70,7 @@ public class SprogCbusSprog3PlusModeSwitcherFrameTest extends jmri.util.JmriJFra
         SprogCbusSprog3PlusModeSwitcherFrame f = ((SprogCbusSprog3PlusModeSwitcherFrame) frame);
 
         f.initComponents();
-        Assert.assertTrue("Operating mode", f.mode == SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE);
+        Assert.assertEquals(f.mode, SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE);
     }
     
     @BeforeEach
