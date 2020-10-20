@@ -304,9 +304,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
                             break;
-                        case "indicatortrackicon" :
+                        case "indicatortrackicon" : // TODO clean up unused icon copies, carefully
                             $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                            $widget['icon2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // spare for occupied
+                            //$widget['icon2'] = $(this).find('iconmap').find('OccupiedTrack').attr('url'); // spare for occupied
                             $widget['icon4'] = $widget['icon' + UNKNOWN];
                             $widget['icon8'] = $widget['icon' + UNKNOWN]; // inconsistent
                             $widget['icon16'] = $(this).find('iconmap').find('AllocatedTrack').attr('url');
@@ -349,7 +349,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
                             break;
                         case "indicatorturnouticon" :
-                            $widget['name'] = $(this).find('turnout').text(); //normalize name
+                            $widget['name'] = $(this).find('turnout').text(); // normalize name
                             $widget.jsonType = 'turnout'; // JSON object type
                             $widget['icon' + UNKNOWN] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
                             $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url'); // Clear + Closed
@@ -1102,7 +1102,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['text4'] = $(this).find('inactiveText').attr('text');
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
                             // add a canvas to the text label, reduce canvas HxW to fit inside the div
-                            $canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
+                            $canvas = "<canvas id=" + $widget.id + "c class='bscanvas' width='" + ($swWidth - 12) + "px' height='" +
                                 ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
                             break;
                         case "button" : // mimick java switchboard buttons

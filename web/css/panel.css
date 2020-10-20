@@ -77,13 +77,13 @@ body {
     margin: 2px;
 }
 
-canvas { /* Switchboard beanswitch */
+.bscanvas { /* Switchboard beanswitch */
     display: block;
     width: 100%;
     height: 100%;
 }
 
-canvas:hover { /* Switchboard beanswitch */
+.bscanvas:hover {
     margin: -1px;
 }
 
