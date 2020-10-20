@@ -1038,7 +1038,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['text4'] = $(this).find('inactiveText').attr('text');
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
                             // add a canvas to the text label, reduce canvas HxW to fit inside the div
-                            $canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
+                            $canvas = "<canvas id=" + $widget.id + "c class='bscanvas' width='" + ($swWidth - 12) + "px' height='" +
                                 ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
                             break;
                         case "button" : // mimick java switchboard buttons
