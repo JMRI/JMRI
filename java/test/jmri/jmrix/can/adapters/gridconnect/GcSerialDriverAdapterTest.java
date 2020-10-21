@@ -38,9 +38,10 @@ public class GcSerialDriverAdapterTest {
             t.openPort("my port", "JMRI app");
             t.configure();
             
-            // Clean up TrafficController runnable
-            t.getSystemConnectionMemo().getTrafficController().terminateThreads();
-            t = null;
+            t.getSystemConnectionMemo().getTrafficController().disconnectPort(t);
+            
+            // This should terminate the TC threads and deregister the shutdown manager but causes an NPE in the input stream
+//            t.getSystemConnectionMemo().getTrafficController().terminateThreads();
         }
         // the mock is not visible outside the block above
     }
@@ -57,6 +58,9 @@ public class GcSerialDriverAdapterTest {
 
     @AfterEach
     public void tearDown() {
+        // Temp fix to remove the TC registered shutdown manager
+        JUnitUtil.clearShutDownManager();
+       
         JUnitAppender.assertErrorMessage("no match to (null) in currentBaudNumber");
         JUnitUtil.tearDown();
     }
