@@ -320,7 +320,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
         // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
         try {
-            log.debug("Block {} setState {}", mSystemName, v); // EBR test CPE
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
             log.error("{} got exception during firePropertyChange({},{}) in thread {} {}: {}", getDisplayName(), old, _current,

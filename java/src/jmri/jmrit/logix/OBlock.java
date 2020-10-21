@@ -46,24 +46,25 @@ import org.slf4j.LoggerFactory;
  * objects only need be unique within an OBlock.
  *
  * @author Pete Cressman (C) 2009
+ * @author Egbert Broerse (C) 2020
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
     /*
-     * Block states.
+     * OBlock states:
      * NamedBean.UNKNOWN                 = 0x01
-     * Block.OCCUPIED =  Sensor.ACTIVE =   0x02
+     * Block.OCCUPIED =  Sensor.ACTIVE   = 0x02
      * Block.UNOCCUPIED = Sensor.INACTIVE= 0x04
      * NamedBean.INCONSISTENT            = 0x08
      * Add the following to the 4 sensor states.
      * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied
      */
     public static final int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
-    public static final int RUNNING = 0x20;     // Block that running train has reached
-    public static final int OUT_OF_SERVICE = 0x40;     // Block that should not be used
-    // UNDETECTED state bit now used for DARK blocks - 12/11/2016 -pwc
-    // static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
-    public static final int TRACK_ERROR = 0x80; // Block has Error
+    public static final int RUNNING = 0x20;     // OBlock that running train has reached
+    public static final int OUT_OF_SERVICE = 0x40;  // OBlock that should not be used
+    // UNDETECTED state bit is used for DARK blocks
+    // static final public int DARK = 0x01;        // OBlock has no Sensor, same as UNKNOWN
+    public static final int TRACK_ERROR = 0x80; // OBlock has Error
 
     private static final HashMap<String, Integer> _statusMap = new HashMap<>();
     private static final HashMap<String, String> _statusNameMap = new HashMap<>();
@@ -281,7 +282,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 } else {
                     setState(oldState & ~TRACK_ERROR);
                 }
-                log.debug("OBLOCK {} NEW STATE: {}", mSystemName, getState()); // TODO remove EBR
                 firePropertyChange("pathState", oldState, getState());
             }
         }
@@ -442,9 +442,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-     * Provide a general method for updating the Oblock status.
+     * Update the Oblock status.
+     * Override Block because change must come from an OBlock for Web Server to receive it
      *
-     * @param v the new state
+     * @param v the new state, called status in JSON Servlet and Web Server
      */
     @Override
     public void setState(int v) {
@@ -452,7 +453,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         super.setState(v);
         // notify
         // copied from Block to get proper listener in Web Server
-            log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // EBR test CPE
+            //log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // used by CPE indicator track icons
             firePropertyChange("state", old, getState());
     }
 

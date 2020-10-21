@@ -107,7 +107,7 @@ public class JsonOblockSocketServiceTest {
         Assert.assertEquals(Block.OCCUPIED, oblock1.getState());
         Assert.assertNotNull(exception);
         Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
-        // TODO test Train, test Allocated EBR
+        // TODO test Train (name?), test Allocated (special values)
     }
 
     @Test
