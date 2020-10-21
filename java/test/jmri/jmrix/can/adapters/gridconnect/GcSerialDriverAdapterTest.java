@@ -57,7 +57,7 @@ public class GcSerialDriverAdapterTest {
     @AfterEach
     public void tearDown() {
         // Temp fix to remove the TC registered shutdown manager
-//        JUnitUtil.clearShutDownManager();
+        JUnitUtil.clearShutDownManager();
        
         JUnitAppender.assertErrorMessage("no match to (null) in currentBaudNumber");
         JUnitUtil.tearDown();
