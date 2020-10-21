@@ -41,7 +41,7 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     }
     
     @Override
-    protected String getSystemNameWithNoPrefix() {
+    protected String getASystemNameWithNoPrefix() {
         return "1106";
     }
 

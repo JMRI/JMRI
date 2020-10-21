@@ -84,7 +84,7 @@
       configured to the system your selected).</p>
 
       <p>Let's set up JMRI Preferences for the Connection with your
-      Command Station. <span style="align: center;color:grey;">In
+      Command Station. <span style="align: center;color:gray;">In
       this example we are using a Digitrax DCS100 Super Chief
       Command Station, (radio) interfaced to the computer via
       LocoNet, PR3 (in MS100 mode) and USB port. We keep our JMRI

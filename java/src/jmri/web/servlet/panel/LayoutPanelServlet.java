@@ -16,7 +16,10 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.*;
 
 /**
- * Return xml (for specified LayoutPanel) suitable for use by external clients
+ * Return xml (for specified LayoutPanel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author mstevetodd -- based on PanelServlet.java by Randall Wood
  */
@@ -180,7 +183,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * replace userName value of attrName with systemName for type attrType
+     * Replace userName value of attrName with systemName for type attrType.
      *
      * @param e        element to be updated
      * @param beanType bean type to use for userName lookup
@@ -221,7 +224,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * replace child element value of attrName with systemName for type attrType
+     * Replace child element value of attrName with systemName for type attrType.
      *
      * @param e         element to be updated
      * @param beanType  bean type to use for userName lookup
@@ -255,8 +258,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
     }
 
     /**
-     * update the element replacing username with systemname for known
-     * attributes and children
+     * Update the element replacing username with systemname for known
+     * attributes and children.
      *
      * @param e element to be updated
      */
@@ -283,4 +286,5 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
 }

@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Return xml (for specified ControlPanel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood (C) 2016
  */
@@ -23,8 +27,6 @@ import org.slf4j.LoggerFactory;
         urlPatterns = {"/panel/ControlPanel"})
 @ServiceProvider(service = HttpServlet.class)
 public class ControlPanelServlet extends AbstractPanelServlet {
-
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
 
     @Override
     protected String getPanelType() {
@@ -87,4 +89,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
+
 }

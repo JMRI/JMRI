@@ -9,6 +9,8 @@ import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 
+import javax.annotation.Nonnull;
+
 /**
  * This module handles configuration for display.PositionablePoint objects for a
  * LayoutEditor.
@@ -78,7 +80,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
     }
 
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(@Nonnull Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }

@@ -1,10 +1,12 @@
 package jmri.jmrix.tmcc;
 
 import java.util.Locale;
+
 import javax.annotation.Nonnull;
-import jmri.JmriException;
-import jmri.Turnout;
+
+import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,15 +72,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
-    }
-
-    @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
-        try {
-            return makeSystemName(curAddress);
-        } catch (IllegalArgumentException ex) {
-            throw new JmriException(ex);
-        }
     }
 
     /**

@@ -72,7 +72,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
 
     // radio buttons
-    JRadioButton stageRadioButton = new JRadioButton(Bundle.getMessage("StagingOnly"));
+    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("StagingOnly"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yards"));
     JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spurs"));
@@ -125,7 +125,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         opsGroup.add(spurRadioButton);
         opsGroup.add(yardRadioButton);
         opsGroup.add(interchangeRadioButton);
-        opsGroup.add(stageRadioButton);
+        opsGroup.add(stagingRadioButton);
 
         if (_location != null) {
             enableButtons(true);
@@ -144,12 +144,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 } else if (interchangeModel.getRowCount() > 0) {
                     interchangeRadioButton.setSelected(true);
                 } else if (stagingModel.getRowCount() > 0) {
-                    stageRadioButton.setSelected(true);
+                    stagingRadioButton.setSelected(true);
                 } else {
                     spurRadioButton.setSelected(true);
                 }
             } else {
-                stageRadioButton.setSelected(true);
+                stagingRadioButton.setSelected(true);
             }
             setTrainDirectionBoxes();
         } else {
@@ -199,7 +199,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pOp.add(spurRadioButton);
         pOp.add(yardRadioButton);
         pOp.add(interchangeRadioButton);
-        pOp.add(stageRadioButton);
+        pOp.add(stagingRadioButton);
 
         // row 11
         JPanel pC = new JPanel();
@@ -266,7 +266,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addRadioButtonAction(spurRadioButton);
         addRadioButtonAction(yardRadioButton);
         addRadioButtonAction(interchangeRadioButton);
-        addRadioButtonAction(stageRadioButton);
+        addRadioButtonAction(stagingRadioButton);
 
         addCheckBoxTrainAction(northCheckBox);
         addCheckBoxTrainAction(southCheckBox);
@@ -504,7 +504,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void setLocationOps() {
-        if (stageRadioButton.isSelected()) {
+        if (stagingRadioButton.isSelected()) {
             _location.setLocationOps(Location.STAGING);
         } else {
             _location.setLocationOps(Location.NORMAL);
@@ -538,7 +538,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         spurRadioButton.setEnabled(enabled);
         yardRadioButton.setEnabled(enabled);
         interchangeRadioButton.setEnabled(enabled);
-        stageRadioButton.setEnabled(enabled);
+        stagingRadioButton.setEnabled(enabled);
         //
         yardTable.setEnabled(enabled);
         if (readerSelector != null) {
@@ -557,8 +557,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setEnabledLocations();
         interchangePane.setVisible(interchangeRadioButton.isSelected());
         addInterchangeButton.setVisible(interchangeRadioButton.isSelected());
-        stagingPane.setVisible(stageRadioButton.isSelected());
-        addStagingButton.setVisible(stageRadioButton.isSelected());
+        stagingPane.setVisible(stagingRadioButton.isSelected());
+        addStagingButton.setVisible(stagingRadioButton.isSelected());
         yardPane.setVisible(yardRadioButton.isSelected());
         addYardButton.setVisible(yardRadioButton.isSelected());
         spurPane.setVisible(spurRadioButton.isSelected());
@@ -567,12 +567,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void setEnabledLocations() {
         if (spurModel.getRowCount() > 0 || yardModel.getRowCount() > 0 || interchangeModel.getRowCount() > 0) {
-            if (stageRadioButton.isSelected()) {
+            if (stagingRadioButton.isSelected()) {
                 spurRadioButton.setSelected(true);
             }
-            stageRadioButton.setEnabled(false);
+            stagingRadioButton.setEnabled(false);
         } else if (stagingModel.getRowCount() > 0) {
-            stageRadioButton.setSelected(true);
+            stagingRadioButton.setSelected(true);
             spurRadioButton.setEnabled(false);
             yardRadioButton.setEnabled(false);
             interchangeRadioButton.setEnabled(false);
@@ -580,7 +580,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             spurRadioButton.setEnabled(true);
             yardRadioButton.setEnabled(true);
             interchangeRadioButton.setEnabled(true);
-            stageRadioButton.setEnabled(true);
+            stagingRadioButton.setEnabled(true);
         }
     }
 

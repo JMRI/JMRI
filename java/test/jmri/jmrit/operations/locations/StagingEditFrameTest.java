@@ -154,7 +154,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("number of staging tracks", 4, fl.stagingModel.getRowCount());
 
         // is the staging only button selected?
-        Assert.assertTrue("staging selected", fl.stageRadioButton.isSelected());
+        Assert.assertTrue("staging selected", fl.stagingRadioButton.isSelected());
 
         JUnitUtil.dispose(fl);
     }
