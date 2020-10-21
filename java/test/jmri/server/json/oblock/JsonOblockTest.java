@@ -1,18 +1,20 @@
-package jmri.server.json.block;
+package jmri.server.json.oblock;
+
+import jmri.server.json.oblock.JsonOblock;
+import jmri.util.JUnitUtil;
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-
-import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Randall Wood Copyright 2018
  */
-public class JsonBlockTest {
+public class JsonOblockTest {
 
     @BeforeEach
     public void setUp() {
@@ -27,17 +29,17 @@ public class JsonBlockTest {
     @Test
     public void testConstructor() throws Exception {
         try {
-            Constructor<JsonBlock> constructor;
-            constructor = JsonBlock.class.getDeclaredConstructor();
+            Constructor<JsonOblock> constructor;
+            constructor = JsonOblock.class.getDeclaredConstructor();
             constructor.setAccessible(true);
             constructor.newInstance();
-            Assert.fail("Instance of JsonBlock created");
+            Assert.fail("Instance of JsonOblock created");
         } catch (InvocationTargetException ex) {
             // because the constructor throws UnsupportedOperationException, and
             // that is thrown by newInstance() into an InvocationTargetException
             // we pass an InvocationTargetException that is caused by an
             // UnsupportedOperationException and fail everything else by
-            // rethrowing the unexepcted exception to get a stack trace
+            // rethrowing the unexpected exception to get a stack trace
             if (!ex.getCause().getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }

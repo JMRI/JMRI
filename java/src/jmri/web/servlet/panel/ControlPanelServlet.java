@@ -76,30 +76,34 @@ public class ControlPanelServlet extends AbstractPanelServlet {
                 } catch (Exception ex) {
                     log.error("Error storing panel element: {}", ex, ex);
                 }
-                // where required, add special stuff to positionable here to see in Web Server
+                // where required, add special stuff to positionable here to use in Web Server
                 switch (e.getName()) {
                     case "indicatorturnouticon" :
-                        // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
+                        // if separate occ.sensor was set on icon, names for sensor plus the turnout were
+                        // already copied to e as part of 'contents'
                         Element elem = new Element("oblocksysname");
                         if (((IndicatorTurnoutIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
-                            elem.addContent(((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName());
-                            log.debug("CP-SERVLET ITOI = {}", ((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName());                            e.addContent(elem);
+                            String itoioblock = ((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName();
+                            elem.addContent(itoioblock);
+                            log.debug("CP-SERVLET ITOI = {}", itoioblock);
                         } else {
                             elem.addContent("none"); // NOI18N
-                            log.debug("no ITOI oblocksensor");
+                            log.debug("no oblocksensor configured on ITOI {}", sub.getNameString());
                         }
+                        e.addContent(elem);
                         break;
                     case "indicatortrackicon" :
-                        // if separate occ.sensor was set on icon, it was already copied to e as part of 'contents'
+                        // if separate occ.sensor was set on icon, its name was already copied to e as part of 'contents'
                         elem = new Element("oblocksysname");
                         if (((IndicatorTrackIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
-                            elem.addContent(((IndicatorTrackIcon) sub).getOccBlock().getSystemName());
-                            log.debug("CP-SERVLET ITI = {}", ((IndicatorTrackIcon) sub).getOccBlock().getSystemName());
-                            e.addContent(elem);
+                            String itioblock = ((IndicatorTrackIcon) sub).getOccBlock().getSystemName();
+                            elem.addContent(itioblock);
+                            log.debug("CP-SERVLET ITI = {}", itioblock);
                         } else {
                             elem.addContent("none"); // NOI18N
-                            log.debug("no ITI oblocksensor");
+                            log.debug("no oblocksensor configured on ITI {}", sub.getNameString());
                         }
+                        e.addContent(elem);
                         break;
                     case "" :
                     default :

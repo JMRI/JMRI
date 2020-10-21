@@ -330,7 +330,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                $widget['occupancystate'] = UNKNOWN;
                                //$widget.jsonType = "sensor"; // JSON object type
                                jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes
-                           } else if ($(this).find('oblocksysname').text()) { // extract the occupancyblock name and state
+                           } else if ($(this).find('oblocksysname').text() && ($(this).find('oblocksysname').text() != "none")) { // extract the occupancyblock name and state
                                 $widget['oblocksysname'] = $(this).find('oblocksysname').text();
                                 $widget['occupancysensor'] = "none"; // clear occ.sensorname
                                 console.log("ITI OBLOCK =" + $widget['oblocksysname']);
@@ -391,7 +391,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['occupancystate'] = UNKNOWN;
                                 jmri.getSensor($widget["occupancysensor"]); // listen for occupancy changes
                                 $store_occupancysensor($widget.id, $widget.occupancysensor); // only do that now we know no oblock is set
-                            } else if ($(this).find('oblocksysname').text()) { // extract the occupancy block name and state
+                            } else if ($(this).find('oblocksysname').text() && ($(this).find('oblocksysname').text() != "none")) {
+                                // extract the occupancy block name and state
                                 $widget['oblocksysname'] = $(this).find('oblocksysname').text();
                                 $widget['occupancysensor'] = "none"; // clear oblockname
                                 console.log("ITOI OBLOCK =" + $widget['oblocksysname']);

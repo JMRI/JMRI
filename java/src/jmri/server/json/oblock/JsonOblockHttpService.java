@@ -106,7 +106,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 oblock.setValue(data.path(JSON.VALUE).asText());
             }
         }
-        int status = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
+        int status = data.path(JsonOblock.STATUS).asInt(JSON.UNKNOWN);
         switch (status) {
             case JSON.ACTIVE:
                 oblock.setState(OBlock.OCCUPIED);
@@ -117,7 +117,19 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
             case JSON.UNKNOWN:
                 // leave state alone in this case
                 break;
-            // TODO if used add staus NotInUse, PowerError, Allocated etc
+            // TODO add status NotInUse, PowerError, Allocated etc
+            case JSON.ALLOCATED:
+                oblock.setState(OBlock.ALLOCATED);
+                break;
+            case JSON.RUNNING:
+                oblock.setState(OBlock.RUNNING);
+                break;
+            case JSON.OUT_OF_SERVICE:
+                oblock.setState(OBlock.OUT_OF_SERVICE);
+                break;
+            case JSON.TRACK_ERROR:
+                oblock.setState(OBlock.TRACK_ERROR);
+                break;
             default:
                 throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", OBLOCK, status),
                         request.id);

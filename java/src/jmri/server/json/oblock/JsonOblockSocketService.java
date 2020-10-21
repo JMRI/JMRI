@@ -5,7 +5,7 @@ import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonNamedBeanSocketService;
 
 /**
- * Copied from jmri/server/json/blocks.java
+ * Copied from jmri/server/json/blocks.java EB 2020
 
  * @author mstevetodd Copyright (C) 2018
  * @author Randall Wood

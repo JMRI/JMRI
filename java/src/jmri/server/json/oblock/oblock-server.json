@@ -30,6 +30,6 @@
             "description": "Train in Warrant for the oblock"
         }
     },
-    "additionalProperties": false,
+    "additionalProperties": true,
     "required": ["name", "userName", "comment", "status"]
 }
