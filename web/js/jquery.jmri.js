@@ -154,7 +154,7 @@
             };
             jmri.networkServices = function (data) {
             };
-            jmri.oblock = function (name, status, data) {
+            jmri.oblock = function (name, value, data) {
             };
             jmri.oblocks = function (data) {
             };
@@ -385,7 +385,7 @@
             };
             jmri.setOblock = function (name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("oblock", { name: name, status: status }, 'post');
+                    jmri.socket.send("oblock", { name: name, value: value }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "oblock/" + name,

@@ -2106,6 +2106,7 @@ $(document).ready(function() {
         // hide the Show XML menu when listing panels
         $("#navbar-panel-xml").addClass("hidden").removeClass("show");
     } else {
+        // note: the functions and parameter names must match exactly those in jquery.jmri.js
         jmri = $.JMRI({
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
@@ -2133,8 +2134,8 @@ $(document).ready(function() {
             	}
                 updateWidgets(name, value, data);
             },
-            oblock: function(name, state, data) { // data contains data.status (Allocated, Occupied,... not state)
-                //console.log("HEARD JSON OBLOCK " + name + " status=" + data.status);
+            oblock: function(name, status, data) { // data contains data.status (Allocated, Occupied,... not state)
+                //console.log("HEARD JSON OBLOCK " + name + " status=" + status + " (" + data.status + ")");
                 if (data.status !== null) {
                     updateOblocks(name, data.status); // only for indicator(turnout)trackicon widgets
                 }

@@ -59,12 +59,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Add the following to the 4 sensor states.
      * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied
      */
-    public static final int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
-    public static final int RUNNING = 0x20;     // OBlock that running train has reached
-    public static final int OUT_OF_SERVICE = 0x40;  // OBlock that should not be used
+    public static final int ALLOCATED = 0x10;      // reserve the block for subsequent use by a train
+    public static final int RUNNING = 0x20;        // OBlock that running train has reached
+    public static final int OUT_OF_SERVICE = 0x40; // OBlock that should not be used
+    public static final int TRACK_ERROR = 0x80;    // OBlock has Error
     // UNDETECTED state bit is used for DARK blocks
-    // static final public int DARK = 0x01;        // OBlock has no Sensor, same as UNKNOWN
-    public static final int TRACK_ERROR = 0x80; // OBlock has Error
+    // static final public int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
 
     private static final HashMap<String, Integer> _statusMap = new HashMap<>();
     private static final HashMap<String, String> _statusNameMap = new HashMap<>();

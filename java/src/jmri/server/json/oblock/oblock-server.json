@@ -18,7 +18,7 @@
         },
         "properties": {
           "type": "array",
-          "description": "NamedBean properties of the block",
+          "description": "NamedBean properties of the OBlock",
           "items": {
             "type": "object",
             "properties": {
