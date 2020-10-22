@@ -10,8 +10,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
-import jmri.server.json.oblock.JsonOblock;
-import jmri.server.json.oblock.JsonOblockSocketService;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;

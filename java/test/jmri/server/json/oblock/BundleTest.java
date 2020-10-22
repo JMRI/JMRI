@@ -1,6 +1,5 @@
 package jmri.server.json.oblock;
 
-import jmri.server.json.oblock.Bundle;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 

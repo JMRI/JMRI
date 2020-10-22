@@ -445,14 +445,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Update the Oblock status.
      * Override Block because change must come from an OBlock for Web Server to receive it
      *
-     * @param v the new state, called status in JSON Servlet and Web Server
+     * @param v the new state, from OBlock.ALLOCATED etc, named 'status' in JSON Servlet and Web Server
      */
     @Override
     public void setState(int v) {
         int old = getState();
         super.setState(v);
         // notify
-        // copied from Block to get proper listener in Web Server
+        // override Block to get proper source to be recognized by listener in Web Server
             //log.debug("OBLOCK.JAVA {} setState({})", getSystemName(), getState()); // used by CPE indicator track icons
             firePropertyChange("state", old, getState());
     }

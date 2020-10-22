@@ -10,7 +10,7 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
-import jmri.server.json.reporter.JsonReporter;
+//import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -52,7 +52,6 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         OBlock oblock1 = manager.provideOBlock("OB1");
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-        //Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
         // test block with defaults
         result = service.doGet(JsonOblock.OBLOCK, "OB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
@@ -75,12 +74,12 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         oblock1.setState(Block.UNOCCUPIED);
         result = service.doGet(JsonOblock.OBLOCK, "OB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
-        assertEquals(JSON.UNKNOWN, result.path(JsonOblock.STATUS).path(JsonOblock.STATUS).asInt());
+        assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JsonOblock.STATUS).asInt());
         // add a sensor and reporter to the oblock
         oblock1.setSensor(sensor1.getSystemName());
-        //oblock1.setReporter(reporter1);
         result = service.doGet(JsonOblock.OBLOCK, "OB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
+        assertEquals(sensor1.getSystemName(), result.path(JSON.DATA).path(JsonSensor.SENSOR).asText());
         try {
             // add an invalid oblock by using a turnout name instead of an oblock name
             assertNull(manager.getOBlock("IT1"));

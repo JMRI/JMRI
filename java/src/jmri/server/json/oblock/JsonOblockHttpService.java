@@ -2,16 +2,18 @@ package jmri.server.json.oblock;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+//import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Warrant;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.idtag.JsonIdTagHttpService;
+import jmri.server.json.reporter.JsonReporterHttpService;
+import jmri.server.json.roster.JsonRosterHttpService;
 import jmri.server.json.sensor.JsonSensor;
 
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static jmri.server.json.JSON.VALUE;
+import static jmri.server.json.idtag.JsonIdTag.IDTAG;
 import static jmri.server.json.oblock.JsonOblock.OBLOCK;
 import static jmri.server.json.oblock.JsonOblock.OBLOCKS;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -55,6 +58,7 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 // add OBlock status, includes special values for Allocated 0x10, OutOfService 0x40 etc.
                 data.put(JsonOblock.STATUS, oblock.getState());
         }
+        data.put(JsonSensor.SENSOR, oblock.getSensor() != null ? oblock.getSensor().getSystemName() : null);
         data.put(JsonOblock.WARRANT, oblock.getWarrant() != null ? oblock.getWarrant().getDisplayName() : null); // add OBlock Warrant name
         data.put(JsonOblock.TRAIN, oblock.getWarrant() != null ? oblock.getWarrant().getTrainName() : null); // add OBlock Warrant name
 

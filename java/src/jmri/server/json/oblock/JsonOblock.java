@@ -30,22 +30,7 @@ public class JsonOblock {
      * {@value #TRAIN}
      */
     public static final String TRAIN = "train"; // NOI18N
-//    /**
-//     * {@value #CURVATURE}
-//     */
-//    public static final String CURVATURE = "curvature"; // NOI18N
-//    /**
-//     * {@value #DENIED}
-//     */
-//    public static final String DENIED = "denied"; // NOI18N
-//    /**
-//     * {@value #PERMISSIVE}
-//     */
-//    public static final String PERMISSIVE = "permissive"; // NOI18N
-//    /**
-//     * {@value #SPEED_LIMIT}
-//     */
-//    public static final String SPEED_LIMIT = JSON.SPEED + "Limit"; // NOI18N
+
 
     /**
      * Prevent instantiation, since this class only contains static values

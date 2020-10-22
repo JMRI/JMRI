@@ -39,7 +39,7 @@
  * metadata(data array)
  * networkService(name, data)
  * networkServices(data array)
- * oblock(name, value, data)
+ * oblock(name, status, data)
  * oblocks(data array)
  * panel(name, value, data)
  * panels(data array)
@@ -154,7 +154,7 @@
             };
             jmri.networkServices = function (data) {
             };
-            jmri.oblock = function (name, value, data) {
+            jmri.oblock = function (name, status, data) {
             };
             jmri.oblocks = function (data) {
             };
@@ -379,14 +379,13 @@
                     jmri.socket.send("oblock", { name: name });
                 } else {
                     $.getJSON(jmri.url + "oblock/" + name, function (json) {
-                        //jmri.oblock(json.data.name, json.data.value, json.data);
-                        jmri.oblock(json.data.name, json.data.state, json.data); // copied from sensor EBR
+                        jmri.oblock(json.data.name, json.data.status, json.data); // copied from sensor
                     });
                 }
             };
             jmri.setOblock = function (name, value) {
                 if (jmri.socket) {
-                    jmri.socket.send("oblock", { name: name, value: value }, 'post');
+                    jmri.socket.send("oblock", { name: name, status: status }, 'post');
                 } else {
                     $.ajax({
                         url: jmri.url + "oblock/" + name,
@@ -394,8 +393,8 @@
                         data: JSON.stringify({ value: value }),
                         contentType: "application/json; charset=utf-8",
                         success: function (json) {
-                            jmri.oblock(json.data.name, json.data.value, json.data);
-                            jmri.getOblock(json.data.name, json.data.value);
+                            jmri.oblock(json.data.name, json.data.status, json.data);
+                            jmri.getOblock(json.data.name, json.data.status);
                         }
                     });
                 }
@@ -482,7 +481,7 @@
                         jmri.setLayoutBlock(name, state, 'post');
                         break;
                     case "oblock":
-                        jmri.setOblock(name, state, 'post');
+                        jmri.setOblock(name, status, 'post');
                         break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state, 'post');
@@ -887,7 +886,7 @@
                     jmri.networkServices(e.data);
                 },
                 oblock: function (e) {
-                    jmri.oblock(e.data.name, e.data.value, e.data);
+                    jmri.oblock(e.data.name, e.data.status, e.data);
                 },
                 oblocks: function (e) {
                     jmri.oblocks(e.data);

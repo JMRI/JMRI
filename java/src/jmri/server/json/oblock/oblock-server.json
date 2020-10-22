@@ -6,30 +6,69 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "System name of the oblock"
+            "description": "System name of the OBlock"
         },
         "userName": {
             "type": ["string", "null"],
-            "description": "User name of the oblock"
+            "description": "User name of the OBlock"
         },
         "comment": {
             "type": ["string", "null"],
-            "description": "Comment for the oblock"
+            "description": "Comment for the OBlock"
+        },
+        "properties": {
+          "type": "array",
+          "description": "NamedBean properties of the block",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string",
+                "description": "Key by which property is accessed"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "String value of property or null"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "name",
+            "value"
+          ]
         },
         "status": {
             "type": "integer",
-            "description": "The status of the oblock",
+            "description": "The occupancy status of the OBlock",
             "enum": [0, 1, 2, 4, 8, 16, 18, 20, 24, 32, 34, 36, 40, 64, 66, 68, 72, 128, 130, 132, 136]
+        },
+        "value": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The OBlock's value, can be idTag, Reporter, or text"
+        },
+        "sensor": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The system name of the sensor associated with the OBlock"
         },
         "warrant": {
             "type": ["string", "null"],
-            "description": "Allocated warrant for the oblock"
+            "description": "Allocated warrant for the OBlock"
         },
         "train": {
             "type": ["string", "null"],
-            "description": "Train in Warrant for the oblock"
+            "description": "Train in Warrant for the OBlock"
         }
     },
-    "additionalProperties": true,
+    "additionalProperties": false,
     "required": ["name", "userName", "comment", "status"]
 }
