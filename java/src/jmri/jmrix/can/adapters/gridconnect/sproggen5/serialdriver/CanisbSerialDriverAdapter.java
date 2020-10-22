@@ -54,6 +54,7 @@ public class CanisbSerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().configureManagers();
         
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.CBUS);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.NONE);
     }
 
     /**

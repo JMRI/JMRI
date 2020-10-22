@@ -615,7 +615,7 @@
             <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
             <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
             <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
-            <li>LocoNet supports discover of the sources of voltage and current
+            <li>LocoNet supports discovery of the sources of voltage and current
                 data and makes them available in the "Voltage/Current Meter" tool.</li>
         </ul>
 

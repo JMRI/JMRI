@@ -3,8 +3,7 @@ package jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.configurexml;
 import org.jdom2.Element;
 
 import jmri.jmrix.PortAdapter;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.PiSprog3ConnectionConfig;
-import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.Sprog3PlusSerialDriverAdapter;
+import jmri.jmrix.can.adapters.gridconnect.sproggen5.serialdriver.*;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 
 /**
@@ -29,7 +28,7 @@ public class PiSprog3ConnectionConfigXml extends AbstractSerialConnectionConfigX
 
     @Override
     protected void getInstance() {
-        adapter = new Sprog3PlusSerialDriverAdapter();
+        adapter = new PiSprog3SerialDriverAdapter();
     }
 
     @Override
