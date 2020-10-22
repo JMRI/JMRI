@@ -53,7 +53,7 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
         if (s.lastIndexOf('>') != -1) {
             s = s.substring(0, s.lastIndexOf('>'));
         }
-        DCCppMessage m = DCCppMessage.parseDCCppMessage(s);
+        DCCppMessage m = new DCCppMessage(s);
         log.debug("Sending: {}", m);
         return(m);
     }

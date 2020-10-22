@@ -228,7 +228,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             // Math.max(0.001,... to prevent 0 division in case 0 items are connected
         }
         var onOffSpans = "";
-        if ($gPanel.type == "L") {
+        if (($gPanel.type == "L") && ($gPanel.controlling == "yes")) {
             // handlers to switch on/off, I18N
             onOffSpans = "&nbsp;<span id='allOff' class='lightswitch'>All Off</span>&nbsp;<span id='allOn' class='lightswitch'>All On</span>";
             // handlers added later
