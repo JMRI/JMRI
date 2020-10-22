@@ -30,6 +30,7 @@ public class CbusPreferences extends PreferencesBean {
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
     private boolean _isGlobalProgrammerAvailable = true;
     private boolean _isAddressedModePossible = true;
+    private int _progTrackMode = 0;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -60,6 +61,8 @@ public class CbusPreferences extends PreferencesBean {
             "globalprogrammer", this.isGlobalProgrammerAvailable() );
         this._isAddressedModePossible = sharedPreferences.getBoolean(
             "addressedprogrammer", this.isAddressedModePossible() );
+
+        this._progTrackMode = sharedPreferences.getInt("progtrackmode", this.getProgTrackMode() );
     }
 
     public void savePreferences() {
@@ -81,6 +84,8 @@ public class CbusPreferences extends PreferencesBean {
 
         sharedPreferences.putBoolean("globalprogrammer", this.isGlobalProgrammerAvailable() );
         sharedPreferences.putBoolean("addressedprogrammer", this.isAddressedModePossible() );
+        
+        sharedPreferences.putInt("progtrackmode", this.getProgTrackMode() );
         
         try {
             sharedPreferences.sync();
@@ -311,6 +316,23 @@ public class CbusPreferences extends PreferencesBean {
     public void setProgrammersAvailable(boolean global, boolean addressed) {
         setGlobalProgrammerAvailable(global);
         setAddressedModePossible(addressed);
+    }
+    
+    /**
+     * Get the programming track mode
+     * @return the mode
+     */
+    public int getProgTrackMode() {
+        return _progTrackMode;
+    }
+    
+    /**
+     * Set programming track mode
+     * @param mode to be set
+     */
+    public void setProgTrackMode(int mode) {
+        _progTrackMode = mode;
+        savePreferences();
     }
     
     private final static Logger log = LoggerFactory.getLogger(CbusPreferences.class);
