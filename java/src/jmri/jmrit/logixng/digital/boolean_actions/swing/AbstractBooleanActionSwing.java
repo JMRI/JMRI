@@ -3,9 +3,9 @@ package jmri.jmrit.logixng.digital.boolean_actions.swing;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
@@ -14,6 +14,12 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 public abstract class AbstractBooleanActionSwing implements SwingConfiguratorInterface {
 
     protected JPanel panel;
+    
+    /** {@inheritDoc} */
+    @Override
+    public Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(DigitalBooleanActionManager.class);
+    }
     
     /** {@inheritDoc} */
     @Override

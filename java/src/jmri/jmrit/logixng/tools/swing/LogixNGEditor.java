@@ -59,7 +59,7 @@ public final class LogixNGEditor {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";      // NOI18N
+    private final String systemNameAuto = "AutoSystemName";         // NOI18N
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
     
@@ -543,7 +543,7 @@ public final class LogixNGEditor {
         JButton create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
         create.addActionListener((ActionEvent e2) -> {
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
+                prefMgr.setPreferenceState(this.getClass().getName(), systemNameAuto, _autoSystemName.isSelected());
             });
             result.set(true);
             dialog.dispose();
@@ -570,7 +570,7 @@ public final class LogixNGEditor {
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+            _autoSystemName.setSelected(prefMgr.getPreferenceState(this.getClass().getName(), systemNameAuto, true));
         });
         
         dialog.setVisible(true);

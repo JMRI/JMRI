@@ -548,7 +548,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     JLabel _sysNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnSystemName") + ":");  // NOI18N
     JLabel _userNameLabel = new JLabel(rbx.getString("BeanNameLogixNG") + " " + Bundle.getMessage("ColumnUserName") + ":");   // NOI18N
-    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";      // NOI18N
+    String systemNameAuto = "AutoSystemName";       // NOI18N
     JButton create;
 
     // Edit LogixNG Variables
@@ -622,7 +622,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
         addLogixNGFrame.setVisible(true);
         _autoSystemName.setSelected(false);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+            _autoSystemName.setSelected(prefMgr.getPreferenceState(this.getClass().getName(), systemNameAuto, true));
         });
     }
 
@@ -779,7 +779,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
                 addLogixNGFrame.setVisible(true);
                 _autoSystemName.setSelected(false);
                 InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+                    _autoSystemName.setSelected(prefMgr.getPreferenceState(this.getClass().getName(), systemNameAuto, true));
                 });
             }
         };

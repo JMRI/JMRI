@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
 
 /**
- * Configures an ExpressionTurnout object with a Swing JPanel.
+ * Configures an ExpressionMemory object with a Swing JPanel.
  */
 public class ExpressionMemorySwing extends AbstractExpressionSwing {
 

@@ -3,7 +3,8 @@ package jmri.jmrit.logixng.digital.expressions.swing;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
-import jmri.InstanceManager;
+
+import jmri.*;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
@@ -14,6 +15,12 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 public abstract class AbstractExpressionSwing implements SwingConfiguratorInterface {
 
     protected JPanel panel;
+    
+    /** {@inheritDoc} */
+    @Override
+    public Manager<? extends NamedBean> getManager() {
+        return InstanceManager.getDefault(DigitalExpressionManager.class);
+    }
     
     /** {@inheritDoc} */
     @Override

@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.swing;
 
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
+
+import jmri.Manager;
+import jmri.NamedBean;
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
 import jmri.jmrit.logixng.Base;
@@ -16,6 +20,12 @@ import jmri.jmrit.logixng.MaleSocket;
  */
 public interface SwingConfiguratorInterface {
 
+    /**
+     * Get the manager that handles the beans for the new object.
+     * @return the manager
+     */
+    public Manager<? extends NamedBean> getManager();
+    
     /**
      * Get a configuration panel when a new object is to be created and we don't
      * have it yet.
@@ -40,14 +50,15 @@ public interface SwingConfiguratorInterface {
     
     /**
      * Validate the form.
+     * <P>
      * The parameter errorMessage is used to give the error message in case of
-     * an error. The caller must ensure that errorMessage.length() is zero.
+     * an error. If there are errors, the error messages is added to the list
+     * errorMessage.
      * 
      * @param errorMessages the error messages in case of an error
      * @return true if data in the form is valid, false otherwise
      */
     public boolean validate(@Nonnull List<String> errorMessages);
-//    public boolean validate(@Nonnull StringBuilder errorMessage);
     
     /**
      * Get an example of a system name

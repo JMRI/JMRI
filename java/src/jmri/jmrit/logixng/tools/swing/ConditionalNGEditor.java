@@ -14,6 +14,7 @@ import javax.swing.tree.*;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.*;
@@ -49,7 +50,7 @@ public class ConditionalNGEditor extends TreeViewer {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";      // NOI18N
+    private final String systemNameAuto = "AutoSystemName";             // NOI18N
     private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
     private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
 //    private Class maleSocketClass = null;
@@ -76,6 +77,17 @@ public class ConditionalNGEditor extends TreeViewer {
      * recipient.
      */
     final HashMap<String, String> logixNGData = new HashMap<>();
+    
+    /**
+     * Construct a ConditionalEditor.
+     * <p>
+     * This is used by JmriUserPreferencesManager since it tries to create an
+     * instance of this class.
+     */
+    public ConditionalNGEditor() {
+        super(null);
+        this._conditionalNG = null;
+    }
     
     /**
      * Construct a ConditionalEditor.
@@ -376,36 +388,60 @@ public class ConditionalNGEditor extends TreeViewer {
             // Create ConditionalNG
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             create.addActionListener((ActionEvent e) -> {
+                List<String> errorMessages = new ArrayList<>();
+                
+                boolean isValid = true;
+                
                 if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
-//                    _systemName.setText(femaleSocket.getNewSystemName());
                     _systemName.setText(addSwingConfiguratorInterface.getAutoSystemName());
                 }
-                MaleSocket socket;
-                if (_addUserName.getText().isEmpty()) {
-                    socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), null);
+                
+                if (addSwingConfiguratorInterface.getManager()
+                        .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
+                    isValid = false;
+                    errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                }
+                
+                isValid &= addSwingConfiguratorInterface.validate(errorMessages);
+                
+                if (isValid) {
+                    MaleSocket socket;
+                    if (_addUserName.getText().isEmpty()) {
+                        socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), null);
+                    } else {
+                        socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
+                    }
+                    try {
+                        femaleSocket.connect(socket);
+                    } catch (SocketAlreadyConnectedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    addSwingConfiguratorInterface.dispose();
+                    addItemDialog.dispose();
+                    addItemDialog = null;
+                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                        TreeModelEvent tme = new TreeModelEvent(
+                                femaleSocket,
+                                path.getPath()
+                        );
+                        l.treeNodesChanged(tme);
+                    }
+                    tree.expandPath(path);
+                    tree.updateUI();
+                    InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                        prefMgr.setPreferenceState(this.getClass().getName(), systemNameAuto, _autoSystemName.isSelected());
+                    });
                 } else {
-                    socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
+                    StringBuilder errorMsg = new StringBuilder();
+                    for (String s : errorMessages) {
+                        if (errorMsg.length() > 0) errorMsg.append("<br>");
+                        errorMsg.append(s);
+                    }
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                            Bundle.getMessage("ValidateErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
-                try {
-                    femaleSocket.connect(socket);
-                } catch (SocketAlreadyConnectedException ex) {
-                    throw new RuntimeException(ex);
-                }
-                addSwingConfiguratorInterface.dispose();
-                addItemDialog.dispose();
-                addItemDialog = null;
-                for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                    TreeModelEvent tme = new TreeModelEvent(
-                            femaleSocket,
-                            path.getPath()
-                    );
-                    l.treeNodesChanged(tme);
-                }
-                tree.expandPath(path);
-                tree.updateUI();
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
-                });
             });
             create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
@@ -432,7 +468,18 @@ public class ConditionalNGEditor extends TreeViewer {
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             edit.addActionListener((ActionEvent e) -> {
                 List<String> errorMessages = new ArrayList<>();
-                if (editSwingConfiguratorInterface.validate(errorMessages)) {
+                
+                boolean isValid = true;
+                
+                if (editSwingConfiguratorInterface.getManager()
+                        .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
+                    isValid = false;
+                    errorMessages.add(Bundle.getMessage("InvalidSystemName", _systemName.getText()));
+                }
+                
+                isValid &= editSwingConfiguratorInterface.validate(errorMessages);
+                
+                if (isValid) {
                     Base object = femaleSocket.getConnectedSocket().getObject();
                     ((NamedBean)object).setUserName(_addUserName.getText());
                     editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
@@ -608,7 +655,7 @@ public class ConditionalNGEditor extends TreeViewer {
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-            _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+            _autoSystemName.setSelected(prefMgr.getPreferenceState(this.getClass().getName(), systemNameAuto, true));
         });
         
         frame.setVisible(true);
