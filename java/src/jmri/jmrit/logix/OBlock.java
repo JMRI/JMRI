@@ -49,6 +49,45 @@ import org.slf4j.LoggerFactory;
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
+    public enum OBlockStatus {
+        Unoccupied(UNOCCUPIED, "unoccupied", Bundle.getMessage("unoccupied")),
+        Occupied(OCCUPIED, "occupied", Bundle.getMessage("occupied")),
+        Allocated(ALLOCATED, "allocated", Bundle.getMessage("allocated")),
+        Running(RUNNING, "running", Bundle.getMessage("running")),
+        OutOfService(OUT_OF_SERVICE, "outOfService", Bundle.getMessage("outOfService")),
+        Dark(UNDETECTED, "dark", Bundle.getMessage("dark")),
+        TrackError(TRACK_ERROR, "powerError", Bundle.getMessage("powerError"));
+        
+        private final int status;
+        private final String name;
+        private final String descr;
+        
+        private static final Map<String, OBlockStatus> map = new HashMap<>();
+        private static final Map<String, OBlockStatus> reverseMap = new HashMap<>();
+        
+        private OBlockStatus(int status, String name, String descr) {
+            this.status = status;
+            this.name = name;
+            this.descr = descr;
+        }
+        
+        public int getStatus() { return status; }
+        
+        public String getName() { return name; }
+        
+        public String getDescr() { return descr; }
+        
+        public static OBlockStatus getByName(String name) { return map.get(name); }
+        public static OBlockStatus getByDescr(String descr) { return reverseMap.get(descr); }
+        
+        static {
+            for (OBlockStatus oblockStatus : OBlockStatus.values()) {
+                map.put(oblockStatus.name, oblockStatus);
+                reverseMap.put(oblockStatus.descr, oblockStatus);
+            }
+        }
+    }
+    
     /*
      * Block states.
      * NamedBean.UNKNOWN                 = 0x01
@@ -65,53 +104,15 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     // static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     public static final int TRACK_ERROR = 0x80; // Block has Error
 
-    private static final HashMap<String, Integer> _statusMap = new HashMap<>();
-    private static final HashMap<String, String> _statusNameMap = new HashMap<>();
-
     private static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
     private static final String ALLOCATED_TO_WARRANT = "AllocatedToWarrant";
 
-    private static void loadStatusMap() {
-        _statusMap.put("unoccupied", UNOCCUPIED);
-        _statusMap.put("occupied", OCCUPIED);
-        _statusMap.put("allocated", ALLOCATED);
-        _statusMap.put("running", RUNNING);
-        _statusMap.put("outOfService", OUT_OF_SERVICE);
-        _statusMap.put("dark", UNDETECTED);
-        _statusMap.put("powerError", TRACK_ERROR);
-    }
-
-    // Note also the enum jmri.Conditional.Type with the values OBLOCK_????
-    private static void loadStatusNameMap() {
-        _statusNameMap.put(Bundle.getMessage("unoccupied"), "unoccupied");
-        _statusNameMap.put(Bundle.getMessage("occupied"), "occupied");
-        _statusNameMap.put(Bundle.getMessage("allocated"), "allocated");
-        _statusNameMap.put(Bundle.getMessage("running"), "running");
-        _statusNameMap.put(Bundle.getMessage("outOfService"), "outOfService");
-        _statusNameMap.put(Bundle.getMessage("dark"), "dark");
-        _statusNameMap.put(Bundle.getMessage("powerError"), "powerError");
-    }
-
-    public static Iterator<String> getLocalStatusNames() {
-        if (_statusNameMap.isEmpty()) {
-            loadStatusNameMap();
-        }
-        return _statusNameMap.keySet().iterator();
-    }
-
     public static String getLocalStatusName(String str) {
-        try {
-            return Bundle.getMessage(str);
-        } catch (java.util.MissingResourceException mre) {
-            return str;
-        }
+        return OBlockStatus.getByName(str).descr;
     }
 
     public static String getSystemStatusName(String str) {
-        if (_statusNameMap.isEmpty()) {
-            loadStatusNameMap();
-        }
-        return _statusNameMap.get(str);
+        return OBlockStatus.getByDescr(str).name;
     }
     private List<Portal> _portals = new ArrayList<>();     // portals to this block
 
@@ -457,12 +458,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      *  From the universal name for block status, check if it is the current status
      */
     public boolean statusIs(String statusName) {
-        if (_statusMap.isEmpty()) {
-            loadStatusMap();
-        }
-        Integer i = _statusMap.get(statusName);
-        if (i != null) {
-            return ((getState() & i) != 0);
+        OBlockStatus oblockStatus = OBlockStatus.getByName(statusName);
+        if (oblockStatus != null) {
+            return ((getState() & oblockStatus.status) != 0);
         }
         log.error("\"{}\" type not found.  Update Conditional State Variable testing OBlock \"{}\" status",
                 getDisplayName(), statusName);
