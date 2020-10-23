@@ -50,7 +50,7 @@ public class ConditionalNGEditor extends TreeViewer {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
-    private final String systemNameAuto = "AutoSystemName";             // NOI18N
+    private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";             // NOI18N
     private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
     private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
 //    private Class maleSocketClass = null;
@@ -429,7 +429,7 @@ public class ConditionalNGEditor extends TreeViewer {
                     tree.expandPath(path);
                     tree.updateUI();
                     InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                        prefMgr.setPreferenceState(this.getClass().getName(), systemNameAuto, _autoSystemName.isSelected());
+                        prefMgr.setCheckboxPreferenceState(systemNameAuto, _autoSystemName.isSelected());
                     });
                 } else {
                     StringBuilder errorMsg = new StringBuilder();
@@ -655,7 +655,7 @@ public class ConditionalNGEditor extends TreeViewer {
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-            _autoSystemName.setSelected(prefMgr.getPreferenceState(this.getClass().getName(), systemNameAuto, true));
+            _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(systemNameAuto, true));
         });
         
         frame.setVisible(true);
