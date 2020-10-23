@@ -47,6 +47,8 @@ import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jmri.util.ColorUtil.contrast;
+
 /**
  * Provides a simple editor for adding jmri.jmrit.display.switchBoard items to a
  * JLayeredPane inside a captive JFrame. Primary use is for new users.
@@ -460,9 +462,9 @@ public class SwitchboardEditor extends Editor {
         help2.setVisible(switchesOnBoard.size() != 0); // hide help2 when help3 is shown vice versa (as no items are dimmed or not)
         pack();
         switchboardLayeredPane.repaint();
-        // hide AllOn/Off buttons unless type is Light
-        allOnButton.setVisible(beanTypeList.getSelectedIndex() == 2);
-        allOffButton.setVisible(beanTypeList.getSelectedIndex() == 2);
+        // hide AllOn/Off buttons unless type is Light and control is allowed
+        allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
+        allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
 
         // must repaint again to fit inside frame
         Dimension frSize = super.getTargetFrame().getSize(); // 5 px for border, 25 px for footer, autoRows(int)
@@ -677,6 +679,8 @@ public class SwitchboardEditor extends Editor {
                 border.setTitle(beanManuNames.getSelectedItem().toString() + " " +
                         beanTypeList.getSelectedItem().toString() + " - " + (allControlling() ? interact : noInteract));
             }
+            allOnButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
+            allOffButton.setVisible((beanTypeList.getSelectedIndex() == 2) && allControlling());
             switchboardLayeredPane.repaint();
             log.debug("border title updated");
         });
@@ -762,31 +766,6 @@ public class SwitchboardEditor extends Editor {
         JMenu colorMenu = new JMenu(Bundle.getMessage("Colors"));
         _optionMenu.add(colorMenu);
 
-        // add background color menu item
-        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
-        colorMenu.add(backgroundColorMenuItem);
-        backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
-            Color desiredColor = JmriColorChooser.showDialog(this,
-                                 Bundle.getMessage("SetBackgroundColor", ""),
-                                 defaultBackgroundColor);
-            if (desiredColor!=null && !defaultBackgroundColor.equals(desiredColor)) {
-                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
-                if (desiredColor.equals(defaultTextColor)) {
-                    int retval = JOptionPane.showOptionDialog(null,
-                               Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                               new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                    if (retval != 0) {
-                        return;
-                    }
-                }
-                defaultBackgroundColor = desiredColor;
-                setBackgroundColor(desiredColor);
-                setDirty(true);
-                JmriColorChooser.addRecentColor(desiredColor);
-                updatePressed();
-           }
-        });
-
         // add text color menu item
         JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
         colorMenu.add(textColorMenuItem);
@@ -794,17 +773,46 @@ public class SwitchboardEditor extends Editor {
             Color desiredColor = JmriColorChooser.showDialog(this,
                                  Bundle.getMessage("DefaultTextColor", ""),
                                  defaultTextColor);
-            if (desiredColor!=null && !defaultTextColor.equals(desiredColor)) {
+            if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 // if new defaultTextColor matches bgColor, ask user as labels will become unreadable
                 if (desiredColor.equals(defaultBackgroundColor)) {
                     int retval = JOptionPane.showOptionDialog(null,
-                    Bundle.getMessage("ColorIdenticalWarning"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
-                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-                    if (retval != 0) {
-                        return;
+                    Bundle.getMessage("ColorIdenticalWarningF"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        setDefaultBackgroundColor(contrast(defaultBackgroundColor));
+                    } else if (retval != 0) {
+                        return; // cancel
                     }
                 }
                 defaultTextColor = desiredColor;
+                setDirty(true);
+                JmriColorChooser.addRecentColor(desiredColor);
+                updatePressed();
+            }
+        });
+
+        // add background color menu item
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
+        colorMenu.add(backgroundColorMenuItem);
+        backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetBackgroundColor", ""),
+                    defaultBackgroundColor);
+            if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
+                // if new bgColor matches the defaultTextColor, ask user as labels will become unreadable
+                if (desiredColor.equals(defaultTextColor)) {
+                    int retval = JOptionPane.showOptionDialog(null,
+                            Bundle.getMessage("ColorIdenticalWarningR"), Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+                            new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonInvert"), Bundle.getMessage("ButtonCancel")}, null);
+                    if (retval == 1) { // invert the other color
+                        defaultTextColor = contrast(defaultTextColor);
+                    } else if (retval != 0) {
+                        return; // cancel
+                    }
+                }
+                defaultBackgroundColor = desiredColor;
+                setBackgroundColor(desiredColor);
                 setDirty(true);
                 JmriColorChooser.addRecentColor(desiredColor);
                 updatePressed();
@@ -884,7 +892,7 @@ public class SwitchboardEditor extends Editor {
      * @param color RGB Color for switchboard background and beanSwitches
      */
     public void setDefaultBackgroundColor(Color color) {
-        setBackgroundColor(color); // via Editor
+        setBackgroundColor(color); // via Editor to update bg color of JPanel
         defaultBackgroundColor = color;
     }
 

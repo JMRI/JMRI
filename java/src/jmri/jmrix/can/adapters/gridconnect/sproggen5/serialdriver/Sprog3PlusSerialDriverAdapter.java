@@ -53,6 +53,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().configureManagers();
         
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
     }
 
     /**

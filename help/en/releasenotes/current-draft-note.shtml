@@ -162,7 +162,16 @@
 
         <h4>Uhlenbrock Intellibox</h4>
             <ul>
-                <li></li>
+                <li>The 73900 decoder definition was renamed 7x900, and updated to support decoder models:
+                  <ul>
+                    <li>73800</li>
+                    <li>73900</li>
+                    <li>76900 (V1)</li>
+                    <li>76900V7</li>
+                    <li>Piko 56126</li>
+                  </ul>
+                  Existing roster entries will suggest this replacement.
+                </li>
             </ul>
 
         <h4>Zimo MXULF</h4>
@@ -414,12 +423,6 @@
           <li></li>
         </ul>
 
-    <h3>Meters and MeterFrames</h3>
-        <a id="Meters" name="Meters"></a>
-        <ul>
-            <li></li>
-        </ul>
-
     <h3>Operations</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
@@ -531,7 +534,13 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+          <li>When the Switchboard pane is resized by the user, the number of rows will adjust to show the largest
+            size switch tiles (default On for new boards). If you prefer to set the number of rows in the Editor,
+            uncheck "Automatically set optimum grid" in the Options menu).</li>
+          <li>Switchboards immediately update after a change in shapes, types, connection or range. The [Update
+            Switchboard] button is still available, and occasionally required.</li>
+          <li>Switches display the user name on the switches (default On for new boards, set "Show user name on
+            switches" in the Options menu.</li>
         </ul>
 
     <h3>Throttle</h3>
@@ -575,7 +584,18 @@
         <ul>
             <li></li>
         </ul>
-        
+
+    <h3>Web Server</h3>
+    <ul>
+      <ul>
+        <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
+        <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
+          Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
+        <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
+          items control layout is selected in the Editor Options menu).</li>
+      </ul>
+    </ul>
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
@@ -590,9 +610,8 @@
             <li>AmpMeterFrame and VoltMeterFrame are replaced by MeterFrame</li>
             <li>The user can select which VoltageMeter/CurrentMeter the MeterFrame should show</li>
             <li>The MeterFrames are stored in the panel file and restored when the panel is loaded</li>
-            <li>LocoNet supports discoverr of the sources of voltage and current 
+            <li>LocoNet supports discovery of the sources of voltage and current
                 data and makes them available in the "Voltage/Current Meter" tool.</li>
-            
         </ul>
 
    <h3>AbstractProxyManager</h3>
@@ -621,4 +640,3 @@
             <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
             <li></li>
         </ul>
-
