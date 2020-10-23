@@ -148,6 +148,8 @@
         <h4>SPROG</h4>
             <ul>
                 <li>EStop for 28 Step mode is now sent correctly</li>
+		<li>Updated programming mode switcher for Pi-SPROG 3</li>
+		<li>Added mode switcher for SPROG 3 Plus</li>
             </ul>
 
         <h4>TAMS</h4>
