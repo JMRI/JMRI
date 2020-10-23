@@ -415,7 +415,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     public void setCheckboxPreferenceState(String name, boolean state) {
         checkBoxLastSelection.put(name, state);
         setChangeMade(false);
-        this.saveComboBoxLastSelections();
+        this.saveCheckBoxLastSelections();
     }
 
     public synchronized boolean getChangeMade() {
