@@ -639,7 +639,22 @@ public class ImportConditional {
     
     
     private DigitalExpressionBean getOBlockExpression(@Nonnull ConditionalVariable cv, OBlock b) throws JmriException {
-        return null;
+        ExpressionOBlock expression =
+                new ExpressionOBlock(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .getAutoSystemName(), null);
+        
+        OBlock.OBlockStatus oblockStatus = OBlock.OBlockStatus.getByName(cv.getDataString());
+        
+        if (oblockStatus == null) {
+            throw new InvalidConditionalVariableException(
+                    Bundle.getMessage("ConditionalBadOBlockDataString", cv.getDataString()));
+        }
+        
+        expression.setOBlock(b);
+        expression.setOBlockStatus(oblockStatus);
+        expression.setTriggerOnChange(cv.doTriggerActions());
+        
+        return expression;
     }
     
     

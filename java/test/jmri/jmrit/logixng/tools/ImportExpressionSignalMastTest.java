@@ -40,10 +40,10 @@ public class ImportExpressionSignalMastTest extends ImportExpressionComplexTestB
         SIGNAL_MAST_LIT(Conditional.Type.SIGNAL_MAST_LIT, null, null, null),
         SIGNAL_MAST_HELD(Conditional.Type.SIGNAL_MAST_HELD, null, null, null);
         
-        private Conditional.Type type;
-        private String initAspect;
-        private String failAspect;
-        private String successAspect;
+        private final Conditional.Type type;
+        private final String initAspect;
+        private final String failAspect;
+        private final String successAspect;
         
         private SignalMastEnum(Conditional.Type type, String initAspect, String failAspect, String successAspect) {
             this.type = type;
