@@ -1174,6 +1174,22 @@
    would select the track with the least amount of use when determining the track to arrive on. Note
    that the program will only prompt you if there are two or more tracks available in staging that
    meet the train's requirements. <a name="CarRouting" id="CarRouting"></a>
+   
+   <a name="TryNormalMode" id="TryNormalMode"></a>
+   <h4>Try Normal Mode if Build Failure from Staging</h4>
+
+   When using <a href="#BuildOptions">aggressive</a> mode to build a train, the program will first
+   try and pull cars from all of the train's locations to free up space for cars departing staging.
+   Sometimes this causes the length of the train to exceed the maximum length requirements of the
+   <a href="#EditRoute">route</a>, causing a build failure. If this option is selected, and the
+   build fails, the program will automatically try to build the train in
+   <a href="#BuildOptions">normal</a> mode. In Normal mode cars from staging are placed along the
+   train's route before pulling cars from location, the exact opposite of aggressive mode.
+
+   <p>
+    You can also request to build a specific train in normal mode, see <a href="#TrainBuildOptions">Train
+     Build Options</a>.
+   </p>
 
    <h3>Car Routing Options</h3>
 
@@ -4266,6 +4282,12 @@
    train departs staging. In normal mode, all of the cars in staging are set out first, where in
    aggressive mode, the cars in staging are set out last. Selecting this option when you have build
    failures out of staging, it could fix the failure.
+
+   <p>
+    You can also configure the program to always try building a train in normal mode when there's a
+    build failure in a aggressive mode when departing staging. See <a href="#TryNormalMode">Try
+     Normal Mode if Build Failure from Staging</a>.
+   </p>
 
    <h4>Send all car pick ups to terminal</h4>
    You can also request that all car pick ups along the train's route are sent to the last location

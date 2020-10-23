@@ -126,7 +126,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         // attach shape specific code to this beanSwitch
         switch (_shape) {
             case 1: // slider shape
-                log.debug("create Slider");
                 beanIcon.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -134,11 +133,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
-                        _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
-                            // display the popup:
-                            showPopUp(e);
+                    public void mouseReleased(MouseEvent me) { // for Windows
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
                         }
                     }
                 });
@@ -156,7 +160,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 this.add(beanIcon);
                 break;
             case 2: // Maerklin style keyboard
-                log.debug("create Key");
                 beanKey.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -164,11 +167,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
-                        _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
-                            // display the popup:
-                            showPopUp(e);
+                    public void mouseReleased(MouseEvent me) { // for Windows
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
                         }
                     }
                 });
@@ -187,7 +195,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 this.add(beanKey);
                 break;
             case 3: // turnout/sensor/light Icon (selecting image by letter in switch name/label)
-                log.debug("create Symbols");
                 beanSymbol.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -195,11 +202,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
-                        _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
-                            // display the popup:
-                            showPopUp(e);
+                    public void mouseReleased(MouseEvent me) { // for Windows
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
                         }
                     }
                 });
@@ -229,7 +241,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 break;
             case 0: // 0 = "Button" shape
             default:
-                log.debug("create Button");
                 beanButton.addMouseListener(new MouseAdapter() { // handled by JPanel
                     @Override
                     public void mouseClicked(MouseEvent me) {
@@ -237,11 +248,16 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
-                        _editor.setBoardToolTip(null); // ends tooltip if displayed
-                        if (e.isPopupTrigger()) {
-                            // display the popup:
-                            showPopUp(e);
+                    public void mouseReleased(MouseEvent me) { // for Windows
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent me) { // for macOS, Linux
+                        if (me.isPopupTrigger()) {
+                            showPopUp(me); // display the popup
                         }
                     }
                 });
@@ -269,6 +285,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 this.add(beanButton);
                 break;
         }
+
         // connect to object or dim switch
         if (bean == null) {
             if (!_editor.hideUnconnected()) {
@@ -278,13 +295,13 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                     case 0:
                         beanButton.setEnabled(false);
                         break;
-//                    case 1:
+                    case 1:
 //                        beanIcon.setOpacity(dim);
 //                        break;
-//                    case 2:
+                    case 2:
 //                        beanKey.setOpacity(dim);
 //                        break;
-//                    case 3:
+                    case 3:
                     default:
 //                        beanSymbol.setOpacity(dim);
                 }
@@ -594,18 +611,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         }
     }
 
-    public void mousePressed(MouseEvent e) {
-        _editor.setBoardToolTip(null); // ends tooltip if displayed
-        if (e.isPopupTrigger()) {
-            // display the popup:
-            showPopUp(e);
-        }
-    }
-
-    public void mouseExited(MouseEvent e) {
-        //super.mouseExited(e);
-    }
-
     void cleanup() {
         if (namedBean != null) {
             getTurnout().removePropertyChangeListener(this);
@@ -641,8 +646,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      * (un)connected bean. Derived from
      * {@link jmri.jmrit.display.switchboardEditor.SwitchboardEditor#showPopUp(Positionable, MouseEvent)}
      *
-     * @param e unused.
-     * @return true when pop up displayed.
+     * @param e unused
+     * @return true when pop up displayed
      */
     public boolean showPopUp(MouseEvent e) {
         if (switchPopup != null) {

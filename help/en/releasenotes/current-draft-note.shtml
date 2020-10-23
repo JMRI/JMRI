@@ -98,7 +98,9 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
+                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
+                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
             </ul>
 
         <h4>MQTT</h4>

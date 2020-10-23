@@ -342,14 +342,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         return Bundle.getMessage("BeanStateUnknown"); // "Unknown"
                     }
                 } else if (col == MODECOL) {
-                    JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
+                    JComboBox<String> c = new JComboBox<>(t.getValidFeedbackNames());
                     c.setSelectedItem(t.getFeedbackModeName());
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == SENSOR1COL) {
                     return t.getFirstSensor();
@@ -364,18 +359,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 } else if (col == LOCKDECCOL) {
                     JComboBox<String> c;
                     if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) != 0) {
-                        c = new JComboBox<String>(t.getValidDecoderNames());
+                        c = new JComboBox<>(t.getValidDecoderNames());
                     } else {
-                        c = new JComboBox<String>(new String[]{t.getDecoderName()});
+                        c = new JComboBox<>(new String[]{t.getDecoderName()});
                     }
 
                     c.setSelectedItem(t.getDecoderName());
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LOCKOPRCOL) {
                     java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
@@ -390,7 +380,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         lockOperations.add(pushbutText);
                     }
                     lockOperations.add(noneText);
-                    JComboBox<String> c = new JComboBox<String>(lockOperations);
+                    JComboBox<String> c = new JComboBox<>(lockOperations);
 
                     if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         c.setSelectedItem(bothText);
@@ -401,12 +391,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     } else {
                         c.setSelectedItem(noneText);
                     }
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STRAIGHTCOL) {
 
@@ -414,10 +399,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     if (!speedListClosed.contains(speed)) {
                         speedListClosed.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedListClosed);
+                    JComboBox<String> c = new JComboBox<>(speedListClosed);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
-
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == DIVERGCOL) {
 
@@ -425,9 +410,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     if (!speedListThrown.contains(speed)) {
                         speedListThrown.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedListThrown);
+                    JComboBox<String> c = new JComboBox<>(speedListThrown);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                     // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
                     //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as
@@ -616,8 +602,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 table = tbl;
 
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table, OPSEDITCOL, editButton());
                 setColumnToHoldButton(table, EDITCOL, editButton());
                 //Hide the following columns by default
@@ -666,13 +650,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     return true;
                 } else {
                     return super.matchPropertyName(e);
-                }
-            }
-
-            public void comboBoxAction(ActionEvent e) {
-                log.debug("Combobox change");
-                if (table != null && table.getCellEditor() != null) {
-                    table.getCellEditor().stopCellEditing();
                 }
             }
 
