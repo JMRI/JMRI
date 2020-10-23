@@ -150,8 +150,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 _icon = true;
                 beanIcon.setPreferredSize(new Dimension(2*r, 2*r));
                 beanIcon.setLabels(switchLabel, _uLabel);
-                beanIcon.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, 14);
-                beanIcon.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
+                beanIcon.positionLabel(0, 5*r/-8, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
+                beanIcon.positionSubLabel(0, r/3, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
                 if (_editor.showToolTip()) {
                     beanIcon.setToolTipText(switchTooltip);
                 }
@@ -184,8 +184,8 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 _icon = true;
                 beanKey.setPreferredSize(new Dimension(new Dimension(2*r, 2*r)));
                 beanKey.setLabels(switchLabel, _uLabel);
-                beanKey.positionLabel(0, r/16, Component.CENTER_ALIGNMENT, 14);
-                beanKey.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, 8); // smaller (system name)
+                beanKey.positionLabel(0, r/16, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
+                beanKey.positionSubLabel(0, r/4, Component.CENTER_ALIGNMENT, Math.max(9,r/5)); // smaller (system name)
                 // provide x, y offset, depending on image size and free space
                 if (_editor.showToolTip()) {
                     beanKey.setToolTipText(switchTooltip);
@@ -221,14 +221,14 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
                 beanSymbol.setLabels(switchLabel, _uLabel);
                 switch (beanTypeChar) {
                     case 'T' :
-                        beanSymbol.positionLabel(0, -3*r/5, Component.CENTER_ALIGNMENT, 14);
-                        beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
+                        beanSymbol.positionLabel(0, -3*r/5, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
+                        beanSymbol.positionSubLabel(0, r/-5, Component.CENTER_ALIGNMENT, Math.max(9,r/5));
                         break;
                     case 'S' :
                     case 'L' :
                     default :
-                        beanSymbol.positionLabel(0, r/-3, Component.CENTER_ALIGNMENT, 14);
-                        beanSymbol.positionSubLabel(0, 6*r/8, Component.CENTER_ALIGNMENT, 8);
+                        beanSymbol.positionLabel(0, r/-3, Component.CENTER_ALIGNMENT, Math.max(12,r/4));
+                        beanSymbol.positionSubLabel(0, 7*r/8, Component.CENTER_ALIGNMENT, Math.max(9,r/5));
                 }
                 if (_editor.showToolTip()) {
                     beanSymbol.setToolTipText(switchTooltip);
@@ -658,7 +658,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
 
         switchPopup.add(getNameString());
 
-        if (_editor.isEditable()) {
+        if (_editor.isEditable() && _editor.allControlling()) {
             // add tristate option if turnout has feedback
             if (namedBean != null) {
                 //addTristateEntry(switchPopup); // beanswitches don't do anything with this property
@@ -826,9 +826,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public void operate(MouseEvent e, String name) {
         log.debug("Button {} clicked", name);
-        //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
-        //    return;
-        //}
         if (namedBean == null || e == null || e.isMetaDown()) {
             return;
         }
@@ -843,9 +840,6 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
         log.debug("Switch clicked");
-        //if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) {
-        //    return;
-        //}
         if (namedBean == null || e == null || e.isMetaDown()) {
             return;
         }
@@ -1197,6 +1191,9 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
             }
 
             g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, textSize));
+            g2d.setRenderingHint( // smoother text display
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             if (Math.abs(textAlign - Component.CENTER_ALIGNMENT) < .0001) {
                 FontMetrics metrics = g.getFontMetrics(); // figure out where the center of the string is
                 labelX = metrics.stringWidth(tag) / -2;

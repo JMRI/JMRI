@@ -221,7 +221,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             // Math.max(0.001,... to prevent 0 division in case 0 items are connected
         }
         var onOffSpans = "";
-        if ($gPanel.type == "L") {
+        if (($gPanel.type == "L") && ($gPanel.controlling == "yes")) {
             // handlers to switch on/off, I18N
             onOffSpans = "&nbsp;<span id='allOff' class='lightswitch'>All Off</span>&nbsp;<span id='allOn' class='lightswitch'>All On</span>";
             // handlers added later
@@ -1038,7 +1038,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['text4'] = $(this).find('inactiveText').attr('text');
                             $widget['text8'] = $(this).find('inconsistentText').attr('text');
                             // add a canvas to the text label, reduce canvas HxW to fit inside the div
-                            $canvas = "<canvas id=" + $widget.id + "c width='" + ($swWidth - 12) + "px' height='" +
+                            $canvas = "<canvas id=" + $widget.id + "c class='bscanvas' width='" + ($swWidth - 12) + "px' height='" +
                                 ($swHeight - 12) + "px' style='border:1px solid white;'></canvas>"; // to insert later
                             break;
                         case "button" : // mimick java switchboard buttons
