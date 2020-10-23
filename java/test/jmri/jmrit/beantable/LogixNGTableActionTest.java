@@ -22,7 +22,6 @@ import org.junit.jupiter.api.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.*;
-import org.openide.util.Exceptions;
 
 
 /*
@@ -95,6 +94,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
+        //disable "Auto System Name" via checkbox
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(jf,Bundle.getMessage("LabelAutoSysName"));
+        jcbo.doClick();
         //Enter IQ1 in the text field labeled "System Name:"
         JLabelOperator jlo = new JLabelOperator(jf, "LogixNG" + " " + Bundle.getMessage("ColumnSystemName") + ":");
 //        JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
@@ -134,7 +136,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         logixNGTable.setEditorMode(LogixNGTableAction.EditMode.TREEEDIT);
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
-        Assert.assertNotNull("LogixNG does not exist", logixNG);
+        Assert.assertNotNull("LogixNG exists", logixNG);
         
         logixNGTable.editPressed("IQ101");  // NOI18N
 
@@ -148,7 +150,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         
         JDialogOperator addDialog = new JDialogOperator("Add ConditionalNG");  // NOI18N
-        new JCheckBoxOperator(addDialog, 0).clickMouse();
         new JButtonOperator(addDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         // Close window
@@ -202,7 +203,6 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
-        new JCheckBoxOperator(addFrame, 0).clickMouse();
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 999");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
 
@@ -229,6 +229,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
 
+        //disable "Auto System Name" via checkbox
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(addFrame,Bundle.getMessage("LabelAutoSysName"));
+        jcbo.doClick();
         new JTextFieldOperator(addFrame, 0).setText("IQ105");  // NOI18N
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
@@ -307,6 +310,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogixNG"));  // NOI18N
         Assert.assertNotNull("Found Add LogixNG Frame", addFrame);  // NOI18N
         
+        //disable "Auto System Name" via checkbox
+        JCheckBoxOperator jcbo = new JCheckBoxOperator(addFrame,Bundle.getMessage("LabelAutoSysName"));
+        jcbo.doClick();
         new JTextFieldOperator(addFrame, 0).setText("IQ105");  // NOI18N
         new JTextFieldOperator(addFrame, 1).setText("LogixNG 105");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
