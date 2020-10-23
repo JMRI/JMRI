@@ -5622,11 +5622,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // delete from array
         }
 
-        if (removeLayoutTrackAndRedraw(o)) {
-            return true;
-        }
-
-        return false;
+        return removeLayoutTrackAndRedraw(o);
     }
 
     private boolean noWarnLayoutTurnout = false;
@@ -5715,12 +5711,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
-        // delete from array
-        if (removeLayoutTrackAndRedraw(o)) {
-            return true;
-        }
-
-        return false;
+        return removeLayoutTrackAndRedraw(o);
     }
 
     private void substituteAnchor(@Nonnull Point2D loc,
@@ -5809,12 +5800,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             lb.decrementUse();
         }
 
-        // delete from array
-        if (removeLayoutTrackAndRedraw(o)) {
-            return true;
-        }
-
-        return false;
+        return removeLayoutTrackAndRedraw(o);
     }
 
     private boolean noWarnSlip = false;
@@ -5888,11 +5874,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             lb.decrementUse();
         }
 
-        if (removeLayoutTrackAndRedraw(o)) {
-            return true;
-        }
-
-        return false;
+        return removeLayoutTrackAndRedraw(o);
     }
 
     private boolean noWarnTurntable = false;
@@ -5942,11 +5924,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
-        if (removeLayoutTrackAndRedraw(o)) {
-            return true;
-        }
-
-        return false;
+        return removeLayoutTrackAndRedraw(o);
     }
 
     /**
