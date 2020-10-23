@@ -1409,16 +1409,20 @@ function $drawIcon($widget) {
 
     // additional naming for indicator*icon widgets to reflect occupancy
     $indicator = "";
-    if (($widget.occupancystate & 0x2) == 0x2) { // look only at bit 2, compare in $redrawIcon()
-        $indicator = "Occupied";
+    $state = "";
+    if ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatorturnouticon") { // check oblock status
+        $indicator = ((($widget.occupancystate & 0x2) == 0x2)  ? "Occupied" : ""); // look only at bit 2, compare to $redrawIcon()
+        Ostate = ($widget.occupancystate & 0xF0); // binary 11110000, discards (in)active bits in occupancy which we already used above
+        $state = Ostate | $widget.state; // adds Turnout state back in to fetch TO state = position icon
+        // $hoverText is updated for OUT_OF_SERVICE on redraw only
+    } else {
+        $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+        $state = $widget.state;
     }
-    Ostate = ($widget.occupancystate & 0xF0); // binary 11110000, discards (in)active bits in occupancy which we already used above
-    Istate = Ostate | $widget.state; // adds Turnout state back in to fetch TO state = position icon
-    // $hoverText is updated for OUT_OF_SERVICE on redraw
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if (typeof $widget['icon' + $indicator + (Istate + "")] !== "undefined") {
+    if (typeof $widget['icon' + $indicator + $state] !== "undefined") {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
-                "' src='" + $widget["icon" + $indicator + Istate] + "' " + $hoverText + "/>"
+                "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
 
         $("#panel-area").append($imgHtml); // put the html in the panel
 
@@ -1433,7 +1437,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", TOstate=" + $widget.state + ", occ=" + $widget.occupancystate + ", iconstate=" + Istate + " ["+$indicator+"] (icon" + $indicator + Istate + ")");
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", TOstate=" + $state + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }
@@ -1618,26 +1622,27 @@ var $setWidgetPosition = function(e) {
 
 // reDraw an icon-based widget to reflect changes to state or occupancy
 var $reDrawIcon = function($widget) {
-    //console.log("REDRAWICON1 " + $widget.id);
     // additional naming for indicator*icon widgets to reflect occupancy, error presendence status was already filtered in updateOblocks()
     $indicator = "";
-    if (($widget.occupancystate & 0x2) == 0x2) { // look only at bit 2, compare to $drawIcon()
-        $indicator = "Occupied";
+    if ($widget.widgetType == "indicatortrackicon" || $widget.widgetType == "indicatorturnouticon") { // check oblock status
+        $indicator = ((($widget.occupancystate & 0x2) == 0x2)  ? "Occupied" : ""); // look only at bit 2, compare to $drawIcon()
+        Ostate = ($widget.occupancystate & 0xF0); // binary + 11110000, discards (in)active occupancy info in bits 1-4
+        $state = (Ostate | $widget.state); // adds Turnout state back in to insert TO state = position icon
+        if (typeof $widget.name !== "undefined") { // intended for indicatorturnouts to show they are not clickable
+            $('img#' + $widget.id).attr('title', $widget.name + ((Ostate & 0x40) == OUT_OF_SERVICE ? " (off)" : ""));
+        // explain why not clickable TODO I18N tooltip for OOS + ERROR
+        }
+    } else {
+        $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
+        $state = $widget.state;
     }
-    Ostate = ($widget.occupancystate & 0xF0); // binary + 11110000 discards (in)active occupancy info in bits 1-4
-    Istate = (Ostate | $widget.state); // adds Turnout state back in to insert TO state = position icon
-    //console.log("REDRAWICON2 " + $widget.id + " ISTATE=" + $indicator + Istate);
-    if (typeof $widget.name !== "undefined") { // intended for indicatorturnouts to show they are not clickable
-        $('img#' + $widget.id).attr('title', $widget.name + ((Ostate & 0x40) == OUT_OF_SERVICE ? " (off)" : ""));
-    }
-    // explain why not clickable TODO I18N tooltip for OOS + ERROR
     // set image src to requested state's image, if defined
-    if ($widget['icon' + $indicator + Istate]) {
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + (Istate + "")]);
+    if ($widget['icon' + $indicator + $state]) {
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($state + "")]);
     } else if ($widget['defaulticon']) {  // if state icon not found, use default icon if provided
         $('img#' + $widget.id).attr('src', $widget['defaulticon']);
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", status=" + $widget.occupancystate + ", iconstate=" + Istate + " ["+$indicator+"] (icon" + $indicator + Istate + ")");
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", status=" + $widget.occupancystate + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
     }
 };
 
