@@ -3,7 +3,6 @@ package jmri.jmrit.logixng;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import jmri.Manager;
 
 /**
  * Manager for DigitalBooleanActionBean
@@ -11,7 +10,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface DigitalBooleanActionManager extends Manager<MaleDigitalBooleanActionSocket>, BaseManager<MaleDigitalBooleanActionSocket> {
+public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBooleanActionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.

@@ -69,11 +69,12 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     }
 
     /** {@inheritDoc} */
+    @SuppressWarnings("unchecked")  // cast in "deregister((E)socket)" is nessesary and cannot be avoided
     @Override
     @OverridingMethodsMustInvokeSuper
     public boolean deleteBean(@Nonnull MaleSocket socket, @Nonnull String property, List<String> errors) {
         // throws PropertyVetoException if vetoed
-        boolean result = fireVetoableChange(property, (E)socket, errors);
+        boolean result = fireVetoableChange(property, socket, errors);
         if (result && property.equals("DoDelete")) { // NOI18N
             deregister((E)socket);
             ((NamedBean)socket).dispose();

@@ -3,7 +3,6 @@ package jmri.jmrit.logixng;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
-import jmri.Manager;
 
 /**
  * Manager for AnalogActionBean
