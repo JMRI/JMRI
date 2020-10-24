@@ -31,7 +31,8 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     private boolean _enabled = true;
 
 
-    public DefaultMaleStringExpressionSocket(@Nonnull StringExpressionBean stringExpression) {
+    public DefaultMaleStringExpressionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull StringExpressionBean stringExpression) {
+        super(manager);
         _expression = stringExpression;
     }
 

@@ -13,7 +13,9 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 
@@ -33,7 +35,8 @@ public class DefaultMaleDigitalActionSocket
     private boolean _enabled = true;
     
     
-    public DefaultMaleDigitalActionSocket(@Nonnull DigitalActionBean action) {
+    public DefaultMaleDigitalActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalActionBean action) {
+        super(manager);
         _action = action;
     }
     

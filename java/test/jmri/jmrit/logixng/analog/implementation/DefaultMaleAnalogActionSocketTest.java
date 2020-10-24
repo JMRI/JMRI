@@ -36,13 +36,13 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         AnalogActionBean action = new AnalogActionMemory("IQAA321", null);
-        Assert.assertNotNull("object exists", new DefaultMaleAnalogActionSocket(action));
+        Assert.assertNotNull("object exists", new DefaultMaleAnalogActionSocket(manager, action));
     }
     
     @Test
     public void testSetValue() throws JmriException {
         MyAnalogAction action = new MyAnalogAction("IQAA321");
-        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -102,7 +102,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testEvaluateErrors() {
         MyAnalogAction action = new MyAnalogAction("IQAA321");
-        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -133,7 +133,7 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testVetoableChange() {
         MyAnalogAction action = new MyAnalogAction("IQAA321");
-        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        DefaultMaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -156,10 +156,10 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyAnalogAction action1 = new MyAnalogAction("IQAA1");
-        DefaultMaleAnalogActionSocket socket1 = new DefaultMaleAnalogActionSocket(action1);
+        DefaultMaleAnalogActionSocket socket1 = new DefaultMaleAnalogActionSocket(manager, action1);
         
         MyAnalogAction action2 = new MyAnalogAction("IQAA01");
-        DefaultMaleAnalogActionSocket socket2 = new DefaultMaleAnalogActionSocket(action2);
+        DefaultMaleAnalogActionSocket socket2 = new DefaultMaleAnalogActionSocket(manager, action2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -187,6 +187,8 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", actionA);
         AnalogActionBean actionB = new MyAnalogAction("IQAA322");
         Assert.assertNotNull("exists", actionA);
+        
+        manager = InstanceManager.getDefault(AnalogActionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(AnalogActionManager.class)

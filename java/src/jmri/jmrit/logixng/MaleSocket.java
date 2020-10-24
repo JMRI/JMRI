@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import jmri.Manager;
+import jmri.NamedBean;
+
 /**
  * A LogixNG male socket.
  * 
@@ -51,6 +54,14 @@ public interface MaleSocket extends Debugable {
      * @return the object this male socket holds
      */
     public Base getObject();
+
+    /**
+     * Get the object that this male socket holds.
+     * This method is used when the object is going to be configured.
+     * 
+     * @return the object this male socket holds
+     */
+    public BaseManager<? extends NamedBean> getManager();
 
     /** {@inheritDoc} */
     @Override

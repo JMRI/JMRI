@@ -13,9 +13,11 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
+import jmri.jmrit.logixng.string.implementation.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +34,8 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
     private boolean _enabled = true;
     
     
-    public DefaultMaleStringActionSocket(@Nonnull StringActionBean stringAction) {
+    public DefaultMaleStringActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull StringActionBean stringAction) {
+        super(manager);
         _action = stringAction;
     }
     

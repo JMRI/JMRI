@@ -29,7 +29,8 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     private boolean _enabled = true;
     
     
-    public DefaultMaleDigitalBooleanActionSocket(@Nonnull DigitalBooleanActionBean action) {
+    public DefaultMaleDigitalBooleanActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalBooleanActionBean action) {
+        super(manager);
         _action = action;
     }
     

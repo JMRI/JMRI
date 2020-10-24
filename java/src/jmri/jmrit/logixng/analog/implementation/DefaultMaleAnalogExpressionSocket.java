@@ -29,7 +29,8 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     private boolean _enabled = true;
 
 
-    public DefaultMaleAnalogExpressionSocket(@Nonnull AnalogExpressionBean expression) {
+    public DefaultMaleAnalogExpressionSocket(@Nonnull AnalogExpressionManager manager, @Nonnull AnalogExpressionBean expression) {
+        super(manager);
         _expression = expression;
     }
 

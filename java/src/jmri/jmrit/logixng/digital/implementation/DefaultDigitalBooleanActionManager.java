@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.DigitalBooleanActionFactory;
 import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
+import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.util.*;
 
 /**
@@ -28,7 +29,7 @@ import jmri.util.*;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigitalBooleanActionSocket>
+public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<MaleDigitalBooleanActionSocket>
         implements DigitalBooleanActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
@@ -48,7 +49,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     }
 
     protected MaleDigitalBooleanActionSocket createMaleActionSocket(DigitalBooleanActionBean action) {
-        MaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
+        MaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(this, action);
         action.setParent(socket);
         return socket;
     }

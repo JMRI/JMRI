@@ -119,8 +119,9 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         errorFlag = new AtomicBoolean();
         _action = new MyOnChangeAction("IQDB321");
         OnChange otherAction = new MyOnChangeAction("IQDB322");
-        maleSocket = new DefaultMaleDigitalBooleanActionSocket(_action);
-        otherMaleSocket = new DefaultMaleDigitalBooleanActionSocket(otherAction);
+        manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        maleSocket = ((DigitalBooleanActionManager)manager).registerAction(_action);
+        otherMaleSocket = ((DigitalBooleanActionManager)manager).registerAction(otherAction);
         _femaleSocket = new DefaultFemaleDigitalBooleanActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

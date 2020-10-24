@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class MaleSocketTestBase {
 
+    protected BaseManager<? extends NamedBean> manager;
     protected MaleSocket maleSocketA;
     protected MaleSocket maleSocketB;
     

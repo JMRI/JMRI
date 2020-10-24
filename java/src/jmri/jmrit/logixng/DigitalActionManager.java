@@ -11,7 +11,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface DigitalActionManager extends Manager<MaleDigitalActionSocket> {
+public interface DigitalActionManager extends Manager<MaleDigitalActionSocket>, BaseManager<MaleDigitalActionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.

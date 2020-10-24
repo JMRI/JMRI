@@ -145,8 +145,9 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");
         ExpressionTurnout otherExpression = new ExpressionTurnout("IQDE322", null);
-        maleSocket = new DefaultMaleDigitalExpressionSocket(_expression);
-        otherMaleSocket = new DefaultMaleDigitalExpressionSocket(otherExpression);
+        manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        maleSocket = ((DigitalExpressionManager)manager).registerExpression(_expression);
+        otherMaleSocket = ((DigitalExpressionManager)manager).registerExpression(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC,
                 null,

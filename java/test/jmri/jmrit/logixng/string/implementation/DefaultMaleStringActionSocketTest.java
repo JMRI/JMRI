@@ -40,31 +40,31 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         StringActionBean action = new StringActionMemory("IQSA321", null);
-        Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(action));
+        Assert.assertNotNull("exists", new DefaultMaleStringActionSocket(manager, action));
     }
     
     @Test
     public void testEvaluate() throws JmriException {
-        MyStringAction expression = new MyStringAction("IQSA321");
-        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(expression);
+        MyStringAction action = new MyStringAction("IQSA321");
+        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
         socket.setErrorHandlingType(MaleSocket.ErrorHandlingType.THROW);
         
-        expression.je = null;
-        expression.re = null;
+        action.je = null;
+        action.re = null;
         socket.setValue("Something");
-        Assert.assertEquals("Something", expression._value);
+        Assert.assertEquals("Something", action._value);
         socket.setValue("Something else");
-        Assert.assertEquals("Something else", expression._value);
+        Assert.assertEquals("Something else", action._value);
         socket.setValue("");
-        Assert.assertEquals("", expression._value);
+        Assert.assertEquals("", action._value);
         socket.setValue(null);
-        Assert.assertNull(expression._value);
+        Assert.assertNull(action._value);
         
-        expression.je = new JmriException("Test JmriException");
-        expression.re = null;
+        action.je = new JmriException("Test JmriException");
+        action.re = null;
         Throwable thrown = catchThrowable( () -> socket.setValue("Something"));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
@@ -72,8 +72,8 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
                 .isInstanceOf(JmriException.class)
                 .hasMessage("Test JmriException");
         
-        expression.je = null;
-        expression.re = new RuntimeException("Test RuntimeException");
+        action.je = null;
+        action.re = new RuntimeException("Test RuntimeException");
         thrown = catchThrowable( () -> socket.setValue("Something"));
         assertThat(thrown)
                 .withFailMessage("Evaluate throws an exception")
@@ -83,7 +83,7 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         
         // If the socket is not enabled, it shouldn't do anything
         socket.setEnabled(false);
-        expression.re = new RuntimeException("Test RuntimeException");
+        action.re = new RuntimeException("Test RuntimeException");
         thrown = catchThrowable( () -> socket.setValue("Something"));
         assertThat(thrown)
                 .withFailMessage("Evaluate does nothing")
@@ -93,22 +93,22 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         socket.setEnabled(true);
         StringActionDebugConfig config = new StringActionDebugConfig();
         socket.setDebugConfig(config);
-        expression.je = null;
-        expression.re = null;
+        action.je = null;
+        action.re = null;
         config._dontExecute = true;
-        expression._value = "Hello";
+        action._value = "Hello";
         socket.setValue("Something");
-        Assert.assertEquals("Hello", expression._value);
+        Assert.assertEquals("Hello", action._value);
         config._dontExecute = false;
-        expression._value = "Hello";
+        action._value = "Hello";
         socket.setValue("Something else");
-        Assert.assertEquals("Something else", expression._value);
+        Assert.assertEquals("Something else", action._value);
     }
     
     @Test
     public void testVetoableChange() {
         MyStringAction action = new MyStringAction("IQSA321");
-        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(action);
+        DefaultMaleStringActionSocket socket = new DefaultMaleStringActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -131,10 +131,10 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyStringAction action1 = new MyStringAction("IQSA1");
-        DefaultMaleStringActionSocket socket1 = new DefaultMaleStringActionSocket(action1);
+        DefaultMaleStringActionSocket socket1 = new DefaultMaleStringActionSocket(manager, action1);
         
         MyStringAction action2 = new MyStringAction("IQSA01");
-        DefaultMaleStringActionSocket socket2 = new DefaultMaleStringActionSocket(action2);
+        DefaultMaleStringActionSocket socket2 = new DefaultMaleStringActionSocket(manager, action2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -162,6 +162,8 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", actionA);
         StringActionBean actionB = new MyStringAction("IQSA322");
         Assert.assertNotNull("exists", actionA);
+        
+        manager = InstanceManager.getDefault(StringActionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(StringActionManager.class)

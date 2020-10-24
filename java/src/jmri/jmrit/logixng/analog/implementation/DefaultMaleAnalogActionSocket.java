@@ -29,7 +29,8 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     private boolean _enabled = true;
     
     
-    public DefaultMaleAnalogActionSocket(@Nonnull AnalogActionBean action) {
+    public DefaultMaleAnalogActionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull AnalogActionBean action) {
+        super(manager);
         _action = action;
     }
     

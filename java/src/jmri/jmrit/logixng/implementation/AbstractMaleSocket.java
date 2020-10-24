@@ -4,7 +4,9 @@ import java.io.PrintWriter;
 import java.util.Locale;
 
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.BaseManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.util.LoggingUtil;
@@ -17,8 +19,13 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
 
+    private BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
+    
+    public AbstractMaleSocket(BaseManager<? extends NamedBean> manager) {
+        _manager = manager;
+    }
     
     @Override
     public final Base getParent() {
@@ -117,6 +124,11 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
         for (int i=0; i < getChildCount(); i++) {
             getChild(i).printTree(locale, writer, indent, currentIndent+indent);
         }
+    }
+    
+    @Override
+    public BaseManager<? extends NamedBean> getManager() {
+        return _manager;
     }
     
     /**

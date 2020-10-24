@@ -4,6 +4,9 @@ import java.beans.*;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
+
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 
@@ -31,7 +34,7 @@ public class DefaultClipboard implements Clipboard {
     
     public DefaultClipboard() {
         try {
-            _femaleRootSocket.connect(new MaleRootSocket());
+            _femaleRootSocket.connect(new MaleRootSocket(null));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
             throw new RuntimeException("Program error", ex);
@@ -95,6 +98,10 @@ public class DefaultClipboard implements Clipboard {
     
     private class MaleRootSocket extends AbstractMaleSocket {
 
+        public MaleRootSocket(BaseManager<? extends NamedBean> manager) {
+            super(manager);
+        }
+        
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported");

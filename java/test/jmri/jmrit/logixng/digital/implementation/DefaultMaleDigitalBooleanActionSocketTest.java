@@ -39,13 +39,13 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @Test
     public void testCtor() {
         DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
-        Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(action));
+        Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(manager, action));
     }
     
     @Test
     public void testEvaluate() throws JmriException {
         MyDigitalBooleanAction action = new MyDigitalBooleanAction("IQDB321");
-        DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
+        DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -106,7 +106,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @Test
     public void testVetoableChange() {
         MyDigitalBooleanAction action = new MyDigitalBooleanAction("IQDB321");
-        DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
+        DefaultMaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -129,10 +129,10 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     @Test
     public void testCompareSystemNameSuffix() {
         MyDigitalBooleanAction action1 = new MyDigitalBooleanAction("IQDB1");
-        DefaultMaleDigitalBooleanActionSocket socket1 = new DefaultMaleDigitalBooleanActionSocket(action1);
+        DefaultMaleDigitalBooleanActionSocket socket1 = new DefaultMaleDigitalBooleanActionSocket(manager, action1);
         
         MyDigitalBooleanAction action2 = new MyDigitalBooleanAction("IQDB01");
-        DefaultMaleDigitalBooleanActionSocket socket2 = new DefaultMaleDigitalBooleanActionSocket(action2);
+        DefaultMaleDigitalBooleanActionSocket socket2 = new DefaultMaleDigitalBooleanActionSocket(manager, action2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -160,6 +160,8 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         Assert.assertNotNull("exists", actionA);
         DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
         Assert.assertNotNull("exists", actionA);
+        
+        manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class)

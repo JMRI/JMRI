@@ -38,13 +38,13 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         DigitalExpressionBean expression = new And("IQDE321", null);
-        Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(expression));
+        Assert.assertNotNull("exists", new DefaultMaleDigitalExpressionSocket(manager, expression));
     }
     
     @Test
     public void testEvaluate() throws JmriException {
         MyDigitalExpression expression = new MyDigitalExpression("IQDE321");
-        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(expression);
+        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -100,7 +100,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testVetoableChange() {
         MyDigitalExpression action = new MyDigitalExpression("IQDE321");
-        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(action);
+        DefaultMaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -123,10 +123,10 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyDigitalExpression expression1 = new MyDigitalExpression("IQDE1");
-        DefaultMaleDigitalExpressionSocket socket1 = new DefaultMaleDigitalExpressionSocket(expression1);
+        DefaultMaleDigitalExpressionSocket socket1 = new DefaultMaleDigitalExpressionSocket(manager, expression1);
         
         MyDigitalExpression expression2 = new MyDigitalExpression("IQDE01");
-        DefaultMaleDigitalExpressionSocket socket2 = new DefaultMaleDigitalExpressionSocket(expression2);
+        DefaultMaleDigitalExpressionSocket socket2 = new DefaultMaleDigitalExpressionSocket(manager, expression2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -154,6 +154,8 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", expressionA);
         DigitalExpressionBean expressionB = new MyDigitalExpression("IQDE322");
         Assert.assertNotNull("exists", expressionA);
+        
+        manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(DigitalExpressionManager.class)

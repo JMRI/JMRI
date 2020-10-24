@@ -11,7 +11,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface AnalogActionManager extends Manager<MaleAnalogActionSocket> {
+public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.

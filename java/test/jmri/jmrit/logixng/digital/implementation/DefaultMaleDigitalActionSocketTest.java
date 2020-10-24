@@ -38,13 +38,13 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     @Test
     public void testCtor() {
         DigitalActionBean action = new Many("IQDA321", null);
-        Assert.assertNotNull("exists", new DefaultMaleDigitalActionSocket(action));
+        Assert.assertNotNull("exists", new DefaultMaleDigitalActionSocket(manager, action));
     }
     
     @Test
     public void testExecute() throws JmriException {
         MyDigitalAction action = new MyDigitalAction("IQDA321");
-        DefaultMaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(action);
+        DefaultMaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -101,7 +101,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     @Test
     public void testVetoableChange() {
         MyDigitalAction action = new MyDigitalAction("IQDA321");
-        DefaultMaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(action);
+        DefaultMaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -124,10 +124,10 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     @Test
     public void testCompareSystemNameSuffix() {
         MyDigitalAction action1 = new MyDigitalAction("IQDA1");
-        DefaultMaleDigitalActionSocket socket1 = new DefaultMaleDigitalActionSocket(action1);
+        DefaultMaleDigitalActionSocket socket1 = new DefaultMaleDigitalActionSocket(manager, action1);
         
         MyDigitalAction action2 = new MyDigitalAction("IQDA01");
-        DefaultMaleDigitalActionSocket socket2 = new DefaultMaleDigitalActionSocket(action2);
+        DefaultMaleDigitalActionSocket socket2 = new DefaultMaleDigitalActionSocket(manager, action2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -155,6 +155,8 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
         Assert.assertNotNull("exists", actionA);
         DigitalActionBean actionB = new MyDigitalAction("IQDA322");
         Assert.assertNotNull("exists", actionA);
+        
+        manager = InstanceManager.getDefault(DigitalActionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(DigitalActionManager.class)

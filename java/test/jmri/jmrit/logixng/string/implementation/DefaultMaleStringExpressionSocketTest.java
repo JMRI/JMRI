@@ -39,13 +39,13 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         StringExpressionBean expression = new StringExpressionMemory("IQSE321", null);
-        Assert.assertNotNull("exists", new DefaultMaleStringExpressionSocket(expression));
+        Assert.assertNotNull("exists", new DefaultMaleStringExpressionSocket(manager, expression));
     }
     
     @Test
     public void testEvaluate() throws JmriException {
         MyStringExpression expression = new MyStringExpression("IQSE321");
-        DefaultMaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(expression);
+        DefaultMaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(manager, expression);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -105,7 +105,7 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testVetoableChange() {
         MyStringExpression action = new MyStringExpression("IQSE321");
-        DefaultMaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(action);
+        DefaultMaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(manager, action);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
@@ -128,10 +128,10 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyStringExpression expression1 = new MyStringExpression("IQSE1");
-        DefaultMaleStringExpressionSocket socket1 = new DefaultMaleStringExpressionSocket(expression1);
+        DefaultMaleStringExpressionSocket socket1 = new DefaultMaleStringExpressionSocket(manager, expression1);
         
         MyStringExpression expression2 = new MyStringExpression("IQSE01");
-        DefaultMaleStringExpressionSocket socket2 = new DefaultMaleStringExpressionSocket(expression2);
+        DefaultMaleStringExpressionSocket socket2 = new DefaultMaleStringExpressionSocket(manager, expression2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -159,6 +159,8 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         Assert.assertNotNull("exists", actionA);
         StringExpressionBean actionB = new MyStringExpression("IQSE322");
         Assert.assertNotNull("exists", actionA);
+        
+        manager = InstanceManager.getDefault(StringExpressionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(StringExpressionManager.class)

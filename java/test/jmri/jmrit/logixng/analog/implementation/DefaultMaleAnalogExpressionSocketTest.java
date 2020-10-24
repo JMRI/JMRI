@@ -37,13 +37,14 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCtor() {
         AnalogExpressionBean expression = new AnalogExpressionMemory("IQAE321", null);
-        Assert.assertNotNull("object exists", new DefaultMaleAnalogExpressionSocket(expression));
+        MaleSocket maleSocket = ((AnalogExpressionManager)manager).registerExpression(expression);
+        Assert.assertNotNull("object exists", maleSocket);
     }
     
     @Test
     public void testEvaluate() throws JmriException {
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
-        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(expression);
+        MaleAnalogExpressionSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -101,7 +102,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testEvaluateErrors() {
         MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
-        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(expression);
+        MaleAnalogExpressionSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
         Assert.assertNotNull("exists", socket);
         
         socket.setEnabled(true);
@@ -134,13 +135,13 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     
     @Test
     public void testVetoableChange() {
-        MyAnalogExpression action = new MyAnalogExpression("IQAE321");
-        DefaultMaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(action);
+        MyAnalogExpression expression = new MyAnalogExpression("IQAE321");
+        MaleSocket socket = ((AnalogExpressionManager)manager).registerExpression(expression);
         Assert.assertNotNull("exists", socket);
         
         PropertyChangeEvent evt = new PropertyChangeEvent("Source", "Prop", null, null);
         
-        action._vetoChange = true;
+        expression._vetoChange = true;
         Throwable thrown = catchThrowable( () -> socket.vetoableChange(evt));
         assertThat(thrown)
                 .withFailMessage("vetoableChange() does throw")
@@ -148,7 +149,7 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
                 .isInstanceOf(PropertyVetoException.class)
                 .hasMessage("Veto change");
         
-        action._vetoChange = false;
+        expression._vetoChange = false;
         thrown = catchThrowable( () -> socket.vetoableChange(evt));
         assertThat(thrown)
                 .withFailMessage("vetoableChange() does not throw")
@@ -158,10 +159,10 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
     @Test
     public void testCompareSystemNameSuffix() {
         MyAnalogExpression expression1 = new MyAnalogExpression("IQAE1");
-        DefaultMaleAnalogExpressionSocket socket1 = new DefaultMaleAnalogExpressionSocket(expression1);
+        MaleAnalogExpressionSocket socket1 = ((AnalogExpressionManager)manager).registerExpression(expression1);
         
         MyAnalogExpression expression2 = new MyAnalogExpression("IQAE01");
-        DefaultMaleAnalogExpressionSocket socket2 = new DefaultMaleAnalogExpressionSocket(expression2);
+        MaleAnalogExpressionSocket socket2 = ((AnalogExpressionManager)manager).registerExpression(expression2);
         
         Assert.assertEquals("compareSystemNameSuffix returns correct value",
                 -1, socket1.compareSystemNameSuffix("01", "1", socket2));
@@ -185,10 +186,12 @@ public class DefaultMaleAnalogExpressionSocketTest extends MaleSocketTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE321", null);
+        AnalogExpressionBean expressionA = new AnalogExpressionMemory("IQAE999", null);
         Assert.assertNotNull("exists", expressionA);
         AnalogExpressionBean expressionB = new MyAnalogExpression("IQAE322");
         Assert.assertNotNull("exists", expressionA);
+        
+        manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         
         maleSocketA =
                 InstanceManager.getDefault(AnalogExpressionManager.class)

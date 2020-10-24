@@ -11,7 +11,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface DigitalExpressionManager extends Manager<MaleDigitalExpressionSocket> {
+public interface DigitalExpressionManager extends Manager<MaleDigitalExpressionSocket>, BaseManager<MaleDigitalExpressionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.

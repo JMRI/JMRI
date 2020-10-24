@@ -17,6 +17,7 @@ import jmri.managers.AbstractManager;
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.util.*;
 
 /**
@@ -25,7 +26,7 @@ import jmri.util.*;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigitalExpressionSocket>
+public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDigitalExpressionSocket>
         implements DigitalExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
@@ -46,7 +47,7 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
     }
 
     protected MaleDigitalExpressionSocket createMaleExpressionSocket(DigitalExpressionBean expression) {
-        MaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(expression);
+        MaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(this, expression);
         expression.setParent(socket);
         return socket;
     }

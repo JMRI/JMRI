@@ -3,7 +3,12 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
-import java.util.*;
+import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.EventListener;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -904,6 +909,25 @@ public class ConditionalNGEditor extends TreeViewer {
             show(_tree, x, y);
         }
 
+        private boolean removeTree(MaleSocket maleSocket, boolean ask, List<String> errors) {
+            boolean result;
+            
+            if (ask) {
+                result = maleSocket.getManager().deleteBean(maleSocket, "CanDelete", errors);
+            } else {
+                result = maleSocket.getManager().deleteBean(maleSocket, "DoDelete", errors);
+            }
+            
+            for (int i=0; i < maleSocket.getChildCount(); i++) {
+                FemaleSocket femaleSocket = maleSocket.getChild(i);
+                if (femaleSocket.isConnected()) {
+                    result &= removeTree(femaleSocket.getConnectedSocket(), ask, errors);
+                }
+            }
+            
+            return result;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
@@ -916,6 +940,19 @@ public class ConditionalNGEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_REMOVE:
+                    List<String> errors = new ArrayList<>();
+                    MaleSocket maleSocket = _currentFemaleSocket.getConnectedSocket();
+                    
+                    // Step 1: Send "CanDelete" to all managers handling the beans in the sub tree
+                    boolean result = removeTree(maleSocket, true, errors);
+                    if (!result || !errors.isEmpty()) throw new RuntimeException("Not implemented yet");
+                    
+                    // Step 2: Send "DoDelete" to all managers handling the beans in the sub tree
+                    _currentFemaleSocket.disconnect();
+                    result = removeTree(maleSocket, false, errors);
+                    if (!result || !errors.isEmpty()) throw new RuntimeException("Not implemented yet");
+                    
+                    updateTree();
                     break;
                     
                 case ACTION_COMMAND_CUT:

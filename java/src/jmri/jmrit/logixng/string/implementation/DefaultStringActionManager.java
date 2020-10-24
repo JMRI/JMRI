@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.util.ThreadingUtil;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
@@ -20,7 +21,7 @@ import jmri.util.*;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultStringActionManager extends AbstractManager<MaleStringActionSocket>
+public class DefaultStringActionManager extends AbstractBaseManager<MaleStringActionSocket>
         implements StringActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
@@ -40,7 +41,7 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
     }
 
     protected MaleStringActionSocket createMaleActionSocket(StringActionBean action) {
-        MaleStringActionSocket socket = new DefaultMaleStringActionSocket(action);
+        MaleStringActionSocket socket = new DefaultMaleStringActionSocket(this, action);
         action.setParent(socket);
         return socket;
     }

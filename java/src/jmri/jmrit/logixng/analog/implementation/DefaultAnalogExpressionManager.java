@@ -14,6 +14,7 @@ import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.LogixNGPreferences;
+import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -23,7 +24,7 @@ import jmri.util.*;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogExpressionSocket>
+public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnalogExpressionSocket>
         implements AnalogExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
@@ -44,7 +45,7 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
     }
 
     protected MaleAnalogExpressionSocket createMaleAnalogExpressionSocket(AnalogExpressionBean expression) {
-        MaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(expression);
+        MaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(this, expression);
         expression.setParent(socket);
         return socket;
     }

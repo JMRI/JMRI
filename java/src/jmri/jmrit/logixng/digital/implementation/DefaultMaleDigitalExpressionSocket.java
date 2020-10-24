@@ -32,7 +32,8 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     private boolean _enabled = true;
 
 
-    public DefaultMaleDigitalExpressionSocket(@Nonnull DigitalExpressionBean expression) {
+    public DefaultMaleDigitalExpressionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull DigitalExpressionBean expression) {
+        super(manager);
         _expression = expression;
     }
 

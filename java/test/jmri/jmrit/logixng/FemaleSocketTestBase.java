@@ -23,6 +23,7 @@ import org.junit.Test;
  */
 public abstract class FemaleSocketTestBase {
 
+    protected Manager<? extends NamedBean> manager;
     protected AtomicBoolean flag;
     protected AtomicBoolean errorFlag;
     protected MaleSocket maleSocket;
@@ -726,6 +727,11 @@ public abstract class FemaleSocketTestBase {
 
         @Override
         public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public BaseManager<? extends NamedBean> getManager() {
             throw new UnsupportedOperationException("Not supported");
         }
         

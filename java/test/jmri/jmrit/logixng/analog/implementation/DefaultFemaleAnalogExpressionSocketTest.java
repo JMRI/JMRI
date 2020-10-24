@@ -134,8 +134,9 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         _expression = new MyAnalogExpressionMemory("IQAE321");
         _expression.setMemory(_memory);
         AnalogExpressionBean otherExpression = new AnalogExpressionMemory("IQAE322", null);
-        maleSocket = new DefaultMaleAnalogExpressionSocket(_expression);
-        otherMaleSocket = new DefaultMaleAnalogExpressionSocket(otherExpression);
+        manager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        maleSocket = ((AnalogExpressionManager)manager).registerExpression(_expression);
+        otherMaleSocket = ((AnalogExpressionManager)manager).registerExpression(otherExpression);
         _femaleSocket = new DefaultFemaleAnalogExpressionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

@@ -145,8 +145,9 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
         _expression = new MyStringExpressionMemory("IQSE321");
         _expression.setMemory(_memory);
         StringExpressionMemory otherExpression = new StringExpressionMemory("IQSE322", null);
-        maleSocket = new DefaultMaleStringExpressionSocket(_expression);
-        otherMaleSocket = new DefaultMaleStringExpressionSocket(otherExpression);
+        manager = InstanceManager.getDefault(StringExpressionManager.class);
+        maleSocket = ((StringExpressionManager)manager).registerExpression(_expression);
+        otherMaleSocket = ((StringExpressionManager)manager).registerExpression(otherExpression);
         femaleGenericSocket = new DefaultFemaleGenericExpressionSocket(
                 FemaleGenericExpressionSocket.SocketType.GENERIC,
                 null,

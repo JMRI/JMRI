@@ -141,8 +141,9 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         _action = new MyAnalogActionMemory("IQAA321");
         _action.setMemory(_memory);
         AnalogActionBean otherAction = new AnalogActionMemory("IQAA322", null);
-        maleSocket = new DefaultMaleAnalogActionSocket(_action);
-        otherMaleSocket = new DefaultMaleAnalogActionSocket(otherAction);
+        manager = InstanceManager.getDefault(AnalogActionManager.class);
+        maleSocket = ((AnalogActionManager)manager).registerAction(_action);
+        otherMaleSocket = ((AnalogActionManager)manager).registerAction(otherAction);
         _femaleSocket = new DefaultFemaleAnalogActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

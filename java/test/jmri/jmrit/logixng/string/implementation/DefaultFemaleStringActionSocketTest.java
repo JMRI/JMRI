@@ -123,8 +123,9 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         _action = new MyStringActionMemory("IQSA321");
         _action.setMemory(_memory);
         StringActionMemory otherAction = new StringActionMemory("IQSA322", null);
-        maleSocket = new DefaultMaleStringActionSocket(_action);
-        otherMaleSocket = new DefaultMaleStringActionSocket(otherAction);
+        manager = InstanceManager.getDefault(StringActionManager.class);
+        maleSocket = ((StringActionManager)manager).registerAction(_action);
+        otherMaleSocket = ((StringActionManager)manager).registerAction(otherAction);
         _femaleSocket = new DefaultFemaleStringActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

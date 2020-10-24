@@ -130,8 +130,9 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         errorFlag = new AtomicBoolean();
         _action = new MyActionTurnout("IQDA321");
         ActionTurnout otherAction = new MyActionTurnout("IQDA322");
-        maleSocket = new DefaultMaleDigitalActionSocket(_action);
-        otherMaleSocket = new DefaultMaleDigitalActionSocket(otherAction);
+        manager = InstanceManager.getDefault(DigitalActionManager.class);
+        maleSocket = ((DigitalActionManager)manager).registerAction(_action);
+        otherMaleSocket = ((DigitalActionManager)manager).registerAction(otherAction);
         _femaleSocket = new DefaultFemaleDigitalActionSocket(null, new FemaleSocketListener() {
             @Override
             public void connected(FemaleSocket socket) {

@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.util.ThreadingUtil;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
@@ -21,7 +22,7 @@ import jmri.util.*;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogActionSocket>
+public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogActionSocket>
         implements AnalogActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
@@ -41,7 +42,7 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
     }
 
     protected MaleAnalogActionSocket createMaleActionSocket(AnalogActionBean action) {
-        MaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(action);
+        MaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(this, action);
         action.setParent(socket);
         return socket;
     }

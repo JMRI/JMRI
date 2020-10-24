@@ -11,7 +11,7 @@ import jmri.Manager;
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface StringActionManager extends Manager<MaleStringActionSocket> {
+public interface StringActionManager extends Manager<MaleStringActionSocket>, BaseManager<MaleStringActionSocket> {
 
     /**
      * Remember a NamedBean Object created outside the manager.
