@@ -332,8 +332,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * gathers a value from an adjacent Block. This can be overridden in a
      * subclass if e.g. you want to keep track of Blocks elsewhere, but make
      * sure you also eventually invoke the super.setValue() here.
-     * <p>
-     * @param value The new Object resident in this block, or null if none.
+     *
+     * @param value The new Object resident in this block, or null if none
      */
     public void setValue(Object value) {
         //ignore if unchanged

@@ -211,7 +211,8 @@ $(document).ready(function () {
 
 	jmri = $.JMRI({
 		// when we get the hello message, send a websocket list request which
-		//  returns the list and sets up change listeners
+		// returns the list and sets up change listeners
+		// note: the functions and parameter names must match exactly those in jquery.jmri.js
 		hello: function (data) {
 			jmri.getList($("html").data("table-type")); // request list and updates for the table-type 
 		},
