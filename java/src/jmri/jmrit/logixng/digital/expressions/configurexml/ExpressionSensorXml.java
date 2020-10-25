@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
@@ -56,7 +57,9 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
 
         Element sensorName = shared.getChild("sensor");
         if (sensorName != null) {
-            h.setSensor(InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim()));
+            Sensor t = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim());
+            if (t != null) h.setSensor(t);
+            else h.removeSensor();
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

@@ -1,12 +1,12 @@
 package jmri.jmrit.logixng.digital.expressions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.MemoryManager;
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
+
 import org.jdom2.Element;
+
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 
 /**
@@ -65,7 +65,9 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
 
         Element memoryName = shared.getChild("memory");
         if (memoryName != null) {
-            h.setMemory(InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim()));
+            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+            if (m != null) h.setMemory(m);
+            else h.removeMemory();
         }
 
         Element otherMemoryName = shared.getChild("other-memory");

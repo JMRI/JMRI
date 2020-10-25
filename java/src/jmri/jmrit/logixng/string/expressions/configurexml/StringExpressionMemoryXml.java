@@ -1,11 +1,10 @@
 package jmri.jmrit.logixng.string.expressions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.MemoryManager;
-import jmri.NamedBeanHandle;
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,7 +84,9 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
 
         Element memoryName = shared.getChild("memory");
         if (memoryName != null) {
-            h.setMemory(InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim()));
+            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+            if (m != null) h.setMemory(m);
+            else h.removeMemory();
         }
 
         // this.checkedNamedBeanReference()

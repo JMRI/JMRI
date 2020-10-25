@@ -1,11 +1,10 @@
 package jmri.jmrit.logixng.digital.actions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.TurnoutManager;
+import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +56,9 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
 
         Element turnoutName = shared.getChild("turnout");
         if (turnoutName != null) {
-            h.setTurnout(InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim()));
+            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim());
+            if (t != null) h.setTurnout(t);
+            else h.removeTurnout();
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

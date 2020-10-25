@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.digital.actions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ActionSensor;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +55,9 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
 
         Element sensorName = shared.getChild("sensor");
         if (sensorName != null) {
-            h.setSensor(InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim()));
+            Sensor t = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName.getTextTrim());
+            if (t != null) h.setSensor(t);
+            else h.removeSensor();
         }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

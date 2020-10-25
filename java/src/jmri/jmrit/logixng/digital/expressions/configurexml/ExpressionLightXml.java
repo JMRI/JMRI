@@ -1,10 +1,9 @@
 package jmri.jmrit.logixng.digital.expressions.configurexml;
 
-import jmri.InstanceManager;
-import jmri.LightManager;
-import jmri.NamedBeanHandle;
+import jmri.*;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +58,9 @@ public class ExpressionLightXml extends jmri.managers.configurexml.AbstractNamed
 
         Element lightName = shared.getChild("light");
         if (lightName != null) {
-            h.setLight(InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim()));
+            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
+            if (t != null) h.setLight(t);
+            else h.removeLight();
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

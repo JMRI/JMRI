@@ -1,14 +1,13 @@
 package jmri.jmrit.logixng.analog.actions.configurexml;
 
 import jmri.InstanceManager;
+import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -56,7 +55,9 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
 
         Element memoryName = shared.getChild("memory");
         if (memoryName != null) {
-            h.setMemory(InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim()));
+            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+            if (m != null) h.setMemory(m);
+            else h.removeMemory();
         }
 
         // this.checkedNamedBeanReference()
@@ -66,5 +67,5 @@ public class AnalogActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(AnalogActionMemoryXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemoryXml.class);
 }
