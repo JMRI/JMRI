@@ -7493,6 +7493,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public @Nonnull
+    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        return getLayoutTracksOfClass(LayoutTurnout.class)
+                .map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     /**
      * Read-only access to the list of LayoutTrack family objects. The returned
      * list will throw UnsupportedOperationException if you attempt to modify
@@ -7606,12 +7613,26 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.clear();
     }
 
-    public @Nonnull
-    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
-                .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList::new));
+    /**
+     * return the layout track for this layout track view
+     *
+     * @param layoutTrackView the layout track view
+     * @return the layout track
+     */
+    protected @CheckReturnValue
+    LayoutTrack getLayoutTrackForView(@Nonnull LayoutTrackView layoutTrackView) {
+        return viewToTrk.get(layoutTrackView);
+    }
+
+    /**
+     * return the layout track view for this layout track
+     *
+     * @param layoutTrack the layout track
+     * @return the layout track view
+     */
+    protected @CheckReturnValue
+    LayoutTrackView getLayoutViewForTrack(@Nonnull LayoutTrack layoutTrack) {
+        return trkToView.get(layoutTrack);
     }
 
     public @Nonnull

@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -13,19 +14,20 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
- * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout. 
- * A LayoutTurnout is an
- * extension of the standard Turnout object with drawing and connectivity
- * information added.
+ * LayoutTurnout is the abstract base for classes representing various types of
+ * turnout on the layout. A LayoutTurnout is an extension of the standard
+ * Turnout object with drawing and connectivity information added.
  * <p>
  * Specific forms are represented: right-hand, left-hand, wye, double crossover,
  * right-handed single crossover, and left-handed single crossover. Note that
@@ -70,9 +72,9 @@ import org.slf4j.*;
  *              XX
  *             //\\
  *        D ==**==**== C
- * </pre>
- * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in 
- * different places and have AD and BC as the normal-continuance parallel paths)
+ * </pre> (The {@link LayoutSlip} track objects follow a different pattern. They
+ * put A-D in different places and have AD and BC as the normal-continuance
+ * parallel paths)
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
  * wye turnouts, the entire turnout is in one block, however, a block border may
@@ -106,20 +108,19 @@ import org.slf4j.*;
  * Signal Head names are saved here to keep track of where signals are.
  * LayoutTurnout only serves as a storage place for signal head names. The names
  * are placed here by tools, e.g., Set Signals at Turnout, and Set Signals at
- * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
+ * Double Crossover. Each connection point can have up to three SignalHeads and
+ * one SignalMast.
  * <p>
- * A LayoutWye may be linked to another LayoutTurnout to form a turnout
- * pair. 
- *<br>
- * Throat-To-Throat Turnouts - Two turnouts connected closely at their
- * throats, so closely that signals are not appropriate at the their throats.
- * This is the situation when two RH, LH, or WYE turnouts are used to model a
- * double slip. 
- *<br>
- * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
- * throat of the second turnout is closely connected to the continuing track of
- * the first turnout. The throat will have three heads, or one head. A link is
- * required to be able to correctly interpret the use of signal heads.
+ * A LayoutWye may be linked to another LayoutTurnout to form a turnout pair.
+ * <br>
+ * Throat-To-Throat Turnouts - Two turnouts connected closely at their throats,
+ * so closely that signals are not appropriate at the their throats. This is the
+ * situation when two RH, LH, or WYE turnouts are used to model a double slip.
+ * <br>
+ * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the throat of
+ * the second turnout is closely connected to the continuing track of the first
+ * turnout. The throat will have three heads, or one head. A link is required to
+ * be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author George Warner Copyright (c) 2017-2019
@@ -181,7 +182,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * @return boolean true if this is a crossover
      */
     public boolean isTurnoutTypeXover() {
-        return hasEnteringDoubleTrack(getTurnoutType());
+        return isTurnoutTypeXover(getTurnoutType());
     }
 
     /**
@@ -245,23 +246,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     // defined constants - link types
-    // public static final int NO_LINK = 0;
-    // public static final int FIRST_3_WAY = 1;       // this turnout is the first turnout of a 3-way
-    // turnout pair (closest to the throat)
-    // public static final int SECOND_3_WAY = 2;      // this turnout is the second turnout of a 3-way
-    // turnout pair (furthest from the throat)
-    // public static final int THROAT_TO_THROAT = 3;  // this turnout is one of two throat-to-throat
-    // turnouts - no signals at throat
     public enum LinkType {
         NO_LINK,
-        FIRST_3_WAY, // this turnout is the first turnout of a 3-way
-        // turnout pair (closest to the throat)
-        SECOND_3_WAY, // this turnout is the second turnout of a 3-way
-        // turnout pair (furthest from the throat)
-        THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
-        // turnouts - no signals at throat
+        FIRST_3_WAY, // this turnout is the first turnout of a 3-way turnout pair (closest to the throat)
+        SECOND_3_WAY, // this turnout is the second turnout of a 3-way turnout pair (furthest from the throat)
+        THROAT_TO_THROAT    // this turnout is one of two throat-to-throat turnouts - no signals at throat
     }
-    
+
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
@@ -284,7 +275,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
-    
+
     // persistent instances variables (saved between sessions)
     // these should be the system or user name of an existing physical turnout
     private String turnoutName = "";
@@ -355,16 +346,16 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public LinkType linkType = LinkType.NO_LINK;
 
     private final boolean useBlockSpeed = false;
-    
+
     // temporary reference to the Editor that will eventually be part of View - should be moved to ctors and final
-    protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+    protected LayoutTurnoutEditor editor;
 
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor, TurnoutType t) {
         super(id, c, layoutEditor);
-        
+
         type = t;
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
+        editor = new LayoutTurnoutEditor(layoutEditor);
     }
 
     protected LayoutTurnout(@Nonnull String id,
@@ -381,14 +372,15 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Main constructor method.
-     * @param id Layout Turnout ID.
-     * @param t type, e.g. LH_TURNOUT, WYE_TURNOUT
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
+     *
+     * @param id           Layout Turnout ID.
+     * @param t            type, e.g. LH_TURNOUT, WYE_TURNOUT
+     * @param c            2D point.
+     * @param rot          rotation.
+     * @param xFactor      horizontal factor.
+     * @param yFactor      vertical factor.
      * @param layoutEditor main layout editor.
-     * @param v version.
+     * @param v            version.
      */
     public LayoutTurnout(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
             double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
@@ -458,7 +450,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 Math.round(dispA.getY() * yFactor));
         dispA = pt;
 
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
+        editor = new LayoutTurnoutEditor(layoutEditor);
     }
 
     /**
@@ -472,6 +464,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Get the Version.
+     *
      * @return turnout version.
      */
     public int getVersion() {
@@ -814,7 +807,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
-    public void removeBeanReference(jmri.NamedBean nb) {
+    public void removeBeanReference(NamedBean nb) {
         if (nb == null) {
             return;
         }
@@ -1381,7 +1374,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) throws JmriException {
         LayoutTrack result = null;
         switch (connectionType) {
             case TURNOUT_A: {
@@ -1404,7 +1397,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); // I18IN
                 log.error("will throw {}", errString);
-                throw new jmri.JmriException(errString);
+                throw new JmriException(errString);
             }
         }
         return result;
@@ -1414,12 +1407,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws jmri.JmriException {
+    public void setConnection(HitPointType connectionType, LayoutTrack o, HitPointType type) throws JmriException {
         if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
             String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); unexpected type",
                     getName(), connectionType, (o == null) ? "null" : o.getName(), type); // I18IN
             log.error("will throw {}", errString);
-            throw new jmri.JmriException(errString);
+            throw new JmriException(errString);
         }
         switch (connectionType) {
             case TURNOUT_A:
@@ -1438,7 +1431,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid Connection Type",
                         getName(), connectionType, (o == null) ? "null" : o.getName(), type); // I18IN
                 log.error("will throw {}", errString);
-                throw new jmri.JmriException(errString);
+                throw new JmriException(errString);
         }
     }
 
@@ -1723,6 +1716,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Set up Layout Block(s) for this Turnout.
+     *
      * @param newLayoutBlock the new layout block.
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
@@ -2751,7 +2745,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
-        log.trace("start LayoutTurnout.showPopup from {} of type {}", this, this.getClass() );
+        log.trace("start LayoutTurnout.showPopup from {} of type {}", this, this.getClass());
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -3227,7 +3221,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return boundaryBetween;
     }   // getBlockBoundaries
 
-    public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
+    public ArrayList<LayoutBlock> getProtectedBlocks(NamedBean bean) {
         ArrayList<LayoutBlock> ret = new ArrayList<>(2);
         if (getLayoutBlock() == null) {
             return ret;
@@ -3370,9 +3364,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
             return;
 
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
-        ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
-        ).isSignalMastUsed(signalMast)) {
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class)
+                .isAdvancedRoutingEnabled()
+                && InstanceManager.getDefault(jmri.SignalMastLogicManager.class)
+                        .isSignalMastUsed(signalMast)) {
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -3402,6 +3397,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     *
      * @return true if active, else false.
      */
     public boolean isActive() {
@@ -3445,11 +3441,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Draw track decorations.
-     * 
+     * <p>
      * This type of track has none, so this method is empty.
      */
     @Override
-    protected void drawDecorations(Graphics2D g2) {}
+    protected void drawDecorations(Graphics2D g2) {
+    }
 
     /**
      * {@inheritDoc}

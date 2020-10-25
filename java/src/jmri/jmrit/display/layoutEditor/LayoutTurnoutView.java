@@ -16,7 +16,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
  * MVC View component for the LayoutTurnout class.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutTurnoutView extends LayoutTrackView {
 
@@ -28,12 +28,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         super(turnout);
         this.turnout = turnout;
     }
-        
-    final private LayoutTurnout turnout;
+
+    final protected LayoutTurnout turnout;
 
     // These now reflect to code in the base class; eventually this heirarchy will
     // expand and the code will be brought here
-    
+
     protected boolean isDisabled() {
         return turnout.isDisabled();
     }
