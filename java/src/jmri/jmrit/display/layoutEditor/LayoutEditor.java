@@ -7451,15 +7451,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public @Nonnull
-    List<PositionablePointView> getPositionablePointViews() {
-        List<PositionablePointView> list = new ArrayList<>();
-        for (PositionablePoint p : getPositionablePoints()) {
-            list.add(new PositionablePointView(p));
-        }
-        return list;
-    }
-
-    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
@@ -7512,6 +7503,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
+    }
+
+    private @Nonnull
+    Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
+        return getLayoutTrackViews().stream()
+                .filter(layoutTrackViewClass::isInstance)
+                .map(layoutTrackViewClass::cast);
+    }
+
+    /**
+     * get the list of positionable point views
+     *
+     * @return list of PositionablePointViews
+     */
+    public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        return getLayoutTrackViewsOfClass(PositionablePointView.class)
+                .map(PositionablePointView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
