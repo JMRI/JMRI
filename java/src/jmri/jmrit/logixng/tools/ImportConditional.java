@@ -659,7 +659,44 @@ public class ImportConditional {
     
     
     private DigitalActionBean getSensorAction(@Nonnull ConditionalAction ca, Sensor sn) throws JmriException {
-        return null;
+        
+        ActionSensor action;
+        
+        switch (ca.getType()) {
+            case SET_SENSOR:
+                action = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                action.setSensor(sn);
+                
+                switch (ca.getActionData()) {
+                    case jmri.Route.TOGGLE:
+                        action.setSensorState(ActionSensor.SensorState.TOGGLE);
+                        break;
+                        
+                    case Sensor.INACTIVE:
+                        action.setSensorState(ActionSensor.SensorState.INACTIVE);
+                        break;
+                        
+                    case Sensor.ACTIVE:
+                        action.setSensorState(ActionSensor.SensorState.ACTIVE);
+                        break;
+                        
+                    default:
+                        throw new InvalidConditionalVariableException(
+                                Bundle.getMessage("ActionBadSensorState", ca.getActionData()));
+                }
+                break;
+                
+            case RESET_DELAYED_SENSOR:
+            case DELAYED_SENSOR:
+            case CANCEL_SENSOR_TIMERS:
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ActionBadSensorType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     
@@ -698,6 +735,7 @@ public class ImportConditional {
                                 Bundle.getMessage("ActionBadTurnoutState", ca.getActionData()));
                 }
                 break;
+                
             case RESET_DELAYED_TURNOUT:
             case DELAYED_TURNOUT:
             case CANCEL_TURNOUT_TIMERS:
@@ -720,7 +758,41 @@ public class ImportConditional {
     
     
     private DigitalActionBean getLightAction(@Nonnull ConditionalAction ca, Light l) throws JmriException {
-        return null;
+        
+        ActionLight action;
+        
+        switch (ca.getType()) {
+            case SET_LIGHT:
+                action = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class)
+                                .getAutoSystemName(), null);
+                
+                action.setLight(l);
+                
+                switch (ca.getActionData()) {
+                    case jmri.Route.TOGGLE:
+                        action.setLightState(ActionLight.LightState.TOGGLE);
+                        break;
+                        
+                    case Light.OFF:
+                        action.setLightState(ActionLight.LightState.OFF);
+                        break;
+                        
+                    case Light.ON:
+                        action.setLightState(ActionLight.LightState.ON);
+                        break;
+                        
+                    default:
+                        throw new InvalidConditionalVariableException(
+                                Bundle.getMessage("ActionBadLightState", ca.getActionData()));
+                }
+                break;
+                
+            default:
+                throw new InvalidConditionalVariableException(
+                        Bundle.getMessage("ActionBadLightType", ca.getType().toString()));
+        }
+        
+        return action;
     }
     
     
