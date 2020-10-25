@@ -210,8 +210,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
         Point2D pD = turnout.getCoordsD();
         Point2D pM = getCoordsCenter();
 
-        boolean drawUnselectedLeg = turnout.layoutEditor.isTurnoutDrawUnselectedLeg()
-                || ((LayoutSlip) turnout).isTurnoutInconsistent();
+        //boolean drawUnselectedLeg = turnout.layoutEditor.isTurnoutDrawUnselectedLeg()
+        //        || ((LayoutSlip) turnout).isTurnoutInconsistent();
 
         Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
         double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
