@@ -139,6 +139,12 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
             case NotHeld:
                 result = ! _signalMastHandle.getBean().getHeld();
                 break;
+            case IsPermissiveSmlDisabled:
+                result = _signalMastHandle.getBean().isPermissiveSmlDisabled();
+                break;
+            case IsPermissiveSmlNotDisabled:
+                result = ! _signalMastHandle.getBean().isPermissiveSmlDisabled();
+                break;
             default:
                 throw new RuntimeException("Unknown enum: "+_queryType.name());
         }
@@ -211,6 +217,11 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                     _signalMastHandle.getBean().addPropertyChangeListener("Held", this);
                     break;
                     
+                case IsPermissiveSmlDisabled:
+                case IsPermissiveSmlNotDisabled:
+                    _signalMastHandle.getBean().removePropertyChangeListener("PermissiveSmlDisabled", this);
+                    break;
+                    
                 default:
                     throw new RuntimeException("Unknown enum: "+_queryType.name());
             }
@@ -237,6 +248,11 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 case Held:
                 case NotHeld:
                     _signalMastHandle.getBean().removePropertyChangeListener("Held", this);
+                    break;
+                    
+                case IsPermissiveSmlDisabled:
+                case IsPermissiveSmlNotDisabled:
+                    _signalMastHandle.getBean().removePropertyChangeListener("PermissiveSmlDisabled", this);
                     break;
                     
                 default:
@@ -267,7 +283,9 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         Lit(Bundle.getMessage("SignalMastQueryType_Lit")),
         NotLit(Bundle.getMessage("SignalMastQueryType_NotLit")),
         Held(Bundle.getMessage("SignalMastQueryType_Held")),
-        NotHeld(Bundle.getMessage("SignalMastQueryType_NotHeld"));
+        NotHeld(Bundle.getMessage("SignalMastQueryType_NotHeld")),
+        IsPermissiveSmlDisabled(Bundle.getMessage("SignalMastQueryType_IsPermissiveSmlDisabled")),
+        IsPermissiveSmlNotDisabled(Bundle.getMessage("SignalMastQueryType_IsPermissiveSmlNotDisabled"));
         
         private final String _text;
         
