@@ -270,7 +270,21 @@ public class ImportConditional {
                 OBlock b = (OBlock)nb;
                 newAction = getOBlockAction(conditionalAction, b);
                 break;
-
+                
+                
+                
+                
+                
+//            case NONE:
+            case LOGIX:
+            case CLOCK:
+                
+            case AUDIO:
+            case SCRIPT:
+            case OTHER:
+                
+                
+                
             default:
                 newAction = null;
                 log.warn("Unexpected type in ImportConditional.doImport(): {} -> {}", conditionalAction.getType(), conditionalAction.getType().getItemType());
