@@ -853,6 +853,17 @@ public final class MathUtil {
     }
 
     /**
+     * point2DToString return a string to represent a point
+     *
+     * @param p the Point2D
+     * @return the string
+     */
+    @Nonnull
+    public static String point2DToString(@Nonnull Point2D p) {
+        return String.format("{%.2f, %.2f}", p.getX(), p.getY());
+    }
+
+    /**
      * rectangle2DToString return a string to represent a rectangle
      *
      * @param r the rectangle2D
