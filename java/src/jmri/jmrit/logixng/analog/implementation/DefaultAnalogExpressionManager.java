@@ -12,10 +12,8 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.logixng.implementation.AbstractBaseManager;
-import jmri.managers.AbstractManager;
+import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.util.*;
 
 /**
@@ -150,6 +148,12 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     public Class<MaleAnalogExpressionSocket> getNamedBeanClass() {
         return MaleAnalogExpressionSocket.class;
     }
+
+    @Override
+    protected MaleAnalogExpressionSocket castBean(MaleSocket maleSocket) {
+        return (MaleAnalogExpressionSocket)maleSocket;
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultAnalogExpressionManager.class);
 

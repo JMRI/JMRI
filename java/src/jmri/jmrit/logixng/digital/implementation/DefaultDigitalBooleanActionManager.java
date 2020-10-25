@@ -9,17 +9,7 @@ import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
 
 import jmri.InvokeOnGuiThread;
-import jmri.util.ThreadingUtil;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.DigitalBooleanActionBean;
-import jmri.jmrit.logixng.DigitalBooleanActionFactory;
-import jmri.jmrit.logixng.MaleDigitalBooleanActionSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBaseManager;
 import jmri.util.*;
 
@@ -140,7 +130,13 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
     public Class<MaleDigitalBooleanActionSocket> getNamedBeanClass() {
         return MaleDigitalBooleanActionSocket.class;
     }
-    
+
+    @Override
+    protected MaleDigitalBooleanActionSocket castBean(MaleSocket maleSocket) {
+        return (MaleDigitalBooleanActionSocket)maleSocket;
+    }
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
 
 }

@@ -8,11 +8,9 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBaseManager;
-import jmri.managers.AbstractManager;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
@@ -133,7 +131,13 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     public Class<MaleDigitalActionSocket> getNamedBeanClass() {
         return MaleDigitalActionSocket.class;
     }
-    
+
+    @Override
+    protected MaleDigitalActionSocket castBean(MaleSocket maleSocket) {
+        return (MaleDigitalActionSocket)maleSocket;
+    }
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalActionManager.class);
 
 }

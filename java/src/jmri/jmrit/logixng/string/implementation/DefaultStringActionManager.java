@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBaseManager;
-import jmri.util.ThreadingUtil;
-import jmri.managers.AbstractManager;
 import jmri.util.*;
 
 /**
@@ -131,7 +129,13 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     public Class<MaleStringActionSocket> getNamedBeanClass() {
         return MaleStringActionSocket.class;
     }
-    
+
+    @Override
+    protected MaleStringActionSocket castBean(MaleSocket maleSocket) {
+        return (MaleStringActionSocket)maleSocket;
+    }
+
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultStringActionManager.class);
 
 }

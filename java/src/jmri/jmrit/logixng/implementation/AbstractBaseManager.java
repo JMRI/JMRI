@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.beans.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -67,7 +66,16 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
         }
         return result;
     }
-
+    
+    /**
+     * Cast the maleSocket to E
+     * This method is needed since SpotBugs @SuppressWarnings("unchecked")
+     * does not work for the cast: (E)socket.
+     * @param maleSocket the maleSocket to cast
+     * @return the maleSocket as E
+     */
+    protected abstract E castBean(MaleSocket maleSocket);
+    
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
@@ -76,7 +84,7 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, socket, null);
         if (property.equals("DoDelete")) { // NOI18N
-            deregister((E)socket);
+            deregister(castBean(socket));
             socket.dispose();
         }
     }
