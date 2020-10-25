@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;

@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 public class AnalogExpressionConstant extends AbstractAnalogExpression {
 
     private double _value;
-    private boolean _listenersAreRegistered = false;
     
     public AnalogExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -40,11 +39,7 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     }
     
     public void setValue(double value) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setValue must not be called when listeners are registered");
-            log.error("setValue must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setValue");
         _value = value;
     }
     

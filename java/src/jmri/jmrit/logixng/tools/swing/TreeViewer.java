@@ -32,7 +32,7 @@ public class TreeViewer extends JmriJFrame {
     
     JTree tree;
     
-    private FemaleSocket _femaleRootSocket;
+    private final FemaleSocket _femaleRootSocket;
     protected FemaleSocketTreeModel femaleSocketTreeModel;
     
     boolean _showReminder = false;

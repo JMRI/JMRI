@@ -26,7 +26,6 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     private NamedBeanHandle<SignalHead> _signalHeadHandle;
     private QueryType _queryType = QueryType.Appearance;
     private int _signalHeadAppearance = SignalHead.DARK;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionSignalHead(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,20 +41,12 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     }
     
     public void setSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSignalHead must not be called when listeners are registered");
-            log.error("setSignalHead must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSignalHead");
         _signalHeadHandle = handle;
     }
     
     public void setSignalHead(@CheckForNull SignalHead turnout) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSignalHead must not be called when listeners are registered");
-            log.error("setSignalHead must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSignalHead");
         if (turnout != null) {
             if (_signalHeadHandle != null) {
                 InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);

@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 public class StringExpressionConstant extends AbstractStringExpression {
 
     private String _value;
-    private boolean _listenersAreRegistered = false;
     
     public StringExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -37,11 +36,7 @@ public class StringExpressionConstant extends AbstractStringExpression {
     }
     
     public void setValue(String value) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setValue must not be called when listeners are registered");
-            log.error("setValue must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setValue");
         _value = value;
     }
     

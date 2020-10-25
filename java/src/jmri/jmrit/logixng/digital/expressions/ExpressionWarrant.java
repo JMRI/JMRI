@@ -26,7 +26,6 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     private Warrant _warrant;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private Type _type = Type.ROUTE_ALLOCATED;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionWarrant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,11 +41,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     }
     
     public void setWarrant(@CheckForNull Warrant warrant) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setWarrant must not be called when listeners are registered");
-            log.error("setWarrant must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setWarrant");
         if (warrant != null) {
             InstanceManager.getDefault(WarrantManager.class).addVetoableChangeListener(this);
             _warrant = warrant;

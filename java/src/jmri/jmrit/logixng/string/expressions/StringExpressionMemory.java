@@ -25,7 +25,6 @@ public class StringExpressionMemory extends AbstractStringExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
-    private boolean _listenersAreRegistered = false;
     
     public StringExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -63,11 +62,7 @@ public class StringExpressionMemory extends AbstractStringExpression
     }
     
     public void setMemory(String memoryName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setMemory");
         if (memoryName != null) {
             Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
             if (memory != null) {
@@ -81,20 +76,12 @@ public class StringExpressionMemory extends AbstractStringExpression
     }
     
     public void setMemory(NamedBeanHandle<Memory> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
     }
     
     public void setMemory(@CheckForNull Memory memory) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setMemory");
         if (memory != null) {
             _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(memory.getDisplayName(), memory);

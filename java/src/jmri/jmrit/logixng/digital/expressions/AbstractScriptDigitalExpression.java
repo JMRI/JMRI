@@ -4,11 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
+
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 
 /**

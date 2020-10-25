@@ -26,7 +26,6 @@ public class ExpressionTimer extends AbstractDigitalExpression {
 
     private ProtectedTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
-    private boolean _listenersAreRegistered = false;
     private final AtomicReference<TimerStatus> _timerStatusRef = new AtomicReference<>(TimerStatus.NOT_STARTED);
     private boolean _onOrOff = false;
     private long _delayOff = 0;     // Time in milliseconds
@@ -50,11 +49,7 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     }
     
     public void setTimerType(TimerType timerType) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTimerType must not be called when listeners are registered");
-            log.error("setTimerType must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTimerType");
         _timerType = timerType;
     }
     
@@ -63,11 +58,7 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     }
     
     public void setTimerDelay(long delayOff, long delayOn) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTimerDelay must not be called when listeners are registered");
-            log.error("setTimerDelay must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTimerDelay");
         _delayOff = delayOff;
         _delayOn = delayOn;
     }

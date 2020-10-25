@@ -26,7 +26,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     private OBlock _oblock;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private OBlock.OBlockStatus _oblockStatus = OBlock.OBlockStatus.Unoccupied;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionOBlock(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,11 +41,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     }
     
     public void setOBlock(@CheckForNull OBlock oblock) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setOBlock must not be called when listeners are registered");
-            log.error("setOBlock must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setOBlock");
         if (oblock != null) {
             InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
             _oblock = oblock;

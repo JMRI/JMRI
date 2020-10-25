@@ -14,6 +14,8 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 
+import org.slf4j.Logger;
+
 /**
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
@@ -22,6 +24,8 @@ public abstract class AbstractBase
         extends AbstractNamedBean
         implements Base, InternalBase {
 
+    protected boolean _listenersAreRegistered = false;
+    
     public AbstractBase(String sys) throws BadSystemNameException {
         super(sys);
     }
@@ -172,6 +176,14 @@ public abstract class AbstractBase
         }
         unregisterListeners();
         disposeMe();
+    }
+    
+    protected void assertListenersAreNotRegistered(Logger log, String method) {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
+            log.error(method + " must not be called when listeners are registered", e);
+            throw e;
+        }
     }
     
 }

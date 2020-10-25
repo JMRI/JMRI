@@ -29,7 +29,6 @@ public class ExpressionSensor extends AbstractDigitalExpression
     private NamedBeanHandle<Sensor> _sensorHandle;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private SensorState _sensorState = SensorState.ACTIVE;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -45,21 +44,13 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
     
     public void setSensor(@Nonnull NamedBeanHandle<Sensor> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSensor must not be called when listeners are registered");
-            log.error("setSensor must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSensor");
         _sensorHandle = handle;
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setSensor(@CheckForNull Sensor sensor) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSensor must not be called when listeners are registered");
-            log.error("setSensor must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSensor");
         if (sensor != null) {
             if (_sensorHandle != null) {
                 InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);

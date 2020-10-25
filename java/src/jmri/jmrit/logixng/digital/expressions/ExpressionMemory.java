@@ -37,7 +37,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
     private String _constantValue = "";
     private NamedBeanHandle<Memory> _otherMemoryHandle;
     private boolean _listenToOtherMemory = false;
-    private boolean _listenersAreRegistered = false;
     
     public ExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -53,20 +52,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
     }
     
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
     }
     
     public void setMemory(@CheckForNull Memory memory) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setMemory");
         if (memory != null) {
             if (_memoryHandle != null) {
                 InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
@@ -93,20 +84,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
     }
     
     public void setOtherMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setOtherMemory");
         _otherMemoryHandle = handle;
     }
     
     public void setOtherMemory(@CheckForNull Memory memory) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setOtherMemory");
         if (memory != null) {
             if (_otherMemoryHandle != null) {
                 InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);

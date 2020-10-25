@@ -29,7 +29,6 @@ public class ExpressionLight extends AbstractDigitalExpression
     private NamedBeanHandle<Light> _lightHandle;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private LightState _lightState = LightState.ON;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -45,20 +44,12 @@ public class ExpressionLight extends AbstractDigitalExpression
     }
     
     public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setLight must not be called when listeners are registered");
-            log.error("setLight must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setLight");
         _lightHandle = handle;
     }
     
     public void setLight(@CheckForNull Light light) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setLight must not be called when listeners are registered");
-            log.error("setLight must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setLight");
         if (light != null) {
             if (_lightHandle != null) {
                 InstanceManager.lightManagerInstance().addVetoableChangeListener(this);

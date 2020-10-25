@@ -33,7 +33,6 @@ public class ExpressionReference extends AbstractDigitalExpression
     private String _reference;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private PointsTo _pointsTo = PointsTo.NOTHING;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionReference(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -41,11 +40,7 @@ public class ExpressionReference extends AbstractDigitalExpression
     }
     
     public void setReference(String reference) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setReference must not be called when listeners are registered");
-            log.error("setReference must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setReference");
         _reference = reference;
     }
     

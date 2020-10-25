@@ -20,7 +20,6 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private Type _type;
-    private boolean _listenersAreRegistered = false;
     private Timebase fastClock;
     private int _beginTime = 0;
     private int _endTime = 0;
@@ -51,11 +50,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     }
     
     public void setType(Type type) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setType must not be called when listeners are registered");
-            log.error("setType must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setType");
         _type = type;
         
         if (_type == Type.FastClock) {
@@ -70,11 +65,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
     }
     
     public void setRange(int beginTime, int endTime) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setRange must not be called when listeners are registered");
-            log.error("setRange must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setRange");
         _beginTime = beginTime;
         _endTime = endTime;
     }

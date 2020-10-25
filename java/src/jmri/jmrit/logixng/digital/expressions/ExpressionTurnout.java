@@ -29,7 +29,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private TurnoutState _turnoutState = TurnoutState.THROWN;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -37,11 +36,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     }
     
     public void setTurnout(@Nonnull String turnoutName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
-            log.error("setTurnout must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTurnout");
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
         if (turnout != null) {
             setTurnout(turnout);
@@ -52,31 +47,19 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     }
     
     public void setTurnout(@Nonnull NamedBeanHandle<Turnout> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
-            log.error("setTurnout must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTurnout");
         _turnoutHandle = handle;
         InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setTurnout(@Nonnull Turnout turnout) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
-            log.error("setTurnout must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTurnout");
         setTurnout(InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(turnout.getDisplayName(), turnout));
     }
     
     public void removeTurnout() {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("removeTurnout must not be called when listeners are registered");
-            log.error("removeTurnout must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setTurnout");
         if (_turnoutHandle != null) {
             InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
             _turnoutHandle = null;

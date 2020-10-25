@@ -26,7 +26,6 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     private DestinationPoints _dp;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private EntryExitState _entryExitState = EntryExitState.ACTIVE;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionEntryExit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,11 +41,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     }
     
     public void setDestinationPoints(@CheckForNull DestinationPoints dp) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setDestinationPoints must not be called when listeners are registered");
-            log.error("setDestinationPoints must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setDestinationPoints");
         if (dp != null) {
             InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
             _dp = dp;

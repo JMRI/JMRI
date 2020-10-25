@@ -32,7 +32,6 @@ public class ExpressionScript extends AbstractDigitalExpression {
 
     private String _scriptText;
     private AbstractScriptDigitalExpression _scriptClass;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionScript(@Nonnull String sys, @CheckForNull String user)
             throws BadUserNameException, BadSystemNameException {
@@ -74,11 +73,7 @@ public class ExpressionScript extends AbstractDigitalExpression {
     }
     
     public void setScript(String script) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setScript must not be called when listeners are registered");
-            log.error("setScript must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setScript");
         _scriptText = script;
         if (_scriptText != null) {
             loadScript();

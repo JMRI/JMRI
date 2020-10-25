@@ -26,7 +26,6 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     private NamedBeanHandle<SignalMast> _signalMastHandle;
     private QueryType _queryType = QueryType.Aspect;
     private String _signalMastAspect = "";
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionSignalMast(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -42,20 +41,12 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     }
     
     public void setSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSignalMast must not be called when listeners are registered");
-            log.error("setSignalMast must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSignalMast");
         _signalMastHandle = handle;
     }
     
     public void setSignalMast(@CheckForNull SignalMast turnout) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSignalMast must not be called when listeners are registered");
-            log.error("setSignalMast must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setSignalMast");
         if (turnout != null) {
             if (_signalMastHandle != null) {
                 InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);

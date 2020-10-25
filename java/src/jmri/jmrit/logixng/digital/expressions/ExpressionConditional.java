@@ -27,7 +27,6 @@ public class ExpressionConditional extends AbstractDigitalExpression
     private Conditional _conditional;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private ConditionalState _conditionalState = ConditionalState.TRUE;
-    private boolean _listenersAreRegistered = false;
 
     public ExpressionConditional(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -43,11 +42,7 @@ public class ExpressionConditional extends AbstractDigitalExpression
     }
     
     public void setConditional(@CheckForNull Conditional conditional) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setConditional must not be called when listeners are registered");
-            log.error("setConditional must not be called when listeners are registered", e);
-            throw e;
-        }
+        assertListenersAreNotRegistered(log, "setConditional");
         if (conditional != null) {
             InstanceManager.getDefault(ConditionalManager.class).addVetoableChangeListener(this);
             _conditional = conditional;
