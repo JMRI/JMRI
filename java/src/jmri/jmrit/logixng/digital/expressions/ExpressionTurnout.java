@@ -58,7 +58,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             throw e;
         }
         _turnoutHandle = handle;
-        System.out.format("addVetoableChangeListener() for turnout%n");
         InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     

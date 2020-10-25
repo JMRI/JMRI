@@ -2,13 +2,12 @@ package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 
 /**
@@ -58,7 +57,9 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
 
         Element turnoutName = shared.getChild("turnout");
         if (turnoutName != null) {
-            h.setTurnout(InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim()));
+            Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim());
+            if (t != null) h.setTurnout(t);
+            else h.removeTurnout();
         }
 
         Element is_IsNot = shared.getChild("is_isNot");
@@ -75,5 +76,5 @@ public class ExpressionTurnoutXml extends jmri.managers.configurexml.AbstractNam
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ExpressionTurnoutXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutXml.class);
 }
