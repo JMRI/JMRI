@@ -13,11 +13,9 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
-import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
-import jmri.jmrit.logixng.string.implementation.Bundle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

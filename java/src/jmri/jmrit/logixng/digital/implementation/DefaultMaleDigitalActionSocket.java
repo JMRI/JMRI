@@ -13,9 +13,7 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
-import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 
