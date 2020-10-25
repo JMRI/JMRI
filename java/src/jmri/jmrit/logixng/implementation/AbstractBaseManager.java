@@ -79,16 +79,6 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
             deregister((E)socket);
             socket.dispose();
         }
-/*        
-        // throws PropertyVetoException if vetoed
-        boolean result = fireVetoableChange(property, socket, errors);
-        if (result && property.equals("DoDelete")) { // NOI18N
-            deregister((E)socket);
-            ((NamedBean)socket).dispose();
-        }
-        
-        return result;
-*/
     }
     
     

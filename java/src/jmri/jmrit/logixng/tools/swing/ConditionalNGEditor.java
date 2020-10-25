@@ -1012,8 +1012,11 @@ public class ConditionalNGEditor extends TreeViewer {
         public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
             for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
                 try {
-                    entry.getKey().disconnect();
-                    entry.getValue().getManager().deleteBean(_maleSocket, "DoDelete");
+                    FemaleSocket femaleSocket = entry.getKey();
+                    femaleSocket.disconnect();
+                    
+                    MaleSocket maleSocket = entry.getValue();
+                    maleSocket.getManager().deleteBean(maleSocket, "DoDelete");
                 } catch (PropertyVetoException e) {
                     //At this stage the DoDelete shouldn'_maleSocket fail, as we have already done a can delete, which would trigger a veto
                     log.error(e.getMessage());
