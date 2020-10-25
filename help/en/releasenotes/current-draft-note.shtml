@@ -148,6 +148,8 @@
         <h4>SPROG</h4>
             <ul>
                 <li>EStop for 28 Step mode is now sent correctly</li>
+		<li>Updated programming mode switcher for Pi-SPROG 3</li>
+		<li>Added mode switcher for SPROG 3 Plus</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -450,7 +452,8 @@
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
-                <li></li>
+                <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
+                  panels. See OBlocks and JSON.</li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -485,7 +488,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Increased address validation for multiple hardware types.</li>
+          <li>Increased address validation for multiple hardware types.</li>
+          <li>Access to OBlocks in Web Server via JSON messages was added.</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -600,6 +604,9 @@
           Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
         <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
           items control layout is selected in the Editor Options menu).</li>
+        <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
+          panels.</li>
+        <li>OBlocks access was added as a JSON Servlet to allow this.</li>
       </ul>
     </ul>
 
