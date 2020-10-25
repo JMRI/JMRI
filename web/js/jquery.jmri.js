@@ -39,6 +39,8 @@
  * metadata(data array)
  * networkService(name, data)
  * networkServices(data array)
+ * oblock(name, status, data)
+ * oblocks(data array)
  * panel(name, value, data)
  * panels(data array)
  * power(state)
@@ -151,6 +153,10 @@
             jmri.networkService = function (name, data) {
             };
             jmri.networkServices = function (data) {
+            };
+            jmri.oblock = function (name, value, data) {
+            };
+            jmri.oblocks = function (data) {
             };
             jmri.panel = function (name, value, data) {
             };
@@ -368,6 +374,32 @@
                     });
                 }
             };
+            jmri.getOblock = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("oblock", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "oblock/" + name, function (json) {
+                        jmri.oblock(json.data.name, json.data.status, json.data); // copied from sensor
+                    });
+                }
+            };
+            jmri.setOblock = function (name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("oblock", { name: name, value: value }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "oblock/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ value: value }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.oblock(json.data.name, json.data.status, json.data);
+                            jmri.getOblock(json.data.name, json.data.status);
+                        }
+                    });
+                }
+            };
+
             /**
              * Request a json list of the specified list type. Individual
              * listeners for each instance of the type will need to be set
@@ -395,6 +427,9 @@
                         break;
                     case "memory":
                         jmri.getMemory(name);
+                        break;
+                    case "oblock":
+                        jmri.getOblock(name);
                         break;
                     case "reporter":
                         jmri.getReporter(name);
@@ -444,6 +479,9 @@
                         break;
                     case "layoutBlock":
                         jmri.setLayoutBlock(name, state, 'post');
+                        break;
+                    case "oblock":
+                        jmri.setOblock(name, status, 'post');
                         break;
                     case "rosterEntry":
                         jmri.setRosterEntry(name, state, 'post');
@@ -846,6 +884,12 @@
                 },
                 networkServices: function (e) {
                     jmri.networkServices(e.data);
+                },
+                oblock: function (e) {
+                    jmri.oblock(e.data.name, e.data.status, e.data);
+                },
+                oblocks: function (e) {
+                    jmri.oblocks(e.data);
                 },
                 panel: function (e) {
                     jmri.panel(e.data.name, e.data.value, e.data);

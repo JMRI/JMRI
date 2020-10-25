@@ -112,4 +112,5 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     protected ProvidingManager<Sensor> getManager() {
         return InstanceManager.getDefault(SensorManager.class);
     }
+
 }

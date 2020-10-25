@@ -139,8 +139,9 @@ $(document).ready(function() {
     getRosterTable($("html").data("roster-group"));
     initUploads();
     
-    //listen for roster changes and refresh the roster table when this occurs
-    //  by overriding processing of websocket messages of interest
+    // listen for roster changes and refresh the roster table when this occurs
+    //    by overriding processing of websocket messages of interest
+    // note: the functions and parameter names must match exactly those in jquery.jmri.js
     jmri = $.JMRI({
     	//wait for the hello message
     	hello: function(data) {
