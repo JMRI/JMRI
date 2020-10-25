@@ -37,9 +37,16 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     }
     
     public void setTurnout(@Nonnull String turnoutName) {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
+            log.error("setTurnout must not be called when listeners are registered", e);
+            throw e;
+        }
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        setTurnout(turnout);
-        if (turnout == null) {
+        if (turnout != null) {
+            setTurnout(turnout);
+        } else {
+            removeTurnout();
             log.error("turnout \"{}\" is not found", turnoutName);
         }
     }
@@ -51,23 +58,29 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             throw e;
         }
         _turnoutHandle = handle;
+        System.out.format("addVetoableChangeListener() for turnout%n");
+        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setTurnout(@CheckForNull Turnout turnout) {
+    public void setTurnout(@Nonnull Turnout turnout) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
             log.error("setTurnout must not be called when listeners are registered", e);
             throw e;
         }
-        if (turnout != null) {
-            if (_turnoutHandle != null) {
-                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-            }
-            _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-        } else {
-            _turnoutHandle = null;
+        setTurnout(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+    }
+    
+    public void removeTurnout() {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException("removeTurnout must not be called when listeners are registered");
+            log.error("removeTurnout must not be called when listeners are registered", e);
+            throw e;
+        }
+        if (_turnoutHandle != null) {
             InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+            _turnoutHandle = null;
         }
     }
     
@@ -96,13 +109,14 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Turnout_TurnoutInUseTurnoutExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    setTurnout((Turnout)null);
+                    removeTurnout();
                 }
             }
         }
@@ -200,6 +214,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+        // Remove the vetoable listener
+        removeTurnout();
     }
     
     

@@ -185,7 +185,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        expressionTurnout.setTurnout((Turnout)null);
+        expressionTurnout.removeTurnout();
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
@@ -262,7 +262,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         NamedBeanHandle<Turnout> otherTurnoutHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherTurnout.getDisplayName(), otherTurnout);
-        expressionTurnout.setTurnout((Turnout)null);
+        expressionTurnout.removeTurnout();
         Assert.assertNull("Turnout is null", expressionTurnout.getTurnout());
         expressionTurnout.setTurnout(otherTurnoutHandle);
         Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getTurnout().getBean());
@@ -281,13 +281,13 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IT14");
         turnout14.setUserName("Some user name");
         
-        expressionTurnout.setTurnout((Turnout)null);
+        expressionTurnout.removeTurnout();
         Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
         
         expressionTurnout.setTurnout(turnout11);
         Assert.assertTrue("turnout is correct", turnout11 == expressionTurnout.getTurnout().getBean());
         
-        expressionTurnout.setTurnout((Turnout)null);
+        expressionTurnout.removeTurnout();
         Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
         
         expressionTurnout.setTurnout(turnoutHandle12);
@@ -346,7 +346,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     public void testRegisterListeners() {
         // Test registerListeners() when the ExpressionTurnout has no turnout
         conditionalNG.setEnabled(false);
-        expressionTurnout.setTurnout((Turnout)null);
+        expressionTurnout.removeTurnout();
         conditionalNG.setEnabled(true);
     }
     

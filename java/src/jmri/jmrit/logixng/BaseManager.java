@@ -29,13 +29,13 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      * If a property name of "DoNotDelete" is thrown back in the VetoException
      * then the delete process should be aborted.
      *
-     * @param n        The MaleSocket to be deleted
-     * @param property The programmatic name of the request. "CanDelete" will
-     *                 enquire with all listeners if the item can be deleted.
-     *                 "DoDelete" tells the listener to delete the item
-     * @param errors if there are errors, the error messages are added to this list
-     * @return true if all beans can be deleted, false otherwise
+     * @param maleSocket The MaleSocket to be deleted
+     * @param property   The programmatic name of the request. "CanDelete" will
+     *                   enquire with all listeners if the item can be deleted.
+     *                   "DoDelete" tells the listener to delete the item
+     * @throws java.beans.PropertyVetoException If the recipients wishes the
+     *                                          delete to be aborted (see above)
      */
-    public boolean deleteBean(@Nonnull MaleSocket n, @Nonnull String property, List<String> errors);
+    public void deleteBean(@Nonnull MaleSocket maleSocket, @Nonnull String property) throws PropertyVetoException;
 
 }

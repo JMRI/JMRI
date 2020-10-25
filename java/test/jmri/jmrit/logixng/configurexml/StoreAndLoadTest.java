@@ -322,7 +322,7 @@ public class StoreAndLoadTest {
         socketOr.getChild(index++).connect(socketTurnout);
 
         ExpressionTurnout expressionTurnout2 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00031", "My turnout");
-        expressionTurnout2.setTurnout((Turnout)null);
+        expressionTurnout2.removeTurnout();
         expressionTurnout2.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout2.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
         MaleSocket socketTurnout2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout2);

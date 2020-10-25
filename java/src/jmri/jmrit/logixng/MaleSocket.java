@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng;
 
-import jmri.Manager;
 import jmri.NamedBean;
 
 /**

@@ -2,8 +2,8 @@ package jmri.jmrit.logixng.tools.swing;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -771,6 +771,17 @@ public class ConditionalNGEditor extends TreeViewer {
         }
     }
     
+    private void updateTree(FemaleSocket currentFemaleSocket, TreePath currentPath) {
+        for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+            TreeModelEvent tme = new TreeModelEvent(
+                    currentFemaleSocket,
+                    currentPath.getPath()
+            );
+            l.treeNodesChanged(tme);
+        }
+        tree.updateUI();
+    }
+    
     
     private final class PopupMenu extends JPopupMenu implements ActionListener {
         
@@ -909,25 +920,6 @@ public class ConditionalNGEditor extends TreeViewer {
             show(_tree, x, y);
         }
 
-        private boolean removeTree(MaleSocket maleSocket, boolean ask, List<String> errors) {
-            boolean result;
-            
-            if (ask) {
-                result = maleSocket.getManager().deleteBean(maleSocket, "CanDelete", errors);
-            } else {
-                result = maleSocket.getManager().deleteBean(maleSocket, "DoDelete", errors);
-            }
-            
-            for (int i=0; i < maleSocket.getChildCount(); i++) {
-                FemaleSocket femaleSocket = maleSocket.getChild(i);
-                if (femaleSocket.isConnected()) {
-                    result &= removeTree(femaleSocket.getConnectedSocket(), ask, errors);
-                }
-            }
-            
-            return result;
-        }
-
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
@@ -940,19 +932,8 @@ public class ConditionalNGEditor extends TreeViewer {
                     break;
                     
                 case ACTION_COMMAND_REMOVE:
-                    List<String> errors = new ArrayList<>();
-                    MaleSocket maleSocket = _currentFemaleSocket.getConnectedSocket();
-                    
-                    // Step 1: Send "CanDelete" to all managers handling the beans in the sub tree
-                    boolean result = removeTree(maleSocket, true, errors);
-                    if (!result || !errors.isEmpty()) throw new RuntimeException("Not implemented yet");
-                    
-                    // Step 2: Send "DoDelete" to all managers handling the beans in the sub tree
-                    _currentFemaleSocket.disconnect();
-                    result = removeTree(maleSocket, false, errors);
-                    if (!result || !errors.isEmpty()) throw new RuntimeException("Not implemented yet");
-                    
-                    updateTree();
+                    DeleteBeanWorker worker = new DeleteBeanWorker(_currentFemaleSocket, _currentPath);
+                    worker.execute();
                     break;
                     
                 case ACTION_COMMAND_CUT:
@@ -961,7 +942,7 @@ public class ConditionalNGEditor extends TreeViewer {
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         clipboard.add(_currentFemaleSocket.getConnectedSocket());
                         _currentFemaleSocket.disconnect();
-                        updateTree();
+                        updateTree(_currentFemaleSocket, _currentPath);
                     } else {
                         log.error("_currentFemaleSocket is not connected");
                     }
@@ -976,7 +957,7 @@ public class ConditionalNGEditor extends TreeViewer {
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         try {
                             _currentFemaleSocket.connect(clipboard.fetchTopItem());
-                            updateTree();
+                            updateTree(_currentFemaleSocket, _currentPath);
                         } catch (SocketAlreadyConnectedException ex) {
                             log.error("item cannot be connected", ex);
                         }
@@ -995,18 +976,185 @@ public class ConditionalNGEditor extends TreeViewer {
                     log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
             }
         }
+    }
+    
+    
+    // This class is copied from BeanTableDataModel
+    class DeleteBeanWorker extends SwingWorker<Void, Void> {
         
-        private void updateTree() {
-            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                TreeModelEvent tme = new TreeModelEvent(
-                        _currentFemaleSocket,
-                        _currentPath.getPath()
-                );
-                l.treeNodesChanged(tme);
+        private final FemaleSocket _currentFemaleSocket;
+        private final TreePath _currentPath;
+        MaleSocket _maleSocket;
+        
+        public DeleteBeanWorker(FemaleSocket currentFemaleSocket, TreePath currentPath) {
+            _currentFemaleSocket = currentFemaleSocket;
+            _currentPath = currentPath;
+            _maleSocket = _currentFemaleSocket.getConnectedSocket();
+        }
+        
+        public int getDisplayDeleteMsg() {
+            return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(ConditionalNGEditor.class.getName(), "deleteInUse");
+        }
+        
+        public void setDisplayDeleteMsg(int boo) {
+            InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(ConditionalNGEditor.class.getName(), "deleteInUse", boo);
+        }
+        
+        private void findAllChilds(FemaleSocket femaleSocket, List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
+            if (!femaleSocket.isConnected()) return;
+            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
+            sockets.add(new HashMap.SimpleEntry<>(femaleSocket, maleSocket));
+            for (int i=0; i < maleSocket.getChildCount(); i++) {
+                findAllChilds(maleSocket.getChild(i), sockets);
             }
-            tree.updateUI();
+        }
+        
+        public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
+            for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                try {
+                    entry.getKey().disconnect();
+                    entry.getValue().getManager().deleteBean(_maleSocket, "DoDelete");
+                } catch (PropertyVetoException e) {
+                    //At this stage the DoDelete shouldn'_maleSocket fail, as we have already done a can delete, which would trigger a veto
+                    log.error(e.getMessage());
+                }
+            }
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Void doInBackground() {
+            List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
+            
+            findAllChilds(_currentFemaleSocket, sockets);
+            
+            StringBuilder message = new StringBuilder();
+            try {
+                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                    entry.getValue().getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
+                }
+            } catch (PropertyVetoException e) {
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    log.warn(e.getMessage());
+                    message.append(Bundle.getMessage("VetoDeleteBean", ((NamedBean)_maleSocket.getObject()).getBeanType(), ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                    JOptionPane.showMessageDialog(null, message.toString(),
+                            Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                message.append(e.getMessage());
+            }
+            int count = _maleSocket.getListenerRefs().size();
+            log.debug("Delete with {}", count);
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
+                doDelete(sockets);
+            } else {
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(Bundle.getMessage("WarningTitle"));
+                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                if (count > 0) { // warn of listeners attached before delete
+                    
+                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    JLabel question = new JLabel(Bundle.getMessage(prompt, ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    
+                    ArrayList<String> listenerRefs = new ArrayList<>();
+                    
+                    for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                        listenerRefs.addAll(entry.getValue().getListenerRefs());
+                    }
+                    
+                    if (listenerRefs.size() > 0) {
+                        ArrayList<String> listeners = new ArrayList<>();
+                        for (int i = 0; i < listenerRefs.size(); i++) {
+                            if (!listeners.contains(listenerRefs.get(i))) {
+                                listeners.add(listenerRefs.get(i));
+                            }
+                        }
+                        
+                        message.append("<br>");
+                        message.append(Bundle.getMessage("ReminderInUse", count));
+                        message.append("<ul>");
+                        for (int i = 0; i < listeners.size(); i++) {
+                            message.append("<li>");
+                            message.append(listeners.get(i));
+                            message.append("</li>");
+                        }
+                        message.append("</ul>");
+                        
+                        JEditorPane pane = new JEditorPane();
+                        pane.setContentType("text/html");
+                        pane.setText("<html>" + message.toString() + "</html>");
+                        pane.setEditable(false);
+                        JScrollPane jScrollPane = new JScrollPane(pane);
+                        container.add(jScrollPane);
+                    }
+                } else {
+                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    String msg = MessageFormat.format(Bundle.getMessage(prompt),
+                            new Object[]{_maleSocket.getSystemName()});
+                    JLabel question = new JLabel(msg);
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                }
+                
+                final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
+                JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener((ActionEvent e) -> {
+                    //there is no point in remembering this the user will never be
+                    //able to delete a bean!
+                    dialog.dispose();
+                });
+                
+                yesButton.addActionListener((ActionEvent e) -> {
+                    if (remember.isSelected()) {
+                        setDisplayDeleteMsg(0x02);
+                    }
+                    doDelete(sockets);
+                    dialog.dispose();
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+            return null;
+        }
+        
+        /**
+         * {@inheritDoc} Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception while deleting bean", e);
+            }
+            updateTree(_currentFemaleSocket, _currentPath);
         }
     }
+    
     
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalNGEditor.class);
