@@ -169,13 +169,13 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Light light14 = InstanceManager.getDefault(LightManager.class).provide("IL14");
         light14.setUserName("Some user name");
         
-        actionLight.setLight((Light)null);
+        actionLight.removeLight();
         Assert.assertNull("light handle is null", actionLight.getLight());
         
         actionLight.setLight(light11);
         Assert.assertTrue("light is correct", light11 == actionLight.getLight().getBean());
         
-        actionLight.setLight((Light)null);
+        actionLight.removeLight();
         Assert.assertNull("light handle is null", actionLight.getLight());
         
         actionLight.setLight(lightHandle12);

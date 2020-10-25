@@ -33,29 +33,33 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
     }
     
     public void setSignalHead(@Nonnull String signalHeadName) {
-        SignalHead turnout = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
-        setSignalHead(turnout);
-        if (turnout == null) {
-            log.error("turnout \"{}\" is not found", signalHeadName);
+        assertListenersAreNotRegistered(log, "setSignalHead");
+        SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName);
+        if (signalHead != null) {
+            setSignalHead(signalHead);
+        } else {
+            removeSignalHead();
+            log.error("signalHead \"{}\" is not found", signalHeadName);
         }
     }
     
     public void setSignalHead(@Nonnull NamedBeanHandle<SignalHead> handle) {
         assertListenersAreNotRegistered(log, "setSignalHead");
         _signalHeadHandle = handle;
+        InstanceManager.getDefault(SignalHeadManager.class).addVetoableChangeListener(this);
     }
     
-    public void setSignalHead(@CheckForNull SignalHead turnout) {
+    public void setSignalHead(@Nonnull SignalHead signalHead) {
         assertListenersAreNotRegistered(log, "setSignalHead");
-        if (turnout != null) {
-            if (_signalHeadHandle != null) {
-                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-            }
-            _signalHeadHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-        } else {
+        setSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead));
+    }
+    
+    public void removeSignalHead() {
+        assertListenersAreNotRegistered(log, "setSignalHead");
+        if (_signalHeadHandle != null) {
+            InstanceManager.getDefault(SignalHeadManager.class).removeVetoableChangeListener(this);
             _signalHeadHandle = null;
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         }
     }
     
@@ -84,13 +88,14 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalHead) {
                 if (evt.getOldValue().equals(getSignalHead().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("SignalHead_SignalHeadInUseSignalHeadExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalHead) {
                 if (evt.getOldValue().equals(getSignalHead().getBean())) {
-                    setSignalHead((SignalHead)null);
+                    removeSignalHead();
                 }
             }
         }

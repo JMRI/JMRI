@@ -34,21 +34,27 @@ public class ExpressionConditional extends AbstractDigitalExpression
     }
     
     public void setConditional(@Nonnull String conditionalName) {
+        assertListenersAreNotRegistered(log, "setConditional");
         Conditional conditional = InstanceManager.getDefault(ConditionalManager.class).getConditional(conditionalName);
-        setConditional(conditional);
-        if (conditional == null) {
+        if (conditional != null) {
+            setConditional(conditional);
+        } else {
+            removeConditional();
             log.error("conditional \"{}\" is not found", conditionalName);
         }
     }
     
-    public void setConditional(@CheckForNull Conditional conditional) {
+    public void setConditional(@Nonnull Conditional conditional) {
         assertListenersAreNotRegistered(log, "setConditional");
-        if (conditional != null) {
-            InstanceManager.getDefault(ConditionalManager.class).addVetoableChangeListener(this);
-            _conditional = conditional;
-        } else {
-            _conditional = null;
+        _conditional = conditional;
+        InstanceManager.getDefault(ConditionalManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void removeConditional() {
+        assertListenersAreNotRegistered(log, "setConditional");
+        if (_conditional != null) {
             InstanceManager.getDefault(ConditionalManager.class).removeVetoableChangeListener(this);
+            _conditional = null;
         }
     }
     
@@ -77,13 +83,14 @@ public class ExpressionConditional extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Conditional) {
                 if (evt.getOldValue().equals(getConditional())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Conditional_ConditionalInUseConditionalExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Conditional) {
                 if (evt.getOldValue().equals(getConditional())) {
-                    setConditional((Conditional)null);
+                    removeConditional();
                 }
             }
         }

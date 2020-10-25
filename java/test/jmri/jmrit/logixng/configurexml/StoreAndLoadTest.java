@@ -294,7 +294,7 @@ public class StoreAndLoadTest {
         socketOr.getChild(index++).connect(socketMemory);
 
         ExpressionLight expressionLight2 = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00027", "My light");
-        expressionLight2.setLight((Light)null);
+        expressionLight2.removeLight();
         expressionLight2.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionLight2.setLightState(ExpressionLight.LightState.ON);
         MaleSocket socketLight2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight2);
@@ -308,7 +308,7 @@ public class StoreAndLoadTest {
         socketOr.getChild(index++).connect(socketSensor);
 
         ExpressionSensor expressionSensor2 = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00029", "My sensor");
-        expressionSensor2.setSensor((Sensor)null);
+        expressionSensor2.removeSensor();
         expressionSensor2.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor2.setSensorState(ExpressionSensor.SensorState.ACTIVE);
         MaleSocket socketSensor2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor2);

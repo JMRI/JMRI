@@ -5,10 +5,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
@@ -32,22 +32,30 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setDestinationPoints(@Nonnull String systemName) {
-        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(systemName);
-        setDestinationPoints(dp);
-        if (dp == null) {
-            log.error("sensor \"{}\" is not found", systemName);
+    public void setDestinationPoints(@Nonnull String destinationPointsName) {
+        assertListenersAreNotRegistered(log, "setDestinationPoints");
+        DestinationPoints destinationPoints =
+                InstanceManager.getDefault(EntryExitPairs.class)
+                        .getBySystemName(destinationPointsName);
+        if (destinationPoints != null) {
+            setDestinationPoints(destinationPoints);
+        } else {
+            removeDestinationPoints();
+            log.error("destinationPoints \"{}\" is not found", destinationPointsName);
         }
     }
     
-    public void setDestinationPoints(@CheckForNull DestinationPoints dp) {
+    public void setDestinationPoints(@Nonnull DestinationPoints destinationPoints) {
         assertListenersAreNotRegistered(log, "setDestinationPoints");
-        if (dp != null) {
-            InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-            _dp = dp;
-        } else {
+        _dp = destinationPoints;
+        InstanceManager.getDefault(EntryExitPairs.class).addVetoableChangeListener(this);
+    }
+    
+    public void removeDestinationPoints() {
+        assertListenersAreNotRegistered(log, "setDestinationPoints");
+        if (_dp != null) {
+            InstanceManager.getDefault(EntryExitPairs.class).removeVetoableChangeListener(this);
             _dp = null;
-            InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
         }
     }
     
@@ -76,13 +84,14 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof DestinationPoints) {
                 if (evt.getOldValue().equals(getDestinationPoints())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("EntryExit_DestinationPointsInUseEntryExitExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof DestinationPoints) {
                 if (evt.getOldValue().equals(getDestinationPoints())) {
-                    setDestinationPoints((DestinationPoints)null);
+                    removeDestinationPoints();
                 }
             }
         }

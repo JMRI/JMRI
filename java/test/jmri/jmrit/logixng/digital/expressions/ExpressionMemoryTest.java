@@ -191,7 +191,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        expressionMemory.setMemory((Memory)null);
+        expressionMemory.removeMemory();
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
         expressionMemory.setMemory(memory);
@@ -250,7 +250,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         NamedBeanHandle<Memory> otherMemoryHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-        expressionMemory.setMemory((Memory)null);
+        expressionMemory.removeMemory();
         Assert.assertNull("Memory is null", expressionMemory.getMemory());
         expressionMemory.setMemory(otherMemoryHandle);
         Assert.assertEquals("Memorys are equal", otherMemory, expressionMemory.getMemory().getBean());
@@ -269,13 +269,13 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IM14");
         memory14.setUserName("Some user name");
         
-        expressionMemory.setMemory((Memory)null);
+        expressionMemory.removeMemory();
         Assert.assertNull("memory handle is null", expressionMemory.getMemory());
         
         expressionMemory.setMemory(memory11);
         Assert.assertTrue("memory is correct", memory11 == expressionMemory.getMemory().getBean());
         
-        expressionMemory.setMemory((Memory)null);
+        expressionMemory.removeMemory();
         Assert.assertNull("memory handle is null", expressionMemory.getMemory());
         
         expressionMemory.setMemory(memoryHandle12);

@@ -132,7 +132,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertEquals("Memory has correct value", "", _memory.getValue());
         action.setValue("Test");
         Assert.assertEquals("Memory has correct value", "Test", _memory.getValue());
-        action.setMemory((Memory)null);
+        action.removeMemory();
         action.setValue("Other test");
         Assert.assertEquals("Memory has correct value", "Test", _memory.getValue());
     }
@@ -140,12 +140,12 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     @Test
     public void testMemory() {
         StringActionMemory action = (StringActionMemory)_base;
-        action.setMemory((Memory)null);
+        action.removeMemory();
         Assert.assertNull("Memory is null", action.getMemory());
         ((StringActionMemory)_base).setMemory(_memory);
         Assert.assertTrue("Memory matches", _memory == action.getMemory().getBean());
         
-        action.setMemory((NamedBeanHandle<Memory>)null);
+        action.removeMemory();
         Assert.assertNull("Memory is null", action.getMemory());
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("memory is not null", otherMemory);
@@ -155,15 +155,15 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
         Assert.assertTrue("Memory matches", otherMemory == action.getMemory().getBean());
         
-        action.setMemory((String)null);
+        action.removeMemory();
         Assert.assertNull("Memory is null", action.getMemory());
         action.setMemory(memoryHandle.getName());
         Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
         
         // Test setMemory with a memory name that doesn't exists
         action.setMemory("Non existent memory");
-        Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
-        JUnitAppender.assertWarnMessage("memory 'Non existent memory' does not exists");
+        Assert.assertNull("Memory is null", action.getMemory());
+        JUnitAppender.assertErrorMessage("memory \"Non existent memory\" is not found");
     }
     
     @Test

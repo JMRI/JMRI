@@ -147,13 +147,13 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IM14");
         memory14.setUserName("Some user name");
         
-        actionMemory.setMemory((Memory)null);
+        actionMemory.removeMemory();
         Assert.assertNull("memory handle is null", actionMemory.getMemory());
         
         actionMemory.setMemory(memory11);
         Assert.assertTrue("memory is correct", memory11 == actionMemory.getMemory().getBean());
         
-        actionMemory.setMemory((Memory)null);
+        actionMemory.removeMemory();
         Assert.assertNull("memory handle is null", actionMemory.getMemory());
         
         actionMemory.setMemory(memoryHandle12);

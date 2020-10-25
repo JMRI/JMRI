@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
@@ -33,30 +34,34 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         super(sys, user);
     }
     
-    public void setMemory(String memoryName) {
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        setMemory(memory);
-        if (memory == null) {
+    public void setMemory(@Nonnull String memoryName) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
-        InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setMemory(@CheckForNull Memory memory) {
-        if (memory != null) {
-            if (_memoryHandle != null) {
-                InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-            }
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-        } else {
+    public void setMemory(@Nonnull Memory memory) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+    
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "setMemory");
+        if (_memoryHandle != null) {
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
             _memoryHandle = null;
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
@@ -121,13 +126,14 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    ActionMemory.this.setMemory((Memory)null);
+                    removeMemory();
                 }
             }
         }

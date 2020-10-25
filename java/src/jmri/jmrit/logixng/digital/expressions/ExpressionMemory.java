@@ -44,9 +44,12 @@ public class ExpressionMemory extends AbstractDigitalExpression
     }
     
     public void setMemory(@Nonnull String memoryName) {
+        assertListenersAreNotRegistered(log, "setMemory");
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        setMemory(memory);
-        if (memory == null) {
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
@@ -54,19 +57,20 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setMemory(@CheckForNull Memory memory) {
+    public void setMemory(@Nonnull Memory memory) {
         assertListenersAreNotRegistered(log, "setMemory");
-        if (memory != null) {
-            if (_memoryHandle != null) {
-                InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-            }
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-        } else {
-            _memoryHandle = null;
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+    
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "setMemory");
+        if (_memoryHandle != null) {
             InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            _memoryHandle = null;
         }
     }
     
@@ -143,13 +147,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+                    removeMemory();
                 }
             }
         }

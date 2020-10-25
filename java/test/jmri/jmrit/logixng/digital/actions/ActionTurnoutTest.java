@@ -169,13 +169,13 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IL14");
         turnout14.setUserName("Some user name");
         
-        actionTurnout.setTurnout((Turnout)null);
+        actionTurnout.removeTurnout();
         Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
         
         actionTurnout.setTurnout(turnout11);
         Assert.assertTrue("turnout is correct", turnout11 == actionTurnout.getTurnout().getBean());
         
-        actionTurnout.setTurnout((Turnout)null);
+        actionTurnout.removeTurnout();
         Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
         
         actionTurnout.setTurnout(turnoutHandle12);

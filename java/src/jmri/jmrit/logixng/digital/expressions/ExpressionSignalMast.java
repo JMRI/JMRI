@@ -32,30 +32,34 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setSignalMast(@Nonnull String signalHeadName) {
-        SignalMast turnout = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalHeadName);
-        setSignalMast(turnout);
-        if (turnout == null) {
-            log.error("turnout \"{}\" is not found", signalHeadName);
+    public void setSignalMast(@Nonnull String signalMastName) {
+        assertListenersAreNotRegistered(log, "setSignalMast");
+        SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName);
+        if (signalMast != null) {
+            setSignalMast(signalMast);
+        } else {
+            removeSignalMast();
+            log.error("signalMast \"{}\" is not found", signalMastName);
         }
     }
     
     public void setSignalMast(@Nonnull NamedBeanHandle<SignalMast> handle) {
         assertListenersAreNotRegistered(log, "setSignalMast");
         _signalMastHandle = handle;
+        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
     }
     
-    public void setSignalMast(@CheckForNull SignalMast turnout) {
+    public void setSignalMast(@Nonnull SignalMast signalMast) {
         assertListenersAreNotRegistered(log, "setSignalMast");
-        if (turnout != null) {
-            if (_signalMastHandle != null) {
-                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-            }
-            _signalMastHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-        } else {
+        setSignalMast(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast));
+    }
+    
+    public void removeSignalMast() {
+        assertListenersAreNotRegistered(log, "setSignalMast");
+        if (_signalMastHandle != null) {
+            InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
             _signalMastHandle = null;
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         }
     }
     
@@ -84,13 +88,14 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
                 if (evt.getOldValue().equals(getSignalMast().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("SignalMast_SignalMastInUseSignalMastExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof SignalMast) {
                 if (evt.getOldValue().equals(getSignalMast().getBean())) {
-                    setSignalMast((SignalMast)null);
+                    removeSignalMast();
                 }
             }
         }

@@ -185,7 +185,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        expressionSensor.setSensor((Sensor)null);
+        expressionSensor.removeSensor();
         Assert.assertEquals("Get sensor", expressionSensor.getShortDescription());
         Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
         expressionSensor.setSensor(sensor);
@@ -263,7 +263,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         NamedBeanHandle<Sensor> otherSensorHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherSensor.getDisplayName(), otherSensor);
-        expressionSensor.setSensor((Sensor)null);
+        expressionSensor.removeSensor();
         Assert.assertNull("Sensor is null", expressionSensor.getSensor());
         expressionSensor.setSensor(otherSensorHandle);
         Assert.assertEquals("Sensors are equal", otherSensor, expressionSensor.getSensor().getBean());
@@ -282,13 +282,13 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IL14");
         sensor14.setUserName("Some user name");
         
-        expressionSensor.setSensor((Sensor)null);
+        expressionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
         
         expressionSensor.setSensor(sensor11);
         Assert.assertTrue("sensor is correct", sensor11 == expressionSensor.getSensor().getBean());
         
-        expressionSensor.setSensor((Sensor)null);
+        expressionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
         
         expressionSensor.setSensor(sensorHandle12);
@@ -309,16 +309,9 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetSensorException() {
-        // Disable the conditionalNG. This will unregister the listeners
-        conditionalNG.setEnabled(false);
-        
-        // Test setSensor() when listeners are not registered
         Assert.assertNotNull("Sensor is not null", sensor);
-        expressionSensor.setSensor(sensor);
-        
         Assert.assertNotNull("Sensor is not null", expressionSensor.getSensor());
-        // Enable the conditionalNG. This will register the listeners
-        conditionalNG.setEnabled(true);
+        expressionSensor.registerListeners();
         boolean thrown = false;
         try {
             expressionSensor.setSensor("A sensor");
@@ -342,7 +335,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionSensor.setSensor((Sensor)null);
+            expressionSensor.removeSensor();
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -354,7 +347,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     public void testRegisterListeners() {
         // Test registerListeners() when the ExpressionSensor has no sensor
         conditionalNG.setEnabled(false);
-        expressionSensor.setSensor((Sensor)null);
+        expressionSensor.removeSensor();
         conditionalNG.setEnabled(true);
     }
     

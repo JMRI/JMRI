@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import javax.annotation.CheckForNull;
+
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
@@ -13,6 +15,7 @@ import jmri.SensorManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,29 +34,34 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         super(sys, user);
     }
     
-    public void setSensor(String sensorName) {
+    public void setSensor(@Nonnull String sensorName) {
+        assertListenersAreNotRegistered(log, "setSensor");
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
-        setSensor(sensor);
-        if (sensor == null) {
+        if (sensor != null) {
+            setSensor(sensor);
+        } else {
+            removeSensor();
             log.error("sensor \"{}\" is not found", sensorName);
         }
     }
     
     public void setSensor(@Nonnull NamedBeanHandle<Sensor> handle) {
+        assertListenersAreNotRegistered(log, "setSensor");
         _sensorHandle = handle;
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setSensor(@CheckForNull Sensor sensor) {
-        if (sensor != null) {
-            if (_sensorHandle != null) {
-                InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-            }
-            _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-        } else {
-            _sensorHandle = null;
+    public void setSensor(@Nonnull Sensor sensor) {
+        assertListenersAreNotRegistered(log, "setSensor");
+        setSensor(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(sensor.getDisplayName(), sensor));
+    }
+    
+    public void removeSensor() {
+        assertListenersAreNotRegistered(log, "setSensor");
+        if (_sensorHandle != null) {
             InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
+            _sensorHandle = null;
         }
     }
     
@@ -74,13 +82,14 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Sensor_SensorInUseSensorExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor().getBean())) {
-                    ActionSensor.this.setSensor((Sensor)null);
+                    removeSensor();
                 }
             }
         }

@@ -5,7 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import javax.annotation.CheckForNull;
+
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -33,21 +33,27 @@ public class ExpressionWarrant extends AbstractDigitalExpression
     }
     
     public void setWarrant(@Nonnull String warrantName) {
+        assertListenersAreNotRegistered(log, "setWarrant");
         Warrant warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant(warrantName);
-        setWarrant(warrant);
-        if (warrant == null) {
-            log.error("conditional \"{}\" is not found", warrantName);
+        if (warrant != null) {
+            setWarrant(warrant);
+        } else {
+            removeWarrant();
+            log.error("warrant \"{}\" is not found", warrantName);
         }
     }
     
-    public void setWarrant(@CheckForNull Warrant warrant) {
+    public void setWarrant(@Nonnull Warrant warrant) {
         assertListenersAreNotRegistered(log, "setWarrant");
-        if (warrant != null) {
-            InstanceManager.getDefault(WarrantManager.class).addVetoableChangeListener(this);
-            _warrant = warrant;
-        } else {
-            _warrant = null;
+        _warrant = warrant;
+        InstanceManager.getDefault(WarrantManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void removeWarrant() {
+        assertListenersAreNotRegistered(log, "setWarrant");
+        if (_warrant != null) {
             InstanceManager.getDefault(WarrantManager.class).removeVetoableChangeListener(this);
+            _warrant = null;
         }
     }
     
@@ -76,13 +82,14 @@ public class ExpressionWarrant extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Warrant) {
                 if (evt.getOldValue().equals(getWarrant())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Warrant_WarrantInUseWarrantExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Warrant) {
                 if (evt.getOldValue().equals(getWarrant())) {
-                    setWarrant((Warrant)null);
+                    removeWarrant();
                 }
             }
         }
@@ -156,13 +163,13 @@ public class ExpressionWarrant extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String conditionalName;
+        String warrantName;
         if (_warrant != null) {
-            conditionalName = _warrant.getDisplayName();
+            warrantName = _warrant.getDisplayName();
         } else {
-            conditionalName = Bundle.getMessage(locale, "BeanNotSelected");
+            warrantName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "Warrant_Long", conditionalName, _is_IsNot.toString(), _type._text);
+        return Bundle.getMessage(locale, "Warrant_Long", warrantName, _is_IsNot.toString(), _type._text);
     }
     
     /** {@inheritDoc} */

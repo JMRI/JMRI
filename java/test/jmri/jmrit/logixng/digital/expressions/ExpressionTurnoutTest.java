@@ -210,6 +210,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Throw the switch. This should not execute the conditional.
@@ -334,7 +335,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionTurnout.setTurnout((Turnout)null);
+            expressionTurnout.removeTurnout();
         } catch (RuntimeException ex) {
             thrown = true;
         }

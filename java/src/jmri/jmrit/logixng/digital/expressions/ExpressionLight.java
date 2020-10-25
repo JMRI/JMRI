@@ -36,9 +36,12 @@ public class ExpressionLight extends AbstractDigitalExpression
     }
     
     public void setLight(@Nonnull String lightName) {
+        assertListenersAreNotRegistered(log, "setLight");
         Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
-        setLight(light);
-        if (light == null) {
+        if (light != null) {
+            setLight(light);
+        } else {
+            removeLight();
             log.error("light \"{}\" is not found", lightName);
         }
     }
@@ -46,19 +49,20 @@ public class ExpressionLight extends AbstractDigitalExpression
     public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
         assertListenersAreNotRegistered(log, "setLight");
         _lightHandle = handle;
+        InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setLight(@CheckForNull Light light) {
+    public void setLight(@Nonnull Light light) {
         assertListenersAreNotRegistered(log, "setLight");
-        if (light != null) {
-            if (_lightHandle != null) {
-                InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-            }
-            _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(light.getDisplayName(), light);
-        } else {
-            _lightHandle = null;
+        setLight(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(light.getDisplayName(), light));
+    }
+    
+    public void removeLight() {
+        assertListenersAreNotRegistered(log, "setLight");
+        if (_lightHandle != null) {
             InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
+            _lightHandle = null;
         }
     }
     
@@ -87,13 +91,14 @@ public class ExpressionLight extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Light) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Light_LightInUseLightExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Light) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
-                    setLight((Light)null);
+                    removeLight();
                 }
             }
         }

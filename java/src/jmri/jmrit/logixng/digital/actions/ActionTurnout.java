@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
@@ -31,29 +32,34 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         super(sys, user);
     }
     
-    public void setTurnout(String turnoutName) {
+    public void setTurnout(@Nonnull String turnoutName) {
+        assertListenersAreNotRegistered(log, "setTurnout");
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        setTurnout(turnout);
-        if (turnout == null) {
+        if (turnout != null) {
+            setTurnout(turnout);
+        } else {
+            removeTurnout();
             log.error("turnout \"{}\" is not found", turnoutName);
         }
     }
     
     public void setTurnout(@Nonnull NamedBeanHandle<Turnout> handle) {
+        assertListenersAreNotRegistered(log, "setTurnout");
         _turnoutHandle = handle;
         InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setTurnout(@CheckForNull Turnout turnout) {
-        if (turnout != null) {
-            if (_turnoutHandle != null) {
-                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-            }
-            _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-        } else {
-            _turnoutHandle = null;
+    public void setTurnout(@Nonnull Turnout turnout) {
+        assertListenersAreNotRegistered(log, "setTurnout");
+        setTurnout(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnout.getDisplayName(), turnout));
+    }
+    
+    public void removeTurnout() {
+        assertListenersAreNotRegistered(log, "setTurnout");
+        if (_turnoutHandle != null) {
             InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+            _turnoutHandle = null;
         }
     }
     
@@ -74,13 +80,14 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Turnout_TurnoutInUseTurnoutExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    ActionTurnout.this.setTurnout((Turnout)null);
+                    removeTurnout();
                 }
             }
         }

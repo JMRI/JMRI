@@ -33,21 +33,27 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     }
     
     public void setOBlock(@Nonnull String oblockName) {
+        assertListenersAreNotRegistered(log, "setOBlock");
         OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getOBlock(oblockName);
-        setOBlock(oblock);
-        if (oblock == null) {
+        if (oblock != null) {
+            setOBlock(oblock);
+        } else {
+            removeOBlock();
             log.error("oblock \"{}\" is not found", oblockName);
         }
     }
     
-    public void setOBlock(@CheckForNull OBlock oblock) {
+    public void setOBlock(@Nonnull OBlock oblock) {
         assertListenersAreNotRegistered(log, "setOBlock");
-        if (oblock != null) {
-            InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
-            _oblock = oblock;
-        } else {
-            _oblock = null;
+        _oblock = oblock;
+        InstanceManager.getDefault(OBlockManager.class).addVetoableChangeListener(this);
+    }
+    
+    public void removeOBlock() {
+        assertListenersAreNotRegistered(log, "setOBlock");
+        if (_oblock != null) {
             InstanceManager.getDefault(OBlockManager.class).removeVetoableChangeListener(this);
+            _oblock = null;
         }
     }
     
@@ -76,13 +82,14 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof OBlock) {
                 if (evt.getOldValue().equals(getOBlock())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("OBlock_OBlockInUseOBlockExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof OBlock) {
                 if (evt.getOldValue().equals(getOBlock())) {
-                    setOBlock((OBlock)null);
+                    removeOBlock();
                 }
             }
         }
@@ -137,13 +144,13 @@ public class ExpressionOBlock extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String conditionalName;
+        String oblockName;
         if (_oblock != null) {
-            conditionalName = _oblock.getDisplayName();
+            oblockName = _oblock.getDisplayName();
         } else {
-            conditionalName = Bundle.getMessage(locale, "BeanNotSelected");
+            oblockName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "OBlock_Long", conditionalName, _is_IsNot.toString(), _oblockStatus.getDescr());
+        return Bundle.getMessage(locale, "OBlock_Long", oblockName, _is_IsNot.toString(), _oblockStatus.getDescr());
     }
     
     /** {@inheritDoc} */

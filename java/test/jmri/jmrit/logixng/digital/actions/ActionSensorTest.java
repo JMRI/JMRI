@@ -169,13 +169,13 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IS14");
         sensor14.setUserName("Some user name");
         
-        actionSensor.setSensor((Sensor)null);
+        actionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", actionSensor.getSensor());
         
         actionSensor.setSensor(sensor11);
         Assert.assertTrue("sensor is correct", sensor11 == actionSensor.getSensor().getBean());
         
-        actionSensor.setSensor((Sensor)null);
+        actionSensor.removeSensor();
         Assert.assertNull("sensor handle is null", actionSensor.getSensor());
         
         actionSensor.setSensor(sensorHandle12);

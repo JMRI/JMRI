@@ -5,7 +5,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -13,6 +16,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,13 +41,14 @@ public class StringExpressionMemory extends AbstractStringExpression
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    throw new PropertyVetoException(getDisplayName(), evt);
+                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
+                    throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+                    removeMemory();
                 }
             }
         }
@@ -61,31 +66,33 @@ public class StringExpressionMemory extends AbstractStringExpression
         return true;
     }
     
-    public void setMemory(String memoryName) {
+    public void setMemory(@Nonnull String memoryName) {
         assertListenersAreNotRegistered(log, "setMemory");
-        if (memoryName != null) {
-            Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-            if (memory != null) {
-                _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-            } else {
-                log.warn("memory '{}' does not exists", memoryName);
-            }
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
         } else {
-            _memoryHandle = null;
+            removeMemory();
+            log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
-    public void setMemory(NamedBeanHandle<Memory> handle) {
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         assertListenersAreNotRegistered(log, "setMemory");
         _memoryHandle = handle;
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
     }
     
-    public void setMemory(@CheckForNull Memory memory) {
+    public void setMemory(@Nonnull Memory memory) {
         assertListenersAreNotRegistered(log, "setMemory");
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-        } else {
+        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(memory.getDisplayName(), memory));
+    }
+    
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "setMemory");
+        if (_memoryHandle != null) {
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
             _memoryHandle = null;
         }
     }

@@ -185,7 +185,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        expressionLight.setLight((Light)null);
+        expressionLight.removeLight();
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
@@ -258,7 +258,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         NamedBeanHandle<Light> otherLightHandle =
                 InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(otherLight.getDisplayName(), otherLight);
-        expressionLight.setLight((Light)null);
+        expressionLight.removeLight();
         Assert.assertNull("Light is null", expressionLight.getLight());
         expressionLight.setLight(otherLightHandle);
         Assert.assertEquals("Lights are equal", otherLight, expressionLight.getLight().getBean());
@@ -277,13 +277,13 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         Light light14 = InstanceManager.getDefault(LightManager.class).provide("IL14");
         light14.setUserName("Some user name");
         
-        expressionLight.setLight((Light)null);
+        expressionLight.removeLight();
         Assert.assertNull("light handle is null", expressionLight.getLight());
         
         expressionLight.setLight(light11);
         Assert.assertTrue("light is correct", light11 == expressionLight.getLight().getBean());
         
-        expressionLight.setLight((Light)null);
+        expressionLight.removeLight();
         Assert.assertNull("light handle is null", expressionLight.getLight());
         
         expressionLight.setLight(lightHandle12);
@@ -343,7 +343,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     public void testRegisterListeners() {
         // Test registerListeners() when the ExpressionLight has no light
         conditionalNG.setEnabled(false);
-        expressionLight.setLight((Light)null);
+        expressionLight.removeLight();
         conditionalNG.setEnabled(true);
     }
     
