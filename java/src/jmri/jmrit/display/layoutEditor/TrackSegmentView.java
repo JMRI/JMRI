@@ -246,7 +246,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     offset = drawArrow(g2, ep1, Math.PI + startAngleRAD, false, offset);
                 }
                 if (trackSegment.isArrowDirOut()) {
-                    offset = drawArrow(g2, ep1, Math.PI + startAngleRAD, true, offset);
+                    /* offset = */ drawArrow(g2, ep1, Math.PI + startAngleRAD, true, offset);
                 }
             }
 
@@ -257,7 +257,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     offset = drawArrow(g2, ep2, stopAngleRAD, false, offset);
                 }
                 if (trackSegment.isArrowDirOut()) {
-                    offset = drawArrow(g2, ep2, stopAngleRAD, true, offset);
+                    /* offset = */ drawArrow(g2, ep2, stopAngleRAD, true, offset);
                 }
             }
         }

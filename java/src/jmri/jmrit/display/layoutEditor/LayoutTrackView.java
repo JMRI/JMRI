@@ -10,17 +10,18 @@ import javax.annotation.*;
 /**
  * MVC View component for the LayoutTrack hierarchy.
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * @author Bob Jacobsen Copyright (c) 2020
  *
  */
 abstract public class LayoutTrackView {
 
     /**
      * Constructor method.
+     *
      * @param track the layout track to view.
      */
     public LayoutTrackView(@Nonnull LayoutTrack track) {
-         this.layoutTrack = track;
+        this.layoutTrack = track;
     }
 
     // temporary method to get a correct-type *View or subclass.
@@ -32,31 +33,58 @@ abstract public class LayoutTrackView {
 
         if (trk instanceof LayoutTurnout) {
 
-            if (trk instanceof LayoutRHTurnout) { return new LayoutRHTurnoutView((LayoutRHTurnout)trk); }
-            if (trk instanceof LayoutLHTurnout) { return new LayoutLHTurnoutView((LayoutLHTurnout)trk); }
-            if (trk instanceof LayoutWye) { return new LayoutWyeView((LayoutWye)trk); }
+            if (trk instanceof LayoutRHTurnout) {
+                return new LayoutRHTurnoutView((LayoutRHTurnout) trk);
+            }
+            if (trk instanceof LayoutLHTurnout) {
+                return new LayoutLHTurnoutView((LayoutLHTurnout) trk);
+            }
+            if (trk instanceof LayoutWye) {
+                return new LayoutWyeView((LayoutWye) trk);
+            }
 
             if (trk instanceof LayoutXOver) {
-                if (trk instanceof LayoutRHXOver) { return new LayoutRHXOverView((LayoutRHXOver)trk); }
-                if (trk instanceof LayoutLHXOver) { return new LayoutLHXOverView((LayoutLHXOver)trk); }
-                if (trk instanceof LayoutDoubleXOver) { return new LayoutDoubleXOverView((LayoutDoubleXOver)trk); }
+                if (trk instanceof LayoutRHXOver) {
+                    return new LayoutRHXOverView((LayoutRHXOver) trk);
+                }
+                if (trk instanceof LayoutLHXOver) {
+                    return new LayoutLHXOverView((LayoutLHXOver) trk);
+                }
+                if (trk instanceof LayoutDoubleXOver) {
+                    return new LayoutDoubleXOverView((LayoutDoubleXOver) trk);
+                }
 
-                return new LayoutXOverView((LayoutXOver)trk);
+                log.warn("makeTrackView did not match subtype of {}", trk, new Exception("traceback"));
+                return new LayoutXOverView((LayoutXOver) trk);
             }
 
             if (trk instanceof LayoutSlip) {
-                if (trk instanceof LayoutSingleSlip) { return new LayoutSingleSlipView((LayoutSingleSlip)trk); }
-                if (trk instanceof LayoutDoubleSlip) { return new LayoutDoubleSlipView((LayoutDoubleSlip)trk); }
+                if (trk instanceof LayoutSingleSlip) {
+                    return new LayoutSingleSlipView((LayoutSingleSlip) trk);
+                }
+                if (trk instanceof LayoutDoubleSlip) {
+                    return new LayoutDoubleSlipView((LayoutDoubleSlip) trk);
+                }
 
-                return new LayoutSlipView((LayoutSlip)trk);
+                log.warn("makeTrackView did not match subtype of {}", trk, new Exception("traceback"));
+                return new LayoutSlipView((LayoutSlip) trk);
             }
 
-            return new LayoutTurnoutView((LayoutTurnout)trk);
+            log.warn("makeTrackView did not match subtype of {}", trk, new Exception("traceback"));
+            return new LayoutTurnoutView((LayoutTurnout) trk);
         }
-        if (trk instanceof TrackSegment) { return new TrackSegmentView((TrackSegment)trk); }
-        if (trk instanceof PositionablePoint) { return new PositionablePointView((PositionablePoint)trk); }
-        if (trk instanceof LevelXing) { return new LevelXingView((LevelXing)trk); }
-        if (trk instanceof LayoutTurntable) { return new LayoutTurntableView((LayoutTurntable)trk); }
+        if (trk instanceof TrackSegment) {
+            return new TrackSegmentView((TrackSegment) trk);
+        }
+        if (trk instanceof PositionablePoint) {
+            return new PositionablePointView((PositionablePoint) trk);
+        }
+        if (trk instanceof LevelXing) {
+            return new LevelXingView((LevelXing) trk);
+        }
+        if (trk instanceof LayoutTurntable) {
+            return new LayoutTurntableView((LayoutTurntable) trk);
+        }
 
         log.error("makeTrackView did not match type of {}", trk, new Exception("traceback"));
         return null;
@@ -66,24 +94,28 @@ abstract public class LayoutTrackView {
 
     // These now reflect to code in the base class; eventually this heirarchy will
     // expand and the code will be brought here
-
     public boolean hasDecorations() {
         return layoutTrack.hasDecorations();
     }
+
     final public Point2D getCoordsCenter() { // final for efficiency
         return layoutTrack.getCoordsCenter();
     }
+
     @Nonnull
     final public String getId() {
         return layoutTrack.getId();
     }
+
     @Nonnull
     final public String getName() {
         return layoutTrack.getName();
     }
+
     public Map<String, String> getDecorations() {
         return layoutTrack.getDecorations();
     }
+
     public boolean isMainline() {
         return layoutTrack.isMainline();
     }
@@ -121,7 +153,6 @@ abstract public class LayoutTrackView {
     final protected void drawHidden(Graphics2D g2) {
         // nothing to do here... move along...
     }
-
 
     /**
      * highlight unconnected connections
