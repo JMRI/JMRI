@@ -29,8 +29,7 @@
                 This is the schema representing checkbox last states.
                 <p/>
                 This version of the schema is for files created by JMRI
-                version 4.21.3 and later.  
-                It is the current development version.
+                version 4.21.3 and later.
             </xs:documentation>
             <xs:appinfo>
                 <jmri:usingclass configurexml="false">jmri.managers.JmriUserMessagePreferences</jmri:usingclass>
