@@ -465,7 +465,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 //snap to grid when moving
                 boolean prefsSnapToGridOnMove = prefsMgr.getSimplePreferenceState(windowFrameRef + ".snapToGridOnMove");
                 // log.debug("{}.snapToGridOnMove is {}", windowFrameRef, prefsSnapToGridOnMove);
-                setSnapOnMove(prefsSnapToGridOnAdd);
+                setSnapOnMove(prefsSnapToGridOnMove);
             }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
