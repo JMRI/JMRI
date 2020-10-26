@@ -47,7 +47,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * {@inheritDoc}
      */
-    //@Override
+    @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
 //   if (getName().equals("T15")) {
 //       log.debug("STOP");
@@ -83,7 +83,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * {@inheritDoc}
      */
-    //@Override
+    @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
 //   if (getName().equals("T5")) {
 //       log.debug("STOP");

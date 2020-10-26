@@ -58,7 +58,7 @@ public class PositionablePointView extends LayoutTrackView {
     /**
      * {@inheritDoc}
      */
-    //@Override
+    @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         if ((specificType == HitPointType.NONE) || (specificType == HitPointType.POS_POINT)) {
             if ((positionablePoint.getConnect1() == null)
@@ -100,7 +100,7 @@ public class PositionablePointView extends LayoutTrackView {
     /**
      * {@inheritDoc}
      */
-    //@Override
+    @Override
     protected void drawTurnoutControls(Graphics2D g2) {
         // PositionablePoints don't have turnout controls...
         // nothing to see here... move along...
