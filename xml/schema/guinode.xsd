@@ -30,7 +30,7 @@
 <xs:complexType name="NodeType" mixed="true">
     <xs:annotation>
     <xs:documentation>
-      Define the XML stucture for storing the one node in the GUI tree
+      Define the XML structure for storing the one node in the GUI tree
     </xs:documentation>
     <xs:appinfo>
         <jmri:usingclass configurexml="false">jmri.util.swing.GuiUtilBase</jmri:usingclass>
