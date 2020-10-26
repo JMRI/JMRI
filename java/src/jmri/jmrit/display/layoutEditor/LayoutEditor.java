@@ -3218,7 +3218,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
 
-                currentPoint.setLocation((double) xLoc, (double) yLoc);
+                currentPoint.setLocation(xLoc, yLoc);
 
                 if (snapToGridOnAdd != snapToGridInvert) {
                     // this snaps the current point to the grid
