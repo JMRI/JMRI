@@ -152,8 +152,6 @@ public class CtcManager implements InstanceManagerAutoDefault, java.beans.Vetoab
 
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         jmri.NamedBean nb = (jmri.NamedBean) evt.getOldValue();
-        boolean found = false;
-
         if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
             if (findNBHforBean(nb)) {
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);  // NOI18N
