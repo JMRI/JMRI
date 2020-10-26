@@ -362,6 +362,12 @@
 
   
 <li>
+<a href="html/hardware/sproggen5/index.shtml">SPROG Generation 5 </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/qsi/index.shtml">SRCP </a>
 <ul></ul>
 </li>
@@ -2120,6 +2126,12 @@
 
    
 <li>
+<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
 <ul></ul>
 </li>
@@ -2139,6 +2151,12 @@
    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
 <ul></ul>
 </li>
 
@@ -2348,19 +2366,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Update </a>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
 <ul></ul>
 </li>
 
    
 <li>
 <a href="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">Send Packet </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrix/sprog/sprogmon/SprogMonFrame.shtml">Traffic Monitor </a>
 <ul></ul>
 </li>
 
@@ -2373,6 +2385,37 @@
    
 <li>
 <a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">Update SPROG II </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="">SPROG Generation 5 </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml">Pi-SPROG 3 Mode Switcher </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-SPROG/SPROG 3 Plus Mode Switcher </a>
 <ul></ul>
 </li>
 

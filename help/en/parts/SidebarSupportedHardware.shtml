@@ -44,7 +44,8 @@
 				<li><a href="/help/en/html/hardware/pi/index.shtml">Raspberry Pi</a>
                 <li><a href="/help/en/html/hardware/rfid/index.shtml">RFID Readers</a>
 				<li><a href="/help/en/html/hardware/XPressNet/index.shtml">Roco</a>
-				<li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG</a>
+				<li><a href="/help/en/html/hardware/sprog/SPROG.shtml">SPROG DCC</a>
+				<li><a href="/help/en/html/hardware/sproggen5/index.shtml">SPROG DCC Generation 5</a>
 				<li><a href="/help/en/html/hardware/SRCP/index.shtml">SRCP server</a>
 				<li><a href="/help/en/html/hardware/tams/index.shtml">TAMS Master Control</a>
                   <li><a href="/help/en/html/hardware/secsi/index.shtml">TracTronics SECSI</a>

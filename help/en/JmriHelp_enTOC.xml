@@ -692,6 +692,8 @@
 
    <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
+   <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
+
    <tocitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
 
    <tocitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
@@ -768,21 +770,23 @@
 
   </tocitem>
   <tocitem text="SPROG " target="html.hardware.sprog.SPROG_tools">
-   <tocitem text="SPROG Update " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+   <tocitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
 
    <tocitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
-
-   <tocitem text="Traffic Monitor " target="package.jmri.jmrix.sprog.sprogmon.SprogMonFrame"/>
 
    <tocitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
 
    <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
 
+   <tocitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
+
   </tocitem>
   <tocitem text="SPROG Generation 5 " target="html.hardware.sproggen5.sproggen5_tools">
    <tocitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
-   <tocitem text="Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusModeSwitcherFrame"/>
+   <tocitem text="Pi-SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
+
+   <tocitem text="Pi-SPROG/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
 
   </tocitem>
   <tocitem text="TAMs " target="html.hardware.tams.index">

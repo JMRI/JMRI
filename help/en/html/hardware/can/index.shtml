@@ -167,6 +167,11 @@
         <dd><a href="https://www.merg.org.uk/kits.php">MERG CANUSB4</a>
         A MERG CBUS to USB interface, available in kit form to MERG members.</dd>
         
+        <dt>SPROG DCC CANISB</dt>
+        
+        <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC CANISB</a>
+        A galvanically isolated CBUS to USB interface.</dd>
+        
       </dl>
       
       <h4>Other CAN Hardware Interfaces</h4>
@@ -192,6 +197,19 @@
             between Engine Driver / WiThrottle and MERG CBUS.</dd>
             </dl>
 
+            <dl>
+            <dt>SPROG DCC SPROG 3 plus</dt>
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC Pi-SPROG 3 Plus</a>
+            CBUS DCC Command Station for direct attachment to a Raspberry-Pi via
+            its 40-pin I/O connector.</dd>
+            </dl>
+      
+            <dl>
+            <dt>SPROG DCC Pi-SPROG 3 plus</dt>
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC SPROG 3 Plus</a>
+            CBUS DCC Command Station with integrated USB interface.</dd>
+            </dl>
+        
       <h2><a name="connect" id="connect">Connecting</a></h2>
 
       <p>JMRI can provide the usual Sensor and Turnout features,
