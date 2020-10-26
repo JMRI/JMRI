@@ -31,15 +31,19 @@ public class TrackSegmentView extends LayoutTrackView {
     public boolean isDashed() {
         return trackSegment.isDashed();
     }
+
     public boolean isArc() {
         return trackSegment.isArc();
     }
+
     public boolean isCircle() {
         return trackSegment.isCircle();
     }
+
     public boolean isBezier() {
         return trackSegment.isBezier();
     }
+
     public LayoutBlock getLayoutBlock() {
         return trackSegment.getLayoutBlock();
     }
@@ -176,6 +180,11 @@ public class TrackSegmentView extends LayoutTrackView {
         // nothing to see here... move along...
     }
 
+    private Point2D ep1, ep2;
+    Point2D p1, p2, p3, p4, p5, p6, p7;
+    Point2D p1P, p2P, p3P, p4P, p5P, p6P, p7P;
+    double startAngleRAD, stopAngleRAD;
+
     /**
      * {@inheritDoc}
      */
@@ -186,11 +195,11 @@ public class TrackSegmentView extends LayoutTrackView {
 //   }
 
 // get end points and calculate start/stop angles (in radians)
-        Point2D ep1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-        Point2D ep2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
-        Point2D p1, p2, p3, p4, p5, p6, p7;
-        Point2D p1P = ep1, p2P = ep2, p3P, p4P, p5P, p6P, p7P;
-        double startAngleRAD, stopAngleRAD;
+        ep1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
+        ep2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+        p1P = ep1;
+        p2P = ep2;
+
         if (isArc()) {
             trackSegment.calculateTrackSegmentAngle();
             double startAngleDEG = trackSegment.getStartAdj(), extentAngleDEG = trackSegment.getTmpAngle();
@@ -215,9 +224,16 @@ public class TrackSegmentView extends LayoutTrackView {
             stopAngleRAD = startAngleRAD;
         }
 
-//
-// arrow decorations
-//
+        drawArrowDecorations(g2);
+        drawBridgeDecorations(g2);
+        drawBumperDecorations(g2);
+        drawTunnelDecorations(g2);
+    }   // drawDecorations
+
+    //
+    // arrow decorations
+    //
+    private void drawArrowDecorations(Graphics2D g2) {
         if (trackSegment.getArrowStyle() > 0) {
             g2.setStroke(new BasicStroke(trackSegment.getArrowLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
@@ -244,11 +260,13 @@ public class TrackSegmentView extends LayoutTrackView {
                     offset = drawArrow(g2, ep2, stopAngleRAD, true, offset);
                 }
             }
-        }   // arrow decoration
+        }
+    }
 
-//
-// bridge decorations
-//
+    //
+    // bridge decorations
+    //
+    private void drawBridgeDecorations(Graphics2D g2) {
         if (trackSegment.isBridgeSideLeft() || trackSegment.isBridgeSideRight()) {
             float halfWidth = trackSegment.getBridgeDeckWidth() / 2.F;
 
@@ -347,10 +365,12 @@ public class TrackSegmentView extends LayoutTrackView {
                 trackSegment.setBridgeSideLeft(temp);
             }
         }
+    }
 
-        //
-        // end bumper decorations
-        //
+    //
+    // end bumper decorations
+    //
+    private void drawBumperDecorations(Graphics2D g2) {
         if (trackSegment.isBumperEndStart() || trackSegment.isBumperEndStop()) {
             g2.setStroke(new BasicStroke(trackSegment.getBumperLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
@@ -381,10 +401,12 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(p1P, p2P));
             }
         }   // if (bumperEndStart || bumperEndStop)
+    }
 
-//
-// tunnel decorations
-//
+    //
+    // tunnel decorations
+    //
+    private void drawTunnelDecorations(Graphics2D g2) {
         if (trackSegment.isTunnelSideRight() || trackSegment.isTunnelSideLeft()) {
             float halfWidth = trackSegment.getTunnelFloorWidth() / 2.F;
             g2.setStroke(new BasicStroke(trackSegment.getTunnelLineWidth(),
@@ -571,7 +593,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 trackSegment.setTunnelSideRight(temp);
             }
         }
-    }   // drawDecorations
+    }
 
     private int drawArrow(
             Graphics2D g2,

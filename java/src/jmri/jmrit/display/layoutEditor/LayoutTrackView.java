@@ -27,7 +27,7 @@ abstract public class LayoutTrackView {
     // Eventually, this will go away once *View's are created
     // in a type-specific way with their underlying model objects
     // @Deprecated // should be made not necessary
-    @Nonnull
+    @CheckForNull
     static public LayoutTrackView makeTrackView(@Nonnull LayoutTrack trk) {
 
         if (trk instanceof LayoutTurnout) {
