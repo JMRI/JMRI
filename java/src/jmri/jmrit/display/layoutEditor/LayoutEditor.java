@@ -418,8 +418,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
                 // log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-                if (prefsProp
-                        != null) {
+                if (prefsProp != null) {
                     ToolBarSide newToolBarSide = ToolBarSide.getName((String) prefsProp);
                     setToolBarSide(newToolBarSide);
                 }
@@ -427,25 +426,46 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // Note: since prefs default to false and we want wide to be the default
                 // we invert it and save it as thin
                 boolean prefsToolBarIsWide = prefsMgr.getSimplePreferenceState(windowFrameRef + ".toolBarThin");
-
                 log.debug("{}.toolBarThin is {}", windowFrameRef, prefsProp);
                 setToolBarWide(prefsToolBarIsWide);
 
                 boolean prefsShowHelpBar = prefsMgr.getSimplePreferenceState(windowFrameRef + ".showHelpBar");
                 // log.debug("{}.showHelpBar is {}", windowFrameRef, prefsShowHelpBar);
-
                 setShowHelpBar(prefsShowHelpBar);
 
                 boolean prefsAntialiasingOn = prefsMgr.getSimplePreferenceState(windowFrameRef + ".antialiasingOn");
                 // log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
-
                 setAntialiasingOn(prefsAntialiasingOn);
 
                 boolean prefsHighlightSelectedBlockFlag
                         = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
                 // log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-
                 setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
+
+                prefsProp = prefsMgr.getProperty(windowFrameRef, "scrollState");
+                // log.debug("{}.scrollState is {}", windowFrameRef, prefsProp);
+                if (prefsProp != null) {
+                    setScroll((Integer) prefsProp);
+                }
+
+                //
+                //window grid properties
+                //
+                //draw grid in edit mode?
+                // note: stored inverted so that it defaults to true if missing
+                boolean prefsDrawGridInverted = prefsMgr.getSimplePreferenceState(windowFrameRef + ".drawGridInverted");
+                // log.debug("{}.prefsDrawGridInverted is {}", windowFrameRef, prefsDrawGridInverted);
+                setDrawGrid(!prefsDrawGridInverted);
+
+                //snap to grid when adding
+                boolean prefsSnapToGridOnAdd = prefsMgr.getSimplePreferenceState(windowFrameRef + ".snapToGridOnAdd");
+                // log.debug("{}.snapToGridOnAdd is {}", windowFrameRef, prefsSnapToGridOnAdd);
+                setSnapOnAdd(prefsSnapToGridOnAdd);
+
+                //snap to grid when moving
+                boolean prefsSnapToGridOnMove = prefsMgr.getSimplePreferenceState(windowFrameRef + ".snapToGridOnMove");
+                // log.debug("{}.snapToGridOnMove is {}", windowFrameRef, prefsSnapToGridOnMove);
+                setSnapOnMove(prefsSnapToGridOnAdd);
             }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
 
             // make sure that the layoutEditorComponent is in the _targetPanel components
@@ -676,6 +696,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             setAllShowToolTip(tooltipsWithoutEditMode);
         }
 
+        //Redundant code; already in setupOptionMenu
         scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
         scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
         scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
@@ -864,40 +885,40 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         scrollMenu = new JMenu(Bundle.getMessage("ComboBoxScrollable")); // used for ScrollBarsSubMenu
         optionMenu.add(scrollMenu);
         ButtonGroup scrollGroup = new ButtonGroup();
-        scrollBothMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
-        scrollGroup.add(scrollBothMenuItem);
-        scrollMenu.add(scrollBothMenuItem);
-        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
-        scrollBothMenuItem.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_BOTH;
-            setScroll(_scrollState);
-            redrawPanel();
-        });
+
         scrollNoneMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollNone"));
         scrollGroup.add(scrollNoneMenuItem);
         scrollMenu.add(scrollNoneMenuItem);
         scrollNoneMenuItem.setSelected(_scrollState == Editor.SCROLL_NONE);
         scrollNoneMenuItem.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_NONE;
-            setScroll(_scrollState);
+            setScroll(Editor.SCROLL_NONE, true);
             redrawPanel();
         });
+
         scrollHorizontalMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
         scrollGroup.add(scrollHorizontalMenuItem);
         scrollMenu.add(scrollHorizontalMenuItem);
         scrollHorizontalMenuItem.setSelected(_scrollState == Editor.SCROLL_HORIZONTAL);
         scrollHorizontalMenuItem.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_HORIZONTAL;
-            setScroll(_scrollState);
+            setScroll(Editor.SCROLL_HORIZONTAL, true);
             redrawPanel();
         });
+
         scrollVerticalMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
         scrollGroup.add(scrollVerticalMenuItem);
         scrollMenu.add(scrollVerticalMenuItem);
         scrollVerticalMenuItem.setSelected(_scrollState == Editor.SCROLL_VERTICAL);
         scrollVerticalMenuItem.addActionListener((ActionEvent event) -> {
-            _scrollState = Editor.SCROLL_VERTICAL;
-            setScroll(_scrollState);
+            setScroll(Editor.SCROLL_VERTICAL, true);
+            redrawPanel();
+        });
+
+        scrollBothMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ScrollBoth"));
+        scrollGroup.add(scrollBothMenuItem);
+        scrollMenu.add(scrollBothMenuItem);
+        scrollBothMenuItem.setSelected(_scrollState == Editor.SCROLL_BOTH);
+        scrollBothMenuItem.addActionListener((ActionEvent event) -> {
+            setScroll(Editor.SCROLL_BOTH, true);
             redrawPanel();
         });
 
@@ -1142,6 +1163,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         gridMenu.add(showGridCheckBoxMenuItem);
         showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             drawGrid = showGridCheckBoxMenuItem.isSelected();
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                    .ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(
+                            getWindowFrameRef() + ".drawGridInverted", !drawGrid));
             redrawPanel();
         });
         showGridCheckBoxMenuItem.setSelected(getDrawGrid());
@@ -1154,6 +1178,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
         snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                    .ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(
+                            getWindowFrameRef() + ".snapToGridOnAdd", snapToGridOnAdd));
             redrawPanel();
         });
         snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
@@ -1166,6 +1193,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
         snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
             snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                    .ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(
+                            getWindowFrameRef() + ".snapToGridOnMove", snapToGridOnMove));
             redrawPanel();
         });
         snapToGridOnMoveCheckBoxMenuItem.setSelected(snapToGridOnMove);
@@ -1608,7 +1638,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // null if edit toolbar is not setup yet...
         if (!newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName()));
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                    .ifPresent((prefsMgr) -> prefsMgr.setProperty(
+                    getWindowFrameRef(), "toolBarSide", toolBarSide.getName()));
             toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
             toolBarSideBottomButton.setSelected(toolBarSide.equals(ToolBarSide.eBOTTOM));
@@ -1774,15 +1806,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 Object zoomProp = prefsMgr.getProperty(getWindowFrameRef(), "zoom");
 
-                log.debug(
-                        "{} zoom is {}", getWindowFrameRef(), zoomProp);
+                log.debug("{} zoom is {}", getWindowFrameRef(), zoomProp);
 
-                if (zoomProp
-                        != null) {
+                if (zoomProp != null) {
                     setZoom((Double) zoomProp);
                 }
-            }
-            );
+            });
 
             // get the scroll bars from the scroll pane
             JScrollPane scrollPane = getPanelScrollPane();
@@ -2645,12 +2674,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void setScroll(int state) {
+        setScroll(state, false);
+    }
+
+    private void setScroll(int state, boolean savePref) {
         if (isEditable()) {
-            // In edit mode the scroll bars are always displayed, however we will want to set the scroll for when we exit edit mode
+            // In edit mode the scroll bars are always displayed,
+            // however we will want to set the scroll for when we exit edit mode
             super.setScroll(Editor.SCROLL_BOTH);
             _scrollState = state;
         } else {
             super.setScroll(state);
+        }
+        if (savePref) {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                    .ifPresent((prefsMgr) -> prefsMgr.setProperty(
+                    getWindowFrameRef(), "scrollState", _scrollState));
         }
     }
 
