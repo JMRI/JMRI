@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table cell editor abstract class with a custom ComboBox per row as the editing component.
  * <p>
- * Used as TableCellRenderer from JTable, declared in ConfigValueColumn()
+ * Used as TableCellRenderer in SignalMast JTable, declared in ConfigValueColumn()
  * Based on: http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/monitor/client/ComboBoxTableCellEditor.java.shtml
  * @author Egbert Broerse 2016
  * @since 4.7.1

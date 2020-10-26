@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks
+ * Support for GUI to define OBlocks and its part.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -89,8 +89,8 @@ public class DnDJTable extends JTable implements DropTargetListener,
             //DnDHandler handler = (DnDHandler)getTransferHandler();
             int col = columnAtPoint(_dropPoint);
             int row = rowAtPoint(_dropPoint);
-            for (int i = 0; i < _skipCols.length; i++) {
-                if (_skipCols[i] == col) {
+            for (int skipCol : _skipCols) {
+                if (skipCol == col) {
                     return false;
                 }
             }
@@ -245,7 +245,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
         return "";
     }
 
-    class TableCellSelection extends StringSelection {
+    static class TableCellSelection extends StringSelection {
 
         int _row;
         int _col;
@@ -301,7 +301,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
         }
     }
 
-    class DnDHandler extends TransferHandler {
+    static class DnDHandler extends TransferHandler {
 
         JTable _table;
 
@@ -328,8 +328,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                 //if (log.isDebugEnabled()) log.debug("DnDHandler.createTransferable: at table "+
                 //                                    getName()+" from ("+row+", "+col+") data= \""
                 //                                    +table.getModel().getValueAt(row, col)+"\"");
-                TableCellSelection tcss = new TableCellSelection((String) table.getModel().getValueAt(row, col),
-                        row, col, _table);
+                TableCellSelection tcss = new TableCellSelection((String) table.getModel().getValueAt(row, col), row, col, _table);
                 return new TableCellTransferable(tcss);
             }
             return null;
@@ -345,9 +344,8 @@ public class DnDJTable extends JTable implements DropTargetListener,
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
 
             boolean canDoIt = false;
-            for (int k = 0; k < transferFlavors.length; k++) {
-                if (transferFlavors[k].equals(TABLECELL_FLAVOR)
-                        || transferFlavors[k].equals(DataFlavor.stringFlavor)) {
+            for (DataFlavor transferFlavor : transferFlavors) {
+                if (transferFlavor.equals(TABLECELL_FLAVOR) || transferFlavor.equals(DataFlavor.stringFlavor)) {
                     if (comp instanceof JTable) {
                         canDoIt = true;
                         break;
@@ -391,7 +389,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     }
                 }
             } catch (UnsupportedFlavorException | IOException ex) {
-                log.warn("DnDHandler.importData: at table e= {}", ex);
+                log.warn("DnDHandler.importData: at table e= ", ex);
             }
             return false;
         }

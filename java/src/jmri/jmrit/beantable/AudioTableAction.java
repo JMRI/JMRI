@@ -133,6 +133,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public JPanel getPanel() {
         createModel();
+
         return atp;
     }
 

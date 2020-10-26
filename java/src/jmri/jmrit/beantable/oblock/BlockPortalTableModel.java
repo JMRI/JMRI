@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks
+ * GUI to define Portal-Block-Portal combos for OBlocks.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -51,8 +51,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     public int getRowCount() {
         int count = 0;
         List<OBlock> list = _oBlockModel.getBeanList();
-        for (int i = 0; i < list.size(); i++) {
-            count += list.get(i).getPortals().size();
+        for (OBlock oBlock : list) {
+            count += oBlock.getPortals().size();
         }
         return count;
     }
@@ -136,4 +136,5 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class);
+
 }

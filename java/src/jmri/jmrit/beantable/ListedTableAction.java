@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Action for dealing with all the tables in a single view with a list
+ * Table Action for dealing with all the JMRI NamedBean etc. tables in a single view with a list
  * option to the left hand side.
  *
  * @author Bob Jacobsen Copyright (C) 2003

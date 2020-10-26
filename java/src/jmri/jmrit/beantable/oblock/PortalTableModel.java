@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks
+ * GUI to define OBlock Poartals.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -38,7 +38,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public static final int NUMCOLS = 4;
 
     PortalManager _manager;
-    private String[] tempRow = new String[NUMCOLS];
+    private final String[] tempRow = new String[NUMCOLS];
 
     TableFrames _parent;
 
@@ -85,8 +85,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public Object getValueAt(int row, int col) {
-//        log.debug("getValueAt row= {} col= {}", row, col);
-        if (row == _manager.getPortalCount()) {
+        log.debug("getValueAt row= {} col= {}", row, col);
+        if (row == _manager.getPortalCount()) { // this must be tempRow
             return tempRow[col];
         }
         Portal portal = _manager.getPortal(row);
@@ -117,7 +117,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public void setValueAt(Object value, int row, int col) {
 //        log.debug("setValueAt value= {}, row= {} col= {}", row, col);
         String msg = null;
-        if (row == _manager.getPortalCount()) {
+        if (row == _manager.getPortalCount()) { // clicked on tempRow
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -283,16 +283,22 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         if (log.isDebugEnabled()) {
             log.debug("property = {} source= {}", property, e.getSource().getClass().getName());
         }
-        if (property.equals("pathCount") || property.equals("numPortals")) {
-            initTempRow();
-            fireTableDataChanged();
-        } else if (property.equals("NameChange")) {
-            int row = _manager.getIndexOf((Portal)e.getNewValue());
-            fireTableRowsUpdated(row, row);   
-        } else if (property.equals("signals")) {
-            _parent.getSignalModel().propertyChange(e);
+        switch (property) {
+            case "pathCount":
+            case "numPortals":
+                initTempRow();
+                fireTableDataChanged();
+                break;
+            case "NameChange":
+                int row = _manager.getIndexOf((Portal) e.getNewValue());
+                fireTableRowsUpdated(row, row);
+                break;
+            case "signals":
+                _parent.getSignalTableModel().propertyChange(e);
+                break;
         }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);
+
 }

@@ -10,9 +10,13 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.*;
@@ -23,8 +27,10 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
+import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -46,28 +52,33 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Pete Cressman (C) 2010
+ * @author Egbert Broerse (C) 2020
  */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    private static int ROW_HEIGHT;
+    private static int ROW_HEIGHT = 10;
     public static final int STRUT_SIZE = 10;
     private static String oblockPrefix;
     private final static String portalPrefix = "IP";
 
     private JTable _oBlockTable;
-    private OBlockTableModel _oBlockModel;
+    private final OBlockTableModel _oBlockModel;
     private JTable _portalTable;
-    private PortalTableModel _portalModel;
+    private final PortalTableModel _portalModel;
     private JTable _blockPortalTable;
-    private BlockPortalTableModel _blockPortalXRefModel;
+    private final BlockPortalTableModel _blockPortalXRefModel;
     private JTable _signalTable;
-    private SignalTableModel _signalModel;
+    private final SignalTableModel _signalModel;
 
-    private JScrollPane _blockTablePane;
-    private JScrollPane _portalTablePane;
-    private JScrollPane _signalTablePane;
+    protected boolean _tabbed; // updated from prefs
+//    private JScrollPane _blockTablePane;
+//    private JScrollPane _portalTablePane;
+//    private JScrollPane _blockPortalTablePane;
+//    private JScrollPane _signalTablePane;
 
     private JDesktopPane _desktop;
+    private final int maxHeight = 600;
+    private final int maxWidth = 1100;
     private JInternalFrame _blockTableFrame;
     private JInternalFrame _portalTableFrame;
     private JInternalFrame _blockPortalXRefFrame;
@@ -75,22 +86,86 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private boolean _showWarnings = true;
     private JMenuItem _showWarnItem;
-    private JMenu _openMenu;
-    private HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
-    private HashMap<String, PathTurnoutFrame> _PathTurnoutMap = new HashMap<>();
+    private JMenu tablesMenu;
+    private JMenuItem openBlock;
+    private JMenuItem openPortal;
+    private JMenuItem openXRef;
+    private JMenuItem openSignal;
+
+    private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
+    private final HashMap<String, PathTurnoutFrame> _PathTurnoutMap = new HashMap<>();
+    private final HashMap<String, PathTurnoutPane> _PathTurnoutPaneMap = new HashMap<>(); // same, for tabbed
 
     public TableFrames() {
         this("OBlock Table");
-    }
+    } // NOI18N, title will be updated when !_tabbed, or is hidden
 
     public TableFrames(String actionName) {
         super(actionName);
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
+        log.debug("_tabbed = {}", _tabbed);
+        if (_tabbed) {
+            this.setVisible(false); // TODO hide the separate _desktop panel, not this
+        }
+        // create the tables
+        _oBlockModel = new OBlockTableModel(this);
+        _portalModel = new PortalTableModel(this);
+        _signalModel = new SignalTableModel(this);
+        _signalModel.init();
+        _blockPortalXRefModel = new BlockPortalTableModel(_oBlockModel);
+        // keep more tables in memory: Path-Turnout, BlockPath?
+    }
+
+    public OBlockTableModel getOblockTableModel() {
+        return _oBlockModel;
+    }
+    public PortalTableModel getPortalTableModel() {
+        return _portalModel;
+    }
+    public SignalTableModel getSignalTableModel() {
+        return _signalModel;
+    }
+    public BlockPortalTableModel getPortalXRefTableModel() {
+        return _blockPortalXRefModel;
+    }
+    public BlockPathTableModel getBlockPathTableModel(OBlock block) {
+        return new BlockPathTableModel(block, this);
     }
 
     @Override
     public void initComponents() {
-        setTitle(Bundle.getMessage("TitleOBlocks"));
-        JMenuBar menuBar = new JMenuBar();
+        if (!_tabbed) { // classic floating desktop interface
+            setTitle(Bundle.getMessage("TitleOBlocks"));
+            setJMenuBar(addMenus(this.getJMenuBar()));
+            addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
+
+            // build tables
+            _blockTableFrame = buildFrame(_oBlockModel, Bundle.getMessage("TitleBlockTable"), Bundle.getMessage("AddPortalPrompt"));
+            _blockTableFrame.setVisible(true);
+
+            _portalTableFrame = buildFrame(_portalModel, Bundle.getMessage("TitlePortalTable"), Bundle.getMessage("AddPortalPrompt"));
+            _portalTableFrame.setVisible(true);
+
+            _signalTableFrame = buildFrame(_signalModel, Bundle.getMessage("TitleSignalTable"), Bundle.getMessage("AddSignalPrompt"));
+            _signalTableFrame.setVisible(false);
+
+            _blockPortalXRefFrame = buildFrame(_blockPortalXRefModel, Bundle.getMessage("TitleBlockPortalXRef"), Bundle.getMessage("XRefPrompt"));
+            _blockPortalXRefFrame.setVisible(false); // start with frame hidden
+
+            createDesktop(); // adds tables as windows on _desktop
+            setLocation(10, 30);
+            setVisible(true);
+            pack();
+
+            WarrantTableAction.getDefault().errorCheck();
+        }
+    }
+
+    public JMenuBar addMenus(JMenuBar mBar) {
+        if (mBar == null) {
+            mBar = new JMenuBar();
+        }
+        // create and add the menus
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.StoreMenu());
 
@@ -150,8 +225,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 }
             }
         });
-
-        menuBar.add(fileMenu);
+        mBar.add(fileMenu);
 
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         editMenu.setMnemonic(KeyEvent.VK_E);
@@ -161,11 +235,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK));
         } else {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
@@ -174,11 +246,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK));
         } else {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
@@ -187,15 +257,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK));
         } else {
-            menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
+            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
-        menuBar.add(editMenu);
+        mBar.add(editMenu);
 
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
@@ -218,47 +286,38 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         });
         optionMenu.add(importBlocksItem);
         // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) // || Block list is empty
-        {
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
             importBlocksItem.setEnabled(false);
         }
 
-        menuBar.add(optionMenu);
+        // Options menu
+        //menuBar.add(optionMenu);
+        // Tables menu
+        tablesMenu = new JMenu(Bundle.getMessage("OpenMenu"));
+        updateOblockTablesMenu();   // replaces the last 2 menu items with appropriate submenus
+        mBar.add(tablesMenu);
+        return mBar; //new JMenu[]{fileMenu, optionMenu, tablesMenu};
+    }
 
-        _openMenu = new JMenu(Bundle.getMessage("OpenMenu"));
-        updateOpenMenu();   // replaces the last item with appropriate
-        menuBar.add(_openMenu);
-
-        setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
-
+    // for desktop style interface, ignored for _tabbed
+    private void createDesktop() {
         _desktop = new JDesktopPane();
-        _desktop.putClientProperty("JDesktopPane.dragMode", "outline");
+        //_desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // too slow
         _desktop.setPreferredSize(new Dimension(1100, 600));
         _desktop.setBackground(new Color(180,180,180));
         setContentPane(_desktop);
-        _blockTableFrame = makeBlockFrame();
-        _blockTableFrame.setVisible(true);
+
+        // placed at 0,0
         _desktop.add(_blockTableFrame);
-
-        _portalTableFrame = makePortalFrame();
-        _portalTableFrame.setVisible(true);
+        _portalTableFrame.setLocation(0, 320);
         _desktop.add(_portalTableFrame);
-
-        _signalTableFrame = makeSignalFrame();
-        _signalTableFrame.setVisible(true);
+        _signalTableFrame.setLocation(350, 400);
         _desktop.add(_signalTableFrame);
-
-        _blockPortalXRefFrame = makeBlockPortalFrame();
-        _blockPortalXRefFrame.setVisible(false);
+        _blockPortalXRefFrame.setLocation(700, 20);
         _desktop.add(_blockPortalXRefFrame);
-
-        setLocation(10, 30);
-        setVisible(true);
-        pack();
-        WarrantTableAction.getDefault().errorCheck();
+        // BlockPathTableFrame(block) is created later on demand
+        //maxHeight = _desktop.getPreferredSize().height; // update
     }
-
     private String oblockPrefix() {
         if (oblockPrefix == null) {
             oblockPrefix = InstanceManager.getDefault(OBlockManager.class).getSystemNamePrefix();
@@ -399,34 +458,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                     JOptionPane.INFORMATION_MESSAGE); // standard JOptionPane can't be found in Jemmy log4J
         }
     }
-
-    protected final JScrollPane getBlockTablePane() {
-        return _blockTablePane;
-    }
-
-    protected final JScrollPane getPortalTablePane() {
-        return _portalTablePane;
-    }
-
-    protected final JScrollPane getSignalTablePane() {
-        return _signalTablePane;
-    }
-
-    protected final OBlockTableModel getBlockModel() {
-        return _oBlockModel;
-    }
-
-    protected final PortalTableModel getPortalModel() {
-        return _portalModel;
-    }
-
-    protected final SignalTableModel getSignalModel() {
-        return _signalModel;
-    }
-
-    protected final BlockPortalTableModel getXRefModel() {
-        return _blockPortalXRefModel;
-    }
+    // End of importBlocks() menu method
 
     protected void setShowWarnings(String cmd) {
         if (cmd.equals("ShowWarning")) {
@@ -444,121 +476,212 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         WarrantTableAction.getDefault().errorCheck();
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE); // closing instead of hiding removes name from Windows menu.handle menu to read Show...
         log.debug("windowClosing: {}", toString());
     }
 
-    protected void updateOpenMenu() {
-        _openMenu.removeAll();
-        JMenuItem openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu"));
-        _openMenu.add(openBlock);
-        openBlock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                _blockTableFrame.setVisible(true);
-                try {
-                    _blockTableFrame.setIcon(false);
-                } catch (PropertyVetoException pve) {
-                    log.warn("Block Table Frame vetoed setIcon {}", pve.toString());
-                }
-                _blockTableFrame.moveToFront();
-            }
-        });
-        JMenuItem openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu"));
-        _openMenu.add(openPortal);
-        openPortal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                _portalTableFrame.setVisible(true);
-                try {
-                    _portalTableFrame.setIcon(false);
-                } catch (PropertyVetoException pve) {
-                    log.warn("Portal Table Frame vetoed setIcon {}", pve.toString());
-                }
-                _portalTableFrame.moveToFront();
-            }
-        });
-        JMenuItem openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu"));
-        _openMenu.add(openXRef);
-        openXRef.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                _blockPortalXRefFrame.setVisible(true);
-                try {
-                    _blockPortalXRefFrame.setIcon(false);
-                } catch (PropertyVetoException pve) {
-                    log.warn("XRef Table Frame vetoed setIcon {}", pve.toString());
-                }
-                _blockPortalXRefFrame.moveToFront();
-            }
-        });
-        JMenuItem openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu"));
-        _openMenu.add(openSignal);
-        openSignal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                _signalTableFrame.setVisible(true);
-                try {
-                    _signalTableFrame.setIcon(false);
-                } catch (PropertyVetoException pve) {
-                    log.warn("Signal Table Frame vetoed setIcon {}", pve.toString());
-                }
-                _signalTableFrame.moveToFront();
-            }
-        });
+    protected void updateOblockTablesMenu() {
+        // fill Table menu
+        tablesMenu.removeAll();
+        // include string Bundle.getMessage("HideTable") for all table open at start
+
+        openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu", Bundle.getMessage("HideTable")));
+        tablesMenu.add(openBlock);
+        openBlock.addActionListener(event -> showHideFrame(_blockTableFrame, openBlock, "OpenBlockMenu"));
+
+        openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu", Bundle.getMessage("HideTable")));
+        tablesMenu.add(openPortal);
+        openPortal.addActionListener(event -> showHideFrame(_portalTableFrame, openPortal, "OpenPortalMenu"));
+
+        openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu", Bundle.getMessage("ShowTable")));
+        tablesMenu.add(openXRef);
+        openXRef.addActionListener(event -> showHideFrame(_blockPortalXRefFrame, openXRef, "OpenXRefMenu"));
+
+        openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu", Bundle.getMessage("ShowTable")));
+        tablesMenu.add(openSignal);
+        openSignal.addActionListener(event -> showHideFrame(_signalTableFrame, openSignal, "OpenSignalMenu"));
+
+        // get the OBlock manager
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
 
         JMenu openBlockPath = new JMenu(Bundle.getMessage("OpenBlockPathMenu"));
-        ActionListener openFrameAction = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String sysName = e.getActionCommand();
-                openBlockPathFrame(sysName);
-            }
+        ActionListener openFrameAction = e -> {
+            String sysName = e.getActionCommand();
+            openBlockPathPane(sysName);
         };
-        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        for (OBlock block : manager.getNamedBeanSet()) {
-            JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
-            mi.setActionCommand(block.getSystemName());
-            mi.addActionListener(openFrameAction);
+
+        if (manager.getNamedBeanSet().size() == 0) {
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("NoBlockPathYet"));
+            mi.setEnabled(false);
             openBlockPath.add(mi);
+        } else {
+            for (OBlock block : manager.getNamedBeanSet()) {
+                JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathMenu", block.getDisplayName()));
+                mi.setActionCommand(block.getSystemName());
+                mi.addActionListener(openFrameAction);
+                openBlockPath.add(mi);
+            }
         }
-        _openMenu.add(openBlockPath);
+        tablesMenu.add(openBlockPath);
 
         JMenu openTurnoutPath = new JMenu(Bundle.getMessage("OpenBlockPathTurnoutMenu"));
-        for (OBlock block : manager.getNamedBeanSet()) {
-            JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
-            openTurnoutPath.add(openTurnoutMenu);
-            openFrameAction = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        if (manager.getNamedBeanSet().size() == 0) {
+            JMenuItem mi = new JMenuItem(Bundle.getMessage("NoPathTurnoutYet"));
+            mi.setEnabled(false);
+            openTurnoutPath.add(mi);
+        } else {
+            for (OBlock block : manager.getNamedBeanSet()) {
+                JMenu openTurnoutMenu = new JMenu(Bundle.getMessage("OpenTurnoutMenu", block.getDisplayName()));
+                openTurnoutPath.add(openTurnoutMenu);
+                openFrameAction = e -> {
                     String pathTurnoutName = e.getActionCommand();
-                    openPathTurnoutFrame(pathTurnoutName);
-                }
-            };
-            for (Path p : block.getPaths()) {
-                if (p instanceof OPath){
-                    OPath path = (OPath) p;
-                    JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
-                    mi.setActionCommand(makePathTurnoutName(block.getSystemName(), path.getName()));
-                    mi.addActionListener(openFrameAction);
-                    openTurnoutMenu.add(mi);
+                    openPathTurnoutPane(pathTurnoutName);
+                };
+                for (Path p : block.getPaths()) {
+                    if (p instanceof OPath) {
+                        OPath path = (OPath) p;
+                        JMenuItem mi = new JMenuItem(Bundle.getMessage("OpenPathTurnoutMenu", path.getName()));
+                        mi.setActionCommand(makePathTurnoutName(block.getSystemName(), path.getName()));
+                        mi.addActionListener(openFrameAction);
+                        openTurnoutMenu.add(mi);
+                    }
                 }
             }
         }
-        _openMenu.add(openTurnoutPath);
+        tablesMenu.add(openTurnoutPath);
+    }
+
+    public void openBlockPathPane(String blockSysName) {
+        if (_tabbed) {
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockSysName);
+            if (block == null) {
+                log.error("null OBlock {}", blockSysName);
+            } else {
+                BlockPathTableModel model = new BlockPathTableModel(block, this);
+                JTable table = makeBlockPathTable(block, model);
+                // set up the table
+                JmriJFrame frame = new JmriJFrame(Bundle.getMessage("TitleBlockPathTable", blockSysName));
+                frame.setPreferredSize(new Dimension(200, 100));
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                panel.add(table);
+                frame.add(panel);
+                frame.setVisible(true);
+            }
+        } else {
+            openBlockPathFrame(blockSysName);
+        }
+    }
+
+    public void openPathTurnoutPane(String pathTurnoutName) {
+        if (_tabbed) {
+            // opslaan in lijst?
+            PathTurnoutPane pane = _PathTurnoutPaneMap.get(pathTurnoutName);
+            log.debug("openPathTurnoutFrame for {}", pathTurnoutName);
+            if (pane == null) {
+                int index = pathTurnoutName.indexOf('&');
+                String pathName = pathTurnoutName.substring(1, index);
+                String sysName = pathTurnoutName.substring(index + 1);
+                OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+                if (block == null) {
+                    log.error("null OBlock {}", pathTurnoutName);
+                } else {
+                    String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
+                    if (log.isDebugEnabled()) {
+                        log.debug("makePathTurnoutPane for Block {} and Path {}", block.getDisplayName(), pathName);
+                    }
+                    pane = new PathTurnoutPane(title);
+                    pane.setName(makePathTurnoutName(block.getSystemName(), pathName));
+                    OPath path = block.getPathByName(pathName);
+                    if (path == null) {
+                        log.error("Null path Turnout");
+                    }
+                    PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, null);
+                    pane.setModel(pathTurnoutModel);
+
+                    JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
+
+                    JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
+
+                    //pane = makePathTurnoutPane(pathTurnoutName);
+                    //                // set up the table
+
+                    JmriJFrame frame = new JmriJFrame(title);
+                    frame.setPreferredSize(new Dimension(200, 100));
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    panel.add(pathTurnoutTable);
+                    frame.add(panel);
+                    frame.setVisible(true);
+
+                    _PathTurnoutPaneMap.put(pathTurnoutName, pane);
+                }
+            }
+        } else {
+            openPathTurnoutFrame(pathTurnoutName);
+        }
+    }
+
+    private void showHideFrame(JInternalFrame frame, JMenuItem menu, String menuName) {
+        if (!frame.isVisible()) {
+            frame.setVisible(true);
+            try {
+                frame.setIcon(false);
+            } catch (PropertyVetoException pve) {
+                log.warn("{} Frame vetoed setIcon {}", frame.getTitle(), pve.toString());
+            }
+            frame.moveToFront();
+        } else {
+            frame.setVisible(false);
+        }
+        menu.setText(Bundle.getMessage(menuName,
+                (frame.isVisible() ? Bundle.getMessage("HideTable") : Bundle.getMessage("ShowTable"))));
     }
 
     private synchronized static void setRowHeight(int newVal) {
-        ROW_HEIGHT = newVal;
+        ROW_HEIGHT = Math.max(newVal, 10); // for safety
+    }
+
+    /**
+     * Wrapper for shared code around each Table.
+     *
+     * @param tableModel underlying model for the table
+     * @param title text displayed as title of frame
+     * @param prompt text below bottom line
+     * @return frame to put on _desktop interface
+     */
+    protected JInternalFrame buildFrame(AbstractTableModel tableModel, String title, String prompt) {
+        JInternalFrame frame = new JInternalFrame(title, true, false, false, true);
+
+        // specifics for table
+        JTable table = new JTable(); // just to make sure it is there
+        if (tableModel instanceof OBlockTableModel) {
+            table = makeOBlockTable((OBlockTableModel) tableModel);
+        } else if (tableModel instanceof PortalTableModel) {
+            table = makePortalTable((PortalTableModel) tableModel);
+        } else if (tableModel instanceof BlockPortalTableModel) {
+            table = makeBlockPortalTable((BlockPortalTableModel) tableModel);
+        } else if (tableModel instanceof SignalTableModel) {
+            table = makeSignalTable((SignalTableModel) tableModel);
+        } // no case for BlockPathTableModel, handled separately
+
+        JScrollPane scroll = new JScrollPane(table);
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout(5, 5));
+        JLabel _prompt = new JLabel(prompt);
+        contentPane.add(_prompt, BorderLayout.NORTH);
+        contentPane.add(scroll, BorderLayout.CENTER);
+
+        frame.setContentPane(contentPane);
+        frame.pack();
+        return frame;
     }
 
     /*
      * ********************* BlockFrame *****************************
      */
-    protected JInternalFrame makeBlockFrame() {
-        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleBlockTable"), true, false, false, true);
-        _oBlockModel = new OBlockTableModel(this);
-        _oBlockTable = new JTable(_oBlockModel);
+    protected JTable makeOBlockTable(OBlockTableModel model) {
+        _oBlockTable = new JTable(model);
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(_oBlockModel);
         // use NamedBean's built-in Comparator interface for sorting
         _oBlockTable.setRowSorter(sorter);
@@ -592,12 +715,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 new MyBooleanRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         _oBlockTable.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent me) {
+            public void mousePressed(MouseEvent me) { // for macOS, Linux
                 showPopup(me);
             }
 
             @Override
-            public void mouseReleased(MouseEvent me) {
+            public void mouseReleased(MouseEvent me) { // for Windows
                 showPopup(me);
             }
         });
@@ -608,10 +731,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-        setRowHeight(_oBlockTable.getRowHeight());
-        int tableWidth = _desktop.getPreferredSize().width;
-        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 16));
-        _blockTablePane = new JScrollPane(_oBlockTable);
+        setRowHeight(9 * (new JButton().getPreferredSize().height)/10);
+
+        _oBlockTable.setRowHeight(ROW_HEIGHT);
+        _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(maxWidth,
+                Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
+        //_blockTablePane = new JScrollPane(_oBlockTable);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
@@ -620,15 +745,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         // tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        JLabel prompt = new JLabel(Bundle.getMessage("AddBlockPrompt"));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        contentPane.add(_blockTablePane, BorderLayout.CENTER);
-
-        frame.setContentPane(contentPane);
-        frame.pack();
-        return frame;
+        return _oBlockTable;
     }
 
     private void showPopup(MouseEvent me) {
@@ -648,79 +765,55 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     /*
      * ********************* PortalFrame *****************************
      */
-    protected JInternalFrame makePortalFrame() {
-        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitlePortalTable"), true, false, false, true);
-        _portalModel = new PortalTableModel(this);
-        _portalTable = new JTable(_portalModel);
-        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(_portalModel);
+    protected JTable makePortalTable(PortalTableModel model) {
+        _portalTable = new JTable(model);
+        TableRowSorter<PortalTableModel> sorter = new TableRowSorter<>(model);
         _portalTable.setRowSorter(sorter);
         _portalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{PortalTableModel.DELETE_COL}));
         _portalTable.setDragEnabled(true);
 
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        for (int i = 0; i < _portalModel.getColumnCount(); i++) {
-            int width = _portalModel.getPreferredWidth(i);
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            int width = model.getPreferredWidth(i);
             _portalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _portalTable.sizeColumnsToFit(-1);
         int tableWidth = _portalTable.getPreferredSize().width;
-        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 16));
-        _portalTablePane = new JScrollPane(_portalTable);
-
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        JLabel prompt = new JLabel(Bundle.getMessage("AddPortalPrompt"));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        contentPane.add(_portalTablePane, BorderLayout.CENTER);
-
-        frame.setContentPane(contentPane);
-        frame.setLocation(0, 320);
-        frame.pack();
-        return frame;
+        _portalTable.setRowHeight(ROW_HEIGHT);
+        _portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
+        return _portalTable;
     }
 
     /*
-     * ********************* BlockPortalFrame *****************************
+     * ********************* BlockPortalTable *****************************
      */
-    protected JInternalFrame makeBlockPortalFrame() {
-        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleBlockPortalXRef"), true, false, false, true);
-        _blockPortalXRefModel = new BlockPortalTableModel(_oBlockModel);
-        _blockPortalTable = new JTable(_blockPortalXRefModel);
+    protected JTable makeBlockPortalTable(BlockPortalTableModel model) {
+        _blockPortalTable = new JTable(model);
         _blockPortalTable.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _blockPortalTable.setDragEnabled(true);
 
         _blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         _blockPortalTable.setDefaultEditor(String.class, new jmri.jmrit.symbolicprog.ValueEditor());
-        for (int i = 0; i < _blockPortalXRefModel.getColumnCount(); i++) {
-            int width = _blockPortalXRefModel.getPreferredWidth(i);
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            int width = model.getPreferredWidth(i);
             _blockPortalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _blockPortalTable.sizeColumnsToFit(-1);
         int tableWidth = _blockPortalTable.getPreferredSize().width;
-        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 25));
-        JScrollPane tablePane = new JScrollPane(_blockPortalTable);
+        _blockPortalTable.setRowHeight(ROW_HEIGHT);
+        _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+                Math.min(TableFrames.ROW_HEIGHT * 20, maxHeight)));
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        contentPane.add(tablePane, BorderLayout.CENTER);
-
-        frame.addInternalFrameListener(this);
-        frame.setContentPane(contentPane);
-        frame.setLocation(700, 20);
-        frame.pack();
-        return frame;
+        return _blockPortalTable;
     }
 
     /*
-     * ********************* SignalFrame *****************************
+     * ********************* SignalTable *****************************
      */
-    protected JInternalFrame makeSignalFrame() {
-        JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleSignalTable"), true, false, false, true);
-        _signalModel = new SignalTableModel(this);
-        _signalModel.init();
-        _signalTable = new JTable(_signalModel);
-        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<>(_signalModel);
+    protected JTable makeSignalTable(SignalTableModel model) {
+        _signalTable = new JTable(model);
+        TableRowSorter<SignalTableModel> sorter = new TableRowSorter<>(model);
         _signalTable.setRowSorter(sorter);
         _signalTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL}));
@@ -730,25 +823,17 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        for (int i = 0; i < _signalModel.getColumnCount(); i++) {
+        for (int i = 0; i < model.getColumnCount(); i++) {
             int width = SignalTableModel.getPreferredWidth(i);
             _signalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _signalTable.sizeColumnsToFit(-1);
         int tableWidth = _signalTable.getPreferredSize().width;
-        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 8));
-        _signalTablePane = new JScrollPane(_signalTable);
+        _signalTable.setRowHeight(ROW_HEIGHT);
+        _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth*2/3,
+                Math.min(TableFrames.ROW_HEIGHT * 8, maxHeight)));
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        JLabel prompt = new JLabel(Bundle.getMessage("AddSignalPrompt"));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        contentPane.add(_signalTablePane, BorderLayout.CENTER);
-
-        frame.setContentPane(contentPane);
-        frame.setLocation(350, 400);
-        frame.pack();
-        return frame;
+        return _signalTable;
     }
 
     /**
@@ -763,28 +848,50 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             super(title, resizable, closable, maximizable, iconifiable);
         }
 
-        void init(OBlock block, TableFrames parent) {
-            blockPathModel = new BlockPathTableModel(block, parent);
-        }
-
         BlockPathTableModel getModel() {
             return blockPathModel;
         }
+
+        void setModel(BlockPathTableModel model, String blockName) {
+            blockPathModel = model;
+            setName(blockName);
+        }
     }
 
-    /*
-     * ********************* BlockPathFrame *****************************
-     */
     protected BlockPathFrame makeBlockPathFrame(OBlock block) {
+
         String title = Bundle.getMessage("TitleBlockPathTable", block.getDisplayName());
         BlockPathFrame frame = new BlockPathFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
-            log.debug("makeBlockPathFrame for Block {}", block.getDisplayName());
+            log.debug("makeBlockPathFrame for OBlock {}", block.getDisplayName());
         }
-        frame.setName(block.getSystemName());
-        frame.init(block, this);
-        BlockPathTableModel blockPathModel = frame.getModel();
-        JTable blockPathTable = new JTable(blockPathModel);
+        // get table
+        BlockPathTableModel model = new BlockPathTableModel(block, this);
+        JTable table = makeBlockPathTable(block, model);
+
+        frame.setModel(model, block.getSystemName());
+
+        JScrollPane tablePane = new JScrollPane(table);
+
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout(5, 5));
+        JLabel prompt = new JLabel(Bundle.getMessage("AddPathPrompt"));
+        contentPane.add(prompt, BorderLayout.NORTH);
+        contentPane.add(tablePane, BorderLayout.CENTER);
+
+        frame.addInternalFrameListener(this);
+        frame.setContentPane(contentPane);
+        //frame.setClosable(true); // set in ctor
+        frame.setLocation(50, 30);
+        frame.pack();
+        return frame;
+    }
+
+    /*
+     * ********************* BlockPathTable *****************************
+     */
+    protected JTable makeBlockPathTable(OBlock block, BlockPathTableModel model) {
+        JTable blockPathTable = new JTable(model);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
             BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
@@ -796,26 +903,16 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
 
-        for (int i = 0; i < blockPathModel.getColumnCount(); i++) {
-            int width = blockPathModel.getPreferredWidth(i);
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            int width = model.getPreferredWidth(i);
             blockPathTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         blockPathTable.sizeColumnsToFit(-1);
         int tableWidth = blockPathTable.getPreferredSize().width;
-        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 10));
-        JScrollPane tablePane = new JScrollPane(blockPathTable);
-
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        JLabel prompt = new JLabel(Bundle.getMessage("AddPathPrompt"));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        contentPane.add(tablePane, BorderLayout.CENTER);
-
-        frame.addInternalFrameListener(this);
-        frame.setContentPane(contentPane);
-        frame.setLocation(50, 30);
-        frame.pack();
-        return frame;
+        blockPathTable.setRowHeight(ROW_HEIGHT);
+        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+                Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
+        return blockPathTable;
     }
 
     /**
@@ -824,7 +921,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     protected static class PathTurnoutFrame extends JInternalFrame {
 
         /**
-         *
+         * Remember the tableModel
          */
         PathTurnoutTableModel pathTurnoutModel;
 
@@ -832,13 +929,36 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 boolean maximizable, boolean iconifiable) {
             super(title, resizable, closable, maximizable, iconifiable);
         }
-        
-        void init(OPath path) {
-            pathTurnoutModel = new PathTurnoutTableModel(path, this);
+
+        PathTurnoutTableModel getModel() {
+            return pathTurnoutModel;
+        }
+
+        void setModel(PathTurnoutTableModel model) {
+            pathTurnoutModel = model;
+        }
+    }
+
+    /**
+     * ********************* PathTurnoutPane *****************************
+     */
+    protected static class PathTurnoutPane extends JmriJFrame {
+
+        /**
+         * Remember the tableModel
+         */
+        PathTurnoutTableModel pathTurnoutModel;
+
+        PathTurnoutPane(String title) {
+            super(title);
         }
 
         PathTurnoutTableModel getModel() {
             return pathTurnoutModel;
+        }
+
+        void setModel(PathTurnoutTableModel model) {
+            pathTurnoutModel = model;
         }
     }
 
@@ -856,26 +976,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (path == null) {
             return null;
         }
-        frame.init(path);
-        PathTurnoutTableModel PathTurnoutModel = frame.getModel();
-        JTable PathTurnoutTable = new JTable(PathTurnoutModel);
-        PathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
-                new int[]{PathTurnoutTableModel.SETTINGCOLUMN, PathTurnoutTableModel.DELETE_COL}));
-        PathTurnoutTable.setDragEnabled(true);
+        //frame.init(path);
+        PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, frame);
+        frame.setModel(pathTurnoutModel);
+        //PathTurnoutTableModel PathTurnoutModel = frame.getModel();
 
-        JComboBox<String> box = new JComboBox<>(PathTurnoutTableModel.turnoutStates);
-        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.SETTINGCOLUMN).setCellEditor(new DefaultCellEditor(box));
-        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        //PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        for (int i = 0; i < PathTurnoutModel.getColumnCount(); i++) {
-            int width = PathTurnoutModel.getPreferredWidth(i);
-            PathTurnoutTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        PathTurnoutTable.sizeColumnsToFit(-1);
-        int tableWidth = PathTurnoutTable.getPreferredSize().width;
-        PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, TableFrames.ROW_HEIGHT * 5));
-        JScrollPane tablePane = new JScrollPane(PathTurnoutTable);
+        JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
+
+        JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
 
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5, 5));
@@ -885,11 +993,66 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         frame.addInternalFrameListener(this);
         frame.setContentPane(contentPane);
+        //frame.setClosable(true); // set in ctor
         frame.setLocation(10, 270);
         frame.pack();
         return frame;
     }
 
+    /*
+     * ********************* PathTurnoutTable *****************************
+     */
+    protected JTable makePathTurnoutTable(PathTurnoutTableModel model) {
+        JTable PathTurnoutTable = new JTable(model);
+        PathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
+                new int[]{PathTurnoutTableModel.STATE_COL, PathTurnoutTableModel.DELETE_COL}));
+        PathTurnoutTable.setDragEnabled(true);
+
+        model.configTurnoutStateColumn(PathTurnoutTable); // use real combo
+        //JComboBox<String> box = new JComboBox<>(model.turnoutStates);
+        //PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.STATE_COL).setCellEditor(new DefaultCellEditor(box));
+        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+        //PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        for (int i = 0; i < model.getColumnCount(); i++) {
+            int width = model.getPreferredWidth(i);
+            PathTurnoutTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        PathTurnoutTable.sizeColumnsToFit(-1);
+        int tableWidth = PathTurnoutTable.getPreferredSize().width;
+        PathTurnoutTable.setRowHeight(ROW_HEIGHT);
+        PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+            Math.min(TableFrames.ROW_HEIGHT * 5, maxHeight)));
+
+        return PathTurnoutTable;
+    }
+
+    /*
+     * ********************* end of InternalFrame definitions *****************************
+     */
+
+//    /**
+//     * Create and configure a new table using the given model and row sorter.
+//     * Adapted from BeanTableDataModel for special OBlockxyz tables. 10/2020
+//     *
+//     * @param name   the name of the table
+//     * @param model  the data model for the table
+//     * @param sorter the row sorter for the table; if null, the table will not
+//     *               be sortable
+//     * @return the table
+//     * @throws NullPointerException if name or model is null
+//     */
+//    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
+//        Objects.requireNonNull(name, "the table name must be nonnull");
+//        Objects.requireNonNull(model, "the table model must be nonnull");
+//        return this.configureJTable(name, new JTable(model), sorter);
+//    }
+
+    /**
+     * Open a block-specific Block-Path table.
+     *
+     * @param sysName of the OBlock
+     */
     protected void openBlockPathFrame(String sysName) {
         BlockPathFrame frame = _blockPathMap.get(sysName);
         if (frame == null) {
@@ -898,10 +1061,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 return;
             }
             frame = makeBlockPathFrame(block);
+            // wrap a table in a frame
+
             _blockPathMap.put(sysName, frame);
             frame.setVisible(true);
             _desktop.add(frame);
-            frame.moveToFront();
         } else {
             frame.setVisible(true);
             try {
@@ -909,8 +1073,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             } catch (PropertyVetoException pve) {
                 log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", sysName, pve);
             }
-            frame.moveToFront();
         }
+        frame.moveToFront();
     }
 
     protected void disposeBlockPathFrame(OBlock block) {
@@ -1007,8 +1171,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      */
     @Override
     public void internalFrameClosing(InternalFrameEvent e) {
-        //JInternalFrame frame = (JInternalFrame)e.getSource();
-        //log.debug("Internal frame closing: {}", frame.getTitle());
+        JInternalFrame frame = (JInternalFrame)e.getSource();
+        log.debug("Internal frame closing: {}", frame.getTitle());
+        if (frame.getTitle().equals(Bundle.getMessage("TitleBlockTable"))) {
+            showHideFrame(_blockTableFrame, openBlock, "OpenBlockMenu");
+        }
     }
 
     @Override
@@ -1060,10 +1227,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (name != null && name.startsWith(oblockPrefix())) {
             if (frame instanceof BlockPathFrame) {
                 String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-                if (msg != null) {
-                    JOptionPane.showMessageDialog(this, msg,
-                            Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }

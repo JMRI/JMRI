@@ -1,5 +1,22 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.ParseException;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+import jmri.InstanceManager;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OPath;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
+import jmri.util.IntlUtilities;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts 
  * from one Portal to another Portal within an OBlock.  It may also be assigned
@@ -18,22 +35,6 @@ package jmri.jmrit.beantable.oblock;
  *
  * @author Pete Cressman (C) 2010
  */
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.ParseException;
-import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.table.AbstractTableModel;
-import jmri.InstanceManager;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OPath;
-import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
-import jmri.util.IntlUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class BlockPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -46,7 +47,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     public static final int DELETE_COL = 6;
     public static final int NUMCOLS = 7;
 
-    private String[] tempRow = new String[NUMCOLS];
+    private final String[] tempRow = new String[NUMCOLS];
 
     private TableFrames _parent;
     private OBlock _block;
@@ -92,10 +93,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             tempRow[UNITSCOL] =  Bundle.getMessage("in");            
         }
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
-        
-        _units = new ArrayList<Boolean>();
-        for(int i=0; i<=_block.getPaths().size(); i++) {
-            _units.add(Boolean.valueOf(_block.isMetric()));
+
+        // refresh the Unit column values list
+        _units = new ArrayList<>();
+        for (int i=0; i<=_block.getPaths().size(); i++) {
+            _units.add(_block.isMetric());
         }
     }
 
@@ -106,7 +108,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public int getRowCount() {
-        return _block.getPaths().size() + 1;
+        return _block.getPaths().size() + 1; // +1 adds the extra empty row at the bottom of the table display
     }
 
     @Override
@@ -230,7 +232,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                                 tempRow[NAME_COLUMN] = strValue;
                             } else {
                                 initTempRow();
-                                _parent.updateOpenMenu();
+                                _parent.updateOblockTablesMenu();
                                 fireTableDataChanged();
                             }
                         } else {
@@ -295,7 +297,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                                 }
                             }
                             portal.setFromBlock(_block, true);
-                            _parent.getPortalModel().fireTableDataChanged();
+                            _parent.getPortalTableModel().fireTableDataChanged();
                         }
                     }
                     path.setFromPortal(portal);
@@ -339,7 +341,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                                 }
                             }
                             portal.setToBlock(_block, true);
-                            _parent.getPortalModel().fireTableDataChanged();
+                            _parent.getPortalTableModel().fireTableDataChanged();
                         }
                     }
                     path.setToPortal(portal);
@@ -406,8 +408,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL || col == EDIT_COL) {
             return JButton.class;
-        } else if (col == UNITSCOL) {
-            return Boolean.class;
+//        } else if (col == UNITSCOL) {
+//            return Boolean.class; // for debug Tabbed Pane EBR
         }
         return String.class;
     }
@@ -450,4 +452,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class);
+
 }

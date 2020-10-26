@@ -33,12 +33,14 @@ import javax.swing.table.TableRowSorter;
 import jmri.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.AlphanumComparator;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to the various tables via a listed pane. Based upon the
- * {@link apps.gui3.tabbedpreferences.TabbedPreferences} by Bob Jacobsen
+ * Provide access to the various tables in the tabbed Tables interface via a listed pane (normall to the left).
+ * <p>
+ * Based upon the {@link apps.gui3.tabbedpreferences.TabbedPreferences} by Bob Jacobsen
  *
  * @author Kevin Dickerson Copyright 2010
  * @author Bob Jacobsen Copyright 2010
@@ -89,6 +91,9 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.LRouteTableAction", Bundle.getMessage("MenuItemLRouteTable"), true);
             addTable("jmri.jmrit.beantable.LogixTableAction", Bundle.getMessage("MenuItemLogixTable"), true);
             addTable("jmri.jmrit.beantable.BlockTableAction", Bundle.getMessage("MenuItemBlockTable"), true);
+            //if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) {
+                addTable("jmri.jmrit.beantable.OBlockTableAction", Bundle.getMessage("MenuItemOBlockTable"), false);
+            //} // requires restart after setting EBR shows up?
             addTable("jmri.jmrit.beantable.SectionTableAction", Bundle.getMessage("MenuItemSectionTable"), true);
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
@@ -311,6 +316,10 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         init = newVal;
     }
 
+    /**
+     *
+     * @param <E>
+     */
     static class TabbedTableItem<E extends NamedBean> {
 
         AbstractTableAction<E> tableAction;
@@ -339,7 +348,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
             try {
                 Class<?> cl = Class.forName(aaClass);
-                java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[]{String.class});
+                java.lang.reflect.Constructor<?> co = cl.getConstructor(String.class);
                 tableAction = (AbstractTableAction<E>) co.newInstance(choice);  // this cast is handled by reflection
             } catch (ClassNotFoundException | InstantiationException e1) {
                 log.error("Not a valid class : {}", aaClass);
@@ -355,13 +364,15 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
                 return;
             }
 
-            //If a panel model is used, it should really add to the bottom box
-            //but it can be done this way if required.
+            // If a panel model is used, it should really add to the bottom box
+            // but it can be done this way if required.
+            // In this case we "hijack" the TabbedTable for different (non-bean) tables to manage OBlocks.
             dataPanel.setLayout(new BorderLayout());
+
             if (stdModel) {
-                createDataModel();
+                createDataModel(); // first table of a grouped set with the primary manager, see OBlockTable
             } else {
-                addPanelModel();
+                addPanelModel(); // for any additional table using a different manager, see Audio, OBlock
             }
         }
 
