@@ -3208,7 +3208,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        // if alt modifier is down then invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
