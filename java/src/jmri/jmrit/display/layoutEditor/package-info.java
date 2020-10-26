@@ -36,7 +36,6 @@
  * <p>
  * Turnouts also have a <code>type</code> variable to represent their geometry,
  * i.e. RH, LH, Wye, etc.
- * <p>
  * <h2>Internals</h2>
  * <h3>Class Hierarchy</h3>
  * <ul>
@@ -73,13 +72,10 @@
  * <li>{@link jmri.jmrit.display.layoutEditor.configurexml}
  * </ul>
  * </ul>
- * <p>
  * <h3>Class Relationships</h3>
  * The LayoutBlock class is at the heart of the navigation web for
  * layout-representing objects.
  * <br><a href="doc-files/LayoutBlockInterconnections.png"><img src="doc-files/LayoutBlockInterconnections.png" alt="UML class diagram for track objects" height="67%" width="67%"></a><br>
- * <p>
- * <p>
  * <h3>GUI</h3>
  * The Layout Editor window consists of a menu bar and an upper tool-bar that
  * are all made with (basically) standard Swing components. Below that is a
@@ -108,8 +104,6 @@
  * <br><a href="doc-files/NMVCmodel.png"><img src="doc-files/MVCmodel.png" alt="MVC object diagram" height="67%" width="67%"></a><br>
  * The goal is a MVC-like structure, with modifications to account for the mix
  * of swing components and AWT-style paint operations.
- * <p>
- * <p>
  * <h3>Persistance</h3>
  * The classes that have ConfigureXML partner classes are:
  * <ul>
