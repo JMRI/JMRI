@@ -8,17 +8,17 @@
             <ul>
                 <li></li>
             </ul>
-        
+
 	    <h4>Anyma DMX512</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
@@ -48,7 +48,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
         <h4>Internal</h4>
             <ul>
                 <li>Sensor, Turnout, Light and Reporter Address ranges do not have to be fully numeric, and will be incremented using the final number in an address.<br>
@@ -69,20 +69,20 @@
             <ul>
               <li>The legacy LocoIO programmer help points to the current <a href="diy">DIY decoder</a> method to
               configure these boards.</li>
-              <li>LocoNet support for "Voltage/Current Meters" has been extended to 
-                  include support for multiple sources of meter information, and 
-                  to include automatic discovery of LocoNet devices which support 
-                  voltage and current reporting.  Each discovered device is identified  
+              <li>LocoNet support for "Voltage/Current Meters" has been extended to
+                  include support for multiple sources of meter information, and
+                  to include automatic discovery of LocoNet devices which support
+                  voltage and current reporting.  Each discovered device is identified
                   by its device type and serial number.  These "friendly" identifiers
-                  appear in the "Voltage Meter" and "Current Meter" menus in the 
+                  appear in the "Voltage Meter" and "Current Meter" menus in the
                   "Voltage/Current Meter" tool. Further information may be found at the
                   <a href="../html/hardware/loconet/DigitraxMeters.shtml">
                       Digitrax "Meters"</a> web page.</li>
                 <li>Start-up "Interrogation" of LocoNet Sensor and Turnout state
                     has re-worked to provide better operation for LocoNet connections
-                    with large numbers of Sensors and/or Turnouts.  The JMRI 
+                    with large numbers of Sensors and/or Turnouts.  The JMRI
                     interrogation mechanism now implements a minimum delay from
-                    the last Sensor Report, Turnout Report or Interrogate Query 
+                    the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
             </ul>
 
@@ -323,7 +323,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -378,7 +378,7 @@
     <h3>CTC Tool</h3>
         <a id="PE-CTC" name="PE-CTC"></a>
         <ul>
-            <li></li>
+            <li>Include detail information for vetoed object deletes.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -413,13 +413,13 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li>The "Copy Logix" feature has been enhanced to provide more assistance 
+          <li>The "Copy Logix" feature has been enhanced to provide more assistance
           in copying conditionals. See the updated help files for details.</li>
-          
+
           <li>Fixed a couple of bugs there Logix wasn't correctly listening on
           signal head lunar state, signal head flash lunar state, signal mast
           lit state and signal mast held state. See PR #9059.</li>
-          
+
           <li></li>
         </ul>
 
@@ -450,7 +450,7 @@
             <ul>
                 <li></li>
             </ul>
-   
+
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
@@ -469,12 +469,12 @@
             <li></li>
         </ul>
 
-    <h3>Routes</h3>    
+    <h3>Routes</h3>
         <a id="Routes" name="Routes"></a>
        <ul>
             <li></li>
        </ul>
-       
+
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
@@ -485,7 +485,7 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>The getSystemNameList() and getNamedBeanList() Manager methods have been fully deprecated.
-            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and 
+            <br>Please update any code warnings re these methods to use getNamedBeanSet(), and
                 post on the JMRI Users Group for any assistance with updating.</li>
             <li>The Manager method getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) has been
             deprecated, please use getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting)</li>
@@ -510,7 +510,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -576,7 +576,8 @@
     <h3>Where Used</h3>
         <a id="WhereUsed" name="WhereUsed"></a>
         <ul>
-            <li></li>
+            <li>Implement data collection for CTC references for sensors, signal heads,
+            signal masts, turnouts and blocks.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
