@@ -1,18 +1,17 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
@@ -341,7 +340,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if occupied
      */
-    private boolean isOccupied() {
+    @Override
+    public boolean isOccupied() {
         Boolean result = false; // assume failure (pessimist!)
         switch (getSlipState()) {
             case STATE_AC: {
@@ -1094,91 +1094,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
         return false;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_A))
-                && (getConnectA() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsA()));
-        }
-
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_B))
-                && (getConnectB() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsB()));
-        }
-
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_C))
-                && (getConnectC() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsC()));
-        }
-
-        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_D))
-                && (getConnectD() == null)) {
-            g2.fill(trackControlCircleAt(getCoordsD()));
-        }
-    }
-
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        if (!disabled && !(disableWhenOccupied && isOccupied())) {
-            // TODO: query user base if this is "acceptable" (can obstruct state)
-            if (false) {
-                int stateA = UNKNOWN;
-                Turnout toA = getTurnout();
-                if (toA != null) {
-                    stateA = toA.getKnownState();
-                }
-
-                Color foregroundColor = g2.getColor();
-                Color backgroundColor = g2.getBackground();
-
-                if (stateA == Turnout.THROWN) {
-                    g2.setColor(backgroundColor);
-                } else if (stateA != Turnout.CLOSED) {
-                    g2.setColor(Color.GRAY);
-                }
-                Point2D rightCircleCenter = getCoordsRight();
-                if (layoutEditor.isTurnoutFillControlCircles()) {
-                    g2.fill(trackControlCircleAt(rightCircleCenter));
-                } else {
-                    g2.draw(trackControlCircleAt(rightCircleCenter));
-                }
-                if (stateA != Turnout.CLOSED) {
-                    g2.setColor(foregroundColor);
-                }
-
-                int stateB = UNKNOWN;
-                Turnout toB = getTurnoutB();
-                if (toB != null) {
-                    stateB = toB.getKnownState();
-                }
-
-                if (stateB == Turnout.THROWN) {
-                    g2.setColor(backgroundColor);
-                } else if (stateB != Turnout.CLOSED) {
-                    g2.setColor(Color.GRAY);
-                }
-                // drawHidden left/right turnout control circles
-                Point2D leftCircleCenter = getCoordsLeft();
-                if (layoutEditor.isTurnoutFillControlCircles()) {
-                    g2.fill(trackControlCircleAt(leftCircleCenter));
-                } else {
-                    g2.draw(trackControlCircleAt(leftCircleCenter));
-                }
-                if (stateB != Turnout.CLOSED) {
-                    g2.setColor(foregroundColor);
-                }
-            } else {
-                Point2D rightCircleCenter = getCoordsRight();
-                g2.draw(trackControlCircleAt(rightCircleCenter));
-                Point2D leftCircleCenter = getCoordsLeft();
-                g2.draw(trackControlCircleAt(leftCircleCenter));
-            }
-        }
-    } // drawTurnoutControls
 
     public static class TurnoutState {
 

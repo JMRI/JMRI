@@ -736,7 +736,7 @@ final public class LayoutEditorChecks {
                                     ts.setCircle(true);
                                 }
                             } else {
-                                log.error("checkFixedRadiusBezierTrackSegments(): unequal radius");
+                                log.debug("checkFixedRadiusBezierTrackSegments(): unequal radius");
                             }
                         }
                     }

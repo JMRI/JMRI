@@ -506,13 +506,14 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
                 if (lt != layoutEditor.beginTrack) {
+                    LayoutTrackView ltv = layoutEditor.getLayoutViewForTrack(lt);
                     if (lt == layoutEditor.foundTrack) {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                         g2.setColor(connectColor);
-                        lt.highlightUnconnected(g2, layoutEditor.foundHitPointType);
+                        ltv.highlightUnconnected(g2, layoutEditor.foundHitPointType);
                         g2.setColor(highlightColor);
                     } else {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                     }
                 }
             }

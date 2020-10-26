@@ -6,10 +6,14 @@ import java.awt.geom.*;
 
 import javax.annotation.*;
 
+import jmri.Turnout;
+import static jmri.Turnout.CLOSED;
+import static jmri.Turnout.THROWN;
 import static jmri.jmrit.display.layoutEditor.LayoutTurnout.STATE_AC;
 import static jmri.jmrit.display.layoutEditor.LayoutTurnout.STATE_AD;
 import static jmri.jmrit.display.layoutEditor.LayoutTurnout.STATE_BC;
 import static jmri.jmrit.display.layoutEditor.LayoutTurnout.STATE_BD;
+import static jmri.jmrit.display.layoutEditor.LayoutTurnout.UNKNOWN;
 import jmri.util.*;
 
 /**
@@ -27,22 +31,24 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     public LayoutSlipView(@Nonnull LayoutSlip slip) {
         super(slip);
-        // this.slip = slip;
+        this.slip = slip;
     }
+
+    final private LayoutSlip slip;
 
     @Override
     protected void draw1(Graphics2D g2, boolean drawMain, boolean isBlock) {
-        Point2D pA = turnout.getCoordsA();
-        Point2D pB = turnout.getCoordsB();
-        Point2D pC = turnout.getCoordsC();
-        Point2D pD = turnout.getCoordsD();
+        Point2D pA = slip.getCoordsA();
+        Point2D pB = slip.getCoordsB();
+        Point2D pC = slip.getCoordsC();
+        Point2D pD = slip.getCoordsD();
 
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
-        boolean drawUnselectedLeg = turnout.layoutEditor.isTurnoutDrawUnselectedLeg()
+        boolean drawUnselectedLeg = slip.layoutEditor.isTurnoutDrawUnselectedLeg()
                 || ((LayoutSlip) turnout).isTurnoutInconsistent();
 
         int slipState = ((LayoutSlip) turnout).getSlipState();
@@ -53,13 +59,13 @@ public class LayoutSlipView extends LayoutTurnoutView {
         Color colorA = color, colorB = color, colorC = color, colorD = color;
 
         if (isBlock) {
-            LayoutBlock layoutBlockA = turnout.getLayoutBlock();
+            LayoutBlock layoutBlockA = slip.getLayoutBlock();
             colorA = (layoutBlockA != null) ? layoutBlockA.getBlockTrackColor() : color;
-            LayoutBlock layoutBlockB = turnout.getLayoutBlockB();
+            LayoutBlock layoutBlockB = slip.getLayoutBlockB();
             colorB = (layoutBlockB != null) ? layoutBlockB.getBlockTrackColor() : color;
-            LayoutBlock layoutBlockC = turnout.getLayoutBlockC();
+            LayoutBlock layoutBlockC = slip.getLayoutBlockC();
             colorC = (layoutBlockC != null) ? layoutBlockC.getBlockTrackColor() : color;
-            LayoutBlock layoutBlockD = turnout.getLayoutBlockD();
+            LayoutBlock layoutBlockD = slip.getLayoutBlockD();
             colorD = (layoutBlockD != null) ? layoutBlockD.getBlockTrackColor() : color;
 
             if (slipState == STATE_AC) {
@@ -204,13 +210,13 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean drawMain, float railDisplacement) {
-        Point2D pA = turnout.getCoordsA();
-        Point2D pB = turnout.getCoordsB();
-        Point2D pC = turnout.getCoordsC();
-        Point2D pD = turnout.getCoordsD();
+        Point2D pA = slip.getCoordsA();
+        Point2D pB = slip.getCoordsB();
+        Point2D pC = slip.getCoordsC();
+        Point2D pD = slip.getCoordsD();
         Point2D pM = getCoordsCenter();
 
-        //boolean drawUnselectedLeg = turnout.layoutEditor.isTurnoutDrawUnselectedLeg()
+        //boolean drawUnselectedLeg = slip.layoutEditor.isTurnoutDrawUnselectedLeg()
         //        || ((LayoutSlip) turnout).isTurnoutInconsistent();
 
         Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
@@ -420,6 +426,91 @@ public class LayoutSlipView extends LayoutTurnoutView {
         //    }
         //}
     }   // draw2
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_A))
+                && (slip.getConnectA() == null)) {
+            g2.fill(slip.trackControlCircleAt(getCoordsA()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_B))
+                && (slip.getConnectB() == null)) {
+            g2.fill(slip.trackControlCircleAt(getCoordsB()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_C))
+                && (slip.getConnectC() == null)) {
+            g2.fill(slip.trackControlCircleAt(getCoordsC()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.SLIP_D))
+                && (slip.getConnectD() == null)) {
+            g2.fill(slip.trackControlCircleAt(getCoordsD()));
+        }
+    }
+
+    @Override
+    protected void drawTurnoutControls(Graphics2D g2) {
+        if (!slip.disabled && !(slip.disableWhenOccupied && slip.isOccupied())) {
+            // TODO: query user base if this is "acceptable" (can obstruct state)
+            if (false) {
+                int stateA = UNKNOWN;
+                Turnout toA = slip.getTurnout();
+                if (toA != null) {
+                    stateA = toA.getKnownState();
+                }
+
+                Color foregroundColor = g2.getColor();
+                Color backgroundColor = g2.getBackground();
+
+                if (stateA == THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateA != CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                Point2D rightCircleCenter = slip.getCoordsRight();
+                if (slip.layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(slip.trackControlCircleAt(rightCircleCenter));
+                } else {
+                    g2.draw(slip.trackControlCircleAt(rightCircleCenter));
+                }
+                if (stateA != CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+
+                int stateB = UNKNOWN;
+                Turnout toB = slip.getTurnoutB();
+                if (toB != null) {
+                    stateB = toB.getKnownState();
+                }
+
+                if (stateB == THROWN) {
+                    g2.setColor(backgroundColor);
+                } else if (stateB != CLOSED) {
+                    g2.setColor(Color.GRAY);
+                }
+                // drawHidden left/right turnout control circles
+                Point2D leftCircleCenter = slip.getCoordsLeft();
+                if (slip.layoutEditor.isTurnoutFillControlCircles()) {
+                    g2.fill(slip.trackControlCircleAt(leftCircleCenter));
+                } else {
+                    g2.draw(slip.trackControlCircleAt(leftCircleCenter));
+                }
+                if (stateB != CLOSED) {
+                    g2.setColor(foregroundColor);
+                }
+            } else {
+                Point2D rightCircleCenter = slip.getCoordsRight();
+                g2.draw(slip.trackControlCircleAt(rightCircleCenter));
+                Point2D leftCircleCenter = slip.getCoordsLeft();
+                g2.draw(slip.trackControlCircleAt(leftCircleCenter));
+            }
+        }
+    } // drawTurnoutControls
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlipView.class);
 }
