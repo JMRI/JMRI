@@ -62,10 +62,12 @@
 
  <indexitem text="CAN Bus - Hardware, Connection, Tools " target="html.hardware.can.index"/>
 
- <indexitem text="CBUS (MERG) " target="html.hardware.can.cbus.index">
+ <indexitem text="CBUS " target="html.hardware.can.cbus.index">
   <indexitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
 
   <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+
+  <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
   <indexitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane"/>
 
@@ -76,6 +78,10 @@
   <indexitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
   <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+  <indexitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+
+  <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
  </indexitem>
  <indexitem text="Circuit Builder (CPE) " target="package.jmri.jmrit.display.CircuitBuilder"/>
@@ -670,138 +676,6 @@
   <indexitem text="Update SPROG V3/V4 " target="package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame"/>
 
  </indexitem>
- <indexitem text="SRCP " target="html.hardware.SRCP.index"/>
-
- <indexitem text="Supported Decoders " target="html.apps.DecoderPro.index_decoderlisting"/>
-
- <indexitem text="Supported Digital Control Hardware " target="html.hardware.index"/>
-
- <indexitem text="Supported Operating Systems to run JMRI " target="html.setup.index"/>
-
- <indexitem text="Swing (Developers) " target="html.doc.Technical.Swing"/>
-
- <indexitem text="Switchboard Editor (Panels) " target="package.jmri.jmrit.display.SwitchboardEditor"/>
-
- <indexitem text="System Console (JMRI System Messages) " target="package.apps.SystemConsole"/>
-
- <indexitem text="TAMs " target="html.hardware.tams.index"/>
-
- <indexitem text="TCH Tech " target="html.hardware.tchtech.index"/>
-
- <indexitem text="Technical " target="html.doc.Technical.index"/>
-
- <indexitem text="Terminal Server connection " target="html.hardware.TerminalServer"/>
-
- <indexitem text="Thread Monitor (Developers) " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
-
- <indexitem text="Throttle " target="html.tools.throttle.ThrottleMain">
-  <indexitem text="Add a Throttle " target="package.jmri.jmrit.throttle.ThrottleFrame"/>
-
-  <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
-
-  <indexitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
-
-  <indexitem text="iPhone/iPod as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
-
-  <indexitem text="USB Joypad as Throttle " target="html.tools.throttle.AdvancedThrottleControl_joypad"/>
-
-  <indexitem text="webThrottle - Web Throttles and Panels " target="package.jmri.jmrit.webThrottle.webThrottle"/>
-
-  <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
-
- </indexitem>
- <indexitem text="Timetable " target="html.tools.TimeTable"/>
-
- <indexitem text="TMCC (Lionel) " target="html.hardware.tmcc.index"/>
-
- <indexitem text="Tools Menu " target="package.jmri.jmrit.ToolsMenu"/>
-
- <indexitem text="Tracker " target="html.tools.tracker.index"/>
-
- <indexitem text="Train Throttle App (Windows Throttle) " target="html.apps.index_addapp"/>
-
- <indexitem text="Train Trackers (Warrants) " target="package.jmri.jmrit.logix.Tracker"/>
-
- <indexitem text="TrainCrew " target="html.apps.index_addapp"/>
-
- <indexitem text="Transit " target="html.tools.Transits">
-  <indexitem text="Add/Edit a Transit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
-
-  <indexitem text="Transit Actions " target="package.jmri.jmrit.beantable.ViewSpecialActions"/>
-
-  <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
-
- </indexitem>
- <indexitem text="Translate (Move) Selection (Panels) " target="package.jmri.jmrit.display.TranslateSelection"/>
-
- <indexitem text="Turnout " target="html.tools.Turnouts">
-  <indexitem text="Add/Edit a Turnout " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
-
-  <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
-
- </indexitem>
- <indexitem text="Uhlenbrock Intelllibox - Hardware, Connection, Tools " target="html.hardware.loconet.Uhlenbrock"/>
-
- <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
-
- <indexitem text="US&amp;S CTC Tools " target="html.tools.uss.index">
-  <indexitem text="Follower " target="package.jmri.jmrit.ussctc.FollowerFrame"/>
-
-  <indexitem text="OS Indicator " target="package.jmri.jmrit.ussctc.OsIndicatorFrame"/>
-
- </indexitem>
- <indexitem text="USB Port " target="package.jmri.jmrix.jinput.treemodel.TreeFrame"/>
-
- <indexitem text="USB-to-Serial Adapter (Hardware) " target="html.hardware.USBtoSerial"/>
-
- <indexitem text="Variable Intensity Lights " target="html.tools.Lights_variablelight"/>
-
- <indexitem text="Virtual Sound Decoder (VSD) " target="package.jmri.jmrit.vsdecoder.VSDecoderFrame"/>
-
- <indexitem text="Wangrow - Hardware, Connection, Tools " target="html.hardware.nce.Wangrow"/>
-
- <indexitem text="Warrants " target="html.tools.WarrantsIntro">
-  <indexitem text="Warrants Overiew and Getting Started " target="package.jmri.jmrit.logix.Warrant"/>
-
-  <indexitem text="Creating and Editing Warrants " target="package.jmri.jmrit.logix.CreateEditWarrant"/>
-
-  <indexitem text="Warrant List " target="package.jmri.jmrit.logix.WarrantTable"/>
-
-  <indexitem text="When Warrant Speeds Are Modified " target="package.jmri.jmrit.logix.SpeedChanges"/>
-
- </indexitem>
- <indexitem text="Web Access to JMRI " target="html.web.index"/>
-
- <indexitem text="Where Used " target="package.jmri.jmrit.whereused.WhereUsed"/>
-
- <indexitem text="Wii Remote, Connecting to " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
-
- <indexitem text="WiThrottle for iPhone/iPad " target="package.jmri.jmrit.withrottle.UserInterface"/>
-
- <indexitem text="X10 (Powerline) - Hardware, Connection, Tools " target="html.hardware.powerline.index"/>
-
- <indexitem text="xAP - Hardware, Connection, Tools " target="html.hardware.xap.index"/>
-
- <indexitem text="XBee - Hardware, Connection, Tools " target="html.hardware.XBee.index"/>
-
- <indexitem text="XML (Developers) " target="html.apps.DecoderPro.IntroXML">
-  <indexitem text="Technical Information " target="html.doc.Technical.XmlView"/>
-
-  <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
-
-  <indexitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
-
-  <indexitem text="XML Schema " target="html.doc.Technical.XmlSchema"/>
-
-  <indexitem text="XML Usage " target="html.doc.Technical.XmlUsage"/>
-
- </indexitem>
- <indexitem text="XPressNet (Lenz) - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>
-
- <indexitem text="XTrackCAD/Reader " target="html.apps.index_addapp"/>
-
- <indexitem text="Zimo - Hardware, Connection, Tools " target="html.hardware.zimo.Zimo"/>
-
- <indexitem text="ZTC - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>
+ <indexitem text="SPROG Generation 5 " target="html.hardware.sproggen5.index"/>
 
 </index>

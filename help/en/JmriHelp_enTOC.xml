@@ -115,6 +115,8 @@
 
   <tocitem text="SPROG " target="html.hardware.sprog.SPROG"/>
 
+  <tocitem text="SPROG Generation 5 " target="html.hardware.sproggen5.index"/>
+
   <tocitem text="SRCP " target="html.hardware.qsi.index"/>
 
   <tocitem text="TAMs Master Control " target="html.hardware.tams.index"/>
@@ -698,6 +700,8 @@
 
    <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
 
+   <tocitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
   </tocitem>
   <tocitem text="MRC " target="html.hardware.mrc.index">
    <tocitem text="MRC Traffic Monitor " target="package.jmri.jmrix.mrc.swing.monitor.MrcMonPanel"/>
@@ -773,6 +777,12 @@
    <tocitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
 
    <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
+
+  </tocitem>
+  <tocitem text="SPROG Generation 5 " target="html.hardware.sproggen5.sproggen5_tools">
+   <tocitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
+   <tocitem text="Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusModeSwitcherFrame"/>
 
   </tocitem>
   <tocitem text="TAMs " target="html.hardware.tams.index">
