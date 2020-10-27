@@ -51,6 +51,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         int ptm = prefs.getProgTrackMode();
         ConfigurationManager.ProgModeSwitch pms = memo.getProgModeSwitch();
         switch (pms) {
+            default:
             case NONE:
                 // Force no programmers available
                 igpa = false;
