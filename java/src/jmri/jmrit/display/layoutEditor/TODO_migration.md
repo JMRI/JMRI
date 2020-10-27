@@ -15,7 +15,7 @@ It's in no particular order, items are removed as done, so please don't consider
  - LE-move-content-MVC-2-draws - pause point, (appears to) draw test layouts properly (tagged as LE-MVC-2 M-V)
  - LE-move-content-MVC-working-on-3 (tagged as LE-MVC-3)
  - LE-move-content-MVC-working-on-4 (tagged as LE-MVC-4)
- - LE-move-content-MVC-working-on-5 - merged to July 10, 2020
+ - LE-move-content-MVC-working-on-5 - merged to Oct 26, 2020 master
  
  - LE-MVC-head - built from latest dev branch above for [Jenkins build](https://builds.jmri.org/jenkins/job/testreleases/job/layouteditor/)
 ----
@@ -277,6 +277,17 @@ java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public Stri
 java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String getId() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
 ```
+
+---
+
+XML migration and Grand Rename
+ - Original store/load from LayoutTrack* names
+ 
+ - This was moved to store/load LayoutTrack* and LayoutTrackView* objects via LayoutTrackViewXml* classes and jmri/configurexml/ClassMigration.properties
+
+ - The long-term is to rename the LayoutTrack* classes to LayoutTrackModel* classes, which 
+   - allows those to be directly and natively stored/loaded via LayoutTrackModelXml* and LayoutTrackViewXml*configXML classes
+   - allows leaving (really, renameing the existing LayoutTrack*) LayoutTrackXml* classes for reading old files
 
 ---
 

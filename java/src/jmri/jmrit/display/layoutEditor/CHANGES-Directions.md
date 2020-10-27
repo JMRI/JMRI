@@ -30,5 +30,4 @@ The immediate design issue is that connectivity model objects will occasionally 
  - What's wrong with calling them all NONE until some reason comes along?
  - Provide a call-back from some outside object that can provide directional information; if there's just on panel, it can use that geometry
   
-None of those are great.
-
+The (perhaps temporary) choice is to defer this to central methods in the LayoutModels (i.e. LayoutEditor) class.
