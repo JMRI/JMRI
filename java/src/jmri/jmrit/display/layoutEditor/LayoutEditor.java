@@ -3208,7 +3208,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        // if alt modifier is down then invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
@@ -7451,15 +7451,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public @Nonnull
-    List<PositionablePointView> getPositionablePointViews() {
-        List<PositionablePointView> list = new ArrayList<>();
-        for (PositionablePoint p : getPositionablePoints()) {
-            list.add(new PositionablePointView(p));
-        }
-        return list;
-    }
-
-    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
@@ -7502,6 +7493,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public @Nonnull
+    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        return getLayoutTracksOfClass(LayoutTurnout.class)
+                .map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     /**
      * Read-only access to the list of LayoutTrack family objects. The returned
      * list will throw UnsupportedOperationException if you attempt to modify
@@ -7512,6 +7510,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
+    }
+
+    private @Nonnull
+    Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
+        return getLayoutTrackViews().stream()
+                .filter(layoutTrackViewClass::isInstance)
+                .map(layoutTrackViewClass::cast);
+    }
+
+    /**
+     * get the list of positionable point views
+     *
+     * @return list of PositionablePointViews
+     */
+    public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        return getLayoutTrackViewsOfClass(PositionablePointView.class)
+                .map(PositionablePointView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -7596,12 +7613,26 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.clear();
     }
 
-    public @Nonnull
-    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
-                .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList::new));
+    /**
+     * return the layout track for this layout track view
+     *
+     * @param layoutTrackView the layout track view
+     * @return the layout track
+     */
+    protected @CheckReturnValue
+    LayoutTrack getLayoutTrackForView(@Nonnull LayoutTrackView layoutTrackView) {
+        return viewToTrk.get(layoutTrackView);
+    }
+
+    /**
+     * return the layout track view for this layout track
+     *
+     * @param layoutTrack the layout track
+     * @return the layout track view
+     */
+    protected @CheckReturnValue
+    LayoutTrackView getLayoutViewForTrack(@Nonnull LayoutTrack layoutTrack) {
+        return trkToView.get(layoutTrack);
     }
 
     public @Nonnull
