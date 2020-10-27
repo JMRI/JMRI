@@ -40,6 +40,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
         return r;
     }
 
+    @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
@@ -50,7 +51,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
         try {
             validSystemNameFormat(sys);
         } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            throw new JmriException(e.getMessage());
         }
         return sys;
     }
@@ -78,17 +79,6 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddReporterEntryToolTip");
-    }
-
-    /**
-     * Static function returning the RpsReporterManager instance to use.
-     *
-     * @return The registered RpsReporterManager instance for general use.
-     * @deprecated since 4.15.6
-     */
-    @Deprecated
-    static public RpsReporterManager instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(RpsReporterManager.class);

@@ -25,7 +25,7 @@
     <xs:complexType name="MeterFrameManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a MeterFrameManager implementation.
+          Define the XML structure for storing the contents of a MeterFrameManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.jmrit.swing.meter.configurexml.MeterFrameManagerXml</jmri:usingclass>

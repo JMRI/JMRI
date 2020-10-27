@@ -8,9 +8,6 @@
   <title>JMRI: Adding A New Data Type</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical type add">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -29,16 +26,14 @@
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-    <h1>JMRI Code: Adding A New Data Type</h1>
+    <h1>JMRI Code: Adding a New Data Type</h1>
 
-      <div class="para">
         <p>This page describes the steps to add a new data-type,
         e.g. Turnouts, to the JMRI code.</p>
 
         <p>It uses as an example the addition of the <em>Reporter</em> type
         in July, 2004. Reporter was added as a new type of NamedBean and
         is being used to bring complex information back from the layout.</p>
-      </div>
 
         <p>Note that we don't do this very often, and 
         the specifics are more important than the generalities
@@ -78,7 +73,7 @@
         "*Reporter*" file.</p>
 
 
-        <h3>Define the new type and it's manager</h3>
+        <h3>Define the new type and its manager</h3>
 
         <dl>
 
@@ -110,9 +105,10 @@
             update the system-specific naming pages as needed.</p>
           </dd>
 
-          </dl>
-            <h3>Provide the base for implementations</h3>
-          <dl>
+        </dl>
+
+        <h3>Provide the base for implementations</h3>
+        <dl>
 
           <dt>AbstractReporter</dt>
 

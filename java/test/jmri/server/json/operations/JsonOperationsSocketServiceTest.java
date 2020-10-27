@@ -380,7 +380,7 @@ public class JsonOperationsSocketServiceTest {
         TrainManager manager = InstanceManager.getDefault(TrainManager.class);
         Train train = manager.getTrainById("1");
         assertThat(train.build()).isTrue();
-        assertThat(train.getCurrentLocation().getLocation()).isEqualTo(location1);
+        assertThat(train.getCurrentRouteLocation().getLocation()).isEqualTo(location1);
         assertThat(manager.getTrainByName("Acme Transfer")).isNull();
         // creates train
         try {

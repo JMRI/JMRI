@@ -130,6 +130,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     @Override
     public void setPermissiveSmlDisabled(boolean disabled) {
         disablePermissiveSignalMastLogic = disabled;
+        firePropertyChange("PermissiveSmlDisabled", null, disabled);
     }
     /**
      * {@inheritDoc }

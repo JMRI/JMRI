@@ -133,7 +133,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         // always return this (the current) name without change
         try {
             OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),prefix+"T");

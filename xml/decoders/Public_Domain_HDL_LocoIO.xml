@@ -107,7 +107,7 @@
       </model>
       <model model="HDL LocoBooster v5" productID="005"/>
 
-      <!--<model model="HDL LocoRCD v2.0" productID="200"/> TODO edit copy of 211-->
+      <model model="HDL LocoRCD v2.0" productID="200"/>
       <model model="HDL LocoRCD2 v2.10" productID="210"/>
       <model model="HDL LocoRCD2 v2.11" productID="211"/>
 

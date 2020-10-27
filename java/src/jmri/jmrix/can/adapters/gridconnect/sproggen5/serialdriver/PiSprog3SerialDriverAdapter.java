@@ -53,6 +53,7 @@ public class PiSprog3SerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().configureManagers();
         
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.NONE);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.EITHER);
     }
 
     /**

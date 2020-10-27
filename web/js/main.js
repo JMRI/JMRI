@@ -294,6 +294,7 @@ $(document).ready(function () {
         setFontSize(14); // reset to default
         return false;
     });
+    // note: the functions and parameter names must match exactly those in jquery.jmri.js
     nbJmri = $.JMRI({
         open: function () {
             nbJmri.getPower();
