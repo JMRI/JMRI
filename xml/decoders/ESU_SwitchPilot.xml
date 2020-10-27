@@ -44,10 +44,21 @@
             <revremark>added german translation</revremark>
         </revision>
         <revision>
-            <revnumber>1</revnumber>
+            <revnumber>3</revnumber>
             <date>2019-12-04</date>
             <authorinitials>DGH</authorinitials>
             <revremark>Added Bounce Effects and Secondary Address Warning</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2020-10-23</date>
+            <authorinitials>DGH</authorinitials>
+            <revremark>
+                Swapped pane display order of Second Address Enable and Secondary Address
+                to work around unresolved issue with splitVal and eumVal interaction,
+                which causes CV value corruption with Read Sheets.
+                Removed Secondary Address Warning.
+            </revremark>
         </revision>
     </revhistory>
     <decoder>
@@ -393,8 +404,11 @@
                         </column>
                         <group include="SwitchPilot,SwitchPilot V2.0">
                             <column>
-                                <display item="Second Address Enable" format="checkbox"/>
+                                <!-- The order of the following two display items must not be swapped -->
+                                <!-- in order to avoid CV corruption during Read Sheet. -->
+                                <!-- See: https://github.com/JMRI/JMRI/issues/9084 -->
                                 <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <display item="Second Address Enable" format="checkbox"/>
                                 <label>
                                     <text> </text>
                                 </label>
@@ -418,8 +432,11 @@
                         </group>
                         <group exclude="SwitchPilot,SwitchPilot V2.0">
                             <column>
-                                <display item="Second Address Enable" format="checkbox"/>
+                                <!-- The order of the following two display items must not be swapped -->
+                                <!-- in order to avoid CV corruption during Read Sheet. -->
+                                <!-- See: https://github.com/JMRI/JMRI/issues/9084 -->
                                 <display item="Second Address" tooltip="Sets base address for Secondary"/>
+                                <display item="Second Address Enable" format="checkbox"/>
                                 <label>
                                     <text> </text>
                                 </label>
@@ -469,6 +486,7 @@
                     </display>
                 </column>
             </row>
+            <!--
             <column>
                 <group>
                     <qualifier>
@@ -504,6 +522,7 @@
                     <separator/>
                 </group>
             </column>
+            -->
         </column>
     </pane>
     <pane>
