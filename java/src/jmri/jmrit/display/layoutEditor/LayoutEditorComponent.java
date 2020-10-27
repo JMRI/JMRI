@@ -11,10 +11,14 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.util.*;
-import org.slf4j.*;
+
 
 /*
 * This is an intermediate component used to put the Layout Editor
@@ -436,19 +440,35 @@ class LayoutEditorComponent extends JComponent {
             boolean isBlock,
             boolean isHidden,
             boolean isDashed) {
-        for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
-            if (!(layoutTrackView instanceof PositionablePointView)) {
-                if (isHidden == layoutTrackView.isHidden()) {
-                    if ((layoutTrackView instanceof TrackSegmentView)) {
-                        if (((TrackSegmentView) layoutTrackView).isDashed() == isDashed) {
-                            layoutTrackView.draw1(g2, isMain, isBlock);
+
+        layoutEditor.getLayoutTrackViews().stream()
+                .filter(tv -> !(tv instanceof PositionablePointView))
+                .filter(tv -> isHidden == tv.isHidden())
+                .map(LayoutTrackView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new))
+                .forEach((tv) -> {
+                    if ((tv instanceof TrackSegmentView)) {
+                        if (((TrackSegment) tv.getLayoutTrack()).isDashed() == isDashed) {
+                            tv.draw1(g2, isMain, isBlock);
                         }
                     } else if (!isDashed) {
-                        layoutTrackView.draw1(g2, isMain, isBlock);
+                        tv.draw1(g2, isMain, isBlock);
                     }
-                }
-            }
-        }
+                });
+
+        //for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
+        //    if (!(layoutTrackView instanceof PositionablePointView)) {
+        //        if (isHidden == layoutTrackView.isHidden()) {
+        //            if ((layoutTrackView instanceof TrackSegmentView)) {
+        //                if (((TrackSegment) layoutTrackView.getLayoutTrack()).isDashed() == isDashed) {
+        //                    layoutTrackView.draw1(g2, isMain, isBlock);
+        //                }
+        //            } else if (!isDashed) {
+        //                layoutTrackView.draw1(g2, isMain, isBlock);
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     // draw positionable points
@@ -468,7 +488,7 @@ class LayoutEditorComponent extends JComponent {
             float railDisplacement, boolean isDashed) {
         for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
             if ((layoutTrackView instanceof TrackSegmentView)) {
-                if (((TrackSegmentView) layoutTrackView).isDashed() == isDashed) {
+                if (((TrackSegment) layoutTrackView.getLayoutTrack()).isDashed() == isDashed) {
                     layoutTrackView.draw2(g2, isMain, railDisplacement);
                 }
             } else if (!isDashed) {

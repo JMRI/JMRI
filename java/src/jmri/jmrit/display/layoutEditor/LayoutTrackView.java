@@ -92,6 +92,10 @@ abstract public class LayoutTrackView {
 
     final private LayoutTrack layoutTrack;
 
+    public LayoutTrack getLayoutTrack() {
+        return layoutTrack;
+    }
+
     // These now reflect to code in the base class; eventually this heirarchy will
     // expand and the code will be brought here
     public boolean hasDecorations() {

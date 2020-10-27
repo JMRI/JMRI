@@ -28,24 +28,232 @@ public class TrackSegmentView extends LayoutTrackView {
 
     final private TrackSegment trackSegment;
 
-    public boolean isDashed() {
+    /*
+    The following are convience getters to simplify accessing these
+    properties of the track segment being drawn by this view
+     */
+    private boolean isDashed() {
         return trackSegment.isDashed();
     }
 
-    public boolean isArc() {
+    private boolean isFlip() {
+        return trackSegment.isFlip();
+    }
+
+    private boolean isArc() {
         return trackSegment.isArc();
     }
 
-    public boolean isCircle() {
+    private boolean isCircle() {
         return trackSegment.isCircle();
     }
 
-    public boolean isBezier() {
+    private boolean isBezier() {
         return trackSegment.isBezier();
     }
 
-    public LayoutBlock getLayoutBlock() {
+    private ArrayList<Point2D> getBezierControlPoints() {
+        return trackSegment.getBezierControlPoints();
+    }
+
+    private LayoutBlock getLayoutBlock() {
         return trackSegment.getLayoutBlock();
+    }
+
+    private void calculateTrackSegmentAngle() {
+        trackSegment.calculateTrackSegmentAngle();
+    }
+
+    private Point2D getCentreSeg() {
+        return trackSegment.getCentreSeg();
+    }
+
+    private double getCX() {
+        return trackSegment.getCX();
+    }
+
+    private double getCY() {
+        return trackSegment.getCY();
+    }
+
+    private double getCH() {
+        return trackSegment.getCH();
+    }
+
+    private double getCW() {
+        return trackSegment.getCW();
+    }
+
+    private double getStartAdj() {
+        return trackSegment.getStartAdj();
+    }
+
+    private double getTmpAngle() {
+        return trackSegment.getTmpAngle();
+    }
+
+    private void trackRedrawn() {
+        trackSegment.trackRedrawn();
+    }
+
+    private Point2D[] getBezierPoints() {
+        return trackSegment.getBezierPoints();
+    }
+
+    private HitPointType getType1() {
+        return trackSegment.getType1();
+    }
+
+    private HitPointType getType2() {
+        return trackSegment.getType2();
+    }
+
+    private LayoutTrack getConnect1() {
+        return trackSegment.getConnect1();
+    }
+
+    private LayoutTrack getConnect2() {
+        return trackSegment.getConnect2();
+    }
+
+    private boolean isShowConstructionLines() {
+        return trackSegment.isShowConstructionLines();
+    }
+
+    private Point2D getCoordsCenterCircle() {
+        return trackSegment.getCoordsCenterCircle();
+    }
+
+    private Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackSegment.trackEditControlCircleAt(inPoint);
+    }
+
+    private Rectangle2D layoutEditorControlRectAt(@Nonnull Point2D inPoint) {
+        return trackSegment.layoutEditor.layoutEditorControlRectAt(inPoint);
+    }
+
+    private int getArrowStyle() {
+        return trackSegment.getArrowStyle();
+    }
+
+    private int getArrowLineWidth() {
+        return trackSegment.getArrowLineWidth();
+    }
+
+    private int getArrowLength() {
+        return trackSegment.getArrowLength();
+    }
+
+    private int getArrowGap() {
+        return trackSegment.getArrowGap();
+    }
+
+    private Color getArrowColor() {
+        return trackSegment.getArrowColor();
+    }
+
+    private boolean isArrowEndStart() {
+        return trackSegment.isArrowEndStart();
+    }
+
+    private boolean isArrowEndStop() {
+        return trackSegment.isArrowEndStop();
+    }
+
+    private boolean isArrowDirIn() {
+        return trackSegment.isArrowDirIn();
+    }
+
+    private boolean isArrowDirOut() {
+        return trackSegment.isArrowDirOut();
+    }
+
+    private boolean isBridgeSideRight() {
+        return trackSegment.isBridgeSideRight();
+    }
+
+    private boolean isBridgeSideLeft() {
+        return trackSegment.isBridgeSideLeft();
+    }
+
+    private boolean isBridgeHasEntry() {
+        return trackSegment.isBridgeHasEntry();
+    }
+
+    private boolean isBridgeHasExit() {
+        return trackSegment.isBridgeHasExit();
+    }
+
+    private int getBridgeApproachWidth() {
+        return trackSegment.getBridgeApproachWidth();
+    }
+
+    private int getBridgeDeckWidth() {
+        return trackSegment.getBridgeDeckWidth();
+    }
+
+    private int getBridgeLineWidth() {
+        return trackSegment.getBridgeLineWidth();
+    }
+
+    private Color getBridgeColor() {
+        return trackSegment.getBridgeColor();
+    }
+
+    private boolean isBumperEndStart() {
+        return trackSegment.isBumperEndStart();
+    }
+
+    private boolean isBumperEndStop() {
+        return trackSegment.isBumperEndStop();
+    }
+
+    private int getBumperLineWidth() {
+        return trackSegment.getBumperLineWidth();
+    }
+
+    private Color getBumperColor() {
+        return trackSegment.getBumperColor();
+    }
+
+    private int getBumperLength() {
+        return trackSegment.getBumperLength();
+    }
+
+    private boolean isBumperFlipped() {
+        return trackSegment.isBumperFlipped();
+    }
+
+    private boolean isTunnelSideRight() {
+        return trackSegment.isTunnelSideRight();
+    }
+
+    private boolean isTunnelSideLeft() {
+        return trackSegment.isTunnelSideLeft();
+    }
+
+    private int getTunnelFloorWidth() {
+        return trackSegment.getTunnelFloorWidth();
+    }
+
+    private int getTunnelLineWidth() {
+        return trackSegment.getTunnelLineWidth();
+    }
+
+    private Color getTunnelColor() {
+        return trackSegment.getTunnelColor();
+    }
+
+    private int getTunnelEntranceWidth() {
+        return trackSegment.getTunnelEntranceWidth();
+    }
+
+    private boolean isTunnelHasEntry() {
+        return trackSegment.isTunnelHasEntry();
+    }
+
+    private boolean isTunnelHasExit() {
+        return trackSegment.isTunnelHasExit();
     }
 
     /**
@@ -53,9 +261,9 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-//   if (getName().equals("T15")) {
-//       log.debug("STOP");
-//   }
+        //if (getName().equals("T15")) {
+        //   log.debug("STOP");
+        //}
         if (!isBlock && isDashed() && getLayoutBlock() != null) {
             // Skip the dashed rail layer, the block layer will display the dashed track
             // This removes random rail fragments from between the block dashes
@@ -66,18 +274,18 @@ public class TrackSegmentView extends LayoutTrackView {
                 setColorForTrackBlock(g2, getLayoutBlock());
             }
             if (isArc()) {
-                trackSegment.calculateTrackSegmentAngle();
-                g2.draw(new Arc2D.Double(trackSegment.getCX(), trackSegment.getCY(),
-                        trackSegment.getCW(), trackSegment.getCH(),
-                        trackSegment.getStartAdj(), trackSegment.getTmpAngle(),
+                calculateTrackSegmentAngle();
+                g2.draw(new Arc2D.Double(
+                        getCX(), getCY(), getCW(), getCH(),
+                        getStartAdj(), getTmpAngle(),
                         Arc2D.OPEN));
-                trackSegment.trackRedrawn();
-            } else if (trackSegment.isBezier()) {
-                Point2D[] points = trackSegment.getBezierPoints();
+                trackRedrawn();
+            } else if (isBezier()) {
+                Point2D[] points = getBezierPoints();
                 MathUtil.drawBezier(g2, points);
             } else {
-                Point2D end1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-                Point2D end2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 g2.draw(new Line2D.Double(end1, end2));
             }
@@ -99,12 +307,11 @@ public class TrackSegmentView extends LayoutTrackView {
         }
         if (isMain == isMainline()) {
             if (isArc()) {
-                trackSegment.calculateTrackSegmentAngle();
+                calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
-                        trackSegment.getCX(), trackSegment.getCY(),
-                        trackSegment.getCW(), trackSegment.getCH());
+                        getCX(), getCY(), getCW(), getCH());
                 Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -railDisplacement);
-                double startAdj = trackSegment.getStartAdj(), tmpAngle = trackSegment.getTmpAngle();
+                double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
                 g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                         tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
@@ -112,14 +319,14 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                         tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                         startAdj, tmpAngle, Arc2D.OPEN));
-                trackSegment.trackRedrawn();
+                trackRedrawn();
             } else if (isBezier()) {
-                Point2D[] points = trackSegment.getBezierPoints();
+                Point2D[] points = getBezierPoints();
                 MathUtil.drawBezier(g2, points, -railDisplacement);
                 MathUtil.drawBezier(g2, points, +railDisplacement);
             } else {
-                Point2D end1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-                Point2D end2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+                Point2D end1 = LayoutEditor.getCoords(getConnect1(), getType1());
+                Point2D end2 = LayoutEditor.getCoords(getConnect2(), getType2());
 
                 Point2D delta = MathUtil.subtract(end2, end1);
                 Point2D vector = MathUtil.normalize(delta, railDisplacement);
@@ -148,30 +355,30 @@ public class TrackSegmentView extends LayoutTrackView {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
-        if (trackSegment.isShowConstructionLines()) {
-            Point2D ep1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-            Point2D ep2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+        if (isShowConstructionLines()) {
+            Point2D ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+            Point2D ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
             if (isCircle()) {
                 // draw radiuses
-                Point2D circleCenterPoint = trackSegment.getCoordsCenterCircle();
+                Point2D circleCenterPoint = getCoordsCenterCircle();
                 g2.draw(new Line2D.Double(circleCenterPoint, ep1));
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
-                g2.draw(trackSegment.trackEditControlCircleAt(circleCenterPoint));
-                g2.draw(trackSegment.layoutEditor.layoutEditorControlRectAt(circleCenterPoint));
+                g2.draw(trackEditControlCircleAt(circleCenterPoint));
+                g2.draw(layoutEditorControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
                 // draw construction lines and control circles
                 Point2D lastPt = ep1;
-                for (Point2D bcp : trackSegment.getBezierControlPoints()) {
+                for (Point2D bcp : getBezierControlPoints()) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
-                    g2.draw(trackSegment.layoutEditor.layoutEditorControlRectAt(bcp));
+                    g2.draw(layoutEditorControlRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(trackSegment.trackEditControlCircleAt(trackSegment.getCentreSeg()));
+        g2.draw(trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
     @Override
@@ -195,17 +402,17 @@ public class TrackSegmentView extends LayoutTrackView {
 //   }
 
 // get end points and calculate start/stop angles (in radians)
-        ep1 = LayoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-        ep2 = LayoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+        ep1 = LayoutEditor.getCoords(getConnect1(), getType1());
+        ep2 = LayoutEditor.getCoords(getConnect2(), getType2());
         p1P = ep1;
         p2P = ep2;
 
         if (isArc()) {
-            trackSegment.calculateTrackSegmentAngle();
-            double startAngleDEG = trackSegment.getStartAdj(), extentAngleDEG = trackSegment.getTmpAngle();
+            calculateTrackSegmentAngle();
+            double startAngleDEG = getStartAdj(), extentAngleDEG = getTmpAngle();
             startAngleRAD = (Math.PI / 2.D) - Math.toRadians(startAngleDEG);
             stopAngleRAD = (Math.PI / 2.D) - Math.toRadians(startAngleDEG + extentAngleDEG);
-            if (trackSegment.isFlip()) {
+            if (isFlip()) {
                 startAngleRAD += Math.PI;
                 stopAngleRAD += Math.PI;
             } else {
@@ -214,7 +421,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 stopAngleRAD = temp;
             }
         } else if (isBezier()) {
-            ArrayList<Point2D> bezierControlPoints = trackSegment.getBezierControlPoints();
+            ArrayList<Point2D> bezierControlPoints = getBezierControlPoints();
             Point2D cp0 = bezierControlPoints.get(0);
             Point2D cpN = bezierControlPoints.get(bezierControlPoints.size() - 1);
             startAngleRAD = (Math.PI / 2.D) - MathUtil.computeAngleRAD(cp0, ep1);
@@ -234,29 +441,29 @@ public class TrackSegmentView extends LayoutTrackView {
     // arrow decorations
     //
     private void drawArrowDecorations(Graphics2D g2) {
-        if (trackSegment.getArrowStyle() > 0) {
-            g2.setStroke(new BasicStroke(trackSegment.getArrowLineWidth(),
+        if (getArrowStyle() > 0) {
+            g2.setStroke(new BasicStroke(getArrowLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
-            g2.setColor(trackSegment.getArrowColor());
+            g2.setColor(getArrowColor());
 
             // draw the start arrows
             int offset = 1;
-            if (trackSegment.isArrowEndStart()) {
-                if (trackSegment.isArrowDirIn()) {
+            if (isArrowEndStart()) {
+                if (isArrowDirIn()) {
                     offset = drawArrow(g2, ep1, Math.PI + startAngleRAD, false, offset);
                 }
-                if (trackSegment.isArrowDirOut()) {
+                if (isArrowDirOut()) {
                     /* offset = */ drawArrow(g2, ep1, Math.PI + startAngleRAD, true, offset);
                 }
             }
 
             // draw the stop arrows
             offset = 1;
-            if (trackSegment.isArrowEndStop()) {
-                if (trackSegment.isArrowDirIn()) {
+            if (isArrowEndStop()) {
+                if (isArrowDirIn()) {
                     offset = drawArrow(g2, ep2, stopAngleRAD, false, offset);
                 }
-                if (trackSegment.isArrowDirOut()) {
+                if (isArrowDirOut()) {
                     /* offset = */ drawArrow(g2, ep2, stopAngleRAD, true, offset);
                 }
             }
@@ -267,37 +474,39 @@ public class TrackSegmentView extends LayoutTrackView {
     // bridge decorations
     //
     private void drawBridgeDecorations(Graphics2D g2) {
-        if (trackSegment.isBridgeSideLeft() || trackSegment.isBridgeSideRight()) {
-            float halfWidth = trackSegment.getBridgeDeckWidth() / 2.F;
+        boolean bridgeSideRight = isBridgeSideRight();
+        boolean bridgeSideLeft = isBridgeSideLeft();
 
-            g2.setStroke(new BasicStroke(trackSegment.getBridgeLineWidth(),
+        if (bridgeSideLeft || bridgeSideRight) {
+            float halfWidth = getBridgeDeckWidth() / 2.F;
+
+            g2.setStroke(new BasicStroke(getBridgeLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
-            g2.setColor(trackSegment.getBridgeColor());
+            g2.setColor(getBridgeColor());
 
             if (isArc()) {
-                trackSegment.calculateTrackSegmentAngle();
+                calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
-                        trackSegment.getCX(), trackSegment.getCY(),
-                        trackSegment.getCW(), trackSegment.getCH());
-                double startAdj = trackSegment.getStartAdj(), tmpAngle = trackSegment.getTmpAngle();
-                if (trackSegment.isBridgeSideLeft()) {
+                        getCX(), getCY(), getCW(), getCH());
+                double startAdj = getStartAdj(), tmpAngle = getTmpAngle();
+                if (bridgeSideLeft) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                             tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
-                if (trackSegment.isBridgeSideRight()) {
+                if (bridgeSideRight) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                             tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAdj, tmpAngle, Arc2D.OPEN));
                 }
             } else if (isBezier()) {
-                Point2D[] points = trackSegment.getBezierPoints();
-                if (trackSegment.isBridgeSideLeft()) {
+                Point2D[] points = getBezierPoints();
+                if (bridgeSideLeft) {
                     MathUtil.drawBezier(g2, points, -halfWidth);
                 }
-                if (trackSegment.isBridgeSideRight()) {
+                if (bridgeSideRight) {
                     MathUtil.drawBezier(g2, points, +halfWidth);
                 }
             } else {
@@ -305,35 +514,35 @@ public class TrackSegmentView extends LayoutTrackView {
                 Point2D vector = MathUtil.normalize(delta, halfWidth);
                 vector = MathUtil.orthogonal(vector);
 
-                if (trackSegment.isBridgeSideRight()) {
+                if (bridgeSideRight) {
                     Point2D ep1R = MathUtil.add(ep1, vector);
                     Point2D ep2R = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
                 }
 
-                if (trackSegment.isBridgeSideLeft()) {
+                if (bridgeSideLeft) {
                     Point2D ep1L = MathUtil.subtract(ep1, vector);
                     Point2D ep2L = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
-            if (trackSegment.isFlip()) {
-                boolean temp = trackSegment.isBridgeSideRight();
-                trackSegment.setBridgeSideRight(trackSegment.isBridgeSideLeft());
-                trackSegment.setBridgeSideLeft(temp);
+            if (isFlip()) {
+                boolean temp = bridgeSideRight;
+                bridgeSideRight = bridgeSideLeft;
+                bridgeSideLeft = temp;
             }
-            int bridgeApproachWidth = trackSegment.getBridgeApproachWidth();
+            int bridgeApproachWidth = getBridgeApproachWidth();
 
-            if (trackSegment.isBridgeHasEntry()) {
-                if (trackSegment.isBridgeSideRight()) {
+            if (isBridgeHasEntry()) {
+                if (bridgeSideRight) {
                     p1 = new Point2D.Double(-bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
                     p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
-                if (trackSegment.isBridgeSideLeft()) {
+                if (bridgeSideLeft) {
                     p1 = new Point2D.Double(-bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
@@ -341,28 +550,21 @@ public class TrackSegmentView extends LayoutTrackView {
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
             }
-            if (trackSegment.isBridgeHasExit()) {
-                if (trackSegment.isBridgeSideRight()) {
+            if (isBridgeHasExit()) {
+                if (bridgeSideRight) {
                     p1 = new Point2D.Double(+bridgeApproachWidth, +bridgeApproachWidth + halfWidth);
                     p2 = new Point2D.Double(0.0, +halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
-                if (trackSegment.isBridgeSideLeft()) {
+                if (bridgeSideLeft) {
                     p1 = new Point2D.Double(+bridgeApproachWidth, -bridgeApproachWidth - halfWidth);
                     p2 = new Point2D.Double(0.0, -halfWidth);
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                     p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
                     g2.draw(new Line2D.Double(p1P, p2P));
                 }
-            }
-
-            // if necessary flip these back
-            if (trackSegment.isFlip()) {
-                boolean temp = trackSegment.isBridgeSideRight();
-                trackSegment.setBridgeSideRight(trackSegment.isBridgeSideLeft());
-                trackSegment.setBridgeSideLeft(temp);
             }
         }
     }
@@ -371,14 +573,14 @@ public class TrackSegmentView extends LayoutTrackView {
     // end bumper decorations
     //
     private void drawBumperDecorations(Graphics2D g2) {
-        if (trackSegment.isBumperEndStart() || trackSegment.isBumperEndStop()) {
-            g2.setStroke(new BasicStroke(trackSegment.getBumperLineWidth(),
+        if (isBumperEndStart() || isBumperEndStop()) {
+            g2.setStroke(new BasicStroke(getBumperLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
-            g2.setColor(trackSegment.getBumperColor());
+            g2.setColor(getBumperColor());
 
-            float halfLength = trackSegment.getBumperLength() / 2.F;
+            float halfLength = getBumperLength() / 2.F;
 
-            if (trackSegment.isBumperFlipped()) {
+            if (isBumperFlipped()) {
                 double temp = startAngleRAD;
                 startAngleRAD = stopAngleRAD;
                 stopAngleRAD = temp;
@@ -388,13 +590,13 @@ public class TrackSegmentView extends LayoutTrackView {
             p1 = new Point2D.Double(0.F, -halfLength);
             p2 = new Point2D.Double(0.F, +halfLength);
 
-            if (trackSegment.isBumperEndStart()) {
+            if (isBumperEndStart()) {
                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
                 // draw cross tie
                 g2.draw(new Line2D.Double(p1P, p2P));
             }
-            if (trackSegment.isBumperEndStop()) {
+            if (isBumperEndStop()) {
                 p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
                 p2P = MathUtil.add(MathUtil.rotateRAD(p2, stopAngleRAD), ep2);
                 // draw cross tie
@@ -407,39 +609,41 @@ public class TrackSegmentView extends LayoutTrackView {
     // tunnel decorations
     //
     private void drawTunnelDecorations(Graphics2D g2) {
-        if (trackSegment.isTunnelSideRight() || trackSegment.isTunnelSideLeft()) {
-            float halfWidth = trackSegment.getTunnelFloorWidth() / 2.F;
-            g2.setStroke(new BasicStroke(trackSegment.getTunnelLineWidth(),
+        boolean tunnelSideRight = isTunnelSideRight();
+        boolean tunnelSideLeft = isTunnelSideLeft();
+
+        if (tunnelSideRight || tunnelSideLeft) {
+            float halfWidth = getTunnelFloorWidth() / 2.F;
+            g2.setStroke(new BasicStroke(getTunnelLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 10.F,
                     new float[]{6.F, 4.F}, 0));
-            g2.setColor(trackSegment.getTunnelColor());
+            g2.setColor(getTunnelColor());
 
             if (isArc()) {
-                trackSegment.calculateTrackSegmentAngle();
+                calculateTrackSegmentAngle();
                 Rectangle2D cRectangle2D = new Rectangle2D.Double(
-                        trackSegment.getCX(), trackSegment.getCY(),
-                        trackSegment.getCW(), trackSegment.getCH());
-                double startAngleDEG = trackSegment.getStartAdj(),
-                        extentAngleDEG = trackSegment.getTmpAngle();
-                if (trackSegment.isTunnelSideRight()) {
+                        getCX(), getCY(), getCW(), getCH());
+                double startAngleDEG = getStartAdj(),
+                        extentAngleDEG = getTmpAngle();
+                if (tunnelSideRight) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, +halfWidth);
                     g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                             tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
-                if (trackSegment.isTunnelSideLeft()) {
+                if (tunnelSideLeft) {
                     Rectangle2D tRectangle2D = MathUtil.inset(cRectangle2D, -halfWidth);
                     g2.draw(new Arc2D.Double(tRectangle2D.getX(), tRectangle2D.getY(),
                             tRectangle2D.getWidth(), tRectangle2D.getHeight(),
                             startAngleDEG, extentAngleDEG, Arc2D.OPEN));
                 }
-                trackSegment.trackRedrawn();
+                trackRedrawn();
             } else if (isBezier()) {
-                Point2D[] points = trackSegment.getBezierPoints();
-                if (trackSegment.isTunnelSideRight()) {
+                Point2D[] points = getBezierPoints();
+                if (tunnelSideRight) {
                     MathUtil.drawBezier(g2, points, +halfWidth);
                 }
-                if (trackSegment.isTunnelSideLeft()) {
+                if (tunnelSideLeft) {
                     MathUtil.drawBezier(g2, points, -halfWidth);
                 }
             } else {
@@ -447,38 +651,38 @@ public class TrackSegmentView extends LayoutTrackView {
                 Point2D vector = MathUtil.normalize(delta, halfWidth);
                 vector = MathUtil.orthogonal(vector);
 
-                if (trackSegment.isTunnelSideRight()) {
+                if (tunnelSideRight) {
                     Point2D ep1L = MathUtil.add(ep1, vector);
                     Point2D ep2L = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
-                if (trackSegment.isTunnelSideLeft()) {
+                if (tunnelSideLeft) {
                     Point2D ep1R = MathUtil.subtract(ep1, vector);
                     Point2D ep2R = MathUtil.subtract(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
-            g2.setStroke(new BasicStroke(trackSegment.getTunnelLineWidth(),
+            g2.setStroke(new BasicStroke(getTunnelLineWidth(),
                     BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1.F));
-            g2.setColor(trackSegment.getTunnelColor());
+            g2.setColor(getTunnelColor());
 
             // don't let tunnelEntranceWidth be less than tunnelFloorWidth + 6
-            double tunnelEntranceWidth = Math.max(trackSegment.getTunnelEntranceWidth(),
-                    trackSegment.getTunnelFloorWidth() + 6);
+            double tunnelEntranceWidth = Math.max(getTunnelEntranceWidth(),
+                    getTunnelFloorWidth() + 6);
 
             double halfEntranceWidth = tunnelEntranceWidth / 2.0;
-            double halfFloorWidth = trackSegment.getTunnelFloorWidth() / 2.0;
+            double halfFloorWidth = getTunnelFloorWidth() / 2.0;
             double halfDiffWidth = halfEntranceWidth - halfFloorWidth;
 
-            if (trackSegment.isFlip()) {
-                boolean temp = trackSegment.isTunnelSideRight();
-                trackSegment.setTunnelSideRight(trackSegment.isTunnelSideLeft());
-                trackSegment.setTunnelSideLeft(temp);
+            if (isFlip()) {
+                boolean temp = tunnelSideRight;
+                tunnelSideRight = tunnelSideLeft;
+                tunnelSideLeft = temp;
             }
 
-            if (trackSegment.isTunnelHasEntry()) {
-                if (trackSegment.isTunnelSideRight()) {
+            if (isTunnelHasEntry()) {
+                if (tunnelSideRight) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, +halfFloorWidth);
                     p3 = new Point2D.Double(0.0, +halfEntranceWidth);
@@ -504,7 +708,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     path.closePath();
                     g2.draw(path);
                 }
-                if (trackSegment.isTunnelSideLeft()) {
+                if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
                     p3 = new Point2D.Double(0.0, -halfEntranceWidth);
@@ -531,8 +735,8 @@ public class TrackSegmentView extends LayoutTrackView {
                     g2.draw(path);
                 }
             }
-            if (trackSegment.isTunnelHasExit()) {
-                if (trackSegment.isTunnelSideRight()) {
+            if (isTunnelHasExit()) {
+                if (tunnelSideRight) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, +halfFloorWidth);
                     p3 = new Point2D.Double(0.0, +halfEntranceWidth);
@@ -558,7 +762,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     path.closePath();
                     g2.draw(path);
                 }
-                if (trackSegment.isTunnelSideLeft()) {
+                if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
                     p3 = new Point2D.Double(0.0, -halfEntranceWidth);
@@ -585,13 +789,6 @@ public class TrackSegmentView extends LayoutTrackView {
                     g2.draw(path);
                 }
             }
-
-            // if necessary, put these back
-            if (trackSegment.isFlip()) {
-                boolean temp = trackSegment.isTunnelSideRight();
-                trackSegment.setTunnelSideRight(trackSegment.isTunnelSideLeft());
-                trackSegment.setTunnelSideLeft(temp);
-            }
         }
     }
 
@@ -603,15 +800,12 @@ public class TrackSegmentView extends LayoutTrackView {
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
 
-        int arrowLength = trackSegment.getArrowLength();
-        int arrowLineWidth = trackSegment.getArrowLineWidth();
-        int arrowGap = trackSegment.getArrowGap();
+        int arrowLength = getArrowLength();
+        int arrowLineWidth = getArrowLineWidth();
+        int arrowGap = getArrowGap();
 
-        switch (trackSegment.getArrowStyle()) {
-            default: {
-                trackSegment.setArrowStyle(0);
-                break;
-            }
+        switch (getArrowStyle()) {
+            default:
             case 0: {
                 break;
             }
