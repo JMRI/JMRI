@@ -474,7 +474,7 @@ public class TrackSegmentView extends LayoutTrackView {
             if (trackSegment.isFlip()) {
                 boolean temp = trackSegment.isTunnelSideRight();
                 trackSegment.setTunnelSideRight(trackSegment.isTunnelSideLeft());
-                trackSegment.setTunnelSideRight(temp);
+                trackSegment.setTunnelSideLeft(temp);
             }
 
             if (trackSegment.isTunnelHasEntry()) {
