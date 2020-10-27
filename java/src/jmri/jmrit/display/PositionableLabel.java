@@ -24,6 +24,7 @@ import javax.swing.JScrollPane;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
+import jmri.jmrit.display.palette.TextItemPanel;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
 import org.slf4j.Logger;
@@ -531,11 +532,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         repaint();
     }
 
-/*    @Override
-    public boolean setEditItemMenu(JPopupMenu popup) {
-        return setEditIconMenu(popup);
-    }*/
-
     /*
      * ********** Methods for Item Popups in Panel editor ************************
      */
@@ -610,9 +606,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public jmri.jmrit.display.DisplayFrame _paletteFrame;
 
-    //
     // ********** Methods for Item Popups in Control Panel editor *******************
-    //
     /**
      * Create a palette window.
      *
@@ -621,8 +615,8 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public DisplayFrame makePaletteFrame(String title) {
         jmri.jmrit.display.palette.ItemPalette.loadIcons();
-
-        return new DisplayFrame(title, _editor);
+        DisplayFrame frame = new DisplayFrame(title, _editor);
+        return frame;
     }
 
     public void initPaletteFrame(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
@@ -632,8 +626,22 @@ public class PositionableLabel extends JLabel implements Positionable {
         sp.setPreferredSize(dim);
         paletteFrame.add(sp);
         paletteFrame.pack();
+        paletteFrame.addWindowListener(new PaletteFrameCloser(itemPanel));
+
         jmri.InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(_editor, this, paletteFrame);
         paletteFrame.setVisible(true);
+    }
+
+    static class PaletteFrameCloser extends java.awt.event.WindowAdapter {
+        ItemPanel ip;
+        PaletteFrameCloser( @Nonnull ItemPanel itemPanel) {
+            super();
+            ip = itemPanel;
+        }
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent e) {
+            ip.closeDialogs();
+        }
     }
 
     public void finishItemUpdate(DisplayFrame paletteFrame, @Nonnull ItemPanel itemPanel) {
@@ -666,26 +674,28 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconItemPanel = new IconItemPanel(_paletteFrame, "Icon"); // NOI18N
         ActionListener updateAction = (ActionEvent a) -> updateIconItem();
         _iconItemPanel.init(updateAction);
+        _iconItemPanel.setUpdateIcon((NamedIcon)getIcon());
         initPaletteFrame(_paletteFrame, _iconItemPanel);
     }
 
     private void updateIconItem() {
-        NamedIcon icon = _iconItemPanel.getIcon();
+        NamedIcon icon = _iconItemPanel.getUpdateIcon();
         if (icon != null) {
             String url = icon.getURL();
             setIcon(NamedIcon.getIconByName(url));
             updateSize();
         }
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _iconItemPanel = null;
-        invalidate();
+        finishItemUpdate(_paletteFrame, _iconItemPanel);
     }
-/* future use to replace editor.setTextAttributes
-    public boolean setEditTextMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(Bundle.getMessage("TextAttributes"), Bundle.getMessage("Text"));
-        popup.add(new AbstractAction(txt) {
 
+    /*    Case for isIcon
+    @Override
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        return setEditIconMenu(popup);
+    }*/
+
+    public boolean setEditTextItemMenu(JPopupMenu popup) {
+        popup.add(new AbstractAction(Bundle.getMessage("SetTextSizeColor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 editTextItem();
@@ -694,26 +704,26 @@ public class PositionableLabel extends JLabel implements Positionable {
         return true;
     }
 
-    TextItemPanel _textItemPanel;
-    
+    TextItemPanel _itemPanel;
+
     protected void editTextItem() {
-        makePaletteFrame(java.text.MessageFormat.format(Bundle.getMessage("TextAttributes"), Bundle.getMessage("BeanNameTurnout")));
-        _textItemPanel = new TextItemPanel(_paletteFrame, "Text", _editor); // NOI18N
-        ActionListener updateAction = (ActionEvent a) -> {
-                updateTextItem();
-         };
-        _textItemPanel.init(updateAction, this);
-        initPaletteFrame(_textItemPanel);
+        _paletteFrame = makePaletteFrame(Bundle.getMessage("SetTextSizeColor"));
+        _itemPanel = new TextItemPanel(_paletteFrame, "Text");
+        ActionListener updateAction = (ActionEvent a) -> updateTextItem();
+        _itemPanel.init(updateAction, this);
+        initPaletteFrame(_paletteFrame, _itemPanel);
     }
 
-    private void updateTextItem() {
-        _textItemPanel.updateAttributes(this);
-        updateSize();
-        _paletteFrame.dispose();
-        _paletteFrame = null;
-        _iconItemPanel = null;
-        invalidate();
-    }*/
+    protected void updateTextItem() {
+        PositionablePopupUtil util = _itemPanel.getPositionablePopupUtil();
+        _itemPanel.setAttributes(this);
+        if (_editor._selectionGroup != null) {
+            _editor.setSelectionsAttributes(util, this);
+        } else {
+            _editor.setAttributes(util, this);
+        }
+        finishItemUpdate(_paletteFrame, _itemPanel);
+    }
 
     /**
      * Rotate degrees return true if popup is set.

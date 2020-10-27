@@ -12,7 +12,7 @@ import jmri.Manager;
  * @author Bob Jacobsen Copyright (C) 2010, 2018
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class ProxyLightManager extends AbstractProxyManager<Light>
+public class ProxyLightManager extends AbstractProvidingProxyManager<Light>
         implements LightManager {
 
     public ProxyLightManager() {
@@ -153,13 +153,18 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         LightManager m = (LightManager) getManager(systemName);
         return (m == null) ? false : m.allowMultipleAdditions(systemName);
     }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        return "Enter a number from 1 to 9999"; // Basic number format help
+        return Bundle.getMessage("EnterNumber1to9999ToolTip");
     }
 
     @Override

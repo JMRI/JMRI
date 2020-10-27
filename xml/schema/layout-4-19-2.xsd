@@ -75,6 +75,9 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/paneleditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/meters.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/meterframes.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/ctcdata.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
 
   <xs:element name="layout-config">
@@ -314,6 +317,8 @@ signals - obsolete, EMPTY, never used
         <xs:element name="sections"     type="SectionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="transits"     type="TransitManagerType" minOccurs="0" maxOccurs="unbounded" />
 
+        <xs:element name="meters"       type="MeterManagerType" minOccurs="0" maxOccurs="unbounded" />
+
         <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" >
@@ -372,6 +377,9 @@ signals - obsolete, EMPTY, never used
             </xs:keyref>
         </xs:element>
         <xs:element name="entryexitpairs" type="EntryExitPairType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="meterFrames"  type="MeterFrameManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="ctcdata" type="CtcDataType" minOccurs="0" maxOccurs="1" />
 
         <xs:element name="filehistory"  type="FileHistoryType" minOccurs="0" maxOccurs="1" />
 

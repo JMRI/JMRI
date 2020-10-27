@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<warrantPreferences>
+  <!--Written by JMRI version 4.21.1ish+sg+2020-08-26T12:24:48Z+R3159d57 on Wed Aug 26 12:24:45 EDT 2020-->
+  <layoutParams layoutScale="160.0" searchDepth="20">
+    <shutdown>PROMPT</shutdown>
+  </layoutParams>
+  <speedMapParams>
+    <stepIncrements timeIncrement="750" rampIncrement="0.04" throttleScale="0.9" />
+    <speedNames interpretation="2">
+      <Cab>120.0</Cab>
+      <Maximum>119.0</Maximum>
+      <Normal>100.0</Normal>
+      <Sixty>90.0</Sixty>
+      <Fifty>80.0</Fifty>
+      <Limited>65.0</Limited>
+      <Medium>50.0</Medium>
+      <Slow>31.0</Slow>
+      <Restricted>35.0</Restricted>
+      <RestrictedSlow>10.0</RestrictedSlow>
+      <Caution>10.0</Caution>
+      <Danger>0.0</Danger>
+      <Stop>0.0</Stop>
+    </speedNames>
+    <appearancePrefs>
+      <SignalHeadStateRed>Stop</SignalHeadStateRed>
+      <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
+      <SignalHeadStateGreen>Normal</SignalHeadStateGreen>
+      <SignalHeadStateFlashingGreen>Normal</SignalHeadStateFlashingGreen>
+      <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
+      <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
+      <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
+      <SignalHeadStateFlashingLunar>Slow</SignalHeadStateFlashingLunar>
+    </appearancePrefs>
+  </speedMapParams>
+</warrantPreferences>

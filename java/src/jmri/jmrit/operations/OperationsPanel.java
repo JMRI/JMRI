@@ -214,11 +214,13 @@ public class OperationsPanel extends JPanel {
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if a default instance of the
-     *         {@link jmri.swing.JTablePersistenceManager} is available; false
-     *         otherwise
      */
-    public boolean loadTableDetails(JTable table) {
+    public void loadTableDetails(JTable table) {
+        loadTableDetails(table, getWindowFrameRef());
+        persist(table);
+    }
+    
+    public static void loadTableDetails(JTable table, String name) {
         if (table.getRowSorter() == null) {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
@@ -239,14 +241,32 @@ public class OperationsPanel extends JPanel {
         // give each cell a bit of space between the vertical lines and text
         table.setIntercellSpacing(new Dimension(3, 1));
         // table must have a name
-        table.setName(getWindowFrameRef() + ":table"); // NOI18N
+        table.setName(name + ":table"); // NOI18N
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
             manager.get().resetState(table);
-            manager.get().persist(table);
-            return true;
         }
-        return false;
+    }
+    
+    public static void persist(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().persist(table);
+        }
+    }
+    
+    public static void cacheState(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().cacheState(table);
+        }
+    }
+    
+    public static void saveTableState() {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().setPaused(false); // cheater way to save preferences.
+        }
     }
 
     protected void clearTableSort(JTable table) {

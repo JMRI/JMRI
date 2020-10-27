@@ -7,10 +7,10 @@ import java.util.Map.Entry;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
- * Gather common methods for Turnouts, Semsors, SignalHeads, Masts, etc.
+ * Gather common methods for Turnouts, Sensors, SignalHeads, Masts, etc.
  *
  * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
- * @author PeteCressman Copyright (C) 2011
+ * @author Pete Cressman Copyright (C) 2011
  */
 public class PositionableIcon extends PositionableLabel {
 
@@ -75,6 +75,10 @@ public class PositionableIcon extends PositionableLabel {
         return _iconMap.keySet().iterator();
     }
 
+    public HashMap<String, NamedIcon> getIconMap() {
+        return cloneMap(_iconMap, this);
+    }
+
     @Override
     public int maxHeight() {
         int max = super.maxHeight();
@@ -126,20 +130,6 @@ public class PositionableIcon extends PositionableLabel {
     @Override
     public double getScale() {
         return _scale;
-    }
-
-    @Override
-    public int getDegrees() {
-        if (_text) {
-            return super.getDegrees();
-        }
-        if (_iconMap != null) {
-            Iterator<NamedIcon> it = _iconMap.values().iterator();
-            if (it.hasNext()) {
-                return it.next().getDegrees();
-            }
-        }
-        return super.getDegrees();
     }
 
     @Override

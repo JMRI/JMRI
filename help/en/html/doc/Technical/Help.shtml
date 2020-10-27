@@ -122,12 +122,13 @@
         <li>When you create a new page, start with a copy of either the help/en/TemplateBar.shtml
         or help/en/TemplatePlain.shtml template file, depending on whether or not you want to include
         a "sidebar" (via a file named Sidebar.shtml). This template will put the proper top and bottom
-        matter in place to get the page properly displayed.</li>
+        matter in place to get the page properly displayed.
+        </li>
         
         <li>In general, all help files in the html directory tree use a sidebar.  In general, files
-        in the package part of the tree do not. If you are using a sidebar, you may find one that suits
-        your purpose in the specific subdirectory in which you are working, in its parent directory, or,
-        in rare cases, you can use the one in the html directory itself (either /help/en/html or /help/fr/html).
+         in the package part of the tree do not. If you are using a sidebar, you may find one that suits
+         your purpose in the specific subdirectory in which you are working, in its parent directory, or,
+         in rare cases, you can use the one in the html directory itself (either /help/en/html or /help/fr/html).
         
         <p> If none of these meet your needs (or do not exist), you may create a Sidebar.shtml in the subdirectory,
          in which case, you should follow the format of other Sidebar.shtml files in other subdirectories at the 
@@ -139,13 +140,10 @@
          as Hardware or Tool. This use of local part files allows Sidebar.shtml files in terminal subdirectories
          to use identical code, something that makes maintenance significantly easier.</p>
 
-        <p> If you do not need a local part, use the Sidebar.shtml in the parent directory by including
-        the following statement in your help file:
-        <pre style="font-family: monospace;">
-     &lt;!--#include virtual="../Sidebar.shtml" --&gt;
-        </pre>
-        This line exists in the help template files but does not have the "../". Note also there is no space 
-        before the hash sign and a space after the final quote.        
+        <p class="noted"> If you do not need a local part, you can include the Sidebar.shtml from the parent directory 
+         but ONLY if that file does not have any relative URLs (URLs with "../" and similar). It is does, the sidebar 
+         links will not work when incorporated into your page. Look at the contents of Sidebar.shtml in the parent 
+         directory before attempting to reference it.</p>
         </li>
 
         <li>All the page formatting on JMRI help and other web pages is done through included CSS
@@ -153,8 +151,10 @@
         Includes (SSI).  The main file is at <a href="../../../../../css/default.css">/css/default.css</a>
         and works with a few other files in that same directory. Because JavaHelp ignores SSI, the
         CSS formatting is ignored when JavaHelp is displaying the pages within the JMRI itself. In 
-        that case, JavaHelp provides the formatting.</li>
-     </ul>
+        that case, JavaHelp provides the formatting.
+        </li>
+ 
+       </ul>
 
              <p><a href="#helpTop">[Go to top of page]</a></p>
        </div>

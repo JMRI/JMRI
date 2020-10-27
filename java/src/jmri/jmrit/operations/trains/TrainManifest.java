@@ -152,20 +152,20 @@ public class TrainManifest extends TrainCommon {
 
                 // engine change or helper service?
                 if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-                    if (rl == train.getSecondLegStartLocation()) {
+                    if (rl == train.getSecondLegStartRouteLocation()) {
                         printChange(fileOut, rl, train, train.getSecondLegOptions());
                     }
-                    if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
+                    if (rl == train.getSecondLegEndRouteLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                                 .getStringRemoveHelpers(), new Object[]{splitString(rl.getName()), train.getName(),
                                         train.getDescription()}));
                     }
                 }
                 if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-                    if (rl == train.getThirdLegStartLocation()) {
+                    if (rl == train.getThirdLegStartRouteLocation()) {
                         printChange(fileOut, rl, train, train.getThirdLegOptions());
                     }
-                    if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
+                    if (rl == train.getThirdLegEndRouteLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                                 .getStringRemoveHelpers(), new Object[]{splitString(rl.getName()), train.getName(),
                                         train.getDescription()}));
@@ -203,17 +203,18 @@ public class TrainManifest extends TrainCommon {
                         }
                         String trainDeparts = "";
                         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+                            int emptyCars = train.getNumberEmptyCarsInTrain(rl);
                             // Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
                             trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringTrainDepartsLoads(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), cars - emptyCars, emptyCars,
+                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
                                             train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
                                             train.getTrainWeight(rl), train.getTrainTerminatesName(), train.getName()});
                         } else {
                             // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
                             trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
                                     .getStringTrainDepartsCars(), new Object[]{routeLocationName,
-                                            rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
+                                            rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl), train.getTrainLength(rl),
                                             Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
                                             train.getTrainTerminatesName(), train.getName()});
                         }

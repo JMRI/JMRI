@@ -14,8 +14,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
@@ -40,7 +38,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 CSVFormat.DEFAULT)) {
             // build header
             printHeader(fileOut);
-            printRailroadName(fileOut, Setup.getRailroadName());
+            printRailroadName(fileOut,
+                    train.getRailroadName().isEmpty() ? Setup.getRailroadName() : train.getRailroadName());
             printTrainName(fileOut, train.getName());
             printTrainDescription(fileOut, train.getDescription());
             printPrinterName(fileOut, locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName());
@@ -131,11 +130,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     found = true;
                     for (Car car : carList) {
                         if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
-                            cars++;
                             newWork = true;
-                            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                                emptyCars++;
-                            }
                             int count = 0;
                             if (car.isUtility()) {
                                 count = countPickupUtilityCars(carList, car, IS_MANIFEST);
@@ -150,12 +145,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 // car set outs
                 for (Car car : carList) {
                     if (car.getRouteDestination() == rl) {
-                        cars--;
                         newWork = true;
-                        if (InstanceManager.getDefault(CarLoads.class).getLoadType(car.getTypeName(), car.getLoadName()).equals(
-                                CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars--;
-                        }
                         int count = 0;
                         if (car.isUtility()) {
                             count = countSetoutUtilityCars(carList, car, false, IS_MANIFEST);
@@ -197,7 +187,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                     if (!routeLocationName.equals(nextRouteLocationName)) {
                         if (newWork) {
                             printTrainDeparts(fileOut, locationName, rl.getTrainDirectionString());
-                            printTrainLength(fileOut, train.getTrainLength(rl), emptyCars, cars);
+                            printTrainLength(fileOut, train.getTrainLength(rl), train.getNumberEmptyCarsInTrain(rl),
+                                    train.getNumberCarsInTrain(rl));
                             printTrainWeight(fileOut, train.getTrainWeight(rl));
                             newWork = false;
                         } else {

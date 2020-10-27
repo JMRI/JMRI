@@ -11,7 +11,7 @@ import jmri.ReporterManager;
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2010
  */
-public class ProxyReporterManager extends AbstractProxyManager<Reporter> implements ReporterManager {
+public class ProxyReporterManager extends AbstractProvidingProxyManager<Reporter> implements ReporterManager {
 
     public ProxyReporterManager() {
         super();
@@ -104,9 +104,15 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
         return ((ReporterManager) getManagerOrDefault(systemName)).allowMultipleAdditions(systemName);
     }
 
+    @SuppressWarnings("deprecation") // user warned by actual manager class
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         return getNextValidAddress(curAddress, prefix, typeLetter());
+    }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws jmri.JmriException {
+        return getNextValidAddress(curAddress, prefix, ignoreInitialExisting, typeLetter());
     }
 
     /**

@@ -6,7 +6,8 @@ import jmri.jmrix.loconet.LnConstants;
 /**
  * Manage the set of valid modes for a particular LocoIO port,
  * as well as the conversions between addresses and SV values.
- *
+ * Used in LocoIO tool.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  * @author John Plocher, January 30, 2007
  */
 public class LocoIOModeList {
@@ -19,7 +20,7 @@ public class LocoIOModeList {
      */
     public LocoIOModeList() {
 
-        /**
+        /*
          * Initialize various configuration modes.
          * @TODO: Need to tag these with which firmware rev supports
          * them and only allow choices that match.
@@ -39,7 +40,7 @@ public class LocoIOModeList {
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x17, 0x70, "Turnout Feedback, single sensor"));
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x37, 0x70, "Turnout Feedback, dual sensor, #1"));
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x37, 0x60, "Turnout Feedback, dual sensor, #2"));
-        /**
+        /*
          * and Outputs...
          */
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xC0, 0x00, "Block Occupied Indication"));

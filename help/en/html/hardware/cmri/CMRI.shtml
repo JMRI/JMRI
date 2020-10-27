@@ -258,24 +258,27 @@
   physical hardware connection via a serial hardware interface or a simulated
   connection.</p>
 
+  <h3>CMRInet</h3>
   <p>To create a CMRInet connection, open the Preferences window. Click on
   <strong>Connections</strong> in the left selection box.</p>
 
-  <p><img alt="xxx" src="images/cmripreferences.png" width="919" height="523"></p>
+  <img alt="xxx" src="images/cmripreferences.png" width="919" height="523">
 
   <p>Select <strong>C/MRI</strong> in the <strong>System manufacturer</strong>
   menu popup. Select <strong>Serial</strong> from the <strong>System
-  connection</strong> menu popup. Under <strong>Settings</strong>, select the
+  connection</strong> menu popup.</p>
+  <p>Under <strong>Settings</strong>, select the
   name of the physical serial port on the computer. Either an RS-232 or USB
-  port can be selected.</p>
+  port known to the system can be selected.</p>
 
   <p>Click on <strong>Additional Connection Settings</strong>, select the
-  network line speed that the C/MRI nodes are configured.</p>
+  network line speed rate that the C/MRI nodes are configured for.</p>
 
   <p>Click <strong>Save</strong> to create the serial connection. JMRI will
-  present a dialog window asking if you want to restart, Click
-  <strong>Yes</strong>.</p>
+  present a dialog window asking if you want to restart.<br>
+  Click <strong>Yes</strong>.</p>
 
+  <h3>Simulator</h3>
   <p>A Simulator connection is very useful if you are creating a PanelPro panel
   and do not have actual C/MRI hardware in place. </p>
 
@@ -285,10 +288,10 @@
 
   <p>To create a Simulator connection, follow the same steps above and select
   Simulator for the System connection. Be sure to <strong>Save</strong> the
-  simulator connection. </p>
+  Simulator connection.</p>
 
-  <p><img alt="" src="images/cmripreferencessimulator.png" width="919"
-  height="523"></p>
+  <img alt="" src="images/cmripreferencessimulator.png" width="919"
+  height="523">
 
   <p>A physical and simulator connection may exist at the same time, but only
   one may be active at a time. Use the <strong>Disable Connection</strong>

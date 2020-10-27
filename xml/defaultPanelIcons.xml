@@ -227,34 +227,34 @@
           resources/icons/smallschematics/lights/cross-unknown.png
         </BeanStateUnknown>
       </Cross>
-      <LeftTurnout>
+      <ToggleSwitch>
         <StateOff>
-          resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
+          resources/icons/USS/plate/levers/switch-off.gif
         </StateOff>
         <StateOn>
-          resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
+          resources/icons/USS/plate/levers/switch-on.gif
         </StateOn>
         <BeanStateInconsistent> 
-          resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
+          resources/icons/USS/plate/levers/switch-inconsistent.gif
         </BeanStateInconsistent> 
         <BeanStateUnknown>
-          resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif
+          resources/icons/USS/plate/levers/switch-unknown.gif
         </BeanStateUnknown>
-      </LeftTurnout>
-      <RightTurnout>
+      </ToggleSwitch>
+      <LightBulb>
         <StateOff>
-          resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
+          resources/icons/functionicons/transparent_background/generic_light_off.png
         </StateOff>
         <StateOn>
-          resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
+          resources/icons/functionicons/transparent_background/generic_light.png
         </StateOn>
         <BeanStateInconsistent> 
-          resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
+          resources/icons/smallschematics/lights/cross-inconsistent.png
         </BeanStateInconsistent> 
         <BeanStateUnknown>
-          resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif
+          resources/icons/smallschematics/lights/cross-unknown.png
         </BeanStateUnknown>
-      </RightTurnout>
+      </LightBulb>
     </Light>
 
     <Icon>
@@ -270,6 +270,15 @@
     
     <Background>
       <set>
+        <plain>
+          resources/icons/USS/background/Panel-plain.gif
+        </plain>
+        <signal>
+          resources/icons/USS/background/Panel-signal.gif
+        </signal>
+        <switch>
+          resources/icons/USS/background/Panel-switch.gif
+        </switch>
       </set>
     </Background>
     

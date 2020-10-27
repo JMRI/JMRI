@@ -82,6 +82,16 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterProvideByNumber() {
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     @Override

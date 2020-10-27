@@ -365,9 +365,9 @@ public class Engine extends RollingStock {
                         getTrain() != null &&
                         !isBunit() &&
                         getTrain().getLeadEngine() != this) {
-                    if (((getTrain().getSecondLegStartLocation() == current &&
+                    if (((getTrain().getSecondLegStartRouteLocation() == current &&
                             (getTrain().getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)) ||
-                            ((getTrain().getThirdLegStartLocation() == current &&
+                            ((getTrain().getThirdLegStartRouteLocation() == current &&
                                     (getTrain().getThirdLegOptions() &
                                             Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES))) {
                         log.debug("New lead locomotive ({}) for train ({})", toString(), getTrain().getName());

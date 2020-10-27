@@ -704,7 +704,7 @@ public class ActivateTrainFrame {
             tSource = ActiveTrain.ROSTER;
 
             if (trainTypeBox.getSelectedIndex() != 0
-                    && (r.getAttribute("DisptacherTrainType") == null
+                    && (r.getAttribute("DispatcherTrainType") == null
                     || !r.getAttribute("DispatcherTrainType").equals("" + trainTypeBox.getSelectedItem()))) {
                 r.putAttribute("DispatcherTrainType", "" + trainTypeBox.getSelectedItem());
                 r.updateFile();

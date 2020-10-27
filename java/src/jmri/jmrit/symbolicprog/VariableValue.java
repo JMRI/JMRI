@@ -15,32 +15,33 @@ import org.slf4j.LoggerFactory;
  * <br><br>
  * The mask shown below comes in two forms:
  * <ul>
- * <li> A character-by-character bit mask of 8 or 16 binary digits, e.g.
- * "XXVVVVXXX"
- * <p>
- * In this case, the "V" bits denote a continuous bit field that contains the
- * datum
- * <li>A small decimal value, i.e. "9"
- * <p>
- * In this case, the mask forms the multiplier (N) which combines with the
- * maximum value (maxVal, defined in a subclass) to break the CV into three
- * parts:
- * <ul>
- * <li>lowest part, stored as 1 times a value 0-(N-1)
- * <li> datum stored as datum*N (datum is limited to maxVal)
- * <li> highest part, which stored as N*(maxVal+1) times the value
- * </ul>
- * As an example, consider storing two decimal digits as a decimal value. You
- * can't use a bit mask changing the 2nd digit from 1 to 7, for example with a
- * total value of 14 to 74, changes bits that are also used by the first digit.
- * Instead, code this as
- * <ul>
- * <li> mask="1" maxVal="9"
- * <li> mask="10" maxVal="9"
- * </ul>
- * and you'll get the desired effect. (This requires Schema
- * <a href="http://jmri.org/xml/schema/decoder-4-15-2.xsd">xml/schema/decoder-4-15-2.xsd</a>
- * for validation)
+ *   <li> A character-by-character bit mask of 8 or 16 binary digits, e.g.
+ *   "XXVVVVXXX"
+ *   <br>
+ *   In this case, the "V" bits denote a continuous bit field that contains the
+ *   datum. For use in SplitVariableValue this mask can also be entered a a list of
+ *   multiple bit masks, separated by spaces.
+ *   <li>A small decimal value, i.e. "9"
+ *   <br>
+ *   In this case, the mask forms the multiplier (N) which combines with the
+ *   maximum value (maxVal, defined in a subclass) to break the CV into three
+ *   parts:
+ *   <ul>
+ *     <li>lowest part, stored as 1 times a value 0-(N-1)
+ *     <li>datum stored as datum*N (datum is limited to maxVal)
+ *     <li>highest part, which stored as N*(maxVal+1) times the value
+ *   </ul>
+ *   As an example, consider storing two decimal digits as a decimal value. You
+ *   can't use a bit mask changing the 2nd digit from 1 to 7, for example with a
+ *   total value of 14 to 74, changes bits that are also used by the first digit.
+ *   Instead, code this as
+ *   <ul>
+ *     <li> mask="1" maxVal="9"
+ *     <li> mask="10" maxVal="9"
+ *   </ul>
+ *   and you'll get the desired effect. (This requires Schema
+ *   <a href="http://jmri.org/xml/schema/decoder-4-15-2.xsd">xml/schema/decoder-4-15-2.xsd</a>
+ *   for validation)
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
@@ -226,15 +227,18 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     /**
      * Default implementation for subclasses to tell if a CV meets a common
      * definition of "changed". This implementation will only consider a
-     * variable to be changed if the underlying CV(s) state is EDITTED, e.g. if
-     * the CV(s) has been manually editted.
+     * variable to be changed if the underlying CV(s) state is EDITED, e.g. if
+     * the CV(s) has been manually edited.
      *
      * @param c CV to be examined
      * @return true if to be considered changed
      */
     public static boolean considerChanged(CvValue c) {
+        if (c == null) {
+            return false; // if no CV was assigned to a decoder variable
+        }
         int state = c.getState();
-        return state == CvValue.EDITED || state == CvValue.UNKNOWN;
+        return (state == CvValue.EDITED || state == CvValue.UNKNOWN);
     }
 
     // handle incoming parameter notification
@@ -268,7 +272,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      *                  only
      * @param cvNum     the CV number
      * @param mask      a bit mask like XXXVVVXX (converts to a value like
-     *                  0b00011100)
+     *                  0b00011100) or a series of masks separated by spaces
      * @param v         a vector of CV objects used to look up CVs
      * @param status    a field that holds the current status
      * @param item      the unique name for this Variable
@@ -285,7 +289,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         _writeOnly = writeOnly;
         _opsOnly = opsOnly;
         _cvNum = cvNum;
-        _mask = mask;
+        _mask = mask; // normally a single 8 bit mask but could be a space separated list of masks
         _cvMap = v;
         _status = status;
         _item = item;
@@ -416,6 +420,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
+     * Extending classes should override to return a single mask in case
+     * a list of masks was provided and the class only uses one.
      *
      * @return the CV bitmask in the form XXXVVVXX
      */
@@ -497,6 +503,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             // avoid method calls unless debugging
             log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
+        if (getCvNum() == null || getCvNum().equals("")) {
+            log.debug("no CV defined for value {}. setToRead skipped", _item);
+            return;
+        }
         _cvMap.get(getCvNum()).setToRead(newState);
     }
 
@@ -508,7 +518,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     @Override
     public boolean isToRead() {
-        return _cvMap.get(getCvNum()).isToRead();
+        if (_cvMap.get(getCvNum()) != null) { // skip displayed variables without a CV
+            return _cvMap.get(getCvNum()).isToRead();
+            }
+        return false;
     }
 
     /**
@@ -535,9 +548,19 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
         if (log.isDebugEnabled()) {
             // avoid method calls unless debugging
-            log.debug("setToRead({}) with overrides {},{},{} sets {}", state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
+            log.debug("setToRead({}) with overrides {},{},{} sets {}",
+                    state, getInfoOnly(), getWriteOnly(), !getAvailable(), newState);
         }
-        _cvMap.get(getCvNum()).setToWrite(newState);
+        CvValue cvVal; // null check in case decoder variable has no CV defined (yet)
+        try {
+            cvVal = _cvMap.get(getCvNum());
+        } catch (NullPointerException e) {
+            log.error("no CV defined for value {}. setToWrite skipped. Verify variable was defined", _item);
+            return;
+        }
+        if (cvVal != null) {
+            cvVal.setToWrite(newState);
+        }
     }
 
     /**
@@ -548,7 +571,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      */
     @Override
     public boolean isToWrite() {
-        return _cvMap.get(getCvNum()).isToWrite();
+        if (_cvMap.get(getCvNum()) != null) { // skip displayed variables without a CV
+            return _cvMap.get(getCvNum()).isToWrite();
+        }
+        return false;
     }
 
     /**
@@ -580,6 +606,18 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
     }
     private boolean _busy = false;
+
+    /**
+     * In case a set of masks was provided, at end of Ctor pick the first mask for
+     * implementing classes that use just one. Call not required if mask is ignored.
+     */
+    protected void simplifyMask() {
+        if (_mask != null && _mask.contains(" ")) {
+            log.debug("Mask for var {} was:{}", getCvName(), _mask);
+            _mask = _mask.split(" ")[0];
+            log.debug("Mask1 for var {} is:{}", getCvName(), _mask);
+        }
+    }
 
     /**
      * Convert a String bit mask like XXXVVVXX to an int like 0b00011100.

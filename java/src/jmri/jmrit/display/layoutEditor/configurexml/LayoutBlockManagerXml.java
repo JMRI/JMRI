@@ -32,7 +32,6 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element layoutblocks = new Element("layoutblocks");
         setStoreElementClass(layoutblocks);
@@ -45,40 +44,33 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             layoutblocks.setAttribute("routingStablisedSensor", tmStable.getName());
         }
 
-        java.util.Iterator<String> iter = tm.getSystemNameList().iterator();
-
         // don't return an element if there is nothing to include
-        if (!iter.hasNext()) {
+        if (tm.getNamedBeanSet().isEmpty()) {
             return null;
         }
+        
+        for (LayoutBlock b : tm.getNamedBeanSet()) {
 
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            if (sname == null) {
-                log.error("System name null during LayoutBlock store");
-            } else {
-                log.debug("layoutblock system name is {}", sname);
-                LayoutBlock b = tm.getBySystemName(sname);
-                // save only those LayoutBlocks that are in use--skip abandoned ones
-                if (b!=null && b.getUseCount() > 0) {
-                    Element elem = new Element("layoutblock").setAttribute("systemName", sname);
-                    elem.addContent(new Element("systemName").addContent(sname));
-                    storeCommon(b, elem);
-                    if (!b.getOccupancySensorName().isEmpty()) {
-                        elem.setAttribute("occupancysensor", b.getOccupancySensorName());
-                    }
-                    elem.setAttribute("occupiedsense", "" + b.getOccupiedSense());
-                    elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
-                    elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
-                    elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
-                    if (!b.getMemoryName().isEmpty()) {
-                        elem.setAttribute("memory", b.getMemoryName());
-                    }
-                    if (!b.useDefaultMetric()) {
-                        elem.addContent(new Element("metric").addContent("" + b.getBlockMetric()));
-                    }
-                    layoutblocks.addContent(elem);
+            // save only those LayoutBlocks that are in use--skip abandoned ones
+            if (b!=null && b.getUseCount() > 0) {
+                Element elem = new Element("layoutblock").setAttribute("systemName", b.getSystemName());
+                elem.addContent(new Element("systemName").addContent(b.getSystemName()));
+                storeCommon(b, elem);
+                if (!b.getOccupancySensorName().isEmpty()) {
+                    elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                 }
+                elem.setAttribute("occupiedsense", "" + b.getOccupiedSense());
+                elem.setAttribute("trackcolor", ColorUtil.colorToColorName(b.getBlockTrackColor()));
+                elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
+                elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
+                if (!b.getMemoryName().isEmpty()) {
+                    elem.setAttribute("memory", b.getMemoryName());
+                }
+                if (!b.useDefaultMetric()) {
+                    elem.addContent(new Element("metric").addContent("" + b.getBlockMetric()));
+                }
+                layoutblocks.addContent(elem);
+                
             }
         }
         return (layoutblocks);

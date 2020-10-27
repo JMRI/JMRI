@@ -322,7 +322,7 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-            <!--<xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/> already declared as part of nmra/shortAndLongAddress.xml incl-->
+            <!--CV29 bit5 already declared as part of nmra/shortAndLongAddress.xml incl-->
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
 
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>

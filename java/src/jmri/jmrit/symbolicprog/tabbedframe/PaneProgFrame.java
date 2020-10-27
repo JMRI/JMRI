@@ -1,9 +1,6 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import java.awt.BorderLayout;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -56,6 +53,10 @@ abstract public class PaneProgFrame extends JmriJFrame
     JPanel tempPane; // passed around during construction
 
     boolean _opsMode;
+    
+    boolean maxFnNumDirty = false;
+    String maxFnNumOld = "";
+    String maxFnNumNew = "";
 
     RosterEntry _rosterEntry = null;
     RosterEntryPane _rPane = null;
@@ -73,6 +74,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     String filename = null;
     String programmerShowEmptyPanes = "";
     String decoderShowEmptyPanes = "";
+    String decoderAllowResetDefaults = "";
 
     // GUI member declarations
     JTabbedPane tabPane = new JTabbedPane();
@@ -272,13 +274,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         addHelp();
     }
 
-    void setProgrammingGui(JPanel pane) {
+    void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
         modePane = getModePane();
         if (modePane != null) {
             // if so, configure programming part of GUI
-            JPanel bottom = new JPanel();
-            bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
             // add buttons
             JPanel bottomButtons = new JPanel();
             bottomButtons.setLayout(new BoxLayout(bottomButtons, BoxLayout.X_AXIS));
@@ -294,15 +294,192 @@ abstract public class PaneProgFrame extends JmriJFrame
             JPanel temp = new JPanel();
             bottom.add(temp);
             temp.add(modePane);
-
-            // add programming status message
-            bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-            progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-            bottom.add(progStatus);
-            pane.add(bottom, BorderLayout.SOUTH);
         }
+        
+        // add space for (programming) status message
+        bottom.add(new JSeparator(javax.swing.SwingConstants.HORIZONTAL));
+        progStatus.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        bottom.add(progStatus);
     }
 
+    // ================== Search section ==================
+    
+    // create and add the Search GUI
+    void setSearchGui(JPanel bottom) {
+        // search field
+        searchBar = new jmri.util.swing.SearchBar(searchForwardTask, searchBackwardTask, searchDoneTask);
+        searchBar.setVisible(false); // start not visible
+        searchBar.configureKeyModifiers(this);
+        bottom.add(searchBar);
+    }
+    
+    jmri.util.swing.SearchBar searchBar;
+    static class SearchPair {
+        WatchingLabel label;
+        JPanel tab;
+        SearchPair(WatchingLabel label, @Nonnull JPanel tab) {
+            this.label = label;
+            this.tab = tab;
+        }
+    }
+    
+    ArrayList<SearchPair> searchTargetList;
+    int nextSearchTarget = 0;
+    
+    // Load the array of search targets
+    protected void loadSearchTargets() {
+        if (searchTargetList != null) return;
+        
+        searchTargetList = new ArrayList<>();
+        
+        for (JPanel p : getPaneList()) {
+            for (Component c : p.getComponents()) {
+                loadJPanel(c, p);
+            }
+        }
+        
+        // add the panes themselves
+        for (JPanel tab : getPaneList()) {
+            searchTargetList.add( new SearchPair( null, tab ));
+        }        
+    }
+    
+    // Recursive load of possible search targets
+    protected void loadJPanel(Component c, JPanel tab) {
+        if (c instanceof JPanel) {
+            for (Component d : ((JPanel)c).getComponents()) {
+                loadJPanel(d, tab);
+            }
+        } else if (c instanceof JScrollPane) {
+            loadJPanel( ((JScrollPane)c).getViewport().getView(), tab);
+        } else if (c instanceof WatchingLabel) {
+            searchTargetList.add( new SearchPair( (WatchingLabel)c, tab));
+        }
+    }
+   
+    // Search didn't find anything at all
+    protected void searchDidNotFind() {
+         java.awt.Toolkit.getDefaultToolkit().beep(); 
+    }
+    
+    // Search succeeded, go to the result
+    protected void searchGoesTo(SearchPair result) {
+        tabPane.setSelectedComponent(result.tab);
+        if (result.label != null) {
+            SwingUtilities.invokeLater(() -> result.label.getWatched().requestFocus());
+        } else {
+            log.trace("search result set to tab {}", result.tab);
+        }
+    }
+    
+    // Check a single case to see if it's search match
+    // @return true for matched
+    private boolean checkSearchTarget(int index, String target) {
+        boolean result = false;
+        if (searchTargetList.get(index).label != null ) {
+            // match label text
+            if ( ! searchTargetList.get(index).label.getText().toUpperCase().contains(target.toUpperCase() ) ) {
+                return false;
+            }
+            // only match if showing
+            return searchTargetList.get(index).label.isShowing();
+        } else {
+            // Match pane label.
+            // Finding the tab requires a search here.  Could have passed
+            // a clue along in SwingUtilities
+            for (int i = 0; i < tabPane.getTabCount(); i++) {
+                if (tabPane.getComponentAt(i) == searchTargetList.get(index).tab) {
+                    result = tabPane.getTitleAt(i).toUpperCase().contains(target.toUpperCase());
+                }
+            }
+        }
+        return result;
+    }
+    
+    // Invoked by forward search operation
+    private Runnable searchForwardTask = new Runnable() {
+        public void run() {
+            log.trace("start forward");
+            loadSearchTargets();
+            String target = searchBar.getSearchString();
+            
+            nextSearchTarget++;
+            if (nextSearchTarget < 0 ) nextSearchTarget = 0;
+            if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = 0;
+            
+            int startingSearchTarget = nextSearchTarget;
+            
+            while (nextSearchTarget < searchTargetList.size()) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget++;
+            }
+            
+            // end reached, wrap
+            nextSearchTarget = 0;
+            while (nextSearchTarget < startingSearchTarget) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget++;
+            }
+            // not found
+            searchDidNotFind();            
+        }
+    };
+    
+    // Invoked by backward search operation
+    private Runnable searchBackwardTask = new Runnable() {
+        public void run() {
+            log.trace("start backward");
+            loadSearchTargets();
+            String target = searchBar.getSearchString();
+            
+            nextSearchTarget--;
+            if (nextSearchTarget < 0 ) nextSearchTarget = searchTargetList.size()-1;
+            if (nextSearchTarget >= searchTargetList.size() ) nextSearchTarget = searchTargetList.size()-1;
+            
+            int startingSearchTarget = nextSearchTarget;
+            
+            while (nextSearchTarget > 0) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget--;
+            }
+            
+            // start reached, wrap
+            nextSearchTarget = searchTargetList.size()-1;
+            while (nextSearchTarget > startingSearchTarget) {
+                if ( checkSearchTarget(nextSearchTarget, target)) {
+                    // hit!
+                    searchGoesTo(searchTargetList.get(nextSearchTarget));
+                    return;
+                }
+                nextSearchTarget--;
+            }
+            // not found
+            searchDidNotFind();
+        }
+    };
+
+    // Invoked when search bar Done is pressed
+    private Runnable searchDoneTask = new Runnable() {
+        public void run() {
+            log.debug("done with search bar");
+            searchBar.setVisible(false);
+        }
+    };
+
+    // =================== End of search section ==================
+    
     public List<JPanel> getPaneList() {
         return paneList;
     }
@@ -485,13 +662,21 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
-        // now that programmer is configured, set the programming GUI
-        setProgrammingGui(tempPane);        
+        JPanel bottom = new JPanel();
+        bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
+        tempPane.add(bottom, BorderLayout.SOUTH);
 
+        // now that programmer is configured, set the programming GUI
+        setProgrammingGui(bottom);        
+
+        // add the search GUI
+        setSearchGui(bottom);
+        
         pack();
 
         if (log.isDebugEnabled()) {  // because size elements take time
-            log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}", pFrameTitle, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
+            log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}",
+                    pFrameTitle, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
         }
     }
 
@@ -625,10 +810,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                     this,
                     Bundle.getMessage("ErrorCannotSetMode", desiredModes.toString()),
                     Bundle.getMessage("ErrorCannotSetModeTitle"),
-                    JOptionPane.OK_OPTION);
+                    JOptionPane.ERROR_MESSAGE);
             log.warn("No acceptable mode found, leave as found");
         }
-
     }
 
     /**
@@ -699,14 +883,21 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // get the showEmptyPanes attribute, if yes/no update our state
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Found in decoder {}", decoderRoot.getAttribute("showEmptyPanes").getValue());
-            }
+            log.debug("Found in decoder showEmptyPanes={}", decoderRoot.getAttribute("showEmptyPanes").getValue());
             decoderShowEmptyPanes = decoderRoot.getAttribute("showEmptyPanes").getValue();
         } else {
             decoderShowEmptyPanes = "";
         }
         log.debug("decoderShowEmptyPanes={}", decoderShowEmptyPanes);
+
+        // get the allowResetDefaults attribute, if yes/no update our state
+        if (decoderRoot.getAttribute("allowResetDefaults") != null) {
+            log.debug("Found in decoder allowResetDefaults={}", decoderRoot.getAttribute("allowResetDefaults").getValue());
+            decoderAllowResetDefaults = decoderRoot.getAttribute("allowResetDefaults").getValue();
+        } else {
+            decoderAllowResetDefaults = "yes";
+        }
+        log.debug("decoderAllowResetDefaults={}", decoderAllowResetDefaults);
 
         // save the pointer to the model element
         modelElem = df.getModelElement();
@@ -717,6 +908,23 @@ abstract public class PaneProgFrame extends JmriJFrame
         // load sound names from model
         re.loadSounds(modelElem.getChild("soundlabels"), "model");
 
+        // load maxFnNum from model
+        Attribute a;
+        if ((a = modelElem.getAttribute("maxFnNum")) != null) {
+            maxFnNumOld = re.getMaxFnNum();
+            maxFnNumNew = a.getValue();
+            if (!maxFnNumOld.equals(maxFnNumNew)) {
+                if (!re.getId().equals(Bundle.getMessage("LabelNewDecoder"))) {
+                    maxFnNumDirty = true;
+                    log.info("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
+                    String message = java.text.MessageFormat.format(
+                            SymbolicProgBundle.getMessage("StatusMaxFnNumUpdated"),
+                            re.getDecoderFamily(), re.getDecoderModel(), maxFnNumNew);
+                    progStatus.setText(message);
+                }
+                re.setMaxFnNum(maxFnNumNew);
+            }
+        }
     }
 
     protected void loadProgrammerFile(RosterEntry r) {
@@ -774,7 +982,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @return true if file needs to be written
      */
     protected boolean checkDirtyFile() {
-        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry) || _rMPane.guiChanged(_rosterEntry));
+        return (variableModel.fileDirty() || _rPane.guiChanged(_rosterEntry) || _flPane.guiChanged(_rosterEntry) || _rMPane.guiChanged(_rosterEntry) || maxFnNumDirty);
     }
 
     protected void handleDirtyFile() {
@@ -819,6 +1027,9 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // cancel requested
                 return; // without doing anything
             }
+        }
+        if(maxFnNumDirty && !maxFnNumOld.equals("")){ 
+            _rosterEntry.setMaxFnNum(maxFnNumOld);
         }
         // Check for a "<new loco>" roster entry; if found, remove it
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, Bundle.getMessage("LabelNewDecoder"));
@@ -984,12 +1195,18 @@ abstract public class PaneProgFrame extends JmriJFrame
         // add the reset button
         JButton reset = new JButton(Bundle.getMessage("ButtonResetDefaults"));
         reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        reset.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                resetToDefaults();
-            }
-        });
+        if (decoderAllowResetDefaults.equals("no")) {
+            reset.setEnabled(false);
+            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaultsDisabled"));
+        } else {
+            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaults"));
+            reset.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    resetToDefaults();
+                }
+            });
+        }
 
         int sizeX = Math.max(reset.getPreferredSize().width, store.getPreferredSize().width);
         int sizeY = Math.max(reset.getPreferredSize().height, store.getPreferredSize().height);
@@ -1082,7 +1299,6 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected JPanel makeMediaPane(RosterEntry r) {
-
         // create the identification pane (not configured by programmer file now; maybe later?)
         JPanel outer = new JPanel();
         outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
@@ -1199,6 +1415,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * If there are any modifier elements, process them.
+     *
      * @param e Process the contents of this element
      * @param pane Destination of any visible items
      * @param model Used to locate any needed variables
@@ -1331,7 +1548,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Read Changes" button, this sets in motion a continuing
+     * Invoked by "Read Changes" button, this sets in motion a continuing
      * sequence of "read changes" operations on the panes.
      * <p>
      * Each invocation of this method reads one pane; completion of that request
@@ -1427,7 +1644,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * invoked by "Write All" button, this sets in motion a continuing sequence
+     * Invoked by "Write All" button, this sets in motion a continuing sequence
      * of "write all" operations on each pane. Each invocation of this method
      * writes one pane; completion of that request will cause it to happen
      * again, writing the next pane, until there's nothing left to write.
@@ -1626,6 +1843,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // mark this as a success
         variableModel.setFileDirty(false);
+        maxFnNumDirty = false;
 
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
@@ -1642,7 +1860,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * local dispose, which also invokes parent. Note that we remove the
+     * Local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
      */
     @Override
@@ -1706,7 +1924,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Set value of Preference option to show empty panes
+     * Set value of Preference option to show empty panes.
      *
      * @param yes true if empty panes should be shown
      */
@@ -1717,7 +1935,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * get value of Preference option to show empty panes.
+     * Get value of Preference option to show empty panes.
+     *
      * @return value from programmer config. manager, else true.
      */
     public static boolean getShowEmptyPanes() {
@@ -1745,7 +1964,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     /**
-     * Option to control appearance of CV numbers in tool tips
+     * Option to control appearance of CV numbers in tool tips.
      *
      * @param yes true is CV numbers should be shown
      */

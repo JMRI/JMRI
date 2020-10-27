@@ -75,7 +75,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
         AcelaNode tNode = AcelaAddress.getNodeFromSystemName(tSystemName,_memo);
         if (tNode == null) {
             // node does not exist, ignore call
-            log.error("Can't resolve Acela Signal with name '{}'. command ingnored", tSystemName);
+            log.error("Can't resolve Acela Signal with name '{}'. command ignored", tSystemName);
             return;
         }
 

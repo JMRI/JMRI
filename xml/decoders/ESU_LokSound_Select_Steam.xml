@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" allowResetDefaults="no">
     <!-- made from the ESU_LokSound_Select.xml Ver 2 file -->
     <!-- ver1 new file -->
     <version author="Michael Mosher" version="1" lastUpdated="20101020"/>
@@ -60,6 +60,8 @@
     <version author="Dave Heap" version="19" lastUpdated="20170819"/>
     <!-- ver20 refactor -->
     <version author="Dave Heap" version="20" lastUpdated="20190507"/>
+    <!-- ver21 disable Reset to Defaults -->
+    <version author="Dave Heap" version="21" lastUpdated="20200818"/>
     <decoder>
         <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
             <model show="no" model="LokSound Select Steam Generic" numOuts="12" maxMotorCurrent="1.1A" extFnsESU="V4" productID="Steam Generic">

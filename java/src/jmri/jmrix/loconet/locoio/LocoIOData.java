@@ -132,7 +132,7 @@ public class LocoIOData extends PropertyChangeSupport
     }
 
     /**
-     * TODO: LocoIO Board level configuration.
+     * No LocoIO Board level configuration.
      * <pre>
      * Bit 0: 0 = default, 1 = Port Refresh
      * Bit 1: 0 = Fixed code PBs, 1 = Alternated code PBs
@@ -140,7 +140,8 @@ public class LocoIOData extends PropertyChangeSupport
      * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
      * Bit 4-7: Blink Rate
      *
-     * If possibe add/support the additional config options for HDL boards
+     * Add/support the additional config options for HDL boards -
+     * Work has moved to xml decoder definition Public_Domain_HDL_LocoIO, is included there since 4.21.2
      * </pre>
      * @param portRefresh port refresh value, bit 0.
      * @param altCodePBs alternated code PBs, bit 1.
@@ -151,6 +152,7 @@ public class LocoIOData extends PropertyChangeSupport
         int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
                 // bit 2 is left at zero
+                // later LocoServo boards store 2 pos/4 pos type in bits 2-3, see Public_Domain_HDL_LocoIO
                 ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         firePropertyChange("UnitConfig", sv0, newsv0); // NOI18N
@@ -429,7 +431,7 @@ public class LocoIOData extends PropertyChangeSupport
                             } else if (type == 1) {     // v1
                                 setV1(channel, data);
                                 setMode(channel, "<none>"); // NOI18N
-                            } else if (type == 0) {       // cv
+                            } else if (type == 0) {     // cv
                                 setSV(channel, data);
                                 // Now that we have all the pieces, recalculate mode
                                 LocoIOMode lim = validmodes.getLocoIOModeFor(getSV(channel), getV1(channel), getV2(channel));
@@ -441,12 +443,15 @@ public class LocoIOData extends PropertyChangeSupport
                                     setMode(channel, lim.getFullMode());
                                     setAddr(channel, validmodes.valuesToAddress(lim.getOpCode(), getSV(channel), getV1(channel), getV2(channel)));
                                 }
-                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})", Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)), Integer.toHexString(getV2(channel)), getAddr(channel), Integer.toHexString(getAddr(channel))); // NOI18N
+                                log.debug("... decoded address (cv={} v1={} v2={}) is {}(0x{})",
+                                        Integer.toHexString(getSV(channel)), Integer.toHexString(getV1(channel)),
+                                        Integer.toHexString(getV2(channel)), getAddr(channel),
+                                        Integer.toHexString(getAddr(channel))); // NOI18N
                             } else {
                                 log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }
-                        } else {
-                            // log.error("last CV recorded is invalid: "+lastOpCv);
+                        // } else {
+                            // log.error("last CV recorded is invalid: {}", lastOpCv);
                         }
                     }  // end of read processing
 
@@ -639,7 +644,7 @@ public class LocoIOData extends PropertyChangeSupport
      * Timer Management Protect against communication failures, addressing
      * mixups and the like.
      */
-    static private int TIMEOUT = 2000;    // ms
+    private static final int TIMEOUT = 2000;    // ms
     protected javax.swing.Timer timer = null;
     private int timeoutcounter;
 

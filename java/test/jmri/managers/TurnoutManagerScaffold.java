@@ -2,6 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 import jmri.JmriException;
 import jmri.Turnout;
@@ -59,12 +61,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
@@ -208,8 +212,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return NameValidity.VALID;
     }
 
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return curAddress;
+    }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         return curAddress;
     }
 
@@ -283,5 +293,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public SystemConnectionMemo getMemo() {
         return new InternalSystemConnectionMemo("J", "Juliet");
     }
+
+    @Override
+    public int getOutputInterval() {
+        return 0;
+    }
+
+    @Override
+    public void setOutputInterval(int newInterval) {}
+
+    @Override
+    @Nonnull
+    public LocalDateTime outputIntervalEnds() { return LocalDateTime.now(); }
 
 }

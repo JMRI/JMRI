@@ -54,6 +54,7 @@ public class CanSprogSerialDriverAdapter extends GcSerialDriverAdapter {
         this.getSystemConnectionMemo().configureManagers();
         
         this.getSystemConnectionMemo().setSubProtocol(ConfigurationManager.SubProtocol.CBUS);
+        this.getSystemConnectionMemo().setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
     }
 
     /**

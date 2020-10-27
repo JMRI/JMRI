@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.21.1-SNAPSHOT</version>
+    <version>4.21.3-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -33,7 +33,7 @@
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
-        <ant.version>1.10.7</ant.version>
+        <ant.version>1.10.8</ant.version>
         <junit5.version>5.6.0</junit5.version>
         <junit.platform.version>1.6.0</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
@@ -360,7 +360,7 @@
                 </excludes>
             </resource>
             <resource>
-                <directory>${basedir}/java/maven-template</directory>
+                <directory>${basedir}/java/template</directory>
                 <filtering>true</filtering>
                 <includes>
                     <include>jmri/Version.properties</include>
@@ -963,6 +963,24 @@
                     </filesets>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>read-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <files>
+                                <file>local.properties</file>
+                            </files>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -1062,6 +1080,11 @@
                             <version>8.29</version>
                         </dependency>
                     </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>properties-maven-plugin</artifactId>
+                    <version>1.0.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -1500,19 +1523,31 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.3.3</version>
+            <version>3.5.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <version>3.5.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>3.3.3</version>
+            <version>3.5.11</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
-            <version>1.10.5</version>
+            <version>1.10.14</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>1.10.14</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -1581,6 +1616,11 @@
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
         </dependency>
         <dependency>
             <groupId>org.apiguardian</groupId>

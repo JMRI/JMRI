@@ -56,11 +56,6 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     }
 
     @Override
-    public boolean validSystemNameConfig(@Nonnull String systemName) {
-        return true;
-    }
-
-    @Override
     public boolean supportsVariableLights(@Nonnull String systemName) {
         return true;
     }

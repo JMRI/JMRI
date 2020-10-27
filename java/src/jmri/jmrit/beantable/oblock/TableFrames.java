@@ -269,7 +269,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     /**
      * Convert a copy of JMRI Blocks to OBlocks and connect them with Portals and Paths.
      *
-     * @author EBR 2019
+     * @author Egbert Broerse 2019
      */
     protected void importBlocks() throws IllegalArgumentException {
         Manager<Block> bm = InstanceManager.getDefault(jmri.BlockManager.class);
@@ -1024,7 +1024,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _blockPathMap.remove(name);
             if (frame instanceof BlockPathFrame) {
                 String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-                if (msg != null) {
+                if (!msg.isEmpty()) {
                     JOptionPane.showMessageDialog(this, msg,
                             Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }

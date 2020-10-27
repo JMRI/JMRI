@@ -6,6 +6,7 @@ import java.awt.image.PixelGrabber;
 
 import javax.swing.JLabel;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -24,6 +25,42 @@ public class NamedIconTest {
     @Test
     public void testCTor() {
         NamedIcon t = new NamedIcon("program:resources/logo.gif","logo");
+        Assert.assertNotNull("exists",t);
+    }
+
+    /**
+     * Test bad prefix on file name
+     */
+    @Test
+    public void testBadPrefix() {
+        NamedIcon t = new NamedIcon("foof:biff.gif","logo");
+        JUnitAppender.assertErrorMessageStartsWith("Did not find \"foof:biff.gif\" for NamedIcon");
+        JUnitAppender.assertWarnMessage("Could not load image from foof:biff.gif (file does not exist)");
+        JUnitAppender.assertWarnMessage("NamedIcon can't scan foof:biff.gif for animated status");
+        Assert.assertNotNull("exists",t);
+    }
+
+    /**
+     * Test no file at prefixed URL
+     */
+    @Test
+    public void testNoFileBehindPrefix() {
+        NamedIcon t = new NamedIcon("program:resources/foo/foo/foo/foo.gif","logo");
+        JUnitAppender.assertErrorMessageStartsWith("Did not find \"program:resources/foo/foo/foo/foo.gif\" for NamedIcon");
+        JUnitAppender.assertWarnMessage("Could not load image from program:resources/foo/foo/foo/foo.gif (file does not exist)");
+        JUnitAppender.assertWarnMessage("NamedIcon can't scan program:resources/foo/foo/foo/foo.gif for animated status");
+        Assert.assertNotNull("exists",t);
+    }
+
+    /**
+     * Test no file at relative URL
+     */
+    @Test
+    public void testNoFileRelative() {
+        NamedIcon t = new NamedIcon("resources/foo/foo/foo/foo.gif","logo");
+        JUnitAppender.assertErrorMessageStartsWith("Did not find \"resources/foo/foo/foo/foo.gif\" for NamedIcon");
+        JUnitAppender.assertWarnMessage("Could not load image from resources/foo/foo/foo/foo.gif (file does not exist)");
+        JUnitAppender.assertWarnMessage("NamedIcon can't scan resources/foo/foo/foo/foo.gif for animated status");
         Assert.assertNotNull("exists",t);
     }
 

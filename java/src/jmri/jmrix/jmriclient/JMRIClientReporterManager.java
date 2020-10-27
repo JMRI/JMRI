@@ -34,5 +34,15 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
         r.setUserName(userName);
         return r;
     }
+    
+    /** 
+     * Validates to only numeric system names.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
+    }
 
 }

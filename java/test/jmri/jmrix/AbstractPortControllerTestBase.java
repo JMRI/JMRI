@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.SystemConnectionMemo;
@@ -17,6 +18,12 @@ public abstract class AbstractPortControllerTestBase {
     @Test
     public void testisDirtyNotNPE() {
         apc.isDirty();
+    }
+
+    @Test
+    public void testDefaultMethod() {
+        Assert.assertFalse("default false", apc.isOptionTypeText("foo"));
+        jmri.util.JUnitAppender.assertErrorMessage("did not find option foo for type");
     }
 
     // from here down is testing infrastructure
@@ -34,7 +41,6 @@ public abstract class AbstractPortControllerTestBase {
     }
 
     public static class AbstractPortControllerScaffold extends AbstractPortController {
-
 
         public AbstractPortControllerScaffold(SystemConnectionMemo memo) {
             super(memo);

@@ -69,6 +69,19 @@ public class LocationManager extends PropertyChangeSupport implements InstanceMa
     public Location getLocationById(String id) {
         return _locationHashTable.get(id);
     }
+    
+    /**
+     * Used to determine if a reporter has been assigned to a location
+     * @return true if a location has a RFID reporter
+     */
+    public boolean hasReporters() {
+        for (Location location : getList()) {
+            if (location.getReporter() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Request a location associated with a given reporter.

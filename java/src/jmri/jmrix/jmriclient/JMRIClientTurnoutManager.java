@@ -48,5 +48,15 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
+    
+    /**
+     * Validates to only numeric.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        return validateSystemNameFormatOnlyNumeric(name,locale);
+    }
 
 }
