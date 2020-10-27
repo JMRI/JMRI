@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -10,14 +9,15 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.text.MessageFormat;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.*;
 import jmri.util.swing.*;
-import org.slf4j.*;
 
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged
@@ -986,7 +986,7 @@ public class PositionablePoint extends LayoutTrack {
                         }
                         connect1.setArrowStyle(n);
                     });
-                    jcbmi.setSelected((connect1.getArrowStyle() == i) && etherEnd);             
+                    jcbmi.setSelected((connect1.getArrowStyle() == i) && etherEnd);
                 }
 
 
@@ -1745,78 +1745,6 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         return result;
-    }
-
-    /**
-     * Draw track decorations.
-     * 
-     * This type of track has none, so this method is empty.
-     */
-    @Override
-    protected void drawDecorations(Graphics2D g2) {}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        //nothing to do here... move along...
-    }   // draw1
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        //nothing to do here... move along...
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
-        if ((specificType == HitPointType.NONE) || (specificType == HitPointType.POS_POINT)) {
-            if ((getConnect1() == null)
-                    || ((getType() == PointType.ANCHOR) && (getConnect2() == null))) {
-                g2.fill(trackControlCircleAt(getCoordsCenter()));
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawEditControls(Graphics2D g2) {
-        TrackSegment ts1 = getConnect1();
-        if (ts1 == null) {
-            g2.setColor(Color.red);
-        } else {
-            TrackSegment ts2 = null;
-            if (getType() == PointType.ANCHOR) {
-                ts2 = getConnect2();
-            } else if (getType() == PointType.EDGE_CONNECTOR) {
-                if (getLinkedPoint() != null) {
-                    ts2 = getLinkedPoint().getConnect1();
-                }
-            }
-            if ((getType() != PointType.END_BUMPER) && (ts2 == null)) {
-                g2.setColor(Color.yellow);
-            } else {
-                g2.setColor(Color.green);
-            }
-        }
-        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
-    }   // drawEditControls
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
-        // PositionablePoints don't have turnout controls...
-        // nothing to see here... move along...
     }
 
     /**
