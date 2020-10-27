@@ -2,8 +2,8 @@ package jmri.jmrix.can.cbus;
 
 import jmri.InstanceManager;
 import jmri.MeterManager;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -149,6 +149,11 @@ public class CbusConfigurationManagerTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         prefs = new CbusPreferences();
+        // Setup programmer availability to match CANCMD
+        prefs.setGlobalProgrammerAvailable(true);
+        prefs.setAddressedModePossible(true);
+        prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
+        memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
         jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);
