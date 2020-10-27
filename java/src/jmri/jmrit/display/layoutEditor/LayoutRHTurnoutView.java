@@ -15,6 +15,11 @@ public class LayoutRHTurnoutView extends LayoutTurnoutView {
     /**
      * Constructor method.
      * @param turnout the turnout to view.
+     * @param c       where to put it
+     * @param rot     for display
+     * @param xFactor     for display
+     * @param yFactor     for display
+     * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutRHTurnoutView(@Nonnull LayoutRHTurnout turnout, 
             @Nonnull Point2D c, double rot,

@@ -14,7 +14,12 @@ public class LayoutXOverView extends LayoutTurnoutView {
 
     /**
      * Constructor method.
-     * @param xover the layout crossover.
+     * @param xover the layout crossover
+     * @param c displays location
+     * @param rot for display
+     * @param xFactor for display
+     * @param yFactor for display
+     * @param layoutEditor for access to tools
      */
     public LayoutXOverView(@Nonnull LayoutXOver xover, 
             @Nonnull Point2D c, double rot,

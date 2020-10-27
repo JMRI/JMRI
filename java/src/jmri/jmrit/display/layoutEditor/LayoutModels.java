@@ -52,15 +52,17 @@ public interface LayoutModels {
     // Access to (lists of) model objects
     // ====================================
 
-    /**
-     * General access. (temporary) Is this actually preferred to all those specific ones?
-     */
+    //
+    // General access. (temporary) Is this actually preferred to all those specific ones?
+    //
+
     @Nonnull
     Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass);
 
-    /**
-     * General access. (temporary) Is this actually preferred to all those specific ones?
-     */
+    //
+    // General access. (temporary) Is this actually preferred to all those specific ones?
+    //
+    
     @Nonnull
     Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass);
     
@@ -130,6 +132,8 @@ public interface LayoutModels {
     /**
      * Add a LayoutTrack and LayoutTrackView to the list of 
      * LayoutTrack family objects.
+     * @param trk to be stored
+     * @param v corresponding view
      */
     void addLayoutTrack(@Nonnull LayoutTrack trk, @Nonnull LayoutTrackView v);
 
@@ -159,6 +163,10 @@ public interface LayoutModels {
      * as it's meant to be the track connectivity direction not the
      * on the screen implementation.
      *
+     * @param trk1 track at "from" end
+     * @param h1 the hit point for "from" end
+     * @param trk2 the track at the "to" end
+     * @param h2 the hit at the "to" end
      * @return the octagonal direction from p1 to p2
      */
     public int computeDirection(@Nonnull LayoutTrack trk1, @Nonnull HitPointType h1, 
@@ -204,6 +212,7 @@ public interface LayoutModels {
      * <p>
      * The default implementation refers this to a View object for displaying a Dialog.
      *
+     * @param track The involved track
      * @param itemList A list of the attached heads, masts and/or sensors.
      * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */

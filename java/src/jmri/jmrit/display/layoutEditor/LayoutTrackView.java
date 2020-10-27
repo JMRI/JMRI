@@ -35,7 +35,8 @@ abstract public class LayoutTrackView {
 
     /**
      * Constructor method.
-     * @param track the layout track to view.
+     * @param track the layout track to view
+     * @param layoutEditor the panel in which to place the view
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull LayoutEditor layoutEditor) {
          this.layoutTrack = track;
@@ -44,6 +45,9 @@ abstract public class LayoutTrackView {
 
     /**
      * constructor method
+     * @param track the track to view
+     * @param c display location
+     * @param layoutEditor for reference to tools
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
          this.layoutTrack = track;
@@ -221,6 +225,8 @@ abstract public class LayoutTrackView {
 
     /**
      * Load a file for a specific arrow ending.
+     * @param n The arrow type as a number
+     * @param arrowsCountMenu menu containing the arrows to set visible selection
      * @return An item for the arrow menu
      */
     public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {

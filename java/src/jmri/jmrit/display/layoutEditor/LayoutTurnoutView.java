@@ -36,6 +36,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
     /**
      * Constructor method.
      * @param turnout the layout turnout to create the view for.
+     * @param c       where to put it
+     * @param rot     for display
+     * @param xFactor     for display
+     * @param yFactor     for display
+     * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, 
             @Nonnull Point2D c, double rot,
@@ -926,6 +931,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * Set up Layout Block(s) for this Turnout.
+     * @param newLayoutBlock See {@link LayoutTurnout#setLayoutBlock} for definition
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlock(newLayoutBlock);

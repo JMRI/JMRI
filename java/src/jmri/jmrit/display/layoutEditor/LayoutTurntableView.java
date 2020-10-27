@@ -821,7 +821,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     private boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * @return "active" true means that the object is still displayed, and should be stored.
      */
     public boolean isActive() {
         return active;

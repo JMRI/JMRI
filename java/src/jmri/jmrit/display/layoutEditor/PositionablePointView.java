@@ -42,6 +42,8 @@ public class PositionablePointView extends LayoutTrackView {
     /**
      * constructor method.
      * @param point the positionable point.
+     * @param c location to display the positionable point
+     * @param layoutEditor for access to tools
      */
     public PositionablePointView(@Nonnull PositionablePoint point, 
             Point2D c, 
@@ -1456,7 +1458,7 @@ public class PositionablePointView extends LayoutTrackView {
     private boolean active = true;
 
     /**
-     * "active" means that the object is still displayed, and should be stored.
+     * @return "active" true means that the object is still displayed, and should be stored.
      */
     protected boolean isActive() {
         return active;

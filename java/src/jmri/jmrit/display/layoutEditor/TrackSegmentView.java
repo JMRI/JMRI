@@ -37,7 +37,11 @@ public class TrackSegmentView extends LayoutTrackView {
     
     /**
      * constructor method.
-     * @param track the track segment to view.
+     * @param track the track segment to view
+     * @param layoutEditor for reference to tools
+     * @param arc specify display
+     * @param flip specify display
+     * @param circle specify display
      */
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor,
                                 boolean arc, boolean flip, boolean circle
@@ -130,6 +134,7 @@ public class TrackSegmentView extends LayoutTrackView {
      *
      * @param oldTrack the old track connection
      * @param newTrack the new track connection
+     * @param newType type of the new track connection
      * @return true if successful
      */
     public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, HitPointType newType) {
@@ -305,6 +310,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * Determine if we need to redraw a curved piece of track. Saves having to
      * recalculate the circle details each time.
+     * @return true means needs to be (re)drawn
      */
     public boolean trackNeedsRedraw() {
         return changed;
@@ -362,6 +368,7 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
+     * @param p the location of the point to be set
      * @param index If negative, this is index from the end i.e. -1 is the last element
      */
     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
@@ -1561,6 +1568,8 @@ public class TrackSegmentView extends LayoutTrackView {
 
     /**
      * Display popup menu for information and editing.
+     * @param e The original event causing this
+     * @param hitPointType the type of the underlying hit
      */
     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
         int bezierControlPointIndex = hitPointType.bezierPointIndex();
@@ -1748,6 +1757,7 @@ public class TrackSegmentView extends LayoutTrackView {
      * <li>HIDECON or otherwise set HIDECON
      * </ul>
      * Then always redraw the LayoutEditor panel and set it dirty.
+     * @param hide The specification i.e. HIDECONALL, SHOWCON et al
      */
     public void hideConstructionLines(int hide) {
         if (hide == HIDECONALL) {
@@ -3194,6 +3204,7 @@ public class TrackSegmentView extends LayoutTrackView {
      * The 0 (none) and 1 through 5 arrow decorations are keyed to 
      * files like program:resources/icons/decorations/ArrowStyle1.png
      * et al.
+     * @param newVal the new style number
      */
     public void setArrowStyle(int newVal) {
         log.trace("TrackSegmentView:setArrowStyle {} {} {}", newVal, arrowEndStart, arrowEndStop);

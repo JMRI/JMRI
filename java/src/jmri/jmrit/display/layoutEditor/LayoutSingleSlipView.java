@@ -21,6 +21,9 @@ public class LayoutSingleSlipView extends LayoutSlipView {
     /**
      * Constructor method.
      * @param slip the slip to create view for.
+     * @param c       where to put it
+     * @param rot     for display
+     * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutSingleSlipView(@Nonnull LayoutSingleSlip slip, Point2D c, double rot, @Nonnull LayoutEditor layoutEditor) {
         super(slip, c, rot, layoutEditor);

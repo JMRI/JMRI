@@ -29,6 +29,7 @@ public class LevelXingView extends LayoutTrackView {
     /**
      * Constructor method.
      * @param xing the level crossing.
+     * @param layoutEditor for access to tools
      */
     public LevelXingView(@Nonnull LevelXing xing, @Nonnull LayoutEditor layoutEditor) {
         super(xing, layoutEditor);
@@ -39,6 +40,9 @@ public class LevelXingView extends LayoutTrackView {
         
     /**
      * constructor method
+     * @param xing the level crossing.
+     * @param c display location
+     * @param layoutEditor for access to tools
      */
     public LevelXingView(@Nonnull LevelXing xing, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         super(xing, c, layoutEditor);

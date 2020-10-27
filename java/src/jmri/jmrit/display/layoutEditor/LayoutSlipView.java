@@ -125,6 +125,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
     /**
      * Toggle slip states if clicked on, physical turnout exists, and not
      * disabled
+     * @param selectedPointType See {@link LayoutSlip#toggleState} for definition
      */
     public void toggleState(HitPointType selectedPointType) {
        slip.toggleState(selectedPointType);

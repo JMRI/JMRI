@@ -194,6 +194,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * Provide the destination TrackSegment of the 1st connection.
+     * @return destination track segment
      */
     public TrackSegment getConnect1() {
         return connect1;
@@ -205,6 +206,7 @@ public class PositionablePoint extends LayoutTrack {
      * Provide the destination TrackSegment of the 2nd connection.
      * When this is an EDGE CONNECTOR, it looks through the linked point (if any)
      * to the far-end track connection.
+     * @return destination track segment
      */
     public TrackSegment getConnect2() {
         if (type == PointType.EDGE_CONNECTOR && getLinkedPoint() != null) {
@@ -216,6 +218,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * Provide the destination TrackSegment of the 2nd connection
      * without doing the look-through present in {@link #getConnect2()}
+     * @return destination track segment
      */
     public TrackSegment getConnect2Actual() {
         return connect2;
