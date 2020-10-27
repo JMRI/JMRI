@@ -2,8 +2,10 @@ package jmri.jmrix.can.cbus;
 
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
 import jmri.beans.PreferencesBean;
 import jmri.jmrix.can.cbus.node.CbusNode;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 
@@ -28,9 +30,11 @@ public class CbusPreferences extends PreferencesBean {
     private boolean _saveRestoreEventTable = true;
     private int minimumNumBackupsToKeep = 10;
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
-    private boolean _isGlobalProgrammerAvailable = true;
-    private boolean _isAddressedModePossible = true;
-    private int _progTrackMode = 0;
+    // Default to no programmers available. The p[rogrammer manager will validate
+    // the preferences for the hardware connection in use.
+    private boolean _isGlobalProgrammerAvailable = false;
+    private boolean _isAddressedModePossible = false;
+    private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
     
     public CbusPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
