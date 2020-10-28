@@ -329,12 +329,12 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public boolean disabled = false;
     public boolean disableWhenOccupied = false;
 
-    public Point2D dispB = new Point2D.Double(20.0, 0.0);
-    public Point2D dispA = new Point2D.Double(20.0, 10.0);
-    public Point2D pointA = new Point2D.Double(0, 0);
-    public Point2D pointB = new Point2D.Double(40, 0);
-    public Point2D pointC = new Point2D.Double(60, 20);
-    public Point2D pointD = new Point2D.Double(20, 20);
+    public final Point2D dispB = new Point2D.Double(20.0, 0.0);
+    public final Point2D dispA = new Point2D.Double(20.0, 10.0);
+    public final Point2D pointA = new Point2D.Double(0, 0);
+    public final Point2D pointB = new Point2D.Double(40, 0);
+    public final Point2D pointC = new Point2D.Double(60, 20);
+    public final Point2D pointD = new Point2D.Double(20, 20);
 
     private int version = 1;
 
@@ -439,12 +439,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
         rotateCoords(rot);
         // adjust size of new turnout
-        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+        dispB.setLocation(Math.round(dispB.getX() * xFactor),
                 Math.round(dispB.getY() * yFactor));
-        dispB = pt;
-        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+        dispA.setLocation(Math.round(dispA.getX() * xFactor),
                 Math.round(dispA.getY() * yFactor));
-        dispA = pt;
 
         editor = new LayoutTurnoutEditor(layoutEditor);
     }
@@ -2225,10 +2223,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
         Point2D offset = MathUtil.subtract(p, getCoordsCenter());
-        pointA = MathUtil.add(pointA, offset);
-        pointB = MathUtil.add(pointB, offset);
-        pointC = MathUtil.add(pointC, offset);
-        pointD = MathUtil.add(pointD, offset);
+        pointA.setLocation(MathUtil.add(pointA, offset));
+        pointB.setLocation(MathUtil.add(pointB, offset));
+        pointC.setLocation(MathUtil.add(pointC, offset));
+        pointD.setLocation(MathUtil.add(pointD, offset));
         super.setCoordsCenter(p);
     }
 
@@ -2237,21 +2235,21 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     public void setCoordsA(@Nonnull Point2D p) {
-        pointA = p;
+        pointA.setLocation(p);
         if (version == 2) {
             reCalculateCenter();
         }
         double x = getCoordsCenter().getX() - p.getX();
         double y = getCoordsCenter().getY() - p.getY();
         if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
-            dispA = new Point2D.Double(x, y);
+            dispA.setLocation(x, y);
             // adjust to maintain rectangle
             double oldLength = MathUtil.length(dispB);
             double newLength = Math.hypot(x, y);
-            dispB = MathUtil.multiply(dispB, newLength / oldLength);
+            dispB.setLocation(MathUtil.multiply(dispB, newLength / oldLength));
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
-            dispA = new Point2D.Double(x, y);
+            dispA.setLocation(x, y);
             // adjust to maintain the parallelogram
             double a = 0.0;
             double b = -y;
@@ -2270,7 +2268,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
-            dispB = new Point2D.Double(x, y);
+            dispB.setLocation(x, y);
         } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
             // modify both to maintain same angle at wye
             double temX = (dispB.getX() + dispA.getX());
@@ -2281,26 +2279,26 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     / ((temXx * temXx) + (temYy * temYy)));
             double xx = x + (y / tan);
             double yy = y - (x / tan);
-            dispA = new Point2D.Double(xx, yy);
+            dispA.setLocation(xx, yy);
             xx = x - (y / tan);
             yy = y + (x / tan);
-            dispB = new Point2D.Double(xx, yy);
+            dispB.setLocation(xx, yy);
         } else {
-            dispB = new Point2D.Double(x, y);
+            dispB.setLocation(x, y);
         }
     }
 
     public void setCoordsB(Point2D p) {
-        pointB = p;
+        pointB.setLocation(p);
         double x = getCoordsCenter().getX() - p.getX();
         double y = getCoordsCenter().getY() - p.getY();
-        dispB = new Point2D.Double(-x, -y);
+        dispB.setLocation(-x, -y);
         if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
                 || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
             double oldLength = MathUtil.length(dispA);
             double newLength = Math.hypot(x, y);
-            dispA = MathUtil.multiply(dispA, newLength / oldLength);
+            dispA.setLocation(MathUtil.multiply(dispA, newLength / oldLength));
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             // adjust to maintain the parallelogram
@@ -2327,24 +2325,24 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (x - xi));
                 y = yi - (3.0 * (y - yi));
             }
-            dispA = new Point2D.Double(x, y);
+            dispA.setLocation(x, y);
         }
     }
 
     public void setCoordsC(Point2D p) {
-        pointC = p;
+        pointC.setLocation(p);
         if (version == 2) {
             reCalculateCenter();
         }
         double x = getCoordsCenter().getX() - p.getX();
         double y = getCoordsCenter().getY() - p.getY();
-        dispA = new Point2D.Double(-x, -y);
+        dispA.setLocation(-x, -y);
         if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
                 || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
             // adjust to maintain rectangle or wye shape
             double oldLength = MathUtil.length(dispB);
             double newLength = Math.hypot(x, y);
-            dispB = MathUtil.multiply(dispB, newLength / oldLength);
+            dispB.setLocation(MathUtil.multiply(dispB, newLength / oldLength));
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             double a = 0.0;
@@ -2371,22 +2369,23 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
-            dispB = new Point2D.Double(-x, -y);
+            dispB.setLocation(-x, -y);
+
         }
     }
 
     public void setCoordsD(Point2D p) {
-        pointD = p;
+        pointD.setLocation(p);
 
         // only used for crossovers
         double x = getCoordsCenter().getX() - p.getX();
         double y = getCoordsCenter().getY() - p.getY();
-        dispB = new Point2D.Double(x, y);
+        dispB.setLocation(x, y);
         if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
             // adjust to maintain rectangle
             double oldLength = MathUtil.length(dispA);
             double newLength = Math.hypot(x, y);
-            dispA = MathUtil.multiply(dispA, newLength / oldLength);
+            dispA.setLocation(MathUtil.multiply(dispA, newLength / oldLength));
         } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
                 || (getTurnoutType() == TurnoutType.LH_XOVER)) {
             // adjust to maintain the parallelogram
@@ -2407,7 +2406,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
                 x = xi - (3.0 * (-x - xi));
                 y = yi - (3.0 * (-y - yi));
             }
-            dispA = new Point2D.Double(x, y);
+            dispA.setLocation(x, y);
         }
     }
 
@@ -2419,13 +2418,13 @@ abstract public class LayoutTurnout extends LayoutTrack {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
 
-        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
-        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
+        dispA.setLocation(MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0));
+        dispB.setLocation(MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0));
 
-        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
-        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
-        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
-        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
+        pointA.setLocation(MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0));
+        pointB.setLocation(MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0));
+        pointC.setLocation(MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0));
+        pointD.setLocation(MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0));
     }
 
     /**
@@ -2435,10 +2434,10 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
-        pointA = MathUtil.add(pointA, factor);
-        pointB = MathUtil.add(pointB, factor);
-        pointC = MathUtil.add(pointC, factor);
-        pointD = MathUtil.add(pointD, factor);
+        pointA.setLocation(MathUtil.add(pointA, factor));
+        pointB.setLocation(MathUtil.add(pointB, factor));
+        pointC.setLocation(MathUtil.add(pointC, factor));
+        pointD.setLocation(MathUtil.add(pointD, factor));
     }
 
     /**
@@ -2454,14 +2453,14 @@ abstract public class LayoutTurnout extends LayoutTrack {
         // rotate displacements around origin {0, 0}
         Point2D center_temp = getCoordsCenter();
         super.setCoordsCenter(MathUtil.zeroPoint2D);
-        dispA = rotatePoint(dispA, sineRot, cosineRot);
-        dispB = rotatePoint(dispB, sineRot, cosineRot);
+        dispA.setLocation(rotatePoint(dispA, sineRot, cosineRot));
+        dispB.setLocation(rotatePoint(dispB, sineRot, cosineRot));
         super.setCoordsCenter(center_temp);
 
-        pointA = rotatePoint(pointA, sineRot, cosineRot);
-        pointB = rotatePoint(pointB, sineRot, cosineRot);
-        pointC = rotatePoint(pointC, sineRot, cosineRot);
-        pointD = rotatePoint(pointD, sineRot, cosineRot);
+        pointA.setLocation(rotatePoint(pointA, sineRot, cosineRot));
+        pointB.setLocation(rotatePoint(pointB, sineRot, cosineRot));
+        pointC.setLocation(rotatePoint(pointC, sineRot, cosineRot));
+        pointD.setLocation(rotatePoint(pointD, sineRot, cosineRot));
     }
 
     /**
