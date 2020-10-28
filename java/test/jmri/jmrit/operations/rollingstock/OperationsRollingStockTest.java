@@ -86,7 +86,6 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         }
 
         jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 not found");
-
     }
 
     // test creation

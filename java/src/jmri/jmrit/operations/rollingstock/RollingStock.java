@@ -194,8 +194,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             // adjust used length if rolling stock is at a location
             if (_location != null && _track != null) {
                 _location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-                _track.setUsedLength(
-                        _track.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+                _track.setUsedLength(_track.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
                 if (_destination != null && _trackDestination != null && !_lengthChange) {
                     _lengthChange = true; // prevent recursive loop, and we want the "old" engine length
                     log.debug("Rolling stock ({}) has destination ({}, {})", this, _destination.getName(),
@@ -816,21 +815,21 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _rfid;
         if (id != null && !id.equals(old)) {
             log.debug("Setting IdTag for {} to {}", this, id);
-            // always set the _rfid if it changed.
             _rfid = id;
-            try {
-                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
-                if (tag != null) {
-                    log.debug("Tag {} found", tag);
-                } else {
-                    log.error("Tag {} not found", id);
+            if (!id.equals(NONE)) {
+                try {
+                    IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
+                    if (tag != null) {
+                        log.debug("Tag {} found", tag);
+                    } else {
+                        log.error("Tag {} not found", id);
+                    }
+                    setIdTag(tag);
+                } catch (NullPointerException e) {
+                    log.error("Tag manager not found");
                 }
-                setIdTag(tag);
-            } catch (NullPointerException e) {
-                log.error("Tag manager not found");
-            } finally {
-                setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
             }
+            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
         }
     }
 
