@@ -132,7 +132,7 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Network connections: Support added for auto-reconnect.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
