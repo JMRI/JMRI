@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusPreferenceTest {
+public class CbusPreferencesTest {
 
     @Test
     public void testCTor() {
