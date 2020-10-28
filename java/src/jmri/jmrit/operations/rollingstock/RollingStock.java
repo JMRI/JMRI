@@ -57,7 +57,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected boolean _selected = false;
 
     protected Location _location = null;
-    protected Track _trackLocation = null;
+    protected Track _track = null;
     protected Location _destination = null;
     protected Track _trackDestination = null;
     protected Train _train = null;
@@ -192,19 +192,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         String old = _length;
         if (!old.equals(length)) {
             // adjust used length if rolling stock is at a location
-            if (_location != null && _trackLocation != null) {
+            if (_location != null && _track != null) {
                 _location.setUsedLength(_location.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
-                _trackLocation.setUsedLength(
-                        _trackLocation.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
+                _track.setUsedLength(
+                        _track.getUsedLength() + Integer.parseInt(length) - Integer.parseInt(old));
                 if (_destination != null && _trackDestination != null && !_lengthChange) {
                     _lengthChange = true; // prevent recursive loop, and we want the "old" engine length
                     log.debug("Rolling stock ({}) has destination ({}, {})", this, _destination.getName(),
                             _trackDestination.getName());
-                    _trackLocation.deletePickupRS(this);
+                    _track.deletePickupRS(this);
                     _trackDestination.deleteDropRS(this);
                     // now change the length and update tracks
                     _length = length;
-                    _trackLocation.addPickupRS(this);
+                    _track.addPickupRS(this);
                     _trackDestination.addDropRS(this);
                     _lengthChange = false; // done
                 }
@@ -368,7 +368,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     public Track getTrack() {
-        return _trackLocation;
+        return _track;
     }
 
     /**
@@ -382,7 +382,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (track != null) {
             _location = track.getLocation();
         }
-        _trackLocation = track;
+        _track = track;
     }
 
     /**
@@ -391,8 +391,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on a track
      */
     public String getTrackName() {
-        if (_trackLocation != null) {
-            return _trackLocation.getName();
+        if (_track != null) {
+            return _track.getName();
         }
         return NONE;
     }
@@ -403,8 +403,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return empty string if rolling stock isn't on a track
      */
     public String getTrackId() {
-        if (_trackLocation != null) {
-            return _trackLocation.getId();
+        if (_track != null) {
+            return _track.getId();
         }
         return NONE;
     }
@@ -435,7 +435,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      */
     public String setLocation(Location location, Track track, boolean force) {
         Location oldLocation = _location;
-        Track oldTrack = _trackLocation;
+        Track oldTrack = _track;
         // first determine if rolling stock can be move to the new location
         if (!force && (oldLocation != location || oldTrack != track)) {
             String status = testLocation(location, track);
@@ -445,7 +445,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         // now update
         _location = location;
-        _trackLocation = track;
+        _track = track;
 
         if (oldLocation != location || oldTrack != track) {
             // update rolling stock location on layout, maybe this should be a property
@@ -474,14 +474,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 // Need to know if location name changes so we can forward to listeners
                 _location.addPropertyChangeListener(this);
             }
-            if (_trackLocation != null) {
-                _trackLocation.addRS(this);
+            if (_track != null) {
+                _track.addRS(this);
                 // Need to know if location name changes so we can forward to listeners
-                _trackLocation.addPropertyChangeListener(this);
+                _track.addPropertyChangeListener(this);
                 // if there's a destination then there's a pick up
                 if (_destination != null) {
                     _location.addPickupRS();
-                    _trackLocation.addPickupRS(this);
+                    _track.addPickupRS(this);
                 }
             }
             setDirtyAndFirePropertyChange(TRACK_CHANGED_PROPERTY, oldTrack, track);
@@ -489,6 +489,16 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return Track.OKAY;
     }
 
+    /**
+     * Used to confirm that a track is associated with a location, and that rolling
+     * stock can be placed on track.
+     * 
+     * @param location The location
+     * @param track    The track, can be null
+     * @return OKAY if track exists at location and rolling stock can be placed on
+     *         track, ERROR_TRACK if track isn't at location, other if rolling stock
+     *         can't be placed on track.
+     */
     public String testLocation(Location location, Track track) {
         if (track == null) {
             return Track.OKAY;
@@ -542,9 +552,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 oldDestination.deleteDropRS();
                 oldDestination.removePropertyChangeListener(this);
                 // delete pick up in case destination is null
-                if (_location != null && _trackLocation != null) {
+                if (_location != null && _track != null) {
                     _location.deletePickupRS();
-                    _trackLocation.deletePickupRS(this);
+                    _track.deletePickupRS(this);
                 }
             }
             if (oldTrack != null) {
@@ -553,9 +563,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
             if (_destination != null) {
                 _destination.addDropRS();
-                if (_location != null && _trackLocation != null) {
+                if (_location != null && _track != null) {
                     _location.addPickupRS();
-                    _trackLocation.addPickupRS(this);
+                    _track.addPickupRS(this);
                 }
 
                 // Need to know if destination name changes so we can forward to listeners
@@ -899,6 +909,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (_tag != null) {
             _tag.addPropertyChangeListener(_tagListener);
             setRfid(_tag.getSystemName());
+        } else {
+            setRfid(NONE);
         }
         // initilize _whenLastSeen and _whereLastSeen for property
         // change notification.
@@ -1461,7 +1473,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)) {
-            if (e.getSource() == _trackLocation) {
+            if (e.getSource() == _track) {
                 log.debug("delete location for rolling stock: ({})", this);
                 setLocation(_location, null);
             }

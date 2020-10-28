@@ -83,7 +83,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        //setup the engines
+        // setup the engines
         e1.setBuilt("2016");
         e2.setBuilt("1212");
         e3.setBuilt("100"); // this stays 100
@@ -108,7 +108,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        //setup the engines
+        // setup the engines
         e1.setMoves(2);
         e2.setMoves(44);
         e3.setMoves(99999);
@@ -133,7 +133,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        //setup the engines
+        // setup the engines
         e1.setOwner("LAST");
         e2.setOwner("FOOL");
         e3.setOwner("AAA");
@@ -175,7 +175,7 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        //setup the engines
+        // setup the engines
         e1.setConsist(new Consist("F"));
         e2.setConsist(new Consist("D"));
         e3.setConsist(new Consist("B"));
@@ -244,7 +244,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Train t3 = new Train("id3", "E");
         t3.setRoute(r);
 
-        //setup the engines
+        // setup the engines
         e1.setTrain(t1);
         e2.setTrain(t3);
         e3.setTrain(t3);
@@ -279,7 +279,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Train t3 = new Train("id3", "E");
         t3.setRoute(r);
 
-        //setup the engines
+        // setup the engines
         e1.setTrain(t1);
         e2.setTrain(t3);
         e3.setTrain(t3);
@@ -315,7 +315,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Train t3 = new Train("id3", "E");
         t3.setRoute(r);
 
-        //setup the engines
+        // setup the engines
         e1.setTrain(t1);
         e2.setTrain(t3);
         e3.setTrain(t3);
@@ -352,7 +352,7 @@ public class EngineManagerTest extends OperationsTestCase {
         Train t3 = new Train("id3", "E");
         t3.setRoute(r);
 
-        //setup the engines
+        // setup the engines
         e1.setTrain(t1);
         e2.setTrain(t3);
         e3.setTrain(t3);
@@ -425,7 +425,7 @@ public class EngineManagerTest extends OperationsTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("93F");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("B12");
 
-        //setup the engines
+        // setup the engines
         e1.setRfid("SQ1");
         e2.setRfid("1Ab");
         e3.setRfid("Ase");
@@ -442,7 +442,6 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("4th engine in list by rfid", e3, engineList.get(3));
         Assert.assertEquals("5th engine in list by rfid", e6, engineList.get(4));
         Assert.assertEquals("6th engine in list by rfid", e1, engineList.get(5));
-        
 
     }
 
@@ -461,7 +460,7 @@ public class EngineManagerTest extends OperationsTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("93F");
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("B12");
 
-        //setup the engines
+        // setup the engines
         e1.setRfid("SQ1");
         e2.setRfid("1Ab");
         e3.setRfid("Ase");
@@ -476,7 +475,6 @@ public class EngineManagerTest extends OperationsTestCase {
         Assert.assertEquals("find e4 by rfid", e4, manager.getByRfid("IDasd"));
         Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("ID93F"));
         Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("IDB12"));
-
 
     }
 

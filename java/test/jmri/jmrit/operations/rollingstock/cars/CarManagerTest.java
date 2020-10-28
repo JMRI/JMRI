@@ -77,7 +77,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("5th car in list by id", c4, carList.get(4));
         Assert.assertEquals("6th car in list by id", c5, carList.get(5));
     }
-    
+
     @Test
     public void testListCarsByBuildDate() {
         initializeTest();
@@ -709,8 +709,8 @@ public class CarManagerTest extends OperationsTestCase {
     }
 
     /**
-     * Cars at the last location are not normally included in car list if pick
-     * up is disabled
+     * Cars at the last location are not normally included in car list if pick up is
+     * disabled
      */
     @Test
     public void testListCarsAvailableByTrain2() {
@@ -737,15 +737,15 @@ public class CarManagerTest extends OperationsTestCase {
         List<Car> carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 4, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, carList.get(0));
-        
+
         // visit last location twice
         RouteLocation last2 = r.addLocation(l3);
         last2.setPickUpAllowed(false); // no pulls
-        
+
         carList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
     }
-    
+
     @Test
     public void testListCarsAvailableByTrainStaging() {
         initializeTest();
@@ -755,7 +755,7 @@ public class CarManagerTest extends OperationsTestCase {
         r.addLocation(l1);
         r.addLocation(l2);
         r.addLocation(l3);
-        
+
         // make last staging
         l3.setLocationOps(Location.STAGING);
 
@@ -774,7 +774,7 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of Cars available for t1", 4, carList.size());
         Assert.assertEquals("1st car in list available for t1", c1, carList.get(0));
     }
-    
+
     @Test
     public void testListCarsByPriority() {
         initializeTest();
@@ -794,7 +794,7 @@ public class CarManagerTest extends OperationsTestCase {
         c4.setTrain(t1);
         c5.setTrain(t1);
         c6.setTrain(t1);
-        
+
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         cl.addName("Boxcar", "Tools");
         cl.setPriority("Boxcar", "Tools", CarLoad.PRIORITY_HIGH);
@@ -804,9 +804,6 @@ public class CarManagerTest extends OperationsTestCase {
         Assert.assertEquals("Number of Cars available for t1", 6, carList.size());
         Assert.assertEquals("1st car in list available for t1", c3, carList.get(0));
     }
-
-
-
 
     @Test
     public void testListCarsByNumber() {
