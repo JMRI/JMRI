@@ -57,7 +57,7 @@ public final class BeanTableStartupActionFactory extends AbstractStartupActionFa
 
     @Override
     public Class<?>[] getActionClasses() {
-        return new Class[]{AudioTableAction.class,
+        return new Class<?>[]{AudioTableAction.class,
             BlockTableAction.class,
             IdTagTableAction.class,
             LightTableAction.class,
