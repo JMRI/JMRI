@@ -107,15 +107,15 @@ public class LayoutTurntableView extends LayoutTrackView {
         // draw ray tracks
         for (int j = 0; j < turntable.getNumberRays(); j++) {
             boolean main = false;
-//            Color c = null;
+            //Color c = null;
             TrackSegment ts = turntable.getRayConnectOrdered(j);
             if (ts != null) {
                 main = ts.isMainline();
-//                LayoutBlock lb = ts.getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                }
+                //LayoutBlock lb = ts.getLayoutBlock();
+                //if (lb != null) {
+                //    c = g2.getColor();
+                //    setColorForTrackBlock(g2, lb);
+                //}
             }
             Point2D pt2 = turntable.getRayCoordsOrdered(j);
             Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, getCoordsCenter()), turntable.getRadius());
@@ -130,13 +130,13 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
             if (isMain && turntable.isTurnoutControlled() && (turntable.getPosition() == j)) {
-//                LayoutBlock lb = getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                } else {
-//                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
-//                }
+                //LayoutBlock lb = getLayoutBlock();
+                //if (lb != null) {
+                //    c = g2.getColor();
+                //    setColorForTrackBlock(g2, lb);
+                //} else {
+                //    g2.setColor(layoutEditor.getDefaultTrackColorColor());
+                //}
                 vDelta = MathUtil.normalize(vDelta, turntable.getRadius() - halfTrackWidth);
                 pt1 = MathUtil.subtract(getCoordsCenter(), vDelta);
                 pt1L = MathUtil.subtract(pt1, vDeltaO);
@@ -144,9 +144,9 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
-//            if (c != null) {
-//                g2.setColor(c); /// restore previous color
-//            }
+            //if (c != null) {
+            //    g2.setColor(c); /// restore previous color
+            //}
         }
     }
 
