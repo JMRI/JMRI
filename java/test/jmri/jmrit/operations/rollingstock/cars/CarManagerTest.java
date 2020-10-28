@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -874,12 +874,12 @@ public class CarManagerTest extends OperationsTestCase {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
         // find car by RFID
-        Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("SQ1"));
-        Assert.assertEquals("find c2 by rfid", c2, manager.getByRfid("1Ab"));
-        Assert.assertEquals("find c3 by rfid", c3, manager.getByRfid("Ase"));
-        Assert.assertEquals("find c4 by rfid", c4, manager.getByRfid("asd"));
-        Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("93F"));
-        Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
+        Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("IDSQ1"));
+        Assert.assertEquals("find c2 by rfid", c2, manager.getByRfid("ID1Ab"));
+        Assert.assertEquals("find c3 by rfid", c3, manager.getByRfid("IDAse"));
+        Assert.assertEquals("find c4 by rfid", c4, manager.getByRfid("IDasd"));
+        Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("ID93F"));
+        Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("IDB12"));
     }
 
     @Test

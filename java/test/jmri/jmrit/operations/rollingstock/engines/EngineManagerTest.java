@@ -3,7 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -470,12 +470,12 @@ public class EngineManagerTest extends OperationsTestCase {
         e6.setRfid("B12");
 
         // find engine by RFID
-        Assert.assertEquals("find e1 by rfid", e1, manager.getByRfid("SQ1"));
-        Assert.assertEquals("find e2 by rfid", e2, manager.getByRfid("1Ab"));
-        Assert.assertEquals("find e3 by rfid", e3, manager.getByRfid("Ase"));
-        Assert.assertEquals("find e4 by rfid", e4, manager.getByRfid("asd"));
-        Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("93F"));
-        Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("B12"));
+        Assert.assertEquals("find e1 by rfid", e1, manager.getByRfid("IDSQ1"));
+        Assert.assertEquals("find e2 by rfid", e2, manager.getByRfid("ID1Ab"));
+        Assert.assertEquals("find e3 by rfid", e3, manager.getByRfid("IDAse"));
+        Assert.assertEquals("find e4 by rfid", e4, manager.getByRfid("IDasd"));
+        Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("ID93F"));
+        Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("IDB12"));
 
 
     }

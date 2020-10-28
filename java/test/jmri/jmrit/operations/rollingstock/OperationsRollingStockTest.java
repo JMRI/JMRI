@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -86,7 +86,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
             Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
         }
 
-        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 Not Found");
+        jmri.util.JUnitAppender.assertErrorMessage("Tag 12345 not found");
         
 
     }
@@ -127,7 +127,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Built", "TESTBUILT", rs1.getBuilt());
         Assert.assertEquals("Car Owner", "TESTOWNER", rs1.getOwner());
         Assert.assertEquals("Car Comment", "TESTCOMMENT", rs1.getComment());
-        Assert.assertEquals("Car Rfid", "TESTRFID", rs1.getRfid());
+        Assert.assertEquals("Car Rfid", "IDTESTRFID", rs1.getRfid());
         Assert.assertEquals("Car Moves", 5, rs1.getMoves());
         
 
