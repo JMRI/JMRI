@@ -158,11 +158,6 @@ public class CbusConfigurationManagerTest {
         memo.setTrafficController(tcis);
         prefs = new CbusPreferences();
         
-        // Setup programmer availability to match CANCMD
-        prefs.setGlobalProgrammerAvailable(true);
-        prefs.setAddressedModePossible(true);
-        prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
-        memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.SPROG3PLUS);
         jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);

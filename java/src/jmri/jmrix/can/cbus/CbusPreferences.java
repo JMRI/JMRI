@@ -32,8 +32,8 @@ public class CbusPreferences extends PreferencesBean {
     private int bootWriteDelay = CbusNode.BOOT_PROG_TIMEOUT_FAST;
     // Default to no programmers available. The p[rogrammer manager will validate
     // the preferences for the hardware connection in use.
-    private boolean _isGlobalProgrammerAvailable = false;
-    private boolean _isAddressedModePossible = false;
+    private boolean _isGlobalProgrammerAvailable = true;
+    private boolean _isAddressedModePossible = true;
     private int _progTrackMode = SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE;
     
     public CbusPreferences() {

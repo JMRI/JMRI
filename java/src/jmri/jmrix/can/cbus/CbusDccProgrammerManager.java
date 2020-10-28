@@ -53,9 +53,9 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         switch (pms) {
             default:
             case NONE:
-                // Force no programmers available
-                igpa = false;
-                iamp = false;
+                // Force both programmers available, e.g. for CANCMD that has no mode switching
+                igpa = true;
+                iamp = true;
                 break;
                 
             case EITHER:
@@ -68,7 +68,7 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
                 
             case SPROG3PLUS:
                 if (ptm == SprogCbusSprog3PlusModeSwitcherFrame.PROG_AR_MODE) {
-                    // No global (service) mode
+                    // No global (service) mode if using auto-reverse
                     igpa = false;
                     iamp = true;
                 } else {

@@ -28,8 +28,8 @@ public class CbusDccProgrammerManagerTest {
         memo.setSubProtocol(ConfigurationManager.SubProtocol.NONE);
         memo.setProgModeSwitch(ConfigurationManager.ProgModeSwitch.EITHER);
         prefs.setProgTrackMode(SprogCbusSprog3PlusModeSwitcherFrame.PROG_OFF_MODE);
-        Assert.assertEquals(false, prefs.isGlobalProgrammerAvailable());
-        Assert.assertEquals(false, prefs.isAddressedModePossible());
+        Assert.assertEquals(true, prefs.isGlobalProgrammerAvailable());
+        Assert.assertEquals(true, prefs.isAddressedModePossible());
         CbusDccProgrammerManager t = new CbusDccProgrammerManager(new CbusDccProgrammer(tc),memo);
         Assert.assertNotNull("exists",t);
         Assert.assertEquals(true , prefs.isGlobalProgrammerAvailable());
@@ -75,9 +75,6 @@ public class CbusDccProgrammerManagerTest {
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tc);
         prefs = new CbusPreferences();
-        prefs.setGlobalProgrammerAvailable(false);
-        prefs.setAddressedModePossible(false);
-        prefs.setProgTrackMode(0);
         jmri.InstanceManager.store(prefs,CbusPreferences.class );
     }
 
