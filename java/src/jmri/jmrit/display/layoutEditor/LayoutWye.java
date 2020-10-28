@@ -1,12 +1,29 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
+import static java.lang.Float.POSITIVE_INFINITY;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.text.MessageFormat;
+import java.util.*;
 import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.util.MathUtil;
+import org.slf4j.*;
 
 /**
  * A specialization of {@link LayoutTurnout}
- * corresponding to a wye turnout on the layout.
+ * corresponding to a wye turnout on the layout. 
  * <p>
  * A LayoutTurnout has three or four connection points, designated A, B, C, and
  * D. For right-handed or left-handed turnouts, A corresponds to the throat. At
@@ -17,17 +34,17 @@ import javax.annotation.*;
  * <pre>
  *    Wye           Three-way
  *
- *       B
- *      //
- * A ==**
- *      \\
- *       C
+ *       B   
+ *      //  
+ * A ==**   
+ *      \\    
+ *       C  
  *
  * </pre>
  * <p>
  * A LayoutWye carries Block information. For
  * wye turnouts, the entire turnout is in one block, however, a block border may
- * occur at any connection (A,B,C,D).
+ * occur at any connection (A,B,C,D). 
  * <p>
  * When LayoutWyes are first created, a rotation (degrees) is provided. For
  * 0.0 rotation, the turnout lies on the east-west line with A facing east.
@@ -46,12 +63,12 @@ import javax.annotation.*;
  * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
  * <p>
  * A LayoutWye may be linked to another LayoutTurnout to form a turnout
- * pair.
+ * pair. 
  *<br>
  * Throat-To-Throat Turnouts - Two turnouts connected closely at their
  * throats, so closely that signals are not appropriate at the their throats.
  * This is the situation when two RH, LH, or WYE turnouts are used to model a
- * double slip.
+ * double slip. 
  *<br>
  * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
  * throat of the second turnout is closely connected to the continuing track of
@@ -86,6 +103,6 @@ public class LayoutWye extends LayoutTurnout {
 
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutWyeEditor(layoutEditor);
     }
-
+    
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutWye.class);
 }

@@ -1,22 +1,23 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static java.lang.Math.PI;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
-
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
-
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
+import org.slf4j.*;
 
 /**
  * A LevelXing is two track segment on a layout that cross at an angle.
@@ -94,9 +95,8 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * Constructor method.
-     *
-     * @param id           ID string.
-     * @param c            the point location.
+     * @param id ID string.
+     * @param c the point location.
      * @param layoutEditor the main layout editor.
      */
     public LevelXing(String id, Point2D c, LayoutEditor layoutEditor) {
@@ -751,7 +751,6 @@ public class LevelXing extends LayoutTrack {
 
     /**
      * Add Layout Blocks.
-     *
      * @param newLayoutBlock the layout block to add.
      */
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
@@ -1422,9 +1421,8 @@ public class LevelXing extends LayoutTrack {
     boolean active = true;
 
     /**
-     * Get if active. "active" means that the object is still displayed, and
-     * should be stored.
-     *
+     * Get if active.
+     * "active" means that the object is still displayed, and should be stored.
      * @return true if still displayed, else false.
      */
     public boolean isActive() {
@@ -1501,6 +1499,183 @@ public class LevelXing extends LayoutTrack {
         for (JMenuItem mi : viewAdditionalMenu) {
             popup.add(mi);
         }
+    }
+
+    /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
+
+    /**
+     * Draw this level crossing.
+     *
+     * @param g2 the graphics port to draw to
+     */
+    @Override
+    protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
+        if (isMain == isMainlineAC()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockAC());
+            }
+            g2.draw(new Line2D.Double(getCoordsA(), getCoordsC()));
+        }
+        if (isMain == isMainlineBD()) {
+            if (isBlock) {
+                setColorForTrackBlock(g2, getLayoutBlockBD());
+            }
+            g2.draw(new Line2D.Double(getCoordsB(), getCoordsD()));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
+        Point2D pA = getCoordsA();
+        Point2D pB = getCoordsB();
+        Point2D pC = getCoordsC();
+        Point2D pD = getCoordsD();
+        Point2D pM = getCoordsCenter();
+
+        Point2D vAC = MathUtil.normalize(MathUtil.subtract(pC, pA), railDisplacement);
+        double dirAC_DEG = MathUtil.computeAngleDEG(pA, pC);
+        Point2D vACo = MathUtil.orthogonal(vAC);
+        Point2D pAL = MathUtil.subtract(pA, vACo);
+        Point2D pAR = MathUtil.add(pA, vACo);
+        Point2D pCL = MathUtil.subtract(pC, vACo);
+        Point2D pCR = MathUtil.add(pC, vACo);
+
+        Point2D vBD = MathUtil.normalize(MathUtil.subtract(pD, pB), railDisplacement);
+        double dirBD_DEG = MathUtil.computeAngleDEG(pB, pD);
+        Point2D vBDo = MathUtil.orthogonal(vBD);
+        Point2D pBL = MathUtil.subtract(pB, vBDo);
+        Point2D pBR = MathUtil.add(pB, vBDo);
+        Point2D pDL = MathUtil.subtract(pD, vBDo);
+        Point2D pDR = MathUtil.add(pD, vBDo);
+
+        double deltaDEG = MathUtil.absDiffAngleDEG(dirAC_DEG, dirBD_DEG);
+        double deltaRAD = Math.toRadians(deltaDEG);
+
+        double hypotK = railDisplacement / Math.cos((PI - deltaRAD) / 2.0);
+        double hypotV = railDisplacement / Math.cos(deltaRAD / 2.0);
+
+        log.debug("dir AC: {}, BD: {}, diff: {}", dirAC_DEG, dirBD_DEG, deltaDEG);
+
+        Point2D vDisK = MathUtil.normalize(MathUtil.add(vAC, vBD), hypotK);
+        Point2D vDisV = MathUtil.normalize(MathUtil.orthogonal(vDisK), hypotV);
+        Point2D pKL = MathUtil.subtract(pM, vDisK);
+        Point2D pKR = MathUtil.add(pM, vDisK);
+        Point2D pVL = MathUtil.subtract(pM, vDisV);
+        Point2D pVR = MathUtil.add(pM, vDisV);
+
+        if (isMain == isMainlineAC()) {
+            // this is the *2.0 vector (rail gap) for the AC diamond parts
+            Point2D vAC2 = MathUtil.normalize(vAC, 2.0);
+            // KL toward C, VR toward A, VL toward C and KR toward A
+            Point2D pKLtC = MathUtil.add(pKL, vAC2);
+            Point2D pVRtA = MathUtil.subtract(pVR, vAC2);
+            Point2D pVLtC = MathUtil.add(pVL, vAC2);
+            Point2D pKRtA = MathUtil.subtract(pKR, vAC2);
+
+            // draw right AC rail: AR====KL == VR====CR
+            g2.draw(new Line2D.Double(pAR, pKL));
+            g2.draw(new Line2D.Double(pKLtC, pVRtA));
+            g2.draw(new Line2D.Double(pVR, pCR));
+
+            // draw left AC rail: AL====VL == KR====CL
+            g2.draw(new Line2D.Double(pAL, pVL));
+            g2.draw(new Line2D.Double(pVLtC, pKRtA));
+            g2.draw(new Line2D.Double(pKR, pCL));
+        }
+        if (isMain == isMainlineBD()) {
+            // this is the *2.0 vector (rail gap) for the BD diamond parts
+            Point2D vBD2 = MathUtil.normalize(vBD, 2.0);
+            // VR toward D, KR toward B, KL toward D and VL toward B
+            Point2D pVRtD = MathUtil.add(pVR, vBD2);
+            Point2D pKRtB = MathUtil.subtract(pKR, vBD2);
+            Point2D pKLtD = MathUtil.add(pKL, vBD2);
+            Point2D pVLtB = MathUtil.subtract(pVL, vBD2);
+
+            // draw right BD rail: BR====VR == KR====DR
+            g2.draw(new Line2D.Double(pBR, pVR));
+            g2.draw(new Line2D.Double(pVRtD, pKRtB));
+            g2.draw(new Line2D.Double(pKR, pDR));
+
+            // draw left BD rail: BL====KL == VL====DL
+            g2.draw(new Line2D.Double(pBL, pKL));
+            g2.draw(new Line2D.Double(pKLtD, pVLtB));
+            g2.draw(new Line2D.Double(pVL, pDL));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_A))
+                && (getConnectA() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsA()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_B))
+                && (getConnectB() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsB()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_C))
+                && (getConnectC() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsC()));
+        }
+
+        if (((specificType == HitPointType.NONE) || (specificType == HitPointType.LEVEL_XING_D))
+                && (getConnectD() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsD()));
+        }
+    }
+
+    @Override
+    protected void drawEditControls(Graphics2D g2) {
+        g2.setColor(layoutEditor.getDefaultTrackColorColor());
+        g2.draw(trackEditControlCircleAt(getCoordsCenter()));
+
+        if (getConnectA() == null) {
+            g2.setColor(Color.magenta);
+        } else {
+            g2.setColor(Color.blue);
+        }
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsA()));
+
+        if (getConnectB() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsB()));
+
+        if (getConnectC() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsC()));
+
+        if (getConnectD() == null) {
+            g2.setColor(Color.red);
+        } else {
+            g2.setColor(Color.green);
+        }
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsD()));
+    }
+
+    @Override
+    protected void drawTurnoutControls(Graphics2D g2) {
+        // LevelXings don't have turnout controls...
+        // nothing to see here... move along...
     }
 
     /*

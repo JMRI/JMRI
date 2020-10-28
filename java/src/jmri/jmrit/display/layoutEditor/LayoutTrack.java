@@ -1,13 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
-
 import javax.annotation.*;
 import javax.swing.*;
-
 import jmri.*;
 import jmri.util.*;
 
@@ -39,12 +38,12 @@ abstract public class LayoutTrack {
      * Get the track ID.
      * @return track ident.
      */
-    @Nonnull
+    @Nonnull 
     final public String getId() {
         return ident;
     }
 
-    @Nonnull
+    @Nonnull 
     final public String getName() {
         return ident;
     }
@@ -54,7 +53,7 @@ abstract public class LayoutTrack {
     final protected void setIdent(@Nonnull String ident) {
         this.ident = ident;
     }
-
+    
     /**
      * Set center coordinates
      *
@@ -94,7 +93,7 @@ abstract public class LayoutTrack {
     }
 
     /**
-     * Set new decorations
+     * Set new decorations 
      *
      * This is a complete replacement of the decorations, not an appending.
      *
@@ -156,7 +155,49 @@ abstract public class LayoutTrack {
         return getColorForTrackBlock(lb, false);
     }
 
+    final protected Color setColorForTrackBlock(Graphics2D g2,
+            @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
+        Color result = getColorForTrackBlock(layoutBlock, forceBlockTrackColor);
+        g2.setColor(result);
+        return result;
+    }
+
+    // optional parameter forceTrack = false
+    final protected Color setColorForTrackBlock(Graphics2D g2, @CheckForNull LayoutBlock lb) {
+        return setColorForTrackBlock(g2, lb, false);
+    }
+
     abstract public boolean isMainline();
+
+    /**
+     * draw one line (Ballast, ties, center or 3rd rail, block lines)
+     *
+     * @param g2      the graphics context
+     * @param isMain  true if drawing mainlines
+     * @param isBlock true if drawing block lines
+     */
+    abstract protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
+
+    /**
+     * draw two lines (rails)
+     *
+     * @param g2               the graphics context
+     * @param isMain           true if drawing mainlines
+     * @param railDisplacement the offset from center to draw the lines
+     */
+    abstract protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement);
+
+    /**
+     * draw hidden track
+     *
+     * @param g2 the graphics context
+     */
+    // abstract protected void drawHidden(Graphics2D g2);
+    // note: placeholder until I get this implemented in all sub-classes
+    // TODO: replace with abstract declaration (above)
+    final protected void drawHidden(Graphics2D g2) {
+        // nothing to do here... move along...
+    }
 
     /**
      * Load a file for a specific arrow ending.
@@ -173,6 +214,40 @@ abstract public class LayoutTrack {
             return jcbmi;
     }
     protected static final int NUM_ARROW_TYPES = 6;
+    
+    /**
+     * highlight unconnected connections
+     *
+     * @param g2           the graphics context
+     * @param specificType the specific connection to draw (or NONE for all)
+     */
+    abstract protected void highlightUnconnected(Graphics2D g2, HitPointType specificType);
+
+    // optional parameter specificType = NONE
+    final protected void highlightUnconnected(Graphics2D g2) {
+        highlightUnconnected(g2, HitPointType.NONE);
+    }
+
+    /**
+     * draw the edit controls
+     *
+     * @param g2 the graphics context
+     */
+    abstract protected void drawEditControls(Graphics2D g2);
+
+    /**
+     * Draw the turnout controls
+     *
+     * @param g2 the graphics context
+     */
+    abstract protected void drawTurnoutControls(Graphics2D g2);
+
+    /**
+     * Draw track decorations
+     *
+     * @param g2 the graphics context
+     */
+    abstract protected void drawDecorations(Graphics2D g2);
 
     /**
      * Get the hidden state of the track element.

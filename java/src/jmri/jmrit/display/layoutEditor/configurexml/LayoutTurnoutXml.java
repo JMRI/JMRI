@@ -22,7 +22,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
     static final EnumIO<LayoutTurnout.LinkType> linkEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.LinkType.class);
     static final EnumIO<LayoutTurnout.TurnoutType> tTypeEnumMap = new EnumIoNamesNumbers<>(LayoutTurnout.TurnoutType.class);
-
+    
     public LayoutTurnoutXml() {
     }
 
@@ -174,7 +174,7 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Load, starting with the LayoutTurnout element, then all the other data
+     * Load, starting with the levelxing element, then all the other data
      *
      * @param element Top level Element to unpack.
      * @param o       LayoutEditor as an Object
@@ -207,34 +207,37 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         }
 
         // create the new LayoutTurnout of the correct type
-        LayoutTurnout l;
-        switch (type) {
-            case RH_TURNOUT:
+        LayoutTurnout l; 
+        switch(type) {
+
+            case RH_TURNOUT :
                 l = new LayoutRHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case LH_TURNOUT:
+            case LH_TURNOUT :
                 l = new LayoutLHTurnout(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case WYE_TURNOUT:
+            case WYE_TURNOUT :
                 l = new LayoutWye(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case DOUBLE_XOVER:
+            case DOUBLE_XOVER :
                 l = new LayoutDoubleXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case RH_XOVER:
+            case RH_XOVER :
                 l = new LayoutRHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case LH_XOVER:
+            case LH_XOVER :
                 l = new LayoutLHXOver(name, new Point2D.Double(x, y), 0.0, 1.0, 1.0, p, version);
                 break;
-            case DOUBLE_SLIP:
+
+            case DOUBLE_SLIP :
                 l = new LayoutDoubleSlip(name, new Point2D.Double(x, y), 0.0, p);
                 log.error("Found DOUBLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
-            case SINGLE_SLIP:
+            case SINGLE_SLIP :
                 l = new LayoutSingleSlip(name, new Point2D.Double(x, y), 0.0, p);
                 log.error("Found SINGLE_SLIP in LayoutTrack ctor for element {}", name);
                 break;
+
             default:
                 log.error("can't create LayoutTrack {} with type {}", name, type);
                 return; // without creating
