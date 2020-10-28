@@ -46,13 +46,15 @@ import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
 
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
+import jmri.jmrit.logixng.ModuleManager;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -77,7 +79,7 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
  */
-public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
+public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jmrit.logixng.Module> {
 
     /**
      * Create a LogixNGTableAction instance.
@@ -85,65 +87,62 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
      * @param s the Action title, not the title of the resulting frame. Perhaps
      *          this should be changed?
      */
-    public LogixNGTableAction(String s) {
+    public LogixNGModuleTableAction(String s) {
         super(s);
     }
     
     /**
      * Create a LogixNGTableAction instance with default title.
      */
-    public LogixNGTableAction() {
-        this(Bundle.getMessage("TitleLogixNGTable"));
+    public LogixNGModuleTableAction() {
+        this(Bundle.getMessage("TitleLogixNGModuleTable"));
     }
 
     @Override
-    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
-        return new LogixNGEditor(f, m, sName);
+    protected AbstractLogixNGEditor<Module> getEditor(BeanTableFrame<Module> f, BeanTableDataModel<Module> m, String sName) {
+        System.out.format("LogixNGModuleTableAction: getEditor()");
+        return null;
+//        return new ModuleEditor(f, m, sName);
     }
     
     @Override
-    protected Manager<LogixNG> getManager() {
-        return InstanceManager.getDefault(LogixNG_Manager.class);
-    }
-    
-    @Override
-    protected void setEnabled(LogixNG logixNG, boolean enable) {
-        logixNG.setEnabled(enable);
-    }
-    
-    @Override
-    protected boolean isEnabled(LogixNG logixNG) {
-        return logixNG.isEnabled();
+    protected Manager<Module> getManager() {
+        return InstanceManager.getDefault(ModuleManager.class);
     }
     
     @Override
     protected void enableAll(boolean enable) {
-        for (LogixNG x : getManager().getNamedBeanSet()) {
-            x.setEnabled(enable);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected LogixNG createBean(String systemName) {
-        return InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG(systemName);
+    protected void setEnabled(Module bean, boolean enable) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected LogixNG createBean(String systemName, String userName) {
-        return InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG(systemName, userName);
+    protected boolean isEnabled(Module bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    public void deleteBean(LogixNG logixNG) {
-        logixNG.setEnabled(false);
-        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(logixNG);
+    protected Module createBean(String systemName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected String getBeanText(LogixNG e) {
-        StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(new PrintWriter(writer), "    ");
-        return writer.toString();
+    protected Module createBean(String systemName, String userName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    protected void deleteBean(Module bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getBeanText(Module bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
@@ -217,7 +216,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
 
         addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

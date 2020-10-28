@@ -49,8 +49,8 @@ import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.NamedTable;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 
@@ -77,7 +77,7 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  * @author Dave Sand copyright (c) 2017 (LogixTableAction)
  * @author Daniel Bergqvist copyright (c) 2019
  */
-public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
+public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
     /**
      * Create a LogixNGTableAction instance.
@@ -85,65 +85,63 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
      * @param s the Action title, not the title of the resulting frame. Perhaps
      *          this should be changed?
      */
-    public LogixNGTableAction(String s) {
+    public LogixNGTableTableAction(String s) {
         super(s);
     }
     
     /**
      * Create a LogixNGTableAction instance with default title.
      */
-    public LogixNGTableAction() {
-        this(Bundle.getMessage("TitleLogixNGTable"));
+    public LogixNGTableTableAction() {
+        this(Bundle.getMessage("TitleLogixNGTableTable"));
     }
 
     @Override
-    protected AbstractLogixNGEditor<LogixNG> getEditor(BeanTableFrame<LogixNG> f, BeanTableDataModel<LogixNG> m, String sName) {
-        return new LogixNGEditor(f, m, sName);
+    protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
+        return null;
+//        return new TableEditor(f, m, sName);
     }
     
     @Override
-    protected Manager<LogixNG> getManager() {
-        return InstanceManager.getDefault(LogixNG_Manager.class);
-    }
-    
-    @Override
-    protected void setEnabled(LogixNG logixNG, boolean enable) {
-        logixNG.setEnabled(enable);
-    }
-    
-    @Override
-    protected boolean isEnabled(LogixNG logixNG) {
-        return logixNG.isEnabled();
+    protected Manager<NamedTable> getManager() {
+        return InstanceManager.getDefault(NamedTableManager.class);
     }
     
     @Override
     protected void enableAll(boolean enable) {
-        for (LogixNG x : getManager().getNamedBeanSet()) {
-            x.setEnabled(enable);
-        }
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected LogixNG createBean(String systemName) {
-        return InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG(systemName);
+    protected void setEnabled(NamedTable bean, boolean enable) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected LogixNG createBean(String systemName, String userName) {
-        return InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG(systemName, userName);
+    protected boolean isEnabled(NamedTable bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    public void deleteBean(LogixNG logixNG) {
-        logixNG.setEnabled(false);
-        InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(logixNG);
+    protected NamedTable createBean(String systemName) {
+//        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, null);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected String getBeanText(LogixNG e) {
-        StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(new PrintWriter(writer), "    ");
-        return writer.toString();
+    protected NamedTable createBean(String systemName, String userName) {
+//        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    protected void deleteBean(NamedTable bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected String getBeanText(NamedTable bean) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     /**
@@ -193,18 +191,44 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName, c);
+        
+        JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
+        JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
+        JRadioButton _typeStackTable = new JRadioButton("Stack. Temporary internal table");
+        ButtonGroup _buttonGroup = new ButtonGroup();
+        _buttonGroup.add(_typeExternalTable);
+        _buttonGroup.add(_typeInternalTable);
+        _buttonGroup.add(_typeStackTable);
+        _typeInternalTable.setSelected(true);
+        
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
         contentPane.add(p);
+        
+        
+        
+        JPanel panel98 = new JPanel();
+        panel98.setLayout(new FlowLayout());
+        JPanel panel99 = new JPanel();
+        panel99.setLayout(new BoxLayout(panel99, BoxLayout.Y_AXIS));
+        panel99.add(_typeExternalTable, c);
+        panel99.add(_typeInternalTable, c);
+        panel99.add(_typeStackTable, c);
+        panel98.add(panel99);
+        contentPane.add(panel98);
+        
+        
+        
+        
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
         panel31.setLayout(new FlowLayout());
-        JLabel message1 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage1"));  // NOI18N
+        JLabel message1 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGTableMessage1"));  // NOI18N
         panel31.add(message1);
         JPanel panel32 = new JPanel();
-        JLabel message2 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGMessage2"));  // NOI18N
+        JLabel message2 = new JLabel(Bundle.getMessage(startMessageId + "LogixNGTableMessage2"));  // NOI18N
         panel32.add(message2);
         panel3.add(panel31);
         panel3.add(panel32);

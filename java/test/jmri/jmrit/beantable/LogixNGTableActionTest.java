@@ -82,7 +82,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void testAddThroughDialog() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -131,9 +131,9 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Override
     public void testEditButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
         
-        logixNGTable.setEditorMode(LogixNGTableAction.EditMode.TREEEDIT);
+        logixNGTable.setEditorMode(AbstractLogixNGTableAction.EditMode.TREEEDIT);
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
@@ -164,7 +164,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testLogixNGBrowser() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.browserPressed("IQ101");  // NOI18N
 
@@ -179,7 +179,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixNGTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
         Assert.assertNotNull(logixNGFrame);
 
@@ -193,7 +193,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testAddLogixNGAutoName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -219,7 +219,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testAddLogixNG() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -249,7 +249,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     public void testDeleteLogixNG() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -301,7 +301,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         
         // * Add a LogixNG
-        LogixNGTableAction logixNGTable = (LogixNGTableAction) a;
+        AbstractLogixNGTableAction logixNGTable = (AbstractLogixNGTableAction) a;
         
         logixNGTable.actionPerformed(null); // show table
         JFrameOperator logixNGFrameOperator = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N

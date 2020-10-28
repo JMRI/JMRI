@@ -39,7 +39,7 @@ import jmri.util.table.ButtonRenderer;
  * @author Dave Sand copyright (c) 2017  (ConditionalListEdit)
  * @author Daniel Bergqvist (c) 2019
  */
-public final class LogixNGEditor {
+public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     
     BeanTableFrame<LogixNG> beanTableFrame;
     BeanTableDataModel<LogixNG> beanTableDataModel;
@@ -267,6 +267,7 @@ public final class LogixNGEditor {
         _editLogixNGFrame.setVisible(true);
     }
 
+    @Override
     public void bringToFront() {
         if (_editLogixNGFrame != null) {
             _editLogixNGFrame.setVisible(true);
@@ -381,9 +382,9 @@ public final class LogixNGEditor {
             }
             // user name is unique, change it
             // user name is unique, change it
-            logixData.clear();
-            logixData.put("chgUname", uName);  // NOI18N
-            fireLogixNGEvent();
+            logixNG_Data.clear();
+            logixNG_Data.put("chgUname", uName);  // NOI18N
+            fireEditorEvent();
         }
         // complete update and activate LogixNG
         finishDone();
@@ -397,9 +398,9 @@ public final class LogixNGEditor {
             _editLogixNGFrame.dispose();
             _editLogixNGFrame = null;
         }
-        logixData.clear();
-        logixData.put("Finish", _curLogixNG.getSystemName());   // NOI18N
-        fireLogixNGEvent();
+        logixNG_Data.clear();
+        logixNG_Data.put("Finish", _curLogixNG.getSystemName());   // NOI18N
+        fireEditorEvent();
     }
 
     /**
@@ -415,9 +416,9 @@ public final class LogixNGEditor {
         }
 */        
         _showReminder = true;
-        logixData.clear();
-        logixData.put("Delete", _curLogixNG.getSystemName());   // NOI18N
-        fireLogixNGEvent();
+        logixNG_Data.clear();
+        logixNG_Data.put("Delete", _curLogixNG.getSystemName());   // NOI18N
+        fireEditorEvent();
         finishDone();
     }
 
@@ -958,20 +959,21 @@ public final class LogixNGEditor {
     /**
      * Maintain a list of listeners -- normally only one.
      */
-    List<LogixNGEventListener> listenerList = new ArrayList<>();
+    List<EditorEventListener> listenerList = new ArrayList<>();
     
     /**
      * This contains a list of commands to be processed by the listener
      * recipient.
      */
-    public HashMap<String, String> logixData = new HashMap<>();
+    private HashMap<String, String> logixNG_Data = new HashMap<>();
     
     /**
      * Add a listener.
      *
      * @param listener The recipient
      */
-    public void addLogixNGEventListener(LogixNGEventListener listener) {
+    @Override
+    public void addEditorEventListener(EditorEventListener listener) {
         listenerList.add(listener);
     }
     
@@ -980,16 +982,17 @@ public final class LogixNGEditor {
      *
      * @param listener The recipient
      */
-    public void removeLogixNGEventListener(LogixNGEventListener listener) {
+    @Override
+    public void removeEditorEventListener(EditorEventListener listener) {
         listenerList.remove(listener);
     }
     
     /**
      * Notify the listeners to check for new data.
      */
-    void fireLogixNGEvent() {
-        for (LogixNGEventListener l : listenerList) {
-            l.logixNGEventOccurred();
+    private void fireEditorEvent() {
+        for (EditorEventListener l : listenerList) {
+            l.editorEventOccurred(logixNG_Data);
         }
     }
     
