@@ -205,31 +205,31 @@ public class LayoutRHXOverView extends LayoutXOverView {
         Point2D pD = getCoordsD();
         Point2D pM = getCoordsCenter();
 
-        Point2D vAM = MathUtil.normalize(MathUtil.subtract(pM, pA));
+        //Point2D vAM = MathUtil.normalize(MathUtil.subtract(pM, pA));
         //Point2D vAMo = MathUtil.orthogonal(MathUtil.normalize(vAM, railDisplacement));
 
         //Point2D pAL = MathUtil.subtract(pA, vAMo);
         //Point2D pAR = MathUtil.add(pA, vAMo);
 
-        Point2D vBM = MathUtil.normalize(MathUtil.subtract(pB, pM));
-        double dirBM_DEG = MathUtil.computeAngleDEG(vBM);
+        //Point2D vBM = MathUtil.normalize(MathUtil.subtract(pB, pM));
+        //double dirBM_DEG = MathUtil.computeAngleDEG(vBM);
         //Point2D vBMo = MathUtil.normalize(MathUtil.orthogonal(vBM), railDisplacement);
         //Point2D pBL = MathUtil.subtract(pB, vBMo);
         //Point2D pBR = MathUtil.add(pB, vBMo);
         //Point2D pMR = MathUtil.add(pM, vBMo);
 
-        Point2D vCM = MathUtil.normalize(MathUtil.subtract(pC, pM));
-        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+        //Point2D vCM = MathUtil.normalize(MathUtil.subtract(pC, pM));
+        //double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
 
         //Point2D vCMo = MathUtil.normalize(MathUtil.orthogonal(vCM), railDisplacement);
         //Point2D pCL = MathUtil.subtract(pC, vCMo);
         //Point2D pCR = MathUtil.add(pC, vCMo);
         //Point2D pML = MathUtil.subtract(pM, vBMo);
 
-        double deltaBMC_DEG = MathUtil.absDiffAngleDEG(dirBM_DEG, dirCM_DEG);
-        double deltaBMC_RAD = Math.toRadians(deltaBMC_DEG);
+        //double deltaBMC_DEG = MathUtil.absDiffAngleDEG(dirBM_DEG, dirCM_DEG);
+        //double deltaBMC_RAD = Math.toRadians(deltaBMC_DEG);
 
-        double hypotF = railDisplacement / Math.sin(deltaBMC_RAD / 2.0);
+        //double hypotF = railDisplacement / Math.sin(deltaBMC_RAD / 2.0);
 
         //Point2D vDisF = MathUtil.normalize(MathUtil.add(vAM, vCM), hypotF);
         //if (turnoutType == LayoutTurnout.TurnoutType.WYE_TURNOUT) {
@@ -242,14 +242,15 @@ public class LayoutRHXOverView extends LayoutXOverView {
 
         //Point2D pFPR = MathUtil.add(pF, MathUtil.normalize(vBMo, 2.0));
         //Point2D pFPL = MathUtil.subtract(pF, MathUtil.normalize(vCMo, 2.0));
-        Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
-        Point2D pAP = MathUtil.subtract(pM, vDisAP);
+        //Point2D vDisAP = MathUtil.normalize(vAM, hypotF);
+        //Point2D pAP = MathUtil.subtract(pM, vDisAP);
         //Point2D pAPR = MathUtil.add(pAP, vAMo);
         //Point2D pAPL = MathUtil.subtract(pAP, vAMo);
 
         //Point2D vSo = MathUtil.normalize(vAMo, 2.0);
         //Point2D pSL = MathUtil.add(pAPL, vSo);
         //Point2D pSR = MathUtil.subtract(pAPR, vSo);
+
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
         boolean mainlineC = isMainlineC();
@@ -295,7 +296,7 @@ public class LayoutRHXOverView extends LayoutXOverView {
         Point2D pACR = MathUtil.add(pM, vACo);
 
         // frogs
-        hypotF = railDisplacement / Math.sin(deltaBAC_RAD / 2.0);
+        double hypotF = railDisplacement / Math.sin(deltaBAC_RAD / 2.0);
         Point2D vF = MathUtil.normalize(MathUtil.add(vAB, vAC), hypotF);
         Point2D pABF = MathUtil.add(pABM, vF);
         Point2D pCDF = MathUtil.subtract(pCDM, vF);
@@ -306,7 +307,7 @@ public class LayoutRHXOverView extends LayoutXOverView {
 
         // end of switch rails (closed)
         Point2D vABF = MathUtil.normalize(vAB, hypotF);
-        pAP = MathUtil.subtract(pABM, vABF);
+        Point2D pAP = MathUtil.subtract(pABM, vABF);
         Point2D pAPL = MathUtil.subtract(pAP, vABo);
         Point2D pAPR = MathUtil.add(pAP, vABo);
         Point2D pCP = MathUtil.add(pCDM, vABF);

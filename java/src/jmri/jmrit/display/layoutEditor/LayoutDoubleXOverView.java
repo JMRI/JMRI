@@ -214,25 +214,25 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
         //Point2D pAL = MathUtil.subtract(pA, vAMo);
         //Point2D pAR = MathUtil.add(pA, vAMo);
 
-        Point2D vBM = MathUtil.normalize(MathUtil.subtract(pB, pM));
-        double dirBM_DEG = MathUtil.computeAngleDEG(vBM);
+        //Point2D vBM = MathUtil.normalize(MathUtil.subtract(pB, pM));
+        //double dirBM_DEG = MathUtil.computeAngleDEG(vBM);
         //Point2D vBMo = MathUtil.normalize(MathUtil.orthogonal(vBM), railDisplacement);
         //Point2D pBL = MathUtil.subtract(pB, vBMo);
         //Point2D pBR = MathUtil.add(pB, vBMo);
         //Point2D pMR = MathUtil.add(pM, vBMo);
 
-        Point2D vCM = MathUtil.normalize(MathUtil.subtract(pC, pM));
-        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+        //Point2D vCM = MathUtil.normalize(MathUtil.subtract(pC, pM));
+        //double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
 
         //Point2D vCMo = MathUtil.normalize(MathUtil.orthogonal(vCM), railDisplacement);
         //Point2D pCL = MathUtil.subtract(pC, vCMo);
         //Point2D pCR = MathUtil.add(pC, vCMo);
         //Point2D pML = MathUtil.subtract(pM, vBMo);
 
-        double deltaBMC_DEG = MathUtil.absDiffAngleDEG(dirBM_DEG, dirCM_DEG);
-        double deltaBMC_RAD = Math.toRadians(deltaBMC_DEG);
+        //double deltaBMC_DEG = MathUtil.absDiffAngleDEG(dirBM_DEG, dirCM_DEG);
+        //double deltaBMC_RAD = Math.toRadians(deltaBMC_DEG);
 
-        double hypotF = railDisplacement / Math.sin(deltaBMC_RAD / 2.0);
+        //double hypotF = railDisplacement / Math.sin(deltaBMC_RAD / 2.0);
 
         //Point2D vDisF = MathUtil.normalize(MathUtil.add(vAM, vCM), hypotF);
         //if (turnoutType == LayoutTurnout.TurnoutType.WYE_TURNOUT) {
@@ -253,6 +253,7 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
         //Point2D vSo = MathUtil.normalize(vAMo, 2.0);
         //Point2D pSL = MathUtil.add(pAPL, vSo);
         //Point2D pSR = MathUtil.subtract(pAPR, vSo);
+
         boolean mainlineA = isMainlineA();
         boolean mainlineB = isMainlineB();
         boolean mainlineC = isMainlineC();
@@ -329,11 +330,11 @@ public class LayoutDoubleXOverView extends LayoutXOverView {
         Point2D pVRtC = MathUtil.add(pVR, vACM2);
 
         // A, B, C, D frog points
-        vCM = MathUtil.normalize(MathUtil.subtract(pCM, pM));
-        dirCM_DEG = MathUtil.computeAngleDEG(vCM);
+        Point2D vCM = MathUtil.normalize(MathUtil.subtract(pCM, pM));
+        double dirCM_DEG = MathUtil.computeAngleDEG(vCM);
         double deltaBAC_DEG = MathUtil.absDiffAngleDEG(dirAB_DEG, dirCM_DEG);
         double deltaBAC_RAD = Math.toRadians(deltaBAC_DEG);
-        hypotF = railDisplacement / Math.sin(deltaBAC_RAD / 2.0);
+        double hypotF = railDisplacement / Math.sin(deltaBAC_RAD / 2.0);
         Point2D vACF = MathUtil.normalize(MathUtil.add(vACM, vAB), hypotF);
         Point2D pAFL = MathUtil.add(pAM, vACF);
         Point2D pCFR = MathUtil.subtract(pCM, vACF);
