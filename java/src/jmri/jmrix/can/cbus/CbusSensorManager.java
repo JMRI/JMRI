@@ -94,11 +94,11 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
-            CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
+            name = CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
         } catch (IllegalArgumentException ex) {
             throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCustom", ex.getMessage());
         }
-        return name;
+        return getSystemNamePrefix() + name;
     }
 
     /**
