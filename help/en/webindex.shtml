@@ -2083,7 +2083,7 @@
 <ul>
   
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
+<a href="html/hardware/sproggen5/hardware.shtml">Hardware Support </a>
 <ul></ul>
 </li>
 
@@ -2096,6 +2096,12 @@
   
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-Sprog/SPROG 3 Plus Mode Switcher </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/can/cbus/index.shtml">See also: CBUS </a>
 <ul></ul>
 </li>
 

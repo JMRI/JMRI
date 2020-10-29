@@ -6,7 +6,7 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI Hardware Support - SPROG Generation 5</title>
+  <title>JMRI Hardware Support - SPROG Generation 5 </title>
   <meta name="author" content="Andrew Crosland">
   <meta name="keywords" content=
   "SPROG java model railroad JMRI install windows linux mac osx">
@@ -28,9 +28,21 @@
     <div id="mainContent">
 
       <h1>Hardware Support: SPROG Generation 5</h1>
+      <ul class="snav">
+        <li><a href="hardware.shtml#setup">Hardware Setup with JMRI</a></li>
+        <li><a href="#documentation">Documentation</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
 
-      <h1>This page is under construction</h1>
-
+      <p>Generation 5 is new generation of SPROG products using CBUS as the
+          protocol interface with the host computer.</p>
+      
+      <h2><a name="documentation" id="documentation">Documentation</a></h2>
+      <p>Please refer to the <a href="https://www.sprog-dcc.co.uk/download-page"> 
+              SPROG DCC Ltd download page</a> for up-to-date documentation.</p>
+      
+      <h2><a name="support" id="support">Support</a></h2>
+      
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

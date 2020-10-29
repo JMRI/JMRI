@@ -681,11 +681,13 @@
 
  </indexitem>
  <indexitem text="SPROG Generation 5 " target="html.hardware.sproggen5.index">
-  <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+  <indexitem text="Hardware Support " target="html.hardware.sproggen5.hardware"/>
 
   <indexitem text="Pi SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
 
   <indexitem text="Pi-Sprog/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
+
+  <indexitem text="See also: CBUS " target="html.hardware.can.cbus.index"/>
 
  </indexitem>
  <indexitem text="Supported Decoders " target="html.apps.DecoderPro.index_decoderlisting"/>

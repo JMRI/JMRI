@@ -77,7 +77,7 @@
 
   <tocitem text="Marklin " target="html.hardware.marklin.index"/>
 
-  <tocitem text="MERG CBUS " target="html.hardware.can.cbus.index"/>
+  <tocitem text="MERG (CBUS) " target="html.hardware.can.cbus.index"/>
 
   <tocitem text="Modbus " target="html.hardware.modbus.index"/>
 
@@ -781,13 +781,31 @@
    <tocitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
 
   </tocitem>
-  <tocitem text="SPROG Generation 5 " target="html.hardware.sproggen5.sproggen5_tools">
-   <tocitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+  <tocitem text="SPROG Generation 5 ">
+   <tocitem text="SPROG Generation 5 Tools ">
+    <tocitem text="Pi-SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
 
-   <tocitem text="Pi-SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
+    <tocitem text="Pi-SPROG/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
 
-   <tocitem text="Pi-SPROG/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
+   </tocitem>
+   <tocitem text="CBUS Tools ">
+    <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
+    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+    <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
+
+    <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
+    <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
+
+    <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
+
+    <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+
+    <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
+   </tocitem>
   </tocitem>
   <tocitem text="TAMs " target="html.hardware.tams.index">
    <tocitem text="Loco Database " target="package.jmri.jmrix.tams.swing.locodatabase.LocoDataFrame"/>

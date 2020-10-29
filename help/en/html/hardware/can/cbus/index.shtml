@@ -670,6 +670,10 @@
         Middle Earth Model Railway has over 70 MERG CBUS modules installed on it and uses JMRI.
         </li>
 
+        <li><a href="https://www.sprog-dcc.co.uk"> SPROG DCC Ltd</a>
+        CBUS USB adapters and CBUS based command stations. Other hardware planned for the future
+        </li>
+
         </ul>
         
         
@@ -683,10 +687,6 @@
         <p>MERG CBUS co-founders : Gil Fuchs, Mike Bolton</p>
         <p>Mike Bolton designed hardware and coded firmware for many of the initial modules, 
         lead for CAN-RS module and code </p>
-        
-        
-        <p>The standalone MERG DCC programmer was the inspiration behind the popular 
-        <a href="../../../../html/hardware/sprog/SPROG.shtml">SPROG DCC programmer</a>, which is fully supported in JMRI.</p>
         
         <p>Andrew Crosland has been heavily involved with JMRI through both SPROG and MERG CBUS, 
         writing much code to enable JMRI to support MERG CBUS. 

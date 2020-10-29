@@ -248,7 +248,7 @@
 
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG CBUS </a>
+<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
 <ul></ul>
 </li>
 
@@ -2398,27 +2398,77 @@
 </ul>
 </li>
   
-<li>
-<a href="">SPROG Generation 5 </a>
-<ul>
+<li>SPROG Generation 5 <ul>
    
-<li>
-<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
-<ul></ul>
-</li>
-
-   
+<li>SPROG Generation 5 Tools <ul>
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml">Pi-SPROG 3 Mode Switcher </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-SPROG/SPROG 3 Plus Mode Switcher </a>
 <ul></ul>
 </li>
 
+   
+</ul>
+</li>
+   
+<li>CBUS Tools <ul>
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
+<ul></ul>
+</li>
+
+   
+</ul>
+</li>
   
 </ul>
 </li>

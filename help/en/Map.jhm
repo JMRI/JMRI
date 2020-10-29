@@ -2446,6 +2446,8 @@
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane_nodeinfo" url="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodeinfo"/>
 
+<mapID target="html.hardware.sproggen5.hardware_pisprog3" url="html/hardware/sproggen5/hardware.shtml#pisprog3"/>
+
 <mapID target="manual.DecoderPro3.Comp_PrintData_a_Top" url="manual/DecoderPro3/Comp_PrintData_a.shtml#Top"/>
 
 <mapID target="html.hardware.sprog.SPROG_documentation" url="html/hardware/sprog/SPROG.shtml#documentation"/>
@@ -2666,6 +2668,8 @@
 
 <mapID target="html.apps.SoundPro.SoundPro" url="html/apps/SoundPro/SoundPro.shtml"/>
 
+<mapID target="html.hardware.sproggen5.index_documentation" url="html/hardware/sproggen5/index.shtml#documentation"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_MisplacedCarsComment" url="package/jmri/jmrit/operations/Operations.shtml#MisplacedCarsComment"/>
 
 <mapID target="html.hardware.cmri.CMRI_L662" url="html/hardware/cmri/CMRI.shtml#L662"/>
@@ -2677,6 +2681,8 @@
 <mapID target="html.hardware.loconet.StandaloneLocoNet_multconsingle" url="html/hardware/loconet/StandaloneLocoNet.shtml#multconsingle"/>
 
 <mapID target="html.hardware.loconet.Digitrax_ConnectingAdapter" url="html/hardware/loconet/Digitrax.shtml#ConnectingAdapter"/>
+
+<mapID target="html.hardware.sproggen5.hardware" url="html/hardware/sproggen5/hardware.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_FinalDestination" url="package/jmri/jmrit/operations/Operations.shtml#FinalDestination"/>
 
@@ -2903,6 +2909,8 @@
 <mapID target="html.tools.Logix_thepolicy" url="html/tools/Logix.shtml#thepolicy"/>
 
 <mapID target="html.tools.speedometer.index" url="html/tools/speedometer/index.shtml"/>
+
+<mapID target="html.hardware.sproggen5.hardware_sprog3plus" url="html/hardware/sproggen5/hardware.shtml#sprog3plus"/>
 
 <mapID target="manual.DecoderPro.Main_Tool_Ops" url="manual/DecoderPro/Main_Tool.shtml#Ops"/>
 
@@ -3350,6 +3358,8 @@
 
 <mapID target="html.tools.WarrantsIntro_types" url="html/tools/WarrantsIntro.shtml#types"/>
 
+<mapID target="html.hardware.sproggen5.hardware_canisb" url="html/hardware/sproggen5/hardware.shtml#canisb"/>
+
 <mapID target="html.hardware.loconet.LocoNetTools_tools" url="html/hardware/loconet/LocoNetTools.shtml#tools"/>
 
 <mapID target="html.tools.Logix_logicalexpression" url="html/tools/Logix.shtml#logicalexpression"/>
@@ -3431,6 +3441,8 @@
 <mapID target="html.doc.Technical.TurnoutFeedback" url="html/doc/Technical/TurnoutFeedback.shtml"/>
 
 <mapID target="html.doc.Technical.AppStructure" url="html/doc/Technical/AppStructure.shtml"/>
+
+<mapID target="html.hardware.sproggen5.hardware_setup" url="html/hardware/sproggen5/hardware.shtml#setup"/>
 
 <mapID target="manual.DecoderPro.Installing_JMRI" url="manual/DecoderPro/Installing_JMRI.shtml"/>
 
@@ -4200,6 +4212,8 @@
 
 <mapID target="html.tools.signaling.Logic_trailmain" url="html/tools/signaling/Logic.shtml#trailmain"/>
 
+<mapID target="html.hardware.sproggen5.index_support" url="html/hardware/sproggen5/index.shtml#support"/>
+
 <mapID target="manual.DecoderPro.Comp_PrintData_c_Top" url="manual/DecoderPro/Comp_PrintData_c.shtml#Top"/>
 
 <mapID target="manual.DecoderPro3.Main_NCE_Clock" url="manual/DecoderPro3/Main_NCE.shtml#Clock"/>
@@ -4849,6 +4863,8 @@
 <mapID target="html.tools.signaling.ldt.output1_html_7f201b69" url="html/tools/signaling/ldt/output1_html_7f201b69.png"/>
 
 <mapID target="package.jmri.jmrit.display.images.SingleOptions" url="package/jmri/jmrit/display/images/SingleOptions.png"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.images.StatusBar" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/images/StatusBar.PNG"/>
 
 <mapID target="manual.DecoderPro3.images.sflogo" url="manual/DecoderPro3/images/sflogo.png"/>
 

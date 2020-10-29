@@ -30,47 +30,33 @@
 
     <p>The bootloader tool allows you to update the firmware in a connected CBUS 
         node</p>
-    
     <p>To update the firmware you will need a firmware programming file (.hex 
         file) saved on your computer</p>
-    
     <p>Start the firmware update tool from the SPROG generation 5 menu.<br><br></p>
-    
     <img src="images/FirmwareMenu.png" alt="CBUS menu entry for bootloader client">
-    
     <p></p>
     
     <p>Enter the Node Number (the default is 65534) and click Read Node 
         Parameters.<br><br></p>
-    
     <img src="images/UpdateNN.png" alt="Select Node Number to be updated">
-    
     <p></p>
     
     <p>Browse to wherever you saved the .hex file and click Open.<br><br></p>
-    
     <img src="images/BrowseToHexFile.png" alt="Browse to the new firmware hex file">
-    
     <p></p>
     
     <p>Select EEPROM Memory Option to preserve EEPROM contents (Node Variables).<br><br></p>
-   
     <img src="images/SelectEEPROM.png" alt="Select preserve EEPROM">
-    
     <p></p>
     
     <p>Click the Start Programming button.<br><br></p>
-   
     <img src="images/StartProgramming.png" alt="Start programming">
-    
     <p></p>
     
     <p>The new firmware will be written to the node. Wait fro the programming to 
         complete, which may take a little while, indicated by the "Bootloading 
         complete..." message in the console.<br><br></p>
-    
     <img src="images/Wait.png" alt="Wait for programming to complete">
-    
     <p></p>
     
     <!--#include virtual="/Footer.shtml" -->
