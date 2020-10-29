@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute a throttle command script for a warrant.
  * <p>
- * This generally operates on its own thread, but calls the Layout
+ * This generally operates on its own thread, but calls the warrant
  * thread via Warrant.fireRunStatus to show status. fireRunStatus uses
  * ThreadingUtil.runOnLayoutEventually to display on the layout thread.
  *

@@ -41,7 +41,7 @@ public class ThrottleSetting {
         SPEEDSTEP(CMD_SPEEDSTEP, true, "speedstep");
 
         int _command;
-        boolean _hasBlock; // setting for this command will require a block name
+        boolean _hasBlock; // when bean is an OBlock.
         String _bundleKey; // key to get command display name
 
         Command(int cmd, boolean hasBlock, String bundleName) {
