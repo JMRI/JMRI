@@ -29,7 +29,7 @@
     <xs:complexType name="LogixManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a LogixManager implementation.
+          Define the XML structure for storing the contents of a LogixManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.DefaultLogixManagerXml</jmri:usingclass>
@@ -67,7 +67,7 @@
     <xs:complexType name="ConditionalManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ConditionalManager implementation.
+          Define the XML structure for storing the contents of a ConditionalManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.DefaultConditionalManagerXml</jmri:usingclass>

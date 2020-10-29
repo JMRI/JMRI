@@ -161,7 +161,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
                 // Verify registration
                 Block testGet = bm.getBySystemName(s);
-                if ( testGet!=null && bm.getNamedBeanSet().contains(testGet) ) {
+                if (testGet != null && bm.getNamedBeanSet().contains(testGet)) {
                     log.debug("Block is valid: {}", s);
                     break;
                 }
@@ -1896,8 +1896,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 }
                 LayoutBlock layoutBlockToNotify = InstanceManager.getDefault(
                         LayoutBlockManager.class).getLayoutBlock(neighbours.get(i).getBlock());
-                if (layoutBlockToNotify==null){ // move to provides?
-                    log.error("Unable to notify neighbours for block {}",neighbours.get(i).getBlock());
+                if (layoutBlockToNotify == null) { // move to provides?
+                    log.error("Unable to notify neighbours for block {}", neighbours.get(i).getBlock());
                     continue;
                 }
                 getAdjacency(neighbours.get(i).getBlock()).dispose();
@@ -2267,8 +2267,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 if (enableDeleteRouteLogging) {
                                     log.info("{}############ We need to send notification to {} to remove route ########### haven't found an example of this yet!", msgPrefix, nextblk.getDisplayName());
                                 }
-                                if (layoutBlock==null) { // change to provides
-                                    log.error("Unable to fetch block {}",nextblk);
+                                if (layoutBlock == null) { // change to provides
+                                    log.error("Unable to fetch block {}", nextblk);
                                     continue;
                                 }
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
@@ -2546,7 +2546,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 boolean allowAddition = false;
                 for (LayoutTrackExpectedState<LayoutTurnout> layoutTurnoutLayoutTrackExpectedState : maxt) {
                     LayoutTurnout turn = layoutTurnoutLayoutTrackExpectedState.getObject();
-                    if (turn.type == LayoutTurnout.TurnoutType.DOUBLE_XOVER) {
+                    if (turn instanceof LayoutDoubleXOver) {
                         allowAddition = true;
                         // The double crossover gets reported in the opposite setting.
                         if (layoutTurnoutLayoutTrackExpectedState.getExpectedState() == 2) {
@@ -2785,7 +2785,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         log.info("Adjacencies for block {}", this.getDisplayName());
         log.info("Neighbour, Direction, mutual, relationship, metric");
         for (Adjacencies neighbour : neighbours) {
-            log.info(" neighbor: {}, {}, {}, {}, {}",neighbour.getBlock().getDisplayName(), Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(), decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
+            log.info(" neighbor: {}, {}, {}, {}, {}", neighbour.getBlock().getDisplayName(), Path.decodeDirection(neighbour.getDirection()), neighbour.isMutual(), decodePacketFlow(neighbour.getPacketFlow()), neighbour.getMetric());
         }
     }
 
@@ -4528,6 +4528,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * When a route is created, check to see if the through path that this route
      * relates to is active.
+     *
      * @param r The route to check
      * @return true if that route is active
      */
@@ -4610,8 +4611,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     /**
      * Set the valid flag for routes that are on a valid through path.
+     *
      * @param nxtHopActive the start of the route
-     * @param state the state to set into the valid flag
+     * @param state        the state to set into the valid flag
      */
     void setRoutesValid(Block nxtHopActive, boolean state) {
         List<Routes> rtr = getRouteByNeighbour(nxtHopActive);

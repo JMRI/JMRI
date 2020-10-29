@@ -29,7 +29,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
     
     @Override
-    public String getSystemNameWithNoPrefix() {
+    public String getASystemNameWithNoPrefix() {
         return "x0102030405060701;x0102030405060702";
     }
     

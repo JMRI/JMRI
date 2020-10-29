@@ -1,5 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.List;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -46,7 +49,6 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertEquals("MR",NameValidity.INVALID,l.validSystemNameFormat("MR"));
         Assert.assertEquals("no value",NameValidity.INVALID,l.validSystemNameFormat(""));
         Assert.assertEquals("Str ing",NameValidity.INVALID,l.validSystemNameFormat("Jon Smith"));
-        Assert.assertEquals("null",NameValidity.INVALID,l.validSystemNameFormat(null));
     }
     
 
@@ -59,6 +61,38 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     public void testAutoSystemNames() {
         Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
+    
+    @Test
+    public void testGetSetDefaultTimeout() {
+        Assert.assertEquals("Default timeout",2000,((CbusReporterManager) l).getTimeout());
+        ((CbusReporterManager) l).setTimeout(5);
+        Assert.assertEquals("New timeout 5",5,((CbusReporterManager) l).getTimeout());
+    }
+    
+    @Test
+    public void testGetKnownBeanProperties() {
+    
+        List<NamedBeanPropertyDescriptor<?>> cbrepproplist =  l.getKnownBeanProperties();
+        Assert.assertEquals("2 properties at present",2,cbrepproplist.size());
+        
+        NamedBeanPropertyDescriptor<?> nbpd = cbrepproplist.get(0);
+        Assert.assertEquals("Column Header matches descriptor key",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
+        Assert.assertEquals("Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
+        Assert.assertEquals("Not Editable if null",false,nbpd.isEditable(null));
+        Assert.assertEquals("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,nbpd.defaultValue);
+        Assert.assertEquals("reporter property key set",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.propertyKey);
+
+        Assert.assertEquals("Currently 2 options",2,((SelectionPropertyDescriptor)nbpd).getOptions().length);
+        Assert.assertEquals("Currently 2 option tooltips",2,((SelectionPropertyDescriptor)nbpd).getOptionToolTips().size());
+        
+        nbpd = cbrepproplist.get(1);
+        Assert.assertEquals("Column Header matches sensor follower descriptor key",CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
+        Assert.assertEquals("sensor follower Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
+        Assert.assertEquals("sensor follower Not Editable if null",false,nbpd.isEditable(null));
+        Assert.assertFalse("Default reporter sensor follower set in properties", (Boolean) nbpd.defaultValue);
+        Assert.assertEquals("sensor follower key set",CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY,nbpd.propertyKey);
+        
     }
     
     private CanSystemConnectionMemo memo;

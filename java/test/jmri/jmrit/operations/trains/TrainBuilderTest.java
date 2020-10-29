@@ -740,7 +740,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("Engine consist total length", 120, consist.getTotalLength());
         // consist is 120' car with FRED 44' with couplers
-        Assert.assertEquals("Train total length", 164, train1.getCurrentLocation().getTrainLength());
+        Assert.assertEquals("Train total length", 164, train1.getCurrentRouteLocation().getTrainLength());
 
         rlA.setMaxTrainLength(155); // only enough for the two engines, train needs a car with FRED
         train1.reset();
@@ -8146,29 +8146,29 @@ public class TrainBuilderTest extends OperationsTestCase {
         // move and terminate
         Assert.assertEquals("Check train 1 departure location name", "Westford", train1
                 .getCurrentLocationName());
-        Assert.assertEquals("Check train 1 departure location", r1l1, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 departure location", r1l1, train1.getCurrentRouteLocation());
         train1.move(); // #1
         Assert.assertEquals("Check train 1 location name", "Chelmsford", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", r1l2, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", r1l2, train1.getCurrentRouteLocation());
         train1.move(); // #2
         Assert.assertEquals("Check train 1 location name", "Bedford", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", r1l3, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", r1l3, train1.getCurrentRouteLocation());
         train1.move(); // #3 terminate
         Assert.assertEquals("Check train 1 location name", "", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", null, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", null, train1.getCurrentRouteLocation());
 
         Assert.assertEquals("Check train 2 departure location name", "Westford", train2
                 .getCurrentLocationName());
-        Assert.assertEquals("Check train 2 departure location", r1l1, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 departure location", r1l1, train2.getCurrentRouteLocation());
         train2.move(); // #1
         Assert.assertEquals("Check train 2 location name", "Chelmsford", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", r1l2, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", r1l2, train2.getCurrentRouteLocation());
         train2.move(); // #2
         Assert.assertEquals("Check train 2 location name", "Bedford", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", r1l3, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", r1l3, train2.getCurrentRouteLocation());
         train2.move(); // #3 terminate
         Assert.assertEquals("Check train 2 location name", "", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", null, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", null, train2.getCurrentRouteLocation());
 
         r1l1.setMaxCarMoves(2);
         r1l2.setMaxCarMoves(6);
@@ -11546,14 +11546,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         // change out 2 engines with 1 engine at Acton
         train1.setSecondLegOptions(Train.CHANGE_ENGINES);
         train1.setSecondLegNumberEngines("1");
-        train1.setSecondLegStartLocation(rlActon);
+        train1.setSecondLegStartRouteLocation(rlActon);
         train1.setSecondLegEngineRoad("UP");
         train1.setSecondLegEngineModel("GP40");
 
         // change out 1 engine with 3 "SP" engines at Chelmsford
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
         train1.setThirdLegNumberEngines("3");
-        train1.setThirdLegStartLocation(rlChelmsford);
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
         train1.setThirdLegEngineRoad("SP");
         train1.setThirdLegEngineModel("GP40");
 
@@ -11701,7 +11701,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // remove caboose at Harvard
         train1.setThirdLegOptions(Train.REMOVE_CABOOSE);
-        train1.setThirdLegStartLocation(rlHarvard);
+        train1.setThirdLegStartRouteLocation(rlHarvard);
 
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train should build", true, train1.isBuilt());
@@ -11715,12 +11715,12 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // swap out caboose at Boston
         train1.setSecondLegOptions(Train.ADD_CABOOSE);
-        train1.setSecondLegStartLocation(rlBoston);
+        train1.setSecondLegStartRouteLocation(rlBoston);
         train1.setSecondLegCabooseRoad("XYZ");
 
         // swap out caboose at Harvard
         train1.setThirdLegOptions(Train.ADD_CABOOSE);
-        train1.setThirdLegStartLocation(rlHarvard);
+        train1.setThirdLegStartRouteLocation(rlHarvard);
         train1.setThirdLegCabooseRoad("STU");
 
         train1.reset();
@@ -12057,13 +12057,13 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         train1.setSecondLegOptions(Train.CHANGE_ENGINES);
         train1.setSecondLegNumberEngines("1");
-        train1.setSecondLegStartLocation(rlBoston);
+        train1.setSecondLegStartRouteLocation(rlBoston);
 
         // 3rd engine change at Danvers
         RouteLocation rlDanvers = route.getRouteLocationBySequenceNumber(4);
         train1.setThirdLegOptions(Train.CHANGE_ENGINES);
         train1.setThirdLegNumberEngines("1");
-        train1.setThirdLegStartLocation(rlDanvers);
+        train1.setThirdLegStartRouteLocation(rlDanvers);
 
         // increase the train's departure weight
         Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", actonYard1, 0);
@@ -12168,8 +12168,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // add helpers at Boston remove at Chelmsford
         train1.setSecondLegOptions(Train.HELPER_ENGINES);
-        train1.setSecondLegStartLocation(rlBoston);
-        train1.setSecondLegEndLocation(rlChelmsford);
+        train1.setSecondLegStartRouteLocation(rlBoston);
+        train1.setSecondLegEndRouteLocation(rlChelmsford);
 
         // weight of train is ignored when helpers are used
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -12190,8 +12190,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // add helpers at Boston remove at Chelmsford
         train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED);
         train1.setThirdLegOptions(Train.HELPER_ENGINES);
-        train1.setThirdLegStartLocation(rlBoston);
-        train1.setThirdLegEndLocation(rlChelmsford);
+        train1.setThirdLegStartRouteLocation(rlBoston);
+        train1.setThirdLegEndRouteLocation(rlChelmsford);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));

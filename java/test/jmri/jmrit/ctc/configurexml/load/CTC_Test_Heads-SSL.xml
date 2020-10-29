@@ -577,6 +577,7 @@
       <TUL_DispatcherInternalSensorUnlockedIndicator>IS2:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
       <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
       <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>true</TUL_GUI_IconsEnabled>
       <TUL_LockImplementation>0</TUL_LockImplementation>
       <TUL_AdditionalExternalTurnouts />
       <IL_Enabled>true</IL_Enabled>
@@ -732,6 +733,7 @@
       <TUL_DispatcherInternalSensorUnlockedIndicator>IS4:UNLOCKEDINDICATOR</TUL_DispatcherInternalSensorUnlockedIndicator>
       <TUL_NoDispatcherControlOfSwitch>false</TUL_NoDispatcherControlOfSwitch>
       <TUL_ndcos_WhenLockedSwitchStateIsClosed>true</TUL_ndcos_WhenLockedSwitchStateIsClosed>
+      <TUL_GUI_IconsEnabled>true</TUL_GUI_IconsEnabled>
       <TUL_LockImplementation>0</TUL_LockImplementation>
       <TUL_AdditionalExternalTurnouts />
       <IL_Enabled>true</IL_Enabled>

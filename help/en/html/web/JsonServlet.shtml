@@ -19,7 +19,7 @@
     }
 
     table#jsonResponses td {
-      border: 1px solid grey;
+      border: 1px solid gray;
       width: 33%;
     }
 
@@ -53,16 +53,18 @@
 
       <h2><a name="jmri_json_servlet">JMRI JSON Servlet</a></h2>
 
+      <p>An overview of how Web Server operates using JSON between JMRI and the web browser, using web.servlet.panel as
+        an example, can be found on <a href="PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
+
       <h2>Setting up the JSON Servlet</h2>
 
       <p>The JMRI JSON Servlet is a feature that is part of the Web
         Server. To use this service:</p>
 
       <ol>
-        <li>Ensure the web server's port is unique:</li>
+        <li>Ensure the web server's port is unique:
 
-        <li style="list-style: none">
-          <ol>
+          <ul>
             <li>Open the Preferences dialog</li>
 
             <li>Click <b>Web Server</b> on the left side</li>
@@ -72,20 +74,19 @@
               Server, etc.</li>
 
             <li>Click Save</li>
-          </ol>
+          </ul>
         </li>
 
         <li>Click <b>Actions</b> and <b>Start Web Server</b> to
           ensure the web server is running</li>
 
-        <li>If you want the web server to run each time you start
-          JMRI:</li>
+        <li>If you want the Web Server to run each time you start
+          JMRI:
 
-        <li style="list-style: none">
-          <ol>
-            <li>Open the <b>Preferences</b> dialog</li>
+          <ul>
+            <li>Open the JMRI <b>Preferences</b> dialog</li>
 
-            <li>Select <b>Start Up</b></li>
+            <li>Select <b>Start Up</b> in the left column</li>
 
             <li>Click <b>Add &#9662;</b></li>
 
@@ -94,7 +95,7 @@
             <li>Select <b>Start Web Server</b></li>
 
             <li>Click <b>OK</b></li>
-          </ol>
+          </ul>
         </li>
       </ol>
 
@@ -124,7 +125,7 @@
             <dd>add an object of <em>type</em></dd>
           </dl>
           A JSON array of valid types for your JMRI installation is available by using the <em>type</em>
-          "<code><a href="http://localhost:12080/json/type">type</a></code>". See the <a
+          "<code><a href="http://localhost:12080/json/type">type</a></code>" (with JMRI Web Server running). See the <a
             href="https://jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol documentation</a> for more
           details.
         </dd>
@@ -171,9 +172,9 @@
         <dt><a href="/web/power.html">Power Demonstration</a></dt>
         <dd>source <a href="https://github.com/JMRI/JMRI/blob/master/web/power.html">/web/power.html</a></dd>
       </dl>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
-
 </html>

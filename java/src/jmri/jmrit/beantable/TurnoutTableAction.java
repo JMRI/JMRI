@@ -17,39 +17,12 @@ import java.util.Vector;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.imageio.ImageIO;
-import javax.swing.AbstractCellEditor;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowSorter;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperation;
-import jmri.TurnoutOperationManager;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
@@ -369,14 +342,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         return Bundle.getMessage("BeanStateUnknown"); // "Unknown"
                     }
                 } else if (col == MODECOL) {
-                    JComboBox<String> c = new JComboBox<String>(t.getValidFeedbackNames());
+                    JComboBox<String> c = new JComboBox<>(t.getValidFeedbackNames());
                     c.setSelectedItem(t.getFeedbackModeName());
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == SENSOR1COL) {
                     return t.getFirstSensor();
@@ -391,18 +359,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 } else if (col == LOCKDECCOL) {
                     JComboBox<String> c;
                     if ((t.getPossibleLockModes() & Turnout.PUSHBUTTONLOCKOUT) != 0) {
-                        c = new JComboBox<String>(t.getValidDecoderNames());
+                        c = new JComboBox<>(t.getValidDecoderNames());
                     } else {
-                        c = new JComboBox<String>(new String[]{t.getDecoderName()});
+                        c = new JComboBox<>(new String[]{t.getDecoderName()});
                     }
 
                     c.setSelectedItem(t.getDecoderName());
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == LOCKOPRCOL) {
                     java.util.Vector<String> lockOperations = new java.util.Vector<>();  // Vector is a JComboBox ctor; List is not
@@ -417,7 +380,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                         lockOperations.add(pushbutText);
                     }
                     lockOperations.add(noneText);
-                    JComboBox<String> c = new JComboBox<String>(lockOperations);
+                    JComboBox<String> c = new JComboBox<>(lockOperations);
 
                     if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)) {
                         c.setSelectedItem(bothText);
@@ -428,12 +391,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     } else {
                         c.setSelectedItem(noneText);
                     }
-                    c.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            comboBoxAction(e);
-                        }
-                    });
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == STRAIGHTCOL) {
 
@@ -441,10 +399,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     if (!speedListClosed.contains(speed)) {
                         speedListClosed.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedListClosed);
+                    JComboBox<String> c = new JComboBox<>(speedListClosed);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
-
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                 } else if (col == DIVERGCOL) {
 
@@ -452,9 +410,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     if (!speedListThrown.contains(speed)) {
                         speedListThrown.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedListThrown);
+                    JComboBox<String> c = new JComboBox<>(speedListThrown);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
+                    c.addActionListener(super::comboBoxAction);
                     return c;
                     // } else if (col == VALUECOL && _graphicState) { // not neeeded as the
                     //  graphic ImageIconRenderer uses the same super.getValueAt(row, col) as
@@ -643,8 +602,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 table = tbl;
 
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
-                table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-                table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table, OPSEDITCOL, editButton());
                 setColumnToHoldButton(table, EDITCOL, editButton());
                 //Hide the following columns by default
@@ -693,13 +650,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     return true;
                 } else {
                     return super.matchPropertyName(e);
-                }
-            }
-
-            public void comboBoxAction(ActionEvent e) {
-                log.debug("Combobox change");
-                if (table != null && table.getCellEditor() != null) {
-                    table.getCellEditor().stopCellEditing();
                 }
             }
 
@@ -1691,20 +1641,13 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
         for (int x = 0; x < numberOfTurnouts; x++) {
             try {
-                curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix);
+                curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix, false);
             } catch (jmri.JmriException ex) {
                 displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);
                 return;
-            }
-            if (curAddress == null) {
-                log.debug("Error converting HW or getNextValidAddress");
-                errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBarLabel.setForeground(Color.red);
-                // The next address returned an error, therefore we stop this attempt and go to the next address.
-                break;
             }
 
             lastSuccessfulAddress = curAddress;
@@ -1819,14 +1762,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
 
             // end of for loop creating rangeBox of Turnouts
         }
-        // provide feedback to uName
-        if (errorMessage == null) {
-            statusBarLabel.setText(statusMessage);
-            statusBarLabel.setForeground(Color.gray);
-        } else {
-            statusBarLabel.setText(errorMessage);
-            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set, to differentiate in urgency
-        }
+        
+        // provide successfeedback to uName
+        statusBarLabel.setText(statusMessage);
+        statusBarLabel.setForeground(Color.gray);
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
         removePrefixBoxListener(prefixBox);

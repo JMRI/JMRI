@@ -16,7 +16,7 @@ import jmri.web.servlet.ServletUtil;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Provide web UI for data, such as turnouts, sensors, etc.
+ * Provide web UI for data, such as turnouts, sensors, etc. displayed in tables
  *
  * Each method of this Servlet responds to a unique URL pattern.
  *

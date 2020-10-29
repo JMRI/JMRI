@@ -1,5 +1,5 @@
 /**
- * Defines classes for ModeSwitcher for switching between programmer and command
+ * Defines classes for ModeSwitcher for switching programmer and command
  * station modes.
  *
  * <h2>Related Documentation</h2>

@@ -259,7 +259,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(rlc); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB); // should report that already serviced train
@@ -276,9 +276,9 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 12, inD.lines().count());
 
         train.move(); // move train to D
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
         train.move(); // move train to D reverse direction
-        Assert.assertEquals("current train location", "Test Location D", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location D", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -295,7 +295,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to C
-        Assert.assertEquals("current train location", "Test Location C", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location C", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -312,7 +312,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to B
-        Assert.assertEquals("current train location", "Test Location B", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location B", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
@@ -329,7 +329,7 @@ public class TrainSwitchListsTest extends OperationsTestCase {
         Assert.assertEquals("confirm number of lines in switch list", 10, inD.lines().count());
 
         train.move(); // move train to A
-        Assert.assertEquals("current train location", "Test Location A", train.getCurrentLocation().getName());
+        Assert.assertEquals("current train location", "Test Location A", train.getCurrentRouteLocation().getName());
 
         tsl.buildSwitchList(locationA);
         tsl.buildSwitchList(locationB);
