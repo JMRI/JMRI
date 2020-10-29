@@ -20,10 +20,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute a throttle command script for a warrant.
  * <p>
- * This generally operates on its own thread, but switches back to the Layout
- * thread when asking the Warrant to perform actions.
+ * This generally operates on its own thread, but calls the Layout
+ * thread via Warrant.fireRunStatus to show status. fireRunStatus uses
+ * ThreadingUtil.runOnLayoutEventually to display on the layout thread.
  *
- * @author Pete Cressman Copyright (C) 2009, 2010, 2011
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2020
  */
 /*
  * ************************ Thread running the train ****************
@@ -410,36 +411,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             _ramp.quit(die);
         }
     }
-/*
-    void doSpeed(float throttle) {
-        synchronized (this) {
-            if (_ramp != null && !_ramp.ready) {
-                try {
-                    if (log.isDebugEnabled()) 
-                        log.debug("Waiting for ramp to finish.  Warrant {}", _warrant.getDisplayName());
-                    wait();
-                } catch (InterruptedException ie) {
-                    _warrant.debugInfo();
-                    Thread.currentThread().interrupt();
-                }
-            }
-            if (_idxCurrentCommand >= _idxSkipToSpeedCommand) {
-                try {
-                    _lock.lock();
-                    _normalSpeed = throttle;
-                    float speedMod = _speedUtil.modifySpeed(throttle, _speedType);
-                    if (Math.abs(throttle - speedMod) > .0001f) {
-                        _timeRatio = throttle / speedMod;
-                    } else {
-                        _timeRatio = 1.0f;
-                    }
-                    setSpeed(speedMod);                                
-                } finally {
-                    _lock.unlock();                                
-                }
-            }
-        }
-    }*/
 
     /**
      * do throttle setting

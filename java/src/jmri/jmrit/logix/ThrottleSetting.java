@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Oct 2020 - change formats to allow I18N of parameters
- * @author  Pete Cressman Copyright (C) 2009
+ * @author  Pete Cressman Copyright (C) 2009, 2020
  */
 public class ThrottleSetting {
 
