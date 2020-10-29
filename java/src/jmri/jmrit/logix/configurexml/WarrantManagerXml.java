@@ -81,6 +81,10 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 }
 
                 List<BlockOrder> orders = warrant.getBlockOrders();
+                if (orders == null) {
+                    log.error("Warrant {} has no Route defined. (no BlockOrders) Cannot store.", warrant.getDisplayName());
+                    continue;
+                }
                 for (BlockOrder bo : orders) {
                     elem.addContent(storeOrder(bo, "blockOrder"));
                 }

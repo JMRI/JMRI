@@ -17,6 +17,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -742,7 +743,7 @@ public class WarrantFrame extends WarrantRoute {
         cmdColumn.setMinWidth(40);
 
         TableColumn valueColumn = columnModel.getColumn(ThrottleTableModel.VALUE_COLUMN);
-        valueColumn.setCellEditor(new valueCellEditor(new JTextField()));
+        valueColumn.setCellEditor(new ValueCellEditor(new JTextField()));
 
         _throttlePane = new JScrollPane(_commandTable);
         _rowHeight = _commandTable.getRowHeight();
@@ -809,7 +810,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
-        if (cmd != null) {
+        if (cmd != null && cmd.getCommand() != null) {
             if (cmd.getCommand().equals(Command.NOOP)) {
                 showWarning(Bundle.getMessage("cannotDeleteNoop"));
                 return;
@@ -945,7 +946,6 @@ public class WarrantFrame extends WarrantRoute {
         return msg;
     }
 
-//    @SuppressFBWarnings(value="SF_SWITCH_FALLTHROUGH", justification="same check for existence of NamedBean for these cases")
     private String checkThrottleCommands() {
         if (_throttleCommands.size() <= getOrders().size() + 1) {
             return Bundle.getMessage("NoCommands", _warrant.getDisplayName());
@@ -1213,6 +1213,9 @@ public class WarrantFrame extends WarrantRoute {
         if (_learnThrottle != null) {
             _learnThrottle.dispose();
             _learnThrottle = null;
+        }
+        if (_warrant == null) {
+            return;
         }
 
         if (_warrant.getRunMode() == Warrant.MODE_LEARN) {
@@ -1508,7 +1511,9 @@ public class WarrantFrame extends WarrantRoute {
                         fatal = true;
                         msg = Bundle.getMessage("WarrantExists", _userNameBox.getText());
                     } else {
-                        _warrant = _saveWarrant;    // update registered warrant 
+                        if (_saveWarrant != null) {
+                            _warrant = _saveWarrant;    // update registered warrant 
+                        }
                     }
                 }
             } else {
@@ -1566,6 +1571,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         if (_saveWarrant == null) {
             mgr.register(_warrant);
+            _saveWarrant = _warrant;
         }
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
@@ -1595,14 +1601,14 @@ public class WarrantFrame extends WarrantRoute {
     static String[]  ON_OFF = {ValueType.VAL_ON.toString(), ValueType.VAL_OFF.toString()};
     static String[]  SENSOR_STATES = {ValueType.VAL_ACTIVE.toString(), ValueType.VAL_INACTIVE.toString()};
 
-    class valueCellEditor extends DefaultCellEditor {
+    class ValueCellEditor extends DefaultCellEditor {
 
         private ComboDialog editorDialog;
         private TextDialog textDialog;
         private String currentText;
         private JTextField editorComponent;
 
-        valueCellEditor(JTextField textField) {
+        ValueCellEditor(JTextField textField) {
             super(textField);
             setClickCountToStart(1);
             log.debug("valueCellEditor Ctor");
@@ -1742,7 +1748,7 @@ public class WarrantFrame extends WarrantRoute {
                 currentText = (String)_comboBox.getSelectedItem();
                 editorComponent.setText(currentText);
                 fireEditingStopped();
-                dispose();
+                this.dispose();
            }
             @Override
             public void  focusGained(FocusEvent e) {
@@ -1752,7 +1758,7 @@ public class WarrantFrame extends WarrantRoute {
                 currentText = (String)_comboBox.getSelectedItem();
                 editorComponent.setText(currentText);
                 fireEditingStopped();
-                dispose();
+                this.dispose();
             }
         }
     }
@@ -1810,12 +1816,12 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
-    class editDialog extends JDialog  {
+    static class EditDialog extends JDialog  {
         SpinnerNumberModel _keyNumModel;
         ThrottleSetting _ts;
         Command _cmd;
 
-        editDialog(JFrame frame, ThrottleSetting ts, Command cmd) {
+        EditDialog(JFrame frame, ThrottleSetting ts, Command cmd) {
             super(frame, true);
             _ts = ts;
             _cmd = cmd;
@@ -1838,7 +1844,7 @@ public class WarrantFrame extends WarrantRoute {
             p.add(doneButton);
 
             JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-            cancelButton.addActionListener((ActionEvent a) -> dispose());
+            cancelButton.addActionListener((ActionEvent a) -> this.dispose());
             p.add(cancelButton);            
             panel.add(p, BorderLayout.SOUTH);
             getContentPane().add(panel);
@@ -1849,12 +1855,12 @@ public class WarrantFrame extends WarrantRoute {
             int i = (Integer)_keyNumModel.getValue();
             _ts.setKeyNum(i);
             _ts.setCommand(_cmd);
-            dispose();
+            this.dispose();
         }
 
     }
     void makeEditWindow(ThrottleSetting ts, Command cmd) {
-        JDialog dialog = new editDialog(this, ts, cmd);
+        JDialog dialog = new EditDialog(this, ts, cmd);
         dialog.setLocation(cellPt);
         dialog.pack();
         dialog.setVisible(true);
@@ -1989,6 +1995,7 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         @Override
+        @SuppressFBWarnings(value="DB_DUPLICATE_SWITCH_CLAUSES", justification="put least likely cases last for efficiency")
         public void setValueAt(Object value, int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
             String msg = null;
@@ -2009,7 +2016,7 @@ public class WarrantFrame extends WarrantRoute {
                 case COMMAND_COLUMN:
                     Command cmd = ((Command) value);
                     Command prCmd = ts.getCommand();
-                    if (!cmd.hasBlockName() && prCmd.hasBlockName()) {
+                    if (prCmd != null && !cmd.hasBlockName() && prCmd.hasBlockName()) {
                         ts.setNamedBeanHandle(null);
                     }
                     switch (cmd) {
