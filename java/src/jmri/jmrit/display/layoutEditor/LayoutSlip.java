@@ -68,12 +68,12 @@ abstract public class LayoutSlip extends LayoutTurnout {
     public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
         super(id, c, layoutEditor, type);
 
-        dispA.setLocation(new Point2D.Double(-20.0, 0.0));
-        pointA.setLocation(MathUtil.add(getCoordsCenter(), dispA));
-        pointC.setLocation(MathUtil.subtract(getCoordsCenter(), dispA));
-        dispB.setLocation(new Point2D.Double(-14.0, 14.0));
-        pointB.setLocation(MathUtil.add(getCoordsCenter(), dispB));
-        pointD.setLocation(MathUtil.subtract(getCoordsCenter(), dispB));
+        dispA = new Point2D.Double(-20.0, 0.0);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
+        dispB = new Point2D.Double(-14.0, 14.0);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
 
         turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
         turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
@@ -628,38 +628,38 @@ abstract public class LayoutSlip extends LayoutTurnout {
     @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
         super.setCoordsCenter(p);
-        pointA.setLocation(MathUtil.add(getCoordsCenter(), dispA));
-        pointB.setLocation(MathUtil.add(getCoordsCenter(), dispB));
-        pointC.setLocation(MathUtil.subtract(getCoordsCenter(), dispA));
-        pointD.setLocation(MathUtil.subtract(getCoordsCenter(), dispB));
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     @Override
     public void setCoordsA(@Nonnull Point2D p) {
-        pointA.setLocation(p);
-        dispA.setLocation(MathUtil.subtract(pointA, getCoordsCenter()));
-        pointC.setLocation(MathUtil.subtract(getCoordsCenter(), dispA));
+        pointA = p;
+        dispA = MathUtil.subtract(pointA, getCoordsCenter());
+        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
     }
 
     @Override
     public void setCoordsB(@Nonnull Point2D p) {
-        pointB.setLocation(p);
-        dispB.setLocation(MathUtil.subtract(pointB, getCoordsCenter()));
-        pointD.setLocation(MathUtil.subtract(getCoordsCenter(), dispB));
+        pointB = p;
+        dispB = MathUtil.subtract(pointB, getCoordsCenter());
+        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
     }
 
     @Override
     public void setCoordsC(@Nonnull Point2D p) {
-        pointC.setLocation(p);
-        dispA.setLocation(MathUtil.subtract(getCoordsCenter(), pointC));
-        pointA.setLocation(MathUtil.add(getCoordsCenter(), dispA));
+        pointC = p;
+        dispA = MathUtil.subtract(getCoordsCenter(), pointC);
+        pointA = MathUtil.add(getCoordsCenter(), dispA);
     }
 
     @Override
     public void setCoordsD(@Nonnull Point2D p) {
-        pointD.setLocation(p);
-        dispB.setLocation(MathUtil.subtract(getCoordsCenter(), pointD));
-        pointB.setLocation(MathUtil.add(getCoordsCenter(), dispB));
+        pointD = p;
+        dispB = MathUtil.subtract(getCoordsCenter(), pointD);
+        pointB = MathUtil.add(getCoordsCenter(), dispB);
     }
 
     JPopupMenu popup = null;

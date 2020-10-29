@@ -31,7 +31,7 @@ abstract public class LayoutTrack {
      */
     public LayoutTrack(@Nonnull String ident, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
         this.ident = ident;
-        this.center.setLocation(c);
+        this.center = new Point2D.Double(c.getX(), c.getY());
         this.layoutEditor = layoutEditor;
     }
 
@@ -72,10 +72,10 @@ abstract public class LayoutTrack {
      * @param p the coordinates to set
      */
     protected void setCoordsCenter(@Nonnull Point2D p) {
-        center.setLocation(p);
+        center = new Point2D.Double(p.getX(), p.getY());
     }
 
-    private final Point2D center = new Point2D.Double(500.0, 500.0);
+    private Point2D center = new Point2D.Double(500.0, 500.0);
 
     /**
      * @return true if this track segment has decorations
