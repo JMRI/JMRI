@@ -247,9 +247,9 @@ public class ThrottleSetting {
     }
 
     /**
-     * Convert old format.
+     * Convert old format. (former Strings for Command enums 
      * @param cmdStr
-     * @return
+     * @return Command
      * @throws JmriException
      */
     private Command getCommandFromString(String cmdStr) throws JmriException {

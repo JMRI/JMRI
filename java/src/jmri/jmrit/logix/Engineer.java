@@ -2,7 +2,6 @@ package jmri.jmrit.logix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.locks.ReentrantLock;
@@ -804,7 +803,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
         String msg = null;
         if (_warrant.getSpeedUtil().getDccAddress().equals(warrant.getSpeedUtil().getDccAddress())) {
             // Same loco, perhaps different warrant
-//            cmdBlockIdx = 0;    // reset block command number
             log.debug("Loco address {} finishes warrant {} and starts warrant {}",
                     warrant.getSpeedUtil().getDccAddress(), _warrant.getDisplayName(), warrant.getDisplayName());
             Thread checker = new CheckForTermination(_warrant, warrant, num);
@@ -872,16 +870,11 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             }
             if (log.isDebugEnabled()) log.debug("CheckForTermination waited {}ms. runMode={} ", time, oldWarrant.getRunMode());
 
-            java.awt.Color color = java.awt.Color.red;
-/*            if (msg == null) {
-                msg = newWarrant.setRoute(false, null);
-            }
-            if (msg == null) {
-                msg = newWarrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-            }*/
+            java.awt.Color color;
             msg = WarrantTableFrame.getDefault().runTrain(newWarrant, Warrant.MODE_RUN);
             if (msg != null) {
                 msg = Bundle.getMessage("CannotRun", newWarrant.getDisplayName(), msg);
+                color = java.awt.Color.red;
             } else {
                 if (oldWarrant.equals(newWarrant)) {
                     msg = Bundle.getMessage("reLaunch", oldWarrant.getDisplayName(), (num<0 ? "unlimited" : num));
