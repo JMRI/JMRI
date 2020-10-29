@@ -17,12 +17,16 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.Sensor;
+import jmri.jmrit.beantable.OBlockTableFrame;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.util.IntlUtilities;
+import jmri.util.JmriJFrame;
 import jmri.util.NamedBeanComparator;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,8 +35,16 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Duplicates the JTable model for BlockTableAction and adds a column for the
  * occupancy sensor. Configured for use within an internal frame.
+ * <p>
+ * Can be used with two interfaces:
+ * <ul>
+ *     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
+ *     <li>JMRI "standard" Tabbed tables (parent class JPanel)
+ * </ul>
+ * The _tabbed field decides, it is set in prefs (restart required).
  *
  * @author Pete Cressman (C) 2010
+ * @author Egbert Broerse (C) 2020
  */
 public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OBlock> {
 
@@ -68,12 +80,18 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     private final String[] tempRow = new String[NUMCOLS];
     private float _tempLen = 0.0f;      // mm for length col of tempRow
     TableFrames _parent;
+    private final boolean _tabbed; // updated from prefs (restart required)
 
-    public OBlockTableModel(TableFrames parent) {
+    public OBlockTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
+        _manager = InstanceManager.getDefault(OBlockManager.class);
+        _manager.addPropertyChangeListener(this);
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
         updateNameList();
-        initTempRow();
+        if (!_tabbed) {
+            initTempRow();
+        }
     }
 
     void addHeaderListener(JTable table) {
@@ -210,7 +228,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public int getRowCount() {
-        return super.getRowCount() + 1;
+        return super.getRowCount() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
     }
 
     @Override
@@ -360,7 +378,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (log.isDebugEnabled()) {
             log.debug("setValueAt: row= {}, col= {}, value= {}", row, col, value);
         }
-        if (super.getRowCount() == row) {
+        if (!_tabbed && (super.getRowCount() == row)) { // editing tempRow
             switch (col) {
                 case SYSNAMECOL:
                     OBlock block = _manager.createNewOBlock((String) value, tempRow[USERNAMECOL]);
@@ -380,7 +398,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                         return;
                     }
                     if (tempRow[SENSORCOL] != null) {
-                        if (!sensorExists(tempRow[SENSORCOL])) {
+                        if (sensorExists(tempRow[SENSORCOL])) {
                             JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[SENSORCOL]),
                                     Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                         }
@@ -414,7 +432,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     
                     if (tempRow[ERR_SENSORCOL] != null) {
                         if (tempRow[ERR_SENSORCOL].trim().length() > 0) {
-                            if (!sensorExists(tempRow[ERR_SENSORCOL])) {
+                            if (sensorExists(tempRow[ERR_SENSORCOL])) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSuchSensorErr", tempRow[ERR_SENSORCOL]),
                                         Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                             }
@@ -440,7 +458,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     initTempRow();
                     fireTableDataChanged();
                     return;
-                case DELETE_COL:            // clear
+                case DELETE_COL:            // "Clear"
                     initTempRow();
                     fireTableRowsUpdated(row, row);
                     return;
@@ -486,6 +504,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             tempRow[col] = (String) value;
             return;
         }
+
+        // Edit an existing row
         String name = sysNameList.get(row);
         OBlock block = _manager.getBySystemName(name);
         if (block == null) {
@@ -634,7 +654,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (sensor == null) {
             sensor = InstanceManager.sensorManagerInstance().getBySystemName(name);
         }
-        return (sensor != null);
+        return (sensor == null);
     }
 
     @Override
@@ -665,7 +685,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case SPEEDCOL:
                 return Bundle.getMessage("SpeedCol");
             case EDIT_COL:
-                return Bundle.getMessage("ButtonEditPath");
+                return Bundle.getMessage("ButtonEditPath"); // named Paths
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
             default:
@@ -675,6 +695,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return super.getColumnName(col);
     }
 
+    // Delete in row pressed, remove OBlock from manager etc. Works in both interfaces
     void deleteBean(OBlock bean) {
         StringBuilder sb = new StringBuilder(Bundle.getMessage("DeletePrompt", bean.getSystemName()));
         for (PropertyChangeListener listener : bean.getPropertyChangeListeners()) {
@@ -752,7 +773,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     @Override
     public boolean isCellEditable(int row, int col) {
         if (super.getRowCount() == row) {
-            return true;
+            return true; // the new entry/bottom row is editable in all cells
         }
         return (col != SYSNAMECOL && col != STATECOL);
     }
@@ -767,7 +788,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         _parent.getPortalTableModel().propertyChange(e);
 
         if (property.equals("length") || property.equals("UserName")) {
-            _parent.updateOblockTablesMenu();
+            _parent.updateOBlockTablesMenu();
         }
     }
 

@@ -4,23 +4,29 @@ import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.IntlUtilities;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define the Signals within an OBlock.
  * <p>
+ * Can be used with two interfaces:
+ * <ul>
+ *     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
+ *     <li>JMRI standard Tabbed tables (parent class JPanel)
+ * </ul>
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -47,11 +53,13 @@ public class SignalTableModel extends AbstractTableModel {
     public static final int NUMCOLS = 7;
     int _lastIdx; // for debug
 
+    //private final CopyOnWriteArrayList<SignalRow> _signalList = new CopyOnWriteArrayList<>();
     private ArrayList<SignalRow> _signalList = new ArrayList<SignalRow>();
     PortalManager _portalMgr;
+    private final boolean _tabbed; // updated from prefs (restart required)
     private float _tempLen = 0.0f;      // mm for length col of tempRow
 
-    static class SignalRow {
+    private static class SignalRow {
 
         NamedBean _signal;
         OBlock _fromBlock;
@@ -106,33 +114,35 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private final String[] tempRow = new String[NUMCOLS];
+    private String[] tempRow;
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
-
     TableFrames _parent;
 
     public SignalTableModel(TableFrames parent) {
         super();
         _parent = parent;
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
     }
 
     public void init() {
         makeList();
-        initTempRow();
+        if (!_tabbed) {
+            initTempRow();
+        }
     }
 
     void initTempRow() {
-        for (int i = 0; i < NUMCOLS; i++) {
-            tempRow[i] = null;
-        }
+        tempRow = new String[NUMCOLS];
         tempRow[LENGTHCOL] = twoDigit.format(0.0);
         tempRow[UNITSCOL] = Bundle.getMessage("in");
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
-    // Rebuild _signalList SignalRow ArrayList, copying Signals from Portal table
+    // Rebuild _signalList CopyOnWriteArrayList<SignalRow>, copying Signals from Portal table
     private void makeList() {
+        //CopyOnWriteArrayList<SignalRow> tempList = new CopyOnWriteArrayList<>();
+        //_signalList.clear(); // EBR try to fix +1 rows bug
         ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
@@ -141,39 +151,57 @@ public class SignalTableModel extends AbstractTableModel {
             OBlock toBlock = portal.getToBlock();
             if (fromBlock != null && toBlock != null) {
                 NamedBean signal = portal.getFromSignal();
-                SignalRow sr = null;
+                SignalRow sr;
                 if (signal != null) {
-                    sr = new SignalRow(signal, fromBlock, portal, toBlock,
-                             portal.getFromSignalOffset(), toBlock.isMetric());
+                    sr = new SignalRow(signal, fromBlock, portal, toBlock, portal.getFromSignalOffset(), toBlock.isMetric());
+                    //_signalList.add(sr);
                     addToList(tempList, sr);
+                    log.debug("1 SR added to tempList, new size = {}", tempList.size());
                 }
                 signal = portal.getToSignal();
                 if (signal != null) {
-                    sr = new SignalRow(signal, toBlock, portal, fromBlock, 
-                            portal.getToSignalOffset(), fromBlock.isMetric());
+                    sr = new SignalRow(signal, toBlock, portal, fromBlock, portal.getToSignalOffset(), fromBlock.isMetric());
+                    //_signalList.add(sr);
                     addToList(tempList, sr);
+                    log.debug("1 SR added to tempList, new size = {}", tempList.size());
                 }
             } else {
-//                Can't get jmri.util.JUnitAppender.assertErrorMessage recognized in TableFramesTest! OK just warn then
+                // Can't get jmri.util.JUnitAppender.assertErrorMessage recognized in TableFramesTest! OK just warn then
                 log.warn("Portal {} needs an OBlock on each side", portal.getName());
             }
         }
-        _signalList = tempList;
-        log.debug("makeList exit: _signalList has {} rows.", _signalList.size());
+        //_signalList = tempList;
+        //if (tempList instanceof ArrayList<SignalRow>) {
+            _signalList = (ArrayList<SignalRow>) tempList.clone(); // unchecked cast TODO fix
+            _lastIdx = tempList.size();
+        //}
+        log.debug("TempList copied, size = {}", tempList.size());
+        _signalList.sort(new NameSorter());
+        log.debug("makeList exit: _signalList size {} items.", _signalList.size());
     }
 
-    static private void addToList(List<SignalRow> tempList, SignalRow sr) {
-        // not in list, for the sort, insert at correct position
+    private static void addToList(List<SignalRow> list, SignalRow sr) {
+        // not in list, for the sort, insert at correct position // TODO EBR add + sort instead?
         boolean add = true;
-        for (int j = 0; j < tempList.size(); j++) {
-            if (sr.getSignal().getDisplayName().compareTo(tempList.get(j).getSignal().getDisplayName()) < 0) {
-                tempList.add(j, sr);
+        for (int j = 0; j < list.size(); j++) {
+            if (sr.getSignal().getDisplayName().compareTo(list.get(j).getSignal().getDisplayName()) < 0) {
+                list.add(j, sr); // added first time
                 add = false;
+                log.debug("comparing list item {} name {}", j, sr.getSignal().getDisplayName());
                 break;
             }
         }
         if (add) {
-            tempList.add(sr);
+            list.add(sr); // added again?
+            log.debug("comparing list item at last pos {} name {}", list.size() , sr.getSignal().getDisplayName());
+        }
+    }
+
+    public static class NameSorter implements Comparator<SignalRow>
+    {
+        @Override
+        public int compare(SignalRow o1, SignalRow o2) {
+            return o2.getSignal().compareTo(o1.getSignal());
         }
     }
 
@@ -226,7 +254,7 @@ public class SignalTableModel extends AbstractTableModel {
         return msg;
     }
 
-    // From the PortalSet get the single portal using the given to and from block.
+    // From the PortalSet get the single portal using the given To and From block.
     private Portal getPortalwithBlocks(OBlock fromBlock, OBlock toBlock) {
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
@@ -288,7 +316,6 @@ public class SignalTableModel extends AbstractTableModel {
             }
         }
         return null;
-
     }
 
     @Override
@@ -298,8 +325,9 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        log.debug("_signalList.size() + 1 = {}", _signalList.size() + 1 + ""); // EBR debug
-        return _signalList.size() + 1; // +1 adds the extra empty row at the bottom of the table display
+        log.debug("_signalList.size() = {}", _signalList.size()); // EBR debug
+        return _signalList.size() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
+        // +1 adds the extra empty row at the bottom of the table display, causes IOB when called externally when _tabbed
     }
 
     @Override
@@ -326,8 +354,11 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        log.debug("getValueAt rowIndex= {}, _lastIdx= {}", rowIndex, _lastIdx);
-        if (_signalList.size() == rowIndex) { // this must be tempRow, a new entry, read from tempRow
+        if (rowIndex > _lastIdx) {
+            log.debug("getValueAt rowIndex= {}, _signalList.size()= {}", rowIndex, _signalList.size());
+        }
+
+        if (!_tabbed && rowIndex == _signalList.size()) { // this must be tempRow, a new entry, read values from tempRow
             if (columnIndex == LENGTHCOL) {
                 log.debug("GetValue SignalTable length entered {} =============== in row {}", _tempLen, rowIndex);
                 if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
@@ -336,11 +367,17 @@ public class SignalTableModel extends AbstractTableModel {
                 return (twoDigit.format(_tempLen/25.4f));
             }
             if (columnIndex == UNITSCOL) {
-                return tempRow[UNITSCOL].equals(Bundle.getMessage("cm"));
+                return tempRow[UNITSCOL].equals(Bundle.getMessage("cm")); // TODO renderer/special class
             }
             return tempRow[columnIndex];
         }
-        SignalRow signalRow = _signalList.get(rowIndex);
+        if (rowIndex >= _signalList.size() || rowIndex >= _lastIdx) {
+            log.error("SignalTable requested ROW {}, SIZE is {}, expected {}", rowIndex, _signalList.size(), _lastIdx);
+            log.debug("items in list: {}", _signalList.size()); // EBR debug
+            return columnIndex + "" + rowIndex + "?";
+        }
+
+        SignalRow signalRow = _signalList.get(rowIndex); // edit an existing array entry
         switch (columnIndex) {
             case NAME_COLUMN:
                 if (signalRow.getSignal() != null) {
@@ -419,7 +456,7 @@ public class SignalTableModel extends AbstractTableModel {
             OBlock fromBlock = null;
             OBlock toBlock = null;
             Portal portal = null;
-            NamedBean signal = null;
+            NamedBean signal;
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
             if (tempRow[FROM_BLOCK_COLUMN] != null) {
                 fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
@@ -492,6 +529,9 @@ public class SignalTableModel extends AbstractTableModel {
                         SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, length, isMetric);
                         msg = setSignal(signalRow, false);
                         if (msg==null) {
+                            //if (signalRow.getLength() == 0) {
+                                log.error("#502 empty tempRow added to SignalList (now {})", _signalList.size());
+                            //}
                             _signalList.add(signalRow);                            
                         }
                         initTempRow();
@@ -500,13 +540,20 @@ public class SignalTableModel extends AbstractTableModel {
                 }
             }
         } else { // Editing an existing signal configuration row
-            SignalRow signalRow = _signalList.get(row);
+            SignalRow signalRow;
+            try {
+                signalRow = _signalList.get(row);
+            } catch (IndexOutOfBoundsException e) {
+                // ignore, happens for unknown reason TODO fix
+                //log.debug("setValue out of range");
+                return;
+            }
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
             switch (col) {
                 case NAME_COLUMN:
                     NamedBean signal = Portal.getSignal((String) value);
                     if (signal == null) {
-                        msg = Bundle.getMessage("NoSuchSignal", (String) value);
+                        msg = Bundle.getMessage("NoSuchSignal", value);
 //                        signalRow.setSignal(null);                              
                         break;
                     }
@@ -528,7 +575,7 @@ public class SignalTableModel extends AbstractTableModel {
                 case FROM_BLOCK_COLUMN:
                     OBlock block = OBlockMgr.getOBlock((String) value);
                     if (block == null) {
-                        msg = Bundle.getMessage("NoSuchBlock", (String) value);
+                        msg = Bundle.getMessage("NoSuchBlock", value);
                         break;
                     }
                     if (block.equals(signalRow.getFromBlock())) {
@@ -561,7 +608,7 @@ public class SignalTableModel extends AbstractTableModel {
                 case PORTAL_COLUMN:
                     portal = _portalMgr.getPortal((String) value);
                     if (portal == null) {
-                        msg = Bundle.getMessage("NoSuchPortalName", (String) value);
+                        msg = Bundle.getMessage("NoSuchPortalName", value);
                         break;
                     }
                     deleteSignal(signalRow);    // delete old
@@ -591,7 +638,7 @@ public class SignalTableModel extends AbstractTableModel {
                 case TO_BLOCK_COLUMN:
                     block = OBlockMgr.getOBlock((String) value);
                     if (block == null) {
-                        msg = Bundle.getMessage("NoSuchBlock", (String) value);
+                        msg = Bundle.getMessage("NoSuchBlock", value);
                         break;
                     }
                     if (block.equals(signalRow.getToBlock())) {
@@ -659,7 +706,7 @@ public class SignalTableModel extends AbstractTableModel {
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            // TODO fix bug doesn't close by clicking OK, only Esc on 4.21.2 on macOS 10/2020 EBR
+            // TODO fix doesn't close by clicking OK after DnD as focus lost, only Esc on 4.21.2 on macOS
         }
     }
 
@@ -713,7 +760,7 @@ public class SignalTableModel extends AbstractTableModel {
             case DELETE_COL:
                 return JButton.class;
 //            case UNITSCOL:
-//                return Boolean.class; // EBR Debug
+//                return Boolean.class; // EBR off for debug
             default:
                 return String.class;
         }

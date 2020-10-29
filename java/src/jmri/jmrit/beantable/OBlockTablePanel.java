@@ -3,6 +3,8 @@ package jmri.jmrit.beantable;
 import jmri.jmrit.beantable.oblock.*;
 import jmri.swing.RowSorterUtil;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +16,7 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.text.MessageFormat;
 import java.util.Objects;
 
@@ -29,34 +32,33 @@ import java.util.Objects;
 public class OBlockTablePanel extends JPanel {
 
     private OBlockTableModel oblockDataModel;
-    private final PortalTableModel portalDataModel;
-    private final SignalTableModel signalDataModel;
-    private final BlockPortalTableModel blockportalDataModel;
-    //    private BlockPathTableModel pathDataModel;
+    private PortalTableModel portalDataModel;
+    private SignalTableModel signalDataModel;
+    private BlockPortalTableModel blockportalDataModel;
 
     private JTable oblockTable;
-    private final JTable portalTable;
+    private JTable portalTable;
     private JTable signalTable;
-    private final JTable blockportalTable;
-    //    private JTable blockpathTable;
+    private JTable blockportalTable;
 
     private JScrollPane oblockDataScroll;
     private JScrollPane portalDataScroll;
     private JScrollPane signalDataScroll;
     private JScrollPane blockportalDataScroll;
-    private JScrollPane blockpathDataScroll;
 
     private JTabbedPane oblockTabs;
     Box bottomBox;                  // panel at bottom for extra buttons etc
     int bottomBoxIndex;             // index to insert extra stuff
 
-    static final int bottomStrutWidth = 20;
+    private static final int bottomStrutWidth = 20;
+    //private static final int ROW_HEIGHT = 10;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public OBlockTablePanel(OBlockTableModel oblocks,
                             PortalTableModel portals,
                             SignalTableModel signals,
                             BlockPortalTableModel blockportals,
+                            TableFrames tf,
                             String helpTarget) {
 
         super();
@@ -64,62 +66,86 @@ public class OBlockTablePanel extends JPanel {
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(oblockDataModel);
         // use NamedBean's built-in Comparator interface for sorting the system name column
         RowSorterUtil.setSortOrder(sorter, OBlockTableModel.SYSNAMECOL, SortOrder.ASCENDING);
-        oblockTable = oblockDataModel.makeJTable(OBlockTableAction.class.getName(), oblockDataModel, sorter); // cannot directly access oblock
+        oblockTable = oblockDataModel.makeJTable(OBlockTableAction.class.getName(), oblockDataModel, sorter); // use built in BeanTableFrame(oblock) function
+        // style table
+        //...
         oblockDataScroll = new JScrollPane(oblockTable);
         oblockTable.setColumnModel(new XTableColumnModel());
         oblockTable.createDefaultColumnsFromModel();
 
         portalDataModel = portals;
-        RowSorterUtil.setSortOrder(sorter, portalDataModel.NAME_COLUMN, SortOrder.ASCENDING);
-        portalTable = makeJTable("Portals", portalDataModel, sorter); // cannot directly access oblock
+        TableRowSorter<PortalTableModel> portalsorter = new TableRowSorter<>(portalDataModel);
+        RowSorterUtil.setSortOrder(portalsorter, portalDataModel.NAME_COLUMN, SortOrder.ASCENDING);
+        //portalTable = tf.makePortalTable(portalDataModel); // public access in oblocks.TableFrames
+        portalTable = makeJTable("Portal", portalDataModel, portalsorter);
+        // style table
+        portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+        portalTable.getColumnModel().getColumn(PortalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+        for (int i = 0; i < portalDataModel.getColumnCount(); i++) {
+            int width = portalDataModel.getPreferredWidth(i);
+            portalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+//        portalTable.doLayout();
+//        int tableWidth = portalTable.getPreferredSize().width;
+//        portalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
         portalDataScroll = new JScrollPane(portalTable);
         portalTable.setColumnModel(new XTableColumnModel());
         portalTable.createDefaultColumnsFromModel();
 
         signalDataModel = signals;
+        //sorter = new TableRowSorter<>(signalDataModel);
         RowSorterUtil.setSortOrder(sorter, SignalTableModel.NAME_COLUMN, SortOrder.ASCENDING);
-        signalTable = makeJTable("Signals", signalDataModel, sorter); // cannot directly access oblock
+        signalTable = makeJTable("Signals", signalDataModel, sorter);
+        // style table
         signalDataScroll = new JScrollPane(signalTable);
         signalTable.setColumnModel(new XTableColumnModel());
         signalTable.createDefaultColumnsFromModel();
 
         blockportalDataModel = blockportals; // cross-reference (not editable)
+        //sorter = new TableRowSorter<>(blockportalDataModel);
         RowSorterUtil.setSortOrder(sorter, BlockPortalTableModel.BLOCK_NAME_COLUMN, SortOrder.ASCENDING);
-        blockportalTable = makeJTable("Block-Portal X-ref", blockportalDataModel, sorter); // cannot directly access oblock
+        blockportalTable = makeJTable("Block-Portal X-ref", blockportalDataModel, sorter); // cannot directly access
+        // style table
+        blockportalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+        blockportalTable.doLayout();
         blockportalDataScroll = new JScrollPane(blockportalTable);
         blockportalTable.setColumnModel(new XTableColumnModel());
         blockportalTable.createDefaultColumnsFromModel();
 
-        // later created on demand
-        //        blockpathDataModel = blockpaths;
-        //        RowSorterUtil.setSortOrder(sorter, OBlockTableModel.SYSNAMECOL, SortOrder.ASCENDING);
-        //        oblockTable = oblockDataModel.makeJTable(OBlockTableAction.class.getName(), oblockDataModel, sorter); // cannot directly access oblock
-        //        oblockDataScroll = new JScrollPane(oblockTable);
-        //        oblockTable.setColumnModel(new XTableColumnModel());
-        //        oblockTable.createDefaultColumnsFromModel();
-
         // configure items for GUI
-        oblockDataModel.configureTable(oblockTable);
+        oblockDataModel.configureTable(oblockTable); // only class to extend BeanTableDataModel
         //oblockDataModel.configEditColumn(oblockTable);
-        oblockDataModel.persistTable(oblockTable);
-//        pathDataModel.configureTable(pathTable);
-//        pathDataModel.configEditColumn(pathTable);
-//        pathDataModel.persistTable(pathTable);
-//        portalDataModel.configureTable(portalTable);
-//        portalDataModel.configEditColumn(portalTable);
-//        portalDataModel.persistTable(portalDataTable);
+        for (int i = 0; i < oblockDataModel.getColumnCount(); i++) {
+            // copied from TableFrames#makeOBlockTable() l729 as it needs table so can't copy to oblockDataModel
+            int width = oblockDataModel.getPreferredWidth(i);
+            oblockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        oblockDataModel.persistTable(oblockTable); // contains this method
+
+        configureWarrantTable(signalTable);
+        // pathDataModel.configEditColumn(pathTable);
+        oblockDataModel.persistTable(signalTable);
+
+        configureWarrantTable(portalTable);
+        // portalDataModel.configEditColumn(portalTable);
+        oblockDataModel.persistTable(portalTable);
+
+        configureWarrantTable(blockportalTable);
+        // portalDataModel.configEditColumn(blockportalTable);
+        oblockDataModel.persistTable(blockportalTable);
+
+        // TODO add changeListeners for table (example load, created) to update tables EBR
 
         // general GUI config
         this.setLayout(new BorderLayout());
 
-        // install items in GUI
+        // install the four items in GUI as tabs
         oblockTabs = new JTabbedPane();
         oblockTabs.addTab(Bundle.getMessage("BeanNameOBlocks"), oblockDataScroll);
         oblockTabs.addTab(Bundle.getMessage("BeanNamePortals"), portalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Signals"), signalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Paths"), blockportalDataScroll);
-        //oblockTabs.addTab(Bundle.getMessage("Paths"), blockpathDataScroll); // Paths
-        // turnout: later
+        // turnouts not on a tab: later
 
         add(oblockTabs, BorderLayout.CENTER);
 
@@ -135,7 +161,6 @@ public class OBlockTablePanel extends JPanel {
         // set preferred scrolling options
         oblockDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        portalDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//        pathDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 //        signalDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        blockportalDataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
@@ -150,7 +175,7 @@ public class OBlockTablePanel extends JPanel {
         return bottomBox;
     }
 
-    public JMenuItem getPrintItem() {
+    public JMenuItem getPrintItem() { // copied from AudioTablePanel
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
 
         printItem.addActionListener(new ActionListener() {
@@ -158,9 +183,10 @@ public class OBlockTablePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     MessageFormat footerFormat = new MessageFormat("Page {0,number}");
-                    oblockTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Listener Table"), footerFormat);
-                    portalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Buffer Table"), footerFormat);
-                    //blockPathTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Source Table"), footerFormat);
+                    oblockTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("OBlock Table"), footerFormat);
+                    portalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Portal Table"), footerFormat);
+                    signalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Signal Table"), footerFormat);
+                    blockportalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(Bundle.getMessage("TitleBlockPortalXRef")), footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
                     log.warn("error printing: {}", e1, e1);
                 }
@@ -191,21 +217,29 @@ public class OBlockTablePanel extends JPanel {
         oblockTable = null;
         oblockDataScroll = null;
 
-//        if (bufferDataModel != null) {
-//            bufferDataModel.stopPersistingTable(bufferDataTable);
-//            bufferDataModel.dispose();
-//        }
-//        bufferDataModel = null;
-//        bufferDataTable = null;
-//        bufferDataScroll = null;
-//
-//        if (sourceDataModel != null) {
-//            sourceDataModel.stopPersistingTable(sourceDataTable);
-//            sourceDataModel.dispose();
-//        }
-//        sourceDataModel = null;
-//        sourceDataTable = null;
-//        sourceDataScroll = null;
+        if (portalDataModel != null) {
+//            portalDataModel.stopPersistingTable(portalTable);
+//            portalDataModel.dispose();
+        }
+        portalDataModel = null;
+        portalTable = null;
+        portalDataScroll = null;
+
+        if (signalDataModel != null) {
+//            signalDataModel.stopPersistingTable(signalTable);
+//            signalDataModel.dispose();
+        }
+        signalDataModel = null;
+        signalTable = null;
+        signalDataScroll = null;
+
+        if (blockportalDataModel != null) {
+//            blockportalDataModel.stopPersistingTable(blockportalTable);
+//            blockportalDataModel.dispose();
+        }
+        blockportalDataModel = null;
+        blockportalTable = null;
+        blockportalDataScroll = null;
     }
 
     /**
@@ -219,8 +253,8 @@ public class OBlockTablePanel extends JPanel {
      * @throws NullPointerException if name or model is null
      */
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
-        Objects.requireNonNull(name, "the table name must be nonnull" + name);
-        Objects.requireNonNull(model, "the table model must be nonnull" + name);
+        Objects.requireNonNull(name, "the table name must be nonnull " + name);
+        Objects.requireNonNull(model, "the table model must be nonnull " + name);
         return this.configureJTable(name, new JTable(model), sorter);
     }
 
@@ -242,8 +276,42 @@ public class OBlockTablePanel extends JPanel {
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-        //addMouseListenerToHeader(table); // TODO must put in tableModelClass to attach listener
+        //addMouseListenerToHeader(table);
+        // TODO must put in tableModelClass to attach listener
         return table;
+    }
+
+    /**
+     * Configure a table to have our standard rows and columns.
+     * This also persists the table user interface state.
+     * Adapted from {@link BeanTableDataModel} for tables 2-4, EBR 2020
+     *
+     * @param table {@link JTable} to configure
+     */
+    public void configureWarrantTable(JTable table) {
+        // ignore Property columns
+        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        table.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        table.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
+//        table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
+//        table.setDefaultEditor(Boolean.class, new ButtonEditor(new JButton()));
+
+        // allow reordering of the columns
+        table.getTableHeader().setReorderingAllowed(true);
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.setRowHeight((new JButton().getPreferredSize().height)*9/10);
+        // resize columns per table
+        table.doLayout();
+        // resize columns as requested
+//        for (int i = 0; i < table.getColumnCount(); i++) {
+//            int width = table.getColumn(i).getPreferredWidth();
+//            table.getColumnModel().getColumn(i).setPreferredWidth(width);
+//        }
+//        configValueColumn(table);
+//        configDeleteColumn(table);
+//        oblockTable.persistTable(dataTable);
     }
 
     private static final Logger log = LoggerFactory.getLogger(OBlockTablePanel.class);

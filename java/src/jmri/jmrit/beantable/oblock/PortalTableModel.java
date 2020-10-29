@@ -2,20 +2,26 @@ package jmri.jmrit.beantable.oblock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
+import jmri.jmrit.logix.*;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlock Poartals.
+ * GUI to define OBlock Portals.
+* <p>
+* Can be used with two interfaces:
+* <ul>
+*     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
+*     <li>JMRI standard Tabbed tables (parent class JPanel)
+* </ul>
+* The _tabbed field decides, it is set in prefs (restart required).
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -28,26 +34,31 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Pete Cressman (C) 2010
+ * @author Egbert Broerse (C) 2020
  */
 public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener {
 
     public static final int FROM_BLOCK_COLUMN = 0;
-    public static final int NAME_COLUMN = 1;
+    public final int NAME_COLUMN = 1; // not static to fetch from _tabbed OBlockTablePanel
     public static final int TO_BLOCK_COLUMN = 2;
     static public final int DELETE_COL = 3;
     public static final int NUMCOLS = 4;
 
     PortalManager _manager;
     private final String[] tempRow = new String[NUMCOLS];
-
+    private final boolean _tabbed; // updated from prefs (restart required)
     TableFrames _parent;
 
-    public PortalTableModel(TableFrames parent) {
+    public PortalTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
         _manager = InstanceManager.getDefault(PortalManager.class);
         _manager.addPropertyChangeListener(this);
-        initTempRow();
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
+        // specific stuff for _desktop
+        if (!_tabbed) {
+            initTempRow();
+        }
     }
 
     void initTempRow() {
@@ -64,18 +75,18 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public int getRowCount() {
-        return _manager.getPortalCount() + 1;
+        return _manager.getPortalCount() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
     }
 
     @Override
     public String getColumnName(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
-                return Bundle.getMessage("BlockName");
+                return Bundle.getMessage("FromBlockName");
             case NAME_COLUMN:
                 return Bundle.getMessage("PortalName");
             case TO_BLOCK_COLUMN:
-                return Bundle.getMessage("BlockName");
+                return Bundle.getMessage("OppBlockName");
             default:
                 // fall through
                 break;
@@ -110,14 +121,14 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     break;
             }
         }
-        return "";
+        return null;
     }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
 //        log.debug("setValueAt value= {}, row= {} col= {}", row, col);
         String msg = null;
-        if (row == _manager.getPortalCount()) { // clicked on tempRow
+        if (row == _manager.getPortalCount()) { // set tempRow, only present using _desktop
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -158,7 +169,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                             initTempRow();
                             fireTableDataChanged();
                         } else {
-                            msg = Bundle.getMessage("DuplPortalName", (String) value);
+                            msg = Bundle.getMessage("DuplPortalName", value);
                         }
                     }
                 } else if (fromBlock == null ^ toBlock==null ) {
@@ -178,11 +189,11 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             return;
         }
 
-        switch (col) {
+        switch (col) { // existing Partals in table
             case FROM_BLOCK_COLUMN:
                 OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String) value);
                 if (block == null) {
-                    msg = Bundle.getMessage("NoSuchBlock", (String) value);
+                    msg = Bundle.getMessage("NoSuchBlock", value);
                     break;
                 }
                 if (block.equals(portal.getToBlock())) {
@@ -207,7 +218,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             case TO_BLOCK_COLUMN:
                 block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String) value);
                 if (block == null) {
-                    msg = Bundle.getMessage("NoSuchBlock", (String) value);
+                    msg = Bundle.getMessage("NoSuchBlock", value);
                     break;
                 }
                 if (block.equals(portal.getFromBlock())) {
@@ -281,7 +292,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (log.isDebugEnabled()) {
-            log.debug("property = {} source= {}", property, e.getSource().getClass().getName());
+            log.debug("PropertyChangeEvent property = {} source= {}", property, e.getSource().getClass().getName());
         }
         switch (property) {
             case "pathCount":

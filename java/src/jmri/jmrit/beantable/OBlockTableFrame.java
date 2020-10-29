@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable;
 
-import jmri.Audio;
-import jmri.jmrit.beantable.AudioTablePanel;
 import jmri.jmrit.beantable.BeanTableFrame;
-import jmri.jmrit.beantable.Bundle;
 import jmri.jmrit.logix.OBlock;
 
 import javax.swing.*;
@@ -34,8 +31,8 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreMenu());
+        fileMenu.add(panel.getPrintItem()); // TODO link to oblock.TableFrames
 
-        //fileMenu.add(panel.getPrintItem());
         setJMenuBar(menuBar);
 
         addHelpMenu(helpTarget, true);

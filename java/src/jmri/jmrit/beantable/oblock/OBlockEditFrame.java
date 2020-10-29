@@ -11,13 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract GUI to edit OBlock objects
+ * GUI to edit OBlock objects.
+ * Adapted from AbstractAudioFrame + -ListenerFrame 2020 by Egbert Broerse.
  *
  * @author Matthew Harris copyright (c) 2009
  */
-abstract public class AbstractOBlockFrame extends JmriJFrame {
+public class OBlockEditFrame extends JmriJFrame {
 
-    AbstractOBlockFrame frame = this;
+    OBlockEditFrame frame = this;
 
     JPanel main = new JPanel();
     private final JScrollPane scroll
@@ -39,7 +40,7 @@ abstract public class AbstractOBlockFrame extends JmriJFrame {
      * @param title Title of this OBlockFrame
      * @param model OBlockTableModel holding OBlock data
      */
-    public AbstractOBlockFrame(String title, OBlockTableModel model) {
+    public OBlockEditFrame(String title, OBlockTableModel model) {
         super(title);
         this.model = model;
     }
@@ -74,9 +75,14 @@ abstract public class AbstractOBlockFrame extends JmriJFrame {
     }
 
     /**
-     * Populate the OBlock frame with default values.
+     * Populate the Edit OBlock frame with default values.
      */
-    abstract public void resetFrame();
+    public void resetFrame() {
+        sysName.setText(null);
+        userName.setText(null);
+
+        //this.newOBlock = true;
+    }
 
     /**
      * Populate the OBlock frame with current values.
@@ -106,6 +112,6 @@ abstract public class AbstractOBlockFrame extends JmriJFrame {
         return false;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractOBlockFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(OBlockEditFrame.class);
 
 }

@@ -1,11 +1,12 @@
 package jmri.jmrit.beantable.oblock;
 
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.beantable.oblock.OBlockTableModel;
+import jmri.InstanceManager;
+import jmri.jmrit.beantable.AudioTableAction;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
+import jmri.util.JmriJFrame;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -15,33 +16,43 @@ import java.awt.event.ActionEvent;
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse (C) 2020
  */
-public class OBlockFrame extends AbstractOBlockFrame {
+public class PortalEditFrame extends JmriJFrame {
 
-    //private boolean newOBlock;
+    JPanel main = new JPanel();
+    private JScrollPane scroll
+            = new JScrollPane(main,
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+    PortalTableModel model;
 
     //private final Object lock = new Object();
 
-    // UI components for Add/Edit OBlock
-    JLabel errorSensorLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensorCol")));
-    JComboBox<String> assignedSensor = new JComboBox<>();
+    // UI components for Add/Edit Portal
+    JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")));
+    JComboBox<String> assignedBlock = new JComboBox<>();
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    JTextField sysName = new JTextField(5);
+    JTextField userName = new JTextField(15);
 
     //private final static String PREFIX = "OB"; // IOB?
+    PortalEditFrame frame = this;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public OBlockFrame(String title, OBlockTableModel model) {
-        super(title, model);
+    public PortalEditFrame(String title, PortalTableModel model) {
+        super(title);
+        this.model= model;
         layoutFrame();
     }
 
-    @Override
     public void layoutFrame() {
-        super.layoutFrame();
         JPanel p;
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(errorSensorLabel);
-        p.add(assignedSensor);
+        p.add(blockLabel);
+        p.add(assignedBlock);
         main.add(p);
 
         p = new JPanel();
@@ -65,30 +76,25 @@ public class OBlockFrame extends AbstractOBlockFrame {
     /**
      * Populate the Edit OBlock frame with default values.
      */
-    @Override
     public void resetFrame() {
         userName.setText(null);
-        //assignedBuffer.setSelectedIndex(0);
-
-        //this.newOBlock = true;
+        //this.newPortal = true;
     }
 
     /**
-     * Populate the Edit OBlock frame with current values.
+     * Populate the Edit Portal frame with current values.
      */
-    @Override
-    public void populateFrame(OBlock a) {
-        if (a == null) {
+    public void populateFrame(Portal p) {
+        if (p == null) {
             throw new IllegalArgumentException("Null OBlock object");
         }
-        super.populateFrame(a);
-//        OBlock s = a;
-//        OBlockManager om = InstanceManager.getDefault(OBlockManager.class);
-//        this.newOBlock = false;
+        Portal s = p;
+        PortalManager pm = InstanceManager.getDefault(PortalManager.class);
+        userName.setText(p.getName());
+        //this.newPortal = false;
     }
 
     private void applyPressed(ActionEvent e) {
-        String sName = sysName.getText();
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
@@ -97,6 +103,6 @@ public class OBlockFrame extends AbstractOBlockFrame {
         model.fireTableDataChanged();
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class);
+    //private static final Logger log = LoggerFactory.getLogger(PortalFrame.class);
 
 }

@@ -3,6 +3,7 @@ package jmri.jmrit.beantable.oblock;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.BeanSetting;
@@ -11,12 +12,19 @@ import jmri.Turnout;
 import jmri.Block;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.OPath;
-import jmri.jmrit.signalling.SignallingPanel;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define Path-Turnout combos for OBlocks.
+ * <p>
+ * Can be used with two interfaces:
+ * <ul>
+ *     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
+ *     <li>JMRI standard Tabbed tables (parent class JPanel)
+ * </ul>
+ * The _tabbed field decides, it is set in prefs (restart required).
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -29,6 +37,7 @@ import org.slf4j.LoggerFactory;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Pete Cressman (C) 2010
+ * @author Egbert Broerse (C) 2020
  */
 public class PathTurnoutTableModel extends AbstractTableModel implements PropertyChangeListener {
 
@@ -37,25 +46,34 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     public static final int DELETE_COL = 2;
     public static final int NUMCOLS = 3;
 
-    //static final String closed = InstanceManager.turnoutManagerInstance().getClosedText();
-    //static final String thrown = InstanceManager.turnoutManagerInstance().getThrownText();
-    //static final String[] turnoutStates = {closed, thrown};//, unknown, inconsistent};
     private static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 
-    private final String[] tempRow = new String[NUMCOLS];
-    TableFrames.PathTurnoutFrame _parent;
     private OPath _path;
+    private final String[] tempRow = new String[NUMCOLS];
+    private TableFrames.PathTurnoutFrame _parent;
+    private TableFrames.PathTurnoutJFrame _tabbedParent;
+    private final boolean _tabbed; // updated from prefs (restart required)
 
     public PathTurnoutTableModel() {
         super();
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
     }
 
-    public PathTurnoutTableModel(OPath path, TableFrames.PathTurnoutFrame parent) {
+    public PathTurnoutTableModel(OPath path, @Nonnull TableFrames.PathTurnoutFrame parent) { // for _desktop
         super();
         _path = path;
         _path.getBlock().addPropertyChangeListener(this);
+        _tabbed = false;
         _parent = parent; // is used to change the title, or dispose when item is deleted
+    }
+
+    public PathTurnoutTableModel(OPath path, @Nonnull TableFrames.PathTurnoutJFrame parent) { // for _tabbed
+        super();
+        _path = path;
+        _path.getBlock().addPropertyChangeListener(this);
+        _tabbed = false;
+        _tabbedParent = parent; // is used to change the title, or dispose when item is deleted
     }
 
     public void removeListener() {
@@ -68,7 +86,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         } catch (NullPointerException npe) { // OK when block is removed
         }
     }
-
 
     void initTempRow() {
         for (int i = 0; i < NUMCOLS; i++) {
@@ -84,7 +101,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
 
     @Override
     public int getRowCount() {
-        return _path.getSettings().size() + 1;
+        return _path.getSettings().size() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
     }
 
     @Override
@@ -128,7 +145,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                         return SET_THROWN;
                     default:
                         return "";
-
                 }
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
@@ -141,7 +157,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (_path.getSettings().size() == row) {
+        if (_path.getSettings().size() == row) { // last entry row, only possible in _desktop interface
             switch (col) {
                 case TURNOUT_NAME_COL:
                     tempRow[TURNOUT_NAME_COL] = (String) value;
@@ -165,7 +181,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             }
             Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(tempRow[TURNOUT_NAME_COL]);
             if (t != null) {
-                int s = Turnout.UNKNOWN;
+                int s;
                 if (tempRow[STATE_COL].equals(SET_CLOSED)) {
                     s = Turnout.CLOSED;
                 } else if (tempRow[STATE_COL].equals(SET_THROWN)) {
@@ -183,7 +199,9 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                         Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            initTempRow();
+            if (_tabbed) {
+                initTempRow();
+            }
             return;
         }
 
@@ -335,14 +353,22 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             String property = e.getPropertyName();
             if (property.equals("pathCount")) {
                 fireTableDataChanged();
-                if (_path.equals(e.getOldValue())) {    // path was deleted
+                if (_path.equals(e.getOldValue())) { // path was deleted
                     removeListener();
-                    _parent.dispose();
+                    if (_tabbed) {
+                        _tabbedParent.dispose();
+                    } else {
+                        _parent.dispose();
+                    }
                 }
             } else if (property.equals("pathName")) {
                 String title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getOldValue());
-                if (_parent.getTitle().equals(title)) {
+                if (_tabbedParent.getTitle().equals(title)) {
                     title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getNewValue());
+                }
+                if (_tabbed) {
+                    _tabbedParent.setTitle(title);
+                } else {
                     _parent.setTitle(title);
                 }
             }

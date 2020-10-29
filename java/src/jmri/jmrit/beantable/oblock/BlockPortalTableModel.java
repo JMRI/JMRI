@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define Portal-Block-Portal combos for OBlocks.
+ * No differences between _desktop nd _tabbed code.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -54,7 +55,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         for (OBlock oBlock : list) {
             count += oBlock.getPortals().size();
         }
-        return count;
+        return count; // check if -1 for _tabbed EBR
     }
 
     @Override

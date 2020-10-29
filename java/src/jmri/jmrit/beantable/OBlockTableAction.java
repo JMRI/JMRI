@@ -1,27 +1,32 @@
 package jmri.jmrit.beantable;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
-//import jmri.TurnoutManager;
+import jmri.*;
 import jmri.jmrit.beantable.oblock.*;
 import jmri.jmrit.logix.OBlock;
-import jmri.InstanceManager;
 //import jmri.swing.SystemNameValidator;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.PortalManager;
 import jmri.util.JmriJFrame;
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks, OPaths and Portals
+ * GUI to define OBlocks, OPaths and Portals. Overrides some of the AbstractTableAction methods as this is a hybrid pane.
+ * Relies on {@link jmri.jmrit.beantable.oblock.TableFrames}.
  *
  * @author Pete Cressman (C) 2009, 2010
  * @author Egbert Broerse (C) 2020
  */
-public class OBlockTableAction extends AbstractTableAction<OBlock> {
+public class OBlockTableAction extends AbstractTableAction<OBlock> implements PropertyChangeListener {
 
     // for tabs or desktop interface
     protected boolean _tabbed = false; // updated from prefs
@@ -34,17 +39,27 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
     PortalTableModel portals;
     SignalTableModel signals;
     BlockPortalTableModel blockportals;
-    // tables created on demand
-    BlockPathTableModel blockpaths;
+    // tables created on demand inside TableFrames:
+    // - BlockPathTable(block)
+    // - PathTurnoutTable(block)
 
-    // edit frames
-    //OBlockFrame oblockFrame;
-//    PathTurnoutFrame ptFrame;
-//    BlockpathFrame bpFrame;
+    @Nonnull
+    protected OBlockManager oblockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+    @Nonnull
+    protected PortalManager portalManager = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
 
     TableFrames tf;
     OBlockTableFrame otf;
     OBlockTablePanel otp;
+
+    // edit frames
+    OBlockEditFrame oblockFrame;
+    PortalEditFrame portalFrame;
+
+    // on demand frames
+//    PathTurnoutFrame ptFrame;
+//    BlockpathFrame bpFrame;
+
 
     public OBlockTableAction(String actionName) {
         super(actionName);
@@ -55,15 +70,35 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
         this(Bundle.getMessage("TitleOBlockTable"));
     }
 
+    /**
+     * Configure managers for all tabs on OBlocks table pane.
+     * @param om the manager to assign
+     */
+    @Override
+    public void setManager(@Nonnull Manager<OBlock> om) {
+        if (oblockManager != null){
+            oblockManager.removePropertyChangeListener(this);
+        }
+        if (om instanceof OBlockManager) {
+            oblockManager = (OBlockManager) om;
+            if (m != null) { // model
+                m.setManager(oblockManager);
+            }
+        }
+        if (oblockManager != null){
+            oblockManager.addPropertyChangeListener(this);
+        }
+    }
+
     @Override
     public void addToFrame(BeanTableFrame f) {
-        JButton addOblockButton = new JButton(Bundle.getMessage("ButtonAdd"));
+        JButton addOblockButton = new JButton(Bundle.getMessage("ButtonAddOBlock"));
         otp.addToBottomBox(addOblockButton);
         addOblockButton.addActionListener(this::addOBlockPressed);
 
-//        JButton addPortalButton = new JButton(Bundle.getMessage("ButtonAddAudioSource"));
-//        otp.addToBottomBox(addPortalButton);
-//        addPortalButton.addActionListener(this::addPortalPressed);
+        JButton addPortalButton = new JButton(Bundle.getMessage("ButtonAddPortal"));
+        otp.addToBottomBox(addPortalButton);
+        addPortalButton.addActionListener(this::addPortalPressed);
     }
 
     /**
@@ -74,15 +109,15 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
     @Override
     public void actionPerformed(ActionEvent e) {
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-        if (_tabbed && f == null) {
-            f = new BeanTableFrame<>();
-        }
+//        if (_tabbed && f == null) {
+//            f = new BeanTableFrame<>();
+//        }
         initTableFrames();
     }
 
     private void initTableFrames() {
         // initialise core OBlock Edit functionality
-        tf = new TableFrames(); // tf contains OBlock methods and links to tableDataModels, is a JmriJFrame that must be hidden
+        tf = new TableFrames(); // tf contains OBlock Edit methods and links to tableDataModels, is a JmriJFrame that must be hidden
         tf.initComponents();
         // original simulated desktop interface is created in tf.initComponents() and takes care of itself if !_tabbed
         if (_tabbed) { // add the tables on a JTabbedPane, choose in Preferences > Display > GUI
@@ -101,12 +136,13 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
                 }
             };
             setTitle();
+
+            //tf.setParentFrame(otf); // needed?
+            tf.makePrivateWindow(); // prevents tf "OBlock Tables..." to show up in the Windows menu
+            tf.setVisible(false); // hide the TableFrames container when _tabbed
+
             otf.pack();
             otf.setVisible(true);
-
-            tf.setVisible(false); // hide the TableFrames container when _tabbed
-            tf.makePrivateWindow();
-            // removes tf "OBlock Tables..." from the Windows menu
         } else {
             tf.setVisible(true);
         }
@@ -126,7 +162,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
         signals = tf.getSignalTableModel();
         blockportals = tf.getPortalXRefTableModel();
         //blockpaths = tf.getBlockPathTableModel(block);
-        otp = new OBlockTablePanel(oblocks, portals, signals, blockportals, helpTarget());
+        otp = new OBlockTablePanel(oblocks, portals, signals, blockportals, tf, helpTarget());
 
         if (f == null) {
             f = new OBlockTableFrame(otp, helpTarget());
@@ -152,7 +188,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
      */
     @Override
     protected void setTitle() {
-        if (_tabbed) {
+        if (_tabbed && otf != null) {
             otf.setTitle(Bundle.getMessage("TitleOBlockTable"));
         }
     }
@@ -169,7 +205,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
                 menuBar = new JMenuBar();
             }
             setTitle();
-            //f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = korter
+            f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = korter
             f.setJMenuBar(tf.addMenus(menuBar));
             // or add separate items, actionhandlers?
             f.addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
@@ -221,15 +257,60 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
 //              }
     }
 
+    void addPortalPressed(ActionEvent e) {
+        if (portalFrame == null) {
+            portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portals);
+        }
+        //portalFrame.updatePortalList();
+        portalFrame.resetFrame();
+        portalFrame.pack();
+        portalFrame.setVisible(true);
+    }
+
     @Override
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
     }
 
-    JmriJFrame addOBlockFrame = null;
     jmri.UserPreferencesManager pref;
+    JmriJFrame addOBlockFrame = null;
 
-    void addOBlockPressed(ActionEvent e) {
+    JTextField sysNameField = new JTextField(20);
+    JTextField userNameField = new JTextField(20);
+//    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+//    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JCheckBox autoSystemNameBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+    String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+
+    protected void addOBlockPressed(ActionEvent e) {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (addOBlockFrame == null) {
+            addOBlockFrame = new JmriJFrame(Bundle.getMessage("TitleAddOBlock"), false, true);
+            addOBlockFrame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
+            addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
+
+            ActionListener okListener = this::createObPressed;
+            ActionListener cancelListener = this::cancelObPressed;
+            addOBlockFrame.add(new AddNewBeanPanel(sysNameField, userNameField, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel));
+            sysNameField.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
+        }
+        sysNameField.setBackground(Color.white);
+        // reset status bar text
+        statusBarLabel.setText(Bundle.getMessage("AddBeanStatusEnter"));
+        statusBarLabel.setForeground(Color.gray);
+        if (pref.getSimplePreferenceState(systemNameAuto)) {
+            autoSystemNameBox.setSelected(true);
+        }
+        addOBlockFrame.pack();
+        addOBlockFrame.setVisible(true);
+    }
+
+    // heavier copy from ??
+    void addOBlock2Pressed(ActionEvent e) {
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addOBlockFrame == null) {
             addOBlockFrame = new JmriJFrame(Bundle.getMessage("TitleAddOBlock"), false, true);
@@ -238,31 +319,31 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
             ActionListener oklistener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
+                    createObPressed(e);
                 }
             };
             ActionListener cancellistener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
+                    cancelObPressed(e);
                 }
             };
             //addOBlockFrame.add(new AddNewBeanPanel(sysName, userName, numberToAddSpinner, addRangeCheckBox, _autoSystemNameCheckBox, "ButtonCreate", oklistener, cancellistener, statusBar));
             //sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
 
             addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener createListener = new ActionListener() {
+            ActionListener createlistener = new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    createPressed(e);
+                    createObPressed(e);
                 }
             };
-            ActionListener cancelListener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelPressed(e);
-                }
-            };
+//            ActionListener cancellistener = new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    cancelObPressed(e);
+//                }
+//            };
             //            ActionListener rangeListener = new ActionListener() { // add rangeBox box turned on/off
             //                @Override
             //                public void actionPerformed(ActionEvent e) {
@@ -276,7 +357,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
             //            prefixBox.setName("prefixBox"); // NOI18N
             // set up validation, zero text = false
             JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addButton.addActionListener(createListener);
+            //addButton.addActionListener(createListener);
             // create panel
             //            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
             //            addOBlockFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
@@ -306,7 +387,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
         //oblockFrame.resetFrame();
     }
 
-    void cancelPressed(ActionEvent e) {
+    void cancelObPressed(ActionEvent e) {
         //removePrefixBoxListener(prefixBox);
         addOBlockFrame.setVisible(false);
         addOBlockFrame.dispose();
@@ -314,16 +395,116 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
     }
 
     /**
-     * Respond to Create new item button pressed on Add OBlock pane.
+     * Respond to Create new item button pressed on Add OBlock pane. Part of Add2 alternative
      *
      * @param e the click event
      */
-    void createPressed(ActionEvent e) {
-        // TODO adapt from TurnoutTableAction using methods in oblock.TableFrames
-        // ...
-//        addOBlockFrame.setVisible(false);
-//        addOBlockFrame.dispose();
-//        addOBlockFrame = null;
+    void createObPressed(ActionEvent e) {
+        int numberOfOblocks = 1;
+
+        if (rangeBox.isSelected()) {
+            numberOfOblocks = (Integer) numberToAddSpinner.getValue();
+        }
+
+        if (numberOfOblocks >= 65) { // limited by JSpinnerModel to 100
+            if (JOptionPane.showConfirmDialog(addOBlockFrame,
+                    Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("OBlocks"), numberOfOblocks),
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_OPTION) == 1) {
+                return;
+            }
+        }
+
+        String uName = NamedBean.normalizeUserName(userNameField.getText());
+        if (uName == null || uName.isEmpty()) {
+            uName = null;
+        }
+        String sName = sysNameField.getText();
+        // initial check for empty entry
+        if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
+            statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
+            statusBarLabel.setForeground(Color.red);
+            sysNameField.setBackground(Color.red);
+            return;
+        } else {
+            sysNameField.setBackground(Color.white);
+        }
+
+        // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
+        StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameOBlock")));
+        String errorMessage = null;
+        for (int x = 0; x < numberOfOblocks; x++) {
+            if (uName != null && !uName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getByUserName(uName) != null && !pref.getPreferenceState(getClassName(), "duplicateUserName")) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", uName), getClassName(), "duplicateUserName", false, true);
+                // show in status bar
+                errorMessage = Bundle.getMessage("ErrorDuplicateUserName", uName);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
+                uName = null; // new Memory objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
+            }
+            if (!sName.isEmpty() && jmri.InstanceManager.memoryManagerInstance().getBySystemName(sName) != null && !pref.getPreferenceState(getClassName(), "duplicateSystemName")) {
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
+                // show in status bar
+                errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
+                return; // new Memory objects are always valid, but system names must not be in use so skip in that case
+            }
+            try {
+                if (autoSystemNameBox.isSelected()) {
+                    InstanceManager.getDefault(OBlockManager.class).createNewOBlock(uName, "");
+                } else {
+                    InstanceManager.getDefault(OBlockManager.class).createNewOBlock(sName, uName);
+                }
+            } catch (IllegalArgumentException ex) {
+                // uName input no good
+                handleCreateException(sName);
+                errorMessage = "An error has occurred";
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.red);
+                return; // without creating
+            }
+
+            // add first and last names to statusMessage uName feedback string
+            // only mention first and last of rangeBox added
+            if (x == 0 || x == numberOfOblocks - 1) {
+                statusMessage.append(" ").append(sName).append(" (").append(uName).append(")");
+            }
+            if (x == numberOfOblocks - 2) {
+                statusMessage.append(" ").append(Bundle.getMessage("ItemCreateUpTo")).append(" ");
+            }
+
+            // bump system & uName names
+            if (!autoSystemNameBox.isSelected()) {
+                sName = nextName(sName);
+            }
+            if (uName != null) {
+                uName = nextName(uName);
+            }
+        } // end of for loop creating rangeBox of Memories
+
+        // provide feedback to uName
+        if (errorMessage == null) {
+            statusBarLabel.setText(statusMessage.toString());
+            statusBarLabel.setForeground(Color.gray);
+        } else {
+            statusBarLabel.setText(errorMessage);
+            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+        }
+
+        pref.setSimplePreferenceState(systemNameAuto, autoSystemNameBox.isSelected());
+        // Notify changes
+        oblocks.fireTableDataChanged();
+    }
+
+
+    void handleCreateException(String sysName) {
+        JOptionPane.showMessageDialog(addOBlockFrame,
+                Bundle.getMessage("ErrorOBlockAddFailed", sysName) + "\n" + Bundle.getMessage("ErrorAddFailedCheck"),
+                Bundle.getMessage("ErrorTitle"),
+                JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -335,12 +516,12 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
 //        BlockPathTableModel blockPathTableModel = tf.getBlockPathTableModel(block);
 //    }
 
-    @Override
-    public void dispose() {
-        //jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setSimplePreferenceState(getClassName() + ":LengthUnitMetric", centimeterBox.isSelected());
-        f.dispose();
-        super.dispose();
-    }
+//    @Override // loops with ListedTableItem.dispose()
+//    public void dispose() {
+//        //jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setSimplePreferenceState(getClassName() + ":LengthUnitMetric", centimeterBox.isSelected());
+//        f.dispose();
+//        super.dispose();
+//    }
 
     @Override
     protected String getClassName() {
@@ -352,14 +533,29 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> {
         return Bundle.getMessage("TitleOBlockTable");
     }
 
-    //setMenuBar(f); // comes after the Help menu is added by f = new
-    // BeanTableFrame(etc.) in stand alone application
-
-
 //    @Override
 //    public void addToPanel(AbstractTableTabAction<OBlock> f) {
 //        // not used (checkboxes etc.)
 //    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        String property = e.getPropertyName();
+        if (log.isDebugEnabled()) {
+            log.debug("PropertyChangeEvent property = {} source= {}", property, e.getSource().getClass().getName());
+        }
+        switch (property) {
+            case "StateStored":
+                //isStateStored.setSelected(oblockManager.isStateStored());
+                break;
+            case "UseFastClock":
+                //isFastClockUsed.setSelected(portalManager.isFastClockUsed());
+                break;
+        }
+    }
 
     @Override
     protected String helpTarget() {

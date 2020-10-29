@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -14,11 +15,12 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.util.IntlUtilities;
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define the OPaths within an OBlock.  An OPath is the setting of turnouts 
+ * GUI to define the OPaths within an OBlock. An OPath is the setting of turnouts
  * from one Portal to another Portal within an OBlock.  It may also be assigned
  * a length.
  * <p>
@@ -49,8 +51,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     private final String[] tempRow = new String[NUMCOLS];
 
-    private TableFrames _parent;
     private OBlock _block;
+    private TableFrames _parent;
+    private final boolean _tabbed; // updated from prefs (restart required)
     private ArrayList<Boolean> _units;      // gimmick to toggle units of length col for each path
     private float _tempLen;
     
@@ -58,13 +61,26 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     public BlockPathTableModel() {
         super();
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
     }
 
-    public BlockPathTableModel(OBlock block, TableFrames parent) {
+    public BlockPathTableModel(@Nonnull OBlock block, @Nonnull TableFrames parent) {
         super();
         _block = block;
         _parent = parent;
-        initTempRow();
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
+        // refresh the Unit column values list
+        _units = new ArrayList<>();
+        if (_tabbed) {
+            for (int i = 0; i < _block.getPaths().size(); i++) {
+                _units.add(_block.isMetric());
+            }
+        } else {
+            for (int i = 0; i <= _block.getPaths().size(); i++) {
+                _units.add(_block.isMetric());
+            }
+            initTempRow();
+        }
         _block.addPropertyChangeListener(this);
     }
 
@@ -93,12 +109,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             tempRow[UNITSCOL] =  Bundle.getMessage("in");            
         }
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
-
-        // refresh the Unit column values list
-        _units = new ArrayList<>();
-        for (int i=0; i<=_block.getPaths().size(); i++) {
-            _units.add(_block.isMetric());
-        }
     }
 
     @Override
@@ -108,7 +118,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public int getRowCount() {
-        return _block.getPaths().size() + 1; // +1 adds the extra empty row at the bottom of the table display
+        return _block.getPaths().size() + (_tabbed ? 0 : 1);
+        // +1 adds the extra empty row at the bottom of the table display
     }
 
     @Override
@@ -408,8 +419,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL || col == EDIT_COL) {
             return JButton.class;
-//        } else if (col == UNITSCOL) {
-//            return Boolean.class; // for debug Tabbed Pane EBR
+        } else if (col == UNITSCOL) {
+            return Boolean.class; // for debug Tabbed Pane EBR
         }
         return String.class;
     }
