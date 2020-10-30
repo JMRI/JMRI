@@ -86,8 +86,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     // end of main panel controls
     private boolean delayedPopupTrigger = false;
-    private Point2D currentPoint = new Point2D.Double(100.0, 100.0);
-    private Point2D dLoc = new Point2D.Double(0.0, 0.0);
+    private final Point2D currentPoint = new Point2D.Double(100.0, 100.0);
+    private final Point2D dLoc = new Point2D.Double(0.0, 0.0);
 
     private int toolbarHeight = 100;
     private int toolbarWidth = 100;
@@ -184,14 +184,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private HitPointType selectedHitPointType = HitPointType.NONE;         // hit point type within the selected object
 
     public LayoutTrack foundTrack = null;      // found object, null if nothing found
-    private Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
+    private final Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
     public HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
 
     public LayoutTrack beginTrack = null;      // begin track segment connection object, null if none
-    public Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
+    public final Point2D beginLocation = new Point2D.Double(0.0, 0.0); // location of begin object
     private HitPointType beginHitPointType = HitPointType.NONE; // connection type within begin connection object
 
-    public Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
+    public final Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
 
     // Lists of items that describe the Layout, and allow it to be drawn
     // Each of the items must be saved to disk over sessions
@@ -3022,7 +3022,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (layoutTrack != null) {
             foundTrack = layoutTrack;
-            foundLocation = layoutTrack.getCoordsForConnectionType(foundHitPointType);
+            foundLocation.setLocation(layoutTrack.getCoordsForConnectionType(foundHitPointType));
             /// foundNeedsConnect = isDisconnected(foundHitPointType);
             result = true;
         }
@@ -3208,7 +3208,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // initialize mouse position
         calcLocation(event);
 
-        // if alt modifier is down invert the snap to grid behaviour
+        // if alt modifier is down then invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
@@ -3218,11 +3218,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
 
-                currentPoint = new Point2D.Double(xLoc, yLoc);
+                currentPoint.setLocation(xLoc, yLoc);
 
                 if (snapToGridOnAdd != snapToGridInvert) {
                     // this snaps the current point to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
+                    currentPoint.setLocation(MathUtil.granulize(currentPoint, gContext.getGridSize()));
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -3827,7 +3827,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_A;
             }
-            dLoc = lt.getCoordsA();
+            dLoc.setLocation(lt.getCoordsA());
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3837,7 +3837,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_B;
             }
-            dLoc = lt.getCoordsB();
+            dLoc.setLocation(lt.getCoordsB());
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3847,7 +3847,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_C;
             }
-            dLoc = lt.getCoordsC();
+            dLoc.setLocation(lt.getCoordsC());
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
 
@@ -3857,7 +3857,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else {
                 beginHitPointType = HitPointType.TURNOUT_D;
             }
-            dLoc = lt.getCoordsD();
+            dLoc.setLocation(lt.getCoordsD());
             hitPointCheckLayoutTurnoutSubs(dLoc);
         }
         beginTrack = null;
@@ -4418,9 +4418,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
             leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
         }
-        currentPoint = MathUtil.add(dLoc, startDelta);
+        currentPoint.setLocation(MathUtil.add(dLoc, startDelta));
         // don't allow negative placement, objects could become unreachable
-        currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
+        currentPoint.setLocation(MathUtil.max(currentPoint, MathUtil.zeroPoint2D));
 
         if ((selectedObject != null) && (isMetaDown(event) || event.isAltDown())
                 && (selectedHitPointType == HitPointType.MARKER)) {
@@ -4436,7 +4436,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if ((selectedObject != null) && isMetaDown(event) && allPositionable()) {
                 if (snapToGridOnMove != snapToGridInvert) {
                     // this snaps currentPoint to the grid
-                    currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
+                    currentPoint.setLocation(MathUtil.granulize(currentPoint, gContext.getGridSize()));
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
                     leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
@@ -7451,15 +7451,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     public @Nonnull
-    List<PositionablePointView> getPositionablePointViews() {
-        List<PositionablePointView> list = new ArrayList<>();
-        for (PositionablePoint p : getPositionablePoints()) {
-            list.add(new PositionablePointView(p));
-        }
-        return list;
-    }
-
-    public @Nonnull
     List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
@@ -7502,6 +7493,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    public @Nonnull
+    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+        return getLayoutTracksOfClass(LayoutTurnout.class)
+                .map(LayoutTurnout.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
     /**
      * Read-only access to the list of LayoutTrack family objects. The returned
      * list will throw UnsupportedOperationException if you attempt to modify
@@ -7512,6 +7510,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     @Nonnull
     final public List<LayoutTrack> getLayoutTracks() {
         return Collections.unmodifiableList(layoutTrackList);
+    }
+
+    private @Nonnull
+    Stream<LayoutTrackView> getLayoutTrackViewsOfClass(Class<? extends LayoutTrackView> layoutTrackViewClass) {
+        return getLayoutTrackViews().stream()
+                .filter(layoutTrackViewClass::isInstance)
+                .map(layoutTrackViewClass::cast);
+    }
+
+    /**
+     * get the list of positionable point views
+     *
+     * @return list of PositionablePointViews
+     */
+    public @Nonnull
+    List<PositionablePointView> getPositionablePointViews() {
+        return getLayoutTrackViewsOfClass(PositionablePointView.class)
+                .map(PositionablePointView.class::cast)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -7596,12 +7613,26 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         viewToTrk.clear();
     }
 
-    public @Nonnull
-    List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
-                .map(LayoutTurnout.class::cast)
-                .collect(Collectors.toCollection(ArrayList::new));
+    /**
+     * return the layout track for this layout track view
+     *
+     * @param layoutTrackView the layout track view
+     * @return the layout track
+     */
+    protected @CheckReturnValue
+    LayoutTrack getLayoutTrackForView(@Nonnull LayoutTrackView layoutTrackView) {
+        return viewToTrk.get(layoutTrackView);
+    }
+
+    /**
+     * return the layout track view for this layout track
+     *
+     * @param layoutTrack the layout track
+     * @return the layout track view
+     */
+    protected @CheckReturnValue
+    LayoutTrackView getLayoutViewForTrack(@Nonnull LayoutTrack layoutTrack) {
+        return trkToView.get(layoutTrack);
     }
 
     public @Nonnull

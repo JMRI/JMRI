@@ -34,7 +34,7 @@ public class SprogCbusModeSwitcherFrame extends JmriJFrame
     protected CbusPreferences preferences;
     protected CbusDccProgrammerManager pm = null;
     protected CanSystemConnectionMemo _memo = null;
-    protected ProgModeSwitch _pms = ProgModeSwitch.NONE;
+    protected ProgModeSwitch _pms;
     protected TrafficController tc;
     protected CbusSend send;
     
