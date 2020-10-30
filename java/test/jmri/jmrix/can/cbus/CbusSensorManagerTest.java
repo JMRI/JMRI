@@ -232,7 +232,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Wrong number of events in address: +7;-5;+11");
+            JUnitAppender.assertErrorMessage("Invalid system name for Sensor: Unable to convert Address: +7;-5;+11");
         }
     }
 
