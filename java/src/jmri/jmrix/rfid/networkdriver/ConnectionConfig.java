@@ -97,6 +97,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
+    @Override
+    public boolean isPortAdvanced() {
+        return false;
+    }
+
     /**
      * {@inheritDoc}
      */
