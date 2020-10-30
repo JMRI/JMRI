@@ -490,7 +490,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         if (attr != null) {
             command = attr.getValue();
         } else {
-            log.error("Command type is null for throttleSetting {} in warrant {}", command, w.getDisplayName());
+            log.error("Command type is null. ThrottleSetting not loaded for warrant {}", w.getDisplayName());
             return null;
         }
 
