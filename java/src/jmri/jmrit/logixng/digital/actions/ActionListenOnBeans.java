@@ -1,12 +1,15 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
+import java.beans.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.annotation.CheckForNull;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -26,6 +29,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.util.DuplicateKeyMap;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +38,11 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class ActionListenOnBeans extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionListenOnBeans extends AbstractDigitalAction
+        implements PropertyChangeListener, VetoableChangeListener {
 
-    private final Map<String, NamedBeanReference> namedBeanReferences = new DuplicateKeyMap<>();
-    private boolean _listenersAreRegistered = false;
+    private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
+//    private boolean _listenersAreRegistered = false;
     
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -45,102 +50,46 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
 //        jmri.NamedBeanMap a;
     }
     
+    /**
+     * Register a bean
+     * The bean must be on the form "beantype:name" where beantype is for
+     * example turnout, sensor or memory, and name is the name of the bean.
+     * The type can be upper case or lower case, it doesn't matter.
+     * @param beanAndType the bean and type
+     */
+    public void addReference(String beanAndType) {
+        assertListenersAreNotRegistered(log, "addReference");
+        String[] parts = beanAndType.split(":");
+        if (parts.length != 2) {
+            throw new IllegalArgumentException(
+                    "Parameter 'beanAndType' must be on the format type:name"
+                    + " where type is turnout, sensor, memory, ...");
+        }
+        
+        try {
+            NamedBeanType type = NamedBeanType.valueOf(parts[0].toUpperCase());
+            NamedBeanReference reference = new NamedBeanReference(parts[1], type);
+            _namedBeanReferences.put(reference._name, reference);
+        } catch (IllegalArgumentException e) {
+            String types = Arrays.asList(NamedBeanType.values())
+                    .stream()
+                    .map(Enum::toString)
+                    .collect(Collectors.joining(", "));
+            throw new IllegalArgumentException(
+                    "Parameter 'beanAndType' has wrong type. Valid types are: " + types);
+        }
+    }
+    
     public void addReference(NamedBeanReference reference) {
-        int a = 0;
-        // Temporary make variables used.
-        if (_listenersAreRegistered && a!=1 && namedBeanReferences != null) throw new RuntimeException();
-    }
-/*    
-    public void setMemoryName(String memoryName) {
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-            memoryManager.addVetoableChangeListener(this);
-        } else {
-            _memoryHandle = null;
-            memoryManager.removeVetoableChangeListener(this);
-        }
+        assertListenersAreNotRegistered(log, "addReference");
+        _namedBeanReferences.put(reference._name, reference);
     }
     
-    public void setMemory(NamedBeanHandle<Memory> handle) {
-        _memoryHandle = handle;
-        if (_memoryHandle != null) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
+    public void removeReference(NamedBeanReference reference) {
+        assertListenersAreNotRegistered(log, "removeReference");
+        _namedBeanReferences.remove(reference._name);
     }
     
-    public void setMemory(@CheckForNull Memory memory) {
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-            // I have a bug here for every action/expression that does this. If 'this' is already registred,
-            // I should not register it again.
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            _memoryHandle = null;
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-    
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
-    }
-    
-    public void setCopyToMemoryName(String memoryName) {
-        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-        Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            _copyToMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-            memoryManager.addVetoableChangeListener(this);
-        } else {
-            _copyToMemoryHandle = null;
-            memoryManager.removeVetoableChangeListener(this);
-        }
-    }
-    
-    public void setCopyToMemory(NamedBeanHandle<Memory> handle) {
-        _copyToMemoryHandle = handle;
-        if (_copyToMemoryHandle != null) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-    
-    public void setCopyToMemory(@CheckForNull Memory memory) {
-        if (memory != null) {
-            _copyToMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            _copyToMemoryHandle = null;
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
-    }
-    
-    public NamedBeanHandle<Memory> getCopyToMemory() {
-        return _copyToMemoryHandle;
-    }
-    
-    public void setMemoryOperation(MemoryOperation state) {
-        _memoryOperation = state;
-    }
-    
-    public MemoryOperation getMemoryOperation() {
-        return _memoryOperation;
-    }
-    
-    public void setNewValue(String newValue) {
-        _newValue = newValue;
-    }
-    
-    public String getNewValue() {
-        return _newValue;
-    }
-*/    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
 /*        
@@ -210,19 +159,39 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-//        if (!_listenersAreRegistered && (_lightHandle != null)) {
-//            _lightHandle.getBean().addPropertyChangeListener("KnownState", this);
-//            _listenersAreRegistered = true;
-//        }
+        System.out.format("registerListenersForThisClass(): %b%n", _listenersAreRegistered);
+        if (_listenersAreRegistered) return;
+        
+        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
+            System.out.format("registerListenersForThisClass(): %s, %s, %s%n", namedBeanReference._handle, namedBeanReference._name, namedBeanReference._type);
+            if (namedBeanReference._handle != null) {
+                System.out.format("register: %s, %s%n", namedBeanReference._handle.getBean(), namedBeanReference._type._propertyName);
+                namedBeanReference._handle.getBean()
+                        .addPropertyChangeListener(namedBeanReference._type._propertyName, this);
+            }
+        }
+        _listenersAreRegistered = true;
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered) {
-//            _lightHandle.getBean().removePropertyChangeListener("KnownState", this);
-            _listenersAreRegistered = false;
+        if (!_listenersAreRegistered) return;
+        
+        for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
+            if (namedBeanReference._handle != null) {
+                namedBeanReference._handle.getBean()
+                        .removePropertyChangeListener(namedBeanReference._type._propertyName, this);
+            }
         }
+        _listenersAreRegistered = false;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.format("propertyChange%n");
+        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */
@@ -232,19 +201,20 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     
     
     public enum NamedBeanType {
-//        CONSTANT(Bundle.getMessage("BeanNameConstant"), InstanceManager.getDefault(ConstantManager.class)),
-        LIGHT(Bundle.getMessage("BeanNameLight"), Light.class, InstanceManager.getDefault(LightManager.class)),
-        MEMORY(Bundle.getMessage("BeanNameMemory"), Memory.class, InstanceManager.getDefault(MemoryManager.class)),
-        SENSOR(Bundle.getMessage("BeanNameSensor"), Sensor.class, InstanceManager.getDefault(SensorManager.class)),
-        TURNOUT(Bundle.getMessage("BeanNameTurnout"), Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
+        LIGHT(Bundle.getMessage("BeanNameLight"), Light.class, "KnownState", InstanceManager.getDefault(LightManager.class)),
+        MEMORY(Bundle.getMessage("BeanNameMemory"), Memory.class, "value", InstanceManager.getDefault(MemoryManager.class)),
+        SENSOR(Bundle.getMessage("BeanNameSensor"), Sensor.class, "KnownState", InstanceManager.getDefault(SensorManager.class)),
+        TURNOUT(Bundle.getMessage("BeanNameTurnout"), Turnout.class, "KnownState", InstanceManager.getDefault(TurnoutManager.class));
         
         private final String _name;
         private final Class<? extends NamedBean> _clazz;
+        private final String _propertyName;
         private final Manager<? extends NamedBean> _manager;
         
-        NamedBeanType(String name, Class<? extends NamedBean> clazz, Manager<? extends NamedBean> manager) {
+        NamedBeanType(String name, Class<? extends NamedBean> clazz, String propertyName, Manager<? extends NamedBean> manager) {
             _name = name;
             _clazz = clazz;
+            _propertyName = propertyName;
             _manager = manager;
         }
         
@@ -286,6 +256,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     }
     
     
-//    private final static Logger log = LoggerFactory.getLogger(ActionListenOnBeans.class);
+    private final static Logger log = LoggerFactory.getLogger(ActionListenOnBeans.class);
     
 }

@@ -67,6 +67,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         _internalTable = new DefaultAnonymousTable(data);
     }
     
+    @Nonnull
     private static NamedTable loadFromCSV(
             @CheckForNull String systemName, @CheckForNull String userName,
             @Nonnull List<String> lines)
@@ -118,6 +119,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         return table;
     }
     
+    @Nonnull
     public static NamedTable loadTableFromCSV_Text(@Nonnull String text)
             throws BadUserNameException, BadSystemNameException {
         
@@ -125,6 +127,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         return loadFromCSV(null, null, lines);
     }
     
+    @Nonnull
     public static NamedTable loadTableFromCSV_File(@Nonnull File file)
             throws BadUserNameException, BadSystemNameException, IOException {
         
@@ -132,6 +135,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         return loadFromCSV(null, null, lines);
     }
     
+    @Nonnull
     public static NamedTable loadTableFromCSV_File(
             @Nonnull String systemName, @CheckForNull String userName,
             @Nonnull File file)
