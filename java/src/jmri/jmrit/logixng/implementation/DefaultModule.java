@@ -117,13 +117,13 @@ public class DefaultModule extends AbstractBase
     public void setLock(Lock lock) {
         throw new UnsupportedOperationException("Not supported.");
     }
-
+/*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
         writer.println();
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {

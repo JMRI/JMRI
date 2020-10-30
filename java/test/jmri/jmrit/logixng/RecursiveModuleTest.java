@@ -80,6 +80,34 @@ public class RecursiveModuleTest {
         
         
         
+        DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA904", null);
+        MaleSocket maleSocket901 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
+        manySocket1.getChild(0).connect(maleSocket901);
+        
+        
+        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory("IQAE901", null);
+        analogExpressionMemory.setMemory("IMN");
+        MaleSocket maleSocket902 =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
+        doAnalogAction.getChild(0).connect(maleSocket902);
+        
+        
+        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA901", null);
+        analogActionMemory.setMemory("IMRESULT");
+        MaleSocket maleSocket903 =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
+        doAnalogAction.getChild(1).connect(maleSocket903);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -182,6 +210,10 @@ public class RecursiveModuleTest {
         
         n.setValue(0);
         s.setState(Sensor.ACTIVE);
+        
+        
+        n.setValue(99.0);
+        Assert.assertEquals((Double)99.0, result.getValue());
         
 //        Assert.assertEquals(Turnout.THROWN, t.getState());
         
