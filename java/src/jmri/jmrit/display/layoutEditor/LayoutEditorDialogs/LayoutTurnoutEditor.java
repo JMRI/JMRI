@@ -1,30 +1,19 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import javax.annotation.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.*;
+import javax.swing.border.TitledBorder;
+
 import jmri.NamedBean.DisplayOptions;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
 
 /**
  * MVC Editor component for LayoutTurnout objects.
@@ -46,6 +35,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     | Edit Layout Turnout |
     \*===================*/
     // variables for Edit Layout Turnout pane
+    protected LayoutTurnoutView layoutTurnoutView = null;
     protected LayoutTurnout layoutTurnout = null;
 
     protected JmriJFrame editLayoutTurnoutFrame = null;
@@ -80,10 +70,11 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
      * Invoked for any of the subtypes, has conditional code for crossovers
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        log.trace("LayoutTurnoutEditor.editLayoutTrack({}) of a {}", layoutTrack, layoutTrack.getClass());
-        if ( layoutTrack instanceof LayoutTurnout ) {
-            this.layoutTurnout = (LayoutTurnout) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        log.trace("LayoutTurnoutEditor.editLayoutTrack({}) of a {}", layoutTrackView, layoutTrackView.getClass());
+        if ( layoutTrackView instanceof LayoutTurnoutView ) {
+            this.layoutTurnoutView = (LayoutTurnoutView) layoutTrackView;
+            this.layoutTurnout = this.layoutTurnoutView.getLayoutTurnout();
         } else {
             log.error("editLayoutTrack called with wrong type {}", layoutTurnout, new Exception("traceback"));
         }
@@ -180,7 +171,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
 
         setUpForEdit();
         
-        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
+        editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnoutView.isHidden());
 
         List<Turnout> currentTurnouts = new ArrayList<>();
         currentTurnouts.add(layoutTurnout.getTurnout());
@@ -273,7 +264,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -297,7 +288,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -321,7 +312,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -345,7 +336,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -373,7 +364,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                     newName, editLayoutTurnoutFrame)) {
                 layoutTurnout.setTurnout(newName);
             } else {
-                layoutTurnout.setTurnout(null);
+                layoutTurnout.setTurnout("");
                 editLayoutTurnout1stTurnoutComboBox.setSelectedItem(null);
             }
             editLayoutTurnoutNeedRedraw = true;
@@ -388,7 +379,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
                 donePressedSecondTurnoutName(newName);
             }
         } else {
-            layoutTurnout.setSecondTurnout(null);
+            layoutTurnout.setSecondTurnout("");
         }
 
         setContinuingRouteTurnoutState();
@@ -400,7 +391,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -408,9 +399,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         checkBlock234Changed();
                 
         // set hidden
-        boolean oldHidden = layoutTurnout.isHidden();
-        layoutTurnout.setHidden(editLayoutTurnoutHiddenCheckBox.isSelected());
-        if (oldHidden != layoutTurnout.isHidden()) {
+        boolean oldHidden = layoutTurnoutView.isHidden();
+        layoutTurnoutView.setHidden(editLayoutTurnoutHiddenCheckBox.isSelected());
+        if (oldHidden != layoutTurnoutView.isHidden()) {
             editLayoutTurnoutNeedRedraw = true;
         }
         editLayoutTurnoutOpen = false;

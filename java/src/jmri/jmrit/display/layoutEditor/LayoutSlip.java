@@ -1,17 +1,14 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.event.*;
-import java.awt.geom.*;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.annotation.*;
-import javax.swing.*;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.JComboBox;
 
 import jmri.*;
-import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.MathUtil;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
@@ -49,31 +46,16 @@ import jmri.util.MathUtil;
  */
 abstract public class LayoutSlip extends LayoutTurnout {
 
-    public int currentState = UNKNOWN;
-
-    private String turnoutBName = "";
-    private NamedBeanHandle<Turnout> namedTurnoutB = null;
-
-    private java.beans.PropertyChangeListener mTurnoutListener = null;
-
     /**
      * Constructor method.
-     *
+     * 
      * @param id slip ID.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param layoutEditor the layout editor.
+     * @param models the layout editor.
      * @param type slip type, SINGLE_SLIP or DOUBLE_SLIP.
      */
-    public LayoutSlip(String id, Point2D c, double rot, LayoutEditor layoutEditor, TurnoutType type) {
-        super(id, c, layoutEditor, type);
-
-        dispA = new Point2D.Double(-20.0, 0.0);
-        pointA = MathUtil.add(getCoordsCenter(), dispA);
-        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
-        dispB = new Point2D.Double(-14.0, 14.0);
-        pointB = MathUtil.add(getCoordsCenter(), dispB);
-        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
+    public LayoutSlip(String id, 
+            LayoutEditor models, TurnoutType type) {
+        super(id, models, type);
 
         turnoutStates.put(STATE_AC, new TurnoutState(Turnout.CLOSED, Turnout.CLOSED));
         turnoutStates.put(STATE_AD, new TurnoutState(Turnout.CLOSED, Turnout.THROWN));
@@ -85,11 +67,14 @@ abstract public class LayoutSlip extends LayoutTurnout {
         } else {
             log.error("{}.setSlipType({}); invalid slip type", getName(), type); // I18IN
         }
-
-        rotateCoords(rot);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
     }
+
+    public int currentState = UNKNOWN;
+
+    private String turnoutBName = "";
+    private NamedBeanHandle<Turnout> namedTurnoutB = null;
+
+    private java.beans.PropertyChangeListener mTurnoutListener = null;
 
     // this should only be used for debugging...
     @Override
@@ -154,7 +139,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
+    public LayoutTrack getConnection(HitPointType connectionType) {
         switch (connectionType) {
             case SLIP_A:
                 return connectA;
@@ -168,7 +153,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 String errString = MessageFormat.format("{0}.getConnection({1}); Invalid Connection Type",
                         getName(), connectionType); // I18IN
                 log.error("will throw {}", errString);
-                throw new jmri.JmriException(errString);
+                throw new IllegalArgumentException(errString);
         }
     }
 
@@ -225,7 +210,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         return name;
     }
 
-    private String getSlipStateString(int slipState) {
+    String getSlipStateString(int slipState) { // package access for View forward
         String result = Bundle.getMessage("BeanStateUnknown");
         switch (slipState) {
             case STATE_AC: {
@@ -320,7 +305,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    private void setSlipState(int newSlipState) {
+    void setSlipState(int newSlipState) {
         if (disableWhenOccupied && isOccupied()) {
             log.debug("Turnout not changed as Block is Occupied");
         } else if (!disabled) {
@@ -341,7 +326,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      * @return true if occupied
      */
     @Override
-    public boolean isOccupied() {
+    boolean isOccupied() {
         Boolean result = false; // assume failure (pessimist!)
         switch (getSlipState()) {
             case STATE_AC: {
@@ -382,7 +367,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     /**
      * Activate/Deactivate turnout to redraw when turnout state changes
      */
-    private void activateTurnout() {
+    void activateTurnout() {
         if (namedTurnout != null) {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = (java.beans.PropertyChangeEvent e) -> {
@@ -398,7 +383,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         updateState();
     }
 
-    private void deactivateTurnout() {
+    void deactivateTurnout() {
         if (mTurnoutListener != null) {
             if (namedTurnout != null) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
@@ -410,82 +395,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    @Override
-    public Point2D getCoordsA() {
-        return pointA;
-    }
-
-    @Override
-    public Point2D getCoordsB() {
-        return pointB;
-    }
-
-    @Override
-    public Point2D getCoordsC() {
-        return pointC;
-    }
-
-    @Override
-    public Point2D getCoordsD() {
-        return pointD;
-    }
-
-    protected Point2D getCoordsLeft() {
-        Point2D leftCenter = MathUtil.midPoint(getCoordsA(), getCoordsB());
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double leftFract = circleRadius / getCoordsCenter().distance(leftCenter);
-        return MathUtil.lerp(getCoordsCenter(), leftCenter, leftFract);
-    }
-
-    protected Point2D getCoordsRight() {
-        Point2D rightCenter = MathUtil.midPoint(getCoordsC(), getCoordsD());
-        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double rightFract = circleRadius / getCoordsCenter().distance(rightCenter);
-        return MathUtil.lerp(getCoordsCenter(), rightCenter, rightFract);
-    }
-
-    /**
-     * return the coordinates for the specified connection type
-     *
-     * @param connectionType the connection type
-     * @return the Point2D coordinates
-     */
-    @Override
-    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = getCoordsCenter();
-        switch (connectionType) {
-            case SLIP_A:
-                result = getCoordsA();
-                break;
-            case SLIP_B:
-                result = getCoordsB();
-                break;
-            case SLIP_C:
-                result = getCoordsC();
-                break;
-            case SLIP_D:
-                result = getCoordsD();
-                break;
-            case SLIP_LEFT:
-                result = getCoordsLeft();
-                break;
-            case SLIP_RIGHT:
-                result = getCoordsRight();
-                break;
-            default:
-                log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type", getName(), connectionType); // I18IN
-        }
-        return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    // just here for testing; should be removed when I'm done...
-    @Override
-    public Rectangle2D getBounds() {
-        return super.getBounds();
-    }
 
     @Override
     public void updateBlockInfo() {
@@ -539,421 +448,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        HitPointType result = HitPointType.NONE;  // assume point not on connection
-
-        if (!requireUnconnected) {
-            // calculate radius of turnout control circle
-            double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-
-            // get left and right centers
-            Point2D leftCenter = getCoordsLeft();
-            Point2D rightCenter = getCoordsRight();
-
-            if (useRectangles) {
-                // calculate turnout's left control rectangle
-                Rectangle2D leftRectangle = layoutEditor.layoutEditorControlCircleRectAt(leftCenter);
-                if (leftRectangle.contains(hitPoint)) {
-                    // point is in this turnout's left control rectangle
-                    result = HitPointType.SLIP_LEFT;
-                }
-                Rectangle2D rightRectangle = layoutEditor.layoutEditorControlCircleRectAt(rightCenter);
-                if (rightRectangle.contains(hitPoint)) {
-                    // point is in this turnout's right control rectangle
-                    result = HitPointType.SLIP_RIGHT;
-                }
-            } else {
-                // check east/west turnout control circles
-                double leftDistance = hitPoint.distance(leftCenter);
-                double rightDistance = hitPoint.distance(rightCenter);
-
-                if ((leftDistance <= circleRadius) || (rightDistance <= circleRadius)) {
-                    // mouse was pressed on this slip
-                    result = (leftDistance < rightDistance) ? HitPointType.SLIP_LEFT : HitPointType.SLIP_RIGHT;
-                }
-            }
-        }
-
-        // have we found anything yet?
-        if (result == HitPointType.NONE) {
-            // rather than create rectangles for all the points below and
-            // see if the passed in point is in one of those rectangles
-            // we can create a rectangle for the passed in point and then
-            // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
-
-            if (!requireUnconnected || (getConnectA() == null)) {
-                // check the A connection point
-                if (r.contains(getCoordsA())) {
-                    result = HitPointType.SLIP_A;
-                }
-            }
-
-            if (!requireUnconnected || (getConnectB() == null)) {
-                // check the B connection point
-                if (r.contains(getCoordsB())) {
-                    result = HitPointType.SLIP_B;
-                }
-            }
-
-            if (!requireUnconnected || (getConnectC() == null)) {
-                // check the C connection point
-                if (r.contains(getCoordsC())) {
-                    result = HitPointType.SLIP_C;
-                }
-            }
-
-            if (!requireUnconnected || (getConnectD() == null)) {
-                // check the D connection point
-                if (r.contains(getCoordsD())) {
-                    result = HitPointType.SLIP_D;
-                }
-            }
-        }
-        return result;
-    }   // findHitPointType
-
-    /*
-    * Modify coordinates methods
-     */
-    /**
-     * set center coordinates
-     *
-     * @param p the coordinates to set
-     */
-    @Override
-    public void setCoordsCenter(@Nonnull Point2D p) {
-        super.setCoordsCenter(p);
-        pointA = MathUtil.add(getCoordsCenter(), dispA);
-        pointB = MathUtil.add(getCoordsCenter(), dispB);
-        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
-        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
-    }
-
-    @Override
-    public void setCoordsA(@Nonnull Point2D p) {
-        pointA = p;
-        dispA = MathUtil.subtract(pointA, getCoordsCenter());
-        pointC = MathUtil.subtract(getCoordsCenter(), dispA);
-    }
-
-    @Override
-    public void setCoordsB(@Nonnull Point2D p) {
-        pointB = p;
-        dispB = MathUtil.subtract(pointB, getCoordsCenter());
-        pointD = MathUtil.subtract(getCoordsCenter(), dispB);
-    }
-
-    @Override
-    public void setCoordsC(@Nonnull Point2D p) {
-        pointC = p;
-        dispA = MathUtil.subtract(getCoordsCenter(), pointC);
-        pointA = MathUtil.add(getCoordsCenter(), dispA);
-    }
-
-    @Override
-    public void setCoordsD(@Nonnull Point2D p) {
-        pointD = p;
-        dispB = MathUtil.subtract(getCoordsCenter(), pointD);
-        pointB = MathUtil.add(getCoordsCenter(), dispB);
-    }
-
-    JPopupMenu popup = null;
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @Nonnull
-    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
-        if (popup != null) {
-            popup.removeAll();
-        } else {
-            popup = new JPopupMenu();
-        }
-        if (layoutEditor.isEditable()) {
-            String slipStateString = getSlipStateString(getSlipState());
-            slipStateString = String.format(" (%s)", slipStateString);
-
-            JMenuItem jmi = null;
-            switch (type) {
-                case SINGLE_SLIP: {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutSingleSlip")) + getId() + slipStateString);
-                    break;
-                }
-                case DOUBLE_SLIP: {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutDoubleSlip")) + getId() + slipStateString);
-                    break;
-                }
-                default: {
-                    log.error("{}.showPopup(<mouseEvent>); Invalid slip type: {}", getName(), type); // I18IN
-                }
-            }
-            if (jmi != null) {
-                jmi.setEnabled(false);
-            }
-
-            if (getTurnout() == null) {
-                jmi = popup.add(Bundle.getMessage("NoTurnout"));
-            } else {
-                String stateString = getTurnoutStateString(getTurnout().getKnownState());
-                stateString = String.format(" (%s)", stateString);
-                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + getTurnoutName() + stateString);
-            }
-            jmi.setEnabled(false);
-
-            if (getTurnoutB() == null) {
-                jmi = popup.add(Bundle.getMessage("NoTurnout"));
-            } else {
-                String stateString = getTurnoutStateString(getTurnoutB().getKnownState());
-                stateString = String.format(" (%s)", stateString);
-                jmi = popup.add(Bundle.getMessage("BeanNameTurnout") + ": " + getTurnoutBName() + stateString);
-            }
-            jmi.setEnabled(false);
-
-            boolean blockAssigned = false;
-            if (getBlockName().isEmpty()) {
-                jmi = popup.add(Bundle.getMessage("NoBlock"));
-                jmi.setEnabled(false);
-            } else {
-                blockAssigned = true;
-
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "A")) + getLayoutBlock().getDisplayName());
-                jmi.setEnabled(false);
-
-                // check if extra blocks have been entered
-                if ((getLayoutBlockB() != null) && (getLayoutBlockB() != getLayoutBlock())) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
-                    jmi.setEnabled(false);
-                }
-                if ((getLayoutBlockC() != null) && (getLayoutBlockC() != getLayoutBlock())) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
-                    jmi.setEnabled(false);
-                }
-                if ((getLayoutBlockD() != null) && (getLayoutBlockD() != getLayoutBlock())) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
-                    jmi.setEnabled(false);
-                }
-            }
-
-            // if there are any track connections
-            if ((connectA != null) || (connectB != null)
-                    || (connectC != null) || (connectD != null)) {
-                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
-                if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
-                            // this shouldn't ever be null... however...
-                            if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
-                            }
-                        }
-                    });
-                }
-                if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
-                            // this shouldn't ever be null... however...
-                            if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
-                            }
-                        }
-                    });
-                }
-                if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
-                            // this shouldn't ever be null... however...
-                            if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
-                            }
-                        }
-                    });
-                }
-                if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
-                            // this shouldn't ever be null... however...
-                            if (lt != null) {
-                                layoutEditor.setSelectionRect(lt.getBounds());
-                                lt.showPopup();
-                            }
-                        }
-                    });
-                }
-                popup.add(connectionsMenu);
-            }
-
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
-
-            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-            hiddenCheckBoxMenuItem.setSelected(isHidden());
-            popup.add(hiddenCheckBoxMenuItem);
-            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
-                setHidden(o.isSelected());
-            });
-
-            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
-            cbmi.setSelected(disabled);
-            popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
-                setDisabled(o.isSelected());
-            });
-
-            cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
-            cbmi.setSelected(disableWhenOccupied);
-            popup.add(cbmi);
-            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
-                setDisableWhenOccupied(o.isSelected());
-            });
-
-            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    editor.editLayoutTrack(LayoutSlip.this);
-                }
-            });
-            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (canRemove() && layoutEditor.removeLayoutSlip(LayoutSlip.this)) {
-                        // Returned true if user did not cancel
-                        remove();
-                        dispose();
-                    }
-                }
-            });
-            if ((connectA == null) && (connectB == null)
-                    && (connectC == null) && (connectD == null)) {
-                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
-                popup.add(rotateItem);
-                rotateItem.addActionListener(
-                        (ActionEvent event) -> {
-                            boolean entering = true;
-                            boolean error = false;
-                            String newAngle = "";
-                            while (entering) {
-                                // prompt for rotation angle
-                                error = false;
-                                newAngle = JOptionPane.showInputDialog(layoutEditor,
-                                        Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
-                                if (newAngle.isEmpty()) {
-                                    return;  // cancelled
-                                }
-                                double rot = 0.0;
-                                try {
-                                    rot = Double.parseDouble(newAngle);
-                                } catch (Exception e1) {
-                                    JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
-                                            + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                                    error = true;
-                                    newAngle = "";
-                                }
-                                if (!error) {
-                                    entering = false;
-                                    if (rot != 0.0) {
-                                        rotateCoords(rot);
-                                        layoutEditor.redrawPanel();
-                                    }
-                                }
-                            }
-                        }
-                );
-            }
-            if ((getTurnout() != null) && (getTurnoutB() != null)) {
-                if (blockAssigned) {
-                    AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            layoutEditor.getLETools().setSignalsAtSlipFromMenu(
-                                    LayoutSlip.this,
-                                    getLayoutEditorToolBarPanel().signalIconEditor,
-                                    getLayoutEditorToolBarPanel().signalFrame);
-                        }
-                    };
-                    JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
-                    if (layoutEditor.getLETools().addLayoutSlipSignalHeadInfoToMenu(
-                            LayoutSlip.this, jm)) {
-                        jm.add(ssaa);
-                        popup.add(jm);
-                    } else {
-                        popup.add(ssaa);
-                    }
-
-                }
-
-                final String[] boundaryBetween = getBlockBoundaries();
-                boolean blockBoundaries = false;
-
-                for (int i = 0; i < 4; i++) {
-                    if (boundaryBetween[i] != null) {
-                        blockBoundaries = true;
-                    }
-                }
-                if (blockBoundaries) {
-                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
-                                    LayoutSlip.this,
-                                    boundaryBetween,
-                                    getLayoutEditorToolBarPanel().signalFrame);
-                        }
-                    });
-                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            layoutEditor.getLETools().setSensorsAtSlipFromMenu(
-                                    LayoutSlip.this, boundaryBetween,
-                                    getLayoutEditorToolBarPanel().sensorIconEditor,
-                                    getLayoutEditorToolBarPanel().sensorFrame);
-                        }
-                    });
-                }
-
-                if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
-                        && blockAssigned) {
-                    popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
-                        @Override
-                        public void actionPerformed(ActionEvent event) {
-                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
-                            routeTableAction.actionPerformed(event);
-                        }
-                    });
-                }
-            }
-            setAdditionalEditPopUpMenu(popup);
-            layoutEditor.setShowAlignmentMenu(popup);
-            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-        } else if (!viewAdditionalMenu.isEmpty()) {
-            setAdditionalViewPopUpMenu(popup);
-            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
-        }
-        return popup;
-    }   // showPopup
-
     @Override
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
@@ -996,18 +490,6 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     /**
-     * Clean up when this object is no longer needed. Should not be called while
-     * the object is still displayed; see remove()
-     */
-    @Override
-    public void dispose() {
-        if (popup != null) {
-            popup.removeAll();
-        }
-        popup = null;
-    }
-
-    /**
      * Removes this object from display and persistance
      */
     @Override
@@ -1022,7 +504,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
         removeSML(getSignalDMast());
     }
 
-    private void disableSML(SignalMast signalMast) {
+    void disableSML(SignalMast signalMast) {
         if (signalMast == null) {
             return;
         }
@@ -1061,7 +543,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
     }
 
     // Internal call to update the state of the slip depending upon the turnout states.
-    private void updateState() {
+    void updateState() {
         if ((getTurnout() != null) && (getTurnoutB() != null)) {
             int state_a = getTurnout().getKnownState();
             int state_b = getTurnoutB().getKnownState();
@@ -1069,7 +551,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 if (en.getValue().getTurnoutAState() == state_a) {
                     if (en.getValue().getTurnoutBState() == state_b) {
                         currentState = en.getKey();
-                        layoutEditor.redrawPanel();
+                        models.redrawPanel();
                         return;
                     }
                 }
@@ -1083,7 +565,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
      *
      * @return true if either turnout is inconsistent.
      */
-    public boolean isTurnoutInconsistent() {
+    boolean isTurnoutInconsistent() {
         Turnout tA = getTurnout();
         if (tA != null && tA.getKnownState() == INCONSISTENT) {
             return true;
@@ -1097,30 +579,30 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
     public static class TurnoutState {
 
-        private int turnoutA = Turnout.CLOSED;
-        private int turnoutB = Turnout.CLOSED;
+        private int turnoutAstate = Turnout.CLOSED;
+        private int turnoutBstate = Turnout.CLOSED;
         private JComboBox<String> turnoutABox;
         private JComboBox<String> turnoutBBox;
 
-        TurnoutState(int turnoutA, int turnoutB) {
-            this.turnoutA = turnoutA;
-            this.turnoutB = turnoutB;
+        TurnoutState(int turnoutAstate, int turnoutBstate) {
+            this.turnoutAstate = turnoutAstate;
+            this.turnoutBstate = turnoutBstate;
         }
 
         public int getTurnoutAState() {
-            return turnoutA;
+            return turnoutAstate;
         }
 
         public int getTurnoutBState() {
-            return turnoutB;
+            return turnoutBstate;
         }
 
         public void setTurnoutAState(int state) {
-            turnoutA = state;
+            turnoutAstate = state;
         }
 
         public void setTurnoutBState(int state) {
-            turnoutB = state;
+            turnoutBstate = state;
         }
 
         public JComboBox<String> getComboA() {
@@ -1128,7 +610,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 String[] state = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                     InstanceManager.turnoutManagerInstance().getThrownText()};
                 turnoutABox = new JComboBox<>(state);
-                if (turnoutA == Turnout.THROWN) {
+                if (turnoutAstate == Turnout.THROWN) {
                     turnoutABox.setSelectedIndex(1);
                 }
             }
@@ -1140,7 +622,7 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 String[] state = new String[]{InstanceManager.turnoutManagerInstance().getClosedText(),
                     InstanceManager.turnoutManagerInstance().getThrownText()};
                 turnoutBBox = new JComboBox<>(state);
-                if (turnoutB == Turnout.THROWN) {
+                if (turnoutBstate == Turnout.THROWN) {
                     turnoutBBox.setSelectedIndex(1);
                 }
             }
@@ -1169,8 +651,8 @@ abstract public class LayoutSlip extends LayoutTurnout {
 
         public void updateStatesFromCombo() {
             if ((turnoutABox != null) && (turnoutBBox != null)) {
-                turnoutA = getTestTurnoutAState();
-                turnoutB = getTestTurnoutBState();
+                turnoutAstate = getTestTurnoutAState();
+                turnoutBstate = getTestTurnoutBState();
             }
         }
 
@@ -1375,15 +857,33 @@ abstract public class LayoutSlip extends LayoutTurnout {
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
+        log.trace("Start in LayoutSlip.getLayoutConnectivity for {}", getName());
+        
         LayoutConnectivity lc = null;
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
+        
+        log.trace("    type: {}", type);
+        log.trace("     lbA: {}", lbA);
+        log.trace("     lbB: {}", lbB);
+        log.trace("     lbC: {}", lbC);
+        log.trace("     lbD: {}", lbD);
+
         if (lbA != null) {
             if (lbA != lbC) {
                 // have a AC block boundary, create a LayoutConnectivity
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
                 lc = new LayoutConnectivity(lbA, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
-                lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
+
+                // The following line needs to change, because it uses location of 
+                // the points on the SlipView itself. Switch to 
+                // direction from connections
+                //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
+                lc.setDirection( models.computeDirectionAC(this) );
+                
+                log.trace("getLayoutConnectivity lbA != lbC");
+                log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
+                
                 results.add(lc);
             }
             if (lbB != lbD) {
@@ -1391,7 +891,16 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                 lc = new LayoutConnectivity(lbB, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
-                lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
+
+                // The following line needs to change, because it uses location of 
+                // the points on the SlipView itself. Switch to 
+                // direction from connections
+                //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
+                lc.setDirection( models.computeDirectionBD(this) );
+                
+                log.trace("getLayoutConnectivity lbA != lbC");
+                log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
+                
                 results.add(lc);
             }
             if (lbA != lbD) {
@@ -1399,7 +908,16 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
                 lc = new LayoutConnectivity(lbA, lbD);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AD);
-                lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
+
+                // The following line needs to change, because it uses location of 
+                // the points on the SlipView itself. Switch to 
+                // direction from connections
+                //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
+                lc.setDirection( models.computeDirectionAD(this) );
+                
+                log.trace("getLayoutConnectivity lbA != lbC");
+                log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbA, lbD, this);
+                
                 results.add(lc);
             }
             if ((type == TurnoutType.DOUBLE_SLIP) && (lbB != lbC)) {
@@ -1407,12 +925,21 @@ abstract public class LayoutSlip extends LayoutTurnout {
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);
                 lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BC);
-                lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
+                
+                // The following line needs to change, because it uses location of 
+                // the points on the SlipView itself. Switch to 
+                // direction from connections
+                //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsC()));
+                lc.setDirection( models.computeDirectionBC(this) );
+                
+                log.trace("getLayoutConnectivity lbA != lbC");
+                log.trace("  Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
+                
                 results.add(lc);
             }
         }
         return results;
-    }   // getLayoutConnectivity()
+    }
 
     /**
      * {@inheritDoc}

@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
-
 import javax.annotation.*;
 
 /**
@@ -103,30 +101,21 @@ import javax.annotation.*;
 public class LayoutRHXOver extends LayoutXOver {
 
     public LayoutRHXOver(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutRHXOverEditor(layoutEditor);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutRHXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.RH_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutRHXOverEditor(layoutEditor);
+    public LayoutRHXOver(@Nonnull String id,
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, TurnoutType.RH_XOVER, layoutEditor, 1);
     }
-
+    
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHXOver.class);
 }
