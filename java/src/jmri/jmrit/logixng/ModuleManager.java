@@ -126,4 +126,15 @@ public interface ModuleManager extends Manager<Module> {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the DigitalActionManager is
+     * {@link #getSystemNamePrefix() } and "DA";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "M";
+    }
+    
 }

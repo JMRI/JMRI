@@ -12,7 +12,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
 // import jmri.implementation.JmriSimplePropertyListener;
-import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.ModuleManager;
@@ -25,12 +24,13 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultModule extends AbstractNamedBean
+public class DefaultModule extends AbstractBase
         implements Module, FemaleSocketListener {
     
     
     private FemaleSocketManager.SocketType _rootSocketType;
-    private FemaleSocket _rootSocket;
+    private FemaleSocket _femaleRootSocket;
+    private String _socketSystemName = null;
     
     
     public DefaultModule(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -85,12 +85,17 @@ public class DefaultModule extends AbstractNamedBean
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported.");
+        if (index != 0) {
+            throw new IllegalArgumentException(
+                    String.format("index has invalid value: %d", index));
+        }
+        
+        return _femaleRootSocket;
     }
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported.");
+        return 1;
     }
 
     @Override
@@ -113,49 +118,6 @@ public class DefaultModule extends AbstractNamedBean
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    final public void setup() {
-        _rootSocket.setup();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public ConditionalNG getConditionalNG() {
-        throw new UnsupportedOperationException("Not supported.");
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LogixNG getLogixNG() {
-        return null;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public final Base getRoot() {
-        return this;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setParentForAllChildren() {
-        _rootSocket.setParent(this);
-        _rootSocket.setParentForAllChildren();
-    }
-
-    /*.* {@inheritDoc} *./
-    @Override
-    public void registerListeners() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-
-    /*.* {@inheritDoc} *./
-    @Override
-    public void unregisterListeners() {
-        throw new UnsupportedOperationException("Not supported");
-    }
-*/    
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
@@ -179,41 +141,92 @@ public class DefaultModule extends AbstractNamedBean
     public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
 
-        _rootSocket.printTree(locale, writer, indent, currentIndent+indent);
+        _femaleRootSocket.printTree(locale, writer, indent, currentIndent+indent);
     }
-
+    
     @Override
     public void setRootSocketType(FemaleSocketManager.SocketType socketType) {
-        if (_rootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
+        if ((_femaleRootSocket != null) && _femaleRootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
         
         _rootSocketType = socketType;
-        _rootSocket = socketType.createSocket(this, this, mSystemName);
+        _femaleRootSocket = socketType.createSocket(this, this, mSystemName);
     }
-
+    
     @Override
     public FemaleSocketManager.SocketType getRootSocketType() {
         return _rootSocketType;
     }
-
+    
     @Override
     public FemaleSocket getRootSocket() {
-        return _rootSocket;
+        return _femaleRootSocket;
     }
-
-    @Override
-    public boolean isActive() {
-        // A module is always active.
-        return true;
-    }
-
+    
     @Override
     public void connected(FemaleSocket socket) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        _socketSystemName = socket.getConnectedSocket().getSystemName();
+    }
+    
+    @Override
+    public void disconnected(FemaleSocket socket) {
+        _socketSystemName = null;
+    }
+    
+    public void setSocketSystemName(String systemName) {
+        if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
+            _femaleRootSocket.disconnect();
+        }
+        _socketSystemName = systemName;
+    }
+    
+    public String getSocketSystemName() {
+        return _socketSystemName;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    final public void setup() {
+        if (!_femaleRootSocket.isConnected()
+                || !_femaleRootSocket.getConnectedSocket().getSystemName()
+                        .equals(_socketSystemName)) {
+            
+            _femaleRootSocket.disconnect();
+            
+            if (_socketSystemName != null) {
+                try {
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalActionManager.class)
+                                    .getBySystemName(_socketSystemName);
+                    if (maleSocket != null) {
+                        _femaleRootSocket.connect(maleSocket);
+                        maleSocket.setup();
+                    } else {
+                        log.error("digital action is not found: " + _socketSystemName);
+                    }
+                } catch (SocketAlreadyConnectedException ex) {
+                    // This shouldn't happen and is a runtime error if it does.
+                    throw new RuntimeException("socket is already connected");
+                }
+            }
+        } else {
+            _femaleRootSocket.setup();
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    final public void disposeMe() {
+        _femaleRootSocket.dispose();
     }
 
     @Override
-    public void disconnected(FemaleSocket socket) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    protected void registerListenersForThisClass() {
+        // Do nothing. A module never listen on anything.
     }
 
+    @Override
+    protected void unregisterListenersForThisClass() {
+        // Do nothing. A module never listen on anything.
+    }
+    
 }

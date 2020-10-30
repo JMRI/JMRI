@@ -24,4 +24,9 @@ public class DefaultFemaleSocketManager implements FemaleSocketManager {
         return Collections.unmodifiableMap(femaleSocketTypes);
     }
     
+    @Override
+    public SocketType getSocketTypeByType(String type) {
+        return femaleSocketTypes.get(type);
+    }
+    
 }

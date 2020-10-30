@@ -87,18 +87,18 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         return 'Q';
     }
 
-    /**
+    /*.*
      * Test if parameter is a properly formatted system name.
      *
      * @param systemName the system name
      * @return enum indicating current validity, which might be just as a prefix
-     */
+     *./
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return LogixNG_Manager.validSystemNameFormat(
                 getSubSystemNamePrefix(), systemName);
     }
-
+*/
     @Override
     public FemaleAnalogActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {

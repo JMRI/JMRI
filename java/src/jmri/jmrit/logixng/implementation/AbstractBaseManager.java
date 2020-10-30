@@ -7,9 +7,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.NamedBean;
+import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
-import jmri.jmrit.logixng.BaseManager;
-import jmri.jmrit.logixng.MaleSocket;
 
 /**
  * Abstract partial implementation for the LogixNG action and expression managers.
@@ -21,13 +20,13 @@ import jmri.jmrit.logixng.MaleSocket;
 public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractManager<E> implements BaseManager<E> {
     
     /**
-     * Inform all registered listeners of a vetoable change.If the
- propertyName is "CanDelete" ALL listeners with an interest in the bean
- will throw an exception, which is recorded returned back to the invoking
- method, so that it can be presented back to the user.However if a
- listener decides that the bean can not be deleted then it should throw an
- exception with a property name of "DoNotDelete", this is thrown back up
- to the user and the delete process should be aborted.
+     * Inform all registered listeners of a vetoable change.If the propertyName
+     * is "CanDelete" ALL listeners with an interest in the bean will throw an
+     * exception, which is recorded returned back to the invoking method, so
+     * that it can be presented back to the user.However if a listener decides
+     * that the bean can not be deleted then it should throw an exception with
+     * a property name of "DoNotDelete", this is thrown back up to the user and
+     * the delete process should be aborted.
      *
      * @param p   The programmatic name of the property that is to be changed.
      *            "CanDelete" will inquire with all listeners if the item can
@@ -87,6 +86,18 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
             deregister(castBean(socket));
             socket.dispose();
         }
+    }
+    
+    /**
+     * Test if parameter is a properly formatted system name.
+     *
+     * @param systemName the system name
+     * @return enum indicating current validity, which might be just as a prefix
+     */
+    @Override
+    public final NameValidity validSystemNameFormat(String systemName) {
+        return LogixNG_Manager.validSystemNameFormat(
+                getSubSystemNamePrefix(), systemName);
     }
     
     

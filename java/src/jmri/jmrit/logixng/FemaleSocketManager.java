@@ -21,4 +21,6 @@ public interface FemaleSocketManager {
     
     public Map<String, SocketType> getSocketTypes();
     
+    public SocketType getSocketTypeByType(String type);
+    
 }

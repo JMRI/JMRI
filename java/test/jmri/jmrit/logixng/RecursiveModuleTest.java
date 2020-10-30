@@ -3,6 +3,7 @@ package jmri.jmrit.logixng;
 import java.util.Map;
 
 import jmri.*;
+import jmri.jmrit.logixng.FemaleSocketManager;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
@@ -63,6 +64,26 @@ public class RecursiveModuleTest {
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         
         
+        
+        Module module = InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
+        
+        module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
+                .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
+        
+        Many many1 = new Many("IQDA901", null);
+        MaleSocket manySocket1 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(many1);
+        module.getRootSocket().connect(manySocket1);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
@@ -91,6 +112,7 @@ public class RecursiveModuleTest {
         manySocket.getChild(1).connect(maleSocket);
         
         ModuleDigitalAction moduleDigitalAction = new ModuleDigitalAction("IQDA4", null);
+        moduleDigitalAction.setModule("IQM1");
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction);
         manySocket.getChild(2).connect(maleSocket2);
