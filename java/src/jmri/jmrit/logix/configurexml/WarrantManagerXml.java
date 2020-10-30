@@ -2,7 +2,7 @@ package jmri.jmrit.logix.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+//import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -476,7 +476,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     }
     
     // pre 4.21.3
-    @SuppressFBWarnings(value="NP_LOAD_OF_KNOWN_NULL_VALUE", justification="nothing wrong about a null return")
+//    @SuppressFBWarnings(value="NP_LOAD_OF_KNOWN_NULL_VALUE", justification="nothing wrong about a null return")
     private static ThrottleSetting loadThrottleCommand(Element elem, Warrant w) {
         long time = 0;
         try {
