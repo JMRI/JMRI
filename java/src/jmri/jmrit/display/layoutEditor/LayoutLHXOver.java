@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
@@ -103,30 +101,21 @@ import javax.annotation.*;
 public class LayoutLHXOver extends LayoutXOver {
 
     public LayoutLHXOver(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHXOverEditor(layoutEditor);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id crossover ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutLHXOver(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.LH_XOVER, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHXOverEditor(layoutEditor);
+    public LayoutLHXOver(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, TurnoutType.LH_XOVER, layoutEditor, 1);
     }
-
+    
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

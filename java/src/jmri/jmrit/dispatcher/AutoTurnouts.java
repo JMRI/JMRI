@@ -218,6 +218,11 @@ public class AutoTurnouts {
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
                 Turnout to = turnoutList.get(i).getObject().getTurnout();
+                if (to == null ) {
+                    // this should not happen due to prior selection
+                    log.error("Found null Turnout reference at {}: {}", i, turnoutList.get(i).getObject());
+                    continue; // move to next loop, what else can we do?
+                }
                 int setting = turnoutList.get(i).getExpectedState();
                 if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutState(turnoutList.get(i).getExpectedState());

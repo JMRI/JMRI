@@ -2,74 +2,1961 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import static java.lang.Float.POSITIVE_INFINITY;
+import java.util.*;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.*;
 
 import jmri.*;
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.INCONSISTENT;
-import jmri.util.*;
-
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
-import static jmri.jmrit.display.layoutEditor.LayoutTurnout.UNKNOWN;
+import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.util.MathUtil;
 
 /**
  * MVC View component for the LayoutTurnout class.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- *
+ * 
  */
 public class LayoutTurnoutView extends LayoutTrackView {
 
+    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, 
+            @Nonnull Point2D c, double rot,
+            @Nonnull LayoutEditor layoutEditor) {
+        this(turnout, c, rot, 1.0, 1.0, layoutEditor);
+    }
+    
     /**
      * Constructor method.
      * @param turnout the layout turnout to create the view for.
+     * @param c       where to put it
+     * @param rot     for display
+     * @param xFactor     for display
+     * @param yFactor     for display
+     * @param layoutEditor what layout editor panel to put it in
      */
-    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout) {
-        super(turnout);
+    public LayoutTurnoutView(@Nonnull LayoutTurnout turnout, 
+            @Nonnull Point2D c, double rot,
+            double xFactor, double yFactor,
+            @Nonnull LayoutEditor layoutEditor) {
+        super(turnout, c, layoutEditor);
         this.turnout = turnout;
+
+        setIdent(turnout.getName());
+
+        int version = turnout.getVersion();
+
+        // adjust initial coordinates
+        
+        if (turnout.getTurnoutType() == TurnoutType.LH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
+            dispA.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
+        } else if (turnout.getTurnoutType() == TurnoutType.RH_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
+            dispA.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
+        } else if (turnout.getTurnoutType() == TurnoutType.WYE_TURNOUT) {
+            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
+            dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
+        } else if (turnout.getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+                pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
+                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+            }
+        } else if (turnout.getTurnoutType() == TurnoutType.RH_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+                pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
+                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+            }
+        } else if (turnout.getTurnoutType() == TurnoutType.LH_XOVER) {
+            if (version == 2) {
+                super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
+
+                pointA.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
+                pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
+                pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
+                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+
+                super.setCoordsCenter(c);
+            } else {
+                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
+            }
+        }
+                
+        rotateCoords(rot);
+        
+        // adjust size of new turnout
+        Point2D pt = new Point2D.Double(Math.round(dispB.getX() * xFactor),
+                Math.round(dispB.getY() * yFactor));
+        dispB = pt;
+        pt = new Point2D.Double(Math.round(dispA.getX() * xFactor),
+                Math.round(dispA.getY() * yFactor));
+        dispA = pt;
+
+        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor(layoutEditor);
     }
 
-    final protected LayoutTurnout turnout;
+    /**
+     * Returns true if this is a turnout (not a crossover or slip)
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a turnout
+     */
+    public static boolean isTurnoutTypeTurnout(TurnoutType type) {
+        return LayoutTurnout.isTurnoutTypeTurnout(type);
+    }
 
-    // These now reflect to code in the base class; eventually this heirarchy will
-    // expand and the code will be brought here
+    /**
+     * Returns true if this is a turnout (not a crossover or slip)
+     *
+     * @return boolean true if this is a turnout
+     */
+    public boolean isTurnoutTypeTurnout() {
+        return turnout.isTurnoutTypeTurnout();
+    }
 
-    protected boolean isDisabled() {
+    /**
+     * Returns true if this is a crossover
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a crossover
+     */
+    public static boolean isTurnoutTypeXover(TurnoutType type) {
+        return LayoutTurnout.isTurnoutTypeXover(type);
+    }
+
+    /**
+     * Returns true if this is a crossover
+     *
+     * @return boolean true if this is a crossover
+     */
+    public boolean isTurnoutTypeXover() {
+        return turnout.isTurnoutTypeXover();
+    }
+
+    /**
+     * Returns true if this is a slip
+     *
+     * @param type the turnout type
+     * @return boolean true if this is a slip
+     */
+    public static boolean isTurnoutTypeSlip(TurnoutType type) {
+        return LayoutTurnout.isTurnoutTypeSlip(type);
+    }
+
+    /**
+     * Returns true if this is a slip
+     *
+     * @return boolean true if this is a slip
+     */
+    public boolean isTurnoutTypeSlip() {
+        return turnout.isTurnoutTypeSlip();
+    }
+
+    /**
+     * Returns true if this has a single-track entrance end. (turnout or wye)
+     *
+     * @param type the turnout type
+     * @return boolean true if single track entrance
+     */
+    public static boolean hasEnteringSingleTrack(TurnoutType type) {
+        return LayoutTurnout.hasEnteringSingleTrack(type);
+    }
+
+    /**
+     * Returns true if this has a single-track entrance end. (turnout or wye)
+     *
+     * @return boolean true if single track entrance
+     */
+    public boolean hasEnteringSingleTrack() {
+        return LayoutTurnout.hasEnteringSingleTrack(getTurnoutType());
+    }
+
+    /**
+     * Returns true if this has double track on the entrance end (crossover or
+     * slip)
+     *
+     * @param type the turnout type
+     * @return boolean true if double track entrance
+     */
+    public static boolean hasEnteringDoubleTrack(TurnoutType type) {
+        return LayoutTurnout.hasEnteringDoubleTrack(type);
+    }
+
+    /**
+     * Returns true if this has double track on the entrance end (crossover or
+     * slip)
+     *
+     * @return boolean true if double track entrance
+     */
+    public boolean hasEnteringDoubleTrack() {
+        return turnout.hasEnteringDoubleTrack();
+    }
+    
+    // operational instance variables (not saved between sessions)
+    public static final int UNKNOWN = Turnout.UNKNOWN;
+    public static final int INCONSISTENT = Turnout.INCONSISTENT;
+    public static final int STATE_AC = 0x02;
+    public static final int STATE_BD = 0x04;
+    public static final int STATE_AD = 0x06;
+    public static final int STATE_BC = 0x08;
+
+    // program default turnout size parameters
+    public static final double turnoutBXDefault = 20.0;  // RH, LH, WYE
+    public static final double turnoutCXDefault = 20.0;
+    public static final double turnoutWidDefault = 10.0;
+    public static final double xOverLongDefault = 30.0;   // DOUBLE_XOVER, RH_XOVER, LH_XOVER
+    public static final double xOverHWidDefault = 10.0;
+    public static final double xOverShortDefault = 10.0;
+
+    // operational instance variables (not saved between sessions)
+    protected NamedBeanHandle<Turnout> namedTurnout = null;
+    // Second turnout is used to either throw a second turnout in a cross over or if one turnout address is used to throw two physical ones
+    protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
+
+    // default is package protected
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockA = null;
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockB = null;  // Xover - second block, if there is one
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockC = null;  // Xover - third block, if there is one
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockD = null;  // Xover - forth block, if there is one
+
+    protected NamedBeanHandle<SignalHead> signalA1HeadNamed = null; // signal 1 (continuing) (throat for RH, LH, WYE)
+    protected NamedBeanHandle<SignalHead> signalA2HeadNamed = null; // signal 2 (diverging) (throat for RH, LH, WYE)
+    protected NamedBeanHandle<SignalHead> signalA3HeadNamed = null; // signal 3 (second diverging) (3-way turnouts only)
+    protected NamedBeanHandle<SignalHead> signalB1HeadNamed = null; // continuing (RH, LH, WYE) signal 1 (double crossover)
+    protected NamedBeanHandle<SignalHead> signalB2HeadNamed = null; // LH_Xover and double crossover only
+    protected NamedBeanHandle<SignalHead> signalC1HeadNamed = null; // diverging (RH, LH, WYE) signal 1 (double crossover)
+    protected NamedBeanHandle<SignalHead> signalC2HeadNamed = null; // RH_Xover and double crossover only
+    protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
+    protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
+
+    public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
+    public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
+    public LayoutTrack connectC = null;
+    public LayoutTrack connectD = null;      // double xover, RH Xover, LH Xover only
+
+    public Point2D dispB = new Point2D.Double(20.0, 0.0);
+    public Point2D dispA = new Point2D.Double(20.0, 10.0);
+    public Point2D pointA = new Point2D.Double(0, 0);
+    public Point2D pointB = new Point2D.Double(40, 0);
+    public Point2D pointC = new Point2D.Double(60, 20);
+    public Point2D pointD = new Point2D.Double(20, 20);
+
+    private int version = 1;
+
+    public String linkedTurnoutName = ""; // name of the linked Turnout (as entered in tool)
+    public LinkType linkType = LinkType.NO_LINK;
+
+    private final boolean useBlockSpeed = false;
+    
+    // temporary reference to the Editor that will eventually be part of View
+    protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
+
+    final private LayoutTurnout turnout;
+    
+    public final LayoutTurnout getLayoutTurnout() { return turnout; }  // getTurnout() gets the real Turnout in the LayoutTurnout
+
+    /**
+     * {@inheritDoc}
+     */
+    // this should only be used for debugging...
+    @Override
+    @Nonnull
+    public String toString() {
+        return "LayoutTurnout " + getName();
+    }
+
+    // 
+    // Accessor methods
+    //
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int v) {
+        version = v;
+    }
+
+    public boolean useBlockSpeed() {
+        return useBlockSpeed;
+    }
+
+    // @CheckForNull - can this be null? or ""?
+    public String getTurnoutName() {
+        return turnout.getTurnoutName();
+    }
+
+   // @CheckForNull - can this be null? or ""?
+    public String getSecondTurnoutName() {
+        return turnout.getSecondTurnoutName();
+    }
+
+    @Nonnull
+    public String getBlockName() {
+        return turnout.getBlockName();
+    }
+
+    @Nonnull
+    public String getBlockBName() {
+        return turnout.getBlockBName();
+    }
+
+    @Nonnull
+    public String getBlockCName() {
+        return turnout.getBlockCName();
+    }
+
+    @Nonnull
+    public String getBlockDName() {
+       return turnout.getBlockDName();
+     }
+
+    @CheckForNull
+    public SignalHead getSignalHead(Geometry loc) {
+        return turnout.getSignalHead(loc);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalA1() {
+        return turnout.getSignalA1();
+    }
+
+    @Nonnull
+    public String getSignalA1Name() {
+        return turnout.getSignalA1Name();
+    }
+
+    public void setSignalA1Name(@CheckForNull String signalHead) {
+        turnout.setSignalA1Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalA2() {
+        return turnout.getSignalA2();
+    }
+
+    @Nonnull
+    public String getSignalA2Name() {
+        return turnout.getSignalA2Name();
+    }
+
+    public void setSignalA2Name(@CheckForNull String signalHead) {
+        turnout.setSignalA2Name(signalHead);
+    }
+
+   @CheckForNull
+    public SignalHead getSignalA3() {
+        return turnout.getSignalA3();
+    }
+
+    @Nonnull
+    public String getSignalA3Name() {
+        return turnout.getSignalA3Name();
+    }
+
+     public void setSignalA3Name(@CheckForNull String signalHead) {
+        turnout.setSignalA3Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalB1() {
+        return turnout.getSignalB1();
+    }
+
+    @Nonnull
+    public String getSignalB1Name() {
+        return turnout.getSignalB1Name();
+    }
+
+    public void setSignalB1Name(@CheckForNull String signalHead) {
+        turnout.setSignalB1Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalB2() {
+        return turnout.getSignalB2();
+    }
+
+    @Nonnull
+    public String getSignalB2Name() {
+        return turnout.getSignalB2Name();
+    }
+
+    public void setSignalB2Name(@CheckForNull String signalHead) {
+        turnout.setSignalB2Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalC1() {
+        return turnout.getSignalC1();
+    }
+
+    @Nonnull
+    public String getSignalC1Name() {
+        return turnout.getSignalC1Name();
+    }
+
+    public void setSignalC1Name(@CheckForNull String signalHead) {
+        turnout.setSignalC1Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalC2() {
+        return turnout.getSignalC2();
+    }
+
+    @Nonnull
+    public String getSignalC2Name() {
+        return turnout.getSignalC2Name();
+    }
+
+    public void setSignalC2Name(@CheckForNull String signalHead) {
+        turnout.setSignalC2Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalD1() {
+        return turnout.getSignalD1();
+    }
+
+    @Nonnull
+    public String getSignalD1Name() {
+        return turnout.getSignalD1Name();
+    }
+
+    public void setSignalD1Name(@CheckForNull String signalHead) {
+        turnout.setSignalD1Name(signalHead);
+    }
+
+    @CheckForNull
+    public SignalHead getSignalD2() {
+        return turnout.getSignalD2();
+    }
+
+    @Nonnull
+    public String getSignalD2Name() {
+        return turnout.getSignalD2Name();
+    }
+
+    public void setSignalD2Name(@CheckForNull String signalHead) {
+        turnout.setSignalD2Name(signalHead);
+    }
+
+    public void removeBeanReference(@CheckForNull jmri.NamedBean nb) {
+        turnout.removeBeanReference(nb);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canRemove() {
+        return turnout.canRemove();
+    }
+
+    /**
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * turnout point.
+     *
+     * @param pointName Specify the point (A-D) or all (All) points.
+     * @return a list of bean reference names.
+     */
+    @Nonnull
+    public ArrayList<String> getBeanReferences(String pointName) {
+        throw new IllegalArgumentException("should be called on LayoutTurnout");
+    }
+
+    @Nonnull
+    public String getSignalAMastName() {
+        return turnout.getSignalAMastName();
+    }
+
+    @CheckForNull
+    public SignalMast getSignalAMast() {
+        return turnout.getSignalAMast();
+    }
+
+    public void setSignalAMast(@CheckForNull String signalMast) {
+        turnout.setSignalAMast(signalMast);
+    }
+
+    @Nonnull
+    public String getSignalBMastName() {
+        return turnout.getSignalBMastName();
+    }
+
+    @CheckForNull
+    public SignalMast getSignalBMast() {
+        return turnout.getSignalBMast();
+    }
+
+    public void setSignalBMast(@CheckForNull String signalMast) {
+        turnout.setSignalBMast(signalMast);
+    }
+
+    @Nonnull
+    public String getSignalCMastName() {
+        return turnout.getSignalCMastName();
+    }
+
+    @CheckForNull
+    public SignalMast getSignalCMast() {
+        return turnout.getSignalCMast();
+    }
+
+    public void setSignalCMast(@CheckForNull String signalMast) {
+        turnout.setSignalCMast(signalMast);
+    }
+
+    @Nonnull
+    public String getSignalDMastName() {
+        return turnout.getSignalDMastName();
+    }
+
+    @CheckForNull
+    public SignalMast getSignalDMast() {
+        return turnout.getSignalDMast();
+    }
+
+    public void setSignalDMast(@CheckForNull String signalMast) {
+        turnout.setSignalDMast(signalMast);
+    }
+
+    @Nonnull
+    public String getSensorAName() {
+        return turnout.getSensorAName();
+    }
+
+    @CheckForNull
+    public Sensor getSensorA() {
+        return turnout.getSensorA();
+    }
+
+    public void setSensorA(@CheckForNull String sensorName) {
+        turnout.setSensorA(sensorName);
+    }
+
+    @Nonnull
+    public String getSensorBName() {
+        return turnout.getSensorBName();
+    }
+
+    @CheckForNull
+    public Sensor getSensorB() {
+        return turnout.getSensorB();
+    }
+
+    public void setSensorB(@CheckForNull String sensorName) {
+        turnout.setSensorB(sensorName);
+    }
+
+    @Nonnull
+    public String getSensorCName() {
+        return turnout.getSensorCName();
+    }
+
+    @CheckForNull
+    public Sensor getSensorC() {
+        return turnout.getSensorC();
+    }
+
+    public void setSensorC(@CheckForNull String sensorName) {
+        turnout.setSensorC(sensorName);
+    }
+
+    @Nonnull
+    public String getSensorDName() {
+        return turnout.getSensorDName();
+    }
+
+    @CheckForNull
+    public Sensor getSensorD() {
+        return turnout.getSensorD();
+    }
+
+    public void setSensorD(@CheckForNull String sensorName) {
+        turnout.setSensorD(sensorName);
+    }
+
+
+    public String getLinkedTurnoutName() {
+        return turnout.getLinkedTurnoutName();
+    }
+
+    public void setLinkedTurnoutName(@Nonnull String s) {
+        turnout.setSensorD(s);
+    }  // Could be done with changing over to a NamedBeanHandle
+
+    public LinkType getLinkType() {
+        return turnout.getLinkType();
+    }
+
+    public void setLinkType(LinkType ltype) {
+         turnout.setLinkType(ltype);
+    }
+
+    public TurnoutType getTurnoutType() {
+        return turnout.getTurnoutType();
+    }
+
+    public LayoutTrack getConnectA() {
+        return turnout.getConnectA();
+    }
+
+    public LayoutTrack getConnectB() {
+        return turnout.getConnectB();
+    }
+
+    public LayoutTrack getConnectC() {
+        return turnout.getConnectC();
+    }
+
+    public LayoutTrack getConnectD() {
+        return turnout.getConnectD();
+    }
+
+    /**
+     * @return null if no turnout set // temporary?  Might want to run all calls through this class; but this is getModel equiv
+     */
+    // @CheckForNull  temporary
+    public Turnout getTurnout() {
+        return turnout.getTurnout();
+    }
+
+    public int getContinuingSense() {
+        return turnout.getContinuingSense();
+    }
+
+    /**
+     *
+     * @return true is the continuingSense matches the known state
+     */
+    public boolean isInContinuingSenseState() {
+        return turnout.isInContinuingSenseState();
+    }
+
+    public void setTurnout(@Nonnull String tName) {
+        turnout.setTurnout(tName);
+    }
+
+    // @CheckForNull - need to have a better way to handle null case
+    public Turnout getSecondTurnout() {
+        return turnout.getSecondTurnout();
+    }
+
+    public void setSecondTurnout(@Nonnull String tName) {
+        turnout.setSecondTurnout(tName);
+    }
+
+    public void setSecondTurnoutInverted(boolean inverted) {
+        turnout.setSecondTurnoutInverted(inverted);
+    }
+
+    public void setContinuingSense(int sense) {
+        turnout.setContinuingSense(sense);
+    }
+
+    public void setDisabled(boolean state) {
+        turnout.setDisabled(state);
+        if (layoutEditor != null) {
+            layoutEditor.redrawPanel();
+        }
+    }
+
+    public boolean isDisabled() {
         return turnout.isDisabled();
     }
+
+    public void setDisableWhenOccupied(boolean state) {
+        turnout.setDisableWhenOccupied(state);
+        if (layoutEditor != null) {
+            layoutEditor.redrawPanel();
+        }
+    }
+
+    public boolean isDisabledWhenOccupied() {
+        return turnout.isDisabledWhenOccupied();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
+        return turnout.getConnection(connectionType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
+        turnout.setConnection(connectionType, o, type);
+    }
+
+    public void setConnectA(@CheckForNull LayoutTrack o, HitPointType type) {
+        turnout.setConnectA(o, type);
+    }
+
+    public void setConnectB(@CheckForNull LayoutTrack o, HitPointType type) {
+        turnout.setConnectB(o, type);
+    }
+
+    public void setConnectC(@CheckForNull LayoutTrack o, HitPointType type) {
+        turnout.setConnectC(o, type);
+    }
+
+    public void setConnectD(@CheckForNull LayoutTrack o, HitPointType type) {
+        turnout.setConnectD(o, type);
+    }
+
+    // @CheckForNull - temporary while we work on centralized protection
+    public LayoutBlock getLayoutBlock() {
+        return turnout.getLayoutBlock();
+    }
+
+    // @CheckForNull - temporary while we work on centralized protection
+    public LayoutBlock getLayoutBlockB() {
+        return turnout.getLayoutBlockB();
+    }
+
+    // @CheckForNull - temporary while we work on centralized protection
+    public LayoutBlock getLayoutBlockC() {
+        return turnout.getLayoutBlockC();
+    }
+
+    // @CheckForNull - temporary while we work on centralized protection
+    public LayoutBlock getLayoutBlockD() {
+        return turnout.getLayoutBlockD();
+    }
+
+    @Nonnull
     public Point2D getCoordsA() {
-        return turnout.getCoordsA();
+        if (isTurnoutTypeXover()) {
+            if (version == 2) {
+                return pointA;
+            }
+            return MathUtil.subtract(getCoordsCenter(), dispA);
+        } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
+            return MathUtil.subtract(getCoordsCenter(), MathUtil.midPoint(dispB, dispA));
+        } else {
+            return MathUtil.subtract(getCoordsCenter(), dispB);
+        }
     }
+
+    @Nonnull
     public Point2D getCoordsB() {
-        return turnout.getCoordsB();
+        if ((version == 2) && isTurnoutTypeXover()) {
+            return pointB;
+        }
+        return MathUtil.add(getCoordsCenter(), dispB);
     }
+
+    @Nonnull
     public Point2D getCoordsC() {
-        return turnout.getCoordsC();
+        if ((version == 2) && isTurnoutTypeXover()) {
+            return pointC;
+        }
+        return MathUtil.add(getCoordsCenter(), dispA);
     }
+
+    @Nonnull
     public Point2D getCoordsD() {
-        return turnout.getCoordsD();
+        if ((version == 2) && isTurnoutTypeXover()) {
+            return pointD;
+        }
+        // only allowed for single and double crossovers
+        return MathUtil.subtract(getCoordsCenter(), dispB);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public Point2D getCoordsForConnectionType(HitPointType connectionType) {
+        Point2D result = getCoordsCenter();
+        switch (connectionType) {
+            case TURNOUT_CENTER:
+                break;
+            case TURNOUT_A:
+                result = getCoordsA();
+                break;
+            case TURNOUT_B:
+                result = getCoordsB();
+                break;
+            case TURNOUT_C:
+                result = getCoordsC();
+                break;
+            case TURNOUT_D:
+                result = getCoordsD();
+                break;
+            default:
+                log.error("{}.getCoordsForConnectionType({}); Invalid Connection Type",
+                        getName(), connectionType); // NOI18N
+        }
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public Rectangle2D getBounds() {
+        Rectangle2D result;
+
+        Point2D pointA = getCoordsA();
+        result = new Rectangle2D.Double(pointA.getX(), pointA.getY(), 0, 0);
+        result.add(getCoordsB());
+        result.add(getCoordsC());
+        if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
+            result.add(getCoordsD());
+        }
+        return result;
+    }
+
+    // updates connectivity for blocks assigned to this turnout and connected track segments
+    public void updateBlockInfo() {
+        turnout.updateBlockInfo();
+    }
+
+    /**
+     * Set default size parameters to correspond to this turnout's size.
+     * <p>
+     * note: only protected so LayoutTurnoutTest can call it
+     */
+    protected void setUpDefaultSize() {
+        // remove the overall scale factor
+        double bX = dispB.getX() / layoutEditor.gContext.getXScale();
+        double bY = dispB.getY() / layoutEditor.gContext.getYScale();
+        double cX = dispA.getX() / layoutEditor.gContext.getXScale();
+        double cY = dispA.getY() / layoutEditor.gContext.getYScale();
+        // calculate default parameters according to type of turnout
+        double lenB = Math.hypot(bX, bY);
+        double lenC = Math.hypot(cX, cY);
+        double distBC = Math.hypot(bX - cX, bY - cY);
+        if ((getTurnoutType() == TurnoutType.LH_TURNOUT)
+                || (getTurnoutType() == TurnoutType.RH_TURNOUT)) {
+                
+            layoutEditor.setTurnoutBX(Math.round(lenB + 0.1));
+            double xc = ((bX * cX) + (bY * cY)) / lenB;
+            layoutEditor.setTurnoutCX(Math.round(xc + 0.1));
+            layoutEditor.setTurnoutWid(Math.round(Math.sqrt((lenC * lenC) - (xc * xc)) + 0.1));
+        } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
+            double xx = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
+            layoutEditor.setTurnoutBX(Math.round(xx + 0.1));
+            layoutEditor.setTurnoutCX(Math.round(xx + 0.1));
+            layoutEditor.setTurnoutWid(Math.round(distBC + 0.1));
+        } else {
+            if (version == 2) {
+                double aX = pointA.getX() / layoutEditor.gContext.getXScale();
+                double aY = pointA.getY() / layoutEditor.gContext.getYScale();
+                bX = pointB.getX() / layoutEditor.gContext.getXScale();
+                bY = pointB.getY() / layoutEditor.gContext.getYScale();
+                cX = pointC.getX() / layoutEditor.gContext.getXScale();
+                cY = pointC.getY() / layoutEditor.gContext.getYScale();
+                double lenAB = Math.hypot(bX - aX, bY - aY);
+                if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
+                    layoutEditor.setXOverLong(Math.round(lenAB / 2)); // set to half to be backwardly compatible
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
+                    layoutEditor.setXOverShort(Math.round((0.5 * lenAB) / 2));
+                } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                    lenAB = lenAB / 3;
+                    layoutEditor.setXOverShort(Math.round(lenAB));
+                    layoutEditor.setXOverLong(Math.round(lenAB * 2));
+                    double opp = (aY - bY);
+                    double ang = Math.asin(opp / (lenAB * 3));
+                    opp = Math.sin(ang) * lenAB;
+                    bY = bY + opp;
+                    double adj = Math.cos(ang) * lenAB;
+                    bX = bX + adj;
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
+                } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                    double dY = pointD.getY() / layoutEditor.gContext.getYScale();
+                    lenAB = lenAB / 3;
+                    layoutEditor.setXOverShort(Math.round(lenAB));
+                    layoutEditor.setXOverLong(Math.round(lenAB * 2));
+                    double opp = (dY - cY);
+                    double ang = Math.asin(opp / (lenAB * 3)); // Length of AB should be the same as CD
+                    opp = Math.sin(ang) * lenAB;
+                    cY = cY + opp;
+                    double adj = Math.cos(ang) * lenAB;
+                    cX = cX + adj;
+                    double lenBC = Math.hypot(bX - cX, bY - cY);
+                    layoutEditor.setXOverHWid(Math.round(lenBC / 2));
+                }
+            } else if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
+                double lng = Math.sqrt((lenB * lenB) - (0.25 * (distBC * distBC)));
+                layoutEditor.setXOverLong(Math.round(lng + 0.1));
+                layoutEditor.setXOverHWid(Math.round((0.5 * distBC) + 0.1));
+                layoutEditor.setXOverShort(Math.round((0.5 * lng) + 0.1));
+            } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                double distDC = Math.hypot(bX + cX, bY + cY);
+                layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
+                layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
+                double hwid = Math.sqrt((lenC * lenC) - (0.5625 * distDC * distDC));
+                layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
+            } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                double distDC = Math.hypot(bX + cX, bY + cY);
+                layoutEditor.setXOverShort(Math.round((0.25 * distDC) + 0.1));
+                layoutEditor.setXOverLong(Math.round((0.75 * distDC) + 0.1));
+                double hwid = Math.sqrt((lenC * lenC) - (0.0625 * distDC * distDC));
+                layoutEditor.setXOverHWid(Math.round(hwid + 0.1));
+            }
+        }
+    }
+
+    /**
+     * Set up Layout Block(s) for this Turnout.
+     * @param newLayoutBlock See {@link LayoutTurnout#setLayoutBlock} for definition
+     */
+    public void setLayoutBlock(LayoutBlock newLayoutBlock) {
+        turnout.setLayoutBlock(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
+    }
+
+    public void setLayoutBlockB(LayoutBlock newLayoutBlock) {
+        turnout.setLayoutBlockB(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
+    }
+
+    public void setLayoutBlockC(LayoutBlock newLayoutBlock) {
+        turnout.setLayoutBlockC(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
+    }
+
+    public void setLayoutBlockD(LayoutBlock newLayoutBlock) {
+        turnout.setLayoutBlockD(newLayoutBlock);
+        // correct any graphical artifacts
+        setTrackSegmentBlocks();
+    }
+
+    public void setLayoutBlockByName(@Nonnull String name) {
+        turnout.setLayoutBlockByName(name);
+    }
+
+    public void setLayoutBlockBByName(@Nonnull String name) {
+        turnout.setLayoutBlockByName(name);
+    }
+
+    public void setLayoutBlockCByName(@Nonnull String name) {
+        turnout.setLayoutBlockByName(name);
+    }
+
+    public void setLayoutBlockDByName(@Nonnull String name) {
+        turnout.setLayoutBlockByName(name);
+    }
+
+    /**
+     * Check each connection point and update the block value for very short
+     * track segments.
+     *
+     * @since 4.11.6
+     */
+    void setTrackSegmentBlocks() {
+        setTrackSegmentBlock(HitPointType.TURNOUT_A, false);
+        setTrackSegmentBlock(HitPointType.TURNOUT_B, false);
+        setTrackSegmentBlock(HitPointType.TURNOUT_C, false);
+        if (hasEnteringDoubleTrack()) {
+            setTrackSegmentBlock(HitPointType.TURNOUT_D, false);
+        }
+    }
+
+    /**
+     * Update the block for a track segment that provides a (graphically) short connection
+     * between a turnout and another object, normally another turnout. These are
+     * hard to see and are frequently missed.
+     * <p>
+     * Skip block changes if signal heads, masts or sensors have been assigned.
+     * Only track segments with a length less than the turnout circle radius
+     * will be changed.
+     *
+     * @since 4.11.6
+     * @param pointType   The point type which indicates which turnout
+     *                    connection.
+     * @param isAutomatic True for the automatically generated track segment
+     *                    created by the drag-n-drop process. False for existing
+     *                    connections which require a track segment length
+     *                    calculation.
+     */
+    void setTrackSegmentBlock(HitPointType pointType, boolean isAutomatic) {
+        TrackSegment trkSeg;
+        Point2D pointCoord;
+        LayoutBlock blockA = getLayoutBlock();
+        LayoutBlock blockB = getLayoutBlock();
+        LayoutBlock blockC = getLayoutBlock();
+        LayoutBlock blockD = getLayoutBlock();
+        LayoutBlock currBlk = blockA;
+
+        switch (pointType) {
+            case TURNOUT_A:
+            case SLIP_A:
+                if (signalA1HeadNamed != null) {
+                    return;
+                }
+                if (signalA2HeadNamed != null) {
+                    return;
+                }
+                if (signalA3HeadNamed != null) {
+                    return;
+                }
+                if (getSignalAMast() != null) {
+                    return;
+                }
+                if (getSensorA() != null) {
+                    return;
+                }
+                trkSeg = (TrackSegment) connectA;
+                pointCoord = getCoordsA();
+                break;
+            case TURNOUT_B:
+            case SLIP_B:
+                if (signalB1HeadNamed != null) {
+                    return;
+                }
+                if (signalB2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalBMast() != null) {
+                    return;
+                }
+                if (getSensorB() != null) {
+                    return;
+                }
+                trkSeg = (TrackSegment) connectB;
+                pointCoord = getCoordsB();
+                if (isTurnoutTypeXover()) {
+                    currBlk = blockB != null ? blockB : blockA;
+                }
+                break;
+            case TURNOUT_C:
+            case SLIP_C:
+                if (signalC1HeadNamed != null) {
+                    return;
+                }
+                if (signalC2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalCMast() != null) {
+                    return;
+                }
+                if (getSensorC() != null) {
+                    return;
+                }
+                trkSeg = (TrackSegment) connectC;
+                pointCoord = getCoordsC();
+                if (isTurnoutTypeXover()) {
+                    currBlk = blockC != null ? blockC : blockA;
+                }
+                break;
+            case TURNOUT_D:
+            case SLIP_D:
+                if (signalD1HeadNamed != null) {
+                    return;
+                }
+                if (signalD2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalDMast() != null) {
+                    return;
+                }
+                if (getSensorD() != null) {
+                    return;
+                }
+                trkSeg = (TrackSegment) connectD;
+                pointCoord = getCoordsD();
+                if (isTurnoutTypeXover()) {
+                    currBlk = blockD != null ? blockD : blockA;
+                }
+                break;
+            default:
+                log.error("{}.setTrackSegmentBlock({}, {}); Invalid pointType",
+                        getName(), pointType, isAutomatic ? "AUTO" : "NON-AUTO");
+                return;
+        }
+        if (trkSeg != null) {
+            double chkSize = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+            double segLength = 0;
+            if (!isAutomatic) {
+                Point2D segCenter = getCoordsCenter();
+                segLength = MathUtil.distance(pointCoord, segCenter) * 2;
+            }
+            if (segLength < chkSize) {
+
+                log.debug("Set block:");
+                log.debug("    seg: {}", trkSeg);
+                log.debug("    cor: {}", pointCoord);
+                log.debug("    blk: {}", (currBlk == null) ? "null" : currBlk.getDisplayName());
+                log.debug("    len: {}", segLength);
+
+                trkSeg.setLayoutBlock(currBlk);
+                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            }
+        }
+    }
+
+    /**
+     * Test if turnout legs are mainline track or not.
+     *
+     * @return true if connecting track segment is mainline; Defaults to not
+     *         mainline if connecting track segment is missing
+     */
     public boolean isMainlineA() {
         return turnout.isMainlineA();
     }
+
     public boolean isMainlineB() {
         return turnout.isMainlineB();
     }
+
     public boolean isMainlineC() {
         return turnout.isMainlineC();
     }
+
     public boolean isMainlineD() {
         return turnout.isMainlineD();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
+        HitPointType result = HitPointType.NONE;  // assume point not on connection
+        // note: optimization here: instead of creating rectangles for all the
+        // points to check below, we create a rectangle for the test point
+        // and test if the points below are in that rectangle instead.
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
+        Point2D p, minPoint = MathUtil.zeroPoint2D;
+
+        double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double distance, minDistance = POSITIVE_INFINITY;
+
+        // check center coordinates
+        if (!requireUnconnected) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = HitPointType.TURNOUT_CENTER;
+            }
+        }
+
+        // check the A connection point
+        if (!requireUnconnected || (getConnectA() == null)) {
+            p = getCoordsA();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = HitPointType.TURNOUT_A;
+            }
+        }
+
+        // check the B connection point
+        if (!requireUnconnected || (getConnectB() == null)) {
+            p = getCoordsB();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = HitPointType.TURNOUT_B;
+            }
+        }
+
+        // check the C connection point
+        if (!requireUnconnected || (getConnectC() == null)) {
+            p = getCoordsC();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = HitPointType.TURNOUT_C;
+            }
+        }
+
+        // check the D connection point
+        if (isTurnoutTypeXover()) {
+            if (!requireUnconnected || (getConnectD() == null)) {
+                p = getCoordsD();
+                distance = MathUtil.distance(p, hitPoint);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    minPoint = p;
+                    result = HitPointType.TURNOUT_D;
+                }
+            }
+        }
+        if ((useRectangles && !r.contains(minPoint))
+                || (!useRectangles && (minDistance > circleRadius))) {
+            result = HitPointType.NONE;
+        }
+        return result;
+    }   // findHitPointType
+
+    /*
+    * Modify coordinates methods
+     */
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setCoordsCenter(@Nonnull Point2D p) {
+        Point2D offset = MathUtil.subtract(p, getCoordsCenter());
+        pointA = MathUtil.add(pointA, offset);
+        pointB = MathUtil.add(pointB, offset);
+        pointC = MathUtil.add(pointC, offset);
+        pointD = MathUtil.add(pointD, offset);
+        super.setCoordsCenter(p);
+    }
+
+    // temporary should be private once LayoutTurnout no longer needs it
+    void reCalculateCenter() {
+        super.setCoordsCenter(MathUtil.midPoint(pointA, pointC));
+    }
+
+    public void setCoordsA(@Nonnull Point2D p) {
+        pointA = p;
+        if (version == 2) {
+            reCalculateCenter();
+        }
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
+        if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
+            dispA = new Point2D.Double(x, y);
+            // adjust to maintain rectangle
+            double oldLength = MathUtil.length(dispB);
+            double newLength = Math.hypot(x, y);
+            dispB = MathUtil.multiply(dispB, newLength / oldLength);
+        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
+                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
+            dispA = new Point2D.Double(x, y);
+            // adjust to maintain the parallelogram
+            double a = 0.0;
+            double b = -y;
+            double xi = 0.0;
+            double yi = b;
+            if ((dispB.getX() + x) != 0.0) {
+                a = (dispB.getY() + y) / (dispB.getX() + x);
+                b = -y + (a * x);
+                xi = -b / (a + (1.0 / a));
+                yi = (a * xi) + b;
+            }
+            if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                x = xi - (0.333333 * (-x - xi));
+                y = yi - (0.333333 * (-y - yi));
+            } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                x = xi - (3.0 * (-x - xi));
+                y = yi - (3.0 * (-y - yi));
+            }
+            dispB = new Point2D.Double(x, y);
+        } else if (getTurnoutType() == TurnoutType.WYE_TURNOUT) {
+            // modify both to maintain same angle at wye
+            double temX = (dispB.getX() + dispA.getX());
+            double temY = (dispB.getY() + dispA.getY());
+            double temXx = (dispB.getX() - dispA.getX());
+            double temYy = (dispB.getY() - dispA.getY());
+            double tan = Math.sqrt(((temX * temX) + (temY * temY))
+                    / ((temXx * temXx) + (temYy * temYy)));
+            double xx = x + (y / tan);
+            double yy = y - (x / tan);
+            dispA = new Point2D.Double(xx, yy);
+            xx = x - (y / tan);
+            yy = y + (x / tan);
+            dispB = new Point2D.Double(xx, yy);
+        } else {
+            dispB = new Point2D.Double(x, y);
+        }
+    }
+
+    public void setCoordsB(Point2D p) {
+        pointB = p;
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
+        dispB = new Point2D.Double(-x, -y);
+        if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
+                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
+            // adjust to maintain rectangle or wye shape
+            double oldLength = MathUtil.length(dispA);
+            double newLength = Math.hypot(x, y);
+            dispA = MathUtil.multiply(dispA, newLength / oldLength);
+        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
+                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
+            // adjust to maintain the parallelogram
+            double a = 0.0;
+            double b = y;
+            double xi = 0.0;
+            double yi = b;
+            if ((dispA.getX() - x) != 0.0) {
+                if ((-dispA.getX() + x) == 0) {
+                    /* we can in some situations eg 90' vertical end up with a 0 value,
+                    so hence remove a small amount so that we
+                    don't have a divide by zero issue */
+                    x = x - 0.0000000001;
+                }
+                a = (dispA.getY() - y) / (dispA.getX() - x);
+                b = y - (a * x);
+                xi = -b / (a + (1.0 / a));
+                yi = (a * xi) + b;
+            }
+            if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                x = xi - (0.333333 * (x - xi));
+                y = yi - (0.333333 * (y - yi));
+            } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                x = xi - (3.0 * (x - xi));
+                y = yi - (3.0 * (y - yi));
+            }
+            dispA = new Point2D.Double(x, y);
+        }
+    }
+
+    public void setCoordsC(Point2D p) {
+        pointC = p;
+        if (version == 2) {
+            reCalculateCenter();
+        }
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
+        dispA = new Point2D.Double(-x, -y);
+        if ((getTurnoutType() == TurnoutType.DOUBLE_XOVER)
+                || (getTurnoutType() == TurnoutType.WYE_TURNOUT)) {
+            // adjust to maintain rectangle or wye shape
+            double oldLength = MathUtil.length(dispB);
+            double newLength = Math.hypot(x, y);
+            dispB = MathUtil.multiply(dispB, newLength / oldLength);
+        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
+                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
+            double a = 0.0;
+            double b = -y;
+            double xi = 0.0;
+            double yi = b;
+            if ((dispB.getX() + x) != 0.0) {
+                if ((-dispB.getX() + x) == 0) {
+                    /* we can in some situations eg 90' vertical end up with a 0 value,
+                    so hence remove a small amount so that we
+                    don't have a divide by zero issue */
+
+                    x = x - 0.0000000001;
+                }
+                a = (-dispB.getY() + y) / (-dispB.getX() + x);
+                b = -y + (a * x);
+                xi = -b / (a + (1.0 / a));
+                yi = (a * xi) + b;
+            }
+            if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                x = xi - (0.333333 * (-x - xi));
+                y = yi - (0.333333 * (-y - yi));
+            } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                x = xi - (3.0 * (-x - xi));
+                y = yi - (3.0 * (-y - yi));
+            }
+            dispB = new Point2D.Double(-x, -y);
+        }
+    }
+
+    public void setCoordsD(Point2D p) {
+        pointD = p;
+
+        // only used for crossovers
+        double x = getCoordsCenter().getX() - p.getX();
+        double y = getCoordsCenter().getY() - p.getY();
+        dispB = new Point2D.Double(x, y);
+        if (getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
+            // adjust to maintain rectangle
+            double oldLength = MathUtil.length(dispA);
+            double newLength = Math.hypot(x, y);
+            dispA = MathUtil.multiply(dispA, newLength / oldLength);
+        } else if ((getTurnoutType() == TurnoutType.RH_XOVER)
+                || (getTurnoutType() == TurnoutType.LH_XOVER)) {
+            // adjust to maintain the parallelogram
+            double a = 0.0;
+            double b = y;
+            double xi = 0.0;
+            double yi = b;
+            if ((dispA.getX() + x) != 0.0) {
+                a = (dispA.getY() + y) / (dispA.getX() + x);
+                b = -y + (a * x);
+                xi = -b / (a + (1.0 / a));
+                yi = (a * xi) + b;
+            }
+            if (getTurnoutType() == TurnoutType.LH_XOVER) {
+                x = xi - (0.333333 * (-x - xi));
+                y = yi - (0.333333 * (-y - yi));
+            } else if (getTurnoutType() == TurnoutType.RH_XOVER) {
+                x = xi - (3.0 * (-x - xi));
+                y = yi - (3.0 * (-y - yi));
+            }
+            dispA = new Point2D.Double(x, y);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void scaleCoords(double xFactor, double yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
+
+        dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
+        dispB = MathUtil.granulize(MathUtil.multiply(dispB, factor), 1.0);
+
+        pointA = MathUtil.granulize(MathUtil.multiply(pointA, factor), 1.0);
+        pointB = MathUtil.granulize(MathUtil.multiply(pointB, factor), 1.0);
+        pointC = MathUtil.granulize(MathUtil.multiply(pointC, factor), 1.0);
+        pointD = MathUtil.granulize(MathUtil.multiply(pointD, factor), 1.0);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void translateCoords(double xFactor, double yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
+        super.setCoordsCenter(MathUtil.add(getCoordsCenter(), factor));
+        pointA = MathUtil.add(pointA, factor);
+        pointB = MathUtil.add(pointB, factor);
+        pointC = MathUtil.add(pointC, factor);
+        pointD = MathUtil.add(pointD, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate coordinates
+        double rotRAD = Math.toRadians(angleDEG);
+        double sineRot = Math.sin(rotRAD);
+        double cosineRot = Math.cos(rotRAD);
+        
+        // rotate displacements around origin {0, 0}
+        Point2D center_temp = getCoordsCenter();
+        super.setCoordsCenter(MathUtil.zeroPoint2D);
+        dispA = rotatePoint(dispA, sineRot, cosineRot);
+        dispB = rotatePoint(dispB, sineRot, cosineRot);
+        super.setCoordsCenter(center_temp);
+
+        pointA = rotatePoint(pointA, sineRot, cosineRot);
+        pointB = rotatePoint(pointB, sineRot, cosineRot);
+        pointC = rotatePoint(pointC, sineRot, cosineRot);
+        pointD = rotatePoint(pointD, sineRot, cosineRot);
+    }
+
+    /**
+     * Toggle turnout if clicked on, physical turnout exists, and not disabled.
+     */
+    public void toggleTurnout() {
+        turnout.toggleTurnout();
+    }
+
+    /**
+     * Set the LayoutTurnout state. Used for sending the toggle command Checks
+     * not disabled, disable when occupied Also sets secondary Turnout commanded
+     * state
+     *
+     * @param state New state to set, eg Turnout.CLOSED
+     */
+    public void setState(int state) {
+        turnout.setState(state);
+    }
+
+    /**
+     * Get the LayoutTurnout state
+     * <p>
+     * Ensures the secondary Turnout state matches the primary
+     *
+     * @return the state, eg Turnout.CLOSED or Turnout.INCONSISTENT
+     */
+    public int getState() {
+        return turnout.getState();
+    }
+
+    /**
+     * Is this turnout occupied?
+     *
+     * @return true if occupied
+     */
+    private boolean isOccupied() {
+        return turnout.isOccupied();
+    }
+
+    // initialization instance variables (used when loading a LayoutEditor)
+    public String connectAName = "";
+    public String connectBName = "";
+    public String connectCName = "";
+    public String connectDName = "";
+
+    public String tBlockAName = "";
+    public String tBlockBName = "";
+    public String tBlockCName = "";
+    public String tBlockDName = "";
+
+    private JPopupMenu popup = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    protected JPopupMenu showPopup(@CheckForNull MouseEvent mouseEvent) {
+        if (popup != null) {
+            popup.removeAll();
+        } else {
+            popup = new JPopupMenu();
+        }
+
+        if (layoutEditor.isEditable()) {
+            String label = "";
+            switch (getTurnoutType()) {
+                case RH_TURNOUT:
+                    label = Bundle.getMessage("RightTurnout");
+                    break;
+                case LH_TURNOUT:
+                    label = Bundle.getMessage("LeftTurnout");
+                    break;
+                case WYE_TURNOUT:
+                    label = Bundle.getMessage("WYETurnout");
+                    break;
+                case DOUBLE_XOVER:
+                    label = Bundle.getMessage("DoubleCrossover");
+                    break;
+                case RH_XOVER:
+                    label = Bundle.getMessage("RightCrossover");
+                    break;
+                case LH_XOVER:
+                    label = Bundle.getMessage("LeftCrossover");
+                    break;
+                default:
+                    break;
+            }
+            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", label) + getName());
+            jmi.setEnabled(false);
+
+            if (getTurnout() == null) {
+                jmi = popup.add(Bundle.getMessage("NoTurnout"));
+            } else {
+                String stateString = getTurnoutStateString(getTurnout().getKnownState());
+                stateString = String.format(" (%s)", stateString);
+                jmi = popup.add(Bundle.getMessage("BeanNameTurnout")
+                        + ": " + getTurnoutName() + stateString);
+            }
+            jmi.setEnabled(false);
+
+            if (getSecondTurnout() != null) {
+                String stateString = getTurnoutStateString(getSecondTurnout().getKnownState());
+                stateString = String.format(" (%s)", stateString);
+                jmi = popup.add(Bundle.getMessage("Supporting",
+                        Bundle.getMessage("BeanNameTurnout"))
+                        + ": " + getSecondTurnoutName() + stateString);
+            }
+            jmi.setEnabled(false);
+
+            if (getBlockName().isEmpty()) {
+                jmi = popup.add(Bundle.getMessage("NoBlock"));
+                jmi.setEnabled(false);
+            } else {
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+                jmi.setEnabled(false);
+                if (isTurnoutTypeXover()) {
+                    // check if extra blocks have been entered
+                    if ((getLayoutBlockB() != null) && (getLayoutBlockB() != getLayoutBlock())) {
+                        jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
+                        jmi.setEnabled(false);
+                    }
+                    if ((getLayoutBlockC() != null) && (getLayoutBlockC() != getLayoutBlock())) {
+                        jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
+                        jmi.setEnabled(false);
+                    }
+                    if ((getLayoutBlockD() != null) && (getLayoutBlockD() != getLayoutBlock())) {
+                        jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
+                        jmi.setEnabled(false);
+                    }
+                }
+            }
+
+            // if there are any track connections
+            if ((connectA != null) || (connectB != null)
+                    || (connectC != null) || (connectD != null)) {
+                JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
+                if (connectA != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
+                            }
+                        }
+                    });
+                }
+                if (connectB != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
+                            }
+                        }
+                    });
+                }
+                if (connectC != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
+                            }
+                        }
+                    });
+                }
+                if (connectD != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorFindItems lf = layoutEditor.getFinder();
+                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
+                            // this shouldn't ever be null... however...
+                            if (lt != null) {
+                                LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+                                layoutEditor.setSelectionRect(ltv.getBounds());
+                                ltv.showPopup();
+                            }
+                        }
+                    });
+                }
+                popup.add(connectionsMenu);
+            }
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
+            hiddenCheckBoxMenuItem.setSelected(isHidden());
+            popup.add(hiddenCheckBoxMenuItem);
+            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setHidden(o.isSelected());
+            });
+
+            JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
+            cbmi.setSelected(isDisabled());
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e2) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e2.getSource();
+                setDisabled(o.isSelected());
+            });
+
+            cbmi = new JCheckBoxMenuItem(Bundle.getMessage("DisabledWhenOccupied"));
+            if (getTurnout() == null || getBlockName().isEmpty()) {
+                cbmi.setEnabled(false);
+            }
+            cbmi.setSelected(isDisabledWhenOccupied());
+            popup.add(cbmi);
+            cbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e3.getSource();
+                setDisableWhenOccupied(o.isSelected());
+            });
+
+            // Rotate if there are no track connections
+            if ((connectA == null) && (connectB == null)
+                    && (connectC == null)
+                    && (connectD == null)) {
+                JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
+                popup.add(rotateItem);
+                rotateItem.addActionListener((ActionEvent event) -> {
+                    boolean entering = true;
+                    boolean error = false;
+                    String newAngle = "";
+                    while (entering) {
+                        // prompt for rotation angle
+                        error = false;
+                        newAngle = JOptionPane.showInputDialog(layoutEditor,
+                                Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterRotation")));
+                        if (newAngle.isEmpty()) {
+                            return;  // cancelled
+                        }
+                        double rot = 0.0;
+                        try {
+                            rot = Double.parseDouble(newAngle);
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(layoutEditor, Bundle.getMessage("Error3")
+                                    + " " + e1, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            error = true;
+                            newAngle = "";
+                        }
+                        if (!error) {
+                            entering = false;
+                            if (rot != 0.0) {
+                                rotateCoords(rot);
+                                layoutEditor.redrawPanel();
+                            }
+                        }
+                    }
+                });
+            }
+
+            popup.add(new AbstractAction(Bundle.getMessage("UseSizeAsDefault")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setUpDefaultSize();
+                }
+            });
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    editor.editLayoutTrack(LayoutTurnoutView.this);
+                }
+            });
+            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (canRemove() && layoutEditor.removeLayoutTurnout(turnout)) {
+                        // Returned true if user did not cancel
+                        remove();
+                        dispose();
+                    }
+                }
+            });
+
+            if (getTurnout() != null) {
+                AbstractAction ssaa = new AbstractAction(Bundle.getMessage("SetSignals")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutEditorTools tools = layoutEditor.getLETools();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
+                        if (isTurnoutTypeXover()) {
+                            tools.setSignalsAtXoverTurnoutFromMenu(turnout,
+                                    letbp.signalIconEditor, letbp.signalFrame);
+                        } else if (linkType == LinkType.NO_LINK) {
+                            tools.setSignalsAtTurnoutFromMenu(turnout,
+                                    letbp.signalIconEditor, letbp.signalFrame);
+                        } else if (linkType == LinkType.THROAT_TO_THROAT) {
+                            tools.setSignalsAtThroatToThroatTurnoutsFromMenu(turnout, linkedTurnoutName,
+                                    letbp.signalIconEditor, letbp.signalFrame);
+                        } else if (linkType == LinkType.FIRST_3_WAY) {
+                            tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
+                                    letbp.signalIconEditor, letbp.signalFrame);
+                        } else if (linkType == LinkType.SECOND_3_WAY) {
+                            tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
+                                    letbp.signalIconEditor, letbp.signalFrame);
+                        }
+                    }
+                };
+
+                JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
+                if (layoutEditor.getLETools().addLayoutTurnoutSignalHeadInfoToMenu(
+                        getTurnoutName(), linkedTurnoutName, jm)) {
+                    jm.add(ssaa);
+                    popup.add(jm);
+                } else {
+                    popup.add(ssaa);
+                }
+            }
+            if (!getBlockName().isEmpty()) {
+                final String[] boundaryBetween = getBlockBoundaries();
+                boolean blockBoundaries = false;
+                for (int i = 0; i < 4; i++) {
+                    if (boundaryBetween[i] != null) {
+                        blockBoundaries = true;
+
+                    }
+                }
+
+                if (blockBoundaries) {
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            layoutEditor.getLETools().setSignalMastsAtTurnoutFromMenu(turnout,
+                                    boundaryBetween);
+                        }
+                    });
+                    popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
+                            layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
+                                    turnout,
+                                    boundaryBetween,
+                                    letbp.sensorIconEditor,
+                                    letbp.sensorFrame);
+                        }
+                    });
+
+                }
+
+                if (InstanceManager.getDefault(LayoutBlockManager.class
+                ).isAdvancedRoutingEnabled()) {
+                    Map<String, LayoutBlock> map = new HashMap<>();
+                    if (!getBlockName().isEmpty()) {
+                        map.put(getBlockName(), getLayoutBlock());
+                    }
+                    if (!getBlockBName().isEmpty()) {
+                        map.put(getBlockBName(), getLayoutBlockB());
+                    }
+                    if (!getBlockCName().isEmpty()) {
+                        map.put(getBlockCName(), getLayoutBlockC());
+                    }
+                    if (!getBlockDName().isEmpty()) {
+                        map.put(getBlockDName(), getLayoutBlockD());
+                    }
+                    if (blockBoundaries) {
+                        if (map.size() == 1) {
+                            popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    AbstractAction routeTableAction = new LayoutBlockRouteTableAction("ViewRouting", getLayoutBlock());
+                                    routeTableAction.actionPerformed(e);
+                                }
+                            });
+                        } else if (map.size() > 1) {
+                            JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
+                            for (Map.Entry<String, LayoutBlock> entry : map.entrySet()) {
+                                String blockName = entry.getKey();
+                                LayoutBlock layoutBlock = entry.getValue();
+                                viewRouting.add(new AbstractActionImpl(blockName, getBlockBName(), layoutBlock));
+                            }
+                            popup.add(viewRouting);
+                        }
+                    }   // if (blockBoundaries)
+                }   // .isAdvancedRoutingEnabled()
+            }   // getBlockName().isEmpty()
+            setAdditionalEditPopUpMenu(popup);
+            layoutEditor.setShowAlignmentMenu(popup);
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        } else if (!viewAdditionalMenu.isEmpty()) {
+            setAdditionalViewPopUpMenu(popup);
+            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        }
+        return popup;
+    } // showPopup
+
+    public String[] getBlockBoundaries() {
+        return turnout.getBlockBoundaries();
+    } 
+
+    public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean) {
+        return turnout.getProtectedBlocks(bean);
+    }
+
+    protected void removeSML(SignalMast signalMast) {
+        turnout.removeSML(signalMast);
+    }
+
+    /**
+     * Clean up when this object is no longer needed. Should not be called while
+     * the object is still displayed; see {@link #remove()}
+     */
+    public void dispose() {
+        if (popup != null) {
+            popup.removeAll();
+        }
+        popup = null;
+    }
+
+    /**
+     * Remove this object from display and persistance.
+     */
+    public void remove() {
+        turnout.remove();
+    }
+
+    /**
+     * "active" means that the object is still displayed, and should be stored.
+     * @return true if active
+     */
+    public boolean isActive() {
+        return turnout.isActive();
+    }
+
+    ArrayList<JMenuItem> editAdditionalMenu = new ArrayList<>(0);
+    ArrayList<JMenuItem> viewAdditionalMenu = new ArrayList<>(0);
+
+    public void addEditPopUpMenu(JMenuItem menu) {
+        if (!editAdditionalMenu.contains(menu)) {
+            editAdditionalMenu.add(menu);
+        }
+    }
+
+    public void addViewPopUpMenu(JMenuItem menu) {
+        if (!viewAdditionalMenu.contains(menu)) {
+            viewAdditionalMenu.add(menu);
+        }
+    }
+
+    public void setAdditionalEditPopUpMenu(JPopupMenu popup) {
+        if (editAdditionalMenu.isEmpty()) {
+            return;
+        }
+        popup.addSeparator();
+        for (JMenuItem mi : editAdditionalMenu) {
+            popup.add(mi);
+        }
+    }
+
+    public void setAdditionalViewPopUpMenu(JPopupMenu popup) {
+        if (viewAdditionalMenu.isEmpty()) {
+            return;
+        }
+        popup.addSeparator();
+        for (JMenuItem mi : viewAdditionalMenu) {
+            popup.add(mi);
+        }
+    }
+
+    /**
+     * Draw track decorations.
+     * 
+     * This type of track has none, so this method is empty.
+     */
+    @Override
+    protected void drawDecorations(Graphics2D g2) {}
 
     /**
      * {@inheritDoc}
      */
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (isBlock && turnout.getLayoutBlock() == null) {
+        if (isBlock && getLayoutBlock() == null) {
             // Skip the block layer if there is no block assigned.
             return;
         }
@@ -84,7 +1971,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
-        boolean drawUnselectedLeg = turnout.layoutEditor.isTurnoutDrawUnselectedLeg();
+        boolean drawUnselectedLeg = layoutEditor.isTurnoutDrawUnselectedLeg();
 
         Color color = g2.getColor();
 
@@ -95,13 +1982,13 @@ public class LayoutTurnoutView extends LayoutTrackView {
         Color colorD = color;
 
         if (isBlock) {
-            LayoutBlock lb = turnout.getLayoutBlock();
+            LayoutBlock lb = getLayoutBlock();
             colorA = (lb == null) ? color : lb.getBlockColor();
-            lb = turnout.getLayoutBlockB();
+            lb = getLayoutBlockB();
             colorB = (lb == null) ? color : lb.getBlockColor();
-            lb = turnout.getLayoutBlockC();
+            lb = getLayoutBlockC();
             colorC = (lb == null) ? color : lb.getBlockColor();
-            lb = turnout.getLayoutBlockD();
+            lb = getLayoutBlockD();
             colorD = (lb == null) ? color : lb.getBlockColor();
         }
 
@@ -125,12 +2012,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
         Point2D pDF = MathUtil.midPoint(pDM, pM);
 
         int state = UNKNOWN;
-        if (turnout.layoutEditor.isAnimating()) {
-            state = turnout.getState();
+        if (layoutEditor.isAnimating()) {
+            state = getState();
         }
 
-        TurnoutType turnoutType = turnout.getTurnoutType();
-        if (turnoutType == TurnoutType.DOUBLE_XOVER) {
+        TurnoutType type = getTurnoutType();
+        if (type == TurnoutType.DOUBLE_XOVER) {
             if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
                     g2.setColor(colorA);
@@ -231,8 +2118,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     }
                 }
             }
-        } else if ((turnoutType == TurnoutType.RH_XOVER)
-                || (turnoutType == TurnoutType.LH_XOVER)) {    // draw (rh & lh) cross overs
+        } else if ((type == TurnoutType.RH_XOVER)
+                || (type == TurnoutType.LH_XOVER)) {    // draw (rh & lh) cross overs
             pAF = MathUtil.midPoint(pABM, pM);
             pBF = MathUtil.midPoint(pABM, pM);
             pCF = MathUtil.midPoint(pCDM, pM);
@@ -255,7 +2142,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     g2.draw(new Line2D.Double(pCDM, pD));
                 }
                 if (!isBlock || drawUnselectedLeg) {
-                    if (turnoutType == TurnoutType.RH_XOVER) {
+                    if (getTurnoutType() == TurnoutType.RH_XOVER) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
                             g2.draw(new Line2D.Double(pAF, pM));
@@ -264,7 +2151,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                             g2.setColor(colorC);
                             g2.draw(new Line2D.Double(pCF, pM));
                         }
-                    } else if (turnoutType == TurnoutType.LH_XOVER) {
+                    } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
                         if (isMain == mainlineB) {
                             g2.setColor(colorB);
                             g2.draw(new Line2D.Double(pBF, pM));
@@ -277,7 +2164,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 }
             }
             if (state != Turnout.CLOSED && state != INCONSISTENT) { // unknown or diverting path - crossed over
-                if (turnoutType == TurnoutType.RH_XOVER) {
+                if (getTurnoutType() == TurnoutType.RH_XOVER) {
                     if (isMain == mainlineA) {
                         g2.setColor(colorA);
                         g2.draw(new Line2D.Double(pA, pABM));
@@ -300,7 +2187,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                             g2.draw(new Line2D.Double(pDM, pD));
                         }
                     }
-                } else if (turnoutType == TurnoutType.LH_XOVER) {
+                } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
                     if (!isBlock || drawUnselectedLeg) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
@@ -343,7 +2230,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     g2.draw(new Line2D.Double(pD, pDM));
                 }
                 if (!isBlock || drawUnselectedLeg) {
-                    if (turnoutType == TurnoutType.RH_XOVER) {
+                    if (getTurnoutType() == TurnoutType.RH_XOVER) {
                         if (isMain == mainlineA) {
                             g2.setColor(colorA);
                             g2.draw(new Line2D.Double(pAF, pM));
@@ -352,7 +2239,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                             g2.setColor(colorC);
                             g2.draw(new Line2D.Double(pCF, pM));
                         }
-                    } else if (turnoutType == TurnoutType.LH_XOVER) {
+                    } else if (getTurnoutType() == TurnoutType.LH_XOVER) {
                         if (isMain == mainlineB) {
                             g2.setColor(colorB);
                             g2.draw(new Line2D.Double(pBF, pM));
@@ -364,7 +2251,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     }
                 }
             }
-        } else if (turnout.isTurnoutTypeSlip()) {
+        } else if (isTurnoutTypeSlip()) {
             log.error("{}.draw1(...); slips should be being drawn by LayoutSlip sub-class", getName());
         } else {    // LH, RH, or WYE Turnouts
             // draw A<===>center
@@ -373,7 +2260,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pA, pM));
             }
 
-            if (state == UNKNOWN || (turnout.continuingSense == state && state != INCONSISTENT)) { // unknown or continuing path
+            if (state == UNKNOWN || (getContinuingSense() == state && state != INCONSISTENT)) { // unknown or continuing path
                 // draw center<===>B
                 if (isMain == mainlineB) {
                     g2.setColor(colorB);
@@ -387,7 +2274,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 }
             }
 
-            if (state == UNKNOWN || (turnout.continuingSense != state && state != INCONSISTENT)) { // unknown or diverting path
+            if (state == UNKNOWN || (getContinuingSense() != state && state != INCONSISTENT)) { // unknown or diverting path
                 // draw center<===>C
                 if (isMain == mainlineC) {
                     g2.setColor(colorC);
@@ -408,7 +2295,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     @Override
     protected void draw2(Graphics2D g2, boolean isMain, float railDisplacement) {
-        TurnoutType turnoutType = turnout.getTurnoutType();
+        TurnoutType type = getTurnoutType();
 
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
@@ -443,7 +2330,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         double hypotF = railDisplacement / Math.sin(deltaBMC_RAD / 2.0);
 
         Point2D vDisF = MathUtil.normalize(MathUtil.add(vAM, vCM), hypotF);
-        if (turnoutType == TurnoutType.WYE_TURNOUT) {
+        if (type == TurnoutType.WYE_TURNOUT) {
             vDisF = MathUtil.normalize(vAM, hypotF);
         }
         Point2D pF = MathUtil.add(pM, vDisF);
@@ -467,11 +2354,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
         boolean mainlineD = isMainlineD();
 
         int state = UNKNOWN;
-        if (turnout.layoutEditor.isAnimating()) {
-            state = turnout.getState();
+        if (layoutEditor.isAnimating()) {
+            state = getState();
         }
 
-        switch (turnoutType) {
+        switch (type) {
             case RH_TURNOUT: {
                 if (isMain == mainlineA) {
                     g2.draw(new Line2D.Double(pAL, pML));
@@ -480,7 +2367,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pML, pBL));
                     g2.draw(new Line2D.Double(pF, pBR));
-                    if (turnout.continuingSense == state) {  // unknown or diverting path
+                    if (getContinuingSense() == state) {  // unknown or diverting path
 //                         g2.draw(new Line2D.Double(pSR, pFPR));
 //                     } else {
                         g2.draw(new Line2D.Double(pAPR, pF));
@@ -494,7 +2381,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     path.quadTo(pMR.getX(), pMR.getY(), pFR.getX(), pFR.getY());
                     path.lineTo(pCR.getX(), pCR.getY());
                     g2.draw(path);
-                    if (turnout.continuingSense != state) {  // unknown or diverting path
+                    if (getContinuingSense() != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPL.getX(), pAPL.getY());
                         path.quadTo(pML.getX(), pML.getY(), pF.getX(), pF.getY());
@@ -517,7 +2404,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (isMain == mainlineB) {
                     g2.draw(new Line2D.Double(pMR, pBR));
                     g2.draw(new Line2D.Double(pF, pBL));
-                    if (turnout.continuingSense == state) {  // straight path
+                    if (getContinuingSense() == state) {  // straight path
 //                         g2.draw(new Line2D.Double(pSL, pFPL));  Offset problem
 //                     } else {
                         g2.draw(new Line2D.Double(pAPL, pF));
@@ -530,7 +2417,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     path.quadTo(pML.getX(), pML.getY(), pFL.getX(), pFL.getY());
                     path.lineTo(pCL.getX(), pCL.getY());
                     g2.draw(path);
-                    if (turnout.continuingSense != state) {  // unknown or diverting path
+                    if (getContinuingSense() != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
@@ -557,7 +2444,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     path.quadTo(pMR.getX(), pMR.getY(), pFR.getX(), pFR.getY());
                     path.lineTo(pBR.getX(), pBR.getY());
                     g2.draw(path);
-                    if (turnout.continuingSense != state) {  // unknown or diverting path
+                    if (getContinuingSense() != state) {  // unknown or diverting path
                         path = new GeneralPath();
                         path.moveTo(pAPR.getX(), pAPR.getY());
                         path.quadTo(pMR.getX(), pMR.getY(), pF.getX(), pF.getY());
@@ -577,7 +2464,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                     path.lineTo(pCL.getX(), pCL.getY());
                     g2.draw(path);
                     g2.draw(new Line2D.Double(pF, pCR));
-                    if (turnout.continuingSense != state) {  // unknown or diverting path
+                    if (getContinuingSense() != state) {  // unknown or diverting path
 //                         path = new GeneralPath();
 //                         path.moveTo(pSL.getX(), pSL.getY());
 //                         path.quadTo(pML.getX(), pML.getY(), pFPL.getX(), pFPL.getY());
@@ -1075,7 +2962,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
             }
             default: {
                 // this should never happen... but...
-                log.error("{}.draw2(...); Unknown turnout type {}", getName(), turnoutType);
+                log.error("{}.draw2(...); Unknown turnout type {}", getName(), type);
                 break;
             }
         }
@@ -1087,23 +2974,23 @@ public class LayoutTurnoutView extends LayoutTrackView {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_A))
-                && (turnout.getConnectA() == null)) {
-            g2.fill(turnout.trackControlCircleAt(getCoordsA()));
+                && (getConnectA() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_B))
-                && (turnout.getConnectB() == null)) {
-            g2.fill(turnout.trackControlCircleAt(getCoordsB()));
+                && (getConnectB() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
         if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_C))
-                && (turnout.getConnectC() == null)) {
-            g2.fill(turnout.trackControlCircleAt(getCoordsC()));
+                && (getConnectC() == null)) {
+            g2.fill(trackControlCircleAt(getCoordsC()));
         }
-        if (turnout.isTurnoutTypeXover()) {
+        if (isTurnoutTypeXover()) {
             if (((specificType == HitPointType.NONE) || (specificType == HitPointType.TURNOUT_D))
-                    && (turnout.getConnectD() == null)) {
-                g2.fill(turnout.trackControlCircleAt(getCoordsD()));
+                    && (getConnectD() == null)) {
+                g2.fill(trackControlCircleAt(getCoordsD()));
             }
         }
     }
@@ -1113,20 +3000,20 @@ public class LayoutTurnoutView extends LayoutTrackView {
      */
     @Override
     protected void drawTurnoutControls(Graphics2D g2) {
-        if (!turnout.disabled && !(turnout.disableWhenOccupied && turnout.isOccupied())) {
+        if (!isDisabled() && !(isDisabledWhenOccupied() && isOccupied())) {
             Color foregroundColor = g2.getColor();
             // if turnout is not continuing state
-            if (turnout.getState() != turnout.continuingSense) {
+            if (getState() != getContinuingSense()) {
                 // then switch to background color
                 g2.setColor(g2.getBackground());
             }
-            if (turnout.layoutEditor.isTurnoutFillControlCircles()) {
-                g2.fill(turnout.trackControlCircleAt(getCoordsCenter()));
+            if (layoutEditor.isTurnoutFillControlCircles()) {
+                g2.fill(trackControlCircleAt(getCoordsCenter()));
             } else {
-                g2.draw(turnout.trackControlCircleAt(getCoordsCenter()));
+                g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
             // if turnout is not continuing state
-            if (turnout.getState() != turnout.continuingSense) {
+            if (getState() != getContinuingSense()) {
                 // then restore foreground color
                 g2.setColor(foregroundColor);
             }
@@ -1139,55 +3026,147 @@ public class LayoutTurnoutView extends LayoutTrackView {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsA();
-        if (turnout.isTurnoutTypeXover() || turnout.isTurnoutTypeSlip()) {
-            if (turnout.getConnectA() == null) {
+        if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
+            if (getConnectA() == null) {
                 g2.setColor(Color.magenta);
             } else {
                 g2.setColor(Color.blue);
             }
         } else {
-            if (turnout.getConnectA() == null) {
+            if (getConnectA() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(turnout.layoutEditor.layoutEditorControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
         pt = getCoordsB();
-        if (turnout.getConnectB() == null) {
+        if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(turnout.layoutEditor.layoutEditorControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
         pt = getCoordsC();
-        if (turnout.getConnectC() == null) {
+        if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(turnout.layoutEditor.layoutEditorControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
-        if (turnout.isTurnoutTypeXover() || turnout.isTurnoutTypeSlip()) {
+        if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
             pt = getCoordsD();
-            if (turnout.getConnectD() == null) {
+            if (getConnectD() == null) {
                 g2.setColor(Color.red);
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(turnout.layoutEditor.layoutEditorControlRectAt(pt));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
         }
     }
 
+    /*
+    * Used by ConnectivityUtil to determine the turnout state necessary to get
+    * from prevLayoutBlock ==> currLayoutBlock ==> nextLayoutBlock
+     */
+    protected int getConnectivityStateForLayoutBlocks(
+            LayoutBlock currLayoutBlock,
+            LayoutBlock prevLayoutBlock,
+            LayoutBlock nextLayoutBlock,
+            boolean suppress) {
+            
+        return turnout.getConnectivityStateForLayoutBlocks(currLayoutBlock,
+                                                            prevLayoutBlock, 
+                                                            nextLayoutBlock,
+                                                            suppress);
+    }
+
     /**
-     * Draw track decorations.
-     * <p>
-     * This type of track has none, so this method is empty.
+     * {@inheritDoc}
+     */
+    // TODO: on the cross-overs, check the internal boundary details.
+    @Override
+    public void reCheckBlockBoundary() {
+    
+        turnout.reCheckBlockBoundary();
+ 
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    protected void drawDecorations(Graphics2D g2) {
+    protected List<LayoutConnectivity> getLayoutConnectivity() {
+        return turnout.getLayoutConnectivity();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public @Nonnull
+    List<HitPointType> checkForFreeConnections() {
+        return turnout.checkForFreeConnections();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUnAssignedBlocks() {
+        // because getLayoutBlock[BCD] will return block [A] if they're null
+        // we only need to test block [A]
+        return turnout.checkForUnAssignedBlocks();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void checkForNonContiguousBlocks(
+            @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
+            
+        turnout.checkForNonContiguousBlocks(blockNamesToTrackNameSetsMap);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void collectContiguousTracksNamesInBlockNamed(
+            @Nonnull String blockName,
+            @Nonnull Set<String> TrackNameSet) {
+        
+        turnout.collectContiguousTracksNamesInBlockNamed(blockName, TrackNameSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
+        turnout.setAllLayoutBlocks(layoutBlock);
+    }
+
+    private static class AbstractActionImpl extends AbstractAction {
+
+        private final String blockName;
+        private final LayoutBlock layoutBlock;
+
+        public AbstractActionImpl(String name, String blockName, LayoutBlock layoutBlock) {
+            super(name);
+            this.blockName = blockName;
+            this.layoutBlock = layoutBlock;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockName, layoutBlock);
+            routeTableAction.actionPerformed(e);
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutView.class);
