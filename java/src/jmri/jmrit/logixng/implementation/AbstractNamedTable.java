@@ -22,11 +22,13 @@ import jmri.jmrit.logixng.NamedTableManager;
 
 /**
  * The default implementation of a NamedTable
+ * 
+ * @author Daniel Bergqvist 2018
  */
-public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
+public abstract class AbstractNamedTable extends AbstractNamedBean implements NamedTable {
 
     private int _state = NamedBean.UNKNOWN;
-    private final AnonymousTable _internalTable;
+    protected final AnonymousTable _internalTable;
     
     /**
      * Create a new named table.
@@ -35,7 +37,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
      * @param numRows the number or rows in the table
      * @param numColumns the number of columns in the table
      */
-    public DefaultNamedTable(
+    public AbstractNamedTable(
             @Nonnull String sys, @CheckForNull String user,
             int numRows, int numColumns)
             throws BadUserNameException, BadSystemNameException {
@@ -51,7 +53,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
      * @param data the data in the table. Note that this data is not copied to
      * an new array but used by the table as is.
      */
-    public DefaultNamedTable(
+    public AbstractNamedTable(
             @Nonnull String systemName, @CheckForNull String userName,
             @Nonnull Object[][] data)
             throws BadUserNameException, BadSystemNameException {
@@ -66,8 +68,8 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     }
     
     private static NamedTable loadFromCSV(
-            @Nonnull List<String> lines,
-            @CheckForNull String systemName, @CheckForNull String userName)
+            @CheckForNull String systemName, @CheckForNull String userName,
+            @Nonnull List<String> lines)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
@@ -110,7 +112,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             }
         }
         
-        NamedTable table = new DefaultNamedTable(systemName, userName, csvCells);
+        NamedTable table = new DefaultInternalNamedTable(systemName, userName, csvCells);
         manager.register(table);
         
         return table;
@@ -120,23 +122,23 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             throws BadUserNameException, BadSystemNameException {
         
         List<String> lines = Arrays.asList(text.split("\\r?\\n",-1));
-        return loadFromCSV(lines, null, null);
+        return loadFromCSV(null, null, lines);
     }
     
     public static NamedTable loadTableFromCSV_File(@Nonnull File file)
             throws BadUserNameException, BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(lines, null, null);
+        return loadFromCSV(null, null, lines);
     }
     
-    static public NamedTable loadTableFromCSV_File(
-            @Nonnull File file,
-            @Nonnull String systemName, @CheckForNull String userName)
+    public static NamedTable loadTableFromCSV_File(
+            @Nonnull String systemName, @CheckForNull String userName,
+            @Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        return loadFromCSV(lines, systemName, userName);
+        return loadFromCSV(systemName, userName, lines);
     }
     
     /**
@@ -147,7 +149,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             throws FileNotFoundException {
         _internalTable.storeTableAsCSV(file, getSystemName(), getUserName());
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -164,19 +166,19 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public void setState(int s) throws JmriException {
         _state = s;
     }
-
+    
     @Override
     public int getState() {
         return _state;
     }
-
+    
     @Override
     public String getBeanType() {
-        return Bundle.getMessage("BeanNameLogixNG");
+        return Bundle.getMessage("BeanNameTable");
 //        return Manager.LOGIXNGS;
 //        return NamedTable.class;
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -184,7 +186,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public Object getCell(int row, int column) {
         return _internalTable.getCell(row, column);
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -192,7 +194,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public void setCell(Object value, int row, int column) {
         _internalTable.setCell(value, row, column);
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -200,7 +202,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public int numRows() {
         return _internalTable.numRows();
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -208,7 +210,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public int numColumns() {
         return _internalTable.numColumns();
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -216,7 +218,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public int getRowNumber(String rowName) {
         return _internalTable.getRowNumber(rowName);
     }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -224,5 +226,21 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     public int getColumnNumber(String columnName) {
         return _internalTable.getColumnNumber(columnName);
     }
-
+/*    
+    protected void insertColumn(int col) {
+        _internalTable.insertColumn(col);
+    }
+    
+    protected void deleteColumn(int col) {
+        _internalTable.deleteColumn(col);
+    }
+    
+    protected void insertRow(int row) {
+        _internalTable.insertRow(row);
+    }
+    
+    protected void deleteRow(int row) {
+        _internalTable.deleteRow(row);
+    }
+*/
 }

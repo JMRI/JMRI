@@ -77,11 +77,14 @@ public class DefaultAnonymousTable implements AnonymousTable {
     private void setupTable() {
         for (int i=1; i <= _numRows; i++) {
             Object cell = _data[i][0];
-            if (cell != null) {
+            if (cell != null && cell instanceof String) {
                 rowNames.put(cell.toString(), i);
-            } else {
-                rowNames.put(Integer.toString(i), i);
             }
+//            if (cell != null) {
+//                rowNames.put(cell.toString(), i);
+//            } else {
+//                rowNames.put(Integer.toString(i), i);
+//            }
         }
         
         for (int i=1; i <= _numColumns; i++) {
@@ -193,6 +196,26 @@ public class DefaultAnonymousTable implements AnonymousTable {
         }
         // If here, the row is not found
         return -1;
+    }
+
+    @Override
+    public void insertColumn(int col) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void deleteColumn(int col) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void insertRow(int row) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public void deleteRow(int row) {
+        throw new UnsupportedOperationException("Not supported");
     }
 
 }

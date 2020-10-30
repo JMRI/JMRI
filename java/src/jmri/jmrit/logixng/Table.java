@@ -16,6 +16,18 @@ public interface Table {
 
     /**
      * Get the value of a cell.
+     * If the table has both rows and columns, the value of the first column
+     * will be returned.
+     * @param row the row of the cell or null if all rows should be returned
+     * @return the value of the cell
+     */
+    @CheckReturnValue
+    default public Object getCell(int row) {
+        return getCell(row, 1);
+    }
+    
+    /**
+     * Get the value of a cell.
      * @param row the row of the cell
      * @param column the column of the cell
      * @return the value of the cell
@@ -32,7 +44,12 @@ public interface Table {
      */
     @CheckReturnValue
     default public Object getCell(@Nonnull String row) {
-        return getCell(row, Integer.toString(1));
+        int rowNumber = getRowNumber(row);
+        if (rowNumber == -1) {
+            throw new IllegalArgumentException("Row '"+row+"' is not found");
+        }
+        
+        return getCell(rowNumber, 1);
     }
     
     /**
@@ -77,7 +94,12 @@ public interface Table {
      * @param row the row of the cell
      */
     default public void setCell(Object value, String row) {
-        setCell(value, row, Integer.toString(1));
+        int rowNumber = getRowNumber(row);
+        if (rowNumber == -1) {
+            throw new IllegalArgumentException("Row '"+row+"' is not found");
+        }
+        
+        setCell(value, rowNumber, 1);
     }
     
     /**

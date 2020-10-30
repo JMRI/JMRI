@@ -172,7 +172,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         m.setValue("Table 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        InstanceManager.getDefault(NamedTableManager.class).newTable("IQT1", "Table 1", 2, 3);
+        InstanceManager.getDefault(NamedTableManager.class).newInternalTable("IQT1", "Table 1", 2, 3);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         Assert.assertEquals("Reference {IM1} is Table", expressionReference.getLongDescription());
         
@@ -240,7 +240,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         m.setValue("Table 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        InstanceManager.getDefault(NamedTableManager.class).newTable("IQT2", "Table 2", 2, 3);
+        InstanceManager.getDefault(NamedTableManager.class).newInternalTable("IQT2", "Table 2", 2, 3);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         Assert.assertEquals("Reference {IM1} is not Table", expressionReference.getLongDescription());
         

@@ -19,12 +19,12 @@ public class DefaultNamedTableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new DefaultNamedTable("IQT10", "A table", 10, 15));
+        Assert.assertNotNull("exists", new DefaultInternalNamedTable("IQT10", "A table", 10, 15));
     }
     
     @Test
     public void testCSVFile() throws IOException {
-        NamedTable table = DefaultNamedTable.loadTableFromCSV_File(
+        NamedTable table = AbstractNamedTable.loadTableFromCSV_File(
                 new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"));
         
         FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");

@@ -104,7 +104,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     
     protected abstract boolean isEnabled(E bean);
     
-    protected abstract E createBean(String systemName);
+    protected abstract E createBean(String userName);
     
     protected abstract E createBean(String systemName, String userName);
     
@@ -873,7 +873,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     void createPressed(ActionEvent e) {
         // possible change
         _showReminder = true;
-        String sName = "";
+        String sName;
         String uName = _addUserName.getText().trim();
         if (uName.length() == 0) {
             uName = null;

@@ -46,13 +46,10 @@ import jmri.util.JmriJFrame;
 
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.tools.swing.AbstractLogixNGEditor;
-import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
+import jmri.jmrit.logixng.tools.swing.TableEditor;
 
 /**
  * Swing action to create and register a LogixNG Table.
@@ -79,6 +76,11 @@ import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
  */
 public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTable> {
 
+    JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
+    JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
+    JRadioButton _typeStackTable = new JRadioButton("Stack. Temporary internal table");
+    ButtonGroup _buttonGroup = new ButtonGroup();
+    
     /**
      * Create a LogixNGTableAction instance.
      *
@@ -98,8 +100,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     @Override
     protected AbstractLogixNGEditor<NamedTable> getEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
-        return null;
-//        return new TableEditor(f, m, sName);
+        return new TableEditor(f, m, sName);
     }
     
     @Override
@@ -119,17 +120,32 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     
     @Override
     protected boolean isEnabled(NamedTable bean) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override
-    protected NamedTable createBean(String systemName) {
-//        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, null);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected NamedTable createBean(String userName) {
+        String systemName = InstanceManager.getDefault(NamedTableManager.class).getAutoSystemName();
+        return createBean(systemName, userName);
     }
     
     @Override
     protected NamedTable createBean(String systemName, String userName) {
+        if (_typeExternalTable.isSelected()) {
+            // Let the user select which CSV file to load.
+            // The user may specify if the file should be in program folder,
+            // user folder, or anywhere else. How?
+        } else if (_typeInternalTable.isSelected()) {
+            // Open table editor
+        } else if (_typeStackTable.isSelected()) {
+            return InstanceManager.getDefault(NamedTableManager.class).newStack(systemName, userName);
+        } else {
+            log.error("No table type selected");
+            throw new RuntimeException("No table type selected");
+        }
+        
+        
 //        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -192,10 +208,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 0;
         p.add(_autoSystemName, c);
         
-        JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
-        JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
-        JRadioButton _typeStackTable = new JRadioButton("Stack. Temporary internal table");
-        ButtonGroup _buttonGroup = new ButtonGroup();
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
         _buttonGroup.add(_typeStackTable);
@@ -204,8 +216,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N
         contentPane.add(p);
-        
-        
         
         JPanel panel98 = new JPanel();
         panel98.setLayout(new FlowLayout());
@@ -216,9 +226,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         panel99.add(_typeStackTable, c);
         panel98.add(panel99);
         contentPane.add(panel98);
-        
-        
-        
         
         // set up message
         JPanel panel3 = new JPanel();
@@ -256,5 +263,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         });
         return panel5;
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableTableAction.class);
 
 }

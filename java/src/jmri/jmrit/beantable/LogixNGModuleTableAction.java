@@ -126,7 +126,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
     
     @Override
-    protected Module createBean(String systemName) {
+    protected Module createBean(String userName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

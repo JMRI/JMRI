@@ -10,11 +10,11 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.AnonymousTable;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
+
+import org.openide.util.Exceptions;
 
 /**
  * Class providing the basic logic of the NamedTable_Manager interface.
@@ -60,7 +60,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
-    public NamedTable newTable(String systemName, String userName, int numRows, int numColumns)
+    public NamedTable newCSVTable(String systemName, String userName, String fileName)
             throws IllegalArgumentException {
         
         // Check that NamedTable does not already exist
@@ -79,8 +79,12 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         if (this.validSystemNameFormat(systemName) != NameValidity.VALID) {
             throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
         }
-        // NamedTable does not exist, create a new NamedTable
-        x = new DefaultNamedTable(systemName, userName, numRows, numColumns);
+        try {
+            // NamedTable does not exist, create a new NamedTable
+            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, new File(fileName));
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         // save in the maps
         register(x);
         
@@ -88,6 +92,74 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         updateAutoNumber(systemName);
         
         return x;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NamedTable newInternalTable(String systemName, String userName, int numRows, int numColumns)
+            throws IllegalArgumentException {
+        
+        // Check that NamedTable does not already exist
+        NamedTable x;
+        if (userName != null && !userName.equals("")) {
+            x = getByUserName(userName);
+            if (x != null) {
+                return null;
+            }
+        }
+        x = getBySystemName(systemName);
+        if (x != null) {
+            return null;
+        }
+        // Check if system name is valid
+        if (this.validSystemNameFormat(systemName) != NameValidity.VALID) {
+            throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
+        }
+        // Table does not exist, create a new NamedTable
+        x = new DefaultInternalNamedTable(systemName, userName, numRows, numColumns);
+        // save in the maps
+        register(x);
+        
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+        
+        return x;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Stack newStack(String systemName, String userName)
+            throws IllegalArgumentException {
+        
+        // Check that NamedTable does not already exist
+        NamedTable x;
+        if (userName != null && !userName.equals("")) {
+            x = getByUserName(userName);
+            if (x != null) {
+                return null;
+            }
+        }
+        x = getBySystemName(systemName);
+        if (x != null) {
+            return null;
+        }
+        // Check if system name is valid
+        if (this.validSystemNameFormat(systemName) != NameValidity.VALID) {
+            throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
+        }
+        // Table does not exist, create a new Stack
+        Stack stack = new DefaultStackTable(systemName, userName);
+        // save in the maps
+        register(stack);
+        
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+        
+        return stack;
     }
 /*
     @Override
@@ -114,7 +186,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public NamedTable loadTableFromCSV(@Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        return DefaultNamedTable.loadTableFromCSV_Text(text);
+        return AbstractNamedTable.loadTableFromCSV_Text(text);
     }
     
     /**
@@ -123,7 +195,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
     @Override
     public NamedTable loadTableFromCSV(@Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return DefaultNamedTable.loadTableFromCSV_File(file);
+        return AbstractNamedTable.loadTableFromCSV_File(file);
     }
     
     /**
@@ -134,7 +206,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             @Nonnull File file,
             @Nonnull String sys, @CheckForNull String user)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
-        return DefaultNamedTable.loadTableFromCSV_File(file, sys, user);
+        return AbstractNamedTable.loadTableFromCSV_File(sys, user, file);
     }
     
     /**

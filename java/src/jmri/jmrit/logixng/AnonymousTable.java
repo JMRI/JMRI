@@ -9,4 +9,13 @@ package jmri.jmrit.logixng;
  * @author Daniel Bergqvist Copyright (C) 2019
  */
 public interface AnonymousTable extends Table {
+    
+    public void insertColumn(int col);
+    
+    public void deleteColumn(int col);
+    
+    public void insertRow(int row);
+    
+    public void deleteRow(int row);
+    
 }

@@ -25,15 +25,39 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public AnonymousTable newAnonymousTable(int numRows, int numColumns);
     
     /**
-     * Create a new named table.
-     * This table is stored in the manager.
+     * Create a new CSV table.
+     * This table is stored in the manager but it's contents does only exists
+     * in the CSV file. If the CSV file is changed, the contents will be read
+     * on the next start of the program.
+     * @param systemName the system name of the table
+     * @param userName the user name of the table, or null if no user name
+     * @param fileName the file name of the CSV file
+     * @return the new table
+     */
+    public NamedTable newCSVTable(String systemName, String userName, String fileName);
+    
+    /**
+     * Create a new internal named table.
+     * This table is stored in the manager together with its contents. Note
+     * that a big table will take a lot of space in the panel file since the
+     * storage of table data has a lot of overhead. For larger tables, a CSV
+     * table is recommended.
      * @param systemName the system name of the table
      * @param userName the user name of the table, or null if no user name
      * @param numRows number of rows in the table
      * @param numColumns number of columns in the table
      * @return the new table
      */
-    public NamedTable newTable(String systemName, String userName, int numRows, int numColumns);
+    public NamedTable newInternalTable(String systemName, String userName, int numRows, int numColumns);
+    
+    /**
+     * Create a new internal named table.
+     * This table is stored in the manager.
+     * @param systemName the system name of the table
+     * @param userName the user name of the table, or null if no user name
+     * @return the new table
+     */
+    public Stack newStack(String systemName, String userName);
     
     /**
      * Load a table from a CSV text.
