@@ -309,6 +309,10 @@ public class LoadAndStoreTestBase {
             loadFile(file);
         }
 
+        // to ease comparison, dump the history information;
+        // if you need to turn that off you can override
+        dumpHistory();
+        
         // find comparison files
         File compFile = new File(file.getCanonicalFile().getParentFile().
                 getParent() + "/loadref/" + file.getName());
@@ -324,10 +328,21 @@ public class LoadAndStoreTestBase {
 
         JUnitAppender.suppressErrorMessage("systemName is already registered: ");
     }
-
+  
+    /** 
+     * By default, drop the history information
+     * to simplify diffing the files. 
+     * Override if that info is needed for a test.  
+     */
+    protected void dumpHistory(){
+        jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).purge(0);
+    }
+    
     /**
-     * If anything, i.e. typically a delay, is needed after loading the file, it
-     * can be added by override here.
+     * If anything, i.e. typically a delay,
+     * is needed after loading the file before storing or doing 
+     * any final tests, 
+     * it can be added by override here.
      */
     protected void postLoadProcessing() {
         // by default do nothing
@@ -346,6 +361,11 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.clearBlockBossLogic();
         System.setProperty("jmri.test.no-dialogs", "true");
+        
+        // kill the fast clock and set to a consistent time
+        jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
+        clock.setRun(false);
+        clock.setTime(java.time.Instant.EPOCH);  // just a specific time
     }
 
     @AfterEach

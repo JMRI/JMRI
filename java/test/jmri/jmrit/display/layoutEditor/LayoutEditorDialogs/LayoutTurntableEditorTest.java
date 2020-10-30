@@ -39,7 +39,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTrack(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntableView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
@@ -130,6 +130,8 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     @Test
@@ -139,7 +141,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTrack(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntableView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
@@ -153,11 +155,13 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the Turntable
-        editor.editLayoutTrack(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntableView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     @Test
@@ -167,7 +171,7 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
         LayoutTurntableEditor editor = new LayoutTurntableEditor(layoutEditor);
 
         // Edit the layoutTurntable
-        editor.editLayoutTrack(layoutTurntable);
+        editor.editLayoutTrack(layoutTurntableView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle
@@ -208,9 +212,12 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     private LayoutEditor layoutEditor = null;
+    private LayoutTurntableView layoutTurntableView = null;
     private LayoutTurntable layoutTurntable = null;
 
     @BeforeEach
@@ -230,9 +237,9 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
 
             // Turntable
             point = MathUtil.add(point, delta);
-            layoutTurntable = new LayoutTurntable("Turntable",
-                    point, layoutEditor);
-
+            layoutTurntable = new LayoutTurntable("Turntable", layoutEditor);
+            layoutTurntableView = new LayoutTurntableView(layoutTurntable, point, layoutEditor);
+            layoutEditor.addLayoutTrack(layoutTurntable, layoutTurntableView);
         }
     }
 
@@ -240,7 +247,6 @@ public class LayoutTurntableEditorTest extends LayoutTrackEditorTest {
     public void tearDown() {
         if (layoutTurntable != null) {
             layoutTurntable.remove();
-            layoutTurntable.dispose();
         }
 
         if (layoutEditor != null) {

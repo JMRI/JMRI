@@ -1,13 +1,17 @@
 package jmri.jmrix.can.cbus;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
 import jmri.InstanceManager;
 import jmri.MeterManager;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -132,11 +136,15 @@ public class CbusConfigurationManagerTest {
     private CbusConfigurationManager t;
     private CbusPreferences prefs;
     
+    @TempDir
+    protected Path tempDir;
+    
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        
+        JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
+
         // This test requires a registred connection config since ProxyMeterManager
         // auto creates system meter managers using the connection configs.
         InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
@@ -149,6 +157,7 @@ public class CbusConfigurationManagerTest {
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
         prefs = new CbusPreferences();
+        
         jmri.InstanceManager.store(prefs,CbusPreferences.class );
         
         t = new CbusConfigurationManager(memo);

@@ -6,7 +6,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
@@ -457,7 +458,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals("BM", data.path(JSON.ROAD).asText());
         assertEquals("216", data.path(JSON.NUMBER).asText());
         assertThat(data.path(JSON.RFID).isValueNode()).isTrue();
-        assertEquals("1234567890AB", data.path(JSON.RFID).asText());
+        assertEquals("ID1234567890AB", data.path(JSON.RFID).asText());
         assertThat(data.path(JsonOperations.CAR_TYPE).asText()).isNotEqualTo(engine.getTypeName());
         assertEquals("Diesel", data.path(JsonOperations.CAR_TYPE).asText());
         assertEquals("Rebuild", data.path(JsonOperations.CAR_SUB_TYPE).asText());

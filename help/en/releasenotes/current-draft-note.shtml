@@ -132,7 +132,7 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>Network connections: Support added for auto-reconnect.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>
@@ -404,7 +404,13 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-	        <li></li>
+	        <li>The Layout Editor code has been substantially restructured in this release.
+	            If you have scripts that reference the jmri.jmrit.display.layoutEditor package
+	            please check them carefully, as new classes have been created and 
+	            some methods have moved.  Panel files containing Layout Editor panels
+	            that are stored (written out) by this release may not be readable 
+	            by earlier releases; this release should load older files just fine.
+	        </li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
