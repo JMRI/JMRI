@@ -135,8 +135,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(minX, y);
-            stopPt.setLocation(maxX, y);
+            startPt = new Point2D.Double(minX, y);
+            stopPt = new Point2D.Double(maxX, y);
 
             if ((y % wideMod) < wideMin) {
                 g2.setStroke(wide);
@@ -149,8 +149,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw vertical lines
         for (int x = minX; x <= maxX; x += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(x, minY);
-            stopPt.setLocation(x, maxY);
+            startPt = new Point2D.Double(x, minY);
+            stopPt = new Point2D.Double(x, maxY);
 
             if ((x % wideMod) < wideMin) {
                 g2.setStroke(wide);
