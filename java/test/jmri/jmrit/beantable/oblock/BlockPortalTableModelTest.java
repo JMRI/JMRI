@@ -19,7 +19,7 @@ public class BlockPortalTableModelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TableFrames f = new TableFrames();
         BlockPortalTableModel t = new BlockPortalTableModel(new OBlockTableModel(f));
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @BeforeEach

@@ -11,7 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Defines a GUI for editing OBlocks, Portals and Path objects. Based on AudioSourceFrame.
+ * Defines a GUI for editing OBlocks, Portals and Path objects in the tabbed Table interface.
+ * Based on AudioSourceFrame.
  *
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse (C) 2020

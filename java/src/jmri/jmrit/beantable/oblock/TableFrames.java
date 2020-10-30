@@ -163,9 +163,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-//    public void setParentFrame(OBlockTableFrame parent) {
-//        _tabbedFrame = parent;
-//        // more?
+//    /**
+//     * For test setup
+//     * @param tabbed true for tabbed interface, false for original _desktop
+//     */
+//    public void setTabbed(boolean tabbed) {
+//        _tabbed = tabbed;
 //    }
 
     public JMenuBar addMenus(JMenuBar mBar) {

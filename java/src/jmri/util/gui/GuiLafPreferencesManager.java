@@ -639,4 +639,5 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }
+
 }

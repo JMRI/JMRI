@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * GUI to define Portal-Block-Portal combos for OBlocks.
- * No differences between _desktop nd _tabbed code.
+ * No differences between _desktop and _tabbed code, so _tabbed not stored.
  * <hr>
  * This file is part of JMRI.
  * <p>

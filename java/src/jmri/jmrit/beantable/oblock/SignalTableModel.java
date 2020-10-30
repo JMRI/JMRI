@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
+//import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -54,10 +54,13 @@ public class SignalTableModel extends AbstractTableModel {
     int _lastIdx; // for debug
 
     //private final CopyOnWriteArrayList<SignalRow> _signalList = new CopyOnWriteArrayList<>();
-    private ArrayList<SignalRow> _signalList = new ArrayList<SignalRow>();
     PortalManager _portalMgr;
+    TableFrames _parent;
+    private SignalArray _signalList = new SignalArray();
     private final boolean _tabbed; // updated from prefs (restart required)
-    private float _tempLen = 0.0f;      // mm for length col of tempRow
+    private float _tempLen = 0.0f; // mm for length col of tempRow
+    private String[] tempRow;
+    java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
     private static class SignalRow {
 
@@ -76,6 +79,7 @@ public class SignalTableModel extends AbstractTableModel {
             _length = length;
             _isMetric = isMetric;
         }
+
         void setSignal(NamedBean signal) {
             _signal = signal;
         }
@@ -112,11 +116,16 @@ public class SignalTableModel extends AbstractTableModel {
         boolean isMetric() {
             return _isMetric;
         }
+
     }
 
-    private String[] tempRow;
-    java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
-    TableFrames _parent;
+    static class SignalArray extends ArrayList<SignalRow> {
+
+        public int numberOfSignals() {
+            return size();
+        }
+
+    }
 
     public SignalTableModel(TableFrames parent) {
         super();
@@ -143,7 +152,7 @@ public class SignalTableModel extends AbstractTableModel {
     private void makeList() {
         //CopyOnWriteArrayList<SignalRow> tempList = new CopyOnWriteArrayList<>();
         //_signalList.clear(); // EBR try to fix +1 rows bug
-        ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
+        SignalArray tempList = new SignalArray();
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
             // check portal is well formed
@@ -156,14 +165,14 @@ public class SignalTableModel extends AbstractTableModel {
                     sr = new SignalRow(signal, fromBlock, portal, toBlock, portal.getFromSignalOffset(), toBlock.isMetric());
                     //_signalList.add(sr);
                     addToList(tempList, sr);
-                    log.debug("1 SR added to tempList, new size = {}", tempList.size());
+                    log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
                 }
                 signal = portal.getToSignal();
                 if (signal != null) {
                     sr = new SignalRow(signal, toBlock, portal, fromBlock, portal.getToSignalOffset(), fromBlock.isMetric());
                     //_signalList.add(sr);
                     addToList(tempList, sr);
-                    log.debug("1 SR added to tempList, new size = {}", tempList.size());
+                    log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
                 }
             } else {
                 // Can't get jmri.util.JUnitAppender.assertErrorMessage recognized in TableFramesTest! OK just warn then
@@ -171,29 +180,27 @@ public class SignalTableModel extends AbstractTableModel {
             }
         }
         //_signalList = tempList;
-        //if (tempList instanceof ArrayList<SignalRow>) {
-            _signalList = (ArrayList<SignalRow>) tempList.clone(); // unchecked cast TODO fix
-            _lastIdx = tempList.size();
-        //}
-        log.debug("TempList copied, size = {}", tempList.size());
+        _signalList = (SignalArray) tempList.clone();
+        _lastIdx = tempList.numberOfSignals();
+        log.debug("TempList copied, size = {}", tempList.numberOfSignals());
         _signalList.sort(new NameSorter());
-        log.debug("makeList exit: _signalList size {} items.", _signalList.size());
+        log.debug("makeList exit: _signalList size {} items.", _signalList.numberOfSignals());
     }
 
-    private static void addToList(List<SignalRow> list, SignalRow sr) {
-        // not in list, for the sort, insert at correct position // TODO EBR add + sort instead?
+    private static void addToList(SignalArray array, SignalRow sr) {
+        // not in array, for the sort, insert at correct position // TODO add + sort instead?
         boolean add = true;
-        for (int j = 0; j < list.size(); j++) {
-            if (sr.getSignal().getDisplayName().compareTo(list.get(j).getSignal().getDisplayName()) < 0) {
-                list.add(j, sr); // added first time
+        for (int j = 0; j < array.numberOfSignals(); j++) {
+            if (sr.getSignal().getDisplayName().compareTo(array.get(j).getSignal().getDisplayName()) < 0) {
+                array.add(j, sr); // added first time
                 add = false;
                 log.debug("comparing list item {} name {}", j, sr.getSignal().getDisplayName());
                 break;
             }
         }
         if (add) {
-            list.add(sr); // added again?
-            log.debug("comparing list item at last pos {} name {}", list.size() , sr.getSignal().getDisplayName());
+            array.add(sr);
+            log.debug("comparing list item at last pos {} name {}", array.numberOfSignals() , sr.getSignal().getDisplayName());
         }
     }
 
@@ -325,8 +332,8 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        log.debug("_signalList.size() = {}", _signalList.size()); // EBR debug
-        return _signalList.size() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
+        log.debug("_signalList.numberOfSignals = {}", _signalList.numberOfSignals()); // EBR debug
+        return _signalList.numberOfSignals() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
         // +1 adds the extra empty row at the bottom of the table display, causes IOB when called externally when _tabbed
     }
 
@@ -355,10 +362,10 @@ public class SignalTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex > _lastIdx) {
-            log.debug("getValueAt rowIndex= {}, _signalList.size()= {}", rowIndex, _signalList.size());
+            log.debug("getValueAt rowIndex = {}, _signalList.numberOfSignals = {}", rowIndex, _signalList.numberOfSignals());
         }
 
-        if (!_tabbed && rowIndex == _signalList.size()) { // this must be tempRow, a new entry, read values from tempRow
+        if (!_tabbed && rowIndex == _signalList.numberOfSignals()) { // this must be tempRow, a new entry, read values from tempRow
             if (columnIndex == LENGTHCOL) {
                 log.debug("GetValue SignalTable length entered {} =============== in row {}", _tempLen, rowIndex);
                 if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
@@ -371,9 +378,9 @@ public class SignalTableModel extends AbstractTableModel {
             }
             return tempRow[columnIndex];
         }
-        if (rowIndex >= _signalList.size() || rowIndex >= _lastIdx) {
-            log.error("SignalTable requested ROW {}, SIZE is {}, expected {}", rowIndex, _signalList.size(), _lastIdx);
-            log.debug("items in list: {}", _signalList.size()); // EBR debug
+        if (rowIndex >= _signalList.numberOfSignals() || rowIndex >= _lastIdx) {
+            log.error("SignalTable requested ROW {}, SIZE is {}, expected {}", rowIndex, _signalList.numberOfSignals(), _lastIdx);
+            log.debug("items in list: {}", _signalList.numberOfSignals()); // EBR debug
             return columnIndex + "" + rowIndex + "?";
         }
 
@@ -418,7 +425,7 @@ public class SignalTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
-        if (_signalList.size() == row) { // this is the new entry in tempRow, not yet in _signalList
+        if (_signalList.numberOfSignals() == row) { // this is the new entry in tempRow, not yet in _signalList
             if (col == DELETE_COL) { // labeled "Clear"
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -530,7 +537,7 @@ public class SignalTableModel extends AbstractTableModel {
                         msg = setSignal(signalRow, false);
                         if (msg==null) {
                             //if (signalRow.getLength() == 0) {
-                                log.error("#502 empty tempRow added to SignalList (now {})", _signalList.size());
+                                log.error("#502 empty tempRow added to SignalList (now {})", _signalList.numberOfSignals());
                             //}
                             _signalList.add(signalRow);                            
                         }
@@ -694,7 +701,7 @@ public class SignalTableModel extends AbstractTableModel {
                 case DELETE_COL:
                     deleteSignal(signalRow);
                     _signalList.remove(signalRow);
-                    log.debug("ROW {} DELETED, tablerows = {}, list size = {}", row, getRowCount(), _signalList.size());
+                    log.debug("ROW {} DELETED, tablerows = {}, list size = {}", row, getRowCount(), _signalList.numberOfSignals());
                     fireTableDataChanged();
                     break;
                 default:

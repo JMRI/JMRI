@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to edit OBlock objects.
+ * GUI to edit OBlock objects in tabbed table interface.
  * Adapted from AbstractAudioFrame + -ListenerFrame 2020 by Egbert Broerse.
  *
  * @author Matthew Harris copyright (c) 2009

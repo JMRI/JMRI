@@ -46,17 +46,17 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     PortalManager _manager;
     private final String[] tempRow = new String[NUMCOLS];
-    private final boolean _tabbed; // updated from prefs (restart required)
+    private final boolean _tabbed; // set from prefs (restart required)
     TableFrames _parent;
 
     public PortalTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
+        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
         _manager = InstanceManager.getDefault(PortalManager.class);
         _manager.addPropertyChangeListener(this);
-        _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-        // specific stuff for _desktop
         if (!_tabbed) {
+            // specific stuff for _desktop
             initTempRow();
         }
     }

@@ -72,7 +72,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     static public final String severeText = Bundle.getMessage("BlockSevere");
     static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
 
-    static String ZEROS = "000000000";      // 9 bits have OBlock state info
+    static String ZEROS = "000000000";      // 9 bits contain the OBlock state info
 
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
@@ -85,9 +85,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     public OBlockTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
-        _manager = InstanceManager.getDefault(OBlockManager.class);
-        _manager.addPropertyChangeListener(this);
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
+        if (_tabbed) {
+            _manager = InstanceManager.getDefault(OBlockManager.class); // TODO also for _desktop?
+            _manager.addPropertyChangeListener(this);
+        }
         updateNameList();
         if (!_tabbed) {
             initTempRow();

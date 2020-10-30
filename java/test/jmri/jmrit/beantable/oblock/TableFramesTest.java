@@ -9,6 +9,7 @@ import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -30,6 +31,9 @@ public class TableFramesTest {
     @Test
     public void testImport() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use original _desktop interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
+
         TableFrames t = new TableFrames();
         t.initComponents();
         // mute warnings
@@ -60,7 +64,7 @@ public class TableFramesTest {
 //            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("MessageTitle"));
 //            new JButtonOperator(jdo, Bundle.getMessage("ButtonOK")).doClick();
 //        });
-        // neither works, so suppressed the Import Ready dialog for now
+        // neither works, so suppress the Import Ready dialog for now
         //Container pane = JUnitUtil.findContainer(Bundle.getMessage("MessageTitle"));
         //Assert.assertNotNull("Import complete dialog", pane);
         //new JButtonOperator(new JFrameOperator((JFrame) pane), Bundle.getMessage("ButtonOK")).doClick();

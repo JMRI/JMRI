@@ -14,7 +14,7 @@ public class BlockPathTableModelTest {
     @Test
     public void testCTor() {
         BlockPathTableModel t = new BlockPathTableModel();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @BeforeEach

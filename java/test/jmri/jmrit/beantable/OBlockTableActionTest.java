@@ -2,10 +2,12 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -21,6 +23,8 @@ public class OBlockTableActionTest {
     @Test
     public void testInvoke() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use original _desktop interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
 
         // ask for the window to open
         OBlockTableAction a = new OBlockTableAction();

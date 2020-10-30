@@ -243,7 +243,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                                 tempRow[NAME_COLUMN] = strValue;
                             } else {
                                 initTempRow();
-                                _parent.updateOblockTablesMenu();
+                                _parent.updateOBlockTablesMenu();
                                 fireTableDataChanged();
                             }
                         } else {

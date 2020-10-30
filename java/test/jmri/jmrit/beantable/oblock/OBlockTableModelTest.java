@@ -17,9 +17,9 @@ public class OBlockTableModelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        OBlockTableModel t = new OBlockTableModel(f);
-        Assert.assertNotNull("exists",t);
+        TableFrames tf = new TableFrames();
+        OBlockTableModel obtm = new OBlockTableModel(tf);
+        Assert.assertNotNull("exists", obtm);
     }
 
     @BeforeEach

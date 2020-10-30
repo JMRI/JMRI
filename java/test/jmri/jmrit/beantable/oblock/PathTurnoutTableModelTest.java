@@ -14,7 +14,7 @@ public class PathTurnoutTableModelTest {
     @Test
     public void testCTor() {
         PathTurnoutTableModel t = new PathTurnoutTableModel();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @BeforeEach
