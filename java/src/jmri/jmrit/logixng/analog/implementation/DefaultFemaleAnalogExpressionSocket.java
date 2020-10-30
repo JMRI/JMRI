@@ -3,15 +3,10 @@ package jmri.jmrit.logixng.analog.implementation;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
@@ -19,6 +14,7 @@ import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
  */
 public class DefaultFemaleAnalogExpressionSocket extends AbstractFemaleSocket
         implements FemaleAnalogExpressionSocket {
+
 
     public DefaultFemaleAnalogExpressionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);

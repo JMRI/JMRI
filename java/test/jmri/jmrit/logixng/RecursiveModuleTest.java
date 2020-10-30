@@ -1,11 +1,15 @@
 package jmri.jmrit.logixng;
 
 import jmri.*;
+import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.digital.actions.PushStack;
+import jmri.jmrit.logixng.digital.actions.PopStack;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.util.JUnitUtil;
 
@@ -70,6 +74,32 @@ public class RecursiveModuleTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(listenOnBeans);
         manySocket.getChild(0).connect(listenSocket);
         
+        PushStack actionPush = new PushStack("IQDA3", null);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionPush);
+        manySocket.getChild(1).connect(maleSocket);
+/*        
+        DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA4", null);
+        maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
+        manySocket.getChild(1).connect(maleSocket);
+        
+        
+        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory("IQAE1", null);
+        analogExpressionMemory.setMemory("IMN");
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
+        doAnalogAction.getChild(0).connect(maleSocket2);
+        
+        
+        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA1", null);
+        analogActionMemory.setMemory("IMRESULT");
+        MaleSocket maleSocket3 =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
+        doAnalogAction.getChild(1).connect(maleSocket3);
+*/        
+        
+        
         
 /*        
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
@@ -92,9 +122,9 @@ public class RecursiveModuleTest {
         ActionTurnout action = new ActionTurnout("IQDA99", null);
         action.setTurnout("IT1");
         action.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
-        MaleSocket maleSocket3 =
+        MaleSocket maleSocket4 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        manySocket.getChild(1).connect(maleSocket3);
+        manySocket.getChild(2).connect(maleSocket4);
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

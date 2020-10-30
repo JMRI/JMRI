@@ -159,13 +159,10 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        System.out.format("registerListenersForThisClass(): %b%n", _listenersAreRegistered);
         if (_listenersAreRegistered) return;
         
         for (NamedBeanReference namedBeanReference : _namedBeanReferences.values()) {
-            System.out.format("registerListenersForThisClass(): %s, %s, %s%n", namedBeanReference._handle, namedBeanReference._name, namedBeanReference._type);
             if (namedBeanReference._handle != null) {
-                System.out.format("register: %s, %s%n", namedBeanReference._handle.getBean(), namedBeanReference._type._propertyName);
                 namedBeanReference._handle.getBean()
                         .addPropertyChangeListener(namedBeanReference._type._propertyName, this);
             }
