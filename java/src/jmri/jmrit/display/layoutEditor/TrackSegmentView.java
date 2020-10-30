@@ -425,7 +425,7 @@ public class TrackSegmentView extends LayoutTrackView {
         super.setCoordsCenter(MathUtil.multiply(getCoordsCenter(), factor));
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
-                p = MathUtil.multiply(p, factor);
+                p.setLocation(MathUtil.multiply(p, factor));
             }
         }
     }
@@ -445,7 +445,7 @@ public class TrackSegmentView extends LayoutTrackView {
     public void rotateCoords(double angleDEG) {
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
-                p = MathUtil.rotateDEG(p, getCoordsCenter(), angleDEG);
+                p.setLocation(MathUtil.rotateDEG(p, getCoordsCenter(), angleDEG));
             }
         }
     }
@@ -461,7 +461,7 @@ public class TrackSegmentView extends LayoutTrackView {
             if (isBezier()) {
                 Point2D delta = MathUtil.subtract(newCenterPoint, getCoordsCenter());
                 for (Point2D p : bezierControlPoints) {
-                    p = MathUtil.add(p, delta);
+                    p.setLocation(MathUtil.add(p, delta));
                 }
             }
             super.setCoordsCenter(newCenterPoint);

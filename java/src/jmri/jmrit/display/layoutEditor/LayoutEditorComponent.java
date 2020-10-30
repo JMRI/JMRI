@@ -125,8 +125,7 @@ class LayoutEditorComponent extends JComponent {
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
-        Point2D startPt = new Point2D.Double();
-        Point2D stopPt = new Point2D.Double();
+        Point2D startPt, stopPt;
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
