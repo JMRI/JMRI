@@ -30,12 +30,13 @@ public class LayoutRHTurnoutEditorTest extends LayoutTurnoutEditorTest  {
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         LayoutTurnoutEditor editor = new LayoutRHTurnoutEditor(layoutEditor);
-        turnoutTestSequence(editor, rightHandLayoutTurnout);
+        turnoutTestSequence(editor, rightHandLayoutTurnoutView);
     }
 
 
     private LayoutEditor layoutEditor = null;
     private LayoutRHTurnout rightHandLayoutTurnout = null;
+    private LayoutRHTurnoutView rightHandLayoutTurnoutView = null;
 
     @BeforeEach
     public void setUp() {
@@ -54,7 +55,9 @@ public class LayoutRHTurnoutEditorTest extends LayoutTurnoutEditorTest  {
 
             // RH Turnout
             point = MathUtil.add(point, delta);
-            rightHandLayoutTurnout = new LayoutRHTurnout("RH Turnout", point, 33.0, 1.1, 1.2, layoutEditor);
+            rightHandLayoutTurnout = new LayoutRHTurnout("RH Turnout", layoutEditor); //  point, 33.0, 1.1, 1.2, 
+            rightHandLayoutTurnoutView = new LayoutRHTurnoutView(rightHandLayoutTurnout, point, 33.0, 1.1, 1.2, layoutEditor);  
+            layoutEditor.addLayoutTrack(rightHandLayoutTurnout, rightHandLayoutTurnoutView);
         }
     }
 
@@ -63,7 +66,6 @@ public class LayoutRHTurnoutEditorTest extends LayoutTurnoutEditorTest  {
     
         if (rightHandLayoutTurnout != null) {
             rightHandLayoutTurnout.remove();
-            rightHandLayoutTurnout.dispose();
         }
 
         if (layoutEditor != null) {
