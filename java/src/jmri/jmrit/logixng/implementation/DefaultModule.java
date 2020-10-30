@@ -26,8 +26,10 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class DefaultModule extends AbstractNamedBean
-        implements Module {
+        implements Module, FemaleSocketListener {
     
+    
+    private FemaleSocketManager.SocketType _rootSocketType;
     private FemaleSocket _rootSocket;
     
     
@@ -181,9 +183,16 @@ public class DefaultModule extends AbstractNamedBean
     }
 
     @Override
-    public void setRootSocket(FemaleSocket rootSocket) {
+    public void setRootSocketType(FemaleSocketManager.SocketType socketType) {
         if (_rootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
-        _rootSocket = rootSocket;
+        
+        _rootSocketType = socketType;
+        _rootSocket = socketType.createSocket(this, this, mSystemName);
+    }
+
+    @Override
+    public FemaleSocketManager.SocketType getRootSocketType() {
+        return _rootSocketType;
     }
 
     @Override
@@ -195,6 +204,16 @@ public class DefaultModule extends AbstractNamedBean
     public boolean isActive() {
         // A module is always active.
         return true;
+    }
+
+    @Override
+    public void connected(FemaleSocket socket) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void disconnected(FemaleSocket socket) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

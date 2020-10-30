@@ -43,6 +43,10 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
             return new DefaultConditionalNGManager();
         }
 
+        if (type == FemaleSocketManager.class) {
+            return new DefaultFemaleSocketManager();
+        }
+
         if (type == LogixNG_Manager.class) {
             return new DefaultLogixNGManager();
         }
@@ -67,6 +71,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         Set<Class<?>> set = super.getInitalizes();
         set.addAll(Arrays.asList(
                 ConditionalNG_Manager.class,
+                FemaleSocketManager.class,
                 LogixNG_Manager.class,
                 ModuleManager.class,
                 NamedTableManager.class,

@@ -11,7 +11,9 @@ import jmri.NamedBean;
  */
 public interface Module extends Base, NamedBean {
     
-    public void setRootSocket(FemaleSocket rootSocket);
+    public void setRootSocketType(FemaleSocketManager.SocketType socketType);
+    
+    public FemaleSocketManager.SocketType getRootSocketType();
     
     public FemaleSocket getRootSocket();
     

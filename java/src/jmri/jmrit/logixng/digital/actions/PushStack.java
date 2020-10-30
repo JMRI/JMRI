@@ -210,6 +210,8 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+        removeMemory();
+        removeStack();
     }
     
     

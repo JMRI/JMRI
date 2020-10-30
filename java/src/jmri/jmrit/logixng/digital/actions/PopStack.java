@@ -210,6 +210,8 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+        removeMemory();
+        removeStack();
     }
     
     
