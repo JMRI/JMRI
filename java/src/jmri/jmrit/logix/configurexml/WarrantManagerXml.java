@@ -321,7 +321,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                         if (throttleCmds != null) {
                             log.debug("throttleCommand size= {}",throttleCmds.size());
                             throttleCmds.forEach((e) -> {
-                                warrant.addThrottleCommand(loadThrottleCommand(e));
+                                warrant.addThrottleCommand(loadThrottleCommand(e, warrant));
                             });
                         }
                         throttleCmds = elem.getChildren("throttleSetting");
@@ -475,7 +475,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
     }
     
     // pre 4.21.3
-    private static ThrottleSetting loadThrottleCommand(Element elem) {
+    private static ThrottleSetting loadThrottleCommand(Element elem, Warrant w) {
         long time = 0;
         try {
             time = elem.getAttribute("time").getLongValue();
@@ -485,8 +485,12 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         Attribute attr = elem.getAttribute("command");
         String command = null;
-        if (attr != null)
+        if (attr != null) {
             command = attr.getValue();
+        } else {
+            log.error("Command type is null for throttleSetting {} in warrant {}", command, w.getDisplayName());
+            return null;
+        }
 
         attr = elem.getAttribute("value");
         String value = null;

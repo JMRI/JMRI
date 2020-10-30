@@ -386,7 +386,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     }
 
     public void addThrottleCommand(ThrottleSetting ts) {
-        _commands.add(ts);
+        if (ts == null) {
+            log.error("warrant {} cannot add null ThrottleSetting", getDisplayName());
+        } else {
+            _commands.add(ts);
+        }
     }
 
     public boolean commandsHaveTrackSpeeds() {

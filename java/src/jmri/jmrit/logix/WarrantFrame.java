@@ -1023,29 +1023,17 @@ public class WarrantFrame extends WarrantRoute {
         switch(command) {
             case SET_SENSOR:
             case WAIT_SENSOR:
-                try {
-                    if (InstanceManager.sensorManagerInstance().getSensor(beanName) == null) {
-                        return Bundle.getMessage("BadSensor", beanName);
-                    }
-                } catch (Exception ex) {
+                if (InstanceManager.sensorManagerInstance().getSensor(beanName) == null) {
                     return Bundle.getMessage("BadSensor", beanName);
                 }
                 break;
             case RUN_WARRANT:
-                try {
-                    if (InstanceManager.getDefault(WarrantManager.class).getWarrant(beanName) == null) {
-                        return Bundle.getMessage("BadWarrant", beanName);
-                    }
-                } catch (Exception ex) {
+                if (InstanceManager.getDefault(WarrantManager.class).getWarrant(beanName) == null) {
                     return Bundle.getMessage("BadWarrant", beanName);
                 }
                 break;
             default:
-                try {
-                    if (InstanceManager.getDefault(OBlockManager.class).getOBlock(beanName) == null) {
-                        return Bundle.getMessage("BlockNotFound", beanName);
-                    }
-                } catch (Exception ex) {
+                if (InstanceManager.getDefault(OBlockManager.class).getOBlock(beanName) == null) {
                     return Bundle.getMessage("BlockNotFound", beanName);
                 }
                 break;
@@ -1491,8 +1479,11 @@ public class WarrantFrame extends WarrantRoute {
             msg = checkLocoAddress();
         }
         if (msg == null && !_isSCWarrant.isSelected()) {
-                msg = checkThrottleCommands();
+            msg = checkThrottleCommands();
+            if (msg != null) {
+                msg = Bundle.getMessage("SaveError", msg);
                 fatal = true;
+            }
         }
 
         WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class); 
@@ -1511,14 +1502,15 @@ public class WarrantFrame extends WarrantRoute {
                         fatal = true;
                         msg = Bundle.getMessage("WarrantExists", _userNameBox.getText());
                     } else {
-                        if (_saveWarrant != null) {
-                            _warrant = _saveWarrant;    // update registered warrant 
-                        }
+                        _warrant = _saveWarrant;    // update registered warrant 
                     }
                 }
             } else {
-                _warrant = mgr.createNewWarrant(
-                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+                if (_warrant == null) {
+                    _warrant = mgr.createNewWarrant(
+                            _sysNameBox.getText(), _userNameBox.getText(), 
+                            _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+                }
             }
         }
         if (_warrant == null) { // find out why
@@ -1570,7 +1562,11 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setThrottleCommands(_throttleCommands);
         _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         if (_saveWarrant == null) {
-            mgr.register(_warrant);
+            try {
+                mgr.register(_warrant);
+            } catch (jmri.NamedBean.DuplicateSystemNameException dsne) {
+                // ignore
+            }
             _saveWarrant = _warrant;
         }
 
@@ -1682,8 +1678,10 @@ public class WarrantFrame extends WarrantRoute {
 
         class TextDialog extends JDialog implements FocusListener {
             JTextField _textField;
+            TextDialog _this;
             TextDialog() {
                 super((JFrame)null, false);
+                _this = this;
                 _textField = new JTextField();
                 _textField.addFocusListener(this);
                 _textField.setForeground(Color.RED);
@@ -1699,7 +1697,7 @@ public class WarrantFrame extends WarrantRoute {
                 currentText = _textField.getText();
                 editorComponent.setText(currentText);
                 fireEditingStopped();
-                dispose();
+                _this.dispose();
             }
         }
 
@@ -1726,11 +1724,13 @@ public class WarrantFrame extends WarrantRoute {
             javax.swing.SwingUtilities.invokeLater(t);
         }
 
-        class ComboDialog extends JDialog implements ItemListener, FocusListener {   
+        class ComboDialog extends JDialog implements ItemListener, FocusListener {  
             JComboBox<String> _comboBox;
+            ComboDialog _this;
 
             ComboDialog(String[] items) {
                 super((JFrame)null, false);
+                _this = this;
                 _comboBox = new JComboBox<String>();
                 _comboBox.addItemListener(this);
                 _comboBox.addFocusListener(this);
@@ -1748,7 +1748,7 @@ public class WarrantFrame extends WarrantRoute {
                 currentText = (String)_comboBox.getSelectedItem();
                 editorComponent.setText(currentText);
                 fireEditingStopped();
-                this.dispose();
+                _this.dispose();
            }
             @Override
             public void  focusGained(FocusEvent e) {
@@ -1758,7 +1758,7 @@ public class WarrantFrame extends WarrantRoute {
                 currentText = (String)_comboBox.getSelectedItem();
                 editorComponent.setText(currentText);
                 fireEditingStopped();
-                this.dispose();
+                _this.dispose();
             }
         }
     }
@@ -1945,7 +1945,6 @@ public class WarrantFrame extends WarrantRoute {
                 case TIME_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
                 case COMMAND_COLUMN:
-                    return new JTextField(15).getPreferredSize().width;
                 case VALUE_COLUMN:
                     return new JTextField(15).getPreferredSize().width;
                 case BLOCK_COLUMN:
