@@ -178,6 +178,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 return super.isCellEditable(row, col);
             }
 
+            @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
             @Override
             public Object getValueAt(int row, int col) {
                 if (col == EDITCOL) {
@@ -193,6 +194,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
                 }
             }
 
+            @SuppressWarnings("unchecked")  // Unchecked cast from Object to E
             @Override
             public void setValueAt(Object value, int row, int col) {
                 if (col == EDITCOL) {
