@@ -30,19 +30,25 @@ public class NewPanelAction extends AbstractAction {
         int response = JOptionPane.showOptionDialog(null,
                 Bundle.getMessage("ChoiceText1") + "\n" + Bundle.getMessage("ChoiceText2") + "\n"
                 + Bundle.getMessage("ChoiceText3") + "\n" + Bundle.getMessage("ChoiceText4") + "\n"
-                        + Bundle.getMessage("ChoiceText5"),
+                + Bundle.getMessage("ChoiceText5" + "\n" + Bundle.getMessage("ChoiceText6")),
                 Bundle.getMessage("ChooseEditor"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("SwitchboardEditor"), Bundle.getMessage("LayoutEditor"),
-                        Bundle.getMessage("ControlPanelEditor"), Bundle.getMessage("PanelEditor"),
-                        Bundle.getMessage("ButtonCancel")},
+                new Object[]{
+                    Bundle.getMessage("SwitchboardEditor"),
+                    Bundle.getMessage("ModulesEditor"),
+                    Bundle.getMessage("LayoutEditor"),
+                    Bundle.getMessage("ControlPanelEditor"),
+                    Bundle.getMessage("PanelEditor"),
+                    Bundle.getMessage("ButtonCancel")},
                 Bundle.getMessage("PanelEditor")); // title
-        if (response == 3) {
+        if (response == 4) {
             new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
-        } else if (response == 2) {
+        } else if (response == 3) {
             new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction().actionPerformed(null);
-        } else if (response == 1) {
+        } else if (response == 2) {
             new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
+        } else if (response == 1) {
+            new jmri.jmrit.display.modulesEditor.ModulesEditorAction().actionPerformed(null);
         } else if (response == 0) {
             new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction().actionPerformed(null);
         }
