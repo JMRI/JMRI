@@ -350,7 +350,7 @@ public class Tokenizer {
             return TokenType.FLOATING_NUMBER;
         }
         
-        if (Character.isLetter(ch)) {
+        if (Character.isLetter(ch) || (ch == '_')) {
             return TokenType.IDENTIFIER;
         }
         

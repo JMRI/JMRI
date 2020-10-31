@@ -100,6 +100,8 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
         
         Module module = _moduleHandle.getBean();
         
+        System.out.format("%n%nexecute module %s%n", module.getSystemName());
+        
         FemaleSocket femaleSocket = module.getRootSocket();
         
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {

@@ -187,7 +187,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.format("propertyChange%n");
+        System.out.format("%npropertyChange%n");
         getConditionalNG().execute();
     }
     

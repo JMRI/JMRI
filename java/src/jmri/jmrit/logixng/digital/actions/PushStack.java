@@ -3,16 +3,16 @@ package jmri.jmrit.logixng.digital.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +24,11 @@ import org.slf4j.LoggerFactory;
  */
 public class PushStack extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
     private NamedBeanHandle<Stack> _stackHandle;
+    private NamedBeanHandle<Memory> _memoryHandle;
+    private ExpressionNode _expressionNode;
+    private String _data = "";
+    private Operation _operation = Operation.MEMORY;
     
     public PushStack(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -105,6 +108,39 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
         return _stackHandle;
     }
     
+    public void setOperation(Operation operation) throws ParserException {
+        _operation = operation;
+        parseFormula();
+    }
+    
+    public Operation getOperation() {
+        return _operation;
+    }
+    
+    public void setData(String data) throws ParserException {
+        _data = data;
+        parseFormula();
+    }
+    
+    public String getData() {
+        return _data;
+    }
+    
+    private void parseFormula() throws ParserException {
+        if (_operation == Operation.FORMULA) {
+            Map<String, Variable> variables = new HashMap<>();
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            try {
+            _expressionNode = parser.parseExpression(_data);
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw e;
+            }
+        } else {
+            _expressionNode = null;
+        }
+    }
+    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -148,13 +184,50 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
-        if (_memoryHandle == null) return;
+    public void execute() throws JmriException {
         
-        final Memory memory = _memoryHandle.getBean();
         final Stack stack = _stackHandle.getBean();
         
-        stack.push(memory.getValue());
+        System.out.format("%s: Push on stack %s. Operation: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
+        
+        Object value;
+        
+        switch (_operation) {
+            case STRING:
+                value = _data;
+                break;
+                
+            case MEMORY:
+                if (_memoryHandle == null) return;
+                value = _memoryHandle.getBean().getValue();
+                break;
+                
+            case FORMULA:
+                System.out.format("aaa%n");
+                if (_data.isEmpty()) {
+                    System.out.format("bbb%n");
+                    value = null;
+                } else {
+                    System.out.format("ccc%n");
+                    try {
+                        value = _expressionNode.calculate();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    value = _expressionNode.calculate();
+                    System.out.format("ddd%n");
+                }
+                System.out.format("eee%n");
+                break;
+                
+            default:
+                System.out.format("%s: Push on stack %s. _operation has invalid value: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
+                throw new IllegalArgumentException("_operation has invalid value: " + _operation.name());
+        }
+        
+        System.out.format("%s: Push %s on stack %s. Operation: %s%n", getSystemName(), value, stack.getSystemName(), _operation.name());
+        
+        stack.push(value);
     }
 
     @Override
@@ -188,7 +261,16 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
             stackName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        return Bundle.getMessage(locale, "PushStack_Long", memoryName, stackName);
+        switch (_operation) {
+            case STRING:
+                return Bundle.getMessage(locale, "PushStack_Long_String", _data, stackName);
+            case MEMORY:
+                return Bundle.getMessage(locale, "PushStack_Long_Memory", memoryName, stackName);
+            case FORMULA:
+                return Bundle.getMessage(locale, "PushStack_Long_Formula", _data, stackName);
+            default:
+                throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _operation.name());
+        }
     }
     
     /** {@inheritDoc} */
@@ -215,10 +297,10 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
     }
     
     
-    public enum MemoryOperation {
-        SET_TO_NULL,
-        SET_TO_STRING,
-        COPY_MEMORY;
+    public enum Operation {
+        STRING,
+        MEMORY,
+        FORMULA;
     }
     
     private final static Logger log = LoggerFactory.getLogger(PushStack.class);

@@ -158,6 +158,8 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         
         final Memory memory = _memoryHandle.getBean();
         
+        System.out.format("ActionMemory %s: %s, %s, %s%n", getSystemName(), memory.getSystemName(), _newValue, _memoryOperation.name());
+        
         ThreadingUtil.runOnLayout(() -> {
             switch (_memoryOperation) {
                 case SET_TO_NULL:
@@ -220,8 +222,10 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                 return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _newValue);
             case COPY_MEMORY:
                 return Bundle.getMessage(locale, "Memory_Long_CopyMemory", memoryName, copyToMemoryName);
+            case FORMULA:
+                return Bundle.getMessage(locale, "Memory_Long_Formula", memoryName, _newValue);
             default:
-                throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _memoryOperation.name());
+                throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
         }
     }
     
@@ -250,7 +254,8 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     public enum MemoryOperation {
         SET_TO_NULL,
         SET_TO_STRING,
-        COPY_MEMORY;
+        COPY_MEMORY,
+        FORMULA;
     }
     
     private final static Logger log = LoggerFactory.getLogger(ActionMemory.class);

@@ -169,7 +169,7 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "PushStack_Short");
+        return Bundle.getMessage(locale, "PopStack_Short");
     }
 
     @Override
@@ -188,7 +188,7 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
             stackName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        return Bundle.getMessage(locale, "PushStack_Long", memoryName, stackName);
+        return Bundle.getMessage(locale, "PopStack_Long_Memory", stackName, memoryName);
     }
     
     /** {@inheritDoc} */
@@ -212,13 +212,6 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
     public void disposeMe() {
         removeMemory();
         removeStack();
-    }
-    
-    
-    public enum MemoryOperation {
-        SET_TO_NULL,
-        SET_TO_STRING,
-        COPY_MEMORY;
     }
     
     private final static Logger log = LoggerFactory.getLogger(PopStack.class);
