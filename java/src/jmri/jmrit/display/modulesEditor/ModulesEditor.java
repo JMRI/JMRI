@@ -5,6 +5,8 @@
  */
 package jmri.jmrit.display.modulesEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
@@ -19,6 +21,7 @@ import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
 
 /**
@@ -58,11 +61,6 @@ final public class ModulesEditor extends PanelEditor {
 
     // Lists of items that describe the Layout, and allow it to be drawn
     private Color defaultTextColor = Color.black;
-
-    private boolean drawGrid = true;
-    private boolean snapToGridOnAdd = false;
-    private boolean snapToGridOnMove = false;
-    private boolean snapToGridInvert = false;
 
     // saved state of options when panel was loaded or created
     private boolean savedEditMode = true;
@@ -336,6 +334,40 @@ final public class ModulesEditor extends PanelEditor {
                 stringsToVTCodes.put(key, code);
             }
         }
+    }
+
+    private boolean drawGrid = true;
+    private boolean snapToGridOnAdd = true;
+    private boolean snapToGridOnMove = true;
+    private boolean snapToGridInvert = false;
+
+    public boolean isDrawGrid() {
+        return drawGrid;
+    }
+
+    public void setDrawGrid(boolean b) {
+        drawGrid = b;
+    }
+
+    public boolean isSnapToGridOnAdd() {
+        return snapToGridOnAdd;
+    }
+
+    public void setSnapToGridOnAdd(boolean b) {
+        snapToGridOnAdd = b;
+    }
+
+    public boolean isSnapToGridOnMove() {
+        return snapToGridOnMove;
+    }
+
+    public void setSnapToGridOnMove(boolean b) {
+        snapToGridOnMove = b;
+    }
+
+    @Nonnull
+    public String getDefaultTextColor() {
+        return ColorUtil.colorToColorName(defaultTextColor);
     }
 
     /**
