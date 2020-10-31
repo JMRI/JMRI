@@ -22,26 +22,9 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.swing.JmriColorChooser;
 
 /**
- * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
+ * Provides a scrollable Modules Editor Panel
  * <p>
- * This module serves as a manager for the LayoutTurnout, Layout Block,
- * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
- * integral subparts of the ModulesEditor class.
- * <p>
- * All created objects are put on specific levels depending on their type
- * (higher levels are in front): Note that higher numbers appear behind lower
- * numbers.
- * <p>
- * The "contents" List keeps track of all text and icon label objects added to
- * the target frame for later manipulation. Other Lists keep track of drawn
- * items.
- * <p>
- * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
- * particular, text and icon label items are copied from Panel editor, as well
- * as some of the control design.
- *
- * @author Dave Duchamp Copyright: (c) 2004-2007
- * @author George Warner Copyright: (c) 2017-2019
+ * @author George Warner Copyright: (c) 2020
  */
 final public class ModulesEditor extends PanelEditor {
 
@@ -143,7 +126,7 @@ final public class ModulesEditor extends PanelEditor {
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
         fileMenu.add(store);
@@ -276,7 +259,6 @@ final public class ModulesEditor extends PanelEditor {
         //    setDirty();
         //    repaint();
         //});
-
         //
         // grid menu
         //
@@ -370,6 +352,16 @@ final public class ModulesEditor extends PanelEditor {
     public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
         JmriColorChooser.addRecentColor(color);
+    }
+
+    /**
+     * Special internal class to allow drawing of layout to a JLayeredPane
+     */
+    @Override
+    public void paintTargetPanel(@Nonnull Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        Rectangle r = g2.getClipBounds();
+        g2.drawOval(0, 0, (int) r.getWidth(), (int) r.getHeight());
     }
 
     // initialize logging

@@ -45,17 +45,25 @@ public class NewPanelAction extends AbstractAction {
                     Bundle.getMessage("ButtonCancel")},
                 Bundle.getMessage("PanelEditor")
         ); // title
-        if (response == 0) {
-            new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction().actionPerformed(null);
-        } else if (response == 1) {
-            new jmri.jmrit.display.modulesEditor.ModulesEditorAction().actionPerformed(null);
-        } else if (response == 2) {
-            new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
-        } else if (response == 3) {
-            new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction().actionPerformed(null);
-        } else if (response == 4) {
-            new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
+
+        switch (response) {
+            case 0:
+                new jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction().actionPerformed(null);
+                break;
+            case 1:
+                new jmri.jmrit.display.modulesEditor.ModulesEditorAction().actionPerformed(null);
+                break;
+            case 2:
+                new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
+                break;
+            case 3:
+                new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction().actionPerformed(null);
+                break;
+            case 4:
+                new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
+                break;
+            default:
+                break;
         }
     }
-
 }

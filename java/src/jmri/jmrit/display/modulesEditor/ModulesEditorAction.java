@@ -13,7 +13,7 @@ import jmri.jmrit.display.EditorManager;
 /**
  * Start a ModulesEditor.
  *
- * @author Bob Jacobsen Copyright (C) 2008
+ * @author George Warner Copyright (C) 2020
  * @see jmri.jmrit.display.panelEditor.PanelEditorAction
  */
 public class ModulesEditorAction extends AbstractAction {
