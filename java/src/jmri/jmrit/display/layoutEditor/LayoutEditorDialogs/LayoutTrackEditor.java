@@ -1,20 +1,16 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
 
-import jmri.*;
+import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
 
 /**
  * MVC root Editor component for LayoutTrack hierarchy objects.
@@ -70,7 +66,7 @@ abstract public class LayoutTrackEditor {
         log.error("makeTrackEditor did not match type of {}", layoutTrack, new Exception("traceback"));
         return new LayoutTrackEditor(layoutEditor){
             @Override
-            public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+            public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
                 log.error("Not a valid LayoutTrackEditor implementation", new Exception("traceback"));
             }
         };
@@ -78,9 +74,9 @@ abstract public class LayoutTrackEditor {
     
     /**
      * Launch the editor for a particular LayoutTrack-tree object.
-     * @param layoutTrack the layout track to edit.
+     * @param layoutTrackView the layout track view to edit.
      */
-    abstract public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack);
+    abstract public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView);
     
     final protected LayoutEditor layoutEditor;
 
