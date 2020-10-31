@@ -8,16 +8,18 @@ package jmri.jmrit.display.modulesEditor;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.lang.reflect.Field;
 import java.util.*;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.Bundle;
 import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
+import jmri.util.swing.JmriColorChooser;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
@@ -41,7 +43,7 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
-final public class ModulesEditor extends PanelEditor implements MouseWheelListener {
+final public class ModulesEditor extends PanelEditor {
 
     // Operational instance variables - not save
     // Option menu items
@@ -86,6 +88,8 @@ final public class ModulesEditor extends PanelEditor implements MouseWheelListen
     private double minZoom = 0.25;
     private final double maxZoom = 8.0;
 
+    private List<PositionableLabel> backgroundImage = new ArrayList<>();    // background images
+
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
@@ -104,14 +108,11 @@ final public class ModulesEditor extends PanelEditor implements MouseWheelListen
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
                 Color.black, new Color(215, 225, 255), Color.black));
 
-        // set to full screen
-        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        setWindowWidth(screenDim.width - 20);
-        setWindowHeight(screenDim.height - 120);
-
         // Let Editor make target, and use this frame
         super.setTargetPanel(null, null);
-        super.setTargetPanelSize(getWindowWidth(), getWindowHeight());
+        // set to full screen
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        super.setTargetPanelSize(screenDim.width - 20, screenDim.height - 120);
         setSize(screenDim.width, screenDim.height);
 
         // register the resulting panel for later configuration
@@ -124,13 +125,13 @@ final public class ModulesEditor extends PanelEditor implements MouseWheelListen
         }
         setFocusable(true);
         addKeyListener(this);
-        resetDirty();
+        //resetDirty();
 
-        SwingUtilities.invokeLater(() -> {
-            // initialize preferences
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
-            }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
-        });
+//        SwingUtilities.invokeLater(() -> {
+//            // initialize preferences
+//            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+//            }); // InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr)
+//        });
     }
 
     private void setupMenuBar() {
@@ -161,10 +162,214 @@ final public class ModulesEditor extends PanelEditor implements MouseWheelListen
         setupOptionMenu(menuBar);
 
         // setup Zoom menu
-        setupZoomMenu(menuBar);
-
+//        setupZoomMenu(menuBar);
         // setup Help menu
         addHelpMenu("package.jmri.jmrit.display.ModulesEditor", true);
+    }
+
+    /**
+     * Set up the Option menu.
+     *
+     * @param menuBar to add the option menu to
+     * @return option menu that was added
+     */
+    private JMenu setupOptionMenu(@Nonnull JMenuBar menuBar) {
+        assert menuBar != null;
+
+        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
+
+        optionMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("OptionsMnemonic")));
+        menuBar.add(optionMenu);
+
+        //
+        //  edit mode
+        //
+        editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
+        optionMenu.add(editModeCheckBoxMenuItem);
+        editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+        editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
+        editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setAllEditable(editModeCheckBoxMenuItem.isSelected());
+
+//            if (isEditable()) {
+//                setAllShowToolTip(tooltipsInEditMode);
+//            } else {
+//                setAllShowToolTip(tooltipsWithoutEditMode);
+//            }
+        });
+        editModeCheckBoxMenuItem.setSelected(isEditable());
+
+        //
+        // edit title
+        //
+        optionMenu.addSeparator();
+        JMenuItem titleItem = new JMenuItem(Bundle.getMessage("EditTitle") + "...");
+        optionMenu.add(titleItem);
+        titleItem.addActionListener((ActionEvent event) -> {
+            // prompt for name
+            String newName = (String) JOptionPane.showInputDialog(getTargetFrame(),
+                    Bundle.getMessage("MakeLabel", Bundle.getMessage("EnterTitle")),
+                    Bundle.getMessage("EditTitleMessageTitle"),
+                    JOptionPane.PLAIN_MESSAGE, null, null, getName());
+
+            if (newName != null) {
+                if (!newName.equals(getName())) {
+                    if (InstanceManager.getDefault(EditorManager.class).contains(newName)) {
+                        JOptionPane.showMessageDialog(
+                                null, Bundle.getMessage("CanNotRename"), Bundle.getMessage("PanelExist"),
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        setTitle(newName);
+//                        setDirty();
+                    }
+                }
+            }
+        });
+
+        //
+        // set background color
+        //
+        JMenuItem backgroundColorMenuItem = new JMenuItem(Bundle.getMessage("SetBackgroundColor", "..."));
+        optionMenu.add(backgroundColorMenuItem);
+        backgroundColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("SetBackgroundColor", ""),
+                    defaultBackgroundColor);
+            if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
+                defaultBackgroundColor = desiredColor;
+                setBackgroundColor(desiredColor);
+//                setDirty();
+                repaint();
+            }
+        });
+
+        //
+        // set default text color
+        //
+        JMenuItem textColorMenuItem = new JMenuItem(Bundle.getMessage("DefaultTextColor", "..."));
+        optionMenu.add(textColorMenuItem);
+        textColorMenuItem.addActionListener((ActionEvent event) -> {
+            Color desiredColor = JmriColorChooser.showDialog(this,
+                    Bundle.getMessage("DefaultTextColor", ""),
+                    defaultTextColor);
+            if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
+                setDefaultTextColor(desiredColor);
+//                setDirty();
+                repaint();
+            }
+        });
+
+        //
+        // Add Options
+        //
+        JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
+        optionMenu.add(optionsAddMenu);
+
+        // add background image
+        //JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
+        //optionsAddMenu.add(backgroundItem);
+        //backgroundItem.addActionListener((ActionEvent event) -> {
+        //    addBackground();
+        //    // note: panel resized in addBackground
+        //    setDirty();
+        //    repaint();
+        //});
+
+        //
+        // grid menu
+        //
+        JMenu gridMenu = new JMenu(Bundle.getMessage("GridMenuTitle")); // used for Grid SubMenu
+        optionMenu.add(gridMenu);
+
+        // show grid
+        showGridCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowEditGrid"));
+        showGridCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("ShowEditGridAccelerator")), primary_modifier));
+        gridMenu.add(showGridCheckBoxMenuItem);
+        showGridCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            drawGrid = showGridCheckBoxMenuItem.isSelected();
+            repaint();
+        });
+        showGridCheckBoxMenuItem.setSelected(drawGrid);
+
+        // snap to grid on add
+        snapToGridOnAddCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnAdd"));
+        snapToGridOnAddCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("SnapToGridOnAddAccelerator")),
+                primary_modifier | ActionEvent.SHIFT_MASK));
+        gridMenu.add(snapToGridOnAddCheckBoxMenuItem);
+        snapToGridOnAddCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            snapToGridOnAdd = snapToGridOnAddCheckBoxMenuItem.isSelected();
+            repaint();
+        });
+        snapToGridOnAddCheckBoxMenuItem.setSelected(snapToGridOnAdd);
+
+        // snap to grid on move
+        snapToGridOnMoveCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("SnapToGridOnMove"));
+        snapToGridOnMoveCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(
+                Bundle.getMessage("SnapToGridOnMoveAccelerator")),
+                primary_modifier | ActionEvent.SHIFT_MASK));
+        gridMenu.add(snapToGridOnMoveCheckBoxMenuItem);
+        snapToGridOnMoveCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            snapToGridOnMove = snapToGridOnMoveCheckBoxMenuItem.isSelected();
+            repaint();
+        });
+        snapToGridOnMoveCheckBoxMenuItem.setSelected(snapToGridOnMove);
+
+        // specify grid square size
+//        JMenuItem gridSizeItem = new JMenuItem(Bundle.getMessage("SetGridSizes") + "...");
+//        gridMenu.add(gridSizeItem);
+//        gridSizeItem.addActionListener((ActionEvent event) -> {
+//            EnterGridSizesDialog d = new EnterGridSizesDialog(this);
+//            d.enterGridSizes();
+//        });
+        return optionMenu;
+    }
+
+    /**
+     * Grabs a subset of the possible KeyEvent constants and puts them into a
+     * hash for fast lookups later. These lookups are used to enable bundles to
+     * specify keyboard shortcuts on a per-locale basis.
+     */
+    private void initStringsToVTCodes() {
+        Field[] fields = KeyEvent.class
+                .getFields();
+
+        for (Field field : fields) {
+            String name = field.getName();
+
+            if (name.startsWith("VK")) {
+                int code = 0;
+                try {
+                    code = field.getInt(null);
+                } catch (IllegalAccessException | IllegalArgumentException e) {
+                    // exceptions make me throw up...
+                }
+
+                String key = name.substring(3);
+
+                // log.debug("VTCode[{}]:'{}'", key, code);
+                stringsToVTCodes.put(key, code);
+            }
+        }
+    }
+
+    /**
+     * @param color value to set the default text color to.
+     */
+    public void setDefaultTextColor(@Nonnull Color color) {
+        defaultTextColor = color;
+        JmriColorChooser.addRecentColor(color);
+    }
+
+    /**
+     * @param color value to set the panel background to.
+     */
+    public void setDefaultBackgroundColor(@Nonnull Color color) {
+        defaultBackgroundColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     // initialize logging

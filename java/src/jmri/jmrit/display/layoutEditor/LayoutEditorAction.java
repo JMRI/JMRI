@@ -27,6 +27,8 @@ public class LayoutEditorAction extends AbstractAction {
         for (int i = 2; i < 100; i++) {
             if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
                 name = "My Layout " + i;
+            } else {
+                break;
             }
         }
         LayoutEditor panel = new LayoutEditor(name);

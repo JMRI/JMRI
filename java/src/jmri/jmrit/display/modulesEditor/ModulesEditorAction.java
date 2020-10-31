@@ -23,23 +23,24 @@ public class ModulesEditorAction extends AbstractAction {
     }
 
     public ModulesEditorAction() {
-        this("New Panel");
+        this(Bundle.getMessage("DefaultModulesEditorPanelName"));
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String name = "My Layout";
+        String defaultName = Bundle.getMessage("DefaultModulesEditorPanelName");
+        String name = defaultName;
         for (int i = 2; i < 100; i++) {
             if (InstanceManager.getDefault(EditorManager.class).contains(name)) {
-                name = "My Layout " + i;
+                name = defaultName + i;
+            } else {
+                break;
             }
         }
         ModulesEditor panel = new ModulesEditor(name);
-        panel.setLayoutName(name);
         panel.pack();
         panel.setVisible(true);
         panel.setAllEditable(true);
-        panel.setCurrentPositionAndSize();
         InstanceManager.getDefault(EditorManager.class).add(panel);
         panel.newPanelDefaults();
     }
