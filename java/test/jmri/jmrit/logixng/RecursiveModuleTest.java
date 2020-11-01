@@ -40,40 +40,40 @@ public class RecursiveModuleTest {
     @Test
     public void testFibonacci() {
         n.setValue(0);
-        Assert.assertEquals("1", result.getValue());
+        Assert.assertEquals(Long.valueOf(1), result.getValue());
 //        if (1==1) return;
         
         n.setValue(1);
-        Assert.assertEquals("1", result.getValue());
+        Assert.assertEquals(Long.valueOf(1), result.getValue());
 //        if (1==1) return;
         
         n.setValue(2);
-        Assert.assertEquals("2", result.getValue());
+        Assert.assertEquals(Long.valueOf(2), result.getValue());
         if (1==1) return;
         
         n.setValue(3);
-        Assert.assertEquals("3", result.getValue());
+        Assert.assertEquals(Long.valueOf(3), result.getValue());
         
         n.setValue(4);
-        Assert.assertEquals("5", result.getValue());
+        Assert.assertEquals(Long.valueOf(5), result.getValue());
         
         n.setValue(5);
-        Assert.assertEquals("8", result.getValue());
+        Assert.assertEquals(Long.valueOf(8), result.getValue());
         
         n.setValue(6);
-        Assert.assertEquals("13", result.getValue());
+        Assert.assertEquals(Long.valueOf(13), result.getValue());
         
         n.setValue(7);
-        Assert.assertEquals("21", result.getValue());
+        Assert.assertEquals(Long.valueOf(21), result.getValue());
         
         n.setValue(8);
-        Assert.assertEquals("34", result.getValue());
+        Assert.assertEquals(Long.valueOf(34), result.getValue());
         
         n.setValue(9);
-        Assert.assertEquals("55", result.getValue());
+        Assert.assertEquals(Long.valueOf(55), result.getValue());
         
         n.setValue(10);
-        Assert.assertEquals("89", result.getValue());
+        Assert.assertEquals(Long.valueOf(89), result.getValue());
     }
     
     // The minimal setup for log4J
@@ -148,8 +148,8 @@ public class RecursiveModuleTest {
         
         ActionMemory actionMemory914 = new ActionMemory("IQDA914", null);
         actionMemory914.setMemory("IMRESULT");
-        actionMemory914.setData("1");
-        actionMemory914.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        actionMemory914.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
+        actionMemory914.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
         MaleSocket maleSocket914 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory914);
         ifThenElseSocket912.getChild(1).connect(maleSocket914);
@@ -172,8 +172,8 @@ public class RecursiveModuleTest {
         
         ActionMemory actionMemory917 = new ActionMemory("IQDA917", null);
         actionMemory917.setMemory("IMRESULT");
-        actionMemory917.setData("1");
-        actionMemory917.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        actionMemory917.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
+        actionMemory917.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
         MaleSocket maleSocket917 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory917);
         ifThenElse915.getChild(1).connect(maleSocket917);
@@ -260,7 +260,7 @@ public class RecursiveModuleTest {
         // Store the sum in IMRESULT
         ActionMemory actionMemory934 = new ActionMemory("IQDA934", null);
         actionMemory934.setMemory("IMRESULT");
-        actionMemory934.setData("readMemory(\"IMRESULT\") + readMemory(\"IM_TEMP2\")");
+        actionMemory934.setData("int(readMemory(\"IMRESULT\")) + int(readMemory(\"IM_TEMP2\"))");
         actionMemory934.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
         MaleSocket maleSocket934 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory934);
