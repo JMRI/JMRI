@@ -42,8 +42,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public final int NAME_COLUMN = 1; // not static to fetch from _tabbed OBlockTablePanel
     public static final int TO_BLOCK_COLUMN = 2;
     static public final int DELETE_COL = 3;
-    public static final int NUMCOLS = 4;
     static public final int EDIT_COL = 4;
+    public static final int NUMCOLS = 4;
     // TODO add EDIT column if _tabbed
 
     PortalManager _manager;
@@ -308,6 +308,11 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 break;
         }
         return 5;
+    }
+
+    // for Print
+    protected String getBeanType() {
+        return "Portal";
     }
 
     @Override

@@ -45,7 +45,6 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     static public final int UNITSCOL = 4;
     public static final int EDIT_COL = 5;
     public static final int DELETE_COL = 6;
-    public static final int EDITBCOL = 7;
     public static final int NUMCOLS = 7;
 
     private final String[] tempRow = new String[NUMCOLS];
@@ -112,13 +111,13 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public int getColumnCount() {
-        return NUMCOLS + (_tabbed ? 1 : 0); // add Edit column on _tabbed
+        return NUMCOLS; // Edit Turnouts column button is replaced by Edit for _tabbed
     }
 
     @Override
     public int getRowCount() {
         return _block.getPaths().size() + (_tabbed ? 0 : 1);
-        // +1 adds the extra empty row at the bottom of the table display
+        // +1 adds the extra empty row at the bottom of the table display for _desktop
     }
 
     @Override
@@ -192,7 +191,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 return _units.get(rowIndex);
             case EDIT_COL:
                 if (path != null) {
-                    return Bundle.getMessage("ButtonEditTO");
+                    if (_tabbed) {
+                        return Bundle.getMessage("ButtonEdit");
+                    } else {
+                        return Bundle.getMessage("ButtonEditTO");
+                    }
                 } else {
                     return "";
                 }
@@ -200,13 +203,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 if (path != null) {
                     return Bundle.getMessage("ButtonDelete");
                 } else {
-                    return Bundle.getMessage("ButtonClear");
-                }
-            case EDITBCOL:
-                if (path != null) {
-                    return Bundle.getMessage("ButtonEdit");
-                } else {
-                    return "";
+                    return Bundle.getMessage("ButtonClear"); // for _desktop
                 }
             default:
                 // fall through
@@ -387,13 +384,12 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 _units.set(row, (Boolean)value);
                 fireTableRowsUpdated(row, row);
                 return;
-            case EDIT_COL:
-                _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
-                        _block.getSystemName(), path.getName()));
-                break;
-            case EDITBCOL: // only on _tabbed
-                _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
-                        _block.getSystemName(), path.getName()));
+            case EDIT_COL: // [Edit] (_tabbed) or [Edit Turnouts] (_desktop)
+                if (_tabbed) { // everything done in BlockPathEdit panel
+                    _parent.openOBlockEditFrame(_block.getSystemName());
+                } else {
+                    _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(_block.getSystemName(), path.getName()));
+                }
                 break;
             case DELETE_COL:
                 if (deletePath(path)) {
@@ -426,10 +422,12 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == DELETE_COL || col == EDIT_COL) {
-            return JButton.class;
-        } else if (col == UNITSCOL) {
-            return JToggleButton.class;
+        switch (col) {
+            case DELETE_COL:
+            case EDIT_COL:
+                return JButton.class;
+            case UNITSCOL:
+                return JToggleButton.class;
         }
         return String.class;
     }

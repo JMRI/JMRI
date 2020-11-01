@@ -35,7 +35,8 @@ public class OBlockEditFrame extends JmriJFrame {
                     ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
                     ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-    OBlockTableModel model;
+    OBlockTableModel _model;
+    String _oblock;
 
     // Common UI components for Add/Edit OBlock
     JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
@@ -51,12 +52,13 @@ public class OBlockEditFrame extends JmriJFrame {
     /**
      * Standard constructor
      *
-     * @param title Title of this OBlockFrame
+     * @param title Title of this OBlockEditFrame
      * @param model OBlockTableModel holding OBlock data
      */
-    public OBlockEditFrame(String title, OBlockTableModel model) {
+    public OBlockEditFrame(String title, String oblock, OBlockTableModel model) {
         super(title);
-        this.model = model;
+        _oblock = oblock;
+        _model = model;
         obm = InstanceManager.getDefault(OBlockManager.class);
     }
 
@@ -148,8 +150,9 @@ public class OBlockEditFrame extends JmriJFrame {
 //                //     JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
 //            }
         }
+
         // Notify changes
-        model.fireTableDataChanged();
+        _model.fireTableDataChanged();
     }
 
     /**

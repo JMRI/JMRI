@@ -709,7 +709,7 @@ public class SignalTableModel extends AbstractTableModel {
                     fireTableDataChanged();
                     break;
                 case EDIT_COL:
-                        editSignal(Portal.getSignal((String) value));
+                    editSignal(Portal.getSignal(signalRow.getSignal().getDisplayName()));
                     break;
                 default:
                     // fall through
@@ -768,7 +768,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     static private boolean checkPortalBlock(Portal portal, OBlock block) {
-        if (block==null) {
+        if (block == null) {
             return false;
         }
         return (block.equals(portal.getToBlock()) || block.equals(portal.getFromBlock()));
@@ -807,7 +807,8 @@ public class SignalTableModel extends AbstractTableModel {
             case UNITSCOL:
                 return new JTextField(3).getPreferredSize().width;
             case DELETE_COL:
-                return new JButton("DELETE").getPreferredSize().width; // NOI18N replaced later
+            case EDIT_COL:
+                return new JButton("DELETE").getPreferredSize().width; // NOI18N
             default:
                 // fall through
                 break;

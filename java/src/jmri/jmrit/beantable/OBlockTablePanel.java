@@ -65,9 +65,10 @@ public class OBlockTablePanel extends JPanel {
                             TableFrames tf,
                             String helpTarget) {
 
-        //super();
-
+        super(); // EBR required? nothing set
         _tf = tf;
+
+        log.debug("Building tables");
         // OBlock Table
         oblockDataModel = oblocks;
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(oblockDataModel);
@@ -188,9 +189,10 @@ public class OBlockTablePanel extends JPanel {
         oblockTabs.addTab(Bundle.getMessage("BeanNamePortals"), portalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Signals"), signalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Paths"), blockportalDataScroll);
-        // turnouts not on a tab: later
+        // turnouts not on a tab: via button
 
         add(oblockTabs, BorderLayout.CENTER);
+        log.debug("tabs complete");
 
         bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue()); // stays at end of box
@@ -201,6 +203,7 @@ public class OBlockTablePanel extends JPanel {
         // add extras, if desired by subclass
         extras();
 
+        log.debug("bottomBox complete");
         // set preferred scrolling options
         oblockDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 //        portalDataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -219,14 +222,15 @@ public class OBlockTablePanel extends JPanel {
     }
 
     public JMenuItem getPrintItem() { // copied from AudioTablePanel
-        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
+        log.debug("OBLOCK TABBED getPrintItem() called");
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable")); // TODO add a submenu per table
 
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     MessageFormat footerFormat = new MessageFormat("Page {0,number}");
-                    oblockTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("OBlock Table"), footerFormat);
+                    oblockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                     portalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Portal Table"), footerFormat);
                     signalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Signal Table"), footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
@@ -238,6 +242,7 @@ public class OBlockTablePanel extends JPanel {
     }
 
     public JMenu getOptionMenu() {
+        log.debug("OBLOCK TABBED getOptionMenu() called");
         return _tf.getOptionMenu();
     }
     /**
@@ -300,7 +305,9 @@ public class OBlockTablePanel extends JPanel {
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull " + name);
         Objects.requireNonNull(model, "the table model must be nonnull " + name);
-        return this.configureJTable(name, new JTable(model), sorter);
+        JTable table = this.configureJTable(name, new JTable(model), sorter);
+        //model.addHeaderListener(table);
+        return table;
     }
 
     /**
@@ -321,8 +328,7 @@ public class OBlockTablePanel extends JPanel {
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-        //addMouseListenerToHeader(table);
-        // TODO must put in tableModelClass to attach listener
+        // TODO must put in tableModelClass to attach listener?
         return table;
     }
 

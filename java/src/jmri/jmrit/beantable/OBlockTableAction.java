@@ -53,7 +53,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     OBlockTablePanel otp;
 
     // edit frames
-    OBlockEditFrame oblockFrame;
+    //OBlockEditFrame oblockFrame;
     PortalEditFrame portalFrame;
     SignalEditFrame signalFrame;
 
@@ -61,12 +61,22 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 //    PathTurnoutFrame ptFrame;
 //    BlockpathFrame bpFrame;
 
-
+    /**
+     * Create an action with a specific title.
+     * <p>
+     * Note that the argument is the Action title, not the title of the
+     * resulting frame. Perhaps this should be changed?
+     *
+     * @param actionName title of the action
+     */
     public OBlockTableAction(String actionName) {
         super(actionName);
         //includeAddButton = false; // not required as we override the actionPerformed method
     }
 
+    /**
+     * Default constructor
+     */
     public OBlockTableAction() {
         this(Bundle.getMessage("TitleOBlockTable"));
     }
@@ -88,7 +98,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(@Nonnull BeanTableFrame<OBlock> f) {
         JButton addOblockButton = new JButton(Bundle.getMessage("ButtonAddOBlock"));
         otp.addToBottomBox(addOblockButton);
         addOblockButton.addActionListener(this::addOBlockPressed);
@@ -110,17 +120,16 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     @Override
     public void actionPerformed(ActionEvent e) {
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-//        if (_tabbed && f == null) {
-//            f = new BeanTableFrame<>();
-//        }
         initTableFrames();
+        if (_tabbed && f == null) {
+            //f = new BeanTableFrame<>();
+        }
     }
 
     private void initTableFrames() {
         // initialise core OBlock Edit functionality
         tf = new TableFrames(); // tf contains OBlock Edit methods and links to tableDataModels, is a JmriJFrame that must be hidden
-        tf.initComponents();
-        // original simulated desktop interface is created in tf.initComponents() and takes care of itself if !_tabbed
+
         if (_tabbed) { // add the tables on a JTabbedPane, choose in Preferences > Display > GUI
             log.debug("Tabbed starting");
             // create the JTable model, with changes for specific NamedBean
@@ -133,7 +142,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                  */
                 @Override
                 void extras() {
-                    //addToFrame(this);
+                    addToFrame(this); //creates multiple sets, wrong level to call
                 }
             };
             setTitle();
@@ -145,7 +154,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             otf.pack();
             otf.setVisible(true);
         } else {
-            tf.initComponents(); // only required for _desktop, create s InternalFrames
+            tf.initComponents();
+            // original simulated desktop interface is created in tf.initComponents() and takes care of itself if !_tabbed
+            // only required for _desktop, creates InternalFrames
             tf.setVisible(true);
         }
     }
@@ -166,10 +177,10 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
         otp = new OBlockTablePanel(oblocks, portals, signals, blockportals, tf, helpTarget());
 
-        if (f == null) {
-            f = new OBlockTableFrame(otp, helpTarget());
-        }
-        setMenuBar(f); // comes after the Help menu is added by f = new
+//        if (f == null) {
+//            f = new OBlockTableFrame(otp, helpTarget());
+//        }
+//        setMenuBar(f); // comes after the Help menu is added by f = new
         // BeanTableFrame(etc.) handled in stand alone application
 //        setTitle(); // TODO see if some of this is required or should be turned off to prevent/hide the stray JFrame that opens
 //        addToFrame(f);
@@ -203,10 +214,37 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         if (_tabbed) {
             //final JmriJFrame finalF = f;   // needed for anonymous ActionListener class on dialogs, see TurnoutTableAction
             JMenuBar menuBar = f.getJMenuBar();
+            MenuElement[] subElements;
+            JMenu fileMenu = null;
+            for (int i = 0; i < menuBar.getMenuCount(); i++) {
+                if (menuBar.getComponent(i) instanceof JMenu) {
+                    if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuFile"))) {
+                        fileMenu = menuBar.getMenu(i);
+                    }
+                }
+            }
+            if (fileMenu == null) {
+                return;
+            }
+            subElements = fileMenu.getSubElements();
+            for (MenuElement subElement : subElements) {
+                MenuElement[] popsubElements = subElement.getSubElements();
+                for (MenuElement popsubElement : popsubElements) {
+                    if (popsubElement instanceof JMenuItem) {
+                        if (((JMenuItem) popsubElement).getText().equals(Bundle.getMessage("PrintTable"))) {
+                            JMenuItem printMenu = (JMenuItem) popsubElement;
+                            fileMenu.remove(printMenu);
+                            break;
+                        }
+                    }
+                }
+            }
+            fileMenu.add(otp.getPrintItem());
+
             if (menuBar == null) {
                 menuBar = new JMenuBar();
             }
-            setTitle();
+            //setTitle();
             f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = korter
             f.setJMenuBar(tf.addMenus(menuBar));  // setJMenuBar(addMenus(this.getJMenuBar()));
 
@@ -214,27 +252,26 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             boolean menuAbsent = true;
             for (int m = 0; m < menuBar.getMenuCount(); ++m) {
                 String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
-                if (name.equals(Bundle.getMessage("MenuFile"))) {
+                if (name.equals(Bundle.getMessage("MenuOptions"))) {
                     // using first menu for check, should be identical to next JMenu Bundle
                     menuAbsent = false;
                     break;
                 }
             }
-            // or add separate items, actionhandlers?
-            f.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
-        }
+            if (menuAbsent) { // create it
+                int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+                int offset = 1;
+                log.debug("setMenuBar number of menu items = {}", pos);
+                for (int i = 0; i <= pos; i++) {
+                    if (menuBar.getComponent(i) instanceof JMenu) {
+                        if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                            offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+                        }
+                    }
+                }
+                JMenu opsMenu = new JMenu(Bundle.getMessage("MenuOptions"));
+                // or add separate items, actionhandlers?
 
-        //        if (menuAbsent) { // create it
-        //            int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
-        //            int offset = 1;
-        //            log.debug("setMenuBar number of menu items = {}", pos);
-        //            for (int i = 0; i <= pos; i++) {
-        //                if (menuBar.getComponent(i) instanceof JMenu) {
-        //                    if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
-        //                        offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
-        //                    }
-        //                }
-        //            }
         //            JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
         //            JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
         //            opsMenu.add(item);
@@ -258,7 +295,10 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //            menuBar.add(speedMenu, pos + offset + 1); // add this menu to the right of the previous
         //            menuBar = f.getJMenuBar();
         //            menuBar.add(tf.getMenuBar());
-//              }
+
+            }
+            f.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
+        }
     }
 
     JTextField startAddress = new JTextField(10);
@@ -289,11 +329,11 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             addOBlockFrame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
             addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-            ActionListener createListener = this::createObPressed;
+//            ActionListener createListener = this::createObPressed;
             ActionListener okListener = this::createObPressed;
             ActionListener cancelListener = this::cancelObPressed;
-            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            addButton.addActionListener(createListener);
+//            addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+//            addButton.addActionListener(createListener);
 
             addOBlockFrame.add(new AddNewBeanPanel(startAddress, userName, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel));
             startAddress.setToolTipText(Bundle.getMessage("SysNameToolTip", "OB")); // override tooltip with bean specific letter
@@ -387,26 +427,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //oblockFrame.resetFrame();
     }
 
-    void addPortalPressed(ActionEvent e) {
-        if (portalFrame == null) {
-            portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portals);
-        }
-        //portalFrame.updatePortalList();
-        portalFrame.resetFrame();
-        portalFrame.pack();
-        portalFrame.setVisible(true);
-    }
-
-    void addSignalPressed(ActionEvent e) {
-        if (signalFrame == null) {
-            signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), signals);
-        }
-        //signalFrame.updateSignalList();
-        signalFrame.resetFrame();
-        signalFrame.pack();
-        signalFrame.setVisible(true);
-    }
-
     void cancelObPressed(ActionEvent e) {
         addOBlockFrame.setVisible(false);
         addOBlockFrame.dispose();
@@ -414,7 +434,8 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     /**
-     * Respond to Create new item button pressed on Add OBlock pane. Part of Add2 alternative
+     * Respond to Create new OBlock button pressed on Add OBlock pane.
+     * Adapted from {@link MemoryTableAction#addPressed(ActionEvent)}
      *
      * @param e the click event
      */
@@ -440,7 +461,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         }
         String sName = "OB" + startAddress.getText();
         // initial check for empty entry
-        if (sName.isEmpty() && !autoSystemNameBox.isSelected()) {
+        if ((sName.isEmpty()) && (!autoSystemNameBox.isSelected())) {
             statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBarLabel.setForeground(Color.red);
             startAddress.setBackground(Color.red);
@@ -449,7 +470,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             startAddress.setBackground(Color.white);
         }
 
-        // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
+        // Add some entry pattern checking, before assembling sName and handing it to the OBlockManager
         StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameOBlock")));
         String errorMessage = null;
         for (int x = 0; x < numberOfOblocks; x++) {
@@ -469,13 +490,13 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
                 statusBarLabel.setText(errorMessage);
                 statusBarLabel.setForeground(Color.red);
-                return; // new Memory objects are always valid, but system names must not be in use so skip in that case
+                return; // new OBlock objects are always valid, but system names must not be in use so skip in that case
             }
             try {
                 if (autoSystemNameBox.isSelected()) {
                     oblockManager.createNewOBlock(uName, "");
                 } else {
-                    InstanceManager.getDefault(OBlockManager.class).createNewOBlock(sName, uName);
+                    oblockManager.createNewOBlock(sName, uName);
                 }
             } catch (IllegalArgumentException ex) {
                 // uName input no good
@@ -502,7 +523,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             if (uName != null) {
                 uName = nextName(uName);
             }
-        } // end of for loop creating rangeBox of Memories
+        } // end of for loop creating rangeBox of OBlocks
 
         // provide feedback to uName
         if (errorMessage == null) {
@@ -516,6 +537,26 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         pref.setSimplePreferenceState(systemNameAuto, autoSystemNameBox.isSelected());
         // Notify changes
         oblocks.fireTableDataChanged();
+    }
+
+    void addPortalPressed(ActionEvent e) {
+        if (portalFrame == null) {
+            portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portals);
+        }
+        //portalFrame.updatePortalList();
+        portalFrame.resetFrame();
+        portalFrame.pack();
+        portalFrame.setVisible(true);
+    }
+
+    void addSignalPressed(ActionEvent e) {
+        if (signalFrame == null) {
+            signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), signals);
+        }
+        //signalFrame.updateSignalList();
+        signalFrame.resetFrame();
+        signalFrame.pack();
+        signalFrame.setVisible(true);
     }
 
     void handleCreateException(String sysName) {
