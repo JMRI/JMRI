@@ -125,8 +125,7 @@ class LayoutEditorComponent extends JComponent {
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
-        Point2D startPt = new Point2D.Double();
-        Point2D stopPt = new Point2D.Double();
+        Point2D startPt, stopPt;
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -135,8 +134,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(minX, y);
-            stopPt.setLocation(maxX, y);
+            startPt = new Point2D.Double(minX, y);
+            stopPt = new Point2D.Double(maxX, y);
 
             if ((y % wideMod) < wideMin) {
                 g2.setStroke(wide);
@@ -149,8 +148,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw vertical lines
         for (int x = minX; x <= maxX; x += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(x, minY);
-            stopPt.setLocation(x, maxY);
+            startPt = new Point2D.Double(x, minY);
+            stopPt = new Point2D.Double(x, maxY);
 
             if ((x % wideMod) < wideMin) {
                 g2.setStroke(wide);
