@@ -41,7 +41,7 @@ import jmri.util.table.ButtonRenderer;
  */
 public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
     
-    BeanTableFrame<NamedTable> beanTableFrame;
+//    BeanTableFrame<NamedTable> beanTableFrame;
     BeanTableDataModel<NamedTable> beanTableDataModel;
     
     NamedTableManager _tableManager = null;
@@ -69,12 +69,13 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
     /**
      * Create a new ConditionalNG List View editor.
      *
-     * @param f the bean table frame
      * @param m the bean table model
      * @param sName name of the NamedTable being edited
      */
-    public TableEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
-        this.beanTableFrame = f;
+//     * @param f the bean table frame
+//    public TableEditor(BeanTableFrame<NamedTable> f, BeanTableDataModel<NamedTable> m, String sName) {
+    public TableEditor(BeanTableDataModel<NamedTable> m, String sName) {
+//        this.beanTableFrame = f;
         this.beanTableDataModel = m;
         _tableManager = InstanceManager.getDefault(jmri.jmrit.logixng.NamedTableManager.class);
         _curTable = _tableManager.getBySystemName(sName);
@@ -888,6 +889,7 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
                     javax.swing.SwingUtilities.invokeLater(t);
                 }
             } else if (col == UNAME_COLUMN) {
+                throw new UnsupportedOperationException("Not implemented yet");
 /*                
                 String uName = (String) value;
                 ConditionalNG cn = _curTable.getConditionalNGByUserName(uName);
