@@ -42,8 +42,8 @@ public class AudioTableFrame extends BeanTableFrame<Audio> {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreMenu());
+        fileMenu.add(panel.getPrintItem());
 
-        //fileMenu.add(panel.getPrintItem());
         setJMenuBar(menuBar);
 
         addHelpMenu(helpTarget, true);

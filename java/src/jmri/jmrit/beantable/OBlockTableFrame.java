@@ -29,11 +29,12 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreMenu());
-        fileMenu.add(panel.getPrintItem()); // TODO link to oblock.TableFrames
+        fileMenu.add(panel.getPrintItem());
+        menuBar.add(fileMenu);
 
-        setJMenuBar(menuBar);
+        menuBar.add(panel.getOptionMenu());
+        setJMenuBar(menuBar); // TODO link to oblock.TableFrames
 
         addHelpMenu(helpTarget, true);
 

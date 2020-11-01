@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable.oblock;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyVetoException;
 import java.text.MessageFormat;
@@ -16,7 +13,6 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import jmri.*;
@@ -34,6 +30,8 @@ import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+import jmri.util.table.ToggleButtonEditor;
+import jmri.util.table.ToggleButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -104,10 +102,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     } // NOI18N, title will be updated when !_tabbed, or is hidden
 
     public TableFrames(String actionName) {
-        super(actionName);
+        //super(actionName);
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-        log.debug("_tabbed = {}", _tabbed);
         this.setVisible(!_tabbed); // also hide some stray separate _desktop panel, not "this"
+        super.setVisible(!_tabbed);
 
         // create the tables
         _oBlockModel = new OBlockTableModel(this);
@@ -115,7 +113,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalXRefModel = new BlockPortalTableModel(_oBlockModel);
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
-        // keep more tables in memory: Path-Turnout, BlockPath?
     }
 
     public OBlockTableModel getOblockTableModel() {
@@ -136,7 +133,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     @Override
     public void initComponents() {
-        if (!_tabbed) { // build and display the classic floating "OBlock and its..." desktop interface
+        // build and display the classic floating "OBlock and its..." desktop interface
+        if (!_tabbed) { // just to be sure
             setTitle(Bundle.getMessage("TitleOBlocks"));
             setJMenuBar(addMenus(this.getJMenuBar()));
             addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
@@ -176,132 +174,111 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             mBar = new JMenuBar();
         }
         // create and add the menus
-        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
-        fileMenu.add(new jmri.configurexml.StoreMenu());
+        if (!_tabbed) { // _tabbed Print is handled via getPrintItem()
+            // File menu
+            JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+            fileMenu.add(new jmri.configurexml.StoreMenu());
 
-        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
-        fileMenu.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
+            JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
+            fileMenu.add(printItem);
+            printItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
+                        MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                        _oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: {}", e1, e1);
+                    }
                 }
-            }
-        });
-        printItem = new JMenuItem(Bundle.getMessage("PrintPortalTable"));
-        fileMenu.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
+            });
+            printItem = new JMenuItem(Bundle.getMessage("PrintPortalTable"));
+            fileMenu.add(printItem);
+            printItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
+                        MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                        _portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: {}", e1, e1);
+                    }
                 }
-            }
-        });
-        printItem = new JMenuItem(Bundle.getMessage("PrintSignalTable"));
-        fileMenu.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
+            });
+            printItem = new JMenuItem(Bundle.getMessage("PrintSignalTable"));
+            fileMenu.add(printItem);
+            printItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
+                        MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                        _signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: {}", e1, e1);
+                    }
                 }
-            }
-        });
-        printItem = new JMenuItem(Bundle.getMessage("PrintXRef"));
-        fileMenu.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
+            });
+            printItem = new JMenuItem(Bundle.getMessage("PrintXRef"));
+            fileMenu.add(printItem);
+            printItem.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
+                        MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                        _blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    } catch (java.awt.print.PrinterException e1) {
+                        log.warn("error printing: {}", e1, e1);
+                    }
                 }
+            });
+            mBar.add(fileMenu);
+
+            // Edit menu
+            JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+            editMenu.setMnemonic(KeyEvent.VK_E);
+            TransferActionListener actionListener = new TransferActionListener();
+
+            JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
+            menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
+            menuItem.addActionListener(actionListener);
+            if (SystemType.isMacOSX()) {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK));
+            } else {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
             }
-        });
-        mBar.add(fileMenu);
+            menuItem.setMnemonic(KeyEvent.VK_T);
+            editMenu.add(menuItem);
 
-        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-        editMenu.setMnemonic(KeyEvent.VK_E);
-        TransferActionListener actionListener = new TransferActionListener();
-
-        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCut"));
-        menuItem.setActionCommand((String) TransferHandler.getCutAction().getValue(Action.NAME));
-        menuItem.addActionListener(actionListener);
-        if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK));
-        } else {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
-        }
-        menuItem.setMnemonic(KeyEvent.VK_T);
-        editMenu.add(menuItem);
-
-        menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-        menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
-        menuItem.addActionListener(actionListener);
-        if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK));
-        } else {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
-        }
-        menuItem.setMnemonic(KeyEvent.VK_C);
-        editMenu.add(menuItem);
-
-        menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
-        menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
-        menuItem.addActionListener(actionListener);
-        if (SystemType.isMacOSX()) {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK));
-        } else {
-            menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
-        }
-        menuItem.setMnemonic(KeyEvent.VK_P);
-        editMenu.add(menuItem);
-        mBar.add(editMenu);
-
-        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
-        _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
-        _showWarnItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                String cmd = event.getActionCommand();
-                setShowWarnings(cmd);
+            menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+            menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+            menuItem.addActionListener(actionListener);
+            if (SystemType.isMacOSX()) {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK));
+            } else {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
             }
-        });
-        optionMenu.add(_showWarnItem);
-        setShowWarnings("ShowWarning");
+            menuItem.setMnemonic(KeyEvent.VK_C);
+            editMenu.add(menuItem);
 
-        JMenuItem importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlocksMenu"));
-        importBlocksItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                importBlocks();
+            menuItem = new JMenuItem(Bundle.getMessage("MenuItemPaste"));
+            menuItem.setActionCommand((String) TransferHandler.getPasteAction().getValue(Action.NAME));
+            menuItem.addActionListener(actionListener);
+            if (SystemType.isMacOSX()) {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK));
+            } else {
+                menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
             }
-        });
-        optionMenu.add(importBlocksItem);
-        // disable ourself if there is no primary Block manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
-            importBlocksItem.setEnabled(false);
+            menuItem.setMnemonic(KeyEvent.VK_P);
+            editMenu.add(menuItem);
+            mBar.add(editMenu);
         }
 
-        // Options menu
-        //menuBar.add(optionMenu);
+        mBar.add(getOptionMenu());
+
         // Tables menu
         tablesMenu = new JMenu(Bundle.getMessage("OpenMenu"));
         updateOBlockTablesMenu(); // replaces the last 2 menu items with appropriate submenus
@@ -326,6 +303,36 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _blockPortalXRefFrame.setLocation(700, 20);
         _desktop.add(_blockPortalXRefFrame);
     }
+
+    public JMenu getOptionMenu() {
+        // Options menu
+        JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
+        _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
+        _showWarnItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                String cmd = event.getActionCommand();
+                setShowWarnings(cmd);
+            }
+        });
+        optionMenu.add(_showWarnItem);
+        setShowWarnings("ShowWarning");
+
+        JMenuItem importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlocksMenu"));
+        importBlocksItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                importBlocks();
+            }
+        });
+        optionMenu.add(importBlocksItem);
+        // disable ourself if there is no primary Block manager available
+        if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
+            importBlocksItem.setEnabled(false);
+        }
+        return optionMenu;
+    }
+
     private String oblockPrefix() {
         if (oblockPrefix == null) {
             oblockPrefix = InstanceManager.getDefault(OBlockManager.class).getSystemNamePrefix();
@@ -398,7 +405,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 oBlock.setCurvature(curve);
 
                 for (Path pa : blockPaths) {
-                    log.debug("Start loop: path {} on block {}", n, oBlockName);
+                    log.debug("Start loop: Path {} on Block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
                     toBlockName = oblockPrefix() + toBlockNumber;
                     String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
@@ -704,16 +711,22 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
-                new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
         JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
-                new MyBooleanRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
+                new ToggleButtonRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
+        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Current"), Bundle.getMessage("Last")));
         box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
         box.addItem("");
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
-                new MyBooleanRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
+                new ToggleButtonRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
+        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         _oBlockTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) { // for macOS, Linux
@@ -819,7 +832,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _signalTable.setDragEnabled(true);
 
         _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
-                new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < model.getColumnCount(); i++) {
@@ -900,6 +915,15 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             }
         }
         frame.moveToFront();
+    }
+
+    protected void openOBlockEditFrame(String sysName) {
+        if (sysName == null) {
+            // new OBlock, normally created from [Add OBlock...] button
+            OBlockEditFrame obef = new OBlockEditFrame("New OBlock", _oBlockModel);
+        } else {
+            OBlockEditFrame obef = new OBlockEditFrame("Edit OBlock " + sysName, _oBlockModel);
+        }
     }
 
     /**
@@ -1019,21 +1043,22 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* Block-Path Table Panel *****************************
      */
     protected JPanel makeBlockPathTablePanel(BlockPathTableModel _model) {
-        BlockPathTableModel model = _model;
-        JTable blockPathTable = new JTable(model);
+        JTable blockPathTable = new JTable(_model);
         blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
             BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
         blockPathTable.setDragEnabled(true);
 
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
-                new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
 
-        for (int i = 0; i < model.getColumnCount(); i++) {
-            int width = model.getPreferredWidth(i);
+        for (int i = 0; i < _model.getColumnCount(); i++) {
+            int width = _model.getPreferredWidth(i);
             blockPathTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         blockPathTable.doLayout();
@@ -1217,39 +1242,41 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
+
     /*
      * ********************* End of tables and frames methods *****************************
      */
 
-    static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
-
-        String _trueValue;
-        String _falseValue;
-
-        MyBooleanRenderer(String trueValue, String falseValue) {
-            _trueValue = trueValue;
-            _falseValue = falseValue;
-        }
-
-        @Override
-        public java.awt.Component getTableCellRendererComponent(JTable table,
-                Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-
-            JLabel val;
-            if (value instanceof Boolean) {
-                if (((Boolean) value)) {
-                    val = new JLabel(_trueValue);
-                } else {
-                    val = new JLabel(_falseValue);
-                }
-            } else {
-                val = new JLabel("");
-            }
-            val.setFont(table.getFont().deriveFont(java.awt.Font.PLAIN));
-            return val;
-        }
-    }
+//    public static class BooleanAsStringsRenderer extends javax.swing.table.DefaultTableCellRenderer {
+//
+//        String _trueValue;
+//        String _falseValue;
+//
+//        public BooleanAsStringsRenderer(String trueValue, String falseValue) {
+//            _trueValue = trueValue;
+//            _falseValue = falseValue;
+//        }
+//
+//        @Override
+//        public java.awt.Component getTableCellRendererComponent(JTable table,
+//                Object value, boolean isSelected,
+//                boolean hasFocus, int row, int column) {
+//
+//            log.debug("BooStriRender for value: {}", value.toString());
+//            JLabel val;
+//            if (value instanceof Boolean) {
+//                if (((Boolean) value)) {
+//                    val = new JLabel(_trueValue);
+//                } else {
+//                    val = new JLabel(_falseValue);
+//                }
+//            } else {
+//                val = new JLabel("");
+//            }
+//            val.setFont(table.getFont().deriveFont(java.awt.Font.PLAIN));
+//            return val;
+//        }
+//    } // end of class
 
     protected int verifyWarning(String message) {
         int val = 0;

@@ -6,12 +6,11 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import jmri.BeanSetting;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.Block;
+
+import jmri.*;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.OPath;
+import jmri.jmrit.logix.Portal;
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +43,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     public static final int TURNOUT_NAME_COL = 0;
     public static final int STATE_COL = 1;
     public static final int DELETE_COL = 2;
+    public static final int EDIT_COL = 3;
     public static final int NUMCOLS = 3;
 
     private static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
@@ -96,7 +96,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
 
     @Override
     public int getColumnCount() {
-        return NUMCOLS;
+        return NUMCOLS + (_tabbed ? 1 : 0); // add Edit column on _tabbed
     }
 
     @Override
@@ -111,6 +111,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 return Bundle.getMessage("LabelItemName");
             case STATE_COL:
                 return Bundle.getMessage("ColumnState"); // state
+            case EDIT_COL:
+                return "  ";
             default:
                 // fall through
                 break;
@@ -148,6 +150,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 }
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            case EDIT_COL:
+                return Bundle.getMessage("ButtonEdit");
             default:
                 // fall through
                 break;
@@ -171,7 +175,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                         return;
                     }
                     break;
-                case DELETE_COL:
+                case DELETE_COL: // called "Clear"
                     initTempRow();
                     fireTableRowsUpdated(row, row);
                     return;
@@ -199,17 +203,18 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                         Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            if (_tabbed) {
+            if (!_tabbed) {
                 initTempRow();
             }
             return;
         }
 
         BeanSetting bs = _path.getSettings().get(row);
+        Turnout t = null;
 
         switch (col) {
             case TURNOUT_NAME_COL:
-                Turnout t = InstanceManager.turnoutManagerInstance().getTurnout((String) value);
+                t = InstanceManager.turnoutManagerInstance().getTurnout((String) value);
                 if (t != null) {
                     if (!t.equals(bs.getBean())) {
                         _path.removeSetting(bs);
@@ -246,6 +251,9 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                     fireTableDataChanged();
                 }
                 break;
+            case EDIT_COL:
+                editTurnout(t);
+                break;
             default:
                 log.warn("Unhandled col: {}", col);
                 break;
@@ -259,12 +267,29 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == DELETE_COL) {
-            return JButton.class;
-        } else if (col == STATE_COL) {
-            return StateComboBoxPanel.class;
+        switch (col) {
+            case DELETE_COL:
+            case EDIT_COL:
+                return JButton.class;
+            case STATE_COL:
+                return StateComboBoxPanel.class;
+            case TURNOUT_NAME_COL:
+            default:
+                return String.class;
         }
-        return String.class;
+    }
+
+    private boolean editTurnout(NamedBean turnout) {
+        if (_tabbed) {
+            if (turnout == null) {
+                return false;
+            } else {
+                JOptionPane.showMessageDialog(null, "TODO open TurnoutEditFrame", Bundle.getMessage("MessageTitle"), JOptionPane.WARNING_MESSAGE);
+                // TODO EBR open SignalEditFrame
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -316,6 +341,8 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         JComboBox<String> editCombo = new JComboBox<>();
         editCombo.addItem(SET_THROWN);
         editCombo.addItem(SET_CLOSED);
+        editCombo.putClientProperty("JComponent.sizeVariant", "small");
+        editCombo.putClientProperty("JComboBox.buttonType", "square");
         return editCombo;
     }
 
@@ -339,6 +366,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
             case STATE_COL:
                 return new JTextField(10).getPreferredSize().width;
             case DELETE_COL:
+            case EDIT_COL:
                 return new JButton("DELETE").getPreferredSize().width;
             default:
                 // fall through

@@ -180,6 +180,8 @@ public abstract class RowComboBoxPanel
         //the user selected another row (or initially no row was selected)
         this.editor.removeAll();  // remove the combobox from the panel
         JComboBox editorbox = getEditorBox(table.convertRowIndexToModel(row));
+        editorbox.putClientProperty("JComponent.sizeVariant", "small");
+        editorbox.putClientProperty("JComboBox.buttonType", "square");
         log.debug("getEditorComponent>notSelected (row={}, value={}; me = {}))", row, value, this.toString());
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
@@ -256,6 +258,8 @@ public abstract class RowComboBoxPanel
         this.renderer.removeAll();  //remove the combobox from the panel
         JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
+        renderbox.putClientProperty("JComponent.sizeVariant", "small");
+        renderbox.putClientProperty("JComboBox.buttonType", "square");
         if (value != null) {
             renderbox.addItem(value.toString()); // display (only) the current Value
         } else {

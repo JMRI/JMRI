@@ -1,24 +1,33 @@
 package jmri.jmrit.beantable.oblock;
 
+import jmri.InstanceManager;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 
 import javax.swing.*;
 //import javax.swing.event.ChangeEvent;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * GUI to edit OBlock objects in tabbed table interface.
- * Adapted from AbstractAudioFrame + -ListenerFrame 2020 by Egbert Broerse.
+ * Adapted from AbstractAudioFrame + -ListenerFrame.
  *
  * @author Matthew Harris copyright (c) 2009
+ * @author Egbert Broerse copyright (c) 2020
  */
 public class OBlockEditFrame extends JmriJFrame {
 
     OBlockEditFrame frame = this;
+    OBlockManager obm;
 
     JPanel main = new JPanel();
     private final JScrollPane scroll
@@ -29,10 +38,15 @@ public class OBlockEditFrame extends JmriJFrame {
     OBlockTableModel model;
 
     // Common UI components for Add/Edit OBlock
-    private static final JLabel SYS_NAME_LABEL = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
+    JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
+    JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField sysName = new JTextField(5);
-    private static final JLabel USER_NAME_LABEL = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextField userName = new JTextField(15);
+    JButton addButton;
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+
+    private final static String PREFIX = "OB";
 
     /**
      * Standard constructor
@@ -43,14 +57,11 @@ public class OBlockEditFrame extends JmriJFrame {
     public OBlockEditFrame(String title, OBlockTableModel model) {
         super(title);
         this.model = model;
+        obm = InstanceManager.getDefault(OBlockManager.class);
     }
 
     /**
-     * Method to layout the frame.
-     * <p>
-     * This contains common items.
-     * <p>
-     * Sub-classes will override this method and provide additional GUI items.
+     * Layout the frame.
      */
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
@@ -61,17 +72,35 @@ public class OBlockEditFrame extends JmriJFrame {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(SYS_NAME_LABEL);
+        p.add(sysNameLabel);
         p.add(sysName);
         frame.getContentPane().add(p);
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(USER_NAME_LABEL);
+        p.add(userNameLabel);
         p.add(userName);
         frame.getContentPane().add(p);
 
+        p = new JPanel();
+        JButton apply;
+        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+        apply.addActionListener(this::applyPressed);
+        JButton ok;
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        ok.addActionListener((ActionEvent e) -> {
+            applyPressed(e);
+            frame.dispose();
+        });
+        JButton cancel;
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
+        frame.getContentPane().add(p);
+
         frame.add(scroll);
+
     }
 
     /**
@@ -92,13 +121,42 @@ public class OBlockEditFrame extends JmriJFrame {
     public void populateFrame(OBlock a) {
         sysName.setText(a.getSystemName());
         userName.setText(a.getUserName());
+//        tempRow[LENGTHCOL] = twoDigit.format(0.0);
+//        tempRow[UNITSCOL] = Bundle.getMessage("in");
+//        tempRow[CURVECOL] = noneText;
+//        tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
+//        tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
+//        tempRow[SPEEDCOL] = "";
+    }
+
+    private void applyPressed(ActionEvent e) {
+        String user = userName.getText().trim();
+        if (user.equals("")) {
+            user = null;
+        }
+        OBlock ob = obm.getOBlock(user);
+        if (ob != null) {
+//            //      try {
+//            OBlock block = fromBlockComboBox.getItemAt(fromBlockComboBox.getSelectedIndex());
+//            if (block != null) {
+//                portal.setFromBlock(block, true);
+//            }
+//            block = toBlockComboBox.getItemAt(toBlockComboBox.getSelectedIndex());
+//            if (block != null) {
+//                ob.setToBlock(block, true);
+//                //  } catch (IllegalArgumentException ex) {
+//                //     JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+//            }
+        }
+        // Notify changes
+        model.fireTableDataChanged();
     }
 
     /**
      * Check System Name user input.
      *
      * @param entry string retrieved from text field
-     * @param counter index of all similar (Path/Portal) items
+     * @param counter index of all similar (OBlock) items
      * @param prefix (Oblock/Portal/path/signal) system name prefix string to compare entry against
      * @return true if prefix doesn't match
      */
@@ -112,6 +170,6 @@ public class OBlockEditFrame extends JmriJFrame {
         return false;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OBlockEditFrame.class);
+    //private static final Logger log = LoggerFactory.getLogger(OBlockEditFrame.class);
 
 }

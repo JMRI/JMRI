@@ -50,6 +50,7 @@ public class SignalTableModel extends AbstractTableModel {
     public static final int LENGTHCOL = 4;
     public static final int UNITSCOL = 5;
     public static final int DELETE_COL = 6;
+    static public final int EDIT_COL = 7;
     public static final int NUMCOLS = 7;
     int _lastIdx; // for debug
 
@@ -248,7 +249,7 @@ public class SignalTableModel extends AbstractTableModel {
                         (toBlock != null ? toBlock.getDisplayName() : "(null to-block reference)"));
             }
         } else if (fromBlock != null && toBlock != null) {
-            Portal p = getPortalwithBlocks(fromBlock, toBlock);
+            Portal p = getPortalWithBlocks(fromBlock, toBlock);
             if (p == null) {
                 msg = Bundle.getMessage("NoSuchPortal", fromBlock.getDisplayName(), toBlock.getDisplayName());
             } else {
@@ -262,7 +263,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     // From the PortalSet get the single portal using the given To and From block.
-    private Portal getPortalwithBlocks(OBlock fromBlock, OBlock toBlock) {
+    private Portal getPortalWithBlocks(OBlock fromBlock, OBlock toBlock) {
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
             OBlock fromBlk = portal.getFromBlock();
@@ -327,7 +328,7 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return NUMCOLS;
+        return NUMCOLS + (_tabbed ? 1 : 0); // add Edit column on _tabbed
     }
 
     @Override
@@ -351,6 +352,7 @@ public class SignalTableModel extends AbstractTableModel {
             case LENGTHCOL:
                 return Bundle.getMessage("Offset");
             case UNITSCOL:
+            case EDIT_COL:
                 return "  ";
             default:
                 // fall through
@@ -415,6 +417,8 @@ public class SignalTableModel extends AbstractTableModel {
                 return signalRow.isMetric();
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
+            case EDIT_COL:
+                return Bundle.getMessage("ButtonEdit");
             default:
                 // fall through
                 break;
@@ -431,7 +435,7 @@ public class SignalTableModel extends AbstractTableModel {
                 fireTableRowsUpdated(row, row);
                 return;
             } else if (col == UNITSCOL) {
-                if ((Boolean) value) {
+                if (value.equals(true)) {
                     tempRow[UNITSCOL] = Bundle.getMessage("cm");
                 } else {
                     tempRow[UNITSCOL] = Bundle.getMessage("in");
@@ -485,7 +489,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }                    
                 } else {
                     if (fromBlock != null && toBlock != null) {
-                        portal = getPortalwithBlocks(fromBlock, toBlock);
+                        portal = getPortalWithBlocks(fromBlock, toBlock);
                         if (portal == null) {
                             msg = Bundle.getMessage("NoSuchPortal", tempRow[FROM_BLOCK_COLUMN], tempRow[TO_BLOCK_COLUMN]);
                         } else {
@@ -503,7 +507,7 @@ public class SignalTableModel extends AbstractTableModel {
                 }
                 if (msg == null) {
                     if (fromBlock != null && toBlock != null) {
-                        portal = getPortalwithBlocks(fromBlock, toBlock);
+                        portal = getPortalWithBlocks(fromBlock, toBlock);
                         if (portal == null) {
                             msg = Bundle.getMessage("NoSuchPortal", tempRow[FROM_BLOCK_COLUMN], tempRow[TO_BLOCK_COLUMN]);
                         } else {
@@ -595,7 +599,7 @@ public class SignalTableModel extends AbstractTableModel {
                         signalRow.setToBlock(null);
                     } else {
                         // get new portal
-                        portal = getPortalwithBlocks(block, signalRow.getToBlock());
+                        portal = getPortalWithBlocks(block, signalRow.getToBlock());
                         signalRow.setPortal(portal);
                     }
                     msg = checkSignalRow(signalRow);
@@ -658,7 +662,7 @@ public class SignalTableModel extends AbstractTableModel {
                         signalRow.setFromBlock(null);
                     } else {
                         // get new portal
-                        portal = getPortalwithBlocks(signalRow.getFromBlock(), block);
+                        portal = getPortalWithBlocks(signalRow.getFromBlock(), block);
                         signalRow.setPortal(portal);
                     }
                     msg = checkSignalRow(signalRow);
@@ -704,6 +708,9 @@ public class SignalTableModel extends AbstractTableModel {
                     log.debug("ROW {} DELETED, tablerows = {}, list size = {}", row, getRowCount(), _signalList.numberOfSignals());
                     fireTableDataChanged();
                     break;
+                case EDIT_COL:
+                        editSignal(Portal.getSignal((String) value));
+                    break;
                 default:
                     // fall through
                     break;
@@ -720,12 +727,25 @@ public class SignalTableModel extends AbstractTableModel {
     private void deleteSignal(SignalRow signalRow) {
         Portal portal = signalRow.getPortal();
         if (portal == null) {
-            portal = getPortalwithBlocks(signalRow.getFromBlock(), signalRow.getToBlock());
+            portal = getPortalWithBlocks(signalRow.getFromBlock(), signalRow.getToBlock());
         }
         if (portal != null) {
             // remove signal from previous portal
             portal.deleteSignal(signalRow.getSignal());
         }
+    }
+
+    private boolean editSignal(NamedBean signal) {
+        if (_tabbed) {
+            if (signal == null) {
+                return false;
+            } else {
+                JOptionPane.showMessageDialog(null, "TODO open SignalEditFrame", Bundle.getMessage("MessageTitle"), JOptionPane.WARNING_MESSAGE);
+                // TODO EBR open SignalEditFrame
+                return true;
+            }
+        }
+        return false;
     }
 
     static private String setSignal(SignalRow signalRow, boolean deletePortal) {
@@ -762,12 +782,12 @@ public class SignalTableModel extends AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case NAME_COLUMN:
-                return String.class;
             case DELETE_COL:
+            case EDIT_COL:
                 return JButton.class;
-//            case UNITSCOL:
-//                return Boolean.class; // EBR off for debug
+            case UNITSCOL:
+                return JToggleButton.class;
+            case NAME_COLUMN:
             default:
                 return String.class;
         }
@@ -778,17 +798,14 @@ public class SignalTableModel extends AbstractTableModel {
     static public int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
-                return new JTextField(18).getPreferredSize().width;
             case FROM_BLOCK_COLUMN:
-                return new JTextField(18).getPreferredSize().width;
             case PORTAL_COLUMN:
-                return new JTextField(18).getPreferredSize().width;
             case TO_BLOCK_COLUMN:
                 return new JTextField(18).getPreferredSize().width;
             case LENGTHCOL:
                 return new JTextField(5).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(2).getPreferredSize().width;
+                return new JTextField(3).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width; // NOI18N replaced later
             default:

@@ -43,6 +43,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public static final int TO_BLOCK_COLUMN = 2;
     static public final int DELETE_COL = 3;
     public static final int NUMCOLS = 4;
+    static public final int EDIT_COL = 4;
+    // TODO add EDIT column if _tabbed
 
     PortalManager _manager;
     private final String[] tempRow = new String[NUMCOLS];
@@ -70,7 +72,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public int getColumnCount() {
-        return NUMCOLS;
+        return NUMCOLS + (_tabbed ? 1 : 0); // add Edit column on _tabbed
     }
 
     @Override
@@ -87,6 +89,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 return Bundle.getMessage("PortalName");
             case TO_BLOCK_COLUMN:
                 return Bundle.getMessage("OppBlockName");
+            case EDIT_COL:
+                return "  ";
             default:
                 // fall through
                 break;
@@ -116,6 +120,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     return portal.getToBlockName();
                 case DELETE_COL:
                     return Bundle.getMessage("ButtonDelete");
+                case EDIT_COL:
+                    return Bundle.getMessage("ButtonEdit");
                 default:
                     // fall through
                     break;
@@ -151,13 +157,13 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     msg = Bundle.getMessage("NoSuchBlock", tempRow[FROM_BLOCK_COLUMN]);
                 }
             }
-            if (msg==null && tempRow[TO_BLOCK_COLUMN] != null) {
+            if (msg == null && tempRow[TO_BLOCK_COLUMN] != null) {
                 toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
-                if (toBlock==null) {
+                if (toBlock == null) {
                     msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);
                 }
             }
-            if (msg==null && tempRow[NAME_COLUMN] != null) {
+            if (msg == null && tempRow[NAME_COLUMN] != null) {
                 if (fromBlock != null && toBlock!=null ) {
                     if (fromBlock.equals(toBlock)) { 
                         msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
@@ -172,7 +178,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                             msg = Bundle.getMessage("DuplPortalName", value);
                         }
                     }
-                } else if (fromBlock == null ^ toBlock==null ) {
+                } else if ((fromBlock == null) ^ (toBlock == null)) {
                     msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
                 }
             }
@@ -189,7 +195,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             return;
         }
 
-        switch (col) { // existing Partals in table
+        switch (col) { // existing Portals in table
             case FROM_BLOCK_COLUMN:
                 OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String) value);
                 if (block == null) {
@@ -239,6 +245,9 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     fireTableDataChanged();
                 }
                 break;
+            case EDIT_COL:
+                editPortal(portal);
+                break;
             default:
                 log.warn("Unhandled column: {}", col);
                 break;
@@ -257,6 +266,15 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         return false;
     }
 
+    private boolean editPortal(Portal portal) {
+        if (_tabbed) {
+            JOptionPane.showMessageDialog(null, "TODO open PortalEditFrame",
+                    Bundle.getMessage("MessageTitle"), JOptionPane.WARNING_MESSAGE);
+            // TODO EBR open PortalEditFrame
+        }
+        return false;
+    }
+
     @Override
     public boolean isCellEditable(int row, int col) {
         return true;
@@ -264,10 +282,13 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     @Override
     public Class<?> getColumnClass(int col) {
-        if (col == DELETE_COL) {
-            return JButton.class;
+        switch (col) {
+            case DELETE_COL:
+            case EDIT_COL:
+                return JButton.class;
+            default:
+                return String.class;
         }
-        return String.class;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
@@ -280,6 +301,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             case NAME_COLUMN:
                 return new JTextField(20).getPreferredSize().width;
             case DELETE_COL:
+            case EDIT_COL:
                 return new JButton("DELETE").getPreferredSize().width;
             default:
                 // fall through

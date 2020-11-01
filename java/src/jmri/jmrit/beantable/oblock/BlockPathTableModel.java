@@ -5,9 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.annotation.Nonnull;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.jmrit.logix.OBlock;
@@ -47,14 +45,15 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     static public final int UNITSCOL = 4;
     public static final int EDIT_COL = 5;
     public static final int DELETE_COL = 6;
+    public static final int EDITBCOL = 7;
     public static final int NUMCOLS = 7;
 
     private final String[] tempRow = new String[NUMCOLS];
 
     private OBlock _block;
     private TableFrames _parent;
-    private final boolean _tabbed; // updated from prefs (restart required)
-    private ArrayList<Boolean> _units;      // gimmick to toggle units of length col for each path
+    private final boolean _tabbed;     // read from prefs (restart required)
+    private ArrayList<Boolean> _units; // gimmick to toggle units of length col for each path
     private float _tempLen;
     
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
@@ -113,7 +112,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public int getColumnCount() {
-        return NUMCOLS;
+        return NUMCOLS + (_tabbed ? 1 : 0); // add Edit column on _tabbed
     }
 
     @Override
@@ -203,6 +202,12 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 } else {
                     return Bundle.getMessage("ButtonClear");
                 }
+            case EDITBCOL:
+                if (path != null) {
+                    return Bundle.getMessage("ButtonEdit");
+                } else {
+                    return "";
+                }
             default:
                 // fall through
                 break;
@@ -213,7 +218,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
-        if (_block.getPaths().size() == row) {
+        if (_block.getPaths().size() == row) { // must be a new BlockPath in tempRow (_desktop interface)
             switch (col) {
                 case NAME_COLUMN:
                     String strValue = (String)value;
@@ -221,7 +226,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                         msg = Bundle.getMessage("DuplPathName", strValue);
                         tempRow[col] = strValue;
                         
-                    }else {
+                    } else {
                         Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
                         Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
                         if (fromPortal !=null || toPortal!= null) {
@@ -284,7 +289,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
 
         OPath path = (OPath) _block.getPaths().get(row);
-
+        // edit existing BlockPath row
         switch (col) {
             case FROM_PORTAL_COLUMN:
                 String strValue = (String)value;
@@ -386,6 +391,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
                         _block.getSystemName(), path.getName()));
                 break;
+            case EDITBCOL: // only on _tabbed
+                _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(
+                        _block.getSystemName(), path.getName()));
+                break;
             case DELETE_COL:
                 if (deletePath(path)) {
                     _units.remove(row);
@@ -420,7 +429,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         if (col == DELETE_COL || col == EDIT_COL) {
             return JButton.class;
         } else if (col == UNITSCOL) {
-            return Boolean.class; // for debug Tabbed Pane EBR
+            return JToggleButton.class;
         }
         return String.class;
     }
@@ -434,7 +443,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             case LENGTHCOL:
                 return new JTextField(5).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(2).getPreferredSize().width;
+                return new JTextField(3).getPreferredSize().width;
             case EDIT_COL:
                 return new JButton("TURNOUT").getPreferredSize().width;
             case DELETE_COL:
