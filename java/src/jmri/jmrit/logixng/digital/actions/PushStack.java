@@ -208,14 +208,7 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
                     System.out.format("bbb%n");
                     value = null;
                 } else {
-                    System.out.format("ccc%n");
-                    try {
-                        value = _expressionNode.calculate();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     value = _expressionNode.calculate();
-                    System.out.format("ddd%n");
                 }
                 System.out.format("eee%n");
                 break;

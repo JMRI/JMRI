@@ -3,17 +3,24 @@ package jmri.jmrit.logixng.digital.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.Locale;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +34,8 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     private NamedBeanHandle<Memory> _memoryHandle;
     private NamedBeanHandle<Memory> _copyToMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SET_TO_STRING;
-    private String _newValue = "";
+    private String _data = "";
+    private ExpressionNode _expressionNode;
     
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -105,20 +113,32 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         return _copyToMemoryHandle;
     }
     
-    public void setMemoryOperation(MemoryOperation state) {
+    public void setMemoryOperation(MemoryOperation state) throws ParserException {
         _memoryOperation = state;
+        parseFormula();
     }
     
     public MemoryOperation getMemoryOperation() {
         return _memoryOperation;
     }
     
-    public void setNewValue(String newValue) {
-        _newValue = newValue;
+    public void setData(String newValue) throws ParserException {
+        _data = newValue;
+        parseFormula();
     }
     
-    public String getNewValue() {
-        return _newValue;
+    public String getData() {
+        return _data;
+    }
+    
+    private void parseFormula() throws ParserException {
+        if (_memoryOperation == MemoryOperation.FORMULA) {
+            Map<String, Variable> variables = new HashMap<>();
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _expressionNode = parser.parseExpression(_data);
+        } else {
+            _expressionNode = null;
+        }
     }
     
     @Override
@@ -153,12 +173,14 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws JmriException {
         if (_memoryHandle == null) return;
         
         final Memory memory = _memoryHandle.getBean();
         
-        System.out.format("ActionMemory %s: %s, %s, %s%n", getSystemName(), memory.getSystemName(), _newValue, _memoryOperation.name());
+        System.out.format("ActionMemory %s: %s, %s, %s%n", getSystemName(), memory.getSystemName(), _data, _memoryOperation.name());
+        
+        AtomicReference<JmriException> ref = new AtomicReference<>();
         
         ThreadingUtil.runOnLayout(() -> {
             switch (_memoryOperation) {
@@ -167,7 +189,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 case SET_TO_STRING:
-                    memory.setValue(_newValue);
+                    memory.setValue(_data);
                     break;
                     
                 case COPY_MEMORY:
@@ -178,10 +200,24 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     }
                     break;
                     
+                case FORMULA:
+                    if (_data.isEmpty()) {
+                        memory.setValue(null);
+                    } else {
+                        try {
+                            memory.setValue(_expressionNode.calculate());
+                        } catch (JmriException e) {
+                            ref.set(e);
+                        }
+                    }
+                    break;
+                    
                 default:
                     throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _memoryOperation.name());
             }
         });
+        
+        if (ref.get() != null) throw ref.get();
     }
 
     @Override
@@ -219,11 +255,11 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             case SET_TO_NULL:
                 return Bundle.getMessage(locale, "Memory_Long_Null", memoryName);
             case SET_TO_STRING:
-                return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _newValue);
+                return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _data);
             case COPY_MEMORY:
                 return Bundle.getMessage(locale, "Memory_Long_CopyMemory", memoryName, copyToMemoryName);
             case FORMULA:
-                return Bundle.getMessage(locale, "Memory_Long_Formula", memoryName, _newValue);
+                return Bundle.getMessage(locale, "Memory_Long_Formula", memoryName, _data);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
         }

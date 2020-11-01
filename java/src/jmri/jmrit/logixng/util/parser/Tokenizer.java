@@ -333,7 +333,7 @@ public class Tokenizer {
             return TokenType.SAME_AS_LAST;
         }
         
-        if ((currentToken._tokenType == TokenType.IDENTIFIER) && (Character.isLetterOrDigit(ch))) {
+        if ((currentToken._tokenType == TokenType.IDENTIFIER) && (Character.isLetterOrDigit(ch) || (ch == '_'))) {
             return TokenType.SAME_AS_LAST;
         }
         

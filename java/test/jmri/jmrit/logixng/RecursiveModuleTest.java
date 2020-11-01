@@ -45,7 +45,7 @@ public class RecursiveModuleTest {
         
         n.setValue(1);
         Assert.assertEquals("1", result.getValue());
-        if (1==1) return;
+//        if (1==1) return;
         
         n.setValue(2);
         Assert.assertEquals("2", result.getValue());
@@ -148,7 +148,7 @@ public class RecursiveModuleTest {
         
         ActionMemory actionMemory914 = new ActionMemory("IQDA914", null);
         actionMemory914.setMemory("IMRESULT");
-        actionMemory914.setNewValue("1");
+        actionMemory914.setData("1");
         actionMemory914.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
         MaleSocket maleSocket914 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory914);
@@ -172,7 +172,7 @@ public class RecursiveModuleTest {
         
         ActionMemory actionMemory917 = new ActionMemory("IQDA917", null);
         actionMemory917.setMemory("IMRESULT");
-        actionMemory917.setNewValue("1");
+        actionMemory917.setData("1");
         actionMemory917.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
         MaleSocket maleSocket917 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory917);
@@ -196,7 +196,7 @@ public class RecursiveModuleTest {
         
         // Push parameter n on the stack
         PushStack actionPush924 = new PushStack("IQDA924", null);
-        actionPush924.setData("{IM_TEMP1} - 1");
+        actionPush924.setData("readMemory(\"IM_TEMP1\") - 1");
         actionPush924.setStack("IQT1");
         actionPush924.setOperation(PushStack.Operation.FORMULA);
         MaleSocket maleSocket924 =
@@ -235,7 +235,7 @@ public class RecursiveModuleTest {
         
         // Push parameter n on the stack
         PushStack actionPush931 = new PushStack("IQDA931", null);
-        actionPush931.setData("{IM_TEMP2} - 2");
+        actionPush931.setData("readMemory(\"IM_TEMP2\") - 2");
         actionPush931.setStack("IQT1");
         actionPush931.setOperation(PushStack.Operation.FORMULA);
         MaleSocket maleSocket931 =
@@ -260,7 +260,7 @@ public class RecursiveModuleTest {
         // Store the sum in IMRESULT
         ActionMemory actionMemory934 = new ActionMemory("IQDA934", null);
         actionMemory934.setMemory("IMRESULT");
-        actionMemory934.setNewValue("{IMRESULT} + {IM_TEMP2}");
+        actionMemory934.setData("readMemory(\"IMRESULT\") + readMemory(\"IM_TEMP2\")");
         actionMemory934.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
         MaleSocket maleSocket934 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory934);

@@ -11,6 +11,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -87,7 +88,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         action2 = new ActionMemory("IQDA321", "My memory");
         action2.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
-        action2.setNewValue("New value");
+        action2.setData("New value");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My memory", action2.getUserName());
         Assert.assertEquals("String matches", "Set memory '' to \"New value\"", action2.getLongDescription());
@@ -190,7 +191,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         // Test to set memory to string
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
-        actionMemory.setNewValue("New value");
+        actionMemory.setData("New value");
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the memory should be thrown
@@ -268,12 +269,12 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testLongDescription() {
+    public void testLongDescription() throws ParserException {
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_NULL);
         Assert.assertEquals("String matches", "Set memory IM1 to null", _base.getLongDescription());
         
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
-        actionMemory.setNewValue("Some new value");
+        actionMemory.setData("Some new value");
         Assert.assertEquals("String matches", "Set memory IM1 to \"Some new value\"", _base.getLongDescription());
         
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY);
@@ -297,7 +298,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() throws SocketAlreadyConnectedException {
+    public void setUp() throws SocketAlreadyConnectedException, ParserException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
