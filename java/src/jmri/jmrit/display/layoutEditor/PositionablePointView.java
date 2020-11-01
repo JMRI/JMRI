@@ -22,8 +22,8 @@ import jmri.util.swing.JmriColorChooser;
 /**
  * MVC View component for the PositionablePoint class.
  *
- * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ * @author Bob Jacobsen Copyright (c) 2020
+ *
  * <p>
  * Arrows and bumpers are visual, presentation aspects handled in the View.
  */
@@ -41,21 +41,24 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * constructor method.
-     * @param point the positionable point.
-     * @param c location to display the positionable point
+     *
+     * @param point        the positionable point.
+     * @param c            location to display the positionable point
      * @param layoutEditor for access to tools
      */
-    public PositionablePointView(@Nonnull PositionablePoint point, 
-            Point2D c, 
+    public PositionablePointView(@Nonnull PositionablePoint point,
+            Point2D c,
             @Nonnull LayoutEditor layoutEditor) {
         super(point, c, layoutEditor);
         this.positionablePoint = point;
     }
 
     final private PositionablePoint positionablePoint;
-    
-    public PositionablePoint getPoint() { return positionablePoint; }
-    
+
+    public PositionablePoint getPoint() {
+        return positionablePoint;
+    }
+
     // this should only be used for debugging...
     @Override
     public String toString() {
@@ -81,9 +84,9 @@ public class PositionablePointView extends LayoutTrackView {
         return result + " '" + getName() + "'";
     }
 
- 
-   /**
+    /**
      * Accessor methods
+     *
      * @return Type enum for this Positionable Point
      */
     public PointType getType() {
@@ -92,7 +95,7 @@ public class PositionablePointView extends LayoutTrackView {
 
     public void setType(PointType newType) {
         positionablePoint.setType(newType);
-        
+
         // (temporary) we keep this echo here until we figure out where arrow info lives
         if (getType() != newType) {
             switch (newType) {
@@ -146,7 +149,7 @@ public class PositionablePointView extends LayoutTrackView {
 
     private void setTypeEndBumper() {
         setIdent(layoutEditor.getFinder().uniqueName("EB", 1));
-        
+
         // type = PointType.END_BUMPER;
         positionablePoint.setTypeEndBumper();
 
@@ -165,10 +168,10 @@ public class PositionablePointView extends LayoutTrackView {
 
     private void setTypeEdgeConnector() {
         setIdent(layoutEditor.getFinder().uniqueName("EC", 1));
-        
+
         // type = PointType.EDGE_CONNECTOR;
         positionablePoint.setTypeEdgeConnector();
-        
+
         if (getConnect1() != null) {
             TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
             if (getConnect1().getConnect1() == positionablePoint) {
@@ -186,6 +189,30 @@ public class PositionablePointView extends LayoutTrackView {
 
     public TrackSegment getConnect2() {
         return positionablePoint.getConnect2();
+    }
+
+    public String getLinkedEditorName() {
+        return positionablePoint.getLinkedEditorName();
+    }
+
+    public LayoutEditor getLinkedEditor() {
+        return positionablePoint.getLinkedEditor();
+    }
+
+    public PositionablePoint getLinkedPoint() {
+        return positionablePoint.getLinkedPoint();
+    }
+
+    public void removeLinkedPoint() {
+        positionablePoint.removeLinkedPoint();
+    }
+
+    public String getLinkedPointId() {
+        return positionablePoint.getLinkedPointId();
+    }
+
+    public void setLinkedPoint(PositionablePoint p) {
+        positionablePoint.setLinkedPoint(p);
     }
 
     /**
@@ -224,67 +251,6 @@ public class PositionablePointView extends LayoutTrackView {
         //Note: empty bounds don't draw...
         // so now I'm making them 0.5 bigger in all directions (1 pixel total)
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
-    }
-
-    private PositionablePoint linkedPoint;
-
-    public String getLinkedEditorName() {
-        if (getLinkedEditor() != null) {
-            return getLinkedEditor().getLayoutName();
-        }
-        return "";
-    }
-
-    public PositionablePoint getLinkedPoint() {
-        return linkedPoint;
-    }
-
-    public String getLinkedPointId() {
-        if (linkedPoint != null) {
-            return linkedPoint.getId();
-        }
-        return "";
-    }
-
-    public void setLinkedPoint(PositionablePoint p) {
-        if (p == linkedPoint) {
-            return;
-        }
-        if (linkedPoint != null) {
-            PositionablePoint oldLinkedPoint = linkedPoint;
-            linkedPoint = null;
-            if (oldLinkedPoint.getLinkedPoint() != null) {
-                oldLinkedPoint.setLinkedPoint(null);
-            }
-            if (oldLinkedPoint.getConnect1() != null) {
-                TrackSegment ts = oldLinkedPoint.getConnect1();
-                oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
-                ts.updateBlockInfo();
-                oldLinkedPoint.getLayoutEditor().repaint();
-            }
-            if (getConnect1() != null) {
-                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-                getConnect1().updateBlockInfo();
-                layoutEditor.repaint();
-            }
-        }
-        linkedPoint = p;
-        if (p != null) {
-            p.setLinkedPoint(positionablePoint);
-            if (getConnect1() != null) {
-                layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-                getConnect1().updateBlockInfo();
-                layoutEditor.repaint();
-            }
-        }
-    }
-
-    @CheckReturnValue
-    public LayoutEditor getLinkedEditor() {
-        if (getLinkedPoint() != null) {
-            return getLinkedPoint().getLayoutEditor();
-        }
-        return null;
     }
 
     @CheckReturnValue
@@ -353,9 +319,11 @@ public class PositionablePointView extends LayoutTrackView {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalEastHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalEastHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalEastHeadNamed = null;
         }
@@ -422,9 +390,11 @@ public class PositionablePointView extends LayoutTrackView {
             return;
         }
 
-        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signalHead);
+        SignalHead head = InstanceManager.getDefault(jmri.SignalHeadManager.class
+        ).getSignalHead(signalHead);
         if (head != null) {
-            signalWestHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalHead, head);
+            signalWestHeadNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalHead, head);
         } else {
             signalWestHeadNamed = null;
         }
@@ -455,7 +425,8 @@ public class PositionablePointView extends LayoutTrackView {
 
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            eastBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            eastBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         } catch (IllegalArgumentException ex) {
             eastBoundSensorNamed = null;
         }
@@ -485,7 +456,8 @@ public class PositionablePointView extends LayoutTrackView {
         }
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-            westBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            westBoundSensorNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(sensorName, sensor);
         } catch (IllegalArgumentException ex) {
             westBoundSensorNamed = null;
         }
@@ -527,7 +499,8 @@ public class PositionablePointView extends LayoutTrackView {
     public void setEastBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.isEmpty()) {
-            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+            ).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("{}.setEastBoundSignalMast({}); Unable to find Signal Mast",
                         getName(), signalMast);
@@ -540,19 +513,23 @@ public class PositionablePointView extends LayoutTrackView {
         if (getType() == PointType.EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
             if (dir == Path.EAST || dir == Path.SOUTH || dir == Path.SOUTH_EAST) {
-                eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(signalMast, mast);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if (linkDir == Path.SOUTH || linkDir == Path.EAST || linkDir == Path.SOUTH_EAST) {
                     getLinkedPoint().setEastBoundSignalMast(signalMast);
                 } else {
-                    eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                    eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(signalMast, mast);
                 }
             } else {
-                eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(signalMast, mast);
             }
         } else {
-            eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            eastBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         }
     }
 
@@ -592,7 +569,8 @@ public class PositionablePointView extends LayoutTrackView {
     public void setWestBoundSignalMast(String signalMast) {
         SignalMast mast = null;
         if (signalMast != null && !signalMast.isEmpty()) {
-            mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signalMast);
+            mast = InstanceManager.getDefault(jmri.SignalMastManager.class
+            ).getSignalMast(signalMast);
             if (mast == null) {
                 log.error("{}.setWestBoundSignalMast({}); Unable to find Signal Mast",
                         getName(), signalMast);
@@ -605,19 +583,23 @@ public class PositionablePointView extends LayoutTrackView {
         if (getType() == PointType.EDGE_CONNECTOR) {
             int dir = getConnect1Dir();
             if (dir == Path.WEST || dir == Path.NORTH || dir == Path.NORTH_WEST) {
-                westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(signalMast, mast);
             } else if (getLinkedPoint() != null) {
                 int linkDir = getLinkedPoint().getConnect1Dir();
                 if (linkDir == Path.WEST || linkDir == Path.NORTH || linkDir == Path.NORTH_WEST) {
                     getLinkedPoint().setWestBoundSignalMast(signalMast);
                 } else {
-                    westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                    westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                    ).getNamedBeanHandle(signalMast, mast);
                 }
             } else {
-                westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+                westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(signalMast, mast);
             }
         } else {
-            westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+            westBoundSignalMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+            ).getNamedBeanHandle(signalMast, mast);
         }
     }
 
@@ -736,8 +718,11 @@ public class PositionablePointView extends LayoutTrackView {
         if (signalMast == null) {
             return;
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
-            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class
+        ).isAdvancedRoutingEnabled() && InstanceManager.getDefault(jmri.SignalMastLogicManager.class
+        ).isSignalMastUsed(signalMast)) {
+            SignallingGuiTools.removeSignalMastLogic(
+                    null, signalMast);
         }
     }
 
@@ -918,7 +903,7 @@ public class PositionablePointView extends LayoutTrackView {
 
             JCheckBoxMenuItem jcbmi;
             TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
-            
+
             if (getType() == PointType.EDGE_CONNECTOR) {
                 JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
                 decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
@@ -960,9 +945,8 @@ public class PositionablePointView extends LayoutTrackView {
                         }
                         ctv1.setArrowStyle(n);
                     });
-                    jcbmi.setSelected((ctv1.getArrowStyle() == i) && etherEnd);             
+                    jcbmi.setSelected((ctv1.getArrowStyle() == i) && etherEnd);
                 }
-
 
                 JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
                 arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
@@ -1107,12 +1091,12 @@ public class PositionablePointView extends LayoutTrackView {
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             ctv.getBumperLineWidth(), t -> {
-                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_WIDTH) {
-                                    throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_WIDTH));
-                                }
-                                return true;
-                            });
+                        if (t < 0 || t > TrackSegmentView.MAX_BUMPER_WIDTH) {
+                            throw new IllegalArgumentException(
+                                    Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_WIDTH));
+                        }
+                        return true;
+                    });
                     ctv.setBumperLineWidth(newValue);
                 });
 
@@ -1126,12 +1110,12 @@ public class PositionablePointView extends LayoutTrackView {
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             ctv.getBumperLength(), t -> {
-                                if (t < 0 || t > TrackSegmentView.MAX_BUMPER_LENGTH) {
-                                    throw new IllegalArgumentException(
-                                            Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_LENGTH));
-                                }
-                                return true;
-                            });
+                        if (t < 0 || t > TrackSegmentView.MAX_BUMPER_LENGTH) {
+                            throw new IllegalArgumentException(
+                                    Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegmentView.MAX_BUMPER_LENGTH));
+                        }
+                        return true;
+                    });
                     ctv.setBumperLength(newValue);
                 });
             }
@@ -1226,10 +1210,10 @@ public class PositionablePointView extends LayoutTrackView {
                         } else {
                             // (this should NEVER happen... however...)
                             log.error("Merge: missing connection(s).");
-                        } 
+                        }
                     }
                 });
-            } 
+            }
         }
 
         popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -1432,21 +1416,6 @@ public class PositionablePointView extends LayoutTrackView {
         removeLinkedPoint();
     }
 
-    void removeLinkedPoint() {
-        if (getType() == PointType.EDGE_CONNECTOR && getLinkedPoint() != null) {
-            if (getConnect2() != null && getLinkedEditor() != null) {
-                //as we have removed the point, need to force the update on the remote end.
-                LayoutEditor oldLinkedEditor = getLinkedEditor();
-                TrackSegment ts = getConnect2();
-                getLinkedPoint().setLinkedPoint(null);
-                oldLinkedEditor.repaint();
-                oldLinkedEditor.getLEAuxTools().setBlockConnectivityChanged();
-                ts.updateBlockInfo();
-            }
-            linkedPoint = null;
-        }
-    }
-
     /**
      * Removes this object from display and persistence
      */
@@ -1458,7 +1427,8 @@ public class PositionablePointView extends LayoutTrackView {
     private boolean active = true;
 
     /**
-     * @return "active" true means that the object is still displayed, and should be stored.
+     * @return "active" true means that the object is still displayed, and
+     *         should be stored.
      */
     protected boolean isActive() {
         return active;
@@ -1517,12 +1487,12 @@ public class PositionablePointView extends LayoutTrackView {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<>();
-        Set<LayoutEditor> panels
-                = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+        Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class)
+                .getAll(LayoutEditor.class);
         editorCombo.addItem(new JCBHandle<>("None"));
-        if (panels.contains(layoutEditor)) {
-            panels.remove(layoutEditor);
-        }
+        //if (panels.contains(layoutEditor)) {
+        //    panels.remove(layoutEditor);
+        //}
         for (LayoutEditor p : panels) {
             JCBHandle<LayoutEditor> h = new JCBHandle<>(p);
             editorCombo.addItem(h);
@@ -1561,10 +1531,12 @@ public class PositionablePointView extends LayoutTrackView {
                     linkPointsBox.addItem(p.getName());
                     linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
-                    if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
-                            pointList.add(p);
-                            linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
+                    if (p != positionablePoint) {
+                        if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
+                            if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
+                                pointList.add(p);
+                                linkPointsBox.addItem(p.getName());
+                            }
                         }
                     }
                 }
@@ -1719,7 +1691,7 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     * 
+     * <p>
      * This type of track has none, so this method is empty.
      */
     @Override
@@ -1783,10 +1755,10 @@ public class PositionablePointView extends LayoutTrackView {
                 g2.setColor(Color.green);
             }
         }
-        log.trace("      at {} in {} draw {}", 
+        log.trace("      at {} in {} draw {}",
                 getCoordsCenter(), g2.getColor(),
                 layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
-                
+
         g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
@@ -2014,6 +1986,7 @@ public class PositionablePointView extends LayoutTrackView {
         // positionable points don't have blocks...
         // nothing to see here, move along...
     }
-    
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class
+    );
 }

@@ -5,8 +5,6 @@
  */
 package jmri.jmrit.display.modulesEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
@@ -17,9 +15,11 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.*;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
@@ -73,6 +73,10 @@ final public class ModulesEditor extends PanelEditor {
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
+    private boolean drawGrid = true;
+    private boolean snapToGridOnAdd = true;
+    private boolean snapToGridOnMove = true;
+    private boolean snapToGridInvert = false;
 
     public ModulesEditor() {
         this(Bundle.getMessage("DefaultModulesEditorPanelName"));
@@ -244,10 +248,9 @@ final public class ModulesEditor extends PanelEditor {
 
         //
         // Add Options
-        //
-        JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
-        optionMenu.add(optionsAddMenu);
-
+        //TODO:finish this?
+//        JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
+//        optionMenu.add(optionsAddMenu);
         // add background image
         //JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
         //optionsAddMenu.add(backgroundItem);
@@ -308,6 +311,10 @@ final public class ModulesEditor extends PanelEditor {
         return optionMenu;
     }
 
+    @Override
+    public void init(String name) {
+    }
+
     /**
      * Grabs a subset of the possible KeyEvent constants and puts them into a
      * hash for fast lookups later. These lookups are used to enable bundles to
@@ -335,11 +342,6 @@ final public class ModulesEditor extends PanelEditor {
             }
         }
     }
-
-    private boolean drawGrid = true;
-    private boolean snapToGridOnAdd = true;
-    private boolean snapToGridOnMove = true;
-    private boolean snapToGridInvert = false;
 
     public boolean isDrawGrid() {
         return drawGrid;
@@ -386,8 +388,54 @@ final public class ModulesEditor extends PanelEditor {
         JmriColorChooser.addRecentColor(color);
     }
 
+    protected void backgroundPopUp(MouseEvent event) {
+        if (!isEditable()) {
+            return;
+        }
+        JPopupMenu popup = new JPopupMenu();
+        setBackgroundMenu(popup);
+        showAddItemPopUp(event, popup);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+
+    protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup) {
+        if (!isEditable()) {
+            return;
+        }
+        JMenu _add = new JMenu(Bundle.getMessage("MenuItemAddItem"));
+
+        Set<LayoutEditor> panels = InstanceManager.getDefault(EditorManager.class)
+                .getAll(LayoutEditor.class);
+        for (LayoutEditor le : panels) {
+            addItemPopUp(le, _add);
+        }
+        popup.add(_add);
+    }
+
+    protected void addItemPopUp(final LayoutEditor layoutEditor, JMenu menu) {
+
+        ActionListener a = new ActionListener() {
+            //final String desiredName = name;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addItemViaMouseClick = true;
+                ///getIconFrame(layoutEditor.getName());
+                //TODO: FINISH THIS!
+            }
+
+            ActionListener init(LayoutEditor layoutEditor) {
+                return this;
+            }
+        }.init(layoutEditor);
+        JMenuItem addto = new JMenuItem(layoutEditor.getName());
+        addto.addActionListener(a);
+        menu.add(addto);
+    }
+
     /**
      * Special internal class to allow drawing of layout to a JLayeredPane
+     *
+     * @param g graphics context
      */
     @Override
     public void paintTargetPanel(@Nonnull Graphics g) {
