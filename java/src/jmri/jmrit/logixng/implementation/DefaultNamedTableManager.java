@@ -85,7 +85,9 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
             // NamedTable does not exist, create a new NamedTable
             x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, new File(fileName));
         } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
+//            Exceptions.printStackTrace(ex);
+            log.error("Cannot load table due to I/O error", ex);
+            return null;
         }
         // save in the maps
         register(x);

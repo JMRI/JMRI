@@ -1,23 +1,8 @@
 package jmri.jmrit.logixng;
 
-import java.io.StringWriter;
-import java.io.PrintWriter;
-import java.util.Locale;
-import java.util.Map;
-
 import jmri.*;
-import jmri.jmrit.logixng.FemaleSocketManager;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.NamedBeanReference;
-import jmri.jmrit.logixng.digital.actions.ActionMemory;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.digital.actions.Many;
-import jmri.jmrit.logixng.digital.actions.ModuleDigitalAction;
-import jmri.jmrit.logixng.digital.actions.PushStack;
-import jmri.jmrit.logixng.digital.actions.PopStack;
 import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
 import jmri.util.JUnitUtil;
 
@@ -41,15 +26,12 @@ public class RecursiveModuleTest {
     public void testFibonacci() {
         n.setValue(0);
         Assert.assertEquals(Long.valueOf(1), result.getValue());
-//        if (1==1) return;
         
         n.setValue(1);
         Assert.assertEquals(Long.valueOf(1), result.getValue());
-//        if (1==1) return;
         
         n.setValue(2);
         Assert.assertEquals(Long.valueOf(2), result.getValue());
-//        if (1==1) return;
         
         n.setValue(3);
         Assert.assertEquals(Long.valueOf(3), result.getValue());
@@ -87,13 +69,11 @@ public class RecursiveModuleTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        
 //        Map<String, FemaleSocketManager.SocketType> socketTypes = InstanceManager.getDefault(FemaleSocketManager.class).getSocketTypes();
         
 //        for (FemaleSocketManager.SocketType socketType : socketTypes.values()) {
 //            System.out.format("Socket: %s, %s, %s%n", socketType.getName(), socketType.getDescr(), socketType.getClass());
 //        }
-        
         
         InstanceManager.getDefault(NamedTableManager.class).newStack("IQT1", null);
         
@@ -107,12 +87,6 @@ public class RecursiveModuleTest {
         InstanceManager.getDefault(MemoryManager.class).provide("IM_TEMP2");
         InstanceManager.getDefault(MemoryManager.class).provide("IM_TEMP3");
         InstanceManager.getDefault(MemoryManager.class).provide("IM_TEMP4");
-        
-        
-//        Sensor s = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-//        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        
-        
         
         Module module = InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
         
@@ -180,7 +154,6 @@ public class RecursiveModuleTest {
         
         
         
-        
         Many many921 = new Many("IQDA921", null);
         MaleSocket manySocket921 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many921);
@@ -229,10 +202,6 @@ public class RecursiveModuleTest {
         
         
         
-        
-        
-        
-        
         // Push parameter n on the stack
         PushStack actionPush931 = new PushStack("IQDA931", null);
         actionPush931.setData("readMemory(\"IM_TEMP2\") - 2");
@@ -265,90 +234,6 @@ public class RecursiveModuleTest {
         MaleSocket maleSocket934 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory934);
         manySocket921.getChild(8).connect(maleSocket934);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-/*        
-        ActionMemory actionMemory918 = new ActionMemory("IQDA918", null);
-        actionMemory918.setMemory("IMRESULT");
-        actionMemory918.setNewValue("aaa");
-        actionMemory917.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
-        MaleSocket maleSocket918 =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory918);
-        ifThenElse915.getChild(2).connect(maleSocket918);
-*/        
-        
-        
-        
-        
-        
-        
-        
-        
-/*        
-        PushStack actionPush = new PushStack("IQDA3", null);
-        actionPush.setMemory("IMN");
-        actionPush.setStack("IQT1");
-        MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionPush);
-        manySocket.getChild(1).connect(maleSocket);
-*/        
-        
-        
-        
-        // if IM_TEMP1 == 0 return 1
-        // if IM_TEMP1 == 1 return 1
-        // IM_TEMP2 = module(IM_TEMP1-1)
-        // IM_TEMP3 = module(IM_TEMP1-2)
-        // return IM_TEMP2 + IM_TEMP3
-        
-        
-        
-        
-        
-        
-        
-/*        
-        DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA904", null);
-        MaleSocket maleSocket901 =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
-        manySocket1.getChild(0).connect(maleSocket901);
-        
-        
-        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory("IQAE901", null);
-        analogExpressionMemory.setMemory("IMN");
-        MaleSocket maleSocket902 =
-                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
-        doAnalogAction.getChild(0).connect(maleSocket902);
-        
-        
-        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA901", null);
-        analogActionMemory.setMemory("IMRESULT");
-        MaleSocket maleSocket903 =
-                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
-        doAnalogAction.getChild(1).connect(maleSocket903);
-*/        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
@@ -388,95 +273,25 @@ public class RecursiveModuleTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction);
         manySocket.getChild(2).connect(maleSocket2);
         
-/*        
-        DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA4", null);
-        maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doAnalogAction);
-        manySocket.getChild(1).connect(maleSocket);
         
-        
-        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory("IQAE1", null);
-        analogExpressionMemory.setMemory("IMN");
-        MaleSocket maleSocket2 =
-                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(analogExpressionMemory);
-        doAnalogAction.getChild(0).connect(maleSocket2);
-        
-        
-        AnalogActionMemory analogActionMemory = new AnalogActionMemory("IQAA1", null);
-        analogActionMemory.setMemory("IMRESULT");
-        MaleSocket maleSocket3 =
-                InstanceManager.getDefault(AnalogActionManager.class).registerAction(analogActionMemory);
-        doAnalogAction.getChild(1).connect(maleSocket3);
-*/        
-        
-        
-        
-/*        
-        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
-        conditionalNG.getChild(0).connect(maleSocket);
-        
-        
-        
-        
-        ExpressionSensor expression = new ExpressionSensor("IQDE1", null);
-        expression.setSensor("IS1");
-        expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket maleSocket2 =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-        ifThenElse.getChild(0).connect(maleSocket2);
-*/        
-        
-/*        
-        ActionTurnout action = new ActionTurnout("IQDA99", null);
-        action.setTurnout("IT1");
-        action.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
-        MaleSocket maleSocket4 =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
-        manySocket.getChild(2).connect(maleSocket4);
-*/        
-        
-        
-//        n.setValue(null);
-//        s.setState(Sensor.INACTIVE);
-//        t.setState(Turnout.CLOSED);
-        
-//        Assert.assertEquals(Turnout.CLOSED, t.getState());
-        
-//        n.setValue(0);
-//        s.setState(Sensor.ACTIVE);
-        
-        
-//        n.setValue(99.0);
-//        Assert.assertEquals((Object)99.0, result.getValue());
-        
-//        Assert.assertEquals(Turnout.THROWN, t.getState());
-        
-        
-        // Temporary let the error messages from this test be shown to the user
-//        JUnitAppender.end();
-        
-        
-/*        
         final String treeIndent = "   ";
         
         System.out.println();
         System.out.println("===========================================");
         System.out.println();
         
-        StringWriter stringWriter = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stringWriter);
-        logixNG.printTree(Locale.ENGLISH, printWriter, treeIndent);
+        java.io.StringWriter stringWriter = new java.io.StringWriter();
+        java.io.PrintWriter printWriter = new java.io.PrintWriter(stringWriter);
+        logixNG.printTree(java.util.Locale.ENGLISH, printWriter, treeIndent);
         System.out.println(stringWriter.toString());
         
         System.out.println();
         System.out.println("===========================================");
         System.out.println();
         
-        stringWriter = new StringWriter();
-        printWriter = new PrintWriter(stringWriter);
-        module.printTree(Locale.ENGLISH, printWriter, treeIndent);
+        stringWriter = new java.io.StringWriter();
+        printWriter = new java.io.PrintWriter(stringWriter);
+        module.printTree(java.util.Locale.ENGLISH, printWriter, treeIndent);
         System.out.println(stringWriter.toString());
         
         System.out.println();
@@ -486,8 +301,6 @@ public class RecursiveModuleTest {
         System.out.println();
         System.out.println();
         System.out.println();
-*/        
-        
         
         
         logixNG.setParentForAllChildren();
