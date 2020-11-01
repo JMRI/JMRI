@@ -188,7 +188,7 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
         
         final Stack stack = _stackHandle.getBean();
         
-        System.out.format("%s: Push on stack %s. Operation: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
+//        System.out.format("%s: Push on stack %s. Operation: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
         
         Object value;
         
@@ -203,22 +203,19 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
                 break;
                 
             case FORMULA:
-                System.out.format("aaa%n");
                 if (_data.isEmpty()) {
-                    System.out.format("bbb%n");
                     value = null;
                 } else {
                     value = _expressionNode.calculate();
                 }
-                System.out.format("eee%n");
                 break;
                 
             default:
-                System.out.format("%s: Push on stack %s. _operation has invalid value: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
+//                System.out.format("%s: Push on stack %s. _operation has invalid value: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
                 throw new IllegalArgumentException("_operation has invalid value: " + _operation.name());
         }
         
-        System.out.format("%s: Push %s on stack %s. Operation: %s%n", getSystemName(), value, stack.getSystemName(), _operation.name());
+//        System.out.format("%s: Push %s on stack %s. Operation: %s%n", getSystemName(), value, stack.getSystemName(), _operation.name());
         
         stack.push(value);
     }

@@ -49,7 +49,7 @@ public class RecursiveModuleTest {
         
         n.setValue(2);
         Assert.assertEquals(Long.valueOf(2), result.getValue());
-        if (1==1) return;
+//        if (1==1) return;
         
         n.setValue(3);
         Assert.assertEquals(Long.valueOf(3), result.getValue());
@@ -458,7 +458,7 @@ public class RecursiveModuleTest {
 //        JUnitAppender.end();
         
         
-        
+/*        
         final String treeIndent = "   ";
         
         System.out.println();
@@ -486,7 +486,7 @@ public class RecursiveModuleTest {
         System.out.println();
         System.out.println();
         System.out.println();
-        
+*/        
         
         
         

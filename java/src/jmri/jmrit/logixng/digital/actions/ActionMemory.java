@@ -178,8 +178,6 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         
         final Memory memory = _memoryHandle.getBean();
         
-        System.out.format("ActionMemory %s: %s, %s, %s%n", getSystemName(), memory.getSystemName(), _data, _memoryOperation.name());
-        
         AtomicReference<JmriException> ref = new AtomicReference<>();
         
         ThreadingUtil.runOnLayout(() -> {

@@ -110,10 +110,8 @@ public class IfThenElse extends AbstractDigitalAction
         
         if (_enableExecution) {
             if (_lastExpressionResult) {
-                System.out.format("if %s then%n", getSystemName());
                 _thenActionSocket.execute();
             } else {
-                System.out.format("if %s else%n", getSystemName());
                 _elseActionSocket.execute();
             }
         }

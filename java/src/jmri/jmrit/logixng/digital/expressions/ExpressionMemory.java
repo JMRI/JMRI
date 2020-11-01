@@ -84,7 +84,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
         if (memory == null) {
             log.error("memory \"{}\" is not found", memoryName);
         }
-//        System.out.format("setOtherMemory: %s, %s%n", memoryName, memory);
     }
     
     public void setOtherMemory(@Nonnull NamedBeanHandle<Memory> handle) {
@@ -291,7 +290,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-        System.out.format("ExpressionMemory.evaluate %s: compareTo: %s, memoryOperation: %s, memoryValue: %s, otherValue: %s%n", getSystemName(), _compareTo.name(), _memoryOperation.name(), _memoryHandle, _otherMemoryHandle);
         if (_memoryHandle == null) return false;
         
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
@@ -343,8 +341,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
         }
-        
-        System.out.format("ExpressionMemory.evaluate %s: compareTo: %s, memoryOperation: %s, memoryValue: %s, otherValue: %s, result: %b%n", getSystemName(), _compareTo.name(), _memoryOperation.name(), memoryValue, otherValue, result);
         
         return result;
     }

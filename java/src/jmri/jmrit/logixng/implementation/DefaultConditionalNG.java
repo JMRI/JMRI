@@ -132,7 +132,6 @@ public class DefaultConditionalNG extends AbstractBase
                 while (executeLock.loop()) {
                     if (isEnabled()) {
                         try {
-                            System.out.format("%n%nConditionalNG execute %s%n", getSystemName());
                             _femaleRootSocket.execute();
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
