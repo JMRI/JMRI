@@ -52,28 +52,28 @@ public class RecursiveModuleTest {
         if (1==1) return;
         
         n.setValue(3);
-        Assert.assertEquals((Object)3, result.getValue());
+        Assert.assertEquals("3", result.getValue());
         
         n.setValue(4);
-        Assert.assertEquals((Object)5, result.getValue());
+        Assert.assertEquals("5", result.getValue());
         
         n.setValue(5);
-        Assert.assertEquals((Object)8, result.getValue());
+        Assert.assertEquals("8", result.getValue());
         
         n.setValue(6);
-        Assert.assertEquals((Object)13, result.getValue());
+        Assert.assertEquals("13", result.getValue());
         
         n.setValue(7);
-        Assert.assertEquals((Object)21, result.getValue());
+        Assert.assertEquals("21", result.getValue());
         
         n.setValue(8);
-        Assert.assertEquals((Object)34, result.getValue());
+        Assert.assertEquals("34", result.getValue());
         
         n.setValue(9);
-        Assert.assertEquals((Object)55, result.getValue());
+        Assert.assertEquals("55", result.getValue());
         
         n.setValue(10);
-        Assert.assertEquals((Object)89, result.getValue());
+        Assert.assertEquals("89", result.getValue());
     }
     
     // The minimal setup for log4J
