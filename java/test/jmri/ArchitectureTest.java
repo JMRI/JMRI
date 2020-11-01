@@ -256,7 +256,9 @@ public class ArchitectureTest {
     @ArchTest
     public static final ArchRule checkEverythingOutsideLogixNG = noClasses()
             .that().resideOutsideOfPackage("jmri.jmrit.logixng..")
+            .and().haveNameNotMatching("^jmri.jmrit.beantable.AbstractLogixNGTableAction(\\$\\d+)?")
             .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGTableAction(\\$\\d+)?")
+            .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGModuleTableAction(\\$\\d+)?")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.ToolsMenu")
             .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.(**)");
 

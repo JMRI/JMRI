@@ -130,12 +130,7 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
         if (_operation == Operation.FORMULA) {
             Map<String, Variable> variables = new HashMap<>();
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-            try {
             _expressionNode = parser.parseExpression(_data);
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw e;
-            }
         } else {
             _expressionNode = null;
         }

@@ -100,7 +100,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
 
     @Override
     protected AbstractLogixNGEditor<Module> getEditor(BeanTableFrame<Module> f, BeanTableDataModel<Module> m, String sName) {
-        System.out.format("LogixNGModuleTableAction: getEditor()");
+//        System.out.format("LogixNGModuleTableAction: getEditor()");
         return null;
 //        return new ModuleEditor(f, m, sName);
     }
