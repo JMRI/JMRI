@@ -420,7 +420,7 @@
   <indexitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
  </indexitem>
- <indexitem text="MERG (CBUS) - Hardware, Connection, Tools " target="html.hardware.can.cbus.index"/>
+ <indexitem text="MERG - Hardware, Connection, Tools " target="html.hardware.merg.index"/>
 
  <indexitem text="Modbus - Hardware, Connection, Tools " target="html.hardware.modbus.index"/>
 

@@ -46,7 +46,7 @@
       
       <h2><a name="sprog3plus" id="sprog3plus">SPROG 3 Plus and Pi-SPROG Plus</a></h2>
       
-      <p>DCC command stations and programmers with integrated CBUS adapters (no 
+      <p>DCC command stations and programmers with integrated CBUS&trade; adapters (no 
           need for a separate USB - CAN adapter) and dual track outputs.</p>
       
       <p>Features</p>
@@ -54,15 +54,16 @@
       <ul>
           <li>Two track outputs allow simultaneous running  and programming.</li>
           <li>Main track output up to 2.5 Amps</li>
-          <li>Flexible second track output features:</li>
-          <ul>
-              <li>Up to 2.5 Amp output</li>
-              <li>Can be disabled when not programming</li>
-              <li>Can follow main track output when not programming allowing
-                  locos to be driven onto an isolated programming track.</li>
-              <li>Can be used as an auto-reverse power district output (no
-                  service mode programming available in this mode.</li>
-          </ul>
+          <li>Flexible second track output features:
+            <ul>
+                <li>Up to 2.5 Amp output</li>
+                <li>Can be disabled when not programming</li>
+                <li>Can follow main track output when not programming allowing
+                    locos to be driven onto an isolated programming track.</li>
+                <li>Can be used as an auto-reverse power district output (no
+                    service mode programming available in this mode.</li>
+            </ul>
+          </li>
           <li>CAN interface (to be enabled in a future firmware release) for 
               full CBUS connectivity.</li>
       </ul>
@@ -100,6 +101,13 @@
       
       <p>Click Next to complete the setup.</p>
       
+      <h2></h2>
+      <p>CBUS is a registered trade mark of Dr Michael Bolton</p>
+      
+        <h2></h2>
+        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

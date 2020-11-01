@@ -288,6 +288,8 @@
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_CommandStation" url="manual/DecoderPro3/Main_LocoNet.shtml#CommandStation"/>
 
+<mapID target="html.hardware.merg.Details" url="html/hardware/merg/Details.shtml"/>
+
 <mapID target="manual.DecoderPro3.Main_Zimo" url="manual/DecoderPro3/Main_Zimo.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.SensorAddEdit_properties" url="package/jmri/jmrit/beantable/SensorAddEdit.shtml#properties"/>
@@ -804,10 +806,6 @@
 
 <mapID target="html.doc.Technical.index_contributing" url="html/doc/Technical/index.shtml#contributing"/>
 
-<mapID target="html.hardware.can.cbus.Details_c7" url="html/hardware/can/cbus/Details.shtml#c7"/>
-
-<mapID target="html.hardware.can.cbus.Details_c6" url="html/hardware/can/cbus/Details.shtml#c6"/>
-
 <mapID target="html.doc.Technical.gitadmin_merge" url="html/doc/Technical/gitadmin.shtml#merge"/>
 
 <mapID target="html.tools.scripting.ex_set_turnouts" url="html/tools/scripting/ex_set_turnouts.shtml"/>
@@ -1038,17 +1036,7 @@
 
 <mapID target="html.hardware.loconet.DigitraxMeters" url="html/hardware/loconet/DigitraxMeters.shtml"/>
 
-<mapID target="html.hardware.can.cbus.Details_c1" url="html/hardware/can/cbus/Details.shtml#c1"/>
-
 <mapID target="html.doc.Technical.Names_format" url="html/doc/Technical/Names.shtml#format"/>
-
-<mapID target="html.hardware.can.cbus.Details_c3" url="html/hardware/can/cbus/Details.shtml#c3"/>
-
-<mapID target="html.hardware.can.cbus.Details_c2" url="html/hardware/can/cbus/Details.shtml#c2"/>
-
-<mapID target="html.hardware.can.cbus.Details_c5" url="html/hardware/can/cbus/Details.shtml#c5"/>
-
-<mapID target="html.hardware.can.cbus.Details_c4" url="html/hardware/can/cbus/Details.shtml#c4"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_PromptDepartureTrack" url="package/jmri/jmrit/operations/Operations.shtml#PromptDepartureTrack"/>
 
@@ -1284,6 +1272,8 @@
 
 <mapID target="html.hardware.marklin.index_tools" url="html/hardware/marklin/index.shtml#tools"/>
 
+<mapID target="html.hardware.can.cbus.index_introduction" url="html/hardware/can/cbus/index.shtml#introduction"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor_turn" url="package/jmri/jmrit/display/LayoutEditor.shtml#turn"/>
 
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_columns" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#columns"/>
@@ -1361,6 +1351,8 @@
 <mapID target="html.hardware.openlcb.index_documentation" url="html/hardware/openlcb/index.shtml#documentation"/>
 
 <mapID target="html.apps.index_addapp" url="html/apps/index.shtml#addapp"/>
+
+<mapID target="html.hardware.merg.Details_canid" url="html/hardware/merg/Details.shtml#canid"/>
 
 <mapID target="manual.DecoderPro.Comp_GlobalCVs" url="manual/DecoderPro/Comp_GlobalCVs.shtml"/>
 
@@ -2042,7 +2034,15 @@
 
 <mapID target="html.tools.tracker.index" url="html/tools/tracker/index.shtml"/>
 
+<mapID target="html.hardware.merg.Details_c4" url="html/hardware/merg/Details.shtml#c4"/>
+
+<mapID target="html.hardware.merg.Details_c5" url="html/hardware/merg/Details.shtml#c5"/>
+
 <mapID target="package.jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame_Roster" url="package/jmri/jmrit/symbolicprog/tabbedframe/PaneOpsProgFrame.shtml#Roster"/>
+
+<mapID target="html.hardware.merg.Details_c6" url="html/hardware/merg/Details.shtml#c6"/>
+
+<mapID target="html.hardware.merg.Details_c7" url="html/hardware/merg/Details.shtml#c7"/>
 
 <mapID target="html.tools.signaling.Logic_face" url="html/tools/signaling/Logic.shtml#face"/>
 
@@ -2050,7 +2050,13 @@
 
 <mapID target="html.apps.DispatcherSystem.DispatcherSystem_dispatch" url="html/apps/DispatcherSystem/DispatcherSystem.shtml#dispatch"/>
 
+<mapID target="html.hardware.merg.Details_c1" url="html/hardware/merg/Details.shtml#c1"/>
+
+<mapID target="html.hardware.merg.Details_c2" url="html/hardware/merg/Details.shtml#c2"/>
+
 <mapID target="html.apps.DecoderPro.index_decoderlisting" url="html/apps/DecoderPro/index.shtml#decoderlisting"/>
+
+<mapID target="html.hardware.merg.Details_c3" url="html/hardware/merg/Details.shtml#c3"/>
 
 <mapID target="html.hardware.XPressNet.index_connectXpa" url="html/hardware/XPressNet/index.shtml#connectXpa"/>
 
@@ -2263,6 +2269,8 @@
 <mapID target="html.tools.throttle.ThrottleChapter4_LoadLayout" url="html/tools/throttle/ThrottleChapter4.shtml#LoadLayout"/>
 
 <mapID target="html.hardware.loconet.CommandStationConfig_ConfigurationBasics" url="html/hardware/loconet/CommandStationConfig.shtml#ConfigurationBasics"/>
+
+<mapID target="html.hardware.merg.Sidebar" url="html/hardware/merg/Sidebar.shtml"/>
 
 <mapID target="html.hardware.arduino.index_multi" url="html/hardware/arduino/index.shtml#multi"/>
 
@@ -2518,6 +2526,8 @@
 
 <mapID target="package.jmri.jmrix.secsi.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame.shtml"/>
 
+<mapID target="html.hardware.sproggen5.Sidebar" url="html/hardware/sproggen5/Sidebar.shtml"/>
+
 <mapID target="manual.DecoderPro3.Comp_Analog" url="manual/DecoderPro3/Comp_Analog.shtml"/>
 
 <mapID target="html.doc.Technical.gitdeveloper_repo" url="html/doc/Technical/gitdeveloper.shtml#repo"/>
@@ -2582,13 +2592,13 @@
 
 <mapID target="html.hardware.loconet.DCS240_Dcs240StandaloneHints" url="html/hardware/loconet/DCS240.shtml#Dcs240StandaloneHints"/>
 
+<mapID target="html.hardware.merg.index_introduction" url="html/hardware/merg/index.shtml#introduction"/>
+
 <mapID target="manual.DecoderPro3.Programmer_OpsMode_Top" url="manual/DecoderPro3/Programmer_OpsMode.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.beantable.BlockTable" url="package/jmri/jmrit/beantable/BlockTable.shtml"/>
 
 <mapID target="html.apps.PanelPro.ShowPanel" url="html/apps/PanelPro/ShowPanel.shtml"/>
-
-<mapID target="html.hardware.can.cbus.Details_canid" url="html/hardware/can/cbus/Details.shtml#canid"/>
 
 <mapID target="html.tools.signaling.AspectSignaling_mastscripting" url="html/tools/signaling/AspectSignaling.shtml#mastscripting"/>
 
@@ -3168,8 +3178,6 @@
 
 <mapID target="html.hardware.mrc.index_tools" url="html/hardware/mrc/index.shtml#tools"/>
 
-<mapID target="html.hardware.can.cbus.Details" url="html/hardware/can/cbus/Details.shtml"/>
-
 <mapID target="html.hardware.tmcc.index_documentation" url="html/hardware/tmcc/index.shtml#documentation"/>
 
 <mapID target="html.apps.DecoderPro.Files_location" url="html/apps/DecoderPro/Files.shtml#location"/>
@@ -3371,6 +3379,8 @@
 <mapID target="manual.DecoderPro.index_Main" url="manual/DecoderPro/index.shtml#Main"/>
 
 <mapID target="html.doc.Technical.IntelliJ_test" url="html/doc/Technical/IntelliJ.shtml#test"/>
+
+<mapID target="html.hardware.merg.index_dcc" url="html/hardware/merg/index.shtml#dcc"/>
 
 <mapID target="html.hardware.SRCP.index" url="html/hardware/SRCP/index.shtml"/>
 
@@ -3594,6 +3604,8 @@
 
 <mapID target="manual.DecoderPro3.Main_SECSI" url="manual/DecoderPro3/Main_SECSI.shtml"/>
 
+<mapID target="html.hardware.merg.index_connecting" url="html/hardware/merg/index.shtml#connecting"/>
+
 <mapID target="package.jmri.jmrit.dispatcher.NewTrain_loadsave" url="package/jmri/jmrit/dispatcher/NewTrain.shtml#loadsave"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_FrameProperties" url="manual/DecoderPro3/dp3_Main_Throttle_FrameProperties.shtml"/>
@@ -3783,6 +3795,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_PrintingManifests" url="package/jmri/jmrit/operations/Operations.shtml#PrintingManifests"/>
 
 <mapID target="html.tools.signaling.SignalGroups" url="html/tools/signaling/SignalGroups.shtml"/>
+
+<mapID target="html.hardware.merg.index" url="html/hardware/merg/index.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_RPS_SpeedSound" url="manual/DecoderPro/Main_RPS.shtml#SpeedSound"/>
 
@@ -4131,8 +4145,6 @@
 <mapID target="html.hardware.XPressNet.index_connectXntcp" url="html/hardware/XPressNet/index.shtml#connectXntcp"/>
 
 <mapID target="html.hardware.cmri.CMRI_L363" url="html/hardware/cmri/CMRI.shtml#L363"/>
-
-<mapID target="html.hardware.can.cbus.index_documentation" url="html/hardware/can/cbus/index.shtml#documentation"/>
 
 <mapID target="manual.DecoderPro3.Main_XpressNet_LZ100" url="manual/DecoderPro3/Main_XpressNet.shtml#LZ100"/>
 

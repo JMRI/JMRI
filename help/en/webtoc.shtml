@@ -134,6 +134,12 @@
 
   
 <li>
+<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/cmri/CMRI.shtml">C/MRI </a>
 <ul></ul>
 </li>
@@ -248,7 +254,7 @@
 
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
+<a href="html/hardware/merg/index.shtml">MERG </a>
 <ul></ul>
 </li>
 
@@ -2092,74 +2098,61 @@
 </li>
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
+<a href="html/hardware/merg/index.shtml">MERG </a>
 <ul>
    
+<li>CBUS Tools <ul>
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
 <ul></ul>
 </li>
 
-   
-<li>
-<a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/hardware/can/index.shtml">CAN Networks </a>
-<ul></ul>
-</li>
-
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
 <ul></ul>
 </li>
 
+   
+</ul>
+</li>
   
 </ul>
 </li>
