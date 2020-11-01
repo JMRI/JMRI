@@ -133,6 +133,7 @@
         <h4>RFID</h4>
             <ul>
                 <li>Network connections: Support added for auto-reconnect.</li>
+                <li>Network connections: TCP/UDP port configuration option promoted to main configuration settings panel and no longer under Additional Connection Settings.</li>
             </ul>
 
         <h4>Roco z21/Z21</h4>

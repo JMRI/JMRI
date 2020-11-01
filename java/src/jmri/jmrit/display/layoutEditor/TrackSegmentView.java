@@ -18,11 +18,10 @@ import jmri.util.swing.JmriColorChooser;
 
 /**
  * MVC View component for the TrackSegment class.
- *
  * <p>
  * Arrows and bumpers are visual, presentation aspects handled in the View.
- * 
- * @author Bob Jacobsen  Copyright (c) 2020
+ *
+ * @author Bob Jacobsen Copyright (c) 2020
  */
 public class TrackSegmentView extends LayoutTrackView {
 
@@ -34,29 +33,30 @@ public class TrackSegmentView extends LayoutTrackView {
         setupDefaultBumperSizes(layoutEditor);
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor(layoutEditor);
     }
-    
+
     /**
      * constructor method.
-     * @param track the track segment to view
+     *
+     * @param track        the track segment to view
      * @param layoutEditor for reference to tools
-     * @param arc specify display
-     * @param flip specify display
-     * @param circle specify display
+     * @param arc          specify display
+     * @param flip         specify display
+     * @param circle       specify display
      */
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor,
-                                boolean arc, boolean flip, boolean circle
-                        ) {
+            boolean arc, boolean flip, boolean circle
+    ) {
         this(track, layoutEditor);
     }
 
     // persistent instances variables (saved between sessions)
     private boolean dashed = false;
-    
+
     private boolean arc = false;
     private boolean circle = false;
     private boolean flip = false;
     private double angle = 0.0D;
-    
+
     private boolean changed = false;
     private boolean bezier = false;
 
@@ -67,11 +67,13 @@ public class TrackSegmentView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
     final private TrackSegment trackSegment;
- 
-     // temporary?
+
+    // temporary?
     @Nonnull
-    public TrackSegment getTrackSegment() { return trackSegment; }
-    
+    public TrackSegment getTrackSegment() {
+        return trackSegment;
+    }
+
     /**
      * Get debugging string for the TrackSegment.
      *
@@ -106,7 +108,7 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     public LayoutTrack getConnect2() {
-        return trackSegment.getConnect2() ;
+        return trackSegment.getConnect2();
     }
 
     /**
@@ -134,7 +136,7 @@ public class TrackSegmentView extends LayoutTrackView {
      *
      * @param oldTrack the old track connection
      * @param newTrack the new track connection
-     * @param newType type of the new track connection
+     * @param newType  type of the new track connection
      * @return true if successful
      */
     public boolean replaceTrackConnection(@CheckForNull LayoutTrack oldTrack, @CheckForNull LayoutTrack newTrack, HitPointType newType) {
@@ -310,6 +312,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * Determine if we need to redraw a curved piece of track. Saves having to
      * recalculate the circle details each time.
+     *
      * @return true means needs to be (re)drawn
      */
     public boolean trackNeedsRedraw() {
@@ -353,7 +356,8 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * @param index If negative, this is index from the end i.e. -1 is the last element
+     * @param index If negative, this is index from the end i.e. -1 is the last
+     *              element
      * @return Reference to the indexed control point
      */
     public Point2D getBezierControlPoint(int index) {
@@ -368,8 +372,9 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * @param p the location of the point to be set
-     * @param index If negative, this is index from the end i.e. -1 is the last element
+     * @param p     the location of the point to be set
+     * @param index If negative, this is index from the end i.e. -1 is the last
+     *              element
      */
     public void setBezierControlPoint(@CheckForNull Point2D p, int index) {
         if (index < 0) {
@@ -384,7 +389,7 @@ public class TrackSegmentView extends LayoutTrackView {
         }
     }
 
-    @Nonnull 
+    @Nonnull
     public ArrayList<Point2D> getBezierControlPoints() {
         return bezierControlPoints;
     }
@@ -579,25 +584,25 @@ public class TrackSegmentView extends LayoutTrackView {
     private static final int MAX_ARROW_LINE_WIDTH = 5;
     private static final int MAX_ARROW_LENGTH = 60;
     private static final int MAX_ARROW_GAP = 40;
-    
+
     private static final int MAX_BRIDGE_LINE_WIDTH = 5;
     private static final int MIN_BRIDGE_LINE_WIDTH = 1;
-        
+
     private static final int MAX_BRIDGE_APPROACH_WIDTH = 100;
     private static final int MIN_BRIDGE_APPROACH_WIDTH = 8;
-    
+
     private static final int MAX_BRIDGE_DECK_WIDTH = 80;
     private static final int MIN_BRIDGE_DECK_WIDTH = 6;
-    
+
     private static final int MAX_BUMPER_LINE_WIDTH = 9;
     private static final int MIN_BUMPER_LINE_WIDTH = 1;
-    
+
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 40;
     private static final int MIN_TUNNEL_FLOOR_WIDTH = 4;
-    
+
     private static final int MAX_TUNNEL_LINE_WIDTH = 9;
     private static final int MIN_TUNNEL_LINE_WIDTH = 1;
-    
+
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 80;
     private static final int MIN_TUNNEL_ENTRANCE_WIDTH = 1;
 
@@ -661,7 +666,7 @@ public class TrackSegmentView extends LayoutTrackView {
         JMenuItem jmi = popupMenu.add(Bundle.getMessage("MakeLabel", info) + getName());
         jmi.setEnabled(false);
 
-        if ( getBlockName().isEmpty() ) {
+        if (getBlockName().isEmpty()) {
             jmi = popupMenu.add(Bundle.getMessage("NoBlock"));
         } else {
             jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
@@ -783,7 +788,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     setArrowEndStop((getType2() == HitPointType.POS_POINT) && (((PositionablePoint) getConnect2()).getType() == PositionablePoint.PointType.EDGE_CONNECTOR));
                     setArrowStyle(n);
                 });
-                jcbmi.setSelected(arrowStyle == i);            
+                jcbmi.setSelected(arrowStyle == i);
             }
 
             if (hasEC1 && hasEC2) {
@@ -1346,7 +1351,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 });
             }
         }
-        if (( !getBlockName().isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
+        if ((!getBlockName().isEmpty()) && (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled())) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -1504,7 +1509,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 newAnchor, HitPointType.POS_POINT,
                 getConnect2(), getType2(),
                 trackSegment.isMainline(), layoutEditor);
-        TrackSegmentView ntsv = new TrackSegmentView(newTrackSegment, 
+        TrackSegmentView ntsv = new TrackSegmentView(newTrackSegment,
                 layoutEditor);
         log.error("temporary: splitTrackSegment created track without view, didn't include isDashed() ");
         // add it to known tracks
@@ -1568,7 +1573,8 @@ public class TrackSegmentView extends LayoutTrackView {
 
     /**
      * Display popup menu for information and editing.
-     * @param e The original event causing this
+     *
+     * @param e            The original event causing this
      * @param hitPointType the type of the underlying hit
      */
     protected void showBezierPopUp(MouseEvent e, HitPointType hitPointType) {
@@ -1727,6 +1733,7 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * Get state. "active" means that the object is still displayed, and should
      * be stored.
+     *
      * @return true if active
      */
     public boolean isActive() {
@@ -1750,13 +1757,14 @@ public class TrackSegmentView extends LayoutTrackView {
     /**
      * Method used by LayoutEditor.
      * <p>
-     * If the argument is 
+     * If the argument is
      * <ul>
      * <li>HIDECONALL then set HIDECONALL
      * <li>SHOWCON reset HIDECONALL is set, other wise set SHOWCON
      * <li>HIDECON or otherwise set HIDECON
      * </ul>
      * Then always redraw the LayoutEditor panel and set it dirty.
+     *
      * @param hide The specification i.e. HIDECONALL, SHOWCON et al
      */
     public void hideConstructionLines(int hide) {
@@ -1783,9 +1791,9 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
-     * The following are used only as a local store after a circle or arc
-     * has been calculated. This prevents the need to recalculate the values
-     * each time a re-draw is required.
+     * The following are used only as a local store after a circle or arc has
+     * been calculated. This prevents the need to recalculate the values each
+     * time a re-draw is required.
      */
     private Point2D pt1;
     private Point2D pt2;
@@ -2141,11 +2149,11 @@ public class TrackSegmentView extends LayoutTrackView {
                 MathUtil.drawBezier(g2, points);
             } else {
                 Point2D end1 = layoutEditor.getCoords(
-                                    getConnect1(), 
-                                    getType1());
+                        getConnect1(),
+                        getType1());
                 Point2D end2 = layoutEditor.getCoords(
-                                    getConnect2(), 
-                                    getType2());
+                        getConnect2(),
+                        getType2());
 
                 g2.draw(new Line2D.Double(end1, end2));
             }
@@ -2261,7 +2269,7 @@ public class TrackSegmentView extends LayoutTrackView {
     @Override
     protected void drawDecorations(Graphics2D g2) {
 
-        log.trace("TrackSegmentView: drawDecorations arrowStyle {}",arrowStyle);
+        log.trace("TrackSegmentView: drawDecorations arrowStyle {}", arrowStyle);
 // get end points and calculate start/stop angles (in radians)
         Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
@@ -2821,13 +2829,13 @@ public class TrackSegmentView extends LayoutTrackView {
     /*======================*\
     |* decoration accessors *|
     \*======================*/
-    
     // Although the superclass LayoutTrack stores decorators in a Map,
     // here we store them in specific variables like arrowStyle, bridgeSideRight, etc.
-    // We convert to and from the map during the getDecorations, setDecorations 
+    // We convert to and from the map during the getDecorations, setDecorations
     // and hasDecorations calls.
-    
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasDecorations() {
         return ((arrowStyle > 0)
@@ -2836,7 +2844,9 @@ public class TrackSegmentView extends LayoutTrackView {
                 || (tunnelSideLeft || tunnelSideRight));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Map<String, String> getDecorations() {
         if (decorations == null) {
@@ -2954,9 +2964,11 @@ public class TrackSegmentView extends LayoutTrackView {
             decorations.put("tunnel", String.join(";", tunnelValues));
         }   // if (tunnelSideLeft || tunnelSideRight)
         return decorations;
-    } 
+    }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDecorations(@Nonnull Map<String, String> decorations) {
         Color defaultTrackColor = layoutEditor.getDefaultTrackColorColor();
@@ -3188,22 +3200,22 @@ public class TrackSegmentView extends LayoutTrackView {
         } // if (decorathions != null)
     }   // setDirections
 
-    /** 
-     * Arrow decoration accessor.
-     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
-     * files like program:resources/icons/decorations/ArrowStyle1.png
-     * et al.
+    /**
+     * Arrow decoration accessor. The 0 (none) and 1 through 5 arrow decorations
+     * are keyed to files like
+     * program:resources/icons/decorations/ArrowStyle1.png et al.
+     *
      * @return Style number
      */
     public int getArrowStyle() {
         return arrowStyle;
     }
 
-    /** 
-     * Set the arrow decoration.
-     * The 0 (none) and 1 through 5 arrow decorations are keyed to 
-     * files like program:resources/icons/decorations/ArrowStyle1.png
-     * et al.
+    /**
+     * Set the arrow decoration. The 0 (none) and 1 through 5 arrow decorations
+     * are keyed to files like
+     * program:resources/icons/decorations/ArrowStyle1.png et al.
+     *
      * @param newVal the new style number
      */
     public void setArrowStyle(int newVal) {
@@ -3786,6 +3798,6 @@ public class TrackSegmentView extends LayoutTrackView {
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegmentView.class);
 }

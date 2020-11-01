@@ -5,38 +5,29 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
+import java.awt.event.*;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.SpeedStepMode;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.RosterSpeedProfile;
+import jmri.jmrit.logix.ThrottleSetting.Command;
+import jmri.jmrit.logix.ThrottleSetting.CommandValue;
+import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -226,9 +217,11 @@ public class WarrantFrame extends WarrantRoute {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
-                if (_dirty && askClose() && _warrant.getRunMode() == Warrant.MODE_NONE) {
+                if (_dirty && _warrant.getRunMode() == Warrant.MODE_NONE) {
                     // if runMode != MODE_NONE, this is probably a panic shutdown. Don't halt it.
-                    return;
+                    if (askClose() && !save()) {
+                        return;
+                    }
                 }
                 WarrantTableAction.getDefault().closeWarrantFrame();
             }
@@ -490,15 +483,19 @@ public class WarrantFrame extends WarrantRoute {
         RosterSpeedProfile speedProfile =  _speedUtil.getSpeedProfile();         
         boolean isForward = true;
         for (ThrottleSetting ts :_throttleCommands) {
-            if ("FORWARD".equalsIgnoreCase(ts.getCommand())) {
-                isForward = Boolean.parseBoolean(ts.getValue());
-            }
-            if ("SPEED".equalsIgnoreCase(ts.getCommand())) {
-                try {
-                    ts.setSpeed(speedProfile.getSpeed(Float.parseFloat(ts.getValue()), isForward) / 1000);                    
-                } catch (NumberFormatException nfe) {
-                    log.error("Command failed! {} {}", ts.toString(), nfe.toString());
-                }
+            CommandValue cmdVal = ts.getValue();
+            ValueType valType = cmdVal.getType();
+            switch (valType) {
+                case VAL_FLOAT:
+                    ts.setTrackSpeed(speedProfile.getSpeed(cmdVal.getFloat(), isForward) / 1000);
+                    break;
+                case VAL_TRUE:
+                    isForward = true;
+                    break;
+                case VAL_FALSE:
+                    isForward = false;
+                    break;
+                default:
             }
         }
         _commandModel.fireTableDataChanged();
@@ -732,11 +729,22 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeThrottleTablePanel() {
         _commandTable = new JTable(_commandModel);
-        _commandTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        DefaultCellEditor ed = (DefaultCellEditor)_commandTable.getDefaultEditor(String.class);
+        ed.setClickCountToStart(1);
+
+        TableColumnModel columnModel = _commandTable.getColumnModel();
         for (int i = 0; i < _commandModel.getColumnCount(); i++) {
             int width = _commandModel.getPreferredWidth(i);
-            _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+            columnModel.getColumn(i).setPreferredWidth(width);
         }
+        TableColumn cmdColumn = columnModel.getColumn(ThrottleTableModel.COMMAND_COLUMN);
+        cmdColumn.setCellEditor(new CommandCellEditor(new JComboBox<Command>()));
+        cmdColumn.setCellRenderer(new CommandCellRenderer());
+        cmdColumn.setMinWidth(40);
+
+        TableColumn valueColumn = columnModel.getColumn(ThrottleTableModel.VALUE_COLUMN);
+        valueColumn.setCellEditor(new ValueCellEditor(new JTextField()));
+
         _throttlePane = new JScrollPane(_commandTable);
         _rowHeight = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
@@ -790,7 +798,7 @@ public class WarrantFrame extends WarrantRoute {
             showWarning(Bundle.getMessage("selectRow"));
             return;
         }
-        _throttleCommands.add(row+1, new ThrottleSetting(0, null, null, null));
+        _throttleCommands.add(row+1, new ThrottleSetting());
         _commandModel.fireTableDataChanged();
         _commandTable.setRowSelectionInterval(row, row);
     }
@@ -802,9 +810,8 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         ThrottleSetting cmd = _throttleCommands.get(row);
-        if (cmd != null) {
-            String c = cmd.getCommand();
-            if (c != null && c.trim().toUpperCase().equals("NOOP")) {
+        if (cmd != null && cmd.getCommand() != null) {
+            if (cmd.getCommand().equals(Command.NOOP)) {
                 showWarning(Bundle.getMessage("cannotDeleteNoop"));
                 return;
             }
@@ -945,12 +952,93 @@ public class WarrantFrame extends WarrantRoute {
         } else {
             for (int i=0; i<_throttleCommands.size(); i++) {
                 ThrottleSetting ts = _throttleCommands.get(i);
-                if (ts.getValue()==null || ts.getCommand()==null || ts.getNamedBeanHandle()==null) {
-                    return Bundle.getMessage("BadThrottleSetting", i+1, ts.toString());
+                Command cmd = ts.getCommand();
+                CommandValue val = ts.getValue();
+                if (val==null || cmd==null) {
+                    return Bundle.getMessage("BadThrottleSetting", i+1);
+                }
+                ValueType valType = val.getType();
+                switch (cmd) {
+                    case SPEED:
+                        if (valType != ValueType.VAL_FLOAT) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        float f = ts.getValue().getFloat();
+                        if (f > 1.0F) {
+                            return Bundle.getMessage("badSpeed", f);
+                        }
+                        break;
+                    case FORWARD:
+                        if (valType != ValueType.VAL_TRUE && valType != ValueType.VAL_FALSE) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        break;
+                    case FKEY:
+                    case LATCHF:
+                        if (valType != ValueType.VAL_ON && valType != ValueType.VAL_OFF) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        break;
+                    case SET_SENSOR:
+                    case WAIT_SENSOR:
+                        if (valType != ValueType.VAL_ACTIVE && valType != ValueType.VAL_INACTIVE) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        String msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                        if (msg != null) {
+                            return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        break;
+                    case RUN_WARRANT:
+                        if (valType != ValueType.VAL_FLOAT) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        msg = WarrantFrame.checkBeanName(cmd, ts.getBeanDisplayName());
+                        if (msg != null) {
+                            return msg + '\n' + Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        break;
+                    case SPEEDSTEP:
+                        if (valType != ValueType.VAL_STEP) {
+                            return Bundle.getMessage("badThrottleCommand", 
+                                    i+1, cmd.toString(), valType.toString());
+                        }
+                        break;
+                    default:
+                        return null;
                 }
             }
         }
-    return null;
+        return null;
+    }
+
+    static String checkBeanName(Command command, String beanName) {
+        switch(command) {
+            case SET_SENSOR:
+            case WAIT_SENSOR:
+                if (InstanceManager.sensorManagerInstance().getSensor(beanName) == null) {
+                    return Bundle.getMessage("BadSensor", beanName);
+                }
+                break;
+            case RUN_WARRANT:
+                if (InstanceManager.getDefault(WarrantManager.class).getWarrant(beanName) == null) {
+                    return Bundle.getMessage("BadWarrant", beanName);
+                }
+                break;
+            default:
+                if (InstanceManager.getDefault(OBlockManager.class).getOBlock(beanName) == null) {
+                    return Bundle.getMessage("BlockNotFound", beanName);
+                }
+                break;
+        }
+        return null;
     }
 
     private void runLearnModeTrain() {
@@ -1114,6 +1202,9 @@ public class WarrantFrame extends WarrantRoute {
             _learnThrottle.dispose();
             _learnThrottle = null;
         }
+        if (_warrant == null) {
+            return;
+        }
 
         if (_warrant.getRunMode() == Warrant.MODE_LEARN) {
             List<BlockOrder> orders = getOrders();
@@ -1167,12 +1258,12 @@ public class WarrantFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        if (log.isDebugEnabled())
-            log.debug("propertyChange \"{}\" old= {} new= {} source= {}",
-                    property, e.getOldValue(), e.getNewValue(), e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
             doAction(e.getSource());
         } else if (e.getSource() instanceof Warrant && _warrant.equals(e.getSource())) {
+            if (log.isDebugEnabled())
+                log.debug("propertyChange \"{}\" old= {} new= {} source= {}",
+                        property, e.getOldValue(), e.getNewValue(), e.getSource().getClass().getName());
             String msg = null;
             Color color = myGreen;
             switch (_warrant.getRunMode()) {
@@ -1370,6 +1461,10 @@ public class WarrantFrame extends WarrantRoute {
         return false;
     }
 
+    /**
+     * Verify that commands are correct
+     * @return true if commands are OK
+     */
     private boolean save() {
         boolean fatal = false;
         if (isRunning()) {
@@ -1384,7 +1479,11 @@ public class WarrantFrame extends WarrantRoute {
             msg = checkLocoAddress();
         }
         if (msg == null && !_isSCWarrant.isSelected()) {
-                msg = checkThrottleCommands();
+            msg = checkThrottleCommands();
+            if (msg != null) {
+                msg = Bundle.getMessage("SaveError", msg);
+                fatal = true;
+            }
         }
 
         WarrantManager mgr = InstanceManager.getDefault(WarrantManager.class); 
@@ -1407,8 +1506,11 @@ public class WarrantFrame extends WarrantRoute {
                     }
                 }
             } else {
-                _warrant = mgr.createNewWarrant(
-                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+                if (_warrant == null) {
+                    _warrant = mgr.createNewWarrant(
+                            _sysNameBox.getText(), _userNameBox.getText(), 
+                            _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+                }
             }
         }
         if (_warrant == null) { // find out why
@@ -1460,7 +1562,12 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setThrottleCommands(_throttleCommands);
         _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         if (_saveWarrant == null) {
-            mgr.register(_warrant);
+            try {
+                mgr.register(_warrant);
+            } catch (jmri.NamedBean.DuplicateSystemNameException dsne) {
+                // ignore
+            }
+            _saveWarrant = _warrant;
         }
 
         if (log.isDebugEnabled()) log.debug("warrant {} saved _train {} name= {}",
@@ -1477,13 +1584,292 @@ public class WarrantFrame extends WarrantRoute {
 
     // shut down, but don't dispose
     protected void close() {
+        _dirty = false;
         clearTempWarrant();
         stopRunTrain();
+        setVisible(false);
     }
 
-    /**
-     * *********************** Throttle Table *****************************
-     */
+    //=============== Throttle Command Table ==========================\\
+    //=============== VALUE_COLUMN editing/rendering ==================\\
+
+    static String[]  TRUE_FALSE = {ValueType.VAL_TRUE.toString(), ValueType.VAL_FALSE.toString()};
+    static String[]  ON_OFF = {ValueType.VAL_ON.toString(), ValueType.VAL_OFF.toString()};
+    static String[]  SENSOR_STATES = {ValueType.VAL_ACTIVE.toString(), ValueType.VAL_INACTIVE.toString()};
+
+    class ValueCellEditor extends DefaultCellEditor {
+
+        private ComboDialog editorDialog;
+        private TextDialog textDialog;
+        private String currentText;
+        private JTextField editorComponent;
+
+        ValueCellEditor(JTextField textField) {
+            super(textField);
+            setClickCountToStart(1);
+            log.debug("valueCellEditor Ctor");
+        }
+
+        @SuppressWarnings("unchecked") // getComponent call requires an unchecked cast
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int col) {
+            if (log.isDebugEnabled()) {
+                log.debug("getValueCellEditorComponent: row= {}, column= {} selected = {} value= {}",
+                        row, col, isSelected, value);
+            }
+            currentText = value.toString();
+            editorComponent = (JTextField)super.getTableCellEditorComponent(table, value, isSelected, row, col);
+            Command cmd = (Command)_commandModel.getValueAt(row, ThrottleTableModel.COMMAND_COLUMN);
+            Rectangle cellRect = table.getCellRect (row, col, false);
+            Dimension dim = new Dimension(cellRect.width, cellRect.height);
+
+            switch (cmd) {
+                case FORWARD:
+                    showComboDialog(TRUE_FALSE, dim);
+                    break;
+                case FKEY:
+                case LATCHF:
+                    showComboDialog(ON_OFF, dim);
+                    break;
+                case SET_SENSOR:
+                case WAIT_SENSOR:
+                    showComboDialog(SENSOR_STATES, dim);
+                    break;
+                case SPEEDSTEP:
+                    String[] items = new String[SpeedStepMode.values().length];
+                    int i = 0;
+                    for (SpeedStepMode sm : SpeedStepMode.values()) {
+                        items[i++] = sm.name; //sm.toString();
+                    }
+                    showComboDialog(items, dim);
+                    break;
+                default:
+                    showTextDialog(dim);
+                    break;
+            }
+            return editorComponent;
+        }
+
+        void showTextDialog(Dimension dim) {
+            log.debug("valueCellEditor.showTextDialog");
+            textDialog = new TextDialog();
+            textDialog._textField.setText(currentText);
+
+            class CellMaker implements Runnable {
+                Dimension dim;
+                CellMaker(Dimension d) {
+                    dim = d;
+                }
+                @Override
+                public void run() {
+                    log.debug("Run valueCellEditor.TextDialog");
+                    Point p = editorComponent.getLocationOnScreen();
+                    textDialog.setLocation(p.x, p.y);
+                    textDialog.setPreferredSize(dim);
+                    textDialog.pack();
+                    textDialog.setVisible(true);
+                }
+            }
+            CellMaker t = new CellMaker(dim);
+            javax.swing.SwingUtilities.invokeLater(t);
+        }
+
+
+        class TextDialog extends JDialog implements FocusListener {
+            JTextField _textField;
+            TextDialog _this;
+            TextDialog() {
+                super((JFrame)null, false);
+                _this = this;
+                _textField = new JTextField();
+                _textField.addFocusListener(this);
+                _textField.setForeground(Color.RED);
+                getContentPane().add(_textField);
+                setUndecorated(true);
+            }
+            
+            @Override
+            public void  focusGained(FocusEvent e) {
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                currentText = _textField.getText();
+                editorComponent.setText(currentText);
+                fireEditingStopped();
+                _this.dispose();
+            }
+        }
+
+        void showComboDialog(String[] items, Dimension dim) {
+            editorDialog = new ComboDialog(items);
+            log.debug("valueCellEditor.showComboDialog");
+
+            class CellMaker implements Runnable {
+                Dimension dim;
+                CellMaker(Dimension d) {
+                    dim = d;
+                }
+                @Override
+                public void run() {
+                    log.debug("Run valueCellEditor.showDialog");
+                    Point p = editorComponent.getLocationOnScreen();
+                    editorDialog.setLocation(p.x, p.y);
+                    editorDialog.setPreferredSize(dim);
+                    editorDialog.pack();
+                    editorDialog.setVisible(true);
+                }
+            }
+            CellMaker t = new CellMaker(dim);
+            javax.swing.SwingUtilities.invokeLater(t);
+        }
+
+        class ComboDialog extends JDialog implements ItemListener, FocusListener {  
+            JComboBox<String> _comboBox;
+            ComboDialog _this;
+
+            ComboDialog(String[] items) {
+                super((JFrame)null, false);
+                _this = this;
+                _comboBox = new JComboBox<String>();
+                _comboBox.addItemListener(this);
+                _comboBox.addFocusListener(this);
+                _comboBox.setForeground(Color.RED);
+                for (String item : items) {
+                    _comboBox.addItem(item);
+                }
+                _comboBox.removeItem(Command.NOOP.toString());
+                getContentPane().add(_comboBox);
+                setUndecorated(true);
+            }
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                currentText = (String)_comboBox.getSelectedItem();
+                editorComponent.setText(currentText);
+                fireEditingStopped();
+                _this.dispose();
+           }
+            @Override
+            public void  focusGained(FocusEvent e) {
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                currentText = (String)_comboBox.getSelectedItem();
+                editorComponent.setText(currentText);
+                fireEditingStopped();
+                _this.dispose();
+            }
+        }
+    }
+
+//=============== COMMAND_COLUMN editing/rendering ===============\\
+
+    class CommandCellEditor extends DefaultCellEditor {
+        CommandCellEditor(JComboBox<Command> comboBox) {
+            super(comboBox);
+            log.debug("New JComboBox<String> CommandCellEditor");
+        }
+
+        @SuppressWarnings("unchecked") // getComponent call requires an unchecked cast
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            if (log.isDebugEnabled()) {
+                log.debug("getTableCellEditorComponent: row= {}, column= {} selected = {}",
+                        row, column, isSelected);
+            }
+            JComboBox<Command> comboBox = (JComboBox<Command>)getComponent();
+            cellPt = MouseInfo.getPointerInfo().getLocation();
+            comboBox.removeAllItems();
+            for (Command cmd : Command.values()) {
+                comboBox.addItem(cmd);
+            }
+            return super.getTableCellEditorComponent(table, value, isSelected, row, column);
+        }
+    }
+
+    Point cellPt;   // point to display key
+
+    class CommandCellRenderer extends DefaultTableCellRenderer {
+        public CommandCellRenderer() {
+            super();
+            log.debug("New JComboBox<String> CommandCellRenderer");
+        }
+
+        @SuppressWarnings("unchecked") // getComponent call requires an unchecked cast
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                boolean isSelected, boolean hasFocus, int row, int column) {
+            Command cmd = (Command)value;
+            int key = _throttleCommands.get(row).getKeyNum();
+            if (cmd == null) {
+                setText(null);
+            } else if (Command.FKEY.equals(cmd)) {
+                setText(Bundle.getMessage("FKey", key));
+            } else if (Command.LATCHF.equals(cmd)) {
+                setText(Bundle.getMessage("FKeyMomemtary", key));
+            } else {
+                setText(cmd.toString());
+            }
+            return this;
+        }
+    }
+
+    static class EditDialog extends JDialog  {
+        SpinnerNumberModel _keyNumModel;
+        ThrottleSetting _ts;
+        Command _cmd;
+
+        EditDialog(JFrame frame, ThrottleSetting ts, Command cmd) {
+            super(frame, true);
+            _ts = ts;
+            _cmd = cmd;
+            int key = ts.getKeyNum();
+            if (key < 0) {
+                key = 0;
+            }
+            _keyNumModel = new SpinnerNumberModel(key, 0, 28, 1);
+            JSpinner keyNums = new JSpinner(_keyNumModel);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+            panel.add(new JLabel(Bundle.getMessage("editFunctionKey")), BorderLayout.NORTH);
+            panel.add(keyNums, BorderLayout.CENTER);
+
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            JButton doneButton;
+            doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+            doneButton.addActionListener((ActionEvent a) -> done());
+            p.add(doneButton);
+
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+            cancelButton.addActionListener((ActionEvent a) -> this.dispose());
+            p.add(cancelButton);            
+            panel.add(p, BorderLayout.SOUTH);
+            getContentPane().add(panel);
+            setUndecorated(true);
+        }
+
+        public void done() {
+            int i = (Integer)_keyNumModel.getValue();
+            _ts.setKeyNum(i);
+            _ts.setCommand(_cmd);
+            this.dispose();
+        }
+
+    }
+    void makeEditWindow(ThrottleSetting ts, Command cmd) {
+        JDialog dialog = new EditDialog(this, ts, cmd);
+        dialog.setLocation(cellPt);
+        dialog.pack();
+        dialog.setVisible(true);
+        if (log.isDebugEnabled()) {
+            log.debug("makeEditWindow: pt at ({}, {})", cellPt.x, cellPt.y);
+        }
+    }
+
+    /************************* Throttle Table ******************************/
     class ThrottleTableModel extends AbstractTableModel {
 
         public static final int ROW_NUM = 0;
@@ -1494,10 +1880,14 @@ public class WarrantFrame extends WarrantRoute {
         public static final int SPEED_COLUMN = 5;
         public static final int NUMCOLS = 6;
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
-        NumberFormat formatter = NumberFormat.getNumberInstance(); 
+
+        JComboBox<Integer> keyNums = new JComboBox<>();
 
         public ThrottleTableModel() {
             super();
+            for (int i=0; i<29; i++) {
+                keyNums.addItem(i);
+            }
         }
 
         @Override
@@ -1542,23 +1932,25 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public Class<?> getColumnClass(int col) {
+            if (col == COMMAND_COLUMN) {
+                return JComboBox.class;
+            }
             return String.class;
         }
 
         public int getPreferredWidth(int col) {
             switch (col) {
                 case ROW_NUM:
-                    return new JTextField(2).getPreferredSize().width;
+                    return new JTextField(3).getPreferredSize().width;
                 case TIME_COLUMN:
-                    return new JTextField(7).getPreferredSize().width;
-                case COMMAND_COLUMN:
-                    return new JTextField(9).getPreferredSize().width;
-                case VALUE_COLUMN:
                     return new JTextField(8).getPreferredSize().width;
+                case COMMAND_COLUMN:
+                case VALUE_COLUMN:
+                    return new JTextField(15).getPreferredSize().width;
                 case BLOCK_COLUMN:
-                    return new JTextField(40).getPreferredSize().width;
+                    return new JTextField(35).getPreferredSize().width;
                 case SPEED_COLUMN:
-                    return new JTextField(10).getPreferredSize().width;
+                    return new JTextField(12).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -1566,7 +1958,6 @@ public class WarrantFrame extends WarrantRoute {
             return new JTextField(12).getPreferredSize().width;
         }
 
-        // TODO Internationalize command names
         @Override
         public Object getValueAt(int row, int col) {
             // some error checking
@@ -1588,35 +1979,22 @@ public class WarrantFrame extends WarrantRoute {
                 case COMMAND_COLUMN:
                     return ts.getCommand();
                 case VALUE_COLUMN:
-                    if ("Mark".equalsIgnoreCase(ts.getValue())) {
-                        return Bundle.getMessage("Mark");
-                    } else {
-                        if (ts.getValue() != null ) {
-                            String cmd = ts.getCommand().toUpperCase();
-                            if ("SPEED".equals(cmd)) {
-                                try {
-                                    float speed = Float.parseFloat(ts.getValue());                                
-                                    return formatter.format(speed);                               
-                                } catch (NumberFormatException npe) {
-                                    log.error("Null value in ThrottleSetting: {}", ts.toString());
-                                }
-                            }
-                        }
+                    CommandValue cmdVal = ts.getValue();
+                    if (cmdVal == null) {
+                        return "";
                     }
-                    return ts.getValue();
+                    return cmdVal.showValue();
                 case BLOCK_COLUMN:
                     return ts.getBeanDisplayName();
                 case SPEED_COLUMN:
-                    return threeDigit.format(ts.getSpeed() * 1000);
+                    return threeDigit.format(ts.getTrackSpeed() * 1000);
                 default:
-                    // fall through
-                    break;
+                    return "";
             }
-            return "";
         }
 
-        // TODO Internationalize command names
         @Override
+        @SuppressFBWarnings(value="DB_DUPLICATE_SWITCH_CLAUSES", justification="put least likely cases last for efficiency")
         public void setValueAt(Object value, int row, int col) {
             ThrottleSetting ts = _throttleCommands.get(row);
             String msg = null;
@@ -1635,138 +2013,62 @@ public class WarrantFrame extends WarrantRoute {
                     }
                     break;
                 case COMMAND_COLUMN:
-                    String cmd = ((String) value);
-                    if (cmd == null || cmd.length() == 0) {
-//                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
-                        break;
+                    Command cmd = ((Command) value);
+                    Command prCmd = ts.getCommand();
+                    if (prCmd != null && !cmd.hasBlockName() && prCmd.hasBlockName()) {
+                        ts.setNamedBeanHandle(null);
                     }
-                    cmd = cmd.trim().toUpperCase();
-                    if ("SPEED".equals(cmd)) {
-                        ts.setCommand("Speed");
-                    } else if ("SPEEDSTEP".equals(cmd)) {
-                        ts.setCommand("SpeedStep");
-                    } else if ("FORWARD".equals(cmd)) {
-                        ts.setCommand("Forward");
-                    } else if (cmd.startsWith("F")) {
-                        try {
-                            int cmdNum = Integer.parseInt(cmd.substring(1));
-                            if (cmdNum < 0 || 28 < cmdNum) {
-                                msg = Bundle.getMessage("badFunctionNum");
-                            } else {
-                                ts.setCommand(cmd);
+                    switch (cmd) {
+                        case SPEED:
+                        case FORWARD:
+                            ts.setCommand(cmd);
+                            break;
+                        case FKEY:
+                        case LATCHF:
+                            class CellMaker implements Runnable {
+                                ThrottleSetting ts;
+                                Command cmd;
+                                CellMaker(ThrottleSetting t, Command c) {
+                                    ts = t;
+                                    cmd = c;
+                                }
+
+                                @Override
+                                public void run() {
+                                    makeEditWindow(ts, cmd);
+                                }
                             }
-                        } catch (NumberFormatException e) {
-                            msg = Bundle.getMessage("badFunctionNum");
-                        }
-                    } else if (cmd.startsWith("LOCKF")) {
-                        try {
-                            int cmdNum = Integer.parseInt(cmd.substring(5));
-                            if (cmdNum < 0 || 28 < cmdNum) {
-                                msg = Bundle.getMessage("badLockFNum");
-                            } else {
-                                ts.setCommand(cmd);
-                            }
-                        } catch (NumberFormatException nfe) {
-                            msg = Bundle.getMessage("badLockFNum");
-                        }
-                    } else if ("NOOP".equals(cmd)) {
-                        msg = Bundle.getMessage("cannotEnterNoop", (String) value);
-                    } else if (ts.getCommand() != null && ts.getCommand().equals("NoOp")) {
-                        msg = Bundle.getMessage("cannotChangeNoop", (String) value);
-                    } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd)) {
-                        ts.setCommand("Set Sensor");
-                    } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd)) {
-                        ts.setCommand("Wait Sensor");
-                    } else if ("RUN WARRANT".equals(cmd)) {
-                        ts.setCommand("Run Warrant");
-                    } else {
-                        msg = Bundle.getMessage("badCommand", (String) value);
+                            CellMaker t = new CellMaker(ts, cmd);
+                            javax.swing.SwingUtilities.invokeLater(t);
+                            break;
+                        case NOOP:
+                            msg = Bundle.getMessage("cannotEnterNoop", cmd.toString());
+                            break;
+                        case SET_SENSOR:
+                        case WAIT_SENSOR:
+                        case RUN_WARRANT:
+                        case SPEEDSTEP:
+                            ts.setCommand(cmd);
+                            break;
+                        default:
+                            msg = Bundle.getMessage("badCommand", cmd.toString());
                     }
                     break;
                 case VALUE_COLUMN:
                     if (value == null || ((String) value).length() == 0) {
                         break;
                     }
-                    boolean resetBlockColumn = true;
                     if (ts==null || ts.getCommand()==null ) {
                         msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
                         break;
                     }
-                    cmd = ts.getCommand().toUpperCase();
-                    if ("SPEED".equals(cmd)) {
-                        try {
-                            float speed = formatter.parse((String) value).floatValue();
-                            if (0.0f <= speed && speed <= 1.0f) {
-                                ts.setValue(Float.toString(speed));
-                                break;
-                            }
-                            msg = Bundle.getMessage("badValue", value, ts.getCommand());
-                        } catch (java.text.ParseException pe) {
-                            msg = Bundle.getMessage("invalidNumber");
-                        } catch (NumberFormatException nfe) {
-                            msg = Bundle.getMessage("invalidNumber");
+                    ts.setValue((String) value);
+                    Command command = ts.getCommand();
+                    if (command != null) {
+                        if (command.hasBlockName()) {
+                            NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
+                            ts.setNamedBeanHandle(bh);
                         }
-                        ts.setValue(null);
-                    } else if ("SPEEDSTEP".equals(cmd)) {
-                        try {
-                            // Get speed step mode, just to check that it's valid.
-                            SpeedStepMode.getByName((String)value);
-                            ts.setValue((String)value);
-                        } catch (IllegalArgumentException nfe) {
-                            msg = Bundle.getMessage("badStepMode");
-                            ts.setValue(null);
-                        }
-                    } else if ("FORWARD".equalsIgnoreCase(cmd)) {
-                            if (((String)value).length() < 4) {
-                                msg = Bundle.getMessage("invalidBoolean");
-                            } else {
-                                if (Boolean.parseBoolean((String) value)) {
-                                    ts.setValue("true");
-                                } else {
-                                    ts.setValue("false");
-                                }
-                            }
-                    } else if (cmd.startsWith("F")) {
-                            if (((String)value).length() < 4) {
-                                msg = Bundle.getMessage("invalidBoolean");
-                            } else {
-                                if (Boolean.parseBoolean((String) value)) {
-                                    ts.setValue("true");
-                                } else {
-                                    ts.setValue("false");
-                                }
-                            }
-                    } else if (cmd.startsWith("LOCKF")) {
-                        if (((String)value).length() < 4) {
-                            msg = Bundle.getMessage("invalidBoolean");
-                        } else {
-                            if (Boolean.parseBoolean((String) value)) {
-                                ts.setValue("true");
-                            } else {
-                                ts.setValue("false");
-                            }
-                        }
-                    } else if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
-                        String v = ((String) value).toUpperCase();
-                        if ("ACTIVE".equals(v) || "INACTIVE".equals(v)) {
-                            ts.setValue((String) value);
-                        } else {
-                            msg = Bundle.getMessage("badSensorCommand");
-                        }
-                        resetBlockColumn = false;
-                    } else if ("RUN WARRANT".equals(cmd)) {
-                        try {
-                            Integer.parseInt((String) value);
-                            ts.setValue((String) value);
-                        } catch (NumberFormatException nfe) {
-                            msg = Bundle.getMessage("badValue", value, cmd);
-                        }
-                        resetBlockColumn = false;
-                    } else {
-                        ts.setValue(null);
-                    }
-                    if (resetBlockColumn) {
-                        ts.setNamedBeanHandle(getPreviousBlockHandle(row));
                     }
                     break;
                 case BLOCK_COLUMN:
@@ -1774,31 +2076,14 @@ public class WarrantFrame extends WarrantRoute {
                         msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
                         break;
                     }
-                    cmd = ts.getCommand().toUpperCase();
-                    if ("SET SENSOR".equals(cmd) || "WAIT SENSOR".equals(cmd)) {
-                        try {
-                            jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor((String) value);
-                            if (s != null) {
-                                ts.setNamedBean(cmd, (String) value);
-                            } else {
-                                msg = Bundle.getMessage("BadSensor", (String) value);
-                            }
-                        } catch (Exception ex) {
-                            msg = Bundle.getMessage("BadSensor", (String) value) + ex;
-                        }
-                    } else if ("NOOP".equals(cmd)) {
+                    command = ts.getCommand();
+                    if (command == null) {
+                        break;
+                    }
+                    if (!command.hasBlockName()) {
+                        msg = ts.setNamedBean(command, (String)value);
+                    } else  if (command.equals(Command.NOOP)) {
                         msg = Bundle.getMessage("cannotChangeBlock", (String) value);
-                    } else if ("RUN WARRANT".equals(cmd)) {
-                        try {
-                            Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant((String) value);
-                            if (w != null) {
-                                ts.setNamedBean(cmd, (String) value);
-                            } else {
-                                msg = Bundle.getMessage("BadWarrant", (String) value);
-                            }
-                        } catch (Exception ex) {
-                            msg = Bundle.getMessage("BadWarrant", value, cmd) + ex;
-                        }
                     } else {
                         NamedBeanHandle<?> bh = getPreviousBlockHandle(row);
                         if (bh != null) {
@@ -1818,6 +2103,7 @@ public class WarrantFrame extends WarrantRoute {
                 showWarning(msg);
             } else {
                 fireTableRowsUpdated(row, row);
+                _dirty = true;
             }
         }
 
