@@ -130,12 +130,12 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
         Attribute a;
 
         // find coordinates
-        int x, y = 0;
+        int x, y;
 
         // separate sizes for window and panel are used
         int windowHeight = 400;
         int windowWidth = 300;
-        int panelHeight, panelWidth;
+//        int panelHeight, panelWidth;
         try {
             if ((a = shared.getAttribute("x")) != null) {
                 x = a.getIntValue();
@@ -146,14 +146,14 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
 
             // For compatibility with previous versions, try and
             // see if height and width tags are contained in the file
-            if ((a = shared.getAttribute("height")) != null) {
-                windowHeight = a.getIntValue();
-                panelHeight = windowHeight - 60;
-            }
-            if ((a = shared.getAttribute("width")) != null) {
-                windowWidth = a.getIntValue();
-                panelWidth = windowWidth - 18;
-            }
+//            if ((a = shared.getAttribute("height")) != null) {
+//                windowHeight = a.getIntValue();
+//                panelHeight = windowHeight - 60;
+//            }
+//            if ((a = shared.getAttribute("width")) != null) {
+//                windowWidth = a.getIntValue();
+//                panelWidth = windowWidth - 18;
+//            }
 
             // For files created by the new version,
             // retrieve window and panel sizes
@@ -163,35 +163,35 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
             if ((a = shared.getAttribute("windowwidth")) != null) {
                 windowWidth = a.getIntValue();
             }
-            if ((a = shared.getAttribute("panelheight")) != null) {
-                panelHeight = a.getIntValue();
-            }
-            if ((a = shared.getAttribute("panelwidth")) != null) {
-                panelWidth = a.getIntValue();
-            }
+//            if ((a = shared.getAttribute("panelheight")) != null) {
+//                panelHeight = a.getIntValue();
+//            }
+//            if ((a = shared.getAttribute("panelwidth")) != null) {
+//                panelWidth = a.getIntValue();
+//            }
         } catch (DataConversionException e) {
             log.error("failed to convert ModulesEditor attribute");
             result = false;
         }
 
-        double xScale;
-        double yScale;
-        if ((a = shared.getAttribute("xscale")) != null) {
-            try {
-                xScale = (Float.parseFloat(a.getValue()));
-            } catch (NumberFormatException e) {
-                log.error("failed to convert xscale attribute to float - {}", a.getValue());
-                result = false;
-            }
-        }
-        if ((a = shared.getAttribute("yscale")) != null) {
-            try {
-                yScale = (Float.parseFloat(a.getValue()));
-            } catch (NumberFormatException e) {
-                log.error("failed to convert yscale attribute to float - {}", a.getValue());
-                result = false;
-            }
-        }
+//        double xScale;
+//        double yScale;
+//        if ((a = shared.getAttribute("xscale")) != null) {
+//            try {
+//                xScale = (Float.parseFloat(a.getValue()));
+//            } catch (NumberFormatException e) {
+//                log.error("failed to convert xscale attribute to float - {}", a.getValue());
+//                result = false;
+//            }
+//        }
+//        if ((a = shared.getAttribute("yscale")) != null) {
+//            try {
+//                yScale = (Float.parseFloat(a.getValue()));
+//            } catch (NumberFormatException e) {
+//                log.error("failed to convert yscale attribute to float - {}", a.getValue());
+//                result = false;
+//            }
+//        }
 
         // find the name
         String name = "";
