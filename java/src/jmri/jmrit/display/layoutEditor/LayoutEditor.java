@@ -31,7 +31,10 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.BlockContentsIcon;
+import jmri.jmrit.display.layoutEditor.Bundle;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
+import jmri.jmrit.display.layoutEditor.MemoryIcon;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
@@ -6641,7 +6644,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         unionToPanelBounds(l.getBounds());
     }
 
-    JFileChooser inputFileChooser;
+    private JFileChooser inputFileChooser = null;
 
     /**
      * Add a background image

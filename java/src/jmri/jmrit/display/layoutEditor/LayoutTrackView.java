@@ -29,7 +29,7 @@ import jmri.util.*;
  * </ul>
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 abstract public class LayoutTrackView {
 
@@ -45,6 +45,7 @@ abstract public class LayoutTrackView {
 
     /**
      * constructor method
+     *
      * @param track the track to view
      * @param c display location
      * @param layoutEditor for reference to tools
@@ -60,14 +61,14 @@ abstract public class LayoutTrackView {
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
-    
-    
-    @Nonnull 
+
+
+    @Nonnull
     final public String getId() {  // temporary Id vs name; is one for the View?
         return layoutTrack.getId();
     }
 
-    @Nonnull 
+    @Nonnull
     final public String getName() {
         return layoutTrack.getName();
     }
@@ -75,11 +76,11 @@ abstract public class LayoutTrackView {
     final protected void setIdent(@Nonnull String ident) {
         layoutTrack.setIdent(ident);
     }
-    
+
     // temporary accessor?  Or is this a long term thing?
     // @Nonnull temporary until we gigure out if can be null or not
     public LayoutTrack getLayoutTrack() { return layoutTrack; }
-    
+
     /**
      * Set center coordinates
      *
@@ -94,6 +95,7 @@ abstract public class LayoutTrackView {
      * <p>
      * Some subtypes may reimplement this is "center" is a more complicated
      * idea, i.e. for Bezier curves
+     *
      * @param p the coordinates to set
      */
     public void setCoordsCenter(@Nonnull Point2D p) {  // temporary = want to make protected after migration
@@ -119,7 +121,7 @@ abstract public class LayoutTrackView {
     }
 
     /**
-     * Set new decorations 
+     * Set new decorations
      *
      * This is a complete replacement of the decorations, not an appending.
      *
@@ -230,15 +232,15 @@ abstract public class LayoutTrackView {
      * @return An item for the arrow menu
      */
     public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle"+n+".png"));
-            JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            // can't set selected here because the ActionListener has to be set first
-            return jcbmi;
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle"+n+".png"));
+        JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        // can't set selected here because the ActionListener has to be set first
+        return jcbmi;
     }
     protected static final int NUM_ARROW_TYPES = 6;
-    
+
     /**
      * highlight unconnected connections
      *
@@ -391,8 +393,8 @@ abstract public class LayoutTrackView {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, 
-                                                    boolean useRectangles, 
+    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint,
+                                                    boolean useRectangles,
                                                     boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
