@@ -98,6 +98,7 @@ public class TrackerTest {
 
         occupied = TkrWest.getBlocksOccupied();
         assertThat(occupied.size()).withFailMessage("TkrWest Blocks Occupied").isEqualTo(3);
+//        jmri.util.JUnitAppender.assertErrorMessage("Sensor \"\" not found. from setNamedBean()");
 
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.dispose();
