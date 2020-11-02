@@ -1417,10 +1417,9 @@ public final class MathUtil {
     }
 
     /**
-     *
-     * @param pointT
-     * @param points
-     * @return
+     * @param pointT the point
+     * @param points the polygon
+     * @return true if pointT is in the polygon made up of the points
      */
     public static boolean isPointInPolygon(Point2D pointT, List<Point2D> points) {
         boolean result = false;
