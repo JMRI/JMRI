@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+< t&#234;te>
+  <meta name="keywords" content="JMRI MERG CBUS setup Fast Clock Fastclock time speed rate FCLK">
+  <title>JMRI Hardware Support - MERG CBUS - CBUS Fast Clock</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html ; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<corps>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+      <h1>Support mat&#223;riel : CBUS MERG - Horloge rapide CBUS </h1>
+        <ul class="snav">
+        <li><a href="#outbound">Envoi au r&#223;seau</a></li>
+        <li><a href="#inbound">Recevoir du r&#223;seau</a></li>
+       </ul>
+      
+      
+      <span class="since">Depuis 4.19.6</span>
+      
+      <p>JMRI dispose d'une horloge interne rapide qui est utilis&#223;e &#224; diff&#223;rents endroits
+        y compris l'horodatage des balises RfID, et des outils d'automatisation R&#223;seau.
+      </p>
+
+      <p>L'Horloge rapide CBUS peut &#234;tre utilis&#223;e pour envoyer ces donn&#223;es d'horloge interne &#224; un r&#223;seau CBUS, 
+        permettant &#224; d'autres dispositifs de r&#223;seau d'utiliser la m&#234;me heure et la m&#234;me date.
+      </p>
+
+      <p>JMRI peut &#223;galement &#223;couter le r&#223;seau CBUS pour les donn&#223;es entrantes de l'Horloge Rapide qui est utilis&#223;e
+        pour mettre &#224; jour l'horloge interne.</p>
+      
+      <p>Si vous ne partagez pas les donn&#223;es horaires sur le r&#223;seau, l'horloge interne Fast Clock vous fournira
+        toutes les fonctionnalit&#223;s dont vous avez besoin, sans avoir &#224; les envoyer ou les recevoir via CBUS.</p>
+
+      <p>L'Horloge Rapide Interne, et des fonctionnalit&#223;s suppl&#223;mentaires du CBUS sont configur&#223;es dans la
+      <a href="../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Fen&#234;tre de configuration de l'Horloge Rapide</a>,
+        <br><strong>PanelPro > Outils > Horloges > Configurer l'Horloge Rapide ...</strong></p>
+      
+
+      <h2><a name="outbound" id="outbound">Envoi de donn&#223;es d'Horloge Rapide au r&#223;seau</a></h2>
+      
+        <div style="float : right ;"><img src="images/web/cbus_fastclock_incoming_420x606.png" 
+        alt="CBUS Fast Clock Incoming" width="420" height="606"></div>
+      
+        <p>Ouvrir la fen&#234;tre de configuration de l'Horloge Rapide.</p>
+      
+        <p>S'assurer que l'horloge interne de l'ordinateur est s&#223;lectionn&#223;e comme source de temps.</p>
+      
+        <p>Cochez la case Synchroniser l'Horloge Rapide du CBUS MERG .</p>
+
+        <p>La configuration de l'Horloge Rapide est stock&#223;e en xml, n'oubliez pas de stocker votre configuration !
+
+        <p>Lorsque l'horloge est en pause/reprise, le message CBUS FCLK appropri&#223; est envoy&#223;.</p>
+
+        <p>Chaque fois que l'horloge interne rapide d&#223;passe une minute, un message CBUS FCLK est envoy&#223;.</p>
+
+        <p>Les donn&#223;es comprennent la vitesse de l'horloge, la minute, l'heure, le jour du mois, le jour de la semaine, le mois, 
+        et un champ de temp&#223;rature ( qui est par d&#223;faut &#224; 0 ).
+        
+        <p>Si la vitesse interne de l'Horloge Rapide n'est pas un nombre entier, la vitesse de l'Horloge Rapide (valeur DIV)
+        sera envoy&#223; sans la d&#223;cimale (c'est-&#224;-dire sans arrondir).
+        Pour qu'un r&#223;cepteur Fast Clock  puisse calculer avec pr&#223;cision les changements de secondes, il doit &#234;tre r&#223;gl&#223; sur 
+        un nombre entier, mais pour de nombreuses demandes, ce n'est pas une obligation.
+        </p>
+
+      
+      
+      <h2><a name="inbound" id="inbound">R&#223;ception de donn&#223;es d'Horloge Rapide du r&#223;seau</a></h2>
+
+        <p>Ouvrir la fen&#234;tre de configuration de l'Horloge Rapide.</p>
+      
+        <p>S'assurer que l'Horloge Rapide du MERG CBUS est s&#223;lectionn&#223;e comme source de temps.</p>
+      
+        <p>Cochez la case Synchroniser l'Horloge Rapide du MERG CBUS.</p>
+
+        <p>La date et l'heure de l'JMRI ma&#238;tre seront d&#223;sormais r&#223;gl&#223;es chaque fois que des OPC CBUS FCLK seront entendus sur le r&#223;seau.</p>
+        
+        <p>L'horloge principale de l'JMRI sera mise en pause et reprise en fonction des OPC CBUS FLCK entrants.</p>
+        
+        <p>Les champs de la vitesse de l'horloge et de la temp&#223;rature de l'Horloge Rapide CBUS sont &#223;galement mis &#224; jour.</p>
+        
+        <p>Si un Fast Clock externe n'envoie pas de mises &#224; jour (et que l'horloge n'est pas en pause),
+        l'horloge interne continuera &#224; mettre &#224; jour l'heure de l'JMRI ma&#238;tre.
+
+        <p>Ce comportement est probablement ind&#223;sirable au d&#223;marrage, il se peut donc que l'horloge ma&#238;tresse soit mise en pause au d&#223;marrage.
+        <br> Options de d&#223;marrage > D&#223;marrer avec l'Horloge Rapide > Arr&#234;t&#223;</p>
+        
+        <p>La configuration de l'Horloge Rapide est stock&#223;e en xml, n'oubliez pas de stocker votre configuration !
+        
+        <p>Au d&#223;part, JMRI tente de mettre &#224; jour la date enti&#232;re, en utilisant les champs minute, heure, jour du mois et mois.
+        <br>Si cela est impossible (par exemple, le 29 f&#223;vrier de l'ann&#223;e non bissextile / mois 17), une deuxi&#232;me tentative
+        est conçu pour r&#223;gler l'horloge interne en utilisant uniquement les champs heure / minute et la date de l'horloge actuelle.</p>
+        
+      
+
+      <h4>Pause et reprise de l'horloge interne via l'&#223;v&#223;nement CBUS</h4>
+      
+      
+        <p>L'horloge ma&#238;tresse de l'JMRI peut &#234;tre mise en pause/reprise par un &#223;v&#223;nement CBUS.</p>
+
+          <p>Apr&#232;s avoir r&#223;gl&#223; l'horloge pour la premi&#232;re fois, il y aura un nouveau capteur interne appel&#223; "ISCLOCKRUNNING".</p>
+
+        <Utilisez Logix (ou la commande de la lumi&#232;re) pour r&#223;gler un capteur CBUS (command&#223; par un &#223;v&#223;nement CBUS) afin de commander ce capteur interne. 
+            &#224; On et Off pour une pause &#224; distance/reprise par &#223;v&#223;nement CBUS.</p>
+
+        <p>Pour plusieurs op&#223;rateurs, les boutons de pause peuvent envoyer un OFF, 
+        avec un bouton principal de reprise envoyant le ON.</p>
+
+
+
+      <h4>D&#223;clenchement des &#223;v&#223;nements CBUS par l'Horloge Rapide</h4>
+
+        <p>Pour activer/d&#223;sactiver les &#223;v&#223;nements CBUS &#224; certains moments rapides, utilisez les commandes de lumi&#232;re ou Logix.</p>
+
+        <p>CBUS Les lumi&#232;res sont un bon choix pour les d&#223;butants, envoyant des &#223;v&#223;nements ON/OFF &#224; chaque fois qu'elles sont allum&#223;es / &#223;teintes.</p>
+        
+        <p> Vous pouvez ajouter de nombreuses t&#225;ches d'automatisation simples avec ces derniers en utilisant les Commandes de Lumi&#232;res Fast Clock.</p>
+        
+        <p>Cela permet d'effectuer des t&#225;ches programm&#223;es, par exemple l'&#223;clairage public, l'&#223;clairage de la maison, le coucher et le lever du soleil, etc. </p>
+
+
+      <h4>Acc&#223;der &#224; la date/aux champs temp&#223;rature</h4>
+      
+        <p>L'heure de l'Horloge Rapide sera mise &#224; jour dans une variable m&#223;moire JMRI.
+        <br>Ce format peut &#234;tre modifi&#223; pour inclure le jour, le mois et l'ann&#223;e, voir le support principal de l'Horloge Rapide JMRI.
+        </p>
+      
+        <p>Le script Jython permet de d&#223;finir la date, ainsi que d'obtenir et de d&#223;finir le champ de temp&#223;rature.</p>
+      
+        <p>eg. Un script pourrait &#223;couter un &#223;v&#223;nement particulier qui pourrait porter une valeur de temp&#223;rature
+        dans ses donn&#223;es ajout&#223;es.
+        </p>
+
+      
+      
+      
+      <h3>Aide JMRI</h3>
+
+        <p><a href="../../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">R&#223;glages Horloge Rapide JMRI </a></p>
+
+        <p><a href="../../../tools/fastclock/index.shtml">Aperçu de l'Horloge Rapide JMRI</a></p>
+
+        <p><a href="../../../../package/jmri/jmrit/beantable/LightAddEdit.shtml#lightcontrolfastclock"
+            >Contr&#244;leurs Lumi&#232;res JMRI</a> - Horloge Rapide Command&#223;e.</p>
+        
+        
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closesS #mainContent-->
+  </div><!-- closes #mBody-->
+</corps>
+</html>
