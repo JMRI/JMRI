@@ -564,7 +564,6 @@ public class TrackSegmentView extends LayoutTrackView {
         result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
         result.add(ep2);
 
-        Point2D p;
         if (isCircle()) {
             result.add(getCoordsCenterCircle());
         } else if (isBezier()) {
