@@ -22,7 +22,7 @@ import jmri.util.MathUtil;
 /**
  * MVC View component for the LayoutTurnout class.
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * @author Bob Jacobsen Copyright (c) 2020
  *
  */
 public class LayoutTurnoutView extends LayoutTrackView {
@@ -35,11 +35,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * Constructor method.
-     * @param turnout the layout turnout to create the view for.
-     * @param c       where to put it
-     * @param rot     for display
-     * @param xFactor     for display
-     * @param yFactor     for display
+     *
+     * @param turnout      the layout turnout to create the view for.
+     * @param c            where to put it
+     * @param rot          for display
+     * @param xFactor      for display
+     * @param yFactor      for display
      * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout,
@@ -54,51 +55,50 @@ public class LayoutTurnoutView extends LayoutTrackView {
         int version = turnout.getVersion();
 
         // adjust initial coordinates
-
         if (turnout.getTurnoutType() == TurnoutType.LH_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispA.setLocation(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
+            dispB = new Point2D.Double(layoutEditor.getTurnoutBX(), 0.0);
+            dispA = new Point2D.Double(layoutEditor.getTurnoutCX(), -layoutEditor.getTurnoutWid());
         } else if (turnout.getTurnoutType() == TurnoutType.RH_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.0);
-            dispA.setLocation(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
+            dispB = new Point2D.Double(layoutEditor.getTurnoutBX(), 0.0);
+            dispA = new Point2D.Double(layoutEditor.getTurnoutCX(), layoutEditor.getTurnoutWid());
         } else if (turnout.getTurnoutType() == TurnoutType.WYE_TURNOUT) {
-            dispB.setLocation(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
-            dispA.setLocation(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
+            dispB = new Point2D.Double(layoutEditor.getTurnoutBX(), 0.5 * layoutEditor.getTurnoutWid());
+            dispA = new Point2D.Double(layoutEditor.getTurnoutBX(), -0.5 * layoutEditor.getTurnoutWid());
         } else if (turnout.getTurnoutType() == TurnoutType.DOUBLE_XOVER) {
             if (version == 2) {
                 super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
-                pointB.setLocation(layoutEditor.getXOverLong() * 2, 0);
-                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+                pointB = new Point2D.Double(layoutEditor.getXOverLong() * 2, 0);
+                pointC = new Point2D.Double(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD = new Point2D.Double(0, (layoutEditor.getXOverHWid() * 2));
                 super.setCoordsCenter(c);
             } else {
-                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                dispB = new Point2D.Double(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
             }
         } else if (turnout.getTurnoutType() == TurnoutType.RH_XOVER) {
             if (version == 2) {
                 super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
-                pointB.setLocation((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
-                pointC.setLocation(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
+                pointB = new Point2D.Double((layoutEditor.getXOverShort() + layoutEditor.getXOverLong()), 0);
+                pointC = new Point2D.Double(layoutEditor.getXOverLong() * 2, (layoutEditor.getXOverHWid() * 2));
+                pointD = new Point2D.Double((getCoordsCenter().getX() - layoutEditor.getXOverShort()), (layoutEditor.getXOverHWid() * 2));
                 super.setCoordsCenter(c);
             } else {
-                dispB.setLocation(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
+                dispB = new Point2D.Double(layoutEditor.getXOverShort(), -layoutEditor.getXOverHWid());
+                dispA = new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid());
             }
         } else if (turnout.getTurnoutType() == TurnoutType.LH_XOVER) {
             if (version == 2) {
                 super.setCoordsCenter(new Point2D.Double(layoutEditor.getXOverLong(), layoutEditor.getXOverHWid()));
 
-                pointA.setLocation((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
-                pointB.setLocation((layoutEditor.getXOverLong() * 2), 0);
-                pointC.setLocation(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
-                pointD.setLocation(0, (layoutEditor.getXOverHWid() * 2));
+                pointA = new Point2D.Double((getCoordsCenter().getX() - layoutEditor.getXOverShort()), 0);
+                pointB = new Point2D.Double((layoutEditor.getXOverLong() * 2), 0);
+                pointC = new Point2D.Double(layoutEditor.getXOverLong() + layoutEditor.getXOverShort(), (layoutEditor.getXOverHWid() * 2));
+                pointD = new Point2D.Double(0, (layoutEditor.getXOverHWid() * 2));
 
                 super.setCoordsCenter(c);
             } else {
-                dispB.setLocation(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
-                dispA.setLocation(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
+                dispB = new Point2D.Double(layoutEditor.getXOverLong(), -layoutEditor.getXOverHWid());
+                dispA = new Point2D.Double(layoutEditor.getXOverShort(), layoutEditor.getXOverHWid());
             }
         }
 
@@ -268,7 +268,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     final private LayoutTurnout turnout;
 
-    public final LayoutTurnout getLayoutTurnout() { return turnout; }  // getTurnout() gets the real Turnout in the LayoutTurnout
+    public final LayoutTurnout getLayoutTurnout() {
+        return turnout;
+    }  // getTurnout() gets the real Turnout in the LayoutTurnout
 
     /**
      * {@inheritDoc}
@@ -300,7 +302,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getTurnoutName();
     }
 
-   // @CheckForNull - can this be null? or ""?
+    // @CheckForNull - can this be null? or ""?
     public String getSecondTurnoutName() {
         return turnout.getSecondTurnoutName();
     }
@@ -322,8 +324,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     @Nonnull
     public String getBlockDName() {
-       return turnout.getBlockDName();
-     }
+        return turnout.getBlockDName();
+    }
 
     @CheckForNull
     public SignalHead getSignalHead(Geometry loc) {
@@ -358,7 +360,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSignalA2Name(signalHead);
     }
 
-   @CheckForNull
+    @CheckForNull
     public SignalHead getSignalA3() {
         return turnout.getSignalA3();
     }
@@ -368,7 +370,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return turnout.getSignalA3Name();
     }
 
-     public void setSignalA3Name(@CheckForNull String signalHead) {
+    public void setSignalA3Name(@CheckForNull String signalHead) {
         turnout.setSignalA3Name(signalHead);
     }
 
@@ -592,7 +594,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.setSensorD(sensorName);
     }
 
-
     public String getLinkedTurnoutName() {
         return turnout.getLinkedTurnoutName();
     }
@@ -606,7 +607,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     public void setLinkType(LinkType ltype) {
-         turnout.setLinkType(ltype);
+        turnout.setLinkType(ltype);
     }
 
     public TurnoutType getTurnoutType() {
@@ -630,7 +631,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     /**
-     * @return null if no turnout set // temporary?  Might want to run all calls through this class; but this is getModel equiv
+     * @return null if no turnout set // temporary? Might want to run all calls
+     *         through this class; but this is getModel equiv
      */
     // @CheckForNull  temporary
     public Turnout getTurnout() {
@@ -926,7 +928,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * Set up Layout Block(s) for this Turnout.
-     * @param newLayoutBlock See {@link LayoutTurnout#setLayoutBlock} for definition
+     *
+     * @param newLayoutBlock See {@link LayoutTurnout#setLayoutBlock} for
+     *                       definition
      */
     public void setLayoutBlock(LayoutBlock newLayoutBlock) {
         turnout.setLayoutBlock(newLayoutBlock);
@@ -984,9 +988,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
     }
 
     /**
-     * Update the block for a track segment that provides a (graphically) short connection
-     * between a turnout and another object, normally another turnout. These are
-     * hard to see and are frequently missed.
+     * Update the block for a track segment that provides a (graphically) short
+     * connection between a turnout and another object, normally another
+     * turnout. These are hard to see and are frequently missed.
      * <p>
      * Skip block changes if signal heads, masts or sensors have been assigned.
      * Only track segments with a length less than the turnout circle radius
@@ -1897,6 +1901,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     *
      * @return true if active
      */
     public boolean isActive() {
@@ -1940,11 +1945,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     *
+     * <p>
      * This type of track has none, so this method is empty.
      */
     @Override
-    protected void drawDecorations(Graphics2D g2) {}
+    protected void drawDecorations(Graphics2D g2) {
+    }
 
     /**
      * {@inheritDoc}
@@ -3074,9 +3080,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
             boolean suppress) {
 
         return turnout.getConnectivityStateForLayoutBlocks(currLayoutBlock,
-                                                            prevLayoutBlock,
-                                                            nextLayoutBlock,
-                                                            suppress);
+                prevLayoutBlock,
+                nextLayoutBlock,
+                suppress);
     }
 
     /**

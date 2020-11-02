@@ -2,14 +2,19 @@ package jmri.jmrit.logix.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
+//import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.SpeedStepMode;
 import jmri.jmrit.logix.BlockOrder;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.SCWarrant;
 import jmri.jmrit.logix.SpeedUtil;
 import jmri.jmrit.logix.ThrottleSetting;
+import jmri.jmrit.logix.ThrottleSetting.Command;
+import jmri.jmrit.logix.ThrottleSetting.CommandValue;
+import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.jdom2.Attribute;
@@ -77,6 +82,10 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 }
 
                 List<BlockOrder> orders = warrant.getBlockOrders();
+                if (orders == null) {
+                    log.error("Warrant {} has no Route defined. (no BlockOrders) Cannot store.", warrant.getDisplayName());
+                    continue;
+                }
                 for (BlockOrder bo : orders) {
                     elem.addContent(storeOrder(bo, "blockOrder"));
                 }
@@ -92,7 +101,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
                 List<ThrottleSetting> throttleCmds = warrant.getThrottleCommands();
                 for (ThrottleSetting ts : throttleCmds) {
-                    elem.addContent(storeCommand(ts, "throttleCommand"));
+                    elem.addContent(storeThrottleSetting(ts));
                 }
 
                 elem.addContent(storeTrain(warrant, "train"));
@@ -162,43 +171,33 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         return elem;
     }
-
-    private static Element storeCommand(ThrottleSetting command, String type) {
-        Element elem = new Element(type);
-
-        String time = String.valueOf(command.getTime());
-        elem.setAttribute("time", time);
-
-        String str = command.getCommand();
-        if (str == null) {
-            str = "";
-            log.error("ThrottleSetting command has no command type! {}", command);
+    private static Element storeThrottleSetting(ThrottleSetting ts) {
+        Element element = new Element("throttleSetting");
+        element.setAttribute("elapsedTime", String.valueOf(ts.getTime()));
+        String name = ts.getBeanSystemName();
+        if (name != null) {
+            element.setAttribute("beanName", name);
+        } else {
+            element.setAttribute("beanName", "");
         }
-        elem.setAttribute("command", str);
+        element.setAttribute("trackSpeed", String.valueOf(ts.getTrackSpeed()));
 
-        str = command.getValue();
-        if (str == null) {
-            str = "";
-            log.error("ThrottleSetting command has no value! {}", command);
-        }
-        elem.setAttribute("value", str);
+        Element elem = new Element("command");
+        Command cmd = ts.getCommand();
+        elem.setAttribute("commandType", String.valueOf(cmd.getIntId()));
+        elem.setAttribute("fKey", String.valueOf(ts.getKeyNum()));
+        element.addContent(elem);
 
-        str = command.getBeanSystemName();
-        if (str == null) {
-            str = "";
-            log.error("ThrottleSetting command has no bean name! {}", command);
-        }
-        elem.setAttribute("block", str);
+        elem = new Element("commandValue");
+        CommandValue cmdVal = ts.getValue();
+        elem.setAttribute("valueType", String.valueOf(cmdVal.getType().getIntId()));
+        elem.setAttribute("speedMode", cmdVal.getMode().name);
+        elem.setAttribute("floatValue", String.valueOf(cmdVal.getFloat()));
+        element.addContent(elem);
 
-        float speed = command.getSpeed();
-        if (speed > 0.0f) {
-            // ignore attribute to allow loading into pre-4.9.2 versions
-            elem.setAttribute("speed", Float.toString(speed));            
-        }
-
-        return elem;
+        return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
 
@@ -316,11 +315,23 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
                 String sysName = elem.getAttribute("systemName").getValue();
                 if (sysName != null) {
                     Warrant warrant = manager.getBySystemName(sysName);
-                    List<Element> throttleCmds = elem.getChildren("throttleCommand");
-                    if (throttleCmds != null) {
-                        throttleCmds.forEach((e) -> {
-                            warrant.addThrottleCommand(loadThrottleCommand(e));
-                        });
+                    List<Element> throttleCmds;
+                    if (warrant != null) {
+                        log.debug("warrant: {}", warrant.getDisplayName());
+                        throttleCmds = elem.getChildren("throttleCommand");
+                        if (throttleCmds != null) {
+                            log.debug("throttleCommand size= {}",throttleCmds.size());
+                            throttleCmds.forEach((e) -> {
+                                warrant.addThrottleCommand(loadThrottleCommand(e, warrant));
+                            });
+                        }
+                        throttleCmds = elem.getChildren("throttleSetting");
+                        if (throttleCmds != null) {
+                            log.debug("throttleSetting size= {}",throttleCmds.size());
+                            throttleCmds.forEach((e) -> {
+                                warrant.addThrottleCommand(loadThrottleSetting(e, warrant));
+                            });
+                        }
                     }
                 }
             }
@@ -393,8 +404,80 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         return new BlockOrder(block, pathName, entryName, exitName);
     }
+
+    private static ThrottleSetting loadThrottleSetting(Element element, Warrant w) {
+
+        ThrottleSetting ts = new ThrottleSetting();
+
+        Attribute attr = element.getAttribute("elapsedTime");
+        if (attr != null) {
+            ts.setTime(Long.parseLong(attr.getValue()));
+        }
+
+        Command cmd = null;
+        Element elem = element.getChild("command");
+        if (elem != null) {
+            attr = elem.getAttribute("commandType");
+            if (attr != null) {
+                try {
+                    cmd = ThrottleSetting.getCommandTypeFromInt(Integer.parseInt(attr.getValue()));
+                    ts.setCommand(cmd);
+                } catch (IllegalArgumentException iae) {
+                    log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
+                }
+            } else {
+                log.error("Command type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+            }
+            attr = elem.getAttribute("fKey");
+            if (attr != null) {
+                ts.setKeyNum(Integer.parseInt(attr.getValue()));
+            }
+        }
+
+        elem = element.getChild("commandValue");
+        ValueType valType = null;
+        SpeedStepMode mode = null;
+        float floatVal = 0;
+        if (elem != null) {
+            attr = elem.getAttribute("valueType");
+            if (attr != null) {
+                try {                
+                    valType = ThrottleSetting.getValueTypeFromInt(Integer.parseInt(attr.getValue()));
+                } catch (IllegalArgumentException iae) {
+                    log.error("{} for throttleSetting {} in warrant {}",iae.getMessage(), ts.toString(), w.getDisplayName());
+                }
+            } else {
+                log.error("Value type is null for throttleSetting {} in warrant {}", ts.toString(), w.getDisplayName());
+            }
+            attr = elem.getAttribute("speedMode");
+            if (attr != null) {
+                mode = SpeedStepMode.getByName(attr.getValue());
+            }
+            attr = elem.getAttribute("floatValue");
+            if (attr != null) {
+                floatVal = Float.parseFloat(attr.getValue());
+            }
+        }
+        ts.setValue(valType, mode, floatVal);
+
+        attr = element.getAttribute("trackSpeed");
+        if (attr != null) {
+            ts.setTrackSpeed(Float.parseFloat(attr.getValue()));
+        }
+        
+        attr = element.getAttribute("beanName");
+        if (attr != null) {
+            String errMsg = ts.setNamedBean(cmd, attr.getValue());
+            if (errMsg != null) {
+                log.error("{} for throttleSetting {} in warrant {}", errMsg, ts.toString(), w.getDisplayName());
+            }
+        }
+        return ts;
+    }
     
-    private static ThrottleSetting loadThrottleCommand(Element elem) {
+    // pre 4.21.3
+//    @SuppressFBWarnings(value="NP_LOAD_OF_KNOWN_NULL_VALUE", justification="nothing wrong about a null return")
+    private static ThrottleSetting loadThrottleCommand(Element elem, Warrant w) {
         long time = 0;
         try {
             time = elem.getAttribute("time").getLongValue();
@@ -404,8 +487,12 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
 
         Attribute attr = elem.getAttribute("command");
         String command = null;
-        if (attr != null)
+        if (attr != null) {
             command = attr.getValue();
+        } else {
+            log.error("Command type is null. ThrottleSetting not loaded for warrant {}", w.getDisplayName());
+            return null;
+        }
 
         attr = elem.getAttribute("value");
         String value = null;
@@ -418,7 +505,7 @@ public class WarrantManagerXml extends jmri.configurexml.AbstractXmlAdapter {
             block =attr.getValue();
 
         float speed = 0.0f;
-        attr = elem.getAttribute("speed");
+        attr = elem.getAttribute("trackSpeed");
         if (attr != null) {
             try {
                 speed = attr.getFloatValue();

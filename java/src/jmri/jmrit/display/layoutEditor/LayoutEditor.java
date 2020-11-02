@@ -177,7 +177,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
     // Selected point information
-    private final Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
+    private Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
     public Object selectedObject = null;       // selected object, null if nothing selected
     public Object prevSelectedObject = null;   // previous selected object, for undo
     private HitPointType selectedHitPointType = HitPointType.NONE;         // hit point type within the selected object
@@ -1829,7 +1829,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             double theZoom = getZoom();
             xLoc = (int) (mouseLoc.getX() / theZoom);
             yLoc = (int) (mouseLoc.getY() / theZoom);
-            dLoc.setLocation(xLoc, yLoc);
+            dLoc = new Point2D.Double(xLoc, yLoc);
 
             leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
             leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
@@ -2751,7 +2751,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private Point2D calcLocation(MouseEvent event, int dX, int dY) {
         xLoc = (int) ((event.getX() + dX) / getZoom());
         yLoc = (int) ((event.getY() + dY) / getZoom());
-        dLoc.setLocation(xLoc, yLoc);
+        dLoc = new Point2D.Double(xLoc, yLoc);
         return dLoc;
     }
 
@@ -2803,24 +2803,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (findLayoutTracksHitPoint(dLoc)) {
                     selectedObject = foundTrack;
                     selectedHitPointType = foundHitPointType;
-                    startDelta.setLocation(MathUtil.subtract(foundLocation, dLoc));
+                    startDelta = MathUtil.subtract(foundLocation, dLoc);
                     foundTrack = null;
                     foundTrackView = null;
                 } else {
                     selectedObject = checkMarkerPopUps(dLoc);
                     if (selectedObject != null) {
                         selectedHitPointType = HitPointType.MARKER;
-                        startDelta.setLocation(MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc));
+                        startDelta = MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc);
                     } else {
                         selectedObject = checkClockPopUps(dLoc);
                         if (selectedObject != null) {
                             selectedHitPointType = HitPointType.LAYOUT_POS_JCOMP;
-                            startDelta.setLocation(MathUtil.subtract(((PositionableJComponent) selectedObject).getLocation(), dLoc));
+                            startDelta = MathUtil.subtract(((PositionableJComponent) selectedObject).getLocation(), dLoc);
                         } else {
                             selectedObject = checkMultiSensorPopUps(dLoc);
                             if (selectedObject != null) {
                                 selectedHitPointType = HitPointType.MULTI_SENSOR;
-                                startDelta.setLocation(MathUtil.subtract(((MultiSensorIcon) selectedObject).getLocation(), dLoc));
+                                startDelta = MathUtil.subtract(((MultiSensorIcon) selectedObject).getLocation(), dLoc);
                             }
                         }
                     }
@@ -2839,12 +2839,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                         if (selectedObject != null) {
                             selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
-                            startDelta.setLocation(MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc));
+                            startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                             if (selectedObject instanceof MemoryIcon) {
                                 MemoryIcon pm = (MemoryIcon) selectedObject;
 
                                 if (pm.getPopupUtility().getFixedWidth() == 0) {
-                                    startDelta.setLocation((pm.getOriginalX() - dLoc.getX()),
+                                    startDelta = new Point2D.Double((pm.getOriginalX() - dLoc.getX()),
                                             (pm.getOriginalY() - dLoc.getY()));
                                 }
                             }
@@ -2853,7 +2853,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                             if (selectedObject != null) {
                                 selectedHitPointType = HitPointType.LAYOUT_POS_LABEL;
-                                startDelta.setLocation(MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc));
+                                startDelta = MathUtil.subtract(((PositionableLabel) selectedObject).getLocation(), dLoc);
                             } else {
                                 // dragging a shape?
                                 ListIterator<LayoutShape> listIterator = layoutShapes.listIterator(layoutShapes.size());
@@ -2864,9 +2864,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     if (LayoutShape.isShapeHitPointType(selectedHitPointType)) {
                                         // log.warn("drag selectedObject: ", lt);
                                         selectedObject = ls;    // found one!
-                                        beginLocation.setLocation(dLoc);
-                                        currentLocation.setLocation(beginLocation);
-                                        startDelta.setLocation(MathUtil.zeroPoint2D);
+                                        beginLocation = dLoc;
+                                        currentLocation = beginLocation;
+                                        startDelta = MathUtil.zeroPoint2D;
                                         break;
                                     }
                                 }
@@ -2882,9 +2882,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     // match to a free connection point
                     beginTrack = foundTrack;
                     beginHitPointType = foundHitPointType;
-                    beginLocation.setLocation(foundLocation);
+                    beginLocation = foundLocation;
                     // BUGFIX: prevents initial drawTrackSegmentInProgress to {0, 0}
-                    currentLocation.setLocation(beginLocation);
+                    currentLocation = beginLocation;
                 } else {
                     // TODO: auto-add anchor point?
                     beginTrack = null;
@@ -2897,8 +2897,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     if (HitPointType.isShapePointOffsetHitPointType(selectedHitPointType)) {
                         // log.warn("extend selectedObject: ", lt);
                         selectedObject = ls;    // nope, we're extending
-                        beginLocation.setLocation(dLoc);
-                        currentLocation.setLocation(beginLocation);
+                        beginLocation = dLoc;
+                        currentLocation = beginLocation;
                         break;
                     }
                 }
@@ -2932,7 +2932,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             selectedObject = checkMarkerPopUps(dLoc);
             if (selectedObject != null) {
                 selectedHitPointType = HitPointType.MARKER;
-                startDelta.setLocation(MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc));
+                startDelta = MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc);
             }
         } else if (event.isPopupTrigger() && !event.isShiftDown()) {
             // not in edit mode - check if a marker popup menu is being requested
@@ -4768,7 +4768,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     && event.isShiftDown()
                     && leToolBarPanel.trackButton.isSelected()) {
                 // dragging from first end of Track Segment
-                currentLocation.setLocation(xLoc, yLoc);
+                currentLocation = new Point2D.Double(xLoc, yLoc);
                 boolean needResetCursor = (foundTrack != null);
 
                 if (findLayoutTracksHitPoint(currentLocation, true)) {
@@ -4780,7 +4780,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             } else if (event.isShiftDown()
                     && leToolBarPanel.shapeButton.isSelected() && (selectedObject != null)) {
                 // dragging from end of shape
-                currentLocation.setLocation(xLoc, yLoc);
+                currentLocation = new Point2D.Double(xLoc, yLoc);
             } else if (selectionActive && !event.isShiftDown() && !isMetaDown(event)) {
                 selectionWidth = xLoc - selectionX;
                 selectionHeight = yLoc - selectionY;

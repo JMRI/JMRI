@@ -19,7 +19,6 @@ import jmri.util.swing.JmriColorChooser;
 /**
  * MVC View component for the TrackSegment class.
  * <p>
- * <p>
  * Arrows and bumpers are visual, presentation aspects handled in the View.
  *
  * @author Bob Jacobsen Copyright (c) 2020
