@@ -130,19 +130,19 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
         Attribute a;
 
         // find coordinates
-        int x, y;
+//        int x, y;
 
         // separate sizes for window and panel are used
-        int windowHeight = 400;
-        int windowWidth = 300;
+//        int windowHeight = 400;
+//        int windowWidth = 300;
 //        int panelHeight, panelWidth;
-        try {
-            if ((a = shared.getAttribute("x")) != null) {
-                x = a.getIntValue();
-            }
-            if ((a = shared.getAttribute("y")) != null) {
-                y = a.getIntValue();
-            }
+//        try {
+//            if ((a = shared.getAttribute("x")) != null) {
+//                x = a.getIntValue();
+//            }
+//            if ((a = shared.getAttribute("y")) != null) {
+//                y = a.getIntValue();
+//            }
 
             // For compatibility with previous versions, try and
             // see if height and width tags are contained in the file
@@ -157,22 +157,22 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
 
             // For files created by the new version,
             // retrieve window and panel sizes
-            if ((a = shared.getAttribute("windowheight")) != null) {
-                windowHeight = a.getIntValue();
-            }
-            if ((a = shared.getAttribute("windowwidth")) != null) {
-                windowWidth = a.getIntValue();
-            }
+//            if ((a = shared.getAttribute("windowheight")) != null) {
+//                windowHeight = a.getIntValue();
+//            }
+//            if ((a = shared.getAttribute("windowwidth")) != null) {
+//                windowWidth = a.getIntValue();
+//            }
 //            if ((a = shared.getAttribute("panelheight")) != null) {
 //                panelHeight = a.getIntValue();
 //            }
 //            if ((a = shared.getAttribute("panelwidth")) != null) {
 //                panelWidth = a.getIntValue();
 //            }
-        } catch (DataConversionException e) {
-            log.error("failed to convert ModulesEditor attribute");
-            result = false;
-        }
+//        } catch (DataConversionException e) {
+//            log.error("failed to convert ModulesEditor attribute");
+//            result = false;
+//        }
 
 //        double xScale;
 //        double yScale;
