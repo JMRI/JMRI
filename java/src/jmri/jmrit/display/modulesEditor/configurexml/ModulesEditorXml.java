@@ -102,16 +102,16 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
         return panel;
     }   // store
 
-    private void storeOne(Element panel, Object item) {
-        try {
-            Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(item);
-            if (e != null) {
-                panel.addContent(e);
-            }
-        } catch (Exception ex) {
-            log.error("Error storing layout item: {}", item, ex);
-        }
-    }
+//     private void storeOne(Element panel, Object item) {
+//         try {
+//             Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(item);
+//             if (e != null) {
+//                 panel.addContent(e);
+//             }
+//         } catch (Exception ex) {
+//             log.error("Error storing layout item: {}", item, ex);
+//         }
+//     }
 
     @Override
     public void load(Element element, Object o) {
@@ -128,16 +128,14 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         Attribute a;
+
         // find coordinates
-        int x = 0;
-        int y = 0;
-        // From this version onwards separate sizes for window and panel are used
+        int x, y = 0;
+
+        // separate sizes for window and panel are used
         int windowHeight = 400;
         int windowWidth = 300;
-        int panelHeight = 340;
-        int panelWidth = 280;
-        int sidetrackwidth = 3;
-        int mainlinetrackwidth = 3;
+        int panelHeight, panelWidth;
         try {
             if ((a = shared.getAttribute("x")) != null) {
                 x = a.getIntValue();
@@ -176,8 +174,8 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
             result = false;
         }
 
-        double xScale = 1.0;
-        double yScale = 1.0;
+        double xScale;
+        double yScale;
         if ((a = shared.getAttribute("xscale")) != null) {
             try {
                 xScale = (Float.parseFloat(a.getValue()));

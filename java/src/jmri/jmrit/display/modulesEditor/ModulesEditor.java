@@ -42,37 +42,37 @@ final public class ModulesEditor extends PanelEditor {
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
 
     // Tools menu items
-    private final JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
-    private final JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
-    private final JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
-    private final JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
-    private final JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
-    private final JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
-    private final JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
-    private final JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
-    private final JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
-    private final JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
-    private final JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
-    private final JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
-    private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
+//    private final JMenu zoomMenu = new JMenu(Bundle.getMessage("MenuZoom"));
+//    private final JRadioButtonMenuItem zoom025Item = new JRadioButtonMenuItem("x 0.25");
+//    private final JRadioButtonMenuItem zoom05Item = new JRadioButtonMenuItem("x 0.5");
+//    private final JRadioButtonMenuItem zoom075Item = new JRadioButtonMenuItem("x 0.75");
+//    private final JRadioButtonMenuItem noZoomItem = new JRadioButtonMenuItem(Bundle.getMessage("NoZoom"));
+//    private final JRadioButtonMenuItem zoom15Item = new JRadioButtonMenuItem("x 1.5");
+//    private final JRadioButtonMenuItem zoom20Item = new JRadioButtonMenuItem("x 2.0");
+//    private final JRadioButtonMenuItem zoom30Item = new JRadioButtonMenuItem("x 3.0");
+//    private final JRadioButtonMenuItem zoom40Item = new JRadioButtonMenuItem("x 4.0");
+//    private final JRadioButtonMenuItem zoom50Item = new JRadioButtonMenuItem("x 5.0");
+//    private final JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
+//    private final JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
+//    private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
     // Selected point information
-    private Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
+//    private Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
     private Point2D startDelta = MathUtil.zeroPoint2D(); // starting delta coordinates
-    private Object selectedObject = null;       // selected object, null if nothing selected
-    private Point2D foundLocation = MathUtil.zeroPoint2D(); // location of found object
+//    private Object selectedObject = null;       // selected object, null if nothing selected
+//    private Point2D foundLocation = MathUtil.zeroPoint2D(); // location of found object
 
     // Lists of items that describe the Layout, and allow it to be drawn
     private Color defaultTextColor = Color.black;
 
     // saved state of options when panel was loaded or created
-    private boolean savedEditMode = true;
+//    private boolean savedEditMode = true;
 
     // zoom
-    private double minZoom = 0.25;
-    private final double maxZoom = 8.0;
+//    private double minZoom = 0.25;
+//    private final double maxZoom = 8.0;
 
-    private List<PositionableLabel> backgroundImage = new ArrayList<>();    // background images
+//    private List<PositionableLabel> backgroundImage = new ArrayList<>();    // background images
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
@@ -133,7 +133,7 @@ final public class ModulesEditor extends PanelEditor {
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
         StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
         store.setEnabled(false);    // TODO:Finish ModulesEditorXml and re-enable this
@@ -178,7 +178,7 @@ final public class ModulesEditor extends PanelEditor {
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
         editModeCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("EditModeMnemonic")));
-        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+        int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         editModeCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("EditModeAccelerator")), primary_modifier));
         editModeCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
@@ -484,7 +484,7 @@ final public class ModulesEditor extends PanelEditor {
     /**
      * ***************************************************
      */
-    private boolean delayedPopupTrigger;
+//    private boolean delayedPopupTrigger;
 
     @Override
     public void mousePressed(MouseEvent event) {
@@ -628,6 +628,7 @@ final public class ModulesEditor extends PanelEditor {
 // }
     }
 
+    @Override
     protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup) {
         if (!isEditable()) {
             return;
