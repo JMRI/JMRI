@@ -807,8 +807,9 @@ public class SignalTableModel extends AbstractTableModel {
             case UNITSCOL:
                 return new JTextField(3).getPreferredSize().width;
             case DELETE_COL:
+                return new JButton("DELETE ").getPreferredSize().width; // NOI18N
             case EDIT_COL:
-                return new JButton("DELETE").getPreferredSize().width; // NOI18N
+                return new JButton("EDIT ").getPreferredSize().width; // NOI18N
             default:
                 // fall through
                 break;

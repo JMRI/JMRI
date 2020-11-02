@@ -1,9 +1,6 @@
 package jmri.jmrit.beantable.oblock;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
+import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -45,6 +42,9 @@ public class SignalEditFrame extends JmriJFrame {
     JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
     private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalMast> sigMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalHead> sigHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
 
     private final static String PREFIX = "OB";
@@ -69,7 +69,9 @@ public class SignalEditFrame extends JmriJFrame {
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(signalMastLabel);
+        p.add(sigMastComboBox);
         p.add(signalHeadLabel);
+        p.add(sigHeadComboBox);
         p.add(fromBlockLabel);
         p.add(fromBlockComboBox);
         p.add(toBlockLabel);
@@ -77,6 +79,11 @@ public class SignalEditFrame extends JmriJFrame {
         main.add(p);
 
         p = new JPanel();
+        JButton cancel;
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
         JButton apply;
         p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener(this::applyPressed);
@@ -86,14 +93,10 @@ public class SignalEditFrame extends JmriJFrame {
             applyPressed(e);
             frame.dispose();
         });
-        JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+
         frame.getContentPane().add(p);
 
-        frame.add(scroll);
+        //frame.add(scroll);
     }
 
     /**
@@ -112,7 +115,7 @@ public class SignalEditFrame extends JmriJFrame {
      */
     public void populateFrame(Portal p) {
         if (p == null) {
-            throw new IllegalArgumentException("Null OBlock object");
+            throw new IllegalArgumentException("Null Signal object");
         }
         //userName.setText(p.getName());
         fromBlockComboBox.setSelectedItemByName(p.getFromBlockName());

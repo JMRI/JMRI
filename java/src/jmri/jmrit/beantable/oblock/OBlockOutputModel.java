@@ -1,23 +1,24 @@
-package jmri.jmrit.beantable.routetable;
+package jmri.jmrit.beantable.oblock;
 
 import jmri.InstanceManager;
+import jmri.jmrit.beantable.routetable.RouteAddFrame;
 
 import javax.swing.table.AbstractTableModel;
 import java.beans.PropertyChangeListener;
 
 /**
- * Base table model for selecting outputs.
+ * Base table model for selecting outputs (Turnouts in OPaths).
  *
- * Split from {@link jmri.jmrit.beantable.RouteTableAction}
+ * Adapted from jmri.jmrit.beantable.routetable.RouteOutputModel
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
- * @author Egbert Broerse Copyright (C) 2016
+ * @author Egbert Broerse Copyright (C) 2016, 2020
  * @author Paul Bender Copyright (C) 2020
  */
-abstract class RouteOutputModel extends AbstractTableModel implements PropertyChangeListener {
+abstract class OBlockOutputModel extends AbstractTableModel implements PropertyChangeListener {
 
     @Override
     public Class<?> getColumnClass(int c) {
@@ -42,7 +43,7 @@ abstract class RouteOutputModel extends AbstractTableModel implements PropertyCh
 
     @Override
     public String getColumnName(int c) {
-        return RouteAddFrame.COLUMN_NAMES[c];
+        return BlockPathEditFrame.COLUMN_NAMES[c];
     }
 
     @Override

@@ -135,7 +135,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
      * Create a new Block using an automatically incrementing system
      * name.
      *
-     * @param userName the user name for the new block
+     * @param userName the user name for the new Block
      * @return null if a Block with the same systemName or userName already
      *         exists, or if there is trouble creating a new Block.
      */

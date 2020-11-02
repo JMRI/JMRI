@@ -333,12 +333,12 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     }
                     return "";
                 }
-                return Boolean.valueOf(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
+                return tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current"));
             case PERMISSIONCOL:
                 if (b != null) {
                     return b.getPermissiveWorking();
                 }
-                return Boolean.valueOf(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
+                return tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive"));
             case SPEEDCOL:
                 if (b != null) {
                     return b.getBlockSpeed();
@@ -476,7 +476,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     }
                     return;
                 case UNITSCOL:
-                    if ((((Boolean) value).booleanValue())) {
+                    if (((Boolean) value)) {
                         tempRow[UNITSCOL] = Bundle.getMessage("cm");
                     } else {
                         tempRow[UNITSCOL] = Bundle.getMessage("in");
@@ -484,14 +484,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     fireTableRowsUpdated(row, row); // recalculates length value as displayed
                     return;
                 case REPORT_CURRENTCOL:
-                    if (((Boolean) value).booleanValue()) {//toggle
+                    if ((Boolean) value) {//toggle
                         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
                     } else {
                         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Last");
                     }
                     return;
                 case PERMISSIONCOL:
-                    if (((Boolean) value).booleanValue()) {//toggle
+                    if ((Boolean) value) {//toggle
                         tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
                     } else {
                         tempRow[PERMISSIONCOL] = Bundle.getMessage("Absolute");
@@ -551,7 +551,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 }
                 return;
             case UNITSCOL:
-                block.setMetricUnits(((Boolean) value).booleanValue());
+                block.setMetricUnits((Boolean) value);
                 fireTableRowsUpdated(row, row);
                 return;
             case CURVECOL:
@@ -606,7 +606,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case REPORT_CURRENTCOL:
                 if (block.getReporter() != null) {
-                    block.setReportingCurrent(((Boolean) value).booleanValue());
+                    block.setReportingCurrent((Boolean) value);
                     fireTableRowsUpdated(row, row);
                 }
                 return;
@@ -637,6 +637,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case EDIT_COL:
                 if (_tabbed) {
+                    log.debug("Edit clicked, opening Block Edit Pane");
                     _parent.openOBlockEditFrame(block.getSystemName());
                 } else {
                     _parent.openBlockPathPane(block.getSystemName());

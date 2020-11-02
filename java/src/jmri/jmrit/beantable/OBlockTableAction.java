@@ -53,7 +53,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     OBlockTablePanel otp;
 
     // edit frames
-    //OBlockEditFrame oblockFrame;
+    //OBlockEditFrame oblockFrame; // instead uses NewBean util + Edit
     PortalEditFrame portalFrame;
     SignalEditFrame signalFrame;
 
@@ -97,6 +97,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         oblockManager.addPropertyChangeListener(this);
     }
 
+    // the 3 buttons to add new OBlock items
     @Override
     public void addToFrame(@Nonnull BeanTableFrame<OBlock> f) {
         JButton addOblockButton = new JButton(Bundle.getMessage("ButtonAddOBlock"));
@@ -492,16 +493,26 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 statusBarLabel.setForeground(Color.red);
                 return; // new OBlock objects are always valid, but system names must not be in use so skip in that case
             }
+            OBlock oblk;
+            String xName = "";
             try {
                 if (autoSystemNameBox.isSelected()) {
-                    oblockManager.createNewOBlock(uName, "");
+                    oblk = oblockManager.createNewOBlock(uName);
+                    if (oblk == null) {
+                        xName = uName;
+                        throw new java.lang.IllegalArgumentException();
+                    }
                 } else {
-                    oblockManager.createNewOBlock(sName, uName);
+                    oblk = oblockManager.createNewOBlock(sName, uName);
+                    if (oblk == null) {
+                        xName = sName;
+                        throw new java.lang.IllegalArgumentException();
+                    }
                 }
             } catch (IllegalArgumentException ex) {
                 // uName input no good
-                handleCreateException(sName);
-                errorMessage = "An error has occurred";
+                handleCreateException(xName);
+                errorMessage = Bundle.getMessage("ErrorAddFailedCheck");
                 statusBarLabel.setText(errorMessage);
                 statusBarLabel.setForeground(Color.red);
                 return; // without creating

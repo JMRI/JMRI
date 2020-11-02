@@ -560,7 +560,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 openTurnoutPath.add(openTurnoutMenu);
                 openFrameAction = e -> {
                     String pathTurnoutName = e.getActionCommand();
-                    openPathTurnoutEditPane(pathTurnoutName);
+                    if (_tabbed) {
+
+                    } else {
+                        openPathTurnoutEditPane(pathTurnoutName);
+                    }
                 };
                 for (Path p : block.getPaths()) {
                     if (p instanceof OPath) {
@@ -577,56 +581,57 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     public void openPathTurnoutEditPane(String pathTurnoutName) {
-        if (_tabbed) {
-            log.debug("openPathTurnoutEditPane for {}", pathTurnoutName);
-            // not stored separately as bean
-            PathTurnoutJFrame frame = _pathTurnoutEditPaneMap.get(pathTurnoutName);
-            if (frame == null) { // create a new pane
-                int index = pathTurnoutName.indexOf('&');
-                String pathName = pathTurnoutName.substring(1, index);
-                String sysName = pathTurnoutName.substring(index + 1);
-                OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
-                if (block == null) {
-                    log.error("null OBlock {}", pathTurnoutName);
-                } else {
-                    String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
-                    if (log.isDebugEnabled()) {
-                        log.debug("makePathTurnoutEditPane for Block {} and Path {}", block.getDisplayName(), pathName);
-                    }
-
-                    frame = new PathTurnoutJFrame(title);
-                    frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
-                    OPath path = block.getPathByName(pathName);
-                    if (path == null) {
-                        log.error("Null path Turnout");
-                    }
-                    // create the pane for _tabbed interface
-                    //JmriJFrame frame = new JmriJFrame(title);
-                    frame.addHelpMenu("package.jmri.jmrit.beantable.oblock.OBlockTable", true);
-                    frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-                    frame.setPreferredSize(new Dimension(200, 100));
-                    // create table
-                    PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, frame);
-                    frame.setModel(pathTurnoutModel);
-                    JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
-
-                    JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
-
-                    JPanel p = new JPanel();
-                    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-                    p.add(tablePane);
-                    frame.add(p);
-                    frame.setVisible(true);
-
-                    _pathTurnoutEditPaneMap.put(pathTurnoutName, frame);
-
-                    // TODO add listeners, see PathTurnoutFrame()
-                    // plus Add New entry pane
-                }
-            }
-        } else { // for _desktop, created from/stored in Portal
+        // only used for desktop
+//        if (_tabbed) {
+//            log.debug("openPathTurnoutEditPane for {}", pathTurnoutName);
+//            // not stored separately as bean
+//            PathTurnoutJFrame frame = _pathTurnoutEditPaneMap.get(pathTurnoutName);
+//            if (frame == null) { // create a new pane TODO embed in PathEditPanel, this is not used
+//                int index = pathTurnoutName.indexOf('&');
+//                String pathName = pathTurnoutName.substring(1, index);
+//                String sysName = pathTurnoutName.substring(index + 1);
+//                OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+//                if (block == null) {
+//                    log.error("null OBlock {}", pathTurnoutName);
+//                } else {
+//                    String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
+//                    if (log.isDebugEnabled()) {
+//                        log.debug("makePathTurnoutEditPane for Block {} and Path {}", block.getDisplayName(), pathName);
+//                    }
+//
+//                    frame = new PathTurnoutJFrame(title);
+//                    frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
+//                    OPath path = block.getPathByName(pathName);
+//                    if (path == null) {
+//                        log.error("Null path Turnout");
+//                    }
+//                    // create the pane for _tabbed interface
+//                    //JmriJFrame frame = new JmriJFrame(title);
+//                    frame.addHelpMenu("package.jmri.jmrit.beantable.oblock.OBlockTable", true);
+//                    frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+//                    frame.setPreferredSize(new Dimension(200, 100));
+//                    // create table
+//                    PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, frame);
+//                    frame.setModel(pathTurnoutModel);
+//                    JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
+//
+//                    JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
+//
+//                    JPanel p = new JPanel();
+//                    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+//                    p.add(tablePane);
+//                    frame.add(p);
+//                    frame.setVisible(true);
+//
+//                    //_pathTurnoutEditPaneMap.put(pathTurnoutName, frame);
+//
+//                    // TODO add listeners, action, see PathTurnoutFrame()
+//                    // plus Add New entry pane
+//                }
+//            }
+//        } else { // for _desktop, created from/stored in Portal
             openPathTurnoutFrame(pathTurnoutName);
-        }
+//        }
     }
 
     /**
@@ -788,9 +793,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //            // new OBlock, normally created from [Add OBlock...] button in table
 //            OBlockEditFrame obef = new OBlockEditFrame("Create New OBlock", null, _oBlockModel);
 //        } else {
-            OBlockEditFrame obef = new OBlockEditFrame(Bundle.getMessage("TitleBlockEditor", sysName), sysName, _oBlockModel);
+            OBlockEditFrame obef = new OBlockEditFrame(Bundle.getMessage("TitleBlockEditor", sysName), sysName, _oBlockModel, this);
 //        }
-
+        obef.setVisible(true);
         return (result == 1);
     }
 
@@ -1059,30 +1064,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* Block-Path Table Panel for _tabbed *****************************
      */
     protected JPanel makeBlockPathTablePanel(BlockPathTableModel _model) {
-        JTable blockPathTable = new JTable(_model);
-        // configure DnD
-        blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{
-            BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
-        blockPathTable.setDragEnabled(true);
-        // style table
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
-                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellEditor(
-                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-
-        for (int i = 0; i < _model.getColumnCount(); i++) {
-            int width = _model.getPreferredWidth(i);
-            blockPathTable.getColumnModel().getColumn(i).setPreferredWidth(width);
-        }
-        blockPathTable.doLayout();
-        int tableWidth = blockPathTable.getPreferredSize().width;
-        blockPathTable.setRowHeight(ROW_HEIGHT);
-        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
-                Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
+        JTable blockPathTable = makeBlockPathTable(_model);
 
         // get table
         JScrollPane tablePane = new JScrollPane(blockPathTable);
@@ -1111,6 +1093,31 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         contentPane.add(tablePane, BorderLayout.CENTER);
 
         return contentPane;
+    }
+
+    protected JTable makeBlockPathTable(BlockPathTableModel _model) {
+        JTable blockPathTable = new JTable(_model);
+        // configure DnD
+        blockPathTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(new int[]{BlockPathTableModel.EDIT_COL, BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL}));
+        blockPathTable.setDragEnabled(true);
+        // style table
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellEditor(new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+
+        for (int i = 0; i < _model.getColumnCount(); i++) {
+            int width = _model.getPreferredWidth(i);
+            blockPathTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
+        blockPathTable.doLayout();
+        int tableWidth = blockPathTable.getPreferredSize().width;
+        blockPathTable.setRowHeight(ROW_HEIGHT);
+        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
+
+        return blockPathTable;
     }
 
     /**
