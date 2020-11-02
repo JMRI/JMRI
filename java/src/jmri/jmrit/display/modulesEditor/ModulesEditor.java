@@ -468,7 +468,7 @@ final public class ModulesEditor extends PanelEditor {
                 showAddItemPopUp(event, popup);
                 popup.show(event.getComponent(), event.getX(), event.getY());
             } else {
-                // TODO: show LEModule popup menu?
+                clickedModule.showPopup(event);
             }
         } else if (isMetaDown(event)) {
             // TODO: add dragging code?

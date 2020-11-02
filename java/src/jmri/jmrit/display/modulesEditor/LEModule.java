@@ -6,13 +6,27 @@
 package jmri.jmrit.display.modulesEditor;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.*;
+import static java.lang.Math.log;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.swing.*;
+
 import jmri.jmrit.display.layoutEditor.*;
+import jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
+import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.ANCHOR;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.EDGE_CONNECTOR;
-import jmri.util.MathUtil;
+import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.END_BUMPER;
+import jmri.util.*;
+import static jmri.util.SystemType.getType;
+import jmri.util.swing.JmriColorChooser;
+
+import static org.apache.log4j.NDC.remove;
+import static org.python.core.Py.getName;
 
 /**
  *
@@ -65,8 +79,7 @@ public class LEModule {
     }
 
     /**
-     * @return this modules outline
-     * note:also sets outlineOffset
+     * @return this modules outline note:also sets outlineOffset
      */
     public List<Point2D> getOutline() {
         List<Point2D> results = new ArrayList<>();
@@ -193,6 +206,72 @@ public class LEModule {
         g2.setColor(Color.green);
         g2.drawOval((int) location.getX() - 5, (int) location.getY() - 5, 11, 11);
     }
+
+    private JPopupMenu popupMenu = null;
+
+    @Nonnull
+    protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
+        if (popupMenu != null) {
+            popupMenu.removeAll();
+        } else {
+            popupMenu = new JPopupMenu();
+        }
+
+        JMenuItem jmi = popupMenu.add(
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Module"))
+                + getLayoutEditor().getName());
+        jmi.setEnabled(false);
+
+        // if there are any edge connections…
+        boolean youveGotToKeepThemSeparated = false;
+        for (LayoutTrackView layoutTrackView : getLayoutEditor().getLayoutTrackViews()) {
+            if (layoutTrackView instanceof PositionablePointView) {
+                PositionablePointView ppv = (PositionablePointView) layoutTrackView;
+                if ((ppv.getType() == PointType.EDGE_CONNECTOR) && (ppv.getLinkedPoint() != null)) {
+                    if (!youveGotToKeepThemSeparated) {
+                        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+                        youveGotToKeepThemSeparated = true;
+                    }
+                    String linkName = ppv.getLinkedPointId();
+                    if (!getLayoutEditor().equals(ppv.getLinkedEditor())) {
+                        linkName = Bundle.getMessage("MakeLabel", ppv.getLinkedEditorName()) + linkName;
+                    }
+
+                    jmi = popupMenu.add(ppv.getName() + " " + Bundle.getMessage("LinkedToX_", linkName));
+                    jmi.setEnabled(false);
+                }
+            }
+        }
+        if (youveGotToKeepThemSeparated) {
+            popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+        }
+
+        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //break links before removing
+                for (LayoutTrackView layoutTrackView : getLayoutEditor().getLayoutTrackViews()) {
+                    if (layoutTrackView instanceof PositionablePointView) {
+                        PositionablePointView ppv = (PositionablePointView) layoutTrackView;
+                        PointType pt = ppv.getType();
+                        if (pt == PointType.EDGE_CONNECTOR && (ppv.getLinkedPoint() != null)) {
+                            ppv.removeLinkedPoint();
+                        }
+                    }
+                }
+
+                remove();
+                if (popupMenu != null) {
+                    popupMenu.removeAll();
+                }
+                popupMenu = null;
+            }
+        });
+
+        popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+
+        return popupMenu;
+    }   // showPopup
 
     // initialize logging
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LEModule.class);

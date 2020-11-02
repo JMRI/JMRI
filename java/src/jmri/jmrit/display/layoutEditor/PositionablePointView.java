@@ -760,7 +760,7 @@ public class PositionablePointView extends LayoutTrackView {
         }
     }
 
-    private JPopupMenu popup = null;
+    private JPopupMenu popupMenu = null;
 
     /**
      * {@inheritDoc}
@@ -768,10 +768,10 @@ public class PositionablePointView extends LayoutTrackView {
     @Override
     @Nonnull
     protected JPopupMenu showPopup(@Nonnull MouseEvent mouseEvent) {
-        if (popup != null) {
-            popup.removeAll();
+        if (popupMenu != null) {
+            popupMenu.removeAll();
         } else {
-            popup = new JPopupMenu();
+            popupMenu = new JPopupMenu();
         }
 
         boolean blockBoundary = false;
@@ -779,7 +779,7 @@ public class PositionablePointView extends LayoutTrackView {
         JMenuItem jmi = null;
         switch (getType()) {
             case ANCHOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + getName());
+                jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Anchor")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock block1 = null;
@@ -791,20 +791,20 @@ public class PositionablePointView extends LayoutTrackView {
                     block2 = getConnect2().getLayoutBlock();
                 }
                 if ((block1 != null) && (block1 == block2)) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    jmi = popup.add(Bundle.getMessage("BlockDivider"));
+                    jmi = popupMenu.add(Bundle.getMessage("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
                     jmi.setEnabled(false);
                     blockBoundary = true;
                 }
                 jmi.setEnabled(false);
                 break;
             case END_BUMPER:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + getName());
+                jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EndBumper")) + getName());
                 jmi.setEnabled(false);
 
                 LayoutBlock blockEnd = null;
@@ -812,20 +812,20 @@ public class PositionablePointView extends LayoutTrackView {
                     blockEnd = getConnect1().getLayoutBlock();
                 }
                 if (blockEnd != null) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")) + blockEnd.getDisplayName());
                     jmi.setEnabled(false);
                 }
                 addSensorsAndSignalMasksMenuItemsFlag = true;
                 break;
             case EDGE_CONNECTOR:
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
+                jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("EdgeConnector")) + getName());
                 jmi.setEnabled(false);
 
                 if (getLinkedEditor() != null) {
                     String linkName = getLinkedEditorName() + ":" + getLinkedPointId();
-                    jmi = popup.add(Bundle.getMessage("LinkedToX", linkName));
+                    jmi = popupMenu.add(Bundle.getMessage("LinkedToX", linkName));
                 } else {
-                    jmi = popup.add(Bundle.getMessage("EdgeNotLinked"));
+                    jmi = popupMenu.add(Bundle.getMessage("EdgeNotLinked"));
                 }
                 jmi.setEnabled(false);
 
@@ -840,13 +840,13 @@ public class PositionablePointView extends LayoutTrackView {
                     }
                 }
                 if ((block1 != null) && (block1 == block2)) {
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + block1.getDisplayName());
                 } else if ((block1 != null) && (block2 != null) && (block1 != block2)) {
-                    jmi = popup.add(Bundle.getMessage("BlockDivider"));
+                    jmi = popupMenu.add(Bundle.getMessage("BlockDivider"));
                     jmi.setEnabled(false);
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + block1.getDisplayName());
                     jmi.setEnabled(false);
-                    jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
+                    jmi = popupMenu.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + block2.getDisplayName());
                     jmi.setEnabled(false);
                     blockBoundary = true;
                 }
@@ -888,18 +888,18 @@ public class PositionablePointView extends LayoutTrackView {
                     }
                 });
             }
-            popup.add(connectionsMenu);
+            popupMenu.add(connectionsMenu);
         }
 
         if (getConnect1() != null && (getType() == PointType.EDGE_CONNECTOR || getType() == PointType.END_BUMPER)) {
             //
             // decorations menu
             //
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
             JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
             decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
-            popup.add(decorationsMenu);
+            popupMenu.add(decorationsMenu);
 
             JCheckBoxMenuItem jcbmi;
             TrackSegmentView ctv1 = layoutEditor.getTrackSegmentView(getConnect1());
@@ -1121,14 +1121,14 @@ public class PositionablePointView extends LayoutTrackView {
             }
         }   // if ((getType() == EDGE_CONNECTOR) || (getType() == END_BUMPER))
 
-        popup.add(new JSeparator(JSeparator.HORIZONTAL));
+        popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
         if (getType() == PointType.ANCHOR) {
             if (blockBoundary) {
-                jmi = popup.add(new JMenuItem(Bundle.getMessage("CanNotMergeAtBlockBoundary")));
+                jmi = popupMenu.add(new JMenuItem(Bundle.getMessage("CanNotMergeAtBlockBoundary")));
                 jmi.setEnabled(false);
             } else if ((getConnect1() != null) && (getConnect2() != null)) {
-                jmi = popup.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
+                jmi = popupMenu.add(new AbstractAction(Bundle.getMessage("MergeAdjacentTracks")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         PositionablePoint pp_this = positionablePoint;
@@ -1216,7 +1216,7 @@ public class PositionablePointView extends LayoutTrackView {
             }
         }
 
-        popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+        popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override
             public void actionPerformed(ActionEvent e
             ) {
@@ -1262,11 +1262,11 @@ public class PositionablePointView extends LayoutTrackView {
 
         jmi.setSelected(getType() == PointType.EDGE_CONNECTOR);
 
-        popup.add(lineType);
+        popupMenu.add(lineType);
 
         if (!blockBoundary && getType() == PointType.EDGE_CONNECTOR) {
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
+            popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
+            popupMenu.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     setLink();
@@ -1275,15 +1275,15 @@ public class PositionablePointView extends LayoutTrackView {
         }
 
         if (blockBoundary) {
-            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+            popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
             if (getType() == PointType.EDGE_CONNECTOR) {
-                popup.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
+                popupMenu.add(new AbstractAction(Bundle.getMessage("EdgeEditLink")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setLink();
                     }
                 });
-                popup.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
+                popupMenu.add(new AbstractAction(Bundle.getMessage("SetSignals")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at edge connector tool dialog
@@ -1306,22 +1306,22 @@ public class PositionablePointView extends LayoutTrackView {
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
                 if (layoutEditor.getLETools().addBlockBoundarySignalHeadInfoToMenu(positionablePoint, jm)) {
                     jm.add(ssaa);
-                    popup.add(jm);
+                    popupMenu.add(jm);
                 } else {
-                    popup.add(ssaa);
+                    popupMenu.add(ssaa);
                 }
             }
             addSensorsAndSignalMasksMenuItemsFlag = true;
         }
         if (addSensorsAndSignalMasksMenuItemsFlag) {
-            popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSignalMastsAtBlockBoundaryFromMenu(positionablePoint);
                 }
             });
-            popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
+            popupMenu.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                 @Override
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
@@ -1332,11 +1332,11 @@ public class PositionablePointView extends LayoutTrackView {
             });
         }
 
-        layoutEditor.setShowAlignmentMenu(popup);
+        layoutEditor.setShowAlignmentMenu(popupMenu);
 
-        popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+        popupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
 
-        return popup;
+        return popupMenu;
     }   // showPopup
 
     /**
@@ -1409,10 +1409,10 @@ public class PositionablePointView extends LayoutTrackView {
      * the object is still displayed; see remove()
      */
     void dispose() {
-        if (popup != null) {
-            popup.removeAll();
+        if (popupMenu != null) {
+            popupMenu.removeAll();
         }
-        popup = null;
+        popupMenu = null;
         removeLinkedPoint();
     }
 
