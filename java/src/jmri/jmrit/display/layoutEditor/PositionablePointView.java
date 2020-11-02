@@ -1750,7 +1750,7 @@ public class PositionablePointView extends LayoutTrackView {
                 }
             }
             if ((getType() != PointType.END_BUMPER) && (ts2 == null)) {
-                g2.setColor(Color.yellow);
+                g2.setColor(Color.magenta);
             } else {
                 g2.setColor(Color.green);
             }

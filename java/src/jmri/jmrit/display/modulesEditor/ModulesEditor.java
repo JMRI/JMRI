@@ -9,8 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.lang.reflect.Field;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -19,8 +19,7 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.display.*;
-import jmri.jmrit.display.layoutEditor.*;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.EDGE_CONNECTOR;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
@@ -33,7 +32,9 @@ import jmri.util.swing.JmriColorChooser;
  */
 final public class ModulesEditor extends PanelEditor {
 
-    // Operational instance variables - not save
+    //
+    // Operational instance variables - not saved
+    //
     // Option menu items
     private JCheckBoxMenuItem editModeCheckBoxMenuItem = null;
     private JCheckBoxMenuItem showGridCheckBoxMenuItem = null;
@@ -56,9 +57,9 @@ final public class ModulesEditor extends PanelEditor {
     private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
     // Selected point information
-    public Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
+    private Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
     private Point2D startDelta = MathUtil.zeroPoint2D(); // starting delta coordinates
-    public Object selectedObject = null;       // selected object, null if nothing selected
+    private Object selectedObject = null;       // selected object, null if nothing selected
     private Point2D foundLocation = MathUtil.zeroPoint2D(); // location of found object
 
     // Lists of items that describe the Layout, and allow it to be drawn
@@ -75,9 +76,9 @@ final public class ModulesEditor extends PanelEditor {
 
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
-    private boolean drawGrid = true;
-    private boolean snapToGridOnAdd = true;
-    private boolean snapToGridOnMove = true;
+    private boolean drawGrid = false;
+    private boolean snapToGridOnAdd = false;
+    private boolean snapToGridOnMove = false;
     private boolean snapToGridInvert = false;
 
     private List<LEModule> modules = new ArrayList<>();
@@ -114,7 +115,7 @@ final public class ModulesEditor extends PanelEditor {
         }
         setFocusable(true);
         addKeyListener(this);
-        //resetDirty();
+        // resetDirty();
 
 //        SwingUtilities.invokeLater(() -> {
 //            // initialize preferences
@@ -135,6 +136,7 @@ final public class ModulesEditor extends PanelEditor {
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
         store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
+        store.setEnabled(false);    // TODO:Finish ModulesEditorXml and re-enable this
         fileMenu.add(store);
         fileMenu.addSeparator();
 
@@ -151,7 +153,7 @@ final public class ModulesEditor extends PanelEditor {
         setupOptionMenu(menuBar);
 
         // setup Zoom menu
-//        setupZoomMenu(menuBar);
+        //setupZoomMenu(menuBar);
         // setup Help menu
         addHelpMenu("package.jmri.jmrit.display.ModulesEditor", true);
     }
@@ -171,7 +173,7 @@ final public class ModulesEditor extends PanelEditor {
         menuBar.add(optionMenu);
 
         //
-        //  edit mode
+        // edit mode
         //
         editModeCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EditMode"));
         optionMenu.add(editModeCheckBoxMenuItem);
@@ -211,7 +213,7 @@ final public class ModulesEditor extends PanelEditor {
                                 JOptionPane.ERROR_MESSAGE);
                     } else {
                         setTitle(newName);
-//                        setDirty();
+                        // setDirty();
                     }
                 }
             }
@@ -229,7 +231,7 @@ final public class ModulesEditor extends PanelEditor {
             if (desiredColor != null && !defaultBackgroundColor.equals(desiredColor)) {
                 defaultBackgroundColor = desiredColor;
                 setBackgroundColor(desiredColor);
-//                setDirty();
+                // setDirty();
                 repaint();
             }
         });
@@ -245,26 +247,25 @@ final public class ModulesEditor extends PanelEditor {
                     defaultTextColor);
             if (desiredColor != null && !defaultTextColor.equals(desiredColor)) {
                 setDefaultTextColor(desiredColor);
-//                setDirty();
+                // setDirty();
                 repaint();
             }
         });
 
-        //
-        // Add Options
-        //TODO:finish this?
-//        JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
-//        optionMenu.add(optionsAddMenu);
-        // add background image
-        //JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
-        //optionsAddMenu.add(backgroundItem);
-        //backgroundItem.addActionListener((ActionEvent event) -> {
-        //    addBackground();
-        //    // note: panel resized in addBackground
-        //    setDirty();
-        //    repaint();
-        //});
-        //
+//      // Add Options
+//      // TODO:finish this?
+//      JMenu optionsAddMenu = new JMenu(Bundle.getMessage("AddMenuTitle"));
+//      optionMenu.add(optionsAddMenu);
+//      // add background image JMenuItem backgroundItem = new JMenuItem(Bundle.getMessage("AddBackground") + "...");
+//      optionsAddMenu.add(backgroundItem);
+//      backgroundItem.addActionListener((ActionEvent event) -> {
+//          addBackground();
+//          // note: panel resized in addBackground
+//          setDirty();
+//          repaint();
+//      });
+
+//
         // grid menu
         //
         JMenu gridMenu = new JMenu(Bundle.getMessage("GridMenuTitle")); // used for Grid SubMenu
@@ -432,7 +433,7 @@ final public class ModulesEditor extends PanelEditor {
     private Point2D calcLocation(MouseEvent event, int dX, int dY) {
         xLoc = (int) ((event.getX() + dX) / getPaintScale());
         yLoc = (int) ((event.getY() + dY) / getPaintScale());
-        //dLoc.setLocation(xLoc, yLoc);
+        // dLoc.setLocation(xLoc, yLoc);
         dLoc = new Point2D.Double(xLoc, yLoc);
         return dLoc;
     }
@@ -453,7 +454,8 @@ final public class ModulesEditor extends PanelEditor {
 
         clickedModule = null;
         for (LEModule module : modules) {
-            if (MathUtil.isPointInPolygon(dLoc, module.getOutline())) {
+            Rectangle2D bounds = module.getBounds();
+            if (bounds.contains(dLoc)) {
                 clickedModule = module;
                 break;
             }
@@ -466,22 +468,16 @@ final public class ModulesEditor extends PanelEditor {
                 showAddItemPopUp(event, popup);
                 popup.show(event.getComponent(), event.getX(), event.getY());
             } else {
-                //TODO: show LEModule popup menu?
+                // TODO: show LEModule popup menu?
             }
         } else if (isMetaDown(event)) {
-            //TODO: add dragging code?
+            // TODO: add dragging code?
             log.warn("!isPopupTrigger() click!");
         }
         if (clickedModule != null) {
-            log.warn("dLoc: {}", dLoc);
-            Point2D l = clickedModule.getLocation();
-            log.warn("     loc: {}", l);
-            Point2D c = MathUtil.midPoint(clickedModule.getLayoutEditor().getPanelBounds());
-            log.warn("     c: {}", c);
-            Point2D c1 = MathUtil.rotateRAD(c, clickedModule.getRotationRAD());
-            log.warn("     c1: {}", c1);
-//            startDelta = MathUtil.subtract(dLoc, c);
-            log.warn("     startDelta: {}", startDelta);
+            // log.debug("dLoc: {}", dLoc);
+            startDelta = MathUtil.subtract(clickedModule.getLocation(), dLoc);
+            // log.debug("     startDelta: {}", startDelta);
         }
     }
 
@@ -523,7 +519,7 @@ final public class ModulesEditor extends PanelEditor {
 //                } else {
 //                    // no possible conflict with moving, display the popup now
 //                    if (_selectionGroup != null) {
-//                        //Will show the copy option only
+//                        // Will show the copy option only
 //                        showMultiSelectPopUp(event, _currentSelection);
 //                    } else {
 //                        showPopUp(_currentSelection, event);
@@ -555,11 +551,11 @@ final public class ModulesEditor extends PanelEditor {
             backgroundPopUp(event);
             _currentSelection = null;
         }
-//        }
+// }
         // if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
         if ((event.isControlDown()) || isMetaDown(event) || event.isAltDown()) {
-            //Don't want to do anything, just want to catch it, so that the next two else ifs are not
-            //executed
+            // Don't want to do anything, just want to catch it, so that the next two else ifs are not
+            // executed
         } else if ((_currentSelection == null && _multiItemCopyGroup == null)
                 || (_selectRect != null && !_selectRect.contains(_anchorX, _anchorY))) {
             _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
@@ -591,10 +587,10 @@ final public class ModulesEditor extends PanelEditor {
         snapToGridInvert = event.isAltDown();
 
         // process this mouse dragged event
-//        if (isEditable()) {
-//            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-//            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
-//        }
+// if (isEditable()) {
+// leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
+// leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+// }
         currentPoint = MathUtil.add(dLoc, startDelta);
         // don't allow negative placement, objects could become unreachable
         currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
@@ -627,9 +623,9 @@ final public class ModulesEditor extends PanelEditor {
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
 
-//        if (isEditable() && (clickedModule != null)) {
+// if (isEditable() && (clickedModule != null)) {
         clickedModule = null;
-//        }
+// }
     }
 
     protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup) {
@@ -648,7 +644,7 @@ final public class ModulesEditor extends PanelEditor {
 
     protected void addItemPopUp(final LayoutEditor layoutEditor, JMenu menu) {
         ActionListener a = new ActionListener() {
-            //final String desiredName = name;
+            // final String desiredName = name;
             @Override
             public void actionPerformed(ActionEvent e) {
                 addItemViaMouseClick = true;
@@ -681,7 +677,7 @@ final public class ModulesEditor extends PanelEditor {
         }
 
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-        //BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        // BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
         g2.setStroke(narrow);
 
@@ -745,7 +741,7 @@ final public class ModulesEditor extends PanelEditor {
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
         }
-    }
+    }   // drawGrid
 
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ModulesEditor.class);

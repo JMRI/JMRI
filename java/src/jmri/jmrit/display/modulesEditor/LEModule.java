@@ -65,8 +65,8 @@ public class LEModule {
     }
 
     /**
-     *
      * @return this modules outline
+     * note:also sets outlineOffset
      */
     public List<Point2D> getOutline() {
         List<Point2D> results = new ArrayList<>();
@@ -95,18 +95,37 @@ public class LEModule {
             results.add(results.get(0));
         }
 
-        //move to origin, rotate and move to location
-        Point2D center = MathUtil.midPoint(results);
-        //Point2D center = MathUtil.midPoint(getLayoutEditor().getPanelBounds());
+        // move to origin, rotate and move to location
+        outlineOffset = MathUtil.midPoint(results);
         for (int i = 0; i < results.size(); i++) {
             Point2D p = results.get(i);
-            p = MathUtil.subtract(p, center);
+            p = MathUtil.subtract(p, outlineOffset);
             p = MathUtil.rotateRAD(p, rotationRAD);
             p = MathUtil.add(p, location);
             results.set(i, p);
         }
+
         return results;
     }   // getOutline
+
+    private Point2D outlineOffset = MathUtil.zeroPoint2D();
+
+    public Point2D getOutlineOffset() {
+        if (MathUtil.equals(outlineOffset, MathUtil.zeroPoint2D)) {
+            getOutline();
+        }
+        return outlineOffset;
+    }
+
+    public Rectangle2D getBounds() {
+        List<Point2D> points = getOutline();
+        Point2D point0 = points.get(0);
+        Rectangle2D result = new Rectangle2D.Double(point0.getX(), point0.getY(), 0, 0);
+        for (Point2D point : points) {
+            result.add(point);
+        }
+        return result;
+    }
 
     /**
      * draw this module
@@ -114,18 +133,21 @@ public class LEModule {
      * @param g2 the graphics context
      */
     public void draw(Graphics2D g2) {
-        BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        BasicStroke thin = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
         // save original transform
         AffineTransform saveAT = g2.getTransform();
 
-        List<Point2D> points = getOutline();
-        Point2D midPoly = MathUtil.midPoint(points);
+        g2.setStroke(thin);
+        g2.setColor(Color.lightGray);
+        g2.draw(getBounds());
 
-        g2.setStroke(narrow);
+        List<Point2D> points = getOutline();
+
+        g2.setStroke(wide);
         GeneralPath path = new GeneralPath();
-        for (Point2D point : getOutline()) {
+        for (Point2D point : points) {
             if (path.getCurrentPoint() == null) {
                 path.moveTo(point.getX(), point.getY());
             } else {
@@ -135,26 +157,13 @@ public class LEModule {
         g2.setColor(Color.blue);
         g2.draw(path);
 
-        // Perform transformation
-        Point2D center = MathUtil.midPoint(getLayoutEditor().getPanelBounds());
-        //log.warn("center: {}, location: {}", center, location);
+        // Perform transformation to draw layout tracks
+        g2.translate(location.getX(), location.getY());
+        g2.rotate(rotationRAD);
+        g2.translate(-outlineOffset.getX(), -outlineOffset.getY());
 
-        g2.setColor(Color.red);
-        g2.fillOval((int) center.getX() - 3, (int) center.getY() - 3, 7, 7);
-
-        g2.setColor(Color.magenta);
-        g2.fillOval((int) midPoly.getX() - 3, (int) midPoly.getY() - 3, 7, 7);
-
-//        Point2D center = MathUtil.subtract(midPoly, location);
-//        g2.translate(midPoly.getX(), midPoly.getY());
-//        g2.translate(-midPoly.getX(), -midPoly.getY());
-//        g2.translate(-center.getX(), -center.getY());
-//        g2.translate(location.getX(), location.getY());
-        g2.translate(-location.getX(), -location.getY());
-//        g2.rotate(rotationRAD);
-
-        g2.setColor(Color.darkGray);
         getLayoutEditor().getLayoutTrackViews().forEach((tsv) -> {
+            g2.setColor(Color.darkGray);
             LayoutTrack lt = tsv.getLayoutTrack();
             if (lt instanceof PositionablePoint) {
                 PositionablePoint pp = (PositionablePoint) lt;
@@ -168,7 +177,7 @@ public class LEModule {
                 g2.setStroke(wide);
                 tsv.drawOne(g2, true, false);
             } else {
-                g2.setStroke(narrow);
+                g2.setStroke(thin);
                 tsv.drawOne(g2, false, false);
             }
         });
@@ -177,13 +186,12 @@ public class LEModule {
 //        g2.fillOval((int) center.getX() - 3, (int) center.getY() - 3, 7, 7);
 //
 //        g2.setColor(Color.magenta);
-//        g2.fillOval((int) midPoly.getX() - 3, (int) midPoly.getY() - 3, 7, 7);
-
+//        g2.fillOval((int) outlineOffset.getX() - 3, (int) outlineOffset.getY() - 3, 7, 7);
         // Restore original transform
         g2.setTransform(saveAT);
 
         g2.setColor(Color.green);
-        g2.drawOval((int) location.getX() - 3, (int) location.getY() - 3, 7, 7);
+        g2.drawOval((int) location.getX() - 5, (int) location.getY() - 5, 11, 11);
     }
 
     // initialize logging
