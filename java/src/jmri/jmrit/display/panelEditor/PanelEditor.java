@@ -650,7 +650,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * ***************************************************
      */
-    private boolean delayedPopupTrigger;
+    protected boolean delayedPopupTrigger;
 
     @Override
     public void mousePressed(MouseEvent event) {
