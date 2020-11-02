@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import java.util.Collection;
+import java.util.List;
+
 import jmri.NamedBean;
 
 /**
@@ -104,5 +107,14 @@ public interface ConditionalNG extends Base, NamedBean {
      * this method must ensure that listeners are not unregistered more than once.
      */
     public void unregisterListeners();
+    
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData);
+    
+    public void removeLocalVariable(String name);
+    
+    public Collection<SymbolTable.ParameterData> getLocalVariables();
     
 }

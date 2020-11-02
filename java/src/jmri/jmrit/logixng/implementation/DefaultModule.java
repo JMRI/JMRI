@@ -3,21 +3,19 @@ package jmri.jmrit.logixng.implementation;
 import static jmri.NamedBean.UNKNOWN;
 
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
-// import jmri.implementation.JmriSimplePropertyListener;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.ModuleManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The default implementation of LogixNG.
@@ -31,6 +29,8 @@ public class DefaultModule extends AbstractBase
     private FemaleSocketManager.SocketType _rootSocketType;
     private FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
+    private final Map<String, SymbolTable.Parameter> _parameters = new HashMap<>();
+    private final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
     
     
     public DefaultModule(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -70,8 +70,6 @@ public class DefaultModule extends AbstractBase
         log.warn("Unexpected call to getState in DefaultModule.");  // NOI18N
         return UNKNOWN;
     }
-
-    private final static Logger log = LoggerFactory.getLogger(DefaultModule.class);
 
     @Override
     public String getShortDescription(Locale locale) {
@@ -163,6 +161,40 @@ public class DefaultModule extends AbstractBase
     }
     
     @Override
+    public void addParameter(String name, boolean isInput, boolean isOutput) {
+        _parameters.put(name, new DefaultSymbolTable.DefaultParameter(name, isInput, isOutput));
+    }
+    
+    @Override
+    public void removeParameter(String name) {
+        _parameters.remove(name);
+    }
+    
+    @Override
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData) {
+        
+        _localVariables.put(name, new DefaultSymbolTable.DefaultParameterData(name, initialValueType, initialValueData));
+    }
+    
+    @Override
+    public void removeLocalVariable(String name) {
+        _localVariables.remove(name);
+    }
+    
+    @Override
+    public Collection<SymbolTable.Parameter> getParameters() {
+        return _parameters.values();
+    }
+    
+    @Override
+    public Collection<SymbolTable.ParameterData> getLocalVariables() {
+        return _localVariables.values();
+    }
+    
+    @Override
     public void connected(FemaleSocket socket) {
         _socketSystemName = socket.getConnectedSocket().getSystemName();
     }
@@ -228,5 +260,8 @@ public class DefaultModule extends AbstractBase
     protected void unregisterListenersForThisClass() {
         // Do nothing. A module never listen on anything.
     }
+
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
     
 }

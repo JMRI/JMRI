@@ -51,15 +51,6 @@ public interface NamedTableManager extends Manager<NamedTable> {
     public NamedTable newInternalTable(String systemName, String userName, int numRows, int numColumns);
     
     /**
-     * Create a new internal named table.
-     * This table is stored in the manager.
-     * @param systemName the system name of the table
-     * @param userName the user name of the table, or null if no user name
-     * @return the new table
-     */
-    public Stack newStack(String systemName, String userName);
-    
-    /**
      * Load a table from a CSV text.
      * @param text the CSV text
      * @return the loaded table

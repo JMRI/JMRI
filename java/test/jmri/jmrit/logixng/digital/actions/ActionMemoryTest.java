@@ -94,10 +94,10 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("String matches", "Set memory '' to \"New value\"", action2.getLongDescription());
         
         action2 = new ActionMemory("IQDA321", null);
-        action2.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY);
+        action2.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
         action2.setMemory(memory);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
-        action2.setCopyToMemory(otherMemory);
+        action2.setOtherMemory(otherMemory);
         Assert.assertTrue("memory is correct", memory == action2.getMemory().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
@@ -201,8 +201,8 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         memory.setValue("A value");
         otherMemory.setValue("Some other value");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY);
-        actionMemory.setCopyToMemory(otherMemory);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        actionMemory.setOtherMemory(otherMemory);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the memory should been copied to the other memory
@@ -277,9 +277,9 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         actionMemory.setData("Some new value");
         Assert.assertEquals("String matches", "Set memory IM1 to \"Some new value\"", _base.getLongDescription());
         
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
-        actionMemory.setCopyToMemory(otherMemory);
+        actionMemory.setOtherMemory(otherMemory);
         Assert.assertEquals("String matches", "Copy memory IM1 to memory IM99", _base.getLongDescription());
     }
     

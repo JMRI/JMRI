@@ -5,7 +5,7 @@ package jmri.jmrit.logixng;
  * 
  * @author Daniel Bergqvist 2020
  */
-public interface Stack extends NamedTable {
+public interface Stack {
     
     /**
      * Pushes a value on the top of the stack so the stack grow.
@@ -18,5 +18,25 @@ public interface Stack extends NamedTable {
      * @return the value that is on the top of the stack
      */
     public Object pop();
+    
+    /**
+     * Get the value at an index
+     * @param index the index from bottom of the table
+     * @return value the new value
+     */
+    public Object getValueAtIndex(int index);
+    
+    /**
+     * Set the value at an index
+     * @param index the index from bottom of the table
+     * @param value the new value
+     */
+    public void setValueAtIndex(int index, Object value);
+    
+    /**
+     * Get the number of items on the stack
+     * @return the number of items
+     */
+    public int getCount();
     
 }

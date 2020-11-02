@@ -136,46 +136,6 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
-    public Stack newStack(String systemName, String userName)
-            throws IllegalArgumentException {
-        
-        // Check that NamedTable does not already exist
-        NamedTable x;
-        if (userName != null && !userName.equals("")) {
-            x = getByUserName(userName);
-            if (x != null) {
-                return null;
-            }
-        }
-        x = getBySystemName(systemName);
-        if (x != null) {
-            return null;
-        }
-        // Check if system name is valid
-        if (this.validSystemNameFormat(systemName) != NameValidity.VALID) {
-            throw new IllegalArgumentException("SystemName " + systemName + " is not in the correct format");
-        }
-        // Table does not exist, create a new Stack
-        Stack stack = new DefaultStackTable(systemName, userName);
-        // save in the maps
-        register(stack);
-        
-        // Keep track of the last created auto system name
-        updateAutoNumber(systemName);
-        
-        return stack;
-    }
-/*
-    @Override
-    public NamedTable createNamedTable(String userName, int numRows, int numColumns)
-            throws IllegalArgumentException {
-        return createNamedTable(getAutoSystemName(), userName, numRows, numColumns);
-    }
-*/    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public AnonymousTable newAnonymousTable(int numRows, int numColumns)
             throws IllegalArgumentException {
         

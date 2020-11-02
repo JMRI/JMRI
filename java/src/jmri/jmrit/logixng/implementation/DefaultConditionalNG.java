@@ -1,8 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
-import static jmri.NamedBean.UNKNOWN;
-
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import static jmri.NamedBean.UNKNOWN;
 
 import javax.annotation.Nonnull;
 
@@ -31,6 +34,7 @@ public class DefaultConditionalNG extends AbstractBase
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
     private boolean _runOnGUIDelayed = true;
+    private final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
     
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -131,8 +135,21 @@ public class DefaultConditionalNG extends AbstractBase
             runOnGUI(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
+                        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+                        
                         try {
+                            newSymbolTable.createSymbols(_localVariables.values());
+                            InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
+                            
+                            for (SymbolTable.ParameterData pd : _localVariables.values()) {
+                                System.out.format("ConditionalNG.execute: pd.name: %s, %s, %s%n", pd.getName(), pd.getInitalValueType().name(), pd.getInitialValueData());
+                            }
+                            
                             _femaleRootSocket.execute();
+                            
+                            for (SymbolTable.ParameterData pd : _localVariables.values()) {
+                                System.out.format("ConditionalNG.execute done: pd.name: %s, %s, %s%n", pd.getName(), pd.getInitalValueType().name(), pd.getInitialValueData());
+                            }
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
@@ -152,6 +169,8 @@ public class DefaultConditionalNG extends AbstractBase
                                             getSystemName(), e, e);
                             }
                         }
+                        
+                        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
                     }
                 }
             });
@@ -350,6 +369,25 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void unregisterListenersForThisClass() {
         // Do nothing
+    }
+    
+    @Override
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData) {
+        
+        _localVariables.put(name, new DefaultSymbolTable.DefaultParameterData(name, initialValueType, initialValueData));
+    }
+    
+    @Override
+    public void removeLocalVariable(String name) {
+        _localVariables.remove(name);
+    }
+    
+    @Override
+    public Collection<SymbolTable.ParameterData> getLocalVariables() {
+        return _localVariables.values();
     }
 
 }

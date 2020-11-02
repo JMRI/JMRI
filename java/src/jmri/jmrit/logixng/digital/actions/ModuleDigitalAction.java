@@ -3,6 +3,8 @@ package jmri.jmrit.logixng.digital.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -10,9 +12,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
  * This action executes a module.
@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class ModuleDigitalAction extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
+    private final Map<String, SymbolTable.ParameterData> _parameterData = new HashMap<>();
     
     public ModuleDigitalAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -100,6 +101,8 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
         
         Module module = _moduleHandle.getBean();
         
+        System.out.format("%n%nModuleDigitalAction.execute() %s%n", getSystemName());
+        
         FemaleSocket femaleSocket = module.getRootSocket();
         
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {
@@ -107,7 +110,25 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
             return;
         }
         
+        for (SymbolTable.ParameterData pd : _parameterData.values()) {
+            System.out.format("ParameterData: %s, %s%n", pd.getName(), pd);
+        }
+        
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+        newSymbolTable.createSymbols(_parameterData.values());
+        newSymbolTable.createSymbols(module.getLocalVariables());
+        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
         ((FemaleDigitalActionSocket)femaleSocket).execute();
+        
+        for (SymbolTable.ParameterData pd : _parameterData.values()) {
+            System.out.format("ParameterData: %s, %s%n", pd.getName(), newSymbolTable.getValue(pd.getName()));
+        }
+        
+        System.out.format("ModuleDigitalAction: After the module is executed%n");
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().printSymbolTable(System.out);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
     }
 
     @Override
@@ -161,13 +182,19 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
         removeModule();
     }
     
-    
-    public enum ModuleOperation {
-        SET_TO_NULL,
-        SET_TO_STRING,
-        COPY_MEMORY;
+    public void addParameter(String name, SymbolTable.InitialValueType initalValueType, String initialValueData) {
+        System.out.format("addParameter: New parameter: %s%n", name);
+        _parameterData.put(name, new DefaultSymbolTable.DefaultParameterData(name, initalValueType, initialValueData));
+        for (SymbolTable.ParameterData pd : _parameterData.values()) {
+            System.out.format("addParameter: ParameterData: %s, %s%n", pd.getName(), pd);
+        }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ModuleDigitalAction.class);
+    public void removeParameter(String name) {
+        _parameterData.remove(name);
+    }
+    
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ModuleDigitalAction.class);
     
 }

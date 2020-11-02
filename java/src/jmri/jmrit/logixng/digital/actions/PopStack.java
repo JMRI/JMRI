@@ -14,9 +14,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This action pops a value from a stack and writes the value to a memory.
  * 
@@ -25,7 +22,6 @@ import org.slf4j.LoggerFactory;
 public class PopStack extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
-    private NamedBeanHandle<Stack> _stackHandle;
     
     public PopStack(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -67,44 +63,6 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
         return _memoryHandle;
     }
     
-    public void setStack(@Nonnull String stackName) {
-        assertListenersAreNotRegistered(log, "setStack");
-        NamedTable stack = InstanceManager.getDefault(NamedTableManager.class).getBySystemName(stackName);
-        if (stack == null) {
-            removeStack();
-            log.error("stack \"{}\" is not found", stackName);
-        } else if (! (stack instanceof Stack)) {
-            removeStack();
-            log.error("stack \"{}\" is not a Stack", stackName);
-        } else {
-            setStack((Stack)stack);
-        }
-    }
-    
-    public void setStack(@Nonnull NamedBeanHandle<Stack> handle) {
-        assertListenersAreNotRegistered(log, "setStack");
-        _stackHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-    }
-    
-    public void setStack(@Nonnull Stack stack) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setStack(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(stack.getDisplayName(), stack));
-    }
-    
-    public void removeStack() {
-        assertListenersAreNotRegistered(log, "removeStack");
-        if (_stackHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _stackHandle = null;
-        }
-    }
-    
-    public NamedBeanHandle<Stack> getStack() {
-        return _stackHandle;
-    }
-    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -114,21 +72,10 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
                     throw new PropertyVetoException(Bundle.getMessage("PushStack_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
-            if (evt.getOldValue() instanceof Stack) {
-                if (evt.getOldValue().equals(getStack().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("PushStack_StackInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     removeMemory();
-                }
-            }
-            if (evt.getOldValue() instanceof Stack) {
-                if (evt.getOldValue().equals(getStack().getBean())) {
-                    removeStack();
                 }
             }
         }
@@ -152,7 +99,7 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
         if (_memoryHandle == null) return;
         
         final Memory memory = _memoryHandle.getBean();
-        final Stack stack = _stackHandle.getBean();
+        final Stack stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
         
         memory.setValue(stack.pop());
     }
@@ -181,14 +128,7 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        String stackName;
-        if (_stackHandle != null) {
-            stackName = _stackHandle.getBean().getDisplayName();
-        } else {
-            stackName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-        
-        return Bundle.getMessage(locale, "PopStack_Long_Memory", stackName, memoryName);
+        return Bundle.getMessage(locale, "PopStack_Long_Memory", memoryName);
     }
     
     /** {@inheritDoc} */
@@ -211,9 +151,9 @@ public class PopStack extends AbstractDigitalAction implements VetoableChangeLis
     @Override
     public void disposeMe() {
         removeMemory();
-        removeStack();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(PopStack.class);
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PopStack.class);
     
 }

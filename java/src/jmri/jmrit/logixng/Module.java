@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import java.util.Collection;
+import java.util.List;
+
 import jmri.NamedBean;
 
 /**
@@ -16,5 +19,20 @@ public interface Module extends Base, NamedBean {
     public FemaleSocketManager.SocketType getRootSocketType();
     
     public FemaleSocket getRootSocket();
+    
+    public void addParameter(String name, boolean isInput, boolean isOutput);
+    
+    public void removeParameter(String name);
+    
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData);
+    
+    public void removeLocalVariable(String name);
+    
+    public Collection<SymbolTable.Parameter> getParameters();
+    
+    public Collection<SymbolTable.ParameterData> getLocalVariables();
     
 }

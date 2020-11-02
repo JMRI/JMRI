@@ -106,12 +106,16 @@ public class IfThenElse extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        System.out.format("%n%nConditionalNG.execute() %s%n", getSystemName());
+        
         _lastExpressionResult = _ifExpressionSocket.evaluate();
         
         if (_enableExecution) {
             if (_lastExpressionResult) {
+                System.out.format("Then: %n");
                 _thenActionSocket.execute();
             } else {
+                System.out.format("Else%n");
                 _elseActionSocket.execute();
             }
         }

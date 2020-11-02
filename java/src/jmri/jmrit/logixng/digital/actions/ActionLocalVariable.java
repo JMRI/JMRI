@@ -29,52 +29,26 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class ActionMemory extends AbstractDigitalAction implements VetoableChangeListener {
+public class ActionLocalVariable extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanHandle<Memory> _memoryHandle;
+    private String _variableName;
     private NamedBeanHandle<Memory> _otherMemoryHandle;
-    private MemoryOperation _memoryOperation = MemoryOperation.SET_TO_STRING;
+    private VariableOperation _variableOperation = VariableOperation.SET_TO_STRING;
     private String _data = "";
     private ExpressionNode _expressionNode;
     
-    public ActionMemory(String sys, String user)
+    public ActionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    public void setMemory(@Nonnull String memoryName) {
+    public void setVariable(String variableName) {
         assertListenersAreNotRegistered(log, "setMemory");
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            setMemory(memory);
-        } else {
-            removeMemory();
-            log.error("memory \"{}\" is not found", memoryName);
-        }
+        _variableName = variableName;
     }
     
-    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        _memoryHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-    }
-    
-    public void setMemory(@Nonnull Memory memory) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setMemory(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
-    }
-    
-    public void removeMemory() {
-        assertListenersAreNotRegistered(log, "setMemory");
-        if (_memoryHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _memoryHandle = null;
-        }
-    }
-    
-    public NamedBeanHandle<Memory> getMemory() {
-        return _memoryHandle;
+    public String getVariableName() {
+        return _variableName;
     }
     
     public void setOtherMemory(String memoryName) {
@@ -113,15 +87,14 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         return _otherMemoryHandle;
     }
     
-    public void setMemoryOperation(MemoryOperation state) throws ParserException {
-        _memoryOperation = state;
-        parseFormula();
+    public void setVariableOperation(VariableOperation memoryOperation) {
+        _variableOperation = memoryOperation;
     }
     
-    public MemoryOperation getMemoryOperation() {
-        return _memoryOperation;
+    public VariableOperation getVariableOperation() {
+        return _variableOperation;
     }
-    
+
     public void setData(String newValue) throws ParserException {
         _data = newValue;
         parseFormula();
@@ -132,7 +105,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     }
     
     private void parseFormula() throws ParserException {
-        if (_memoryOperation == MemoryOperation.FORMULA) {
+        if (_variableOperation == VariableOperation.FORMULA) {
             Map<String, Variable> variables = new HashMap<>();
             
             SymbolTable symbolTable =
@@ -159,6 +132,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+/*        
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
@@ -173,6 +147,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                 }
             }
         }
+*/        
     }
     
     /** {@inheritDoc} */
@@ -190,60 +165,64 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (_memoryHandle == null) return;
+        if (_variableName == null) return;
         
-        System.out.format("%n%nActionMemory.execute() %s%n", getSystemName());
+        System.out.format("%n%nActionLocalVariable.execute() %s%n", getSystemName());
         
-        final Memory memory = _memoryHandle.getBean();
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().printSymbolTable(System.out);
+        
+        SymbolTable symbolTable =
+                InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
         
         AtomicReference<JmriException> ref = new AtomicReference<>();
         
         ThreadingUtil.runOnLayout(() -> {
-            System.out.format("ActionMemory: oper: %s, memory: %s, memory value: %s, data: %s%n", _memoryOperation.name(), memory.getSystemName(), memory.getValue(), _data);
+            System.out.format("ActionMemory: oper: %s, memory: %s, memory value: %s, data: %s%n", _variableOperation.name(), _variableName, symbolTable.getValue(_variableName), _data);
             
-            switch (_memoryOperation) {
+            switch (_variableOperation) {
                 case SET_TO_NULL:
-                    memory.setValue(null);
+                    symbolTable.setValue(_variableName, null);
                     break;
                     
                 case SET_TO_STRING:
-                    memory.setValue(_data);
+                    symbolTable.setValue(_variableName, _data);
                     break;
                     
-                case COPY_VARIABLE_TO_MEMORY:
-                    System.out.format("AXZ ActionMemory: SET_TO_VARIABLE: %s, %s%n", memory.getSystemName(), memory.getValue());
+                case COPY_VARIABLE_TO_VARIABLE:
+                    System.out.format("AXZ ActionMemory: SET_TO_VARIABLE: %s, %s%n", _variableName, symbolTable.getValue(_variableName));
                     InstanceManager.getDefault(LogixNG_Manager.class)
                             .getSymbolTable().printSymbolTable(System.out);
                     
                     Object variableValue =
                             InstanceManager.getDefault(LogixNG_Manager.class)
                                     .getSymbolTable().getValue(_data);
-                    System.out.format("AA ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, memory.getSystemName(), memory.getValue());
+                    System.out.format("AA ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, _variableName, symbolTable.getValue(_variableName));
                     variableValue = "Something else!!!";
 //                    Object variableValue = "Something else!!!";
-                    memory.setValue(variableValue);
+                    symbolTable.setValue(_variableName, variableValue);
                     
-                    System.out.format("BB ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, memory.getSystemName(), memory.getValue());
+                    System.out.format("BB ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, _variableName, symbolTable.getValue(_variableName));
                     break;
                     
-                case COPY_MEMORY_TO_MEMORY:
+                case COPY_MEMORY_TO_VARIABLE:
                     if (_otherMemoryHandle != null) {
-                        memory.setValue(_otherMemoryHandle.getBean().getValue());
+                        symbolTable.setValue(_variableName, _otherMemoryHandle.getBean().getValue());
                     } else {
-                        log.error("setMemory should copy memory to memory but other memory is null");
+                        log.error("setLocalVariable should copy memory to variable but memory is null");
                     }
                     break;
                     
                 case FORMULA:
                     if (_data.isEmpty()) {
-                        memory.setValue(null);
+                        symbolTable.setValue(_variableName, null);
                     } else {
                         try {
                             if (_expressionNode == null) {
                                 System.out.format("ActionMemory: %s, _expressionNode is null%n", getSystemName());
                                 return;
                             }
-                            memory.setValue(_expressionNode.calculate());
+                            symbolTable.setValue(_variableName, _expressionNode.calculate());
                         } catch (JmriException e) {
                             ref.set(e);
                         }
@@ -251,7 +230,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _memoryOperation.name());
+                    throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name());
             }
         });
         
@@ -270,18 +249,11 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Memory_Short");
+        return Bundle.getMessage(locale, "LocalVariable_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        String memoryName;
-        if (_memoryHandle != null) {
-            memoryName = _memoryHandle.getBean().getDisplayName();
-        } else {
-            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-        
         String copyToMemoryName;
         if (_otherMemoryHandle != null) {
             copyToMemoryName = _otherMemoryHandle.getBean().getDisplayName();
@@ -289,19 +261,19 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        switch (_memoryOperation) {
+        switch (_variableOperation) {
             case SET_TO_NULL:
-                return Bundle.getMessage(locale, "Memory_Long_Null", memoryName);
+                return Bundle.getMessage(locale, "LocalVariable_Long_Null", _variableName);
             case SET_TO_STRING:
-                return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _data);
-            case COPY_VARIABLE_TO_MEMORY:
-                return Bundle.getMessage(locale, "Memory_Long_CopyVariableToMemory", _data, memoryName);
-            case COPY_MEMORY_TO_MEMORY:
-                return Bundle.getMessage(locale, "Memory_Long_CopyMemoryToMemory", copyToMemoryName, memoryName);
+                return Bundle.getMessage(locale, "LocalVariable_Long_Value", _variableName, _data);
+            case COPY_VARIABLE_TO_VARIABLE:
+                return Bundle.getMessage(locale, "LocalVariable_Long_CopyVariableToVariable", _data, _variableName);
+            case COPY_MEMORY_TO_VARIABLE:
+                return Bundle.getMessage(locale, "LocalVariable_Long_CopyMemoryToVariable", copyToMemoryName, _variableName);
             case FORMULA:
-                return Bundle.getMessage(locale, "Memory_Long_Formula", memoryName, _data);
+                return Bundle.getMessage(locale, "LocalVariable_Long_Formula", _variableName, _data);
             default:
-                throw new IllegalArgumentException("_memoryOperation has invalid value: " + _memoryOperation.name());
+                throw new IllegalArgumentException("_memoryOperation has invalid value: " + _variableOperation.name());
         }
     }
     
@@ -327,14 +299,14 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     }
     
     
-    public enum MemoryOperation {
+    public enum VariableOperation {
         SET_TO_NULL,
         SET_TO_STRING,
-        COPY_VARIABLE_TO_MEMORY,
-        COPY_MEMORY_TO_MEMORY,
+        COPY_VARIABLE_TO_VARIABLE,
+        COPY_MEMORY_TO_VARIABLE,
         FORMULA;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionMemory.class);
+    private final static Logger log = LoggerFactory.getLogger(ActionLocalVariable.class);
     
 }

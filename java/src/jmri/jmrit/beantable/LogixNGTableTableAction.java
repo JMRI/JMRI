@@ -78,7 +78,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
 
     JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
     JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
-    JRadioButton _typeStackTable = new JRadioButton("Stack. Temporary internal table");
     ButtonGroup _buttonGroup = new ButtonGroup();
     
     /**
@@ -139,8 +138,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             // user folder, or anywhere else. How?
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
-        } else if (_typeStackTable.isSelected()) {
-            return InstanceManager.getDefault(NamedTableManager.class).newStack(systemName, userName);
         } else {
             log.error("No table type selected");
             throw new RuntimeException("No table type selected");
@@ -211,7 +208,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
-        _buttonGroup.add(_typeStackTable);
         _typeInternalTable.setSelected(true);
         
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
@@ -224,7 +220,6 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         panel99.setLayout(new BoxLayout(panel99, BoxLayout.Y_AXIS));
         panel99.add(_typeExternalTable, c);
         panel99.add(_typeInternalTable, c);
-        panel99.add(_typeStackTable, c);
         panel98.add(panel99);
         contentPane.add(panel98);
         

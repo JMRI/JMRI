@@ -18,6 +18,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     
     private final Clipboard _clipboard = new DefaultClipboard();
+    private final Stack _stack = new DefaultStack();
+    private SymbolTable _symbolTable;
     
     
     public DefaultLogixNGManager() {
@@ -145,6 +147,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void deleteLogixNG(LogixNG x) {
         // delete the LogixNG
@@ -152,6 +155,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         x.dispose();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLoadDisabled(boolean s) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -171,16 +175,36 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         return (_instance);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Class<LogixNG> getNamedBeanClass() {
         return LogixNG.class;
     }
     
+    /** {@inheritDoc} */
     @Override
     public Clipboard getClipboard() {
         return _clipboard;
     }
-
+    
+    /** {@inheritDoc} */
+    @Override
+    public Stack getStack() {
+        return _stack;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public SymbolTable getSymbolTable() {
+        return _symbolTable;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setSymbolTable(SymbolTable symbolTable) {
+        _symbolTable = symbolTable;
+    }
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);
 
 }

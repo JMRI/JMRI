@@ -126,6 +126,7 @@ public class Many extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        System.out.format("%n%nMany.execute() %s%n", getSystemName());
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.execute();
         }

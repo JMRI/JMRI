@@ -14,9 +14,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This action reads the value of a memory and pushes it on a stack.
  * 
@@ -24,7 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PushStack extends AbstractDigitalAction implements VetoableChangeListener {
 
-    private NamedBeanHandle<Stack> _stackHandle;
     private NamedBeanHandle<Memory> _memoryHandle;
     private ExpressionNode _expressionNode;
     private String _data = "";
@@ -70,44 +66,6 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
         return _memoryHandle;
     }
     
-    public void setStack(@Nonnull String stackName) {
-        assertListenersAreNotRegistered(log, "setStack");
-        NamedTable stack = InstanceManager.getDefault(NamedTableManager.class).getBySystemName(stackName);
-        if (stack == null) {
-            removeStack();
-            log.error("stack \"{}\" is not found", stackName);
-        } else if (! (stack instanceof Stack)) {
-            removeStack();
-            log.error("stack \"{}\" is not a Stack", stackName);
-        } else {
-            setStack((Stack)stack);
-        }
-    }
-    
-    public void setStack(@Nonnull NamedBeanHandle<Stack> handle) {
-        assertListenersAreNotRegistered(log, "setStack");
-        _stackHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-    }
-    
-    public void setStack(@Nonnull Stack stack) {
-        assertListenersAreNotRegistered(log, "setMemory");
-        setStack(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(stack.getDisplayName(), stack));
-    }
-    
-    public void removeStack() {
-        assertListenersAreNotRegistered(log, "removeStack");
-        if (_stackHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
-            _stackHandle = null;
-        }
-    }
-    
-    public NamedBeanHandle<Stack> getStack() {
-        return _stackHandle;
-    }
-    
     public void setOperation(Operation operation) throws ParserException {
         _operation = operation;
         parseFormula();
@@ -145,21 +103,10 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
                     throw new PropertyVetoException(Bundle.getMessage("PushStack_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
-            if (evt.getOldValue() instanceof Stack) {
-                if (evt.getOldValue().equals(getStack().getBean())) {
-                    PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("PushStack_StackInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
-                }
-            }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
                     removeMemory();
-                }
-            }
-            if (evt.getOldValue() instanceof Stack) {
-                if (evt.getOldValue().equals(getStack().getBean())) {
-                    removeStack();
                 }
             }
         }
@@ -181,7 +128,7 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
     @Override
     public void execute() throws JmriException {
         
-        final Stack stack = _stackHandle.getBean();
+        final Stack stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
         
 //        System.out.format("%s: Push on stack %s. Operation: %s%n", getSystemName(), stack.getSystemName(), _operation.name());
         
@@ -239,20 +186,13 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        String stackName;
-        if (_stackHandle != null) {
-            stackName = _stackHandle.getBean().getDisplayName();
-        } else {
-            stackName = Bundle.getMessage(locale, "BeanNotSelected");
-        }
-        
         switch (_operation) {
             case STRING:
-                return Bundle.getMessage(locale, "PushStack_Long_String", _data, stackName);
+                return Bundle.getMessage(locale, "PushStack_Long_String", _data);
             case MEMORY:
-                return Bundle.getMessage(locale, "PushStack_Long_Memory", memoryName, stackName);
+                return Bundle.getMessage(locale, "PushStack_Long_Memory", memoryName);
             case FORMULA:
-                return Bundle.getMessage(locale, "PushStack_Long_Formula", _data, stackName);
+                return Bundle.getMessage(locale, "PushStack_Long_Formula", _data);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _operation.name());
         }
@@ -278,7 +218,6 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
     @Override
     public void disposeMe() {
         removeMemory();
-        removeStack();
     }
     
     
@@ -288,6 +227,6 @@ public class PushStack extends AbstractDigitalAction implements VetoableChangeLi
         FORMULA;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(PushStack.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PushStack.class);
     
 }
