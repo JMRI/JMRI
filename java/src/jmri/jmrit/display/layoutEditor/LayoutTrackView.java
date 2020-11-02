@@ -17,42 +17,45 @@ import jmri.util.*;
 /**
  * MVC View component abstract base for the LayoutTrack hierarchy.
  * <p>
- * This contains the display information, including screen geometry, for a LayoutEditor panel.
- * The geometry/connectivity information is held in {@link LayoutTrack} subclasses.
+ * This contains the display information, including screen geometry, for a
+ * LayoutEditor panel. The geometry/connectivity information is held in
+ * {@link LayoutTrack} subclasses.
  * <ul>
- *   <li>Position(s) of the screen icons and its parts, typically the center;
- *             scaling and translation; size and bounds
- *   <li>Line colors
- *   <li>Flipped status; drawing details like bezier curve points
- *   <li>Various decorations: arrows, tunnels, bridges
- *   <li>Hidden status
+ * <li>Position(s) of the screen icons and its parts, typically the center;
+ * scaling and translation; size and bounds
+ * <li>Line colors
+ * <li>Flipped status; drawing details like bezier curve points
+ * <li>Various decorations: arrows, tunnels, bridges
+ * <li>Hidden status
  * </ul>
  *
- * @author Bob Jacobsen  Copyright (c) 2020
+ * @author Bob Jacobsen Copyright (c) 2020
  *
  */
 abstract public class LayoutTrackView {
 
     /**
      * Constructor method.
-     * @param track the layout track to view
+     *
+     * @param track        the layout track to view
      * @param layoutEditor the panel in which to place the view
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull LayoutEditor layoutEditor) {
-         this.layoutTrack = track;
-         this.layoutEditor = layoutEditor;
+        this.layoutTrack = track;
+        this.layoutEditor = layoutEditor;
     }
 
     /**
      * constructor method
-     * @param track the track to view
-     * @param c display location
+     *
+     * @param track        the track to view
+     * @param c            display location
      * @param layoutEditor for reference to tools
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
-         this.layoutTrack = track;
-         this.layoutEditor = layoutEditor;
-         this.center = c;
+        this.layoutTrack = track;
+        this.layoutEditor = layoutEditor;
+        this.center = c;
     }
 
     final private LayoutTrack layoutTrack;
@@ -60,8 +63,6 @@ abstract public class LayoutTrackView {
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
-
-
     @Nonnull
     final public String getId() {  // temporary Id vs name; is one for the View?
         return layoutTrack.getId();
@@ -78,7 +79,9 @@ abstract public class LayoutTrackView {
 
     // temporary accessor?  Or is this a long term thing?
     // @Nonnull temporary until we gigure out if can be null or not
-    public LayoutTrack getLayoutTrack() { return layoutTrack; }
+    public LayoutTrack getLayoutTrack() {
+        return layoutTrack;
+    }
 
     /**
      * Set center coordinates
@@ -94,6 +97,7 @@ abstract public class LayoutTrackView {
      * <p>
      * Some subtypes may reimplement this is "center" is a more complicated
      * idea, i.e. for Bezier curves
+     *
      * @param p the coordinates to set
      */
     public void setCoordsCenter(@Nonnull Point2D p) {  // temporary = want to make protected after migration
@@ -120,12 +124,13 @@ abstract public class LayoutTrackView {
 
     /**
      * Set new decorations
-     *
+     * <p>
      * This is a complete replacement of the decorations, not an appending.
      *
-     * @param decorations A map from strings ("arrow", "bridge", "bumper",..)
-     *          to specific value strings ("single", "entry;right", ), perhaps
-     *          including multiple values separated by semicolons.
+     * @param decorations A map from strings ("arrow", "bridge", "bumper",..) to
+     *                    specific value strings ("single", "entry;right", ),
+     *                    perhaps including multiple values separated by
+     *                    semicolons.
      */
     public void setDecorations(Map<String, String> decorations) {
         this.decorations = decorations;
@@ -229,17 +234,19 @@ abstract public class LayoutTrackView {
 
     /**
      * Load a file for a specific arrow ending.
-     * @param n The arrow type as a number
-     * @param arrowsCountMenu menu containing the arrows to set visible selection
+     *
+     * @param n               The arrow type as a number
+     * @param arrowsCountMenu menu containing the arrows to set visible
+     *                        selection
      * @return An item for the arrow menu
      */
     public JCheckBoxMenuItem loadArrowImageToJCBItem(int n, JMenu arrowsCountMenu) {
-            ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle"+n+".png"));
-            JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
-            arrowsCountMenu.add(jcbmi);
-            jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
-            // can't set selected here because the ActionListener has to be set first
-            return jcbmi;
+        ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle" + n + ".png"));
+        JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(imageIcon);
+        arrowsCountMenu.add(jcbmi);
+        jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+        // can't set selected here because the ActionListener has to be set first
+        return jcbmi;
     }
     protected static final int NUM_ARROW_TYPES = 6;
 
@@ -262,6 +269,15 @@ abstract public class LayoutTrackView {
      * @param g2 the graphics context
      */
     abstract protected void drawEditControls(Graphics2D g2);
+
+    /**
+     *
+     * @param g2 TODO:REMOVE THIS! (Skankey hack so I don't have to change all
+     *           drawEditControls methods to public right now)
+     */
+    public void drawEditControlsPublic(Graphics2D g2) {
+        drawEditControls(g2);
+    }
 
     /**
      * Draw the turnout controls
@@ -396,8 +412,8 @@ abstract public class LayoutTrackView {
      * @since 7.4.3
      */
     abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint,
-                                                    boolean useRectangles,
-                                                    boolean requireUnconnected);
+            boolean useRectangles,
+            boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {
@@ -510,11 +526,11 @@ abstract public class LayoutTrackView {
      *
      * @return the list of available connections
      */
-     // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
-     //
-     // This could have just returned a boolean but I thought a list might be
-     // more useful (eventually... not currently being used; we just check to see
-     // if it's not empty.)
+    // note: used by LayoutEditorChecks.setupCheckUnConnectedTracksMenu()
+    //
+    // This could have just returned a boolean but I thought a list might be
+    // more useful (eventually... not currently being used; we just check to see
+    // if it's not empty.)
     @Nonnull
     abstract public List<HitPointType> checkForFreeConnections();
 
@@ -523,8 +539,8 @@ abstract public class LayoutTrackView {
      *
      * @return true if all appropriate blocks have been assigned
      */
-     // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
-     //
+    // note: used by LayoutEditorChecks.setupCheckUnBlockedTracksMenu()
+    //
     abstract public boolean checkForUnAssignedBlocks();
 
     /**
@@ -542,8 +558,8 @@ abstract public class LayoutTrackView {
      * @param blockNamesToTrackNameSetMaps hashmap of key:block names to lists
      *                                     of track name sets for those blocks
      */
-     // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
-     //
+    // note: used by LayoutEditorChecks.setupCheckNonContiguousBlocksMenu()
+    //
     abstract public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps);
 

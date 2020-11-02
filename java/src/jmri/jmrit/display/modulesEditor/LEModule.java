@@ -139,12 +139,19 @@ public class LEModule {
         Point2D center = MathUtil.midPoint(getLayoutEditor().getPanelBounds());
         //log.warn("center: {}, location: {}", center, location);
 
+        g2.setColor(Color.red);
+        g2.fillOval((int) center.getX() - 3, (int) center.getY() - 3, 7, 7);
+
+        g2.setColor(Color.magenta);
+        g2.fillOval((int) midPoly.getX() - 3, (int) midPoly.getY() - 3, 7, 7);
+
 //        Point2D center = MathUtil.subtract(midPoly, location);
 //        g2.translate(midPoly.getX(), midPoly.getY());
 //        g2.translate(-midPoly.getX(), -midPoly.getY());
 //        g2.translate(-center.getX(), -center.getY());
 //        g2.translate(location.getX(), location.getY());
-        g2.rotate(rotationRAD);
+        g2.translate(-location.getX(), -location.getY());
+//        g2.rotate(rotationRAD);
 
         g2.setColor(Color.darkGray);
         getLayoutEditor().getLayoutTrackViews().forEach((tsv) -> {
@@ -152,9 +159,10 @@ public class LEModule {
             if (lt instanceof PositionablePoint) {
                 PositionablePoint pp = (PositionablePoint) lt;
                 if (pp.getType() == EDGE_CONNECTOR) {
-                    Point2D c = tsv.getCoordsCenter();
-                    g2.drawLine((int) c.getX() - 3, (int) c.getY() - 3, (int) c.getX() + 3, (int) c.getY() + 3);
-                    g2.drawLine((int) c.getX() - 3, (int) c.getY() + 3, (int) c.getX() + 3, (int) c.getY() - 3);
+//                    Point2D c = tsv.getCoordsCenter();
+//                    g2.drawLine((int) c.getX() - 3, (int) c.getY() - 3, (int) c.getX() + 3, (int) c.getY() + 3);
+//                    g2.drawLine((int) c.getX() - 3, (int) c.getY() + 3, (int) c.getX() + 3, (int) c.getY() - 3);
+                    tsv.drawEditControlsPublic(g2);
                 }
             } else if (lt.isMainline()) {
                 g2.setStroke(wide);
@@ -165,11 +173,11 @@ public class LEModule {
             }
         });
 
-        g2.setColor(Color.red);
-        g2.fillOval((int) center.getX() - 3, (int) center.getY() - 3, 7, 7);
-
-        g2.setColor(Color.magenta);
-        g2.fillOval((int) midPoly.getX() - 3, (int) midPoly.getY() - 3, 7, 7);
+//        g2.setColor(Color.red);
+//        g2.fillOval((int) center.getX() - 3, (int) center.getY() - 3, 7, 7);
+//
+//        g2.setColor(Color.magenta);
+//        g2.fillOval((int) midPoly.getX() - 3, (int) midPoly.getY() - 3, 7, 7);
 
         // Restore original transform
         g2.setTransform(saveAT);
