@@ -29,7 +29,7 @@ import jmri.util.*;
  * </ul>
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 abstract public class LayoutTrackView {
 
@@ -60,14 +60,14 @@ abstract public class LayoutTrackView {
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
-    
-    
-    @Nonnull 
+
+
+    @Nonnull
     final public String getId() {  // temporary Id vs name; is one for the View?
         return layoutTrack.getId();
     }
 
-    @Nonnull 
+    @Nonnull
     final public String getName() {
         return layoutTrack.getName();
     }
@@ -75,11 +75,11 @@ abstract public class LayoutTrackView {
     final protected void setIdent(@Nonnull String ident) {
         layoutTrack.setIdent(ident);
     }
-    
+
     // temporary accessor?  Or is this a long term thing?
     // @Nonnull temporary until we gigure out if can be null or not
     public LayoutTrack getLayoutTrack() { return layoutTrack; }
-    
+
     /**
      * Set center coordinates
      *
@@ -119,7 +119,7 @@ abstract public class LayoutTrackView {
     }
 
     /**
-     * Set new decorations 
+     * Set new decorations
      *
      * This is a complete replacement of the decorations, not an appending.
      *
@@ -202,6 +202,10 @@ abstract public class LayoutTrackView {
      */
     abstract protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock);
 
+    final public void drawOne(Graphics2D g2, boolean isMain, boolean isBlock) {
+        draw1(g2, isMain, isBlock);
+    }
+
     /**
      * draw two lines (rails)
      *
@@ -238,7 +242,7 @@ abstract public class LayoutTrackView {
             return jcbmi;
     }
     protected static final int NUM_ARROW_TYPES = 6;
-    
+
     /**
      * highlight unconnected connections
      *
@@ -391,8 +395,8 @@ abstract public class LayoutTrackView {
      * @return the location type for the point (or NONE)
      * @since 7.4.3
      */
-    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint, 
-                                                    boolean useRectangles, 
+    abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint,
+                                                    boolean useRectangles,
                                                     boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false

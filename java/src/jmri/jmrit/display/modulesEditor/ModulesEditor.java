@@ -7,7 +7,7 @@ package jmri.jmrit.display.modulesEditor;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.List;
@@ -19,9 +19,11 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.display.*;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.*;
+import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.EDGE_CONNECTOR;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.ColorUtil;
+import jmri.util.MathUtil;
 import jmri.util.swing.JmriColorChooser;
 
 /**
@@ -54,10 +56,10 @@ final public class ModulesEditor extends PanelEditor {
     private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
     // Selected point information
-    public Point2D currentLocation = new Point2D.Double(0.0, 0.0); // current location
-    private final Point2D startDelta = new Point2D.Double(0.0, 0.0); // starting delta coordinates
+    public Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
+    private Point2D startDelta = MathUtil.zeroPoint2D(); // starting delta coordinates
     public Object selectedObject = null;       // selected object, null if nothing selected
-    private Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
+    private Point2D foundLocation = MathUtil.zeroPoint2D(); // location of found object
 
     // Lists of items that describe the Layout, and allow it to be drawn
     private Color defaultTextColor = Color.black;
@@ -77,6 +79,8 @@ final public class ModulesEditor extends PanelEditor {
     private boolean snapToGridOnAdd = true;
     private boolean snapToGridOnMove = true;
     private boolean snapToGridInvert = false;
+
+    private List<LEModule> modules = new ArrayList<>();
 
     public ModulesEditor() {
         this(Bundle.getMessage("DefaultModulesEditorPanelName"));
@@ -367,6 +371,37 @@ final public class ModulesEditor extends PanelEditor {
         snapToGridOnMove = b;
     }
 
+    final public int setGridSize(int newSize) {
+        gridSize1st = newSize;
+        return gridSize1st;
+    }
+
+    /**
+     * Get the width drawing the grid; 10 is the default/initial value.
+     *
+     * @return current value
+     */
+    final public int getGridSize() {
+        return gridSize1st;
+    }
+    private int gridSize1st = 10;
+
+    final public int setGridSize2nd(int newSize) {
+        gridSize2nd = newSize;
+        return gridSize2nd;
+    }
+
+    /**
+     * Get the width for 2nd drawing of the grid; 10 is the default/initial
+     * value.
+     *
+     * @return current value
+     */
+    final public int getGridSize2nd() {
+        return gridSize2nd;
+    }
+    private int gridSize2nd = 10;
+
     @Nonnull
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
@@ -388,14 +423,213 @@ final public class ModulesEditor extends PanelEditor {
         JmriColorChooser.addRecentColor(color);
     }
 
+    /*
+    * Get mouse coordinates and adjust for zoom.
+    * <p>
+    * Side effects on xLoc, yLoc and dLoc
+     */
+    @Nonnull
+    private Point2D calcLocation(MouseEvent event, int dX, int dY) {
+        xLoc = (int) ((event.getX() + dX) / getPaintScale());
+        yLoc = (int) ((event.getY() + dY) / getPaintScale());
+        //dLoc.setLocation(xLoc, yLoc);
+        dLoc = new Point2D.Double(xLoc, yLoc);
+        return dLoc;
+    }
+
+    private Point2D calcLocation(MouseEvent event) {
+        return calcLocation(event, 0, 0);
+    }
+    private Point2D dLoc = MathUtil.zeroPoint2D();
+    private Point2D currentPoint = MathUtil.zeroPoint2D();
+    private LEModule clickedModule = null;
+
+    @Override
     protected void backgroundPopUp(MouseEvent event) {
         if (!isEditable()) {
             return;
         }
-        JPopupMenu popup = new JPopupMenu();
-        setBackgroundMenu(popup);
-        showAddItemPopUp(event, popup);
-        popup.show(event.getComponent(), event.getX(), event.getY());
+        calcLocation(event);
+
+        clickedModule = null;
+        for (LEModule module : modules) {
+            if (MathUtil.isPointInPolygon(dLoc, module.getOutline())) {
+                clickedModule = module;
+                break;
+            }
+        }
+
+        if (event.isPopupTrigger()) {
+            if (clickedModule == null) {
+                JPopupMenu popup = new JPopupMenu();
+                setBackgroundMenu(popup);
+                showAddItemPopUp(event, popup);
+                popup.show(event.getComponent(), event.getX(), event.getY());
+            } else {
+                //TODO: show LEModule popup menu?
+            }
+        } else if (isMetaDown(event)) {
+            //TODO: add dragging code?
+            log.warn("!isPopupTrigger() click!");
+        }
+        if (clickedModule != null) {
+            log.warn("dLoc: {}", dLoc);
+            Point2D l = clickedModule.getLocation();
+            log.warn("     loc: {}", l);
+            Point2D c = MathUtil.midPoint(clickedModule.getLayoutEditor().getPanelBounds());
+            log.warn("     c: {}", c);
+            Point2D c1 = MathUtil.rotateRAD(c, clickedModule.getRotationRAD());
+            log.warn("     c1: {}", c1);
+//            startDelta = MathUtil.subtract(dLoc, c);
+            log.warn("     startDelta: {}", startDelta);
+        }
+    }
+
+    /**
+     * ***************************************************
+     */
+    private boolean delayedPopupTrigger;
+
+    @Override
+    public void mousePressed(MouseEvent event) {
+        log.warn("mousePressed at ({},{}) _dragging: {}", event.getX(), event.getY(), _dragging);
+
+        setToolTip(null); // ends tooltip if displayed
+
+        // initialize mouse position
+        calcLocation(event);
+
+        _anchorX = event.getX();
+        _anchorY = event.getY();
+        _lastX = _anchorX;
+        _lastY = _anchorY;
+        if (_dragging) {
+            return;
+        }
+        startDelta = MathUtil.zeroPoint2D();
+
+//        List<Positionable> selections = getSelectedItems(event);
+//        if (selections.size() > 0) {
+//            if (event.isShiftDown() && selections.size() > 1) {
+//                _currentSelection = selections.get(1);
+//            } else {
+//                _currentSelection = selections.get(0);
+//            }
+//            if (event.isPopupTrigger()) {
+//                log.debug("mousePressed calls showPopUp");
+//                if (isMetaDown(event) || event.isAltDown()) {
+//                    // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+//                    delayedPopupTrigger = true;
+//                } else {
+//                    // no possible conflict with moving, display the popup now
+//                    if (_selectionGroup != null) {
+//                        //Will show the copy option only
+//                        showMultiSelectPopUp(event, _currentSelection);
+//                    } else {
+//                        showPopUp(_currentSelection, event);
+//                    }
+//                }
+//            } else if (!event.isControlDown()) {
+//                _currentSelection.doMousePressed(event);
+//                if (_multiItemCopyGroup != null && !_multiItemCopyGroup.contains(_currentSelection)) {
+//                    _multiItemCopyGroup = null;
+//                }
+//                // _selectionGroup = null;
+//            }
+//        } else {
+        if (event.isPopupTrigger()) {
+            if (isMetaDown(event) || event.isAltDown()) {
+                // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                delayedPopupTrigger = true;
+            } else {
+                if (_multiItemCopyGroup != null) {
+                    pasteItemPopUp(event);
+                } else if (_selectionGroup != null) {
+                    showMultiSelectPopUp(event, _currentSelection);
+                } else {
+                    backgroundPopUp(event);
+                    _currentSelection = null;
+                }
+            }
+        } else {
+            backgroundPopUp(event);
+            _currentSelection = null;
+        }
+//        }
+        // if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
+        if ((event.isControlDown()) || isMetaDown(event) || event.isAltDown()) {
+            //Don't want to do anything, just want to catch it, so that the next two else ifs are not
+            //executed
+        } else if ((_currentSelection == null && _multiItemCopyGroup == null)
+                || (_selectRect != null && !_selectRect.contains(_anchorX, _anchorY))) {
+            _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
+            _selectionGroup = null;
+        } else {
+            _selectRect = null;
+            _selectionGroup = null;
+        }
+        _targetPanel.repaint(); // needed for ToolTip
+    }   // mousePressed
+
+    private boolean isDragging = false;
+
+    @Override
+    public void mouseDragged(@Nonnull MouseEvent event) {
+        log.warn("mouseDragged at ({},{}) _dragging: {}", event.getX(), event.getY(), _dragging);
+
+        setToolTip(null); // ends tooltip if displayed
+
+        // initialize mouse position
+        calcLocation(event);
+
+        // ignore this event if still at the original point
+        if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
+            return;
+        }
+
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
+        // process this mouse dragged event
+//        if (isEditable()) {
+//            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
+//            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+//        }
+        currentPoint = MathUtil.add(dLoc, startDelta);
+        // don't allow negative placement, objects could become unreachable
+        currentPoint = MathUtil.max(currentPoint, MathUtil.zeroPoint2D);
+        if (isEditable()) {
+            if ((clickedModule != null) && isMetaDown(event)) {
+                if (snapToGridOnMove != snapToGridInvert) {
+                    // this snaps currentPoint to the grid
+                    currentPoint = MathUtil.granulize(currentPoint, getGridSize());
+                    xLoc = (int) currentPoint.getX();
+                    yLoc = (int) currentPoint.getY();
+                }
+                clickedModule.setLocation(currentPoint);
+                repaint();
+            }
+        } else {
+            Rectangle r = new Rectangle(event.getX(), event.getY(), 1, 1);
+            ((JComponent) event.getSource()).scrollRectToVisible(r);
+        }   // if (isEditable())
+    }   // mouseDragged
+
+    @Override
+    public void mouseReleased(MouseEvent event) {
+        log.warn("mouseReleased at ({},{}) _dragging: {}", event.getX(), event.getY(), _dragging);
+
+        setToolTip(null); // ends tooltip if displayed
+
+        // initialize mouse position
+        calcLocation(event);
+
+        // if alt modifier is down invert the snap to grid behaviour
+        snapToGridInvert = event.isAltDown();
+
+//        if (isEditable() && (clickedModule != null)) {
+        clickedModule = null;
+//        }
     }
 
     protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup) {
@@ -413,14 +647,15 @@ final public class ModulesEditor extends PanelEditor {
     }
 
     protected void addItemPopUp(final LayoutEditor layoutEditor, JMenu menu) {
-
         ActionListener a = new ActionListener() {
             //final String desiredName = name;
             @Override
             public void actionPerformed(ActionEvent e) {
                 addItemViaMouseClick = true;
-                ///getIconFrame(layoutEditor.getName());
-                //TODO: FINISH THIS!
+                LEModule module = new LEModule(layoutEditor);
+                module.setLocation(dLoc);
+                modules.add(module);
+                repaint();
             }
 
             ActionListener init(LayoutEditor layoutEditor) {
@@ -440,8 +675,76 @@ final public class ModulesEditor extends PanelEditor {
     @Override
     public void paintTargetPanel(@Nonnull Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
+
+        if (drawGrid) {
+            drawGrid(g2);
+        }
+
+        BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        //BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
+        g2.setStroke(narrow);
+
+        g2.setColor(Color.RED);
         Rectangle r = g2.getClipBounds();
         g2.drawOval(0, 0, (int) r.getWidth(), (int) r.getHeight());
+
+        for (LEModule module : modules) {
+            module.draw(g2);
+        }
+    }
+
+    private void drawGrid(Graphics2D g2) {
+        int wideMod = getGridSize() * getGridSize2nd();
+        int wideMin = getGridSize() / 2;
+
+        // This is the bounds of what's on the screen
+        JScrollPane scrollPane = getPanelScrollPane();
+        Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+
+        int minX = 0;
+        int minY = 0;
+        // granulize puts these on getGridSize() increments
+        int maxX = (int) MathUtil.granulize(scrollBounds.getWidth(), getGridSize());
+        int maxY = (int) MathUtil.granulize(scrollBounds.getHeight(), getGridSize());
+
+        log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
+
+        Point2D startPt = new Point2D.Double();
+        Point2D stopPt = new Point2D.Double();
+        BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+
+        g2.setColor(Color.gray);
+        g2.setStroke(narrow);
+
+        // draw horizontal lines
+        for (int y = minY; y <= maxY; y += getGridSize()) {
+            startPt.setLocation(minX, y);
+            stopPt.setLocation(maxX, y);
+
+            if ((y % wideMod) < wideMin) {
+                g2.setStroke(wide);
+                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.setStroke(narrow);
+            } else {
+                g2.draw(new Line2D.Double(startPt, stopPt));
+            }
+        }
+
+        // draw vertical lines
+        for (int x = minX; x <= maxX; x += getGridSize()) {
+            startPt.setLocation(x, minY);
+            stopPt.setLocation(x, maxY);
+
+            if ((x % wideMod) < wideMin) {
+                g2.setStroke(wide);
+                g2.draw(new Line2D.Double(startPt, stopPt));
+                g2.setStroke(narrow);
+            } else {
+                g2.draw(new Line2D.Double(startPt, stopPt));
+            }
+        }
     }
 
     // initialize logging
