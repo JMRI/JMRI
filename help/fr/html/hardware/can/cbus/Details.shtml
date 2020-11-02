@@ -1,66 +1,206 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR
+"http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="fr">
-<head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-16-->
-<title>JMRI Hardware Support - CBUS - Tech Details</title>
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+< t&#234;te>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X" (vers 31 octobre 2006 - Apple Inc. build 15.17), voir www.w3.org">
+  <meta name="keywords" content="JMRI help MERG CBUS Connecting connection canusb4 network">
+  <title>JMRI Hardware Assistance - MERG CBUS - Tech Details</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html ; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
-<body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<corps>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<h1>Structure Mat&#233;riel:  CBUS - D&#233;tails Support Technique</h1>
+      <h1>Assistance mat&#233;riel : CBUS MERG - D&#233;tails de la connexion</h1>
+       <ul class="snav">
+        <li><a href="#canid">ID R&#233;seau CBUS CAN </a></li>
+        <li><a href="#c1">CAN via MERG CAN-RS ou CAN-USB</a></li>
+        <li><a href="#c2">CAN via l'interface du r&#233;seau MERG</a></li>
+        <li><a href="#c3">CAN via l'adaptateur GridConnect</a></li>
+        <li><a href="#c4">CAN via l'interface de r&#233;seau GridConnect</a></li>
+        <li><a href="#c5">CAN via Lawicell CANUSB</a></li>
+        <li><a href="#c6">Simulation de CAN</a><</li>
+        <li><a href="#c7">Connexion s&#233;rie directe</a></li>
+       </ul>
 
-<em>Le support sur cette page est en &#233;volution rapide, le
-code r&#233;el pourrait &#233;tre en avance ou en retard sur la documentation
-un jour donn&#233;.</em><p>
+      <p>Cette page d&#233;crit les d&#233;tails techniques du support de connexion du CBUS MERG de JMRI
+      .</p>
 
-Cette page d&#233;crit les d&#233;tails techniques dde la prise en charge JMRI pour
-<a href="index.shtml"> CBUS </a>
- Voir aussi les pages sur le
-<A href="../index.shtml"> soutien g&#233;n&#233;ral JMRI pour CAN </a>.
-<p>
+      <h2>Adaptateurs CAN</h2>
 
-<h2>Adaptateurs CAN</h2>
+      <img align="right" src="images/connection/merg-system-connection-400x290.png" 
+      width="400" height="290" alt="JMRI MERG Connections">
 
-L'approche g&#233;n&#233;rale JMRI est de prendre en charge le plus grand nombre de
-combinaisons de mat&#233;riel possibles. En soutenant le plus 
-grand nombre possible de personnes et leurs mat&#233;riels, nous
-pouvons cr&#233;er une communaut&#233; grandissante de d&#233;veloppeurs, donc plus de
-code.
+      <p> L'approche g&#233;n&#233;rale de JMRI est de soutenir 
+      de nombreuses combinaisons de mat&#233;riel. En soutenant le plus grand nombre possible de
+      personnes et leurs d&#233;sirs mat&#233;riels, nous pouvons cr&#233;er
+      une communaut&#233; croissante de d&#233;veloppeurs, donc plus de code.
+      <br>
+      Dans ce cadre, le soutien du JMRI CAN est conçu pour utiliser
+      autant de types d'adaptateurs CAN que possible.
+      <br>
+      Peu de PC disposent aujourd'hui d'un port s&#233;rie RS232, mais il est toujours pris en charge.
+      </p>
+      
+      <ul>
+        <li><a href="#c1">CAN via MERG CAN-RS ou CAN-USB</a></li>
+        <li><a href="#c2">CAN via l'interface du r&#233;seau MERG</a></li>
+        <li><a href="#c3">CAN via l'adaptateur GridConnect</a></li>
+        <li><a href="#c4">CAN via l'interface de r&#233;seau GridConnect</a></li>
+        <li><a href="#c5">CAN via Lawicell CANUSB</a></li>
+        <li><a href="#c6">Simulation de CAN</a><</li>
+        <li><a href="#c7">Connexion s&#233;rie directe</a></li>
+      </ul>
 
-<P>
-Dans le cadre de la pr&#233;sente, la prise en charge JMRI CAN est con&#231;ue pour
-utiliser autant de types d'adaptateur CAN que possible..
+      <p>Lorsque des interfaces USB sont utilis&#233;es, le d&#233;bit en bauds n'est pas pertinent.</p>
 
-<P>
-Le MERG CAN-RS peut faire "l'&#233;num&#233;ration " pour CBUS, mais
-de nombreux autres adaptateurs ne peuvent pas &#233;tre utilis&#233;s
-en raison de leur latence intrins&#232;que.
-Leurs r&#233;ponses lentes les rend effectivement invisibles.
+      <h2><a name="canid" id="canid">ID R&#233;seau CBUS CAN MERG</a><</h2>
+      
+        <p>Tous les modules CBUS MERG ont besoin d'une ID CAN, et l'jmri ne fait pas exception &#224; la r&#232;gle.</p>
+        
+        <p>Les modules ne doivent pas avoir un double CAN ID</p>
+        
+        <Le CAN ID est distinct de tout NODE ID utilis&#233; dans le cadre des &#233;v&#233;nements longs du MERG CBUS.</p>
 
-<P>
-Par cons&#233;quent, Mike Bolton, l'un des d&#233;veloppeurs du CBUS
-a sugg&#233;r&#233; que JMRI utilise un ID CBUS de 126. Actuellement, c'est une valeur fixe.
+        <p>Les num&#233;ros de N&#156;uds sont pour les &#233;v&#233;nements longs du CBUS MERG , les ID CAN sont uniquement pour la transmission du protocole CAN 
+        et sont largement hors de propos dans le traitement par JMRI des &#233;v&#233;nements CBUS MERG .</p>
+      
+        <p>La plupart des modules MERG peuvent effectuer un "d&#233;nombrement" pour le CBUS MERG, 
+        mais certains autres adaptateurs ne peuvent pas le faire en raison de leur latence intrins&#232;que.
+        La lenteur de leurs r&#233;ponses les rend en effet invisibles.
+        <br>
+        C'est pourquoi Mike Bolton, l'un des d&#233;veloppeurs du CBUS MERG 
+        a sugg&#233;r&#233; que JMRI utilise un CAN ID de 126. C'est un
+        valeur fixe dans certains syst&#232;mes.</p>
 
-<a name="documentation"></a><h2>Documentation</h2>
-<h3>Aide JMRI</h3>
-<p>Retour &#224; la page  <a href="index.shtml">Aide Principale CBUS</a>
-<p>Lire aussi la  <a href="../index.shtml">prise en charge g&#233;n&#233;rale de CAN dans JMRI</a>
+      <p>Si vous avez plusieurs copies de JMRI attach&#233;es &#224; un r&#233;seau CBUS MERG,
+      Veillez &#224; donner ces identifiants CAN uniques.
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <h3><a name="c1" id="c1">CAN via MERG CAN-RS ou CAN-USB</a><</h3>
+      
+      <img src="images/connection/merg-connection-canrs-canusb-350x250.jpg"
+      width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align="right">
+
+        <p>Un CANUSB4 ne devrait normalement pas n&#233;cessiter l'installation de pilotes sp&#233;ciaux, il devrait juste fonctionner.</p>
+
+        <p>Si vous utilisez un MacBook Pro avec Mojave et que vous avez des difficult&#233;s avec les pilotes pour un CANUSB / CANUSB2, 
+        le pilote appropri&#233; est disponible aupr&#232;s du FDTI pour l'UM245R, l'option VCP. 
+        <br>
+        (Conseil fourni par John (G8GKU) via <a
+        href="https://groups.io/g/jmriusers/topic/running_jmri_from_a_macbook/28888237?p=,,,50,0,0,0::recentpostdate%2Fsticky,,,50,2,0,28888237"
+        >JMRI Users at Groups.io</a>)
+        </p>
+
+        <p>R&#233;glage par d&#233;faut indiqu&#233; &#224; droite apr&#232;s le " : " </p>
+      
+        <p>Port s&#233;rie - S&#233;lectionnez le port s&#233;rie ou USB sur lequel votre interface CAN est branch&#233;e.</p>
+        <p>Pr&#233;fixe de connexion : "M"</p>
+        <p>Nom de la connexion : "MERG"</p>
+        <em>Param&#232;tres de connexion suppl&#233;mentaires affich&#233;s lorsque la case est coch&#233;e</em>
+        <p>vitesse en baud
+
+	<p> Protocole de connexion : "CBUS MERG " (les autres options sont "OpenLCB", "Raw CAN" et "Test - ne pas utiliser")</p>
+        <p>Intervalle de sortie : 250 ms</p>
+
+      <h3><a name="c4" id="c4">CAN via l'interface de r&#233;seau GridConnect</a></h3>
+      <img src="images/connection/merg-connection-gridconnect-network-interface-300x267.png"
+      width="300" height="267" alt="JMRI MERG GridConnect Network Interface" align="right">
+        <p>Adresse IP / Nom d'h&#244;te : (aucun) - entrez une adresse IP pour une configuration enti&#232;rement manuelle.  Nom d'h&#244;te optionnel pour la configuration ZeroConf / mDNS. </p>
+        <p>Port TCP/UDP  : 0 - R&#233;glage de l'adresse de port de la connexion TCP</p>
+        <p> Protocole de connexion : " CBUS MERG " (les autres options sont "OpenLCB", "Raw CAN" et "Test - ne pas utiliser")</p>
+        <p>Pr&#233;fixe de connexion : "M"</p>
+        <p>Nom de la connexion : "MERG"</p>
+        <em>Param&#232;tres de connexion suppl&#233;mentaires affich&#233;s lorsque la case est coch&#233;e</em>
+        <p>Passerelle : Pass All ( Filtrage &#233;galement s&#233;lectionnable )</p>
+        <p>Intervalle de sortie : 250 ms</p>
+
+      <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a><</h3>
+      <img src="images/connection/merg-connection-lawicell.png"
+      width="294" height="211" alt="JMRI MERG Lawicell USB Connection" align="right">
+        <p>Port s&#233;rie - S&#233;lectionnez le port s&#233;rie ou USB sur lequel votre interface CAN est branch&#233;e.</p>
+        <p>Pr&#233;fixe de connexion : "M"</p>
+        <p>Nom de la connexion : "MERG"</p>
+        <em>Param&#232;tres de connexion suppl&#233;mentaires affich&#233;s lorsque la case est coch&#233;e</em>
+        <p>Taux de transmission</p>
+        <ul>
+        <li>57 600 (par d&#233;faut)</li>
+        <li>115,200</li>
+        <li>230,400</li>
+        <li>250.000</li>
+        <li>333,333</li>
+        <li>460 800</li>
+        <li>500.000</li>
+        </ul>
+        
+        <p> Protocole de connexion : "MERG CBUS" (les autres options sont "OpenLCB", "Raw CAN" et "Test - ne pas utiliser")</p>
+        <p>Intervalle de sortie : 250 ms</p>
+
+      <h3><a name="c6" id="c6">Simulation de CAN</a><</h3>
+      
+         <img src="images/connection/merg-connection-simulation-330x215.png"
+      width="330" height="215" alt="JMRI MERG CAN Simulation Connection" align="right">
+
+        <p>Un poste de commande simul&#233; est d&#233;marr&#233; pour cette connexion,
+        see <a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+        >Outils de simulation du CBUS</a>.</p>
+        <p>D&#233;faut de CAN ID 120</p>
+      
+        <p>Port s&#233;rie : (aucun)</p>
+        <p>Pr&#233;fixe de connexion : "M"</p>
+        <p>Nom de la connexion : "MERG"</p>
+        <em>Param&#232;tres de connexion suppl&#233;mentaires affich&#233;s lorsque la case est coch&#233;e</em>
+        <p> Protocole de connexion : "MERG CBUS" (les autres options sont "OpenLCB", "Raw CAN" et "Test - ne pas utiliser") </p>
+
+      <h3><a name="c7" id="c7">Connexion s&#233;rie directe</a><</h3>
+      
+      <img src="images/connection/merg-connection-direct-serial-330x288.png"
+      width="330" height="288" alt="JMRI MERG Direct Serial Connection RfID" align="right">
+      
+        <p>Port s&#233;rie - Choisissez le port s&#233;rie ou USB sur lequel votre interface CAN est branch&#233;e.</p>
+        <p>Gamme du concentrateur S&#233;lectionnez : "A-H", non s&#233;lectionnable dans la case gris&#233;e
+        <p>Device Type Select : "MOD-RFID125", non s&#233;lectionnable dans la zone gris&#233;e select box</p>
+        <p>Adapter Select : Generic Stand-alone ( MERG Concentrator alternate option, choosing this allows the Concentrator Range select, with an additional "I-P" option )</p>
+        <p>S&#233;lection du protocole : CORE-ID 
+        <br>Alternate option - Olimex, active un type de dispositif MOD-RFID1356MIFARE dans le menu d&#233;roulant type de dispositif.
+        <br>Alternate option - Parallax
+        <br>Option alternative - SeeedStudio
+        <br>Option alternative - EM-18
+        </p>
+        <p>Pr&#233;fixe de connexion : "F"</p>
+        <p>Nom de la connexion : Rfid</p>
+        <em>Param&#232;tres de connexion suppl&#233;mentaires affich&#233;s lorsque la case est coch&#233;e</em>
+        <p>Baud rate : automatique ( non s&#233;lectionnable, case gris&#233;e )</p>
+        <p>Intervalle de sortie : 250 ms</p>
+
+      <h2>JMRI Aide</h2>
+
+        <p><a href="index.shtml">Page d'aide principale du CBUS JMRI MERG</a></p>
+
+        <p><a href="../index.shtml">Assistance G&#233;n&#233;ral JMRI CAN </a><</p>
+        
+        <p><a href="../../rfid/index.shtml">Assistance JMRI RFID</a><</p>
+        
+        <p><a href="index.shtml#thirdparty">Liens tiers du CBUS MERG</a> Voir le lien pour le guide des d&#233;veloppeurs du CBUS MERG </p>
+        
+        
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
+
+
