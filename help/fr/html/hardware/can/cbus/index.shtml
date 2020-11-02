@@ -37,12 +37,13 @@
 JMRI fournit une prise en charge pour les 
 <a href="../../../tools/Sensors.shtml"> Capteurs</a> g&#233;n&#233;raux JMRI
  les
-<a href="../../../tools/Turnouts.shtml"> Aiguillages</a>  g&#233;n&#233;raux JMRI
+<a href="../../../tools/Turnouts.shtml"> Aiguillages</a> et  <a href=
+      "../../../tools/Lights.shtml"> Lumi&#232;res de JMRI
 en termes d'"&#233;v&#233;nements" CBUS.
 
 Le <a  href="../../../doc/Technical/Names.shtml"> syst&#232;me de lettre</a>
 pour les connexions CBUS est "M". 
-<p>D&#233;tails  d'&#233;v&#233;nement CBUS et les noms des objet sont
+<p>Les D&#233;tails  d'&#233;v&#233;nement CBUS et les noms des objet sont
 d&#233;crits ci-dessous, avec des d&#233;tails techniques sur une
 <a href="Names.shtml"> page s&#233;par&#233;e</a>.
 
@@ -58,19 +59,104 @@ sur un circuit particulier
 , ces noms syst&#232;mes peuvent &#234;tre tr&#232;s long, auquel
 cas, le "nom utilisateur" devient beaucoup plus utile. 
 
+<h3>Ajout d'un &#233;l&#233;ment dans la table</h3>
+      <p>Lorsque vous ajoutez un &#233;l&#233;ment &#224; l'un des tableaux, il vous suffit souvent de remplir les chiffres pour que JMRI construise le nom complet du syst&#232;me.<br>
+      Voici un r&#233;sum&#233;, divis&#233; pour les Sorties (par exemple, les Aiguillages) et les Entr&#233;es (par exemple, les Capteurs):</p>
+      
+      <table>
+        <tbody><tr>
+          <th>In/Out</th>
+          <th>Entry</th>
+          <th>Meaning</th>
+          <th>makes System Name</th>
+          <th>Mask</th>
+          <th>Equivalent</th>
+          <th>Minimum</th>
+          <th>Maximum</th>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>200018M07</td>
+          <td>listen to Events 18 .. 1F</td>
+          <td>MS200018M07</td>
+          <td>+ M + hex mask</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>in</td>
+          <td>X91012;X91019</td>
+          <td>hex CAN frame msg. Active; Inactive</td>
+          <td>MTX91012;X91019</td>
+          <td>hex ; hex</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18</td>
+          <td>event 18 On; 18 Off</td>
+          <td>MT18</td>
+          <td>integer</td>
+          <td>+18;-18</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>18;21</td>
+          <td>event 18 On; 21 On</td>
+          <td>MT18;21</td>
+          <td>integer ; integer</td>
+          <td>+18;+21</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>+18;-21</td>
+          <td>event 18 On; 21 Off</td>
+          <td>MT+18;-21</td>
+          <td>idem signed</td>
+          <td>N/A</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>2000018</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MT200018</td>
+          <td>node + (5 digits)</td>
+          <td>N2E18</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td>both</td>
+          <td>N2E18</td>
+          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
+          <td>MTN2E18</td>
+          <td>N + number + E + number</td>
+          <td>2000018</td>
+          <td>Note: not working</td>
+          <td> </td>
+        </tr>
+        </tbody></table>
+      <!-- ce tableau est un extrait du tableau du fichier help/en/html/doc/Technical/Names.shtml 
+      bas&#233; sur les informations des pages d'aide sur le mat&#233;riel par Egbert Broerse @silverailscolo July 2017 -->
+
 <h2>Capteurs</h2>
 <p>
-Les messages CBUS entrant dans une applications JMRI peuvent &#234;tre consult&#233;s
-via des objets capteur JMRI. Le<a href="Names.shtml"> Nom Syst&#232;me</a> des capteurs
-d&#233;termine &#224; quel(s) message(s) CBUS (s) il correspond.
-
-Le codage Un capteur est d&#233;fini par deux &#233;v&#233;nements: L'un, qui est ACTIF, et
-celui qui est INACTIF.
-
-Si ces images sont mapp&#233;es &#224; ON et OFF avec le m&#234;me num&#233;ro ID d'&#233;v&#233;nement, respectivement, seul
-le nombre d'ID d'&#233;v&#233;nement doit &#234;tre pr&#233;cis&#233;:
-<br><code>MS18</code><br>
-Le nombre est d&#233;cimal.
+<p>Les messages BUS arrivant dans les applications JMRI sont accessibles via les objets capteurs JMRI. 
+Le capteur <a href= "Names.shtml">Nom du syst&#232;me</a> d&#233;termine &#224; quel(s) message(s) CBUS 
+il correspond. Un capteur est d&#233;fini par deux &#233;v&#233;nements : Celui qui le rend Actif, 
+et celui qui le rend Inactif. Si ceux-ci sont mis en correspondance avec des 
+trames ON et OFF avec le m&#234;me num&#233;ro d'identification d'&#233;v&#233;nement, respectivement, 
+seul le num&#233;ro d'identification d'&#233;v&#233;nement doit &#234;tre sp&#233;cifi&#233;:<br> 
+<code>MS18</code><br> Le num&#233;ro est d&#233;cimal.</p>
 
 <p>
 Pour accro&#238;tre la polyvalence, il est possible d'utiliser diff&#233;rents num&#233;ros d'ID d'&#233;v&#233;nement
@@ -148,7 +234,7 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
   <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
  	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoyer Trame</a></li>
 	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a>
-	<li>Tableau &#201;v&#233;neme</li>
+	<li><li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml"> Tableau &#201;v&#233;neme</li>
 	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration de N&#339;ud</a></li>
 	</ul>
 
@@ -157,8 +243,21 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
 	<ul>
 	<li>La d&#233;nomination des Entr&#233;es et des Sorties CBUS est d&#233;crites <a href="Names.shtml">ici</a>.
 	<li><a href="Details.shtml">D&#233;tails technique du support CBUS</a>
-	<li><a href="../index.shtml">Page d'AidePrincipale du support CAN</a> includant des liens pour obtenir plus d'outils.
+	<li><a href="../index.shtml">Page d'Aide Principale du support CAN</a> includnt des liens pour obtenir plus d'outils.
 	</ul>
+	
+	<h3>Tierce Partie/Support</h3>
+      <ul>
+        <li><a href="http://www.merg.org.uk/merg_resources/cbus-dcc.php"> les pages d'aides
+        The Model Electronic Railway Group MERG-DCC</a>
+        </li>
+      </ul>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
