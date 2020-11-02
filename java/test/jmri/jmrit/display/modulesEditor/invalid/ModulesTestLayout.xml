@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>21</minor>
+    <test>3</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+      <userName>Turnout 1</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+      <userName>Turnout 2</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+      <userName>Turnout 3</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+      <userName>Turnout 4</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <userName>Turnout 5</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+      <userName>Turnout 6</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+      <userName>Turnout 7</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+      <userName>Turnout 8</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+      <userName>Turnout 9</userName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory>
+      <systemName>IM1</systemName>
+      <userName>PLUGH</userName>
+    </memory>
+  </memories>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB1">
+      <systemName>IB1</systemName>
+      <userName>Yard</userName>
+    </block>
+    <block systemName="IB2">
+      <systemName>IB2</systemName>
+      <userName>South Yard</userName>
+    </block>
+    <block systemName="IB3">
+      <systemName>IB3</systemName>
+      <userName>West</userName>
+    </block>
+    <block systemName="IB4">
+      <systemName>IB4</systemName>
+      <userName>East</userName>
+    </block>
+    <block systemName="IB5">
+      <systemName>IB5</systemName>
+      <userName>SW Sliding</userName>
+    </block>
+    <block systemName="IB6">
+      <systemName>IB6</systemName>
+      <userName>SE Sliding</userName>
+    </block>
+    <block systemName="IB7">
+      <systemName>IB7</systemName>
+      <userName>North</userName>
+    </block>
+    <block systemName="IB1" length="0.0" curve="0">
+      <systemName>IB1</systemName>
+      <userName>Yard</userName>
+      <permissive>no</permissive>
+      <path todir="80" fromdir="160" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 2" />
+        </beansetting>
+      </path>
+      <path todir="80" fromdir="160" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 3" />
+        </beansetting>
+      </path>
+      <path todir="144" fromdir="96" block="IB7">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 1" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB2" length="0.0" curve="0">
+      <systemName>IB2</systemName>
+      <userName>South Yard</userName>
+      <permissive>no</permissive>
+      <path todir="16" fromdir="32" block="IB3" />
+      <path todir="16" fromdir="32" block="IB3" />
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="16" fromdir="32" block="IB4" />
+      <path todir="16" fromdir="32" block="IB4" />
+      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="128" fromdir="64" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 7" />
+        </beansetting>
+      </path>
+      <path todir="128" fromdir="64" block="IB5">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 7" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB6">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 9" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB6">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 9" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB3" length="0.0" curve="0">
+      <systemName>IB3</systemName>
+      <userName>West</userName>
+      <permissive>no</permissive>
+      <path todir="32" fromdir="16" block="IB2" />
+      <path todir="32" fromdir="16" block="IB2" />
+      <path todir="64" fromdir="128" block="IB2" />
+      <path todir="64" fromdir="128" block="IB2" />
+      <path todir="16" fromdir="32" block="IB7" />
+      <path todir="16" fromdir="32" block="IB7" />
+      <path todir="64" fromdir="128" block="IB7" />
+      <path todir="64" fromdir="128" block="IB7" />
+    </block>
+    <block systemName="IB4" length="0.0" curve="0">
+      <systemName>IB4</systemName>
+      <userName>East</userName>
+      <permissive>no</permissive>
+      <path todir="32" fromdir="16" block="IB2" />
+      <path todir="32" fromdir="16" block="IB2" />
+      <path todir="128" fromdir="64" block="IB2" />
+      <path todir="128" fromdir="64" block="IB2" />
+      <path todir="16" fromdir="32" block="IB7" />
+      <path todir="16" fromdir="32" block="IB7" />
+      <path todir="128" fromdir="64" block="IB7" />
+      <path todir="128" fromdir="64" block="IB7" />
+    </block>
+    <block systemName="IB5" length="0.0" curve="0">
+      <systemName>IB5</systemName>
+      <userName>SW Sliding</userName>
+      <permissive>no</permissive>
+      <path todir="64" fromdir="128" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 7" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB6" length="0.0" curve="0">
+      <systemName>IB6</systemName>
+      <userName>SE Sliding</userName>
+      <permissive>no</permissive>
+      <path todir="128" fromdir="64" block="IB2">
+        <beansetting setting="2">
+          <turnout systemName="Turnout 9" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB7" length="0.0" curve="0">
+      <systemName>IB7</systemName>
+      <userName>North</userName>
+      <permissive>no</permissive>
+      <path todir="96" fromdir="144" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 1" />
+        </beansetting>
+      </path>
+      <path todir="96" fromdir="144" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 1" />
+        </beansetting>
+      </path>
+      <path todir="160" fromdir="80" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 3" />
+        </beansetting>
+      </path>
+      <path todir="160" fromdir="80" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 3" />
+        </beansetting>
+      </path>
+      <path todir="160" fromdir="80" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 2" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="Turnout 3" />
+        </beansetting>
+      </path>
+      <path todir="160" fromdir="80" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="Turnout 2" />
+        </beansetting>
+        <beansetting setting="2">
+          <turnout systemName="Turnout 3" />
+        </beansetting>
+      </path>
+      <path todir="32" fromdir="16" block="IB3" />
+      <path todir="32" fromdir="16" block="IB3" />
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="128" fromdir="64" block="IB3" />
+      <path todir="32" fromdir="16" block="IB4" />
+      <path todir="32" fromdir="16" block="IB4" />
+      <path todir="64" fromdir="128" block="IB4" />
+      <path todir="64" fromdir="128" block="IB4" />
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" occupiedsense="2" trackcolor="cyan" occupiedcolor="red" extracolor="green" memory="XYZZY">
+      <systemName>ILB1</systemName>
+      <userName>Yard</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupiedsense="2" trackcolor="cyan" occupiedcolor="red" extracolor="green">
+      <systemName>ILB2</systemName>
+      <userName>West</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupiedsense="2" trackcolor="#33FFFF" occupiedcolor="red" extracolor="green">
+      <systemName>ILB3</systemName>
+      <userName>East</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupiedsense="2" trackcolor="#33FFFF" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>SW Sliding</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupiedsense="2" trackcolor="#33FFFF" occupiedcolor="red" extracolor="green">
+      <systemName>ILB5</systemName>
+      <userName>SE Sliding</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB6" occupiedsense="2" trackcolor="cyan" occupiedcolor="red" extracolor="green">
+      <systemName>ILB6</systemName>
+      <userName>North</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB7" occupiedsense="2" trackcolor="#33FFFF" occupiedcolor="red" extracolor="green">
+      <systemName>ILB7</systemName>
+      <userName>South Yard</userName>
+    </layoutblock>
+  </layoutblocks>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Modules Test Layout (North)" x="0" y="0" windowheight="834" windowwidth="1920" panelheight="270" panelwidth="550" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="yes" turnoutcircles="yes" tooltipsnotedit="yes" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="204" greenBackground="255" blueBackground="204" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Modules Test Layout (North)" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>4</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>2</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <layoutturnout ident="TO4" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="202.0" ycen="40.0" xa="184.0" ya="40.0" xb="220.0" yb="40.0" xc="220.0" yc="50.0" xd="184.0" yd="40.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="Turnout 1" blockname="North" connectaname="T19" connectbname="T12" connectcname="T10" />
+    <layoutturnout ident="TO8" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="320.0" ycen="40.0" xa="360.0" ya="40.0" xb="280.0" yb="40.0" xc="300.0" yc="50.0" xd="360.0" yd="40.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="Turnout 2" blockname="North" connectaname="T15" connectbname="T12" connectcname="T11" />
+    <layoutturnout ident="TO5" type="WYE_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="200.0" ycen="100.0" xa="216.13423843904454" ya="92.10246276855469" xb="180.0000015154656" yb="100.0" xc="187.7315216064453" yc="115.79507446289062" xd="219.9999984845344" yd="100.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutWyeXml" turnoutname="Turnout 4" blockname="Yard" connectaname="T9" connectbname="T13" connectcname="T14" />
+    <layoutturnout ident="TO6" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="400.0" ycen="40.0" xa="420.0" ya="40.0" xb="380.0" yb="40.0" xc="380.0" yc="50.0" xd="420.0" yd="40.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="Turnout 3" blockname="North" connectaname="T16" connectbname="T15" connectcname="T17" />
+    <tracksegment ident="T10" blockname="Yard" connect1name="TO4" type1="TURNOUT_C" connect2name="X0" type2="LEVEL_XING_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T11" blockname="Yard" connect1name="X0" type1="LEVEL_XING_D" connect2name="TO8" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T12" blockname="North" connect1name="TO4" type1="TURNOUT_B" connect2name="TO8" type2="TURNOUT_B" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T9" blockname="Yard" connect1name="TO5" type1="TURNOUT_A" connect2name="X0" type2="LEVEL_XING_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T13" blockname="Yard" connect1name="EB3" type1="POS_POINT" connect2name="TO5" type2="TURNOUT_B" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T14" blockname="Yard" connect1name="TO5" type1="TURNOUT_C" connect2name="EB4" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="stop" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T15" blockname="North" connect1name="TO6" type1="TURNOUT_B" connect2name="TO8" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="Yard" connect1name="SL1" type1="SLIP_D" connect2name="TO6" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" blockname="Yard" connect1name="SL1" type1="SLIP_B" connect2name="EB5" type2="POS_POINT" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <controlpoints>
+        <controlpoint index="0" x="220.0" y="130.0" />
+        <controlpoint index="1" x="180.0" y="170.0" />
+      </controlpoints>
+      <decorations>
+        <bumper end="stop" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T22" blockname="Yard" connect1name="SL1" type1="SLIP_C" connect2name="EB6" type2="POS_POINT" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <controlpoints>
+        <controlpoint index="0" x="400.0" y="140.0" />
+        <controlpoint index="1" x="420.0" y="140.0" />
+      </controlpoints>
+      <decorations>
+        <bumper end="stop" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T0" blockname="Yard" connect1name="X0" type1="LEVEL_XING_C" connect2name="SL1" type2="SLIP_A" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T16" blockname="North" connect1name="TO6" type1="TURNOUT_A" connect2name="EC3" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T19" blockname="North" connect1name="TO4" type1="TURNOUT_A" connect2name="EC2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <positionablepoint ident="EB3" type="END_BUMPER" x="110.0" y="100.0" connect1name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="120.0" y="200.0" connect1name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="END_BUMPER" x="150.0" y="220.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="END_BUMPER" x="500.0" y="140.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC2" type="EDGE_CONNECTOR" x="160.0" y="40.0" connect1name="T19" connect2name="T1" linkedpanel="Modules Test Layout (West)" linkpointid="EC1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC3" type="EDGE_CONNECTOR" x="440.0" y="40.0" connect1name="T16" connect2name="T8" linkedpanel="Modules Test Layout (East)" linkpointid="EC4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <levelxing ident="X0" blocknameac="Yard" blocknamebd="Yard" connectaname="T10" connectbname="T9" connectcname="T0" connectdname="T11" xcen="260.0" ycen="70.0" xa="240.0" ya="60.0" xb="240.0" yb="80.0" class="jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml" />
+    <layoutSlip ident="SL1" slipType="DOUBLE_SLIP" hidden="no" disabled="no" disableWhenOccupied="no" xcen="300.0" ycen="90.0" xa="280.0" ya="80.0" xb="280.0" yb="100.0" blockname="Yard" connectaname="T0" connectbname="T18" connectcname="T22" connectdname="T17" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleSlipXml">
+      <turnout>Turnout 5</turnout>
+      <turnoutB>Turnout 6</turnoutB>
+      <states>
+        <A-C>
+          <turnout>2</turnout>
+          <turnoutB>2</turnoutB>
+        </A-C>
+        <A-D>
+          <turnout>2</turnout>
+          <turnoutB>4</turnoutB>
+        </A-D>
+        <B-D>
+          <turnout>4</turnout>
+          <turnoutB>4</turnoutB>
+        </B-D>
+        <B-C>
+          <turnout>4</turnout>
+          <turnoutB>2</turnoutB>
+        </B-C>
+      </states>
+    </layoutSlip>
+  </LayoutEditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Modules Test Layout (South)" x="0" y="0" windowheight="834" windowwidth="1920" panelheight="310" panelwidth="620" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="yes" turnoutcircles="yes" tooltipsnotedit="yes" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="204" greenBackground="255" blueBackground="204" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Modules Test Layout (South)" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>4</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>2</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <layoutturnout ident="TO1" type="RH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="210.0" ycen="250.0" xa="180.0" ya="240.0" xb="219.99999" yb="240.0" xc="240.0" yc="260.0" xd="200.00001" yd="260.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHXOverXml" turnoutname="Turnout 7" blockname="South Yard" connectaname="T21" connectbname="T4" connectcname="T2" connectdname="T6" />
+    <layoutturnout ident="TO2" type="DOUBLE_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="290.0" ycen="250.0" xa="260.0" ya="240.0" xb="320.0" yb="240.0" xc="320.0" yc="260.0" xd="260.0" yd="260.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleXOverXml" turnoutname="Turnout 8" blockname="South Yard" connectaname="T4" connectbname="T5" connectcname="T3" connectdname="T2" />
+    <layoutturnout ident="TO3" type="LH_XOVER" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="370.0" ycen="250.0" xa="360.0" ya="240.0" xb="400.0" yb="240.0" xc="380.0" yc="260.0" xd="340.0" yd="260.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHXOverXml" turnoutname="Turnout 9" blockname="South Yard" connectaname="T5" connectbname="T20" connectcname="T7" connectdname="T3" />
+    <tracksegment ident="T2" blockname="South Yard" connect1name="TO2" type1="TURNOUT_D" connect2name="TO1" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="South Yard" connect1name="TO3" type1="TURNOUT_D" connect2name="TO2" type2="TURNOUT_C" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="South Yard" connect1name="TO1" type1="TURNOUT_B" connect2name="TO2" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T5" blockname="South Yard" connect1name="TO2" type1="TURNOUT_B" connect2name="TO3" type2="TURNOUT_A" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T6" blockname="SW Sliding" connect1name="EB1" type1="POS_POINT" connect2name="TO1" type2="TURNOUT_D" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T7" blockname="SE Sliding" connect1name="TO3" type1="TURNOUT_C" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="stop" color="#000000" linewidth="2" length="8" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T20" blockname="South Yard" connect1name="TO3" type1="TURNOUT_B" connect2name="EC9" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T21" blockname="South Yard" connect1name="TO1" type1="TURNOUT_A" connect2name="EC5" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <positionablepoint ident="EB1" type="END_BUMPER" x="50.0" y="260.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="570.0" y="260.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC9" type="EDGE_CONNECTOR" x="440.0" y="240.0" connect1name="T20" connect2name="T8" linkedpanel="Modules Test Layout (East)" linkpointid="EC8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC5" type="EDGE_CONNECTOR" x="160.0" y="240.0" connect1name="T21" connect2name="T1" linkedpanel="Modules Test Layout (West)" linkpointid="EC6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Modules Test Layout (East)" x="0" y="0" windowheight="834" windowwidth="1920" panelheight="290" panelwidth="520" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="yes" turnoutcircles="yes" tooltipsnotedit="yes" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="204" greenBackground="255" blueBackground="204" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Modules Test Layout (East)" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>4</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>2</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <tracksegment ident="T8" blockname="East" connect1name="EC4" type1="POS_POINT" connect2name="EC8" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="180.0" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="both" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <positionablepoint ident="EC4" type="EDGE_CONNECTOR" x="470.0" y="40.0" connect1name="T8" connect2name="T16" linkedpanel="Modules Test Layout (North)" linkpointid="EC3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC8" type="EDGE_CONNECTOR" x="470.0" y="240.0" connect1name="T8" connect2name="T20" linkedpanel="Modules Test Layout (South)" linkpointid="EC9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Modules Test Layout (West)" x="0" y="0" windowheight="834" windowwidth="1920" panelheight="290" panelwidth="180" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="yes" turnoutcircles="yes" tooltipsnotedit="yes" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="black" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="magenta" turnoutcirclesize="2" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="204" greenBackground="255" blueBackground="204" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Modules Test Layout (West)" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>4</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>2</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <tracksegment ident="T1" blockname="West" connect1name="EC1" type1="POS_POINT" connect2name="EC6" type2="POS_POINT" dashed="no" mainline="no" hidden="no" arc="yes" flip="yes" circle="yes" angle="180.0" hideConLines="yes" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="both" direction="out" color="#000000" linewidth="2" length="3" gap="1" />
+      </decorations>
+    </tracksegment>
+    <positionablepoint ident="EC1" type="EDGE_CONNECTOR" x="130.0" y="40.0" connect1name="T1" connect2name="T19" linkedpanel="Modules Test Layout (North)" linkpointid="EC2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC6" type="EDGE_CONNECTOR" x="130.0" y="240.0" connect1name="T1" connect2name="T21" linkedpanel="Modules Test Layout (South)" linkpointid="EC5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+  </filehistory>
+  <!--Written by JMRI version 4.21.3ish+geowar+2020-11-02T17:25:09Z+R81168a9 on Mon Nov 02 09:28:15 PST 2020-->
+</layout-config>
