@@ -212,24 +212,24 @@ public class ModulesEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
-            jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
-            if (prefsMgr != null) {
-                String windowFrameRef = "jmri.jmrit.display.layoutEditor.ModulesEditor:" + name;
-
-                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
-                if (prefsWindowLocation != null) {
-                    x = (int) prefsWindowLocation.getX();
-                    y = (int) prefsWindowLocation.getY();
-                }
-
-                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
-                if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
-                    windowHeight = (int) prefsWindowSize.getHeight();
-                    windowWidth = (int) prefsWindowSize.getWidth();
-                }
-            }
-        }
+//        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+//            jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
+//            if (prefsMgr != null) {
+//                String windowFrameRef = "jmri.jmrit.display.layoutEditor.ModulesEditor:" + name;
+//
+//                java.awt.Point prefsWindowLocation = prefsMgr.getWindowLocation(windowFrameRef);
+//                if (prefsWindowLocation != null) {
+//                    x = (int) prefsWindowLocation.getX();
+//                    y = (int) prefsWindowLocation.getY();
+//                }
+//
+//                java.awt.Dimension prefsWindowSize = prefsMgr.getWindowSize(windowFrameRef);
+//                if (prefsWindowSize != null && prefsWindowSize.getHeight() != 0 && prefsWindowSize.getWidth() != 0) {
+//                    windowHeight = (int) prefsWindowSize.getHeight();
+//                    windowWidth = (int) prefsWindowSize.getWidth();
+//                }
+//            }
+//        }
 
         ModulesEditor panel = new ModulesEditor(name);
         InstanceManager.getDefault(EditorManager.class).add(panel);
