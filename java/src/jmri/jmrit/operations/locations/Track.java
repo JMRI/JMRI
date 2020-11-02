@@ -29,7 +29,8 @@ import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
 /**
- * Represents a location (track) on the layout Can be a spur, yard, staging, or interchange track.
+ * Represents a location (track) on the layout Can be a spur, yard, staging, or
+ * interchange track.
  *
  * @author Daniel Boudreau Copyright (C) 2008 - 2014
  */
@@ -126,7 +127,8 @@ public class Track extends PropertyChangeSupport {
     public static final String STAGING = "Staging";
     public static final String INTERCHANGE = "Interchange";
     public static final String YARD = "Yard";
-    public static final String SPUR = "Spur"; // note that code before 2020 (4.21.1) used Siding as the spur type // NOI18N
+    public static final String SPUR = "Spur"; // note that code before 2020 (4.21.1) used Siding as the spur type //
+                                              // NOI18N
     private static final String SIDING = "Siding"; // For loading older files
 
     // train directions serviced by this track
@@ -424,8 +426,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Used to determine how much track space is going to be consumed by cars in route to this track. See
-     * isSpaceAvailable().
+     * Used to determine how much track space is going to be consumed by cars in
+     * route to this track. See isSpaceAvailable().
      *
      * @return The length of all cars en route to this track including couplers.
      */
@@ -438,8 +440,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Set the reservation factor. Default 100 (100%). Used by the program when generating car loads from staging. A
-     * factor of 100% allows the program to fill a track with car loads. Numbers over 100% can overload a track.
+     * Set the reservation factor. Default 100 (100%). Used by the program when
+     * generating car loads from staging. A factor of 100% allows the program to
+     * fill a track with car loads. Numbers over 100% can overload a track.
      *
      * @param factor A number from 0 to 10000.
      */
@@ -501,8 +504,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * If enabled (true), hold cars with custom loads rather than allowing them to go to staging if the spur and the
-     * alternate track were full. If disabled, cars with custom loads can be forwarded to staging when this spur and all
+     * If enabled (true), hold cars with custom loads rather than allowing them to
+     * go to staging if the spur and the alternate track were full. If disabled,
+     * cars with custom loads can be forwarded to staging when this spur and all
      * others with this option are also false.
      * 
      * @return True if enabled
@@ -512,8 +516,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Used to determine if there's space available at this track for the car. Considers cars en route to this track.
-     * Used to prevent overloading the track with cars from staging or cars with custom loads.
+     * Used to determine if there's space available at this track for the car.
+     * Considers cars en route to this track. Used to prevent overloading the track
+     * with cars from staging or cars with custom loads.
      *
      * @param car The car to be set out.
      * @return true if space available.
@@ -553,8 +558,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * The amount of consumed track space to be ignored when sending new rolling stock to the track. See Planned Pickups
-     * in help.
+     * The amount of consumed track space to be ignored when sending new rolling
+     * stock to the track. See Planned Pickups in help.
      *
      * @param percentage a number between 0 and 100
      */
@@ -661,7 +666,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Increments the number of cars and or engines that will be picked up by a train from this track.
+     * Increments the number of cars and or engines that will be picked up by a
+     * train from this track.
      * 
      * @param rs The rolling stock.
      */
@@ -687,7 +693,8 @@ public class Track extends PropertyChangeSupport {
 
     /**
      *
-     * @return the number of rolling stock (cars and or locos) that are scheduled for pick up from this track.
+     * @return the number of rolling stock (cars and or locos) that are scheduled
+     *         for pick up from this track.
      */
     public int getPickupRS() {
         return _pickupRS;
@@ -982,7 +989,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Provides a list of receive loads that the track will either service or exclude. See setLoadOption
+     * Provides a list of receive loads that the track will either service or
+     * exclude. See setLoadOption
      *
      * @return Array of load names as Strings
      */
@@ -999,7 +1007,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Add a receive load that the track will either service or exclude. See setLoadOption
+     * Add a receive load that the track will either service or exclude. See
+     * setLoadOption
      * 
      * @param load The string load name.
      *
@@ -1016,7 +1025,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Delete a receive load name that the track will either service or exclude. See setLoadOption
+     * Delete a receive load name that the track will either service or exclude. See
+     * setLoadOption
      * 
      * @param load The string load name.
      *
@@ -1112,7 +1122,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Provides a list of ship loads that the track will either service or exclude. See setShipLoadOption
+     * Provides a list of ship loads that the track will either service or exclude.
+     * See setShipLoadOption
      *
      * @return Array of load names as Strings
      */
@@ -1129,7 +1140,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Add a ship load that the track will either service or exclude. See setShipLoadOption
+     * Add a ship load that the track will either service or exclude. See
+     * setShipLoadOption
      * 
      * @param load The string load name.
      *
@@ -1146,7 +1158,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Delete a ship load name that the track will either service or exclude. See setLoadOption
+     * Delete a ship load name that the track will either service or exclude. See
+     * setLoadOption
      * 
      * @param load The string load name.
      *
@@ -1198,8 +1211,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Gets the drop option for this track. ANY means that all trains and routes can drop cars to this track. The other
-     * four options are used to restrict the track to certain trains or routes.
+     * Gets the drop option for this track. ANY means that all trains and routes can
+     * drop cars to this track. The other four options are used to restrict the
+     * track to certain trains or routes.
      * 
      * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
@@ -1222,8 +1236,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Gets the pickup option for this track. ANY means that all trains and routes can pull cars from this track. The
-     * other four options are used to restrict the track to certain trains or routes.
+     * Gets the pickup option for this track. ANY means that all trains and routes
+     * can pull cars from this track. The other four options are used to restrict
+     * the track to certain trains or routes.
      * 
      * @return ANY, TRAINS, ROUTES, EXCLUDE_TRAINS, or EXCLUDE_ROUTES
      */
@@ -1277,8 +1292,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Determine if train can set out cars to this track. Based on the train's id or train's route id. See
-     * setDropOption(option).
+     * Determine if train can set out cars to this track. Based on the train's id or
+     * train's route id. See setDropOption(option).
      * 
      * @param train The Train to test.
      *
@@ -1359,8 +1374,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Determine if train can pick up cars from this track. Based on the train's id or train's route id. See
-     * setPickupOption(option).
+     * Determine if train can pick up cars from this track. Based on the train's id
+     * or train's route id. See setPickupOption(option).
      * 
      * @param train The Train to test.
      *
@@ -1446,12 +1461,13 @@ public class Track extends PropertyChangeSupport {
      * Used to determine if track can service the rolling stock.
      *
      * @param rs the car or loco to be tested
-     * @return Error string starting with TYPE, ROAD, CAPACITY, LENGTH, DESTINATION or LOAD if there's an issue. OKAY if
-     *         track can service Rolling Stock.
+     * @return Error string starting with TYPE, ROAD, CAPACITY, LENGTH, DESTINATION
+     *         or LOAD if there's an issue. OKAY if track can service Rolling Stock.
      */
     public String isRollingStockAccepted(RollingStock rs) {
         // first determine if rolling stock can be move to the new location
-        // note that there's code that checks for certain issues by checking the first word of the status string
+        // note that there's code that checks for certain issues by checking the first
+        // word of the status string
         // returned
         if (!isTypeNameAccepted(rs.getTypeName())) {
             log.debug("Rolling stock ({}) type ({}) not accepted at location ({}, {}) wrong type", rs.toString(),
@@ -1476,7 +1492,8 @@ public class Track extends PropertyChangeSupport {
             Car car = (Car) rs;
             // does this track service the car's final destination?
             if (!isDestinationAccepted(car.getFinalDestination())) {
-                // && getLocation() != car.getFinalDestination()) { // 4/14/2014 I can't remember why this was needed
+                // && getLocation() != car.getFinalDestination()) { // 4/14/2014 I can't
+                // remember why this was needed
                 return DESTINATION +
                         " (" +
                         car.getFinalDestinationName() +
@@ -1515,7 +1532,8 @@ public class Track extends PropertyChangeSupport {
             if (checkPlannedPickUps(length)) {
                 return OKAY;
             }
-            // Note that much of the code checks for track length being an issue, therefore it has to be the last
+            // Note that much of the code checks for track length being an issue, therefore
+            // it has to be the last
             // check.
             // Is rolling stock too long for this track?
             if ((getLength() < length && getPool() == null) ||
@@ -1533,11 +1551,13 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Performs two checks, number of new set outs shouldn't exceed the track length. The second check protects against
-     * overloading, the total number of cars shouldn't exceed the track length plus the number of cars to ignore.
+     * Performs two checks, number of new set outs shouldn't exceed the track
+     * length. The second check protects against overloading, the total number of
+     * cars shouldn't exceed the track length plus the number of cars to ignore.
      * 
      * @param length rolling stock length
-     * @return true if the program should ignore some percentage of the car's length currently consuming track space.
+     * @return true if the program should ignore some percentage of the car's length
+     *         currently consuming track space.
      */
     private boolean checkPlannedPickUps(int length) {
         if (getIgnoreUsedLengthPercentage() > 0 && getAvailableTrackSpace() >= length) {
@@ -1547,7 +1567,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Available track space. Adjusted when a track is using the planned pickups feature
+     * Available track space. Adjusted when a track is using the planned pickups
+     * feature
      * 
      * @return available track space
      */
@@ -1595,7 +1616,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Get the service order for this track. Only yards and interchange have this feature.
+     * Get the service order for this track. Only yards and interchange have this
+     * feature.
      *
      * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
      */
@@ -1607,7 +1629,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Set the service order for this track. Only yards and interchange have this feature.
+     * Set the service order for this track. Only yards and interchange have this
+     * feature.
      * 
      * @param order Track.NORMAL, Track.FIFO, Track.LIFO
      */
@@ -1618,8 +1641,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Returns the name of the schedule. Note that this returns the schedule name based on the schedule's id. A
-     * schedule's name can be modified by the user.
+     * Returns the name of the schedule. Note that this returns the schedule name
+     * based on the schedule's id. A schedule's name can be modified by the user.
      *
      * @return Schedule name
      */
@@ -1690,8 +1713,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Recommend getCurrentScheduleItem() to get the current schedule item for this track. Protects against user
-     * deleting a schedule item from the schedule.
+     * Recommend getCurrentScheduleItem() to get the current schedule item for this
+     * track. Protects against user deleting a schedule item from the schedule.
      *
      * @return schedule item id
      */
@@ -1707,8 +1730,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Get's the current schedule item for this track Protects against user deleting an item in a shared schedule.
-     * Recommend using this versus getScheduleItemId() as the id can be obsolete.
+     * Get's the current schedule item for this track Protects against user deleting
+     * an item in a shared schedule. Recommend using this versus getScheduleItemId()
+     * as the id can be obsolete.
      * 
      * @return The current ScheduleItem.
      */
@@ -1825,7 +1849,8 @@ public class Track extends PropertyChangeSupport {
                 status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
                 break;
             }
-            // check roads, accepted by track, valid road, and there's at least one car with that road
+            // check roads, accepted by track, valid road, and there's at least one car with
+            // that road
             if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                     (!isRoadNameAccepted(si.getRoadName()) ||
                             !InstanceManager.getDefault(CarRoads.class).containsName(si.getRoadName()) ||
@@ -1873,7 +1898,8 @@ public class Track extends PropertyChangeSupport {
                     break;
                 }
                 if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
-                        !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(), si.getTypeName())) {
+                        !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
+                                si.getTypeName())) {
                     status = MessageFormat.format(Bundle.getMessage("NotValid"),
                             new Object[] { si.getDestinationTrack() + " (" + Bundle.getMessage("Load") + ")" });
                     break;
@@ -1884,8 +1910,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Checks to see if car can be placed on this spur using this schedule. Returns OKAY if the schedule can service the
-     * car.
+     * Checks to see if car can be placed on this spur using this schedule. Returns
+     * OKAY if the schedule can service the car.
      * 
      * @param car The Car to be tested.
      *
@@ -1934,7 +1960,8 @@ public class Track extends PropertyChangeSupport {
             log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(),
                     car.getLoadName());
         }
-        // has the car already been assigned a schedule item? Then verify that its still okay
+        // has the car already been assigned a schedule item? Then verify that its still
+        // okay
         if (!car.getScheduleItemId().equals(NONE)) {
             ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
             if (si != null && checkScheduleItem(si, car).equals(OKAY)) {
@@ -2051,15 +2078,17 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Check to see if track has schedule and if it does will schedule the next item in the list. Load the car with the
-     * next schedule load if one exists, and set the car's final destination if there's one in the schedule.
+     * Check to see if track has schedule and if it does will schedule the next item
+     * in the list. Load the car with the next schedule load if one exists, and set
+     * the car's final destination if there's one in the schedule.
      * 
      * @param car The Car to be modified.
      *
      * @return Track.OKAY or Track.SCHEDULE
      */
     public String scheduleNext(Car car) {
-        // clean up the car's final destination if sent to that destination and there isn't a schedule
+        // clean up the car's final destination if sent to that destination and there
+        // isn't a schedule
         if (getScheduleId().equals(NONE) &&
                 car.getDestination() != null &&
                 car.getDestination().equals(car.getFinalDestination()) &&
@@ -2090,8 +2119,10 @@ public class Track extends PropertyChangeSupport {
                     return OKAY;
                 }
                 log.debug("Schedule id ({}) not valid for track ({})", id, getName());
-                // user could have deleted the schedule item after build train, so not really an error
-                // return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
+                // user could have deleted the schedule item after build train, so not really an
+                // error
+                // return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() +
+                // ")"; // NOI18N
             }
         }
         if (getScheduleMode() == MATCH && !searchSchedule(car).equals(OKAY)) {
@@ -2115,9 +2146,12 @@ public class Track extends PropertyChangeSupport {
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {
-            // log.debug("Car (" + toString() + ") type (" + getType() + ") road (" + getRoad() + ") load ("
-            // + getLoad() + ") arrived out of sequence, needed type (" + currentSi.getType() // NOI18N
-            // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")"); // NOI18N
+            // log.debug("Car (" + toString() + ") type (" + getType() + ") road (" +
+            // getRoad() + ") load ("
+            // + getLoad() + ") arrived out of sequence, needed type (" +
+            // currentSi.getType() // NOI18N
+            // + ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")");
+            // // NOI18N
             // build return message
             String scheduleName = "";
             String currentTrainScheduleName = "";
@@ -2149,8 +2183,9 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Loads the car's with a final destination which is the ship address for the schedule item. Also sets the next load
-     * and wait count that will kick in when the car arrives at the spur with this schedule.
+     * Loads the car's with a final destination which is the ship address for the
+     * schedule item. Also sets the next load and wait count that will kick in when
+     * the car arrives at the spur with this schedule.
      *
      */
     private void loadNext(ScheduleItem scheduleItem, Car car) {
@@ -2195,7 +2230,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Enable setting the car generic load state to empty when car arrives at this track.
+     * Enable setting the car generic load state to empty when car arrives at this
+     * track.
      *
      * @param enable when true, set generic car load to empty
      */
@@ -2267,7 +2303,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * When enabled, add custom car loads to cars in staging for new destinations that are staging.
+     * When enabled, add custom car loads to cars in staging for new destinations
+     * that are staging.
      *
      * @param enable when true, add custom load to car
      */
@@ -2383,13 +2420,17 @@ public class Track extends PropertyChangeSupport {
     /**
      * Sets the destination option for this track. The three options are:
      * <p>
-     * ALL_DESTINATIONS which means this track services all destinations, the default.
+     * ALL_DESTINATIONS which means this track services all destinations, the
+     * default.
      * <p>
-     * INCLUDE_DESTINATIONS which means this track services only certain destinations.
+     * INCLUDE_DESTINATIONS which means this track services only certain
+     * destinations.
      * <p>
-     * EXCLUDE_DESTINATIONS which means this track does not service certain destinations.
+     * EXCLUDE_DESTINATIONS which means this track does not service certain
+     * destinations.
      *
-     * @param option Track.ALL_DESTINATIONS, Track.INCLUDE_DESTINATIONS, or Track.EXCLUDE_DESTINATIONS
+     * @param option Track.ALL_DESTINATIONS, Track.INCLUDE_DESTINATIONS, or
+     *               Track.EXCLUDE_DESTINATIONS
      */
     public void setDestinationOption(String option) {
         String old = _destinationOption;
@@ -2418,8 +2459,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * When true the C/I track will only accept cars that have a final destination that can be serviced by the track.
-     * See acceptsDestination(Location).
+     * When true the C/I track will only accept cars that have a final destination
+     * that can be serviced by the track. See acceptsDestination(Location).
      * 
      * @return false if any car spotted, true if only cars with a FD.
      */
@@ -2448,8 +2489,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Construct this Entry from XML. This member has to remain synchronized with the detailed DTD in
-     * operations-config.xml
+     * Construct this Entry from XML. This member has to remain synchronized with
+     * the detailed DTD in operations-config.xml
      *
      * @param e        Consist XML element
      * @param location The Location loading this track.
@@ -2776,8 +2817,8 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
-     * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
-     * operations-location.dtd.
+     * Create an XML element to represent this Entry. This member has to remain
+     * synchronized with the detailed DTD in operations-location.dtd.
      *
      * @return Contents in a JDOM Element
      */
@@ -2787,16 +2828,19 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.TRACK_TYPE, getTrackType());
 
-        // backwards compatibility since 4.21.1
+        // backwards compatibility since 4.21.1, remove after year 2021
         String trackType = getTrackType();
         if (getTrackType().equals(SPUR)) {
             trackType = SIDING; // Pre 4.21.1 location type
         }
-        e.setAttribute(Xml.LOC_TYPE, trackType);
+        e.setAttribute(Xml.LOC_TYPE, trackType); // backwards compatibility
+        
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
-        e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
+        if (getBlockingOrder() != 0) {
+            e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
+        }
         // build list of car types for this track
         String[] types = getTypeNames();
         // new way of saving car types using elements
@@ -2964,8 +3008,8 @@ public class Track extends PropertyChangeSupport {
 
             e.addContent(comments);
         }
-        if (_reader != null) {
-            e.setAttribute(Xml.READER, _reader.getDisplayName());
+        if (getReporter() != null) {
+            e.setAttribute(Xml.READER, getReporter().getDisplayName());
         }
         return e;
     }
@@ -2996,7 +3040,7 @@ public class Track extends PropertyChangeSupport {
     public Reporter getReporter() {
         return _reader;
     }
-    
+
     public String getReporterName() {
         if (getReporter() != null) {
             return getReporter().getDisplayName();
