@@ -15,10 +15,10 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.EDGE_CONNECTOR;
-import jmri.util.*;
+import jmri.jmrit.display.layoutEditor.*;
+import jmri.util.MathUtil;
 
 import static org.apache.log4j.NDC.remove;
 
@@ -248,12 +248,19 @@ public class LEModule {
         if (youveGotToKeepThemSeparated) {
             popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
         }
-        JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("MakeLabel", Bundle.getMessage("Rotate")) + getRotationDEG());
+        JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("MakeLabel", Bundle.getMessage("Rotation"))
+                + Bundle.getMessage("Rotation_", (int) Math.round(getRotationDEG())));
         rotateItem.addActionListener((ActionEvent event) -> {
             // prompt for rotation angle
             JOptionPane optionPane = new JOptionPane();
             DefaultBoundedRangeModel model = new DefaultBoundedRangeModel((int) getRotationDEG(), 0, 0, 360);
             JSlider slider = new JSlider(model);
+
+            // make it BIGGER!
+            Dimension d = slider.getPreferredSize();
+            d.setSize(d.getWidth() * 2, d.getHeight() * 2);
+            slider.setPreferredSize(d);
+
             slider.setMajorTickSpacing(15);
             slider.setPaintTicks(true);
 
@@ -271,6 +278,11 @@ public class LEModule {
             // Set the label to be drawn
             slider.setLabelTable(position);
             slider.setValueIsAdjusting(true);
+            JLabel rotationLabel = new JLabel(Bundle.getMessage("SetRotation_", (int) Math.round(getRotationDEG())));
+            optionPane.setMessage(new Object[]{rotationLabel, slider});
+            optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+            optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
+
             slider.addChangeListener(changeEvent -> {
                 JSlider theSlider = (JSlider) changeEvent.getSource();
                 //if (!theSlider.getValueIsAdjusting()) {
@@ -278,12 +290,11 @@ public class LEModule {
                 optionPane.setInputValue(value);
                 setRotationDEG(value);
                 getModulesEditor().repaint();
+                rotationLabel.setText(Bundle.getMessage("SetRotation_", value));
                 //}
             });
-            optionPane.setMessage(new Object[]{"Select a value: ", slider});
-            optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
-            optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
-            JDialog dialog = optionPane.createDialog(getModulesEditor(), "My Slider");
+
+            JDialog dialog = optionPane.createDialog(getModulesEditor(), Bundle.getMessage("SetRotation"));
             dialog.setVisible(true);
 
 //                if (rot != 0.0) {

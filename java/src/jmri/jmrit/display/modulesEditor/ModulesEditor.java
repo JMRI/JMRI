@@ -18,7 +18,8 @@ import javax.swing.*;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.StoreXmlUserAction;
-import jmri.jmrit.display.*;
+import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.ColorUtil;
@@ -55,7 +56,6 @@ final public class ModulesEditor extends PanelEditor {
 //    private final JRadioButtonMenuItem zoom60Item = new JRadioButtonMenuItem("x 6.0");
 //    private final JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
 //    private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
-
     // Selected point information
 //    private Point2D currentLocation = MathUtil.zeroPoint2D(); // current location
     private Point2D startDelta = MathUtil.zeroPoint2D(); // starting delta coordinates
@@ -67,13 +67,10 @@ final public class ModulesEditor extends PanelEditor {
 
     // saved state of options when panel was loaded or created
 //    private boolean savedEditMode = true;
-
     // zoom
 //    private double minZoom = 0.25;
 //    private final double maxZoom = 8.0;
-
 //    private List<PositionableLabel> backgroundImage = new ArrayList<>();    // background images
-
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
     private boolean drawGrid = false;
@@ -264,7 +261,6 @@ final public class ModulesEditor extends PanelEditor {
 //          setDirty();
 //          repaint();
 //      });
-
 //
         // grid menu
         //
@@ -485,7 +481,6 @@ final public class ModulesEditor extends PanelEditor {
      * ***************************************************
      */
 //    private boolean delayedPopupTrigger;
-
     @Override
     public void mousePressed(MouseEvent event) {
         log.warn("mousePressed at ({},{}) _dragging: {}", event.getX(), event.getY(), _dragging);
@@ -676,18 +671,13 @@ final public class ModulesEditor extends PanelEditor {
     public void paintTargetPanel(@Nonnull Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
+        g2.setRenderingHints(new RenderingHints(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON));
+
         if (drawGrid) {
             drawGrid(g2);
         }
-
-        BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-        // BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-
-        g2.setStroke(narrow);
-
-        g2.setColor(Color.RED);
-        Rectangle r = g2.getClipBounds();
-        g2.drawOval(0, 0, (int) r.getWidth(), (int) r.getHeight());
 
         for (LEModule module : modules) {
             module.draw(g2);
