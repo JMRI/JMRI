@@ -1896,6 +1896,13 @@ public class TrackSegmentView extends LayoutTrackView {
      * @return the location of the middle of the segment (on the segment)
      */
     public Point2D getCentreSeg() {
+        return super.getCoordsCenter();
+    }
+
+    /**
+     * @return the location of the middle of the segment (on the segment)
+     */
+    public Point2D calcCentreSeg() {
         Point2D result = MathUtil.zeroPoint2D;
 
         if ((getConnect1() != null) && (getConnect2() != null)) {
@@ -2255,7 +2262,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(trackEditControlCircleAt(getCentreSeg()));
+        g2.draw(trackEditControlCircleAt(calcCentreSeg()));
     }   // drawEditControls
 
     @Override
