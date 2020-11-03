@@ -2150,6 +2150,12 @@
 <ul></ul>
 </li>
 
+    
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
+<ul></ul>
+</li>
+
    
 </ul>
 </li>
@@ -2456,6 +2462,12 @@
     
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
 <ul></ul>
 </li>
 

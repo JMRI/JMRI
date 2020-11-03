@@ -701,6 +701,8 @@
 
     <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
+    <tocitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
+
    </tocitem>
   </tocitem>
   <tocitem text="MRC " target="html.hardware.mrc.index">
@@ -802,6 +804,8 @@
     <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
 
     <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
+    <tocitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
 
    </tocitem>
   </tocitem>

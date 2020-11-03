@@ -994,6 +994,8 @@
 
 <mapID target="manual.DecoderPro.Main_LocoNet_Firmware" url="manual/DecoderPro/Main_LocoNet.shtml#Firmware"/>
 
+<mapID target="html.hardware.can.cbus.CbusMeters" url="html/hardware/can/cbus/CbusMeters.shtml"/>
+
 <mapID target="package.jmri.jmrix.marklin.swing.packetgen.PacketGenFrame" url="package/jmri/jmrix/marklin/swing/packetgen/PacketGenFrame.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_SPROG" url="manual/DecoderPro3/Main_SPROG.shtml"/>
@@ -4876,7 +4878,7 @@
 
 <mapID target="package.jmri.jmrit.display.images.SingleOptions" url="package/jmri/jmrit/display/images/SingleOptions.png"/>
 
-<mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.images.StatusBar" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/images/StatusBar.PNG"/>
+<mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.images.StatusBar" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/images/StatusBar.png"/>
 
 <mapID target="manual.DecoderPro3.images.sflogo" url="manual/DecoderPro3/images/sflogo.png"/>
 

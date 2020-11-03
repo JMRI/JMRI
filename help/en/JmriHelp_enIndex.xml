@@ -83,6 +83,8 @@
 
   <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
+  <indexitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
+
  </indexitem>
  <indexitem text="Circuit Builder (CPE) " target="package.jmri.jmrit.display.CircuitBuilder"/>
 

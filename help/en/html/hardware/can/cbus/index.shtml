@@ -70,7 +70,7 @@
                         <li><a href = ../../sproggen5/index.shtml> SPROG DCC Generation 5</a></li>
                     </ul>
 
-                    <h2><a name="tools" id="tools">CBUS Tools</a>
+                    <h2><a name="tools" id="tools">CBUS Tools</a></h2>
                         <p>CBUS tools are accessed from the menu for your chosen system connection.The 
                             example shows a connection to MERG hardware. The available tools may vary with
                             the system connection</p>
@@ -96,14 +96,15 @@
                             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
                                    >Network Item simulation</a> - Simulates Cbus Command stations and responds to event requests</li>
                             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml"> 
-                                    CBUS bootloader </a> - to update CBUS module firmware</li>
+                                    Firmware update </a> - to update CBUS module firmware</li>
+                            <li><a href="CbusMeters.shtml"> 
+                                    Voltage / Current meters </a> - Monitor track current/voltage</li>
                         </ul>
                 </div>
 
                 <h2><a name="cbusevents" id="cbusevents">CBUS Events</a></h2>
                 <div>
-
-                    <li><a href="Names.shtml">CBUS Events in JMRI</a>
+                    <a href="Names.shtml">CBUS Events in JMRI</a>
                         <ul>
                             <li><a href="Names.shtml#events">Event Name and Numbering</a></li>
                             <li><a href="Names.shtml#sysname">System Names</a></li>
@@ -112,7 +113,6 @@
                             <li><a href="Names.shtml#hex">Sending hex strings</a></li>
                             <li><a href="Names.shtml#opc">Opcodes in JMRI</a></li>
                         </ul>        
-                    </li>
 
                     <h3>CBUS Event Overview </h3>
 
