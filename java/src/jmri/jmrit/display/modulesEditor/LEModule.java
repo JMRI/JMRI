@@ -258,7 +258,7 @@ public class LEModule {
 
             // make it BIGGER!
             Dimension d = slider.getPreferredSize();
-            d.setSize(d.getWidth() * 2, d.getHeight() * 2);
+            d.setSize(360 + 32, d.getHeight() * 2);
             slider.setPreferredSize(d);
 
             slider.setMajorTickSpacing(15);
@@ -266,17 +266,9 @@ public class LEModule {
 
             // Set the labels to be painted on the slider
             slider.setPaintLabels(true);
+            // Set the labels to be drawn
+            slider.setLabelTable(slider.createStandardLabels(30));
 
-            // Add positions label in the slider
-            Hashtable position = new Hashtable();
-            position.put(0, new JLabel("0"));
-            position.put(90, new JLabel("90"));
-            position.put(180, new JLabel("180"));
-            position.put(270, new JLabel("270"));
-            position.put(360, new JLabel("360"));
-
-            // Set the label to be drawn
-            slider.setLabelTable(position);
             slider.setValueIsAdjusting(true);
             JLabel rotationLabel = new JLabel(Bundle.getMessage("SetRotation_", (int) Math.round(getRotationDEG())));
             optionPane.setMessage(new Object[]{rotationLabel, slider});
