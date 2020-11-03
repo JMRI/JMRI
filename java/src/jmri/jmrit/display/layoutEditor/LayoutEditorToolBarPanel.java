@@ -411,6 +411,18 @@ public class LayoutEditorToolBarPanel extends JPanel {
                     locationPopupMenu.show(locationPanel, me.getX(), me.getY());
                 }
             }
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                if (me.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                }
+            }
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                if (me.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                }
+            }
         });
 
         // second row of edit tool bar items
