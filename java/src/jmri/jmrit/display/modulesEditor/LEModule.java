@@ -9,8 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.*;
-import static java.lang.Math.log;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -18,15 +17,10 @@ import javax.swing.*;
 
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.display.layoutEditor.PositionablePoint.PointType;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.ANCHOR;
 import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.EDGE_CONNECTOR;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.PointType.END_BUMPER;
 import jmri.util.*;
-import static jmri.util.SystemType.getType;
-import jmri.util.swing.JmriColorChooser;
 
 import static org.apache.log4j.NDC.remove;
-import static org.python.core.Py.getName;
 
 /**
  *
@@ -34,16 +28,25 @@ import static org.python.core.Py.getName;
  */
 public class LEModule {
 
+    private final ModulesEditor modulesEditor;
     private final LayoutEditor layoutEditor;
 
-    public LEModule(LayoutEditor layoutEditor) {
+    public LEModule(ModulesEditor modulesEditor, LayoutEditor layoutEditor) {
+        this.modulesEditor = modulesEditor;
         this.layoutEditor = layoutEditor;
+    }
+
+    public ModulesEditor getModulesEditor() {
+        return modulesEditor;
     }
 
     public LayoutEditor getLayoutEditor() {
         return layoutEditor;
     }
 
+    public String getName() {
+        return getLayoutEditor().getName();
+    }
     /*
      * accessors for location
      */
@@ -85,7 +88,7 @@ public class LEModule {
         List<Point2D> results = new ArrayList<>();
 
         // add tracks
-        for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
+        for (LayoutTrackView layoutTrackView : getLayoutEditor().getLayoutTrackViews()) {
             Rectangle2D r = layoutTrackView.getBounds();
             results.add(new Point2D.Double(r.getMinX(), r.getMinY()));
             results.add(new Point2D.Double(r.getMinX(), r.getMaxY()));
@@ -93,7 +96,7 @@ public class LEModule {
             results.add(new Point2D.Double(r.getMaxX(), r.getMaxY()));
         }
         // add shapes
-        for (LayoutShape layoutShape : layoutEditor.getLayoutShapes()) {
+        for (LayoutShape layoutShape : getLayoutEditor().getLayoutShapes()) {
             Rectangle2D r = layoutShape.getBounds();
             results.add(new Point2D.Double(r.getMinX(), r.getMinY()));
             results.add(new Point2D.Double(r.getMinX(), r.getMaxY()));
@@ -219,7 +222,7 @@ public class LEModule {
 
         JMenuItem jmi = popupMenu.add(
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Module"))
-                + getLayoutEditor().getName());
+                + getName());
         jmi.setEnabled(false);
 
         // if there are any edge connections…
@@ -245,6 +248,50 @@ public class LEModule {
         if (youveGotToKeepThemSeparated) {
             popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
         }
+        JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("MakeLabel", Bundle.getMessage("Rotate")) + getRotationDEG());
+        rotateItem.addActionListener((ActionEvent event) -> {
+            // prompt for rotation angle
+            JOptionPane optionPane = new JOptionPane();
+            DefaultBoundedRangeModel model = new DefaultBoundedRangeModel((int) getRotationDEG(), 0, 0, 360);
+            JSlider slider = new JSlider(model);
+            slider.setMajorTickSpacing(15);
+            slider.setPaintTicks(true);
+
+            // Set the labels to be painted on the slider
+            slider.setPaintLabels(true);
+
+            // Add positions label in the slider
+            Hashtable position = new Hashtable();
+            position.put(0, new JLabel("0"));
+            position.put(90, new JLabel("90"));
+            position.put(180, new JLabel("180"));
+            position.put(270, new JLabel("270"));
+            position.put(360, new JLabel("360"));
+
+            // Set the label to be drawn
+            slider.setLabelTable(position);
+            slider.setValueIsAdjusting(true);
+            slider.addChangeListener(changeEvent -> {
+                JSlider theSlider = (JSlider) changeEvent.getSource();
+                //if (!theSlider.getValueIsAdjusting()) {
+                int value = theSlider.getValue();
+                optionPane.setInputValue(value);
+                setRotationDEG(value);
+                getModulesEditor().repaint();
+                //}
+            });
+            optionPane.setMessage(new Object[]{"Select a value: ", slider});
+            optionPane.setMessageType(JOptionPane.QUESTION_MESSAGE);
+            optionPane.setOptionType(JOptionPane.OK_CANCEL_OPTION);
+            JDialog dialog = optionPane.createDialog(getModulesEditor(), "My Slider");
+            dialog.setVisible(true);
+
+//                if (rot != 0.0) {
+//                    rotateCoords(rot);
+//                    getModulesEditor().redrawPanel();
+//                }
+        });
+        popupMenu.add(rotateItem);
 
         popupMenu.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
             @Override

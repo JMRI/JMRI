@@ -644,12 +644,15 @@ final public class ModulesEditor extends PanelEditor {
     }
 
     protected void addItemPopUp(final LayoutEditor layoutEditor, JMenu menu) {
+        //TODO: I don't remember how to typecast 'this' within the lambda expression...
+        //      so I'm going "old school" and using a final variable... Sorry...
+        final ModulesEditor me = this;
         ActionListener a = new ActionListener() {
             // final String desiredName = name;
             @Override
             public void actionPerformed(ActionEvent e) {
                 addItemViaMouseClick = true;
-                LEModule module = new LEModule(layoutEditor);
+                LEModule module = new LEModule(me, layoutEditor);
                 module.setLocation(dLoc);
                 modules.add(module);
                 repaint();
