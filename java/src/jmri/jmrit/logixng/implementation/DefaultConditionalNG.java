@@ -1,9 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import static jmri.NamedBean.UNKNOWN;
 
@@ -31,7 +28,6 @@ public class DefaultConditionalNG extends AbstractBase
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
     private boolean _runOnGUIDelayed = true;
-    private final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
     
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -132,12 +128,9 @@ public class DefaultConditionalNG extends AbstractBase
             runOnGUI(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
-                        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
-                        
                         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
                         
                         try {
-                            newSymbolTable.createSymbols(_localVariables.values());
                             InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
                             
                             _femaleRootSocket.execute();
@@ -160,8 +153,6 @@ public class DefaultConditionalNG extends AbstractBase
                                             getSystemName(), e, e);
                             }
                         }
-                        
-                        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
                         
                         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
                     }
@@ -362,31 +353,6 @@ public class DefaultConditionalNG extends AbstractBase
         // Do nothing
     }
     
-    @Override
-    public void addLocalVariable(
-            String name,
-            SymbolTable.InitialValueType initialValueType,
-            String initialValueData) {
-        
-        _localVariables.put(name,
-                new DefaultSymbolTable.DefaultParameterData(
-                        name,
-                        initialValueType,
-                        initialValueData,
-                        SymbolTable.ReturnValueType.None,
-                        null));
-    }
-    
-    @Override
-    public void removeLocalVariable(String name) {
-        _localVariables.remove(name);
-    }
-    
-    @Override
-    public Collection<SymbolTable.ParameterData> getLocalVariables() {
-        return _localVariables.values();
-    }
-
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);
 
 }

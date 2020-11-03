@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -259,6 +260,9 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         _conditionalNG.getChild(0).connect(maleSocket);
         _base = _actionTimer;
         _baseMaleSocket = maleSocket;
+        
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
         
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);

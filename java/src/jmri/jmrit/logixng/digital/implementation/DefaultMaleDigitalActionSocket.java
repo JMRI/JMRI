@@ -13,7 +13,9 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.digital.implementation.Bundle;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
 
@@ -92,13 +94,21 @@ public class DefaultMaleDigitalActionSocket
             return;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
         try {
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables.values());
+            
             _action.execute();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
         }
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables.values());
     }
 
     @Override

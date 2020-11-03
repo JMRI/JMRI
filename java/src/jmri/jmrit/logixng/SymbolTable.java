@@ -1,6 +1,9 @@
 package jmri.jmrit.logixng;
 
+import java.util.Collection;
 import java.util.Map;
+
+import jmri.JmriException;
 
 /**
  * A symbol table
@@ -28,6 +31,20 @@ public interface SymbolTable {
      * @param value the value
      */
     public void setValue(String name, Object value);
+    
+    /**
+     * Add new symbols to the symbol table
+     * @param symbolDefinitions the definitions of the new symbols
+     * @throws JmriException if an exception is thrown
+     */
+    public void createSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException;
+    
+    /**
+     * Removes symbols from the symbol table
+     * @param symbolDefinitions the definitions of the symbols to be removed
+     * @throws JmriException if an exception is thrown
+     */
+    public void removeSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException;
     
     /**
      * Print the symbol table on a stream

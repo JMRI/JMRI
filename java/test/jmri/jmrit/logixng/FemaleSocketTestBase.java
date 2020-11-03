@@ -734,6 +734,21 @@ public abstract class FemaleSocketTestBase {
         public BaseManager<? extends NamedBean> getManager() {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public void addLocalVariable(String name, SymbolTable.InitialValueType initialValueType, String initialValueData) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void removeLocalVariable(String name) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public Collection<SymbolTable.ParameterData> getLocalVariables() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
         
     }
     

@@ -56,6 +56,7 @@ public class DefaultSymbolTable implements SymbolTable {
         _stack.setValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex(), value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public void printSymbolTable(java.io.PrintStream stream) {
         stream.format("printSymbolTable:%n");
@@ -84,15 +85,16 @@ public class DefaultSymbolTable implements SymbolTable {
         return new RecursiveDescentParser(variables);
     }
     
-    /**
-     * Create the symbols
-     * @param symbolDefinitions list of symbols to create
-     * @throws jmri.JmriException if an exception occurs
-     */
+    /** {@inheritDoc} */
+    @Override
     public void createSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
         for (SymbolTable.ParameterData parameter : symbolDefinitions) {
             Symbol symbol = new DefaultSymbol(parameter.getName(), _stack.getCount() - _firstSymbolIndex);
             Object initialValue = null;
+            
+            if (_symbols.containsKey(symbol.getName())) {
+                throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
+            }
             
             switch (parameter.getInitalValueType()) {
                 case None:
@@ -131,6 +133,14 @@ public class DefaultSymbolTable implements SymbolTable {
             _stack.push(initialValue);
             _symbols.put(symbol.getName(), symbol);
         }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void removeSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
+        symbolDefinitions.forEach((parameter) -> {
+            _symbols.remove(parameter.getName());
+        });
     }
     
     /**

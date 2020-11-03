@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.digital.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalActionSocket.DigitalActionDebugConfig;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -167,6 +168,9 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
     }
 
     @AfterEach

@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import java.util.Collection;
+
 import jmri.NamedBean;
 
 /**
@@ -33,6 +35,15 @@ public interface MaleSocket extends Debugable {
      */
     @Override
     public boolean isEnabled();
+    
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData);
+    
+    public void removeLocalVariable(String name);
+    
+    public Collection<SymbolTable.ParameterData> getLocalVariables();
     
     /**
      * Get the error handling type for this socket.

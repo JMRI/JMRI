@@ -7,6 +7,7 @@ import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange.Trigger;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -338,6 +339,9 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
         
         _base = _actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
+        
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
+        InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

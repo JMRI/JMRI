@@ -1,14 +1,14 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.JmriException;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.BaseManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.util.LoggingUtil;
 
 import org.slf4j.Logger;
@@ -19,7 +19,8 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
 
-    private BaseManager<? extends NamedBean> _manager;
+    protected final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
+    private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     
@@ -27,6 +28,31 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
         _manager = manager;
     }
     
+    @Override
+    public void addLocalVariable(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData) {
+        
+        _localVariables.put(name,
+                new DefaultSymbolTable.DefaultParameterData(
+                        name,
+                        initialValueType,
+                        initialValueData,
+                        SymbolTable.ReturnValueType.None,
+                        null));
+    }
+    
+    @Override
+    public void removeLocalVariable(String name) {
+        _localVariables.remove(name);
+    }
+    
+    @Override
+    public Collection<SymbolTable.ParameterData> getLocalVariables() {
+        return _localVariables.values();
+    }
+
     @Override
     public final Base getParent() {
         return _parent;
