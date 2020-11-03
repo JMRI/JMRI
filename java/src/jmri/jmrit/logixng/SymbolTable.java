@@ -61,6 +61,27 @@ public interface SymbolTable {
     
     
     /**
+     * An enum that defines the types of initial value.
+     */
+    public enum ReturnValueType {
+        
+        None(Bundle.getMessage("ReturnValueType_None")),
+        LocalVariable(Bundle.getMessage("ReturnValueType_LocalVariable")),
+        Memory(Bundle.getMessage("ReturnValueType_Memory"));
+        
+        private final String _descr;
+        
+        private ReturnValueType(String descr) {
+            _descr = descr;
+        }
+        
+        public String getDescr() {
+            return _descr;
+        }
+    }
+    
+    
+    /**
      * The definition of the symbol
      */
     public interface Symbol {
@@ -120,6 +141,10 @@ public interface SymbolTable {
         public InitialValueType getInitalValueType();
         
         public String getInitialValueData();
+        
+        public ReturnValueType getReturnValueType();
+        
+        public String getReturnValueData();
         
     }
     

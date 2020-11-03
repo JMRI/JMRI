@@ -28,7 +28,6 @@ public class DefaultSymbolTable implements SymbolTable {
         _prevSymbolTable = InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
         _stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
         _firstSymbolIndex = _stack.getCount();
-        System.out.format("DefaultSymbolTable: _firstSymbolIndex: %d%n", _firstSymbolIndex);
     }
     
     /**
@@ -48,8 +47,6 @@ public class DefaultSymbolTable implements SymbolTable {
     /** {@inheritDoc} */
     @Override
     public Object getValue(String name) {
-//        System.out.format("DefaultSymbolTable.getValue: stack: %s, name: %s%n", _stack, name);
-//        System.out.format("DefaultSymbolTable.getValue: stack: %s, name: %s, _symbols.get(): %s%n", _stack, name, _symbols.get(name));
         return _stack.getValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex());
     }
     
@@ -94,17 +91,14 @@ public class DefaultSymbolTable implements SymbolTable {
      */
     public void createSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
         for (SymbolTable.ParameterData parameter : symbolDefinitions) {
-            Symbol symbol = new DefaultSymbol(parameter.getName(), _stack.getCount());
+            Symbol symbol = new DefaultSymbol(parameter.getName(), _stack.getCount() - _firstSymbolIndex);
             Object initialValue = null;
-            
-//            System.out.format("createSymbols: Add symbol: %s, %s, %s%n", symbol.getName(), parameter.getInitalValueType().name(), parameter.getInitialValueData());
             
             switch (parameter.getInitalValueType()) {
                 case None:
                     break;
                     
                 case LocalVariable:
-//                    System.out.format("AAAA createSymbols: %s, %s%n", parameter.getName(), parameter.getInitialValueData());
                     initialValue = _prevSymbolTable.getValue(parameter.getInitialValueData());
                     break;
                     
@@ -124,13 +118,11 @@ public class DefaultSymbolTable implements SymbolTable {
                 case Formula:
                     RecursiveDescentParser parser = createParser();
                     ExpressionNode expressionNode = parser.parseExpression(parameter.getInitialValueData());
-//                    System.out.format("Expression calculate%n");
                     initialValue = expressionNode.calculate();
-//                    System.out.format("Expression calculate done%n");
                     break;
                     
                 default:
-                    System.out.format("definition._initalValueType has invalid value: %s%n", parameter.getInitalValueType().name());
+                    log.error("definition._initalValueType has invalid value: {}", parameter.getInitalValueType().name());
                     throw new IllegalArgumentException("definition._initalValueType has invalid value: " + parameter.getInitalValueType().name());
             }
             
@@ -138,6 +130,37 @@ public class DefaultSymbolTable implements SymbolTable {
             
             _stack.push(initialValue);
             _symbols.put(symbol.getName(), symbol);
+        }
+    }
+    
+    /**
+     * Return the symbols
+     * @param symbolDefinitions list of symbols to return
+     * @throws jmri.JmriException if an exception occurs
+     */
+    public void returnSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
+        for (SymbolTable.ParameterData parameter : symbolDefinitions) {
+            Object returnValue = getValue(parameter.getName());
+            
+            switch (parameter.getReturnValueType()) {
+                case None:
+                    break;
+                    
+                case LocalVariable:
+                    _prevSymbolTable.setValue(parameter.getReturnValueData(), returnValue);
+                    break;
+                    
+                case Memory:
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(parameter.getReturnValueData());
+                    if (m != null) m.setValue(returnValue);
+                    break;
+                    
+                default:
+                    log.error("definition.returnValueType has invalid value: {}", parameter.getReturnValueType().name());
+                    throw new IllegalArgumentException("definition._returnValueType has invalid value: " + parameter.getReturnValueType().name());
+            }
+            
+//            System.out.format("Return symbol: %s = %s%n", symbol.getName(), initialValue);
         }
     }
     
@@ -217,11 +240,21 @@ public class DefaultSymbolTable implements SymbolTable {
         public String _name;
         public InitialValueType _initalValueType;
         public String _initialValueData;
+        public ReturnValueType _returnValueType;
+        public String _returnValueData;
         
-        public DefaultParameterData(String name, InitialValueType initalValueType, String initialValueData) {
+        public DefaultParameterData(
+                String name,
+                InitialValueType initalValueType,
+                String initialValueData,
+                ReturnValueType returnValueType,
+                String returnValueData) {
+            
             _name = name;
             _initalValueType = initalValueType;
             _initialValueData = initialValueData;
+            _returnValueType = returnValueType;
+            _returnValueData = returnValueData;
         }
         
         /** {@inheritDoc} */
@@ -240,6 +273,18 @@ public class DefaultSymbolTable implements SymbolTable {
         @Override
         public String getInitialValueData() {
             return _initialValueData;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public ReturnValueType getReturnValueType() {
+            return _returnValueType;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public String getReturnValueData() {
+            return _returnValueData;
         }
         
     }

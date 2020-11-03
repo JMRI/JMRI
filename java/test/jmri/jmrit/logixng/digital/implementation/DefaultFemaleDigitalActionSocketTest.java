@@ -87,6 +87,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionMemory.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);

@@ -24,15 +24,12 @@ public class RecursiveModuleTest {
     
     @Test
     public void testFibonacci() {
-        System.out.format("%n%n%nStart test%n%n");
-        
         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(null);
         Stack stack = InstanceManager.getDefault(LogixNG_Manager.class).getStack();
         while (stack.getCount() > 0) stack.pop();
         
         n.setValue(0);
         Assert.assertEquals(Long.valueOf(1), result.getValue());
-        if (1==1) return;
         
         n.setValue(1);
         Assert.assertEquals(Long.valueOf(1), result.getValue());
@@ -97,7 +94,8 @@ public class RecursiveModuleTest {
         
         module.addParameter("n", true, false);
         module.addParameter("result", false, true);
-        module.addLocalVariable("temp", SymbolTable.InitialValueType.None, "");
+        module.addLocalVariable("temp1", SymbolTable.InitialValueType.None, null);
+        module.addLocalVariable("temp2", SymbolTable.InitialValueType.None, null);
         
         module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
@@ -165,7 +163,8 @@ public class RecursiveModuleTest {
         // Call the module for n-1
         ModuleDigitalAction moduleDigitalAction925 = new ModuleDigitalAction("IQDA925", null);
         moduleDigitalAction925.setModule("IQM1");
-        moduleDigitalAction925.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 1");
+        moduleDigitalAction925.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 1", SymbolTable.ReturnValueType.None, null);
+        moduleDigitalAction925.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp1");
         MaleSocket maleSocket925 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction925);
         manySocket921.getChild(0).connect(maleSocket925);
@@ -173,10 +172,19 @@ public class RecursiveModuleTest {
         // Call the module
         ModuleDigitalAction moduleDigitalAction932 = new ModuleDigitalAction("IQDA932", null);
         moduleDigitalAction932.setModule("IQM1");
-        moduleDigitalAction932.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 2");
+        moduleDigitalAction932.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 2", SymbolTable.ReturnValueType.None, null);
+        moduleDigitalAction932.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp2");
         MaleSocket maleSocket932 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction932);
         manySocket921.getChild(1).connect(maleSocket932);
+        
+        ActionLocalVariable actionLocalVariable933 = new ActionLocalVariable("IQDA933", null);
+        actionLocalVariable933.setVariable("result");
+        actionLocalVariable933.setData("temp1 + temp2");
+        actionLocalVariable933.setVariableOperation(ActionLocalVariable.VariableOperation.FORMULA);
+        MaleSocket maleSocket933 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable933);
+        manySocket921.getChild(2).connect(maleSocket933);
         
         
         
@@ -209,8 +217,8 @@ public class RecursiveModuleTest {
         ModuleDigitalAction moduleDigitalAction = new ModuleDigitalAction("IQDA4", null);
         moduleDigitalAction.setModule("IQM1");
 //        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.LocalVariable, "n");
-        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.Memory, "IMN");
-        moduleDigitalAction.addParameter("result", SymbolTable.InitialValueType.None, "");
+        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.Memory, "IMN", SymbolTable.ReturnValueType.None, null);
+        moduleDigitalAction.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.Memory, "IMRESULT");
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction);
         manySocket.getChild(1).connect(maleSocket2);
@@ -229,7 +237,7 @@ public class RecursiveModuleTest {
         
         
         
-        
+/*        
         final String treeIndent = "   ";
         
         System.out.println();
@@ -257,7 +265,7 @@ public class RecursiveModuleTest {
         System.out.println();
         System.out.println();
         System.out.println();
-        
+*/        
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

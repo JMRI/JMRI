@@ -6,7 +6,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.util.parser.Variable;
 
 /**
- * A variable that evaluates a constant expression
+ * A variable that evaluates a local variable
  */
 public class LocalVariableExpressionVariable implements Variable {
 

@@ -39,4 +39,13 @@ public interface Stack {
      */
     public int getCount();
     
+    /**
+     * Reset the number of items on the stack.
+     * This is used when parameters are put on the stack before a call to a
+     * module and those parameters needs to be removed when the module returns.
+     * The new count must be less than or equal to the current number of items.
+     * @param newCount the new number of items
+     */
+    public void setCount(int newCount);
+    
 }

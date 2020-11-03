@@ -267,11 +267,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public boolean evaluate() {
         if (_variableName == null) return false;
         
-        System.out.format("%n%nExpressionLocalVariable.evaluate() %s%n", getSystemName());
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().printSymbolTable(System.out);
-        
         String variableValue = getString(
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .getSymbolTable().getValue(_variableName));
@@ -288,8 +283,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
         }
-        
-        System.out.format("This value: %s, CompareTo: %s, other value: %s%n", variableValue, _compareTo.name(), otherValue);
         
         switch (_variableOperation) {
             case LESS_THAN:
@@ -324,8 +317,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             default:
                 throw new IllegalArgumentException("_memoryOperation has unknown value: "+_variableOperation.name());
         }
-        
-        System.out.format("LocalVariable result: %s%n", result);
         
         return result;
     }

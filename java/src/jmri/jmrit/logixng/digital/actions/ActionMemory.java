@@ -134,7 +134,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     private void parseFormula() throws ParserException {
         if (_memoryOperation == MemoryOperation.FORMULA) {
             Map<String, Variable> variables = new HashMap<>();
-            
+/*            
             SymbolTable symbolTable =
                     InstanceManager.getDefault(LogixNG_Manager.class)
                             .getSymbolTable();
@@ -149,7 +149,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                 variables.put(symbol.getName(),
                         new LocalVariableExpressionVariable(symbol.getName()));
             }
-            
+*/            
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_data);
         } else {

@@ -176,7 +176,13 @@ public class DefaultModule extends AbstractBase
             SymbolTable.InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.put(name, new DefaultSymbolTable.DefaultParameterData(name, initialValueType, initialValueData));
+        _localVariables.put(name,
+                new DefaultSymbolTable.DefaultParameterData(
+                        name,
+                        initialValueType,
+                        initialValueData,
+                        SymbolTable.ReturnValueType.None,
+                        null));
     }
     
     @Override

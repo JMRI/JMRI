@@ -101,7 +101,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("memory is correct", memory == action2.getMemory().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
-        Assert.assertEquals("String matches", "Copy memory IM1 to memory IM12", action2.getLongDescription());
+        Assert.assertEquals("String matches", "Copy memory IM12 to memory IM1", action2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -206,8 +206,8 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the memory should been copied to the other memory
-        Assert.assertEquals("memory has correct value", "A value", memory.getValue());
-        Assert.assertEquals("memory has correct value", "A value", otherMemory.getValue());
+        Assert.assertEquals("memory has correct value", "Some other value", memory.getValue());
+        Assert.assertEquals("memory has correct value", "Some other value", otherMemory.getValue());
     }
     
     @Test
@@ -280,7 +280,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         actionMemory.setOtherMemory(otherMemory);
-        Assert.assertEquals("String matches", "Copy memory IM1 to memory IM99", _base.getLongDescription());
+        Assert.assertEquals("String matches", "Copy memory IM99 to memory IM1", _base.getLongDescription());
     }
     
     @Test

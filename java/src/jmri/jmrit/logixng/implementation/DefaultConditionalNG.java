@@ -15,9 +15,6 @@ import jmri.Manager;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The default implementation of ConditionalNG.
  * 
@@ -135,21 +132,15 @@ public class DefaultConditionalNG extends AbstractBase
             runOnGUI(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
+                        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+                        
                         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
                         
                         try {
                             newSymbolTable.createSymbols(_localVariables.values());
                             InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
                             
-                            for (SymbolTable.ParameterData pd : _localVariables.values()) {
-                                System.out.format("ConditionalNG.execute: pd.name: %s, %s, %s%n", pd.getName(), pd.getInitalValueType().name(), pd.getInitialValueData());
-                            }
-                            
                             _femaleRootSocket.execute();
-                            
-                            for (SymbolTable.ParameterData pd : _localVariables.values()) {
-                                System.out.format("ConditionalNG.execute done: pd.name: %s, %s, %s%n", pd.getName(), pd.getInitalValueType().name(), pd.getInitialValueData());
-                            }
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
@@ -169,6 +160,8 @@ public class DefaultConditionalNG extends AbstractBase
                                             getSystemName(), e, e);
                             }
                         }
+                        
+                        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
                         
                         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
                     }
@@ -224,8 +217,6 @@ public class DefaultConditionalNG extends AbstractBase
 //    public boolean getEnabled() {
 //        return _enabled;
 //    }
-
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalNG.class);
 
     @Override
     public void connected(FemaleSocket socket) {
@@ -377,7 +368,13 @@ public class DefaultConditionalNG extends AbstractBase
             SymbolTable.InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.put(name, new DefaultSymbolTable.DefaultParameterData(name, initialValueType, initialValueData));
+        _localVariables.put(name,
+                new DefaultSymbolTable.DefaultParameterData(
+                        name,
+                        initialValueType,
+                        initialValueData,
+                        SymbolTable.ReturnValueType.None,
+                        null));
     }
     
     @Override
@@ -389,5 +386,7 @@ public class DefaultConditionalNG extends AbstractBase
     public Collection<SymbolTable.ParameterData> getLocalVariables() {
         return _localVariables.values();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);
 
 }

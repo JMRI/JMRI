@@ -87,8 +87,9 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         return _otherMemoryHandle;
     }
     
-    public void setVariableOperation(VariableOperation memoryOperation) {
+    public void setVariableOperation(VariableOperation memoryOperation) throws ParserException {
         _variableOperation = memoryOperation;
+        parseFormula();
     }
     
     public VariableOperation getVariableOperation() {
@@ -107,21 +108,6 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     private void parseFormula() throws ParserException {
         if (_variableOperation == VariableOperation.FORMULA) {
             Map<String, Variable> variables = new HashMap<>();
-            
-            SymbolTable symbolTable =
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable();
-            
-            if (symbolTable == null && 1==1) return;    // Why does this happens?
-//            if (symbolTable == null && 1==1) return;    // Nothing we can do if we don't have a symbol table
-            if (symbolTable == null) throw new RuntimeException("Daniel AA");
-            if (symbolTable.getSymbols() == null) throw new RuntimeException("Daniel BB");
-            if (symbolTable.getSymbols().values() == null) throw new RuntimeException("Daniel BB");
-            
-            for (SymbolTable.Symbol symbol : symbolTable.getSymbols().values()) {
-                variables.put(symbol.getName(),
-                        new LocalVariableExpressionVariable(symbol.getName()));
-            }
             
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             _expressionNode = parser.parseExpression(_data);
@@ -167,18 +153,12 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     public void execute() throws JmriException {
         if (_variableName == null) return;
         
-        System.out.format("%n%nActionLocalVariable.execute() %s%n", getSystemName());
-        
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().printSymbolTable(System.out);
-        
         SymbolTable symbolTable =
                 InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
         
         AtomicReference<JmriException> ref = new AtomicReference<>();
         
         ThreadingUtil.runOnLayout(() -> {
-            System.out.format("ActionMemory: oper: %s, memory: %s, memory value: %s, data: %s%n", _variableOperation.name(), _variableName, symbolTable.getValue(_variableName), _data);
             
             switch (_variableOperation) {
                 case SET_TO_NULL:
@@ -190,19 +170,11 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                     break;
                     
                 case COPY_VARIABLE_TO_VARIABLE:
-                    System.out.format("AXZ ActionMemory: SET_TO_VARIABLE: %s, %s%n", _variableName, symbolTable.getValue(_variableName));
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable().printSymbolTable(System.out);
-                    
                     Object variableValue =
                             InstanceManager.getDefault(LogixNG_Manager.class)
                                     .getSymbolTable().getValue(_data);
-                    System.out.format("AA ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, _variableName, symbolTable.getValue(_variableName));
-                    variableValue = "Something else!!!";
-//                    Object variableValue = "Something else!!!";
-                    symbolTable.setValue(_variableName, variableValue);
                     
-                    System.out.format("BB ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, _variableName, symbolTable.getValue(_variableName));
+                    symbolTable.setValue(_variableName, variableValue);
                     break;
                     
                 case COPY_MEMORY_TO_VARIABLE:
@@ -219,7 +191,6 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                     } else {
                         try {
                             if (_expressionNode == null) {
-                                System.out.format("ActionMemory: %s, _expressionNode is null%n", getSystemName());
                                 return;
                             }
                             symbolTable.setValue(_variableName, _expressionNode.calculate());

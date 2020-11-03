@@ -283,7 +283,7 @@ public class RecursiveDescentParserTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
+/*        
         exceptionIsThrown.set(false);
         try {
             t.parseExpression("abcde");
@@ -293,7 +293,7 @@ public class RecursiveDescentParserTest {
             exceptionIsThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", exceptionIsThrown.get());
-        
+*/        
         exceptionIsThrown.set(false);
         try {
             t.parseExpression("abc(123)");

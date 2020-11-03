@@ -110,23 +110,10 @@ public class Many extends AbstractDigitalAction
     public boolean isExternal() {
         return false;
     }
-/*    
-    @Override
-    public void evaluateOnly() {
-        for (ActionEntry actionEntry : _actionEntries) {
-            if (actionEntry._socket instanceof DigitalActionWithEnableExecution) {
-                ((DigitalActionWithEnableExecution)actionEntry._socket).evaluateOnly();
-            } else {
-                throw new UnsupportedOperationException(
-                        "evaluateOnly() is only supported if all the children supports evaluateOnly()");
-            }
-        }
-    }
-*/    
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        System.out.format("%n%nMany.execute() %s%n", getSystemName());
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.execute();
         }

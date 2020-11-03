@@ -101,8 +101,6 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
         
         Module module = _moduleHandle.getBean();
         
-        System.out.format("%n%nModuleDigitalAction.execute() %s%n", getSystemName());
-        
         FemaleSocket femaleSocket = module.getRootSocket();
         
         if (! (femaleSocket instanceof FemaleDigitalActionSocket)) {
@@ -110,23 +108,18 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
             return;
         }
         
-        for (SymbolTable.ParameterData pd : _parameterData.values()) {
-            System.out.format("ParameterData: %s, %s%n", pd.getName(), pd);
-        }
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
         
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable();
         newSymbolTable.createSymbols(_parameterData.values());
         newSymbolTable.createSymbols(module.getLocalVariables());
         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
+        
         ((FemaleDigitalActionSocket)femaleSocket).execute();
         
-        for (SymbolTable.ParameterData pd : _parameterData.values()) {
-            System.out.format("ParameterData: %s, %s%n", pd.getName(), newSymbolTable.getValue(pd.getName()));
-        }
+        newSymbolTable.returnSymbols(_parameterData.values());
         
-        System.out.format("ModuleDigitalAction: After the module is executed%n");
-        InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().printSymbolTable(System.out);
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
         
         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable.getPrevSymbolTable());
     }
@@ -182,12 +175,20 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
         removeModule();
     }
     
-    public void addParameter(String name, SymbolTable.InitialValueType initalValueType, String initialValueData) {
-        System.out.format("addParameter: New parameter: %s%n", name);
-        _parameterData.put(name, new DefaultSymbolTable.DefaultParameterData(name, initalValueType, initialValueData));
-        for (SymbolTable.ParameterData pd : _parameterData.values()) {
-            System.out.format("addParameter: ParameterData: %s, %s%n", pd.getName(), pd);
-        }
+    public void addParameter(
+            String name,
+            SymbolTable.InitialValueType initialValueType,
+            String initialValueData,
+            SymbolTable.ReturnValueType returnValueType,
+            String returnValueData) {
+        
+        _parameterData.put(name,
+                new DefaultSymbolTable.DefaultParameterData(
+                        name,
+                        initialValueType,
+                        initialValueData,
+                        returnValueType,
+                        returnValueData));
     }
     
     public void removeParameter(String name) {

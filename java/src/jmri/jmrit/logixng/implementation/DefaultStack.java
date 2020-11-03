@@ -58,4 +58,11 @@ public class DefaultStack implements Stack {
         return _count;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void setCount(int newCount) {
+        if ((newCount < 0) || (newCount > _count)) throw new IllegalArgumentException("newCount has invalid value: " + Integer.toString(newCount));
+        _count = newCount;
+    }
+
 }
