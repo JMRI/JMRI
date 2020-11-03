@@ -1,10 +1,7 @@
 package jmri.jmrit.beantable.oblock;
 
 import jmri.*;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
+import jmri.jmrit.logix.*;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 
@@ -38,6 +35,7 @@ public class OBlockEditFrame extends JmriJFrame {
     OBlockTableModel _model;
     String _oblock;
     TableFrames _core;
+    JTable _pathTable;
 
     // Common UI components for Add/Edit OBlock
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
@@ -50,8 +48,8 @@ public class OBlockEditFrame extends JmriJFrame {
     JLabel errorSensorLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ErrorSensorCol")));
     JLabel sysName = new JLabel();
     JTextField userName = new JTextField(15);
-    JTextField length = new JTextField(5);
-    JToggleButton unit = new JToggleButton("cm");
+    JFormattedTextField length = new JFormattedTextField(0.00);
+    JToggleButton unit = new JToggleButton(Bundle.getMessage("cm"));
     JComboBox<String> curveBox = new JComboBox<>(OBlockTableModel.curveOptions);
     JTextField current = new JTextField(15);
     JTextArea comment  = new JTextArea();
@@ -59,20 +57,25 @@ public class OBlockEditFrame extends JmriJFrame {
     private final NamedBeanComboBox<Sensor> errorSensorBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     JButton addButton;
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    TableFrames.BlockPathJPanel _pathTablePane;
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
-    JTable pathTable;
+    float baseLength;
     private final static String PREFIX = "OB";
 
     /**
      * Standard constructor
      *
      * @param title Title of this OBlockEditFrame
+     * @param oblock name of OBlock being edited, to find its Paths
      * @param model OBlockTableModel holding OBlock data
+     * @param table table of Paths on this OBlock to display on panel
      */
-    public OBlockEditFrame(String title, String oblock, OBlockTableModel model, TableFrames parent) {
+    public OBlockEditFrame(String title, String oblock, OBlockTableModel model,
+                           TableFrames.BlockPathJPanel table, TableFrames parent) {
         super(title);
         _oblock = oblock;
         _model = model;
+        _pathTablePane = table;
         _core = parent;
         obm = InstanceManager.getDefault(OBlockManager.class);
         layoutFrame();
@@ -91,7 +94,6 @@ public class OBlockEditFrame extends JmriJFrame {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         //p.setLayout(new FlowLayout());
-        //comment
 
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
@@ -103,6 +105,9 @@ public class OBlockEditFrame extends JmriJFrame {
         p1.add(userNameLabel);
         userNameLabel.setLabelFor(userName);
         p1.add(userName);
+        p.add(p1);
+        p1 = new JPanel();
+        p1.add(comment);
         p.add(p1);
         frame.getContentPane().add(p);
 
@@ -128,21 +133,38 @@ public class OBlockEditFrame extends JmriJFrame {
         p.add(p1);
 
         p1 = new JPanel();
-        p1.add(pathTable);
-        p.add(p1);
-
-        p1 = new JPanel();
         p1.add(sensorLabel);
         sensorLabel.setLabelFor(sensorBox);
         p1.add(sensorBox);
         p.add(p1);
-        frame.getContentPane().add(p);
+
         p1 = new JPanel();
         p1.add(errorSensorLabel);
         errorSensorLabel.setLabelFor(errorSensorBox);
         p1.add(errorSensorBox);
         p.add(p1);
+
+        p1 = new JPanel();
+        p1.setLayout(new BorderLayout(10, 10));
+        p1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        p1.add(_pathTablePane, BorderLayout.CENTER);
+        p.add(p1);
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BorderLayout(10, 10));
+        buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
+        p1.add(buttonPane, BorderLayout.SOUTH);
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
+        ActionListener addPathAction = e -> {
+            _core.addPathPane(obm.getOBlock(_oblock));
+        };
+        addButton.addActionListener(addPathAction);
+        addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
+        buttonPane.add(addButton);
+        // TODO add more, like a button Add... to frame?
         frame.getContentPane().add(p);
+
         p = new JPanel();
         JButton cancel;
         p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
@@ -185,11 +207,9 @@ public class OBlockEditFrame extends JmriJFrame {
         length.setText(twoDigit.format(ob.getLengthCm()));
         curveBox.setSelectedItem(ob.getCurvature());
         sensorBox.setSelectedItem(ob.getSensor());
-
-        BlockPathTableModel pathModel = new BlockPathTableModel(ob, _core);
-        pathTable = new JTable(pathModel);
         // formatting?
 
+        baseLength = ob.getLengthMm();
         //permission
 //        tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
 //        tempRow[SPEEDCOL] = "";
@@ -205,17 +225,25 @@ public class OBlockEditFrame extends JmriJFrame {
         OBlock ob = obm.getOBlock(_oblock);
         if (ob != null) {
             ob.setUserName(user);
-//            //      try {
-//            OBlock block = fromBlockComboBox.getItemAt(fromBlockComboBox.getSelectedIndex());
-//            if (block != null) {
-//                portal.setFromBlock(block, true);
-//            }
-//            block = toBlockComboBox.getItemAt(toBlockComboBox.getSelectedIndex());
-//            if (block != null) {
-//                ob.setToBlock(block, true);
-//                //  } catch (IllegalArgumentException ex) {
-//                //     JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
-//            }
+            if (sensorBox.getSelectedItem() != null) {
+                ob.setSensor(sensorBox.getSelectedItem().getDisplayName());
+            }
+            if (errorSensorBox.getSelectedItem() != null) {
+                ob.setErrorSensor(errorSensorBox.getSelectedItem().getDisplayName());
+            }
+            ob.setComment(comment.getText());
+            ob.setMetricUnits(unit.getText().equals(Bundle.getMessage("cm")));
+            ob.setLength((float) (baseLength));
+            // more?
+
+            String msg = WarrantTableAction.getDefault().checkPathPortals(ob);
+            if (!msg.isEmpty()) {
+                JOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (_pathTablePane.getModel() != null) {
+                _pathTablePane.getModel().removeListener();
+            }
         }
 
         // Notify changes

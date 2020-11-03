@@ -14,10 +14,8 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.Sensor;
-import jmri.jmrit.beantable.OBlockTableFrame;
 import jmri.jmrit.logix.*;
 import jmri.util.IntlUtilities;
-import jmri.util.JmriJFrame;
 import jmri.util.NamedBeanComparator;
 
 import jmri.util.gui.GuiLafPreferencesManager;
@@ -638,9 +636,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case EDIT_COL:
                 if (_tabbed) {
                     log.debug("Edit clicked, opening Block Edit Pane");
-                    _parent.openOBlockEditFrame(block.getSystemName());
-                } else {
                     _parent.openBlockPathPane(block.getSystemName());
+                } else {
+                    _parent.openBlockPathFrame(block.getSystemName());
                 }
                 return;
             case DELETE_COL:

@@ -10,12 +10,13 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Defines a GUI for editing OBlocks - Portal objects in the tabbed Table interface.
+ * Defines a GUI for editing OBlocks - Path objects in the tabbed Table interface.
  * Based on {@link jmri.jmrit.audio.swing.AudioSourceFrame} and
  * {@link jmri.jmrit.beantable.routetable.AbstractRouteAddEditFrame}
  *
@@ -30,8 +31,9 @@ public class BlockPathEditFrame extends JmriJFrame {
             ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-    PortalTableModel model;
+    PathTurnoutTableModel _tmodel;
     OBlock _block;
+    OPath _path;
     PortalManager pm;
 //    List<BeanSetting> settings;
 
@@ -40,7 +42,6 @@ public class BlockPathEditFrame extends JmriJFrame {
     JTextField blockName = new JTextField(15);
     JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Path")));
     JTextField userName = new JTextField(15);
-    JLabel ReporterLabel = new JLabel(Bundle.getMessage("MakeLabel", "BlockReporter"));
     JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
     JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
     private final JComboBox<Portal> fromPortalComboBox = new JComboBox<>();
@@ -65,18 +66,14 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     static int ROW_HEIGHT;
 
-    //    final JTextField _systemName = new JTextField(10);
     final JTextField _userName = new JTextField(22);
-    //    final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     JTextArea comment  = new JTextArea();
     final JLabel status1 = new JLabel();
     final JLabel status2 = new JLabel();
 
-    //    protected final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
     //    protected ArrayList<PathTurnout> _includedTurnoutList;
-    //    ArrayList<PathTurnout> _turnoutList;      // array of all Turnouts
     PathTurnoutTableModel _pathTurnoutTableModel;
     JScrollPane _pathTurnoutScrollPane;
     NamedBeanComboBox<OBlock> fromOBlock;
@@ -84,18 +81,21 @@ public class BlockPathEditFrame extends JmriJFrame {
     boolean editMode = false;
 
     protected UserPreferencesManager pref;
-    private JRadioButton allButton = null;
+    //private final JRadioButton allButton = null;
     protected boolean routeDirty = false;  // true to fire reminder to save work
-    private boolean showAll = true;   // false indicates show only included Turnouts
+    //private boolean showAll = true;   // false indicates show only included Turnouts
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public BlockPathEditFrame(String title, OBlock block, PortalTableModel model) {
+    public BlockPathEditFrame(String title, OBlock block, OPath path) {
         super(title, true, true);
-        //this(Bundle.getMessage("TitleEditPath", block.getDisplayName()), block);
-        this.model = model;
         _block = block;
+        _path = path;
         pm = InstanceManager.getDefault(PortalManager.class);
+        PathTurnoutTableModel _tmodel = new PathTurnoutTableModel(path, this);
         layoutFrame();
+        if (path != null) {
+            populateFrame(path);
+        }
     }
 
     public void layoutFrame() {
@@ -117,6 +117,8 @@ public class BlockPathEditFrame extends JmriJFrame {
         p.add(toPortalLabel);
         p.add(toPortalComboBox);
         main.add(p);
+
+        // add Turnout table + Add button
 
         p = new JPanel();
         p.add(statusBar);
@@ -192,7 +194,7 @@ public class BlockPathEditFrame extends JmriJFrame {
             }
         }
         // Notify changes
-        model.fireTableDataChanged();
+        _tmodel.fireTableDataChanged();
     }
 
     protected JPanel getButtonPanel() {
