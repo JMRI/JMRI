@@ -192,14 +192,11 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     public void execute() throws JmriException {
         if (_memoryHandle == null) return;
         
-        System.out.format("%n%nActionMemory.execute() %s%n", getSystemName());
-        
         final Memory memory = _memoryHandle.getBean();
         
         AtomicReference<JmriException> ref = new AtomicReference<>();
         
         ThreadingUtil.runOnLayout(() -> {
-            System.out.format("ActionMemory: oper: %s, memory: %s, memory value: %s, data: %s%n", _memoryOperation.name(), memory.getSystemName(), memory.getValue(), _data);
             
             switch (_memoryOperation) {
                 case SET_TO_NULL:
@@ -211,19 +208,10 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     break;
                     
                 case COPY_VARIABLE_TO_MEMORY:
-                    System.out.format("AXZ ActionMemory: SET_TO_VARIABLE: %s, %s%n", memory.getSystemName(), memory.getValue());
-                    InstanceManager.getDefault(LogixNG_Manager.class)
-                            .getSymbolTable().printSymbolTable(System.out);
-                    
                     Object variableValue =
                             InstanceManager.getDefault(LogixNG_Manager.class)
                                     .getSymbolTable().getValue(_data);
-                    System.out.format("AA ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, memory.getSystemName(), memory.getValue());
-                    variableValue = "Something else!!!";
-//                    Object variableValue = "Something else!!!";
                     memory.setValue(variableValue);
-                    
-                    System.out.format("BB ActionMemory: SET_TO_VARIABLE: %s, %s, %s%n", variableValue, memory.getSystemName(), memory.getValue());
                     break;
                     
                 case COPY_MEMORY_TO_MEMORY:
@@ -240,7 +228,6 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
                     } else {
                         try {
                             if (_expressionNode == null) {
-                                System.out.format("ActionMemory: %s, _expressionNode is null%n", getSystemName());
                                 return;
                             }
                             memory.setValue(_expressionNode.calculate());

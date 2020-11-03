@@ -259,6 +259,7 @@ public class ArchitectureTest {
             .and().haveNameNotMatching("^jmri.jmrit.beantable.AbstractLogixNGTableAction(\\$\\d+)?")
             .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGTableAction(\\$\\d+)?")
             .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGModuleTableAction(\\$\\d+)?")
+            .and().haveNameNotMatching("^jmri.jmrit.beantable.LogixNGTableTableAction(\\$\\d+)?")
             .and().doNotHaveFullyQualifiedName("jmri.jmrit.ToolsMenu")
             .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.logixng.(**)");
 
