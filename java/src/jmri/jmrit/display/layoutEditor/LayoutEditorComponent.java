@@ -616,7 +616,7 @@ class LayoutEditorComponent extends JComponent {
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 
@@ -625,7 +625,7 @@ class LayoutEditorComponent extends JComponent {
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 
