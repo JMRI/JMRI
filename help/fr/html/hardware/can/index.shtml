@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR
 "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
-< head>
+<head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X" (vers 31 octobre 2006 - Apple Inc. build 15.17), voir www.w3.org">
 
-  <titre>Support mat&#233;riel IRMJ - R&#233;seau CAN</titre>
+  <titre>Support mat&#233;riel JMRI - R&#233;seau CAN</titre>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html ; charset=utf-8">
@@ -68,7 +68,7 @@
       Contr&#244;le et Commande du R&#233;seau (LCC, anciennement
       NMRAnet)</a>.</p>
 
-      <h3><a href="cbus/index.shtml">CBUS MERG</a><</h3>
+      <h3><a href="cbus/index.shtml">CBUS MERG</a></h3>
 
         <img src="http://mergcbus.sourceforge.net/cbus.png" align=
       "right" alt="MERG CBUS logo" height="45" width="90">
@@ -188,7 +188,7 @@
             entre Engine Driver/WiThrottle et CBUS MERG.</dd>
             </dl>
 
-      <h2><a name="connect" id="connect">Connexion</a><</h2>
+      <h2><a name="connect" id="connect">Connexion</a></h2>
 
       <p>JMRI peut fournir les fonctions habituelles de capteur et d'aiguillage,
       une fois configur&#233; pour <a href=
@@ -336,16 +336,16 @@
 
       <p><a href="../openlcb/index.shtml">OpenLCB</a> Aide</p>
 
-      <p><a href="cbus/index.shtml">CBUS MERG/a> Assistance</p>
+      <p><a href="cbus/index.shtml">CBUS MERG</a> Assistance</p>
       
       <p><a href="scripting.shtml">Script JMRI</a> pour les trames CAN.</p>
       
       
       <h3>Information sur les tiers</h3>
 
-      <p><a href="http://www.openlcb.org">OpenLCB.org</a><</p>
-      <p><a href="https://www.merg.org.uk">merg.org.uk</a><</p>
-      <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a><</p>
+      <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>
+      <p><a href="https://www.merg.org.uk">merg.org.uk</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a></p>
       
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
