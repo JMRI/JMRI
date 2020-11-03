@@ -1073,7 +1073,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             optionMenu.add(locationItem);
             locationItem.addActionListener((ActionEvent event) -> {
                 setCurrentPositionAndSize();
-                log.debug("Bounds:{}, {}, {}, {}, {}, {}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}",
+                        gContext.getUpperLeftX(), gContext.getUpperLeftY(),
+                        gContext.getWindowWidth(), gContext.getWindowHeight(),
+                        gContext.getLayoutWidth(), gContext.getLayoutHeight());
             });
         }
 
@@ -1831,8 +1834,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             yLoc = (int) (mouseLoc.getY() / theZoom);
             dLoc = new Point2D.Double(xLoc, yLoc);
 
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         adjustClip();
     }
@@ -2780,8 +2782,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
             selectionActive = false;
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             if (event.isPopupTrigger()) {
                 if (isMetaDown(event) || event.isAltDown()) {
@@ -3304,8 +3305,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
@@ -3317,8 +3317,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if (leToolBarPanel.turnoutRHButton.isSelected()) {
@@ -4502,8 +4501,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         List<Positionable> selections = getSelectedItems(event);
         Positionable selection = null;
@@ -4555,8 +4553,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // process this mouse dragged event
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         currentPoint = MathUtil.add(dLoc, startDelta);
         // don't allow negative placement, objects could become unreachable
@@ -4579,8 +4576,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if ((_positionableSelection.size() > 0)
