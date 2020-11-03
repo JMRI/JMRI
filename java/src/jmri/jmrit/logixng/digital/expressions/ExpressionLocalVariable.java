@@ -158,11 +158,11 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
      * instructions in {@link #_variableOperation}.
      *
      * <strong>Note:</strong> {@link #_variableOperation} must be one of
-     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN},
-     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #ExpressionMemory.MemoryOperation.EQUAL},
-     * {@link #ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #ExpressionMemory.MemoryOperation.GREATER_THAN}.
+     * {@link #ExpressionLocalVariable.MemoryOperation.LESS_THAN},
+     * {@link #ExpressionLocalVariable.MemoryOperation.LESS_THAN_OR_EQUAL},
+     * {@link #ExpressionLocalVariable.MemoryOperation.EQUAL},
+     * {@link #ExpressionLocalVariable.MemoryOperation.GREATER_THAN_OR_EQUAL},
+     * or {@link #ExpressionLocalVariable.MemoryOperation.GREATER_THAN}.
      *
      * @param value1          left side of the comparison
      * @param value2          right side of the comparison
