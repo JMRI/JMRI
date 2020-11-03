@@ -19,12 +19,12 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class ModuleDigitalAction extends AbstractDigitalAction implements VetoableChangeListener {
+public class CallModule extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
     private final Map<String, SymbolTable.ParameterData> _parameterData = new HashMap<>();
     
-    public ModuleDigitalAction(String sys, String user)
+    public CallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -196,6 +196,6 @@ public class ModuleDigitalAction extends AbstractDigitalAction implements Vetoab
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ModuleDigitalAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CallModule.class);
     
 }

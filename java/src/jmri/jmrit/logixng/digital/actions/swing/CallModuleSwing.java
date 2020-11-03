@@ -1,19 +1,21 @@
 package jmri.jmrit.logixng.digital.actions.swing;
 
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
+
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.digital.actions.ModuleDigitalAction;
+import jmri.jmrit.logixng.digital.actions.CallModule;
 
 /**
  * Configures an ModuleDigitalAction object with a Swing JPanel.
  */
-public class ModuleDigitalActionSwing extends AbstractActionSwing {
+public class CallModuleSwing extends AbstractActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -29,7 +31,7 @@ public class ModuleDigitalActionSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ModuleDigitalAction action = new ModuleDigitalAction(systemName, userName);
+        CallModule action = new CallModule(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     

@@ -161,7 +161,7 @@ public class RecursiveModuleTest {
         ifThenElse915.getChild(2).connect(manySocket921);
         
         // Call the module for n-1
-        ModuleDigitalAction moduleDigitalAction925 = new ModuleDigitalAction("IQDA925", null);
+        CallModule moduleDigitalAction925 = new CallModule("IQDA925", null);
         moduleDigitalAction925.setModule("IQM1");
         moduleDigitalAction925.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 1", SymbolTable.ReturnValueType.None, null);
         moduleDigitalAction925.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp1");
@@ -170,7 +170,7 @@ public class RecursiveModuleTest {
         manySocket921.getChild(0).connect(maleSocket925);
         
         // Call the module
-        ModuleDigitalAction moduleDigitalAction932 = new ModuleDigitalAction("IQDA932", null);
+        CallModule moduleDigitalAction932 = new CallModule("IQDA932", null);
         moduleDigitalAction932.setModule("IQM1");
         moduleDigitalAction932.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 2", SymbolTable.ReturnValueType.None, null);
         moduleDigitalAction932.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp2");
@@ -214,7 +214,7 @@ public class RecursiveModuleTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(listenOnBeans);
         manySocket.getChild(0).connect(listenSocket);
         
-        ModuleDigitalAction moduleDigitalAction = new ModuleDigitalAction("IQDA4", null);
+        CallModule moduleDigitalAction = new CallModule("IQDA4", null);
         moduleDigitalAction.setModule("IQM1");
 //        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.LocalVariable, "n");
         moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.Memory, "IMN", SymbolTable.ReturnValueType.None, null);

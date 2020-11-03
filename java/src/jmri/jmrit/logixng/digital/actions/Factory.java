@@ -27,12 +27,12 @@ public class Factory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottle.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ActionTimer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, CallModule.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoAnalogAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoStringAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, IfThenElse.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Many.class));
-        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ModuleDigitalAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, PopStack.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, PushStack.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.EXRAVAGANZA, ShutdownComputer.class));
