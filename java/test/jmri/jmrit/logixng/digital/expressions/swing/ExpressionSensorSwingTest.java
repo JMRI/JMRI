@@ -101,7 +101,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IS99");
+        new JTextFieldOperator(jdo, 3).enterText("IS99");
         
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionSensor.SensorState.ACTIVE);

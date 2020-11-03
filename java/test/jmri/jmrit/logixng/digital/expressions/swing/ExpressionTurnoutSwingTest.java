@@ -101,7 +101,7 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IT99");
+        new JTextFieldOperator(jdo, 3).enterText("IT99");
         
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.THROWN);

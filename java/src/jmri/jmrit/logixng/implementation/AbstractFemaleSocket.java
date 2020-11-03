@@ -260,6 +260,18 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
 
     /** {@inheritDoc} */
     @Override
+    public String getComment() {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setComment(String s) {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public String getSystemName() {
         throw new UnsupportedOperationException("Not supported.");
     }

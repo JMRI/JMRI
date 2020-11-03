@@ -163,6 +163,16 @@ public class DefaultClipboard implements Clipboard {
         }
 
         @Override
+        public String getComment() {
+            return _clipboardItems.getComment();
+        }
+
+        @Override
+        public void setComment(String s) throws NamedBean.BadUserNameException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
         public String getShortDescription(Locale locale) {
             return _clipboardItems.getShortDescription(locale);
         }

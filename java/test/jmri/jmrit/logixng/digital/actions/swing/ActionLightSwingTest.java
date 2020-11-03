@@ -82,7 +82,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IL99");
+        new JTextFieldOperator(jdo, 3).enterText("IL99");
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.ON);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         

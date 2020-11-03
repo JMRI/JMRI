@@ -112,13 +112,33 @@ public interface Base extends PropertyChangeProvider {
      * Get the user name.
      * @return the user name
      */
+    @CheckReturnValue
+    @CheckForNull
     public String getUserName();
+    
+    /**
+     * Get associated comment text.
+     *
+     * @return the comment or null
+     */
+    @CheckReturnValue
+    @CheckForNull
+    public String getComment();
     
     /**
      * Get the user name.
      * @param s the new user name
      */
     public void setUserName(@CheckForNull String s) throws NamedBean.BadUserNameException;
+    
+    /**
+     * Set associated comment text.
+     * <p>
+     * Comments can be any valid text.
+     *
+     * @param comment the comment or null to remove an existing comment
+     */
+    public void setComment(@CheckForNull String comment);
     
     /**
      * Get a short description of this item.

@@ -546,6 +546,16 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
+        public String getComment() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setComment(String s) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public String getShortDescription(Locale locale) {
             throw new UnsupportedOperationException("Not supported.");
         }

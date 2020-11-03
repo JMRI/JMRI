@@ -44,6 +44,7 @@ public class ConditionalNGEditor extends TreeViewer {
     private JDialog editConditionalNGDialog = null;
     private final JTextField _systemName = new JTextField(20);
     private final JTextField _addUserName = new JTextField(20);
+    private final JTextField _addComment = new JTextField(50);
     
     private final Comparator<SwingConfiguratorInterface> _swingConfiguratorComboBoxComparator
             = (SwingConfiguratorInterface o1, SwingConfiguratorInterface o2) -> o1.toString().compareTo(o2.toString());
@@ -56,15 +57,13 @@ public class ConditionalNGEditor extends TreeViewer {
     private final JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));   // NOI18N
     private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
     private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
+    private final JLabel _commentLabel = new JLabel(Bundle.getMessage("Comment") + ":");   // NOI18N
     private final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";             // NOI18N
     private final JLabel _categoryLabel = new JLabel(Bundle.getMessage("Category") + ":");  // NOI18N
     private final JLabel _typeLabel = new JLabel(Bundle.getMessage("Type") + ":");   // NOI18N
 //    private Class maleSocketClass = null;
     private JButton create;
     private JButton edit;
-    boolean _showReminder = false;
-    
-//    private Map<Category, List<Class<? extends Base>>> connectableClasses;
     
     private SwingConfiguratorInterface addSwingConfiguratorInterface;
     private SwingConfiguratorInterface editSwingConfiguratorInterface;
@@ -328,9 +327,6 @@ public class ConditionalNGEditor extends TreeViewer {
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         
-//        maleSocketClass = connectableClasses.get(Category.ITEM).get(0);
-        
-//        swingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(maleSocketClass);
         contentPanel.add(panel3);
 
         // set up create and cancel buttons
@@ -417,6 +413,7 @@ public class ConditionalNGEditor extends TreeViewer {
                     } else {
                         socket = addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
                     }
+                    socket.setComment(_addComment.getText());
                     try {
                         femaleSocket.connect(socket);
                     } catch (SocketAlreadyConnectedException ex) {
@@ -488,6 +485,7 @@ public class ConditionalNGEditor extends TreeViewer {
                 if (isValid) {
                     Base object = femaleSocket.getConnectedSocket().getObject();
                     ((NamedBean)object).setUserName(_addUserName.getText());
+                    ((NamedBean)object).setComment(_addComment.getText());
                     editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
                     editSwingConfiguratorInterface.dispose();
                     editConditionalNGDialog.dispose();
@@ -555,6 +553,8 @@ public class ConditionalNGEditor extends TreeViewer {
         p.add(_sysNameLabel, c);
         c.gridy = 1;
         p.add(_userNameLabel, c);
+        c.gridy = 2;
+        p.add(_commentLabel, c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -563,6 +563,8 @@ public class ConditionalNGEditor extends TreeViewer {
         p.add(_systemName, c);
         c.gridy = 1;
         p.add(_addUserName, c);
+        c.gridy = 2;
+        p.add(_addComment, c);
         if (!femaleSocket.isConnected()) {
             c.gridx = 2;
             c.gridy = 1;
@@ -577,17 +579,18 @@ public class ConditionalNGEditor extends TreeViewer {
             _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
             _systemName.setEnabled(false);
             _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
+            _addComment.setText(femaleSocket.getConnectedSocket().getComment());
         } else {
             _systemName.setText("");
             _systemName.setEnabled(true);
             _addUserName.setText("");
+            _addComment.setText("");
         }
         
-        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
-//        _addUserName.setToolTipText("LogixNGUserNameHint");    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
                 swingConfiguratorInterface.getExampleSystemName()));
-//        _systemName.setToolTipText("LogixNGSystemNameHint");   // NOI18N
+        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
+        _addComment.setToolTipText(Bundle.getMessage("CommentHint"));
         contentPanel.add(p);
         // set up message
         JPanel panel3 = new JPanel();

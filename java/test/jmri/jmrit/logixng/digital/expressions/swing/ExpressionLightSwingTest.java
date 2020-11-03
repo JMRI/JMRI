@@ -92,7 +92,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IL99");
+        new JTextFieldOperator(jdo, 3).enterText("IL99");
         new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.ON);
         

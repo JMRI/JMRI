@@ -73,8 +73,7 @@ public interface SwingConfiguratorInterface {
     public String getAutoSystemName();
     
     /**
-     * Create a new object with the data entered.
-     * This method must also register the object in its manager.
+     * Create a new object with the data entered.This method must also register the object in its manager.
      * 
      * @param systemName system name
      * @param userName user name

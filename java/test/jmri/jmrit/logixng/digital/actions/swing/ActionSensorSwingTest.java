@@ -82,7 +82,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IS99");
+        new JTextFieldOperator(jdo, 3).enterText("IS99");
         
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.ACTIVE);
         new JButtonOperator(jdo, "OK").push();  // NOI18N

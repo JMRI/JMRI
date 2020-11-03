@@ -9,6 +9,7 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -67,7 +68,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
     }
     
     @Test
-    public void testDialogCreateNewTurnout() throws SocketAlreadyConnectedException {
+    public void testDialogCreateNewTurnout() throws SocketAlreadyConnectedException, InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
@@ -82,9 +83,10 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
-        new JTextFieldOperator(jdo, 2).enterText("IT99");
+        new JTextFieldOperator(jdo, 3).enterText("IT99");
         
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionTurnout.TurnoutState.THROWN);
+        Thread.sleep(5000);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IT99", action.getTurnout().getBean().getSystemName());
