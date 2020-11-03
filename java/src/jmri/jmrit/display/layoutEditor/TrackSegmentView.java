@@ -571,7 +571,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 result.add(bezierControlPoints.get(index));
             }
         }
-        result.add(getCentreSeg());
+        result.add(getCoordsCenter());
 
         return result;
     }
