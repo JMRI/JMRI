@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+
+    <titre>
+ 	Support mat&#233;riel : Communication multi-bit et octet utilisant CMRI
+    </titre>
+    
+    <!-- Copyright 2020 Jerry Grochow -->
+    
+    <meta name="author" content="Jerry Grochow">
+    <meta name="keywords" content="Arduino CMRI JMRI Byte Communication">
+    
+    <!--#include virtual="/Style.shtml" -->
+    
+</head>
+
+<body>
+    <!--#include virtual="/Header.shtml" -->
+    
+    <div id="mBody">
+        <!--#include virtual="Sidebar.shtml" -->
+        
+    <div id="mainContent">
+
+	    <h1>Support mat&#233;riel : Communication multi-bit et octet utilisant CMRI et arduinos</h1>
+		
+		<div class="para">
+        <p>JMRI met en &#156;uvre le <a href="../cmri/CMRI.shtml">protocole CMRInet</a> pour envoyer et recevoir des informations 
+        en changeant l'&#233;tat des objets JMRI:</p>
+        
+        <ul><li>Envoi &#224; un n&#156;ud CMRI qu'un aiguillage doit &#234;tre d&#233;vi&#233; ou qu'une lumi&#232;re doit &#234;tre allum&#233;e ou &#233;teinte  
+        (tout accessoire reli&#233; &#224; une sortie CMRI),</li>
+          <li>R&#233;ception &#224; partir d'un n&#156;ud CMRI pour indiquer qu'un capteur est devenu actif ou inactif (toute entr&#233;e CMRI).</li>
+        </ul>
+
+        <p>Les objets JMRI sont associ&#233;s &#224; un seul bit CMRI dans le cas des capteurs (entr&#233;e) et des lumi&#232;res (sortie), 
+        et &#224; un ou deux bits dans le cas des aiguillages (voir la page d'aide CMRI <a href="../cmri/CMRI.shtml#L405">section 
+        sur la configuration des aiguillages et des lumi&#232;res</a> pour une utilisation avec le CMRI). 
+        Avec l'introduction de la technologie des microcontr&#244;leurs comme le <a href="https://arduino.cc" target="_blank">arduino</a>, 
+        les n&#156;uds CMRI ne doivent plus &#234;tre limit&#233;s pour faire fonctionner le mat&#233;riel de r&#233;seau bas&#233; sur des commandes &#224; un 
+        (ou deux) bit. Les arduinos sont des ordinateurs tr&#232;s performants qui peuvent traiter les messages CMRINet et agir sur
+         ce qu'ils reçoivent sous le contr&#244;le d'un programme local. 
+        <a href="index.shtml#CMRI">Un arduino &#233;mulant un n&#156;ud CMRI </a>peut &#234;tre programm&#233; pour lancer des animations, 
+        jouer une s&#233;rie de sons, &#233;clairer des b&#226;timents de mani&#232;re r&#233;aliste, ou contr&#244;ler la vitesse de moteurs d'accessoires -- &#224; peu 
+        pr&#232;s tout ce que le mod&#233;liste peut imaginer.</p>
+
+        <p> De m&#234;me, il est &#233;galement possible de renvoyer des informations &#224; JMRI via CMRINet sous forme de chiffres ou de 
+        lettres, ou toute cha&#238;ne pouvant &#234;tre encod&#233;e en quelques octets d'informations. JMRI recevrait chaque octet comme 
+        d&#233;finissant l'&#233;tat de huit capteurs, mais un simple script JMRI peut traduire cette information binaire en nombre 
+        d&#233;cimal ou en caract&#232;re qu'elle repr&#233;sente.</p>
+        
+        <p class="note">Il est &#233;galement possible d'envoyer des chiffres et des caract&#232;res directement &#224; JMRI depuis des arduinos en 
+        utilisant <a href="index.shtml#serial">communications s&#233;rie</a> sans profiter des capacit&#233;s CMRInet de JMRI.  
+        Chaque approche a ses avantages et ses inconv&#233;nients, comme nous l'avons vu<a href="index.shtml#connect"> ici.</a></p>
+
+        <p class="im"><img src="images/CMRISensorsByte.png" align="left" height="165" width="275" 
+        alt="Sensor Table with 8 sensors> Create eight sensors"> 
+        Un exemple de ce type d'utilisation serait d'utiliser deux lumi&#232;res JMRI connect&#233;es &#224; un bit CMRI chacune) pour dire &#224; 
+        l'arduino d'augmenter ou de diminuer la vitesse d'un moteur attach&#233; &#224; une animation (peut-&#234;tre un carrousel rotatif). 
+        L'arduino peut modifier la vitesse du moteur et renvoyer un nombre indiquant la vitesse actuelle (peut-&#234;tre 1 &#224; 8) en codant ce 
+        nombre en plusieurs bits &#224; envoyer dans le cadre de la transmission CMRINet. 
+        Un <a href="../../outils/scripting/index.shtml">script JMRI</a> peut &#234;tre <a href="../../outils/scripting/HowTo.shtml#multturnouts"> &#224 l'&#233;coute 
+        des changements</a> dans ces bits de "vitesse" et les utiliser pour cr&#233;er un nombre d&#233;cimal dans un <a href="../../outils/m&#233;moires. shtml">
+        </a>Variable m&#233;moire JMRI pour affichage sur un panneau, comme illustr&#233; dans cet <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" target="_blank"> 
+		exemple de script.</a> L'image ici montre les capteurs 0, 1, 2, et 3 actifs qui se traduiraient par le nombre d&#233;cimal 15.
+        
+        <p class="im"> <img src="images/CMRINode-MotorControl.png" 
+        alt="Exemple de panneau utilisant l'affichage des bits" align="right" height="225" width="135">
+        Il est &#233;galement possible d'attribuer un certain nombre de bits de capteur &#224; un affichage de la vitesse, l'arduino activant les 
+        capteurs pour indiquer le pourcentage de la vitesse maximale, comme le montre l'image du panneau de pr&#233;sentation. 
+        Quatre des huit bits de ce contr&#244;le de vitesse du carrousel sont "allum&#233;s" ou actifs, ce qui repr&#233;sente une vitesse de 50% de 
+        la vitesse maximale.  Le panneau montre &#233;galement la commande de curseur on-off et les panneaux cliquables plus grand/moins grand que 
+        pour commander &#224; l'arduino de faire tourner le carrousel plus vite ou moins vite. La partie inf&#233;rieure du panneau montre un autre 
+        exemple avec une fl&#232;che courb&#233;e qui, lorsqu'on clique dessus, indique &#224; l'arduino de changer la direction de la  Grande roue 
+        (actuellement arr&#234;t&#233;e). </p>
+
+		</div>
+
+		<div class="list">
+	<h1>Exemple de configuration de JMRI</h1>
+        
+		<p>Les &#233;tapes sont assez simples:</p>
+		<dl>
+		    <dt class="left">Configurer un n&#156;ud CMRI</dt>
+		    <dd class="first">
+			<p><a href="../cmri/CMRI.shtml#L268">Configurer un n&#156;ud CMRI</a> repr&#233;sentant le nombre de bits de sortie (JMRI-&amp;gt;n&#156;ud CMRI) 
+			et de bits d'entr&#233;e (n&#156;ud CMRI-&amp;gt;JMRI) souhait&#233;. Rappelez-vous que <a href="../cmri/CMRI.shtml#L391">JMRI les lumi&#232;res et 
+			les aiguillages sortent au CMRI et que les capteurs JMRI fournissent des entr&#233;es</a> (pensez &#224; cela en termes de n&#156;ud CMRI : 
+			les capteurs physiques entrent des informations au n&#156;ud ; le n&#156;ud sort ensuite des informations pour contr&#244;ler les aiguillages et les feux).</p>
+		    </dd>
+
+		    <dt class="left">Cr&#233;er des objets l&#233;gers</dt>
+		    <dd>
+			<p>Cr&#233;er autant de <a href="../../tools//Lights.shtml">Lumi&#232;res JMRI </a>
+            car vous devez dire &#224; l'arduino d'accomplir une t&#226;che. Le contr&#244;le de la mise en marche ou de l'arr&#234;t d'un moteur peut &#234;tre effectu&#233; &#224; l
+            'aide d'un seul voyant (INACTIF (qui envoie un 0) pour OFF, ACTIF (qui envoie un 1) pour ON). Pour contr&#244;ler sa vitesse, il faut deux voyants
+             - un pour lui dire d'augmenter, un pour lui dire de diminuer, ni allum&#233; pour rester &#224; la m&#234;me vitesse.</p>
+		    </dd>
+
+            <dt class="left">Cr&#233;er des objets capteurs</dt>
+		    <dd>
+			<p>Cr&#233;er <a href="../../tools/Sensors.shtml">capteurs</a> comme indiqu&#233; ci-dessus pour chaque octet d'information (nombre ou caract&#232;re) que vous 
+			souhaitez recevoir en retour de l'arduino. Si vous voulez recevoir la vitesse du moteur sous forme de nombre de z&#233;ro &#224; sept, vous avez besoin 
+			de trois capteurs. Si vous voulez recevoir des nombres plus grands, vous avez besoin de plus de capteurs pour obtenir plus de bits. 
+			Huit bits peuvent repr&#233;senter des nombres jusqu'&#224; 255 (l'image ici montre des bits correspondant au nombre d&#233;cimal 14).
+            Assurez-vous que les capteurs sont reli&#233;s aux bits appropri&#233;s sur votre n&#156;ud arduino/CMRI.
+            
+            <p class="note">Alors que le JMRI envoie et reçoit un 0 ou un 1 dans le  CMRI bit vapeur, il traduit un z&#233;ro en un &#233;tat INACTIf du capteur,
+             qui est effectivement stock&#233; sous la forme 4 (demandant "state" et l'imprimant comme un num&#233;ro dans un script  retournera un 4) et 
+             ACTIF comme un 2. Ceci est important pour la r&#233;daction de votre JMRI  pour traduire les &#233;tats des capteurs reçus en bits binaires.]</p>
+		    </dd>
+            
+            <dt class="left">Cr&#233;er une variable m&#233;moire</dt>
+		    <dd>
+			<p>Cr&#233;er <a href="../../tools/Memories.shtml">une variable m&#233;moire</a> pour contenir chaque octet d'information qui sera calcul&#233; par le script &#224; partir des huit capteurs.</p>
+		    </dd>
+
+            <dt class="left">Ex&#233;cuter le script</dt>
+		    <dd>
+			<p>Create <a href="../../tools/scripting/HowTo.shtml#multturnouts">un script d'&#233;coute</a> comme indiqu&#233; ci-dessus pour traduire les &#233;tats du capteur en bits et 
+			cr&#233;er un nombre de lettres dans la variable m&#233;moire. Un exemple de script pour convertir huit &#233;tats de capteur (bits) en un nombre 
+			peut &#234;tre trouv&#233; <a href="https://www.jmri.org/jython/CmriBitsToBytes.py" target="_blank">ici.</a> </p>
+		    </dd>
+
+		</dl>
+        
+        
+		</div> <!-- closes #list -->
+    
+    <!--#include virtual="/Footer.shtml" -->
+
+    </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody, de l'avant Sidebar -->
+</body>
+</html>
