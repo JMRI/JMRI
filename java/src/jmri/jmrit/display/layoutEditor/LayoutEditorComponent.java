@@ -97,7 +97,7 @@ class LayoutEditorComponent extends JComponent {
                 drawTrackSegmentInProgress(g2);
                 drawShapeInProgress(g2);
 
-                drawLayoutTrackText(g2);
+                drawLayoutTracksText(g2);
             } else if (layoutEditor.turnoutCirclesWithoutEditMode) {
                 if (layoutEditor.allControlling()) {
                     drawTurnoutControls(g2);
@@ -628,7 +628,7 @@ class LayoutEditorComponent extends JComponent {
         g.setStroke(stroke);
     }
 
-    private void drawLayoutTrackText(Graphics2D g) {
+    private void drawLayoutTracksText(Graphics2D g) {
         g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 10));
         g.setColor(Color.red);
         for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
