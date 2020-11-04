@@ -120,6 +120,10 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {
         writer.append(currentIndent);
         writer.append(getLongDescription(locale));
+        if (getComment() != null) {
+            writer.append(" ::: ");
+            writer.append(getComment());
+        }
         writer.println();
     }
     

@@ -454,9 +454,10 @@ public class DefaultLogixNG extends AbstractNamedBean
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
-
+        
         for (int i=0; i < this.getNumConditionalNGs(); i++) {
             getConditionalNG(i).printTree(locale, writer, indent, currentIndent+indent);
+//            writer.println();
         }
     }
     

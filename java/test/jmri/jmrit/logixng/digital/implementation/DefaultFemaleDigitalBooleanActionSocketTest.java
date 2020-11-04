@@ -90,6 +90,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.digital.boolean_actions.Many.class);
         classes.add(jmri.jmrit.logixng.digital.boolean_actions.OnChange.class);
         map.put(Category.COMMON, classes);
         

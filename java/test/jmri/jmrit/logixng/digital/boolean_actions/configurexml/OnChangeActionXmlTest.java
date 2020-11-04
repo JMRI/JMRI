@@ -21,7 +21,7 @@ public class OnChangeActionXmlTest {
     public void testLoad() throws JmriConfigureXmlException {
         AbstractNamedBeanManagerConfigXML b;
         
-        b = new OnChangeActionXml();
+        b = new OnChangeXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

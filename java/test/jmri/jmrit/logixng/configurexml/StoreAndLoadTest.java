@@ -6,15 +6,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.*;
 import jmri.jmrit.logixng.analog.expressions.*;
 import jmri.jmrit.logixng.digital.actions.*;
+import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.*;
 import jmri.jmrit.logixng.string.expressions.*;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 
 import org.junit.*;
 
@@ -25,31 +26,6 @@ import org.junit.*;
  * compare the LogixNGs before and after store and load.
  */
 public class StoreAndLoadTest {
-    
-    public void setupInitialConditionalNGTree(ConditionalNG conditionalNG) {
-        try {
-            DigitalActionManager digitalActionManager =
-                    InstanceManager.getDefault(DigitalActionManager.class);
-            
-            FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
-            MaleDigitalActionSocket actionManySocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(
-                                    new jmri.jmrit.logixng.digital.actions.Many(
-                                            digitalActionManager.getAutoSystemName(), null));
-            femaleSocket.connect(actionManySocket);
-            femaleSocket.setLock(Base.Lock.HARD_LOCK);
-
-            femaleSocket = actionManySocket.getChild(0);
-            MaleDigitalActionSocket actionIfThenSocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));
-            femaleSocket.connect(actionIfThenSocket);
-        } catch (SocketAlreadyConnectedException e) {
-            // This should never be able to happen.
-            throw new RuntimeException(e);
-        }
-    }
     
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
@@ -91,7 +67,8 @@ public class StoreAndLoadTest {
         Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
         Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
-
+        
+        
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
         AnalogActionManager analogActionManager = InstanceManager.getDefault(AnalogActionManager.class);
@@ -101,6 +78,29 @@ public class StoreAndLoadTest {
         DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
         StringActionManager stringActionManager = InstanceManager.getDefault(StringActionManager.class);
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
+        
+        
+        
+        
+        // Create module IQM1
+        jmri.jmrit.logixng.Module module =
+                InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
+        
+        module.addParameter("n", true, false);
+        module.addParameter("result", false, true);
+        module.addLocalVariable("temp1", SymbolTable.InitialValueType.None, null);
+        module.addLocalVariable("temp2", SymbolTable.InitialValueType.None, null);
+        
+        module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
+                .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
+        
+        jmri.jmrit.logixng.digital.actions.Many many901 = new jmri.jmrit.logixng.digital.actions.Many("IQDA901", null);
+        MaleSocket manySocket901 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
+        module.getRootSocket().connect(manySocket901);
+        
+        
+        
         
         // Create an empty LogixNG
         logixNG_Manager.createLogixNG("An empty logixNG");
@@ -114,31 +114,592 @@ public class StoreAndLoadTest {
         conditionalNG.setEnabled(false);
         
         
-        // Create LogixNG with a tree of stuff
         logixNG = logixNG_Manager.createLogixNG("A logixNG");
         conditionalNG =
-                conditionalNGManager.createConditionalNG("A conditionalNG");
-        
-        
-        
-        
-        
-        
-        setupInitialConditionalNGTree(conditionalNG);
-        
+                conditionalNGManager.createConditionalNG("Yet another conditionalNG");
         logixNG.addConditionalNG(conditionalNG);
         logixNG.setEnabled(true);
         conditionalNG.setEnabled(true);
-
-        logixNG = logixNG_Manager.createLogixNG("Another logixNG");
-        conditionalNG =
-                conditionalNGManager.createConditionalNG("");
-        setupInitialConditionalNGTree(conditionalNG);
-        logixNG.addConditionalNG(conditionalNG);
-
-        logixNG = logixNG_Manager.createLogixNG("Yet another logixNG");
-        conditionalNG =
-                conditionalNGManager.createConditionalNG("Yet another conditionalNG");
+        
+        FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+        MaleDigitalActionSocket actionManySocket =
+                digitalActionManager.registerAction(
+                                new jmri.jmrit.logixng.digital.actions.Many(
+                                        digitalActionManager.getAutoSystemName(), null));
+        femaleSocket.connect(actionManySocket);
+        femaleSocket.setLock(Base.Lock.HARD_LOCK);
+        
+        
+        
+        int index = 0;
+        
+        ActionLight actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        MaleSocket maleSocket = digitalActionManager.registerAction(actionLight);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
+        actionLight.setComment("A comment");
+        actionLight.setLight(light1);
+        actionLight.setLightState(ActionLight.LightState.OFF);
+        maleSocket = digitalActionManager.registerAction(actionLight);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionListenOnBeans actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionListenOnBeans = new ActionListenOnBeans(digitalActionManager.getAutoSystemName(), null);
+        actionListenOnBeans.setComment("A comment");
+        actionListenOnBeans.addReference("light:IL1");
+        maleSocket = digitalActionManager.registerAction(actionListenOnBeans);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionLocalVariable actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("A comment");
+        actionLocalVariable.setVariable("result");
+        actionLocalVariable.setData("1");
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionMemory actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setOtherMemory(memory2);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionMemory = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        actionMemory.setComment("A comment");
+        actionMemory.setMemory(memory1);
+        actionMemory.setData("n + 3");
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
+        maleSocket = digitalActionManager.registerAction(actionMemory);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionScript);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
+        actionScript.setComment("A comment");
+        actionScript.setScript("import java\n");
+        maleSocket = digitalActionManager.registerAction(actionScript);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionSensor actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionSensor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
+        actionSensor.setComment("A comment");
+        actionSensor.setSensor(sensor1);
+        actionSensor.setSensorState(ActionSensor.SensorState.INACTIVE);
+        maleSocket = digitalActionManager.registerAction(actionSensor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionThrottle actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionThrottle);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
+        actionThrottle.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionThrottle);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionTimer actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionTimer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
+        actionTimer.setComment("A comment");
+        actionTimer.setDelay(100);
+        maleSocket = digitalActionManager.registerAction(actionTimer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ActionTurnout actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        CallModule callModule = new CallModule(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(callModule);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        callModule = new CallModule(digitalActionManager.getAutoSystemName(), null);
+        callModule.setComment("A comment");
+        callModule.setModule("IQM1");
+        maleSocket = digitalActionManager.registerAction(callModule);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        DoAnalogAction doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        doAnalogAction = new DoAnalogAction(digitalActionManager.getAutoSystemName(), null);
+        doAnalogAction.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(doAnalogAction);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        DoStringAction doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        doStringAction = new DoStringAction(digitalActionManager.getAutoSystemName(), null);
+        doStringAction.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(doStringAction);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.CONTINOUS_ACTION);
+        maleSocket = digitalActionManager.registerAction(ifThenElse);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse.setComment("A comment");
+        ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
+        maleSocket = digitalActionManager.registerAction(ifThenElse);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        jmri.jmrit.logixng.digital.actions.Logix logix =
+                new jmri.jmrit.logixng.digital.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(logix);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        logix = new jmri.jmrit.logixng.digital.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        logix.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(logix);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        jmri.jmrit.logixng.digital.boolean_actions.Many booleanMany =
+                new jmri.jmrit.logixng.digital.boolean_actions.Many(digitalBooleanActionManager.getAutoSystemName(), null);
+        maleSocket = digitalBooleanActionManager.registerAction(booleanMany);
+        logix.getChild(1).connect(maleSocket);
+        
+        
+        OnChange onChange =
+                new OnChange(digitalBooleanActionManager.getAutoSystemName(), null, OnChange.Trigger.CHANGE);
+        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        booleanMany.getChild(0).connect(maleSocket);
+        
+        onChange = new OnChange(digitalBooleanActionManager.getAutoSystemName(), null, OnChange.Trigger.CHANGE_TO_FALSE);
+        onChange.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        booleanMany.getChild(1).connect(maleSocket);
+        
+        
+        
+        
+        
+        jmri.jmrit.logixng.digital.actions.Many many =
+                new jmri.jmrit.logixng.digital.actions.Many(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(many);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        many = new jmri.jmrit.logixng.digital.actions.Many(digitalActionManager.getAutoSystemName(), null);
+        many.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(many);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        ShutdownComputer shutdownComputer =
+                new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(shutdownComputer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        shutdownComputer = new ShutdownComputer(digitalActionManager.getAutoSystemName(), null);
+        shutdownComputer.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(shutdownComputer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        
+        
+        actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);
+        actionThrottle.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionThrottle);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        maleSocket.getChild(0).connect(
+                analogExpressionManager.registerExpression(
+                        new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null)));
+        
+        maleSocket.getChild(1).connect(
+                analogExpressionManager.registerExpression(
+                        new AnalogExpressionMemory(analogExpressionManager.getAutoSystemName(), null)));
+        
+        maleSocket.getChild(2).connect(
+                digitalExpressionManager.registerExpression(
+                        new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null)));
+        
+        
+        
+        ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse.setComment("A comment");
+        ifThenElse.setType(IfThenElse.Type.TRIGGER_ACTION);
+        maleSocket = digitalActionManager.registerAction(ifThenElse);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        And and1 = new And(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(and1);
+        ifThenElse.getChild(0).connect(maleSocket);
+        
+        And and = new And(digitalExpressionManager.getAutoSystemName(), null);
+        and.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(and);
+        and1.getChild(0).connect(maleSocket);
+        
+        
+        index = 0;
+        
+        
+        Antecedent antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        and.getChild(index++).connect(maleSocket);
+        
+        antecedent = new Antecedent(digitalExpressionManager.getAutoSystemName(), null);
+        antecedent.setComment("A comment");
+        antecedent.setAntecedent("R1 or R2");
+        maleSocket = digitalExpressionManager.registerExpression(antecedent);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionClock expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionClock.setType(ExpressionClock.Type.SystemClock);
+        expressionClock.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionClock);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionClock.setComment("A comment");
+        expressionClock.setRange(10, 20);
+        expressionClock.setType(ExpressionClock.Type.FastClock);
+        expressionClock.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionClock);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionConditional expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.TRUE);
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
+        expressionConditional.setComment("A comment");
+        expressionConditional.setConditional("IXC1");
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.FALSE);
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionEntryExit expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.ACTIVE);
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
+        expressionEntryExit.setComment("A comment");
+        expressionEntryExit.setDestinationPoints("Something");
+        expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.INACTIVE);
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionLight expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLight.setLightState(ExpressionLight.LightState.ON);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLight);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLight.setComment("A comment");
+        expressionLight.setLight(light1);
+        expressionLight.setLightState(ExpressionLight.LightState.OFF);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLight);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionLocalVariable expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setConstantValue("10");
+        expressionLocalVariable.setCaseInsensitive(true);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.VALUE);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GREATER_THAN);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
+        expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setOtherMemory(memory2);
+        expressionLocalVariable.setCaseInsensitive(false);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.MEMORY);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LESS_THAN);
+        maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionMemory expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setComment("A comment");
+        expressionMemory.setMemory(memory1);
+        expressionMemory.setConstantValue("10");
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
+        expressionMemory.setComment("A comment");
+        expressionMemory.setMemory(memory2);
+        expressionMemory.setOtherMemory(memory3);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+        maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionOBlock expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Dark);
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionOBlock.setComment("A comment");
+        expressionOBlock.setOBlock("OB1");
+        expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Occupied);
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionReference expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
+        expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
+        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionReference);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
+        expressionReference.setComment("A comment");
+        expressionReference.setReference("IL1");
+        expressionReference.setPointsTo(ExpressionReference.PointsTo.LIGHT);
+        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionReference);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionScript expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionScript);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionScript = new ExpressionScript(digitalExpressionManager.getAutoSystemName(), null);
+        expressionScript.setComment("A comment");
+        expressionScript.setScript("import jmri\n");
+        maleSocket = digitalExpressionManager.registerExpression(expressionScript);
+        and.getChild(index++).connect(maleSocket);
+        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        
+        
+        ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSensor.setComment("A comment");
+        expressionSensor.setSensor(sensor1);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.INACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionSignalHead expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("Something");
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Lit);
+        expressionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionSignalMast expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("Something");
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Lit);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionTimer expressionTimer = new ExpressionTimer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setTimerType(ExpressionTimer.TimerType.REPEAT_DOUBLE_DELAY);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionTimer = new ExpressionTimer(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTimer.setComment("A comment");
+        expressionTimer.setTimerDelay(3, 4);
+        expressionTimer.setTimerType(ExpressionTimer.TimerType.WAIT_ONCE_TRIG_ONCE);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTurnout.setTriggerOnChange(false);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
+        expressionTurnout.setComment("A comment");
+        expressionTurnout.setTurnout(turnout1);
+        expressionTurnout.setTriggerOnChange(true);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ExpressionWarrant expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
+        expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_FREE);
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IS);
+        maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
+        expressionWarrant.setComment("A comment");
+        expressionWarrant.setWarrant("Something");
+        expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_SET);
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        False false1 = new False(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(false1);
+        and.getChild(index++).connect(maleSocket);
+        
+        false1 = new False(digitalExpressionManager.getAutoSystemName(), null);
+        false1.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(false1);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        jmri.jmrit.logixng.digital.expressions.Formula formula =
+                new jmri.jmrit.logixng.digital.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(formula);
+        and.getChild(index++).connect(maleSocket);
+        
+        formula = new jmri.jmrit.logixng.digital.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
+        formula.setComment("A comment");
+        formula.setFormula("n + 1");
+        maleSocket = digitalExpressionManager.registerExpression(formula);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        Hold hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(hold);
+        and.getChild(index++).connect(maleSocket);
+        
+        hold = new Hold(digitalExpressionManager.getAutoSystemName(), null);
+        hold.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(hold);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        Or or = new Or(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(or);
+        and.getChild(index++).connect(maleSocket);
+        
+        or = new Or(digitalExpressionManager.getAutoSystemName(), null);
+        or.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(or);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        ResetOnTrue resetOnTrue = new ResetOnTrue(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(resetOnTrue);
+        and.getChild(index++).connect(maleSocket);
+        
+        resetOnTrue = new ResetOnTrue(digitalExpressionManager.getAutoSystemName(), null);
+        resetOnTrue.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(resetOnTrue);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        TriggerOnce triggerOnce = new TriggerOnce(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(triggerOnce);
+        and.getChild(index++).connect(maleSocket);
+        
+        triggerOnce = new TriggerOnce(digitalExpressionManager.getAutoSystemName(), null);
+        triggerOnce.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(triggerOnce);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        True true1 = new True(digitalExpressionManager.getAutoSystemName(), null);
+        maleSocket = digitalExpressionManager.registerExpression(true1);
+        and.getChild(index++).connect(maleSocket);
+        
+        true1 = new True(digitalExpressionManager.getAutoSystemName(), null);
+        true1.setComment("A comment");
+        maleSocket = digitalExpressionManager.registerExpression(true1);
+        and.getChild(index++).connect(maleSocket);
+        
+        
+        
         
         
         
@@ -146,383 +707,21 @@ public class StoreAndLoadTest {
         
         
         if (1==0) {
-        
-        
-        
-        
-        
-        
-        setupInitialConditionalNGTree(conditionalNG);
-        logixNG.addConditionalNG(conditionalNG);
-
-        MaleSocket socketMany = conditionalNG.getChild(0).getConnectedSocket();
-        MaleSocket socketIfThen = socketMany.getChild(0).getConnectedSocket();
-
-        Or expressionOr = new Or(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00001", null);
-        MaleSocket socketOr = digitalExpressionManager.registerExpression(expressionOr);
-        socketIfThen.getChild(0).connect(socketOr);
-
-        int index = 0;
-
-        Or expressionOr2 = new Or(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00002", "My Or expression");
-        MaleSocket socketOr2 = digitalExpressionManager.registerExpression(expressionOr2);
-        socketOr.getChild(index++).connect(socketOr2);
-
-        And expressionAnd = new And(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00003", null);
-        MaleSocket socketAnd = digitalExpressionManager.registerExpression(expressionAnd);
-        socketOr.getChild(index++).connect(socketAnd);
-
-        And expressionAnd2 = new And(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00004", "My And expression");
-        MaleSocket socketAnd2 = digitalExpressionManager.registerExpression(expressionAnd2);
-        socketOr.getChild(index++).connect(socketAnd2);
-
-        ExpressionTurnout expressionTurnout3 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00005", null);
-        expressionTurnout3.setTurnout(turnout3);
-        expressionTurnout3.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        MaleSocket socketTurnout3 = digitalExpressionManager.registerExpression(expressionTurnout3);
-        expressionAnd.getChild(0).connect(socketTurnout3);
-
-        ExpressionTurnout expressionTurnout4 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00006", "My new turnout");
-        expressionTurnout4.setTurnout(turnout4);
-        expressionTurnout4.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
-        expressionTurnout4.set_Is_IsNot(Is_IsNot_Enum.IS);
-        MaleSocket socketTurnout4 = digitalExpressionManager.registerExpression(expressionTurnout4);
-        expressionAnd.getChild(1).connect(socketTurnout4);
-
-        ExpressionTurnout expressionTurnout5 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00007", null);
-        expressionTurnout5.setTurnout(turnout5);
-        expressionTurnout5.setTurnoutState(ExpressionTurnout.TurnoutState.OTHER);
-        expressionTurnout5.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
-        MaleSocket socketTurnout5 = digitalExpressionManager.registerExpression(expressionTurnout5);
-        expressionAnd.getChild(2).connect(socketTurnout5);
-
-        Antecedent expressionAntecedent = new Antecedent(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00008", null);
-        expressionAntecedent.setAntecedent("R1");
-        MaleSocket socketAntecedent = digitalExpressionManager.registerExpression(expressionAntecedent);
-        socketOr.getChild(index++).connect(socketAntecedent);
-
-        Antecedent expressionAntecedent2 = new Antecedent(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00009", "My Antecedent expression");
-        expressionAntecedent2.setAntecedent("R1");
-        MaleSocket socketAntecedent2 = digitalExpressionManager.registerExpression(expressionAntecedent2);
-        socketOr.getChild(index++).connect(socketAntecedent2);
-
-        Antecedent expressionAntecedent3 = new Antecedent(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00010", "My Antecedent expression");
-        expressionAntecedent3.setAntecedent("R1");
-        MaleSocket socketAntecedent3 = digitalExpressionManager.registerExpression(expressionAntecedent3);
-        socketAntecedent2.getChild(0).connect(socketAntecedent3);
-
-        False expressionFalse = new False(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00011", null);
-        MaleSocket socketFalse = digitalExpressionManager.registerExpression(expressionFalse);
-        socketOr.getChild(index++).connect(socketFalse);
-
-        False expressionFalse2 = new False(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00012", "My False expression");
-        MaleSocket socketFalse2 = digitalExpressionManager.registerExpression(expressionFalse2);
-        socketOr.getChild(index++).connect(socketFalse2);
-
-        Hold expressionHold = new Hold(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00013", null);
-        MaleSocket socketHold = digitalExpressionManager.registerExpression(expressionHold);
-        socketOr.getChild(index++).connect(socketHold);
-
-        Hold expressionHold2 = new Hold(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00014", "My Hold expression");
-        MaleSocket socketHold2 = digitalExpressionManager.registerExpression(expressionHold2);
-        socketOr.getChild(index++).connect(socketHold2);
-
-        Hold expressionHold3 = new Hold(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00015", "My other Hold expression");
-        MaleSocket socketHold3 = digitalExpressionManager.registerExpression(expressionHold3);
-        socketHold2.getChild(0).connect(socketHold3);
-
-        Hold expressionHold4 = new Hold(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00016", "My other Hold expression");
-        MaleSocket socketHold4 = digitalExpressionManager.registerExpression(expressionHold4);
-        socketHold2.getChild(1).connect(socketHold4);
-
-        ResetOnTrue expressionResetOnTrue = new ResetOnTrue(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00017", null);
-        MaleSocket socketResetOnTrue = digitalExpressionManager.registerExpression(expressionResetOnTrue);
-        socketOr.getChild(index++).connect(socketResetOnTrue);
-
-        ResetOnTrue expressionResetOnTrue2 = new ResetOnTrue(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00018", "My ResetOnTrue expression");
-        MaleSocket socketResetOnTrue2 = digitalExpressionManager.registerExpression(expressionResetOnTrue2);
-        expressionResetOnTrue.getChild(0).connect(socketResetOnTrue2);
-
-        ResetOnTrue expressionResetOnTrue3 = new ResetOnTrue(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00019", "My ResetOnTrue expression");
-        MaleSocket socketResetOnTrue3 = digitalExpressionManager.registerExpression(expressionResetOnTrue3);
-        expressionResetOnTrue.getChild(1).connect(socketResetOnTrue3);
-
-        ExpressionTimer expressionTimer = new ExpressionTimer(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00020", null);
-        MaleSocket socketTimer = digitalExpressionManager.registerExpression(expressionTimer);
-        socketOr.getChild(index++).connect(socketTimer);
-
-        ExpressionTimer expressionTimer2 = new ExpressionTimer(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00021", "My Timer expression");
-        MaleSocket socketTimer2 = digitalExpressionManager.registerExpression(expressionTimer2);
-        socketOr.getChild(index++).connect(socketTimer2);
-
-        TriggerOnce expressionTriggerOnce = new TriggerOnce(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00022", null);
-        MaleSocket socketTriggerOnce = digitalExpressionManager.registerExpression(expressionTriggerOnce);
-        socketOr.getChild(index++).connect(socketTriggerOnce);
-
-        TriggerOnce expressionTriggerOnce2 = new TriggerOnce(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00023", "My TriggerOnce expression");
-        MaleSocket socketTriggerOnce2 = digitalExpressionManager.registerExpression(expressionTriggerOnce2);
-        expressionTriggerOnce.getChild(0).connect(socketTriggerOnce2);
-
-        True expressionTrue = new True(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00024", null);
-        MaleSocket socketTrue = digitalExpressionManager.registerExpression(expressionTrue);
-        socketOr.getChild(index++).connect(socketTrue);
-
-        True expressionTrue2 = new True(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00025", "My True expression");
-        MaleSocket socketTrue2 = digitalExpressionManager.registerExpression(expressionTrue2);
-        socketOr.getChild(index++).connect(socketTrue2);
-
-        ExpressionLight expressionLight = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00026", null);
-        expressionLight.setLight(light1);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.ON);
-        MaleSocket socketLight = digitalExpressionManager.registerExpression(expressionLight);
-        socketOr.getChild(index++).connect(socketLight);
-
-        ExpressionMemory expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:11026", null);
-        expressionMemory.setMemory(memory1);
-        expressionMemory.setConstantValue("Some constant value");
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
-        expressionMemory.setCaseInsensitive(true);
-        MaleSocket socketMemory = digitalExpressionManager.registerExpression(expressionMemory);
-        socketOr.getChild(index++).connect(socketMemory);
-
-        expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:12026", null);
-        expressionMemory.setMemory(memory2);
-        expressionMemory.setOtherMemory(memory3);
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
-        expressionMemory.setCaseInsensitive(false);
-        socketMemory = digitalExpressionManager.registerExpression(expressionMemory);
-        socketOr.getChild(index++).connect(socketMemory);
-
-        ExpressionLight expressionLight2 = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00027", "My light");
-        expressionLight2.removeLight();
-        expressionLight2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight2.setLightState(ExpressionLight.LightState.ON);
-        MaleSocket socketLight2 = digitalExpressionManager.registerExpression(expressionLight2);
-        socketOr.getChild(index++).connect(socketLight2);
-
-        ExpressionSensor expressionSensor = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00028", null);
-        expressionSensor.setSensor(sensor1);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket socketSensor = digitalExpressionManager.registerExpression(expressionSensor);
-        socketOr.getChild(index++).connect(socketSensor);
-
-        ExpressionSensor expressionSensor2 = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00029", "My sensor");
-        expressionSensor2.removeSensor();
-        expressionSensor2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor2.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket socketSensor2 = digitalExpressionManager.registerExpression(expressionSensor2);
-        socketOr.getChild(index++).connect(socketSensor2);
-
-        ExpressionTurnout expressionTurnout = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00030", null);
-        expressionTurnout.setTurnout(turnout1);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        MaleSocket socketTurnout = digitalExpressionManager.registerExpression(expressionTurnout);
-        socketOr.getChild(index++).connect(socketTurnout);
-
-        ExpressionTurnout expressionTurnout2 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00031", "My turnout");
-        expressionTurnout2.removeTurnout();
-        expressionTurnout2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout2.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        MaleSocket socketTurnout2 = digitalExpressionManager.registerExpression(expressionTurnout2);
-        socketOr.getChild(index++).connect(socketTurnout2);
-
-
-
-        // If then
-        jmri.jmrit.logixng.digital.actions.Many expressionMany =
-                new jmri.jmrit.logixng.digital.actions.Many(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00010", null);
-        MaleSocket socketSecondMany = digitalActionManager.registerAction(expressionMany);
-        socketIfThen.getChild(1).connect(socketSecondMany);
-
-        // If else
-        jmri.jmrit.logixng.digital.actions.Many expressionMany2 =
-                new jmri.jmrit.logixng.digital.actions.Many(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10010", null);
-        MaleSocket socketSecondMany2 = digitalActionManager.registerAction(expressionMany2);
-        socketIfThen.getChild(2).connect(socketSecondMany2);
-
-        index = 0;
-/*                    
-        HoldAnything actionHoldAnything = new HoldAnything(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00011", "My hold anything");
-        MaleSocket socketHoldAnything = digitalActionManager.registerAction(actionHoldAnything);
-        socketSecondMany.getChild(index++).connect(socketHoldAnything);
-*/                    
-        IfThenElse actionIfThen2 = new IfThenElse(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00012", "My if then", IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen2 = digitalActionManager.registerAction(actionIfThen2);
-        socketSecondMany.getChild(index++).connect(socketIfThen2);
-
-        jmri.jmrit.logixng.digital.actions.Many actionMany =
-                new jmri.jmrit.logixng.digital.actions.Many(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00013", "My many");
-        MaleSocket socketMany2 = digitalActionManager.registerAction(actionMany);
-        socketSecondMany.getChild(index++).connect(socketMany2);
-
-        ShutdownComputer actionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00014", "My shutdown computer");
-        MaleSocket socketShutdownComputer = digitalActionManager.registerAction(actionShutdownComputer);
-        socketSecondMany.getChild(index++).connect(socketShutdownComputer);
-
-        DoAnalogAction actionDoAnalogAction = new DoAnalogAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00015", null);
-        MaleSocket socketDoAnalogAction = digitalActionManager.registerAction(actionDoAnalogAction);
-        socketSecondMany.getChild(index++).connect(socketDoAnalogAction);
-
-        DoStringAction actionDoStringAction = new DoStringAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00016", null);
-        MaleSocket socketDoStringAction = digitalActionManager.registerAction(actionDoStringAction);
-        socketSecondMany.getChild(index++).connect(socketDoStringAction);
-
-        ShutdownComputer expressionShutdownComputer = new ShutdownComputer(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00017", null);
-        MaleSocket socketShutdownComputer2 = digitalActionManager.registerAction(expressionShutdownComputer);
-        socketSecondMany.getChild(index++).connect(socketShutdownComputer2);
-
-        ActionLight actionLight = new ActionLight(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00018", null);
-//                    actionLight.setLight(light2);
-        actionLight.setLightState(ActionLight.LightState.ON);
-        socketLight2 = digitalActionManager.registerAction(actionLight);
-        socketSecondMany.getChild(index++).connect(socketLight2);
-
-        actionLight = new ActionLight(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10019", "My light action");
-        actionLight.setLight(light2);
-        actionLight.setLightState(ActionLight.LightState.ON);
-        socketLight2 = digitalActionManager.registerAction(actionLight);
-        socketSecondMany.getChild(index++).connect(socketLight2);
-
-        ActionSensor actionSensor = new ActionSensor(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00020", null);
-//                    actionSensor.setSensor(sensor2);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
-        socketSensor2 = digitalActionManager.registerAction(actionSensor);
-        socketSecondMany.getChild(index++).connect(socketSensor2);
-
-        actionSensor = new ActionSensor(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00021", "My sensor action");
-        actionSensor.setSensor(sensor2);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
-        socketSensor2 = digitalActionManager.registerAction(actionSensor);
-        socketSecondMany.getChild(index++).connect(socketSensor2);
-
-        ActionTurnout actionTurnout = new ActionTurnout(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00022", null);
-//                    actionTurnout.setTurnout(turnout2);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
-        socketTurnout2 = digitalActionManager.registerAction(actionTurnout);
-        socketSecondMany.getChild(index++).connect(socketTurnout2);
-
-        actionTurnout = new ActionTurnout(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00023", "My turnout action");
-        actionTurnout.setTurnout(turnout2);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
-        socketTurnout2 = digitalActionManager.registerAction(actionTurnout);
-        socketSecondMany.getChild(index++).connect(socketTurnout2);
-
-        AnalogExpressionConstant locoConstant = new AnalogExpressionConstant(logixNG_Manager.getSystemNamePrefix()+"AE:AUTO:00001", null);
-        locoConstant.setValue(10);
-        MaleSocket socketLocoConstant = analogExpressionManager.registerExpression(locoConstant);
-
-        AnalogExpressionConstant speedConstant = new AnalogExpressionConstant(logixNG_Manager.getSystemNamePrefix()+"AE:AUTO:00002", null);
-        speedConstant.setValue(0.5);
-        MaleSocket socketSpeedConstant = analogExpressionManager.registerExpression(speedConstant);
-
-        Sensor sensorDirection = InstanceManager.getDefault(SensorManager.class).provide("IS100");
-        sensorDirection.setCommandedState(Sensor.ACTIVE);
-        ExpressionSensor directionSensor = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:10028", null);
-        expressionSensor.setSensor(sensorDirection);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket socketDirectionSensor = digitalExpressionManager.registerExpression(directionSensor);
-
-        ActionThrottle actionThrottle = new ActionThrottle(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10023", "My throttle action");
-        actionThrottle.getChild(0).connect(socketLocoConstant);
-        actionThrottle.getChild(1).connect(socketSpeedConstant);
-        actionThrottle.getChild(2).connect(socketDirectionSensor);
-        MaleSocket socketThrottle = digitalActionManager.registerAction(actionThrottle);
-        socketSecondMany.getChild(index++).connect(socketThrottle);
-
-        actionThrottle = new ActionThrottle(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10024", "My other throttle action");
-        socketThrottle = digitalActionManager.registerAction(actionThrottle);
-        socketSecondMany.getChild(index++).connect(socketThrottle);
-
-        AnalogExpressionMemory analogExpressionMemory = new AnalogExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"AE:AUTO:00003", null);
-        analogExpressionMemory.setMemory(memory1);
-        MaleSocket socketAnalogExpressionMemory = analogExpressionManager.registerExpression(analogExpressionMemory);
-
-        AnalogActionMemory analogActionMemory = new AnalogActionMemory(logixNG_Manager.getSystemNamePrefix()+"AA:AUTO:00001", null);
-        analogActionMemory.setMemory(memory2);
-        MaleSocket socketAnalogActionMemory = analogActionManager.registerAction(analogActionMemory);
-
-        DoAnalogAction doAnalogAction = new DoAnalogAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00101", "My do analog action");
-        doAnalogAction.getChild(0).connect(socketAnalogExpressionMemory);
-//DANIEL                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
-        doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
-//DANIEL                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
-        MaleSocket socket = digitalActionManager.registerAction(doAnalogAction);
-        socketSecondMany.getChild(index++).connect(socket);
-
-        analogExpressionMemory = new AnalogExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"AE:AUTO:00004", "My expression");
-        socketAnalogExpressionMemory = analogExpressionManager.registerExpression(analogExpressionMemory);
-
-        analogActionMemory = new AnalogActionMemory(logixNG_Manager.getSystemNamePrefix()+"AA:AUTO:00002", "My action");
-        socketAnalogActionMemory = analogActionManager.registerAction(analogActionMemory);
-
-        doAnalogAction = new DoAnalogAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00102", null);
-//                    doAnalogAction.setAnalogExpressionSocketSystemName(socketAnalogExpressionMemory.getSystemName());
-        doAnalogAction.getChild(0).connect(socketAnalogExpressionMemory);
-//                    doAnalogAction.setAnalogActionSocketSystemName(socketAnalogActionMemory.getSystemName());
-        doAnalogAction.getChild(1).connect(socketAnalogActionMemory);
-        socket = digitalActionManager.registerAction(doAnalogAction);
-        socketSecondMany.getChild(index++).connect(socket);
-
-        StringExpressionMemory stringExpressionMemory = new StringExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"SE:AUTO:00001", null);
-        stringExpressionMemory.setMemory(memory3);
-        MaleSocket socketStringExpressionMemory = stringExpressionManager.registerExpression(stringExpressionMemory);
-
-        StringActionMemory stringActionMemory = new StringActionMemory(logixNG_Manager.getSystemNamePrefix()+"SA:AUTO:00001", null);
-        stringActionMemory.setMemory(memory4);
-        MaleSocket socketStringActionMemory = stringActionManager.registerAction(stringActionMemory);
-
-        DoStringAction doStringAction = new DoStringAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00103", "My do string action");
-        doStringAction.getChild(0).connect(socketStringExpressionMemory);
-//DANIEL                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
-        doStringAction.getChild(1).connect(socketStringActionMemory);
-//DANIEL                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
-        socket = digitalActionManager.registerAction(doStringAction);
-        socketSecondMany.getChild(index++).connect(socket);
-
-        stringExpressionMemory = new StringExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"SE:AUTO:00002", "My expression");
-        socketStringExpressionMemory = stringExpressionManager.registerExpression(stringExpressionMemory);
-
-        stringActionMemory = new StringActionMemory(logixNG_Manager.getSystemNamePrefix()+"SA:AUTO:00002", "My action");
-        socketStringActionMemory = stringActionManager.registerAction(stringActionMemory);
-
-        doStringAction = new DoStringAction(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00104", null);
-        doStringAction.getChild(0).connect(socketStringExpressionMemory);
-//DANIEL                    doStringAction.setStringExpressionSocketSystemName(socketStringExpressionMemory.getSystemName());
-        doStringAction.getChild(1).connect(socketStringActionMemory);
-//DANIEL                    doStringAction.setStringActionSocketSystemName(socketStringActionMemory.getSystemName());
-        socket = digitalActionManager.registerAction(doStringAction);
-        socketSecondMany.getChild(index++).connect(socket);
-
-        logixNG_Manager.resolveAllTrees();
-        logixNG_Manager.setupAllLogixNGs();
-
-        logixNG.setEnabled(true);
-        conditionalNG.setEnabled(true);
-        
-        
-        
-        
-        
-        
-        
+            final String treeIndent = "   ";
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
+            
+            log.error("--------------------------------------------");
+            log.error("New tree:");
+            log.error("XXX"+stringWriter.toString()+"XXX");
+            log.error("--------------------------------------------");
+            return;
         }
         
         
         
         
-        
-        
-        
-        
-        
-        
-
         // Store panels
         jmri.ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
         if (cm == null) {
@@ -537,7 +736,7 @@ public class StoreAndLoadTest {
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
-            logixNG.printTree(Locale.ENGLISH, printWriter, treeIndent);
+            logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
             final String originalTree = stringWriter.toString();
             
             boolean results = cm.storeUser(firstFile);
@@ -656,11 +855,10 @@ public class StoreAndLoadTest {
             if (results) {
                 logixNG_Manager.resolveAllTrees();
                 logixNG_Manager.setupAllLogixNGs();
-
-                logixNG = logixNG_Manager.getLogixNG("Yet another logixNG");
+                
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
-                logixNG.printTree(Locale.ENGLISH, printWriter, treeIndent);
+                logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
 
                 if (!originalTree.equals(stringWriter.toString())) {
                     log.error("--------------------------------------------");
@@ -676,7 +874,8 @@ public class StoreAndLoadTest {
                     throw new RuntimeException("tree has changed");
                 }
             } else {
-                throw new RuntimeException("Failed to load panel");
+                Assert.fail("Failed to load panel");
+//                throw new RuntimeException("Failed to load panel");
             }
         }
     }
@@ -732,6 +931,8 @@ public class StoreAndLoadTest {
 
     @After
     public void tearDown() {
+        JUnitAppender.clearBacklog();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
     

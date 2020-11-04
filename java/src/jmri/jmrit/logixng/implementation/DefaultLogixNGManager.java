@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.PrintWriter;
+import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
@@ -160,6 +163,22 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public void setLoadDisabled(boolean s) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(PrintWriter writer, String indent) {
+        printTree(Locale.getDefault(), writer, indent);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        for (LogixNG logixNG : getNamedBeanSet()) {
+            logixNG.printTree(locale, writer, indent, "");
+            writer.println();
+        }
+    }
+    
     
     static volatile DefaultLogixNGManager _instance = null;
 

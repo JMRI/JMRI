@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng;
 
 import java.util.Collection;
-import java.util.List;
 
 import jmri.NamedBean;
 

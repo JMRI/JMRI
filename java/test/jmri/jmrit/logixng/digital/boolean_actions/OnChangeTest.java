@@ -39,7 +39,8 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        DigitalActionBean childAction = new Many("IQDA999", null);
+        DigitalActionBean childAction =
+                new jmri.jmrit.logixng.digital.actions.Many("IQDA999", null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(childAction);
         return maleSocketChild;

@@ -43,19 +43,19 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
     public void setModule(@Nonnull NamedBeanHandle<Module> handle) {
         assertListenersAreNotRegistered(log, "setModule");
         _moduleHandle = handle;
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.getDefault(ModuleManager.class).addVetoableChangeListener(this);
     }
     
-    public void setModule(@Nonnull Module memory) {
+    public void setModule(@Nonnull Module module) {
         assertListenersAreNotRegistered(log, "setModule");
         setModule(InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(memory.getDisplayName(), memory));
+                .getNamedBeanHandle(module.getDisplayName(), module));
     }
     
     public void removeModule() {
         assertListenersAreNotRegistered(log, "setModule");
         if (_moduleHandle != null) {
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            InstanceManager.getDefault(ModuleManager.class).removeVetoableChangeListener(this);
             _moduleHandle = null;
         }
     }
@@ -70,7 +70,7 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
             if (evt.getOldValue() instanceof Module) {
                 if (evt.getOldValue().equals(getModule().getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new PropertyVetoException(Bundle.getMessage("ModuleDigitalAction_ModuleInUseModuleExpressionVeto", getDisplayName()), e); // NOI18N
+                    throw new PropertyVetoException(Bundle.getMessage("CallModule_ModuleInUseVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
@@ -136,7 +136,7 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ModuleDigitalAction_Short");
+        return Bundle.getMessage(locale, "CallModule_Short");
     }
 
     @Override
@@ -148,7 +148,7 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        return Bundle.getMessage(locale, "ModuleDigitalAction_Long", memoryName);
+        return Bundle.getMessage(locale, "CallModule_Long", memoryName);
     }
     
     /** {@inheritDoc} */

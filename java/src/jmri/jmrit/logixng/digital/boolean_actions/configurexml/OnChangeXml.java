@@ -1,13 +1,12 @@
 package jmri.jmrit.logixng.digital.boolean_actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
+import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -15,9 +14,9 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class OnChangeXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public OnChangeActionXml() {
+    public OnChangeXml() {
     }
 
     /**
@@ -36,7 +35,7 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
         
         storeCommon(p, element);
 
-        element.setAttribute("whichChange", p.getTrigger().name());
+        element.setAttribute("trigger", p.getTrigger().name());
         
         Element e2 = new Element("socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
@@ -58,12 +57,12 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
     @Override
     public boolean load(Element shared, Element perNode) {
         
-        Attribute whichChangeAttribute = shared.getAttribute("whichChange");
-        OnChange.Trigger whichChange = OnChange.Trigger.valueOf(whichChangeAttribute.getValue());
+        Attribute triggerAttribute = shared.getAttribute("trigger");
+        OnChange.Trigger trigger = OnChange.Trigger.valueOf(triggerAttribute.getValue());
         
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        OnChange h = new OnChange(sys, uname, whichChange);
+        OnChange h = new OnChange(sys, uname, trigger);
 
         loadCommon(h, shared);
         
@@ -78,5 +77,5 @@ public class OnChangeActionXml extends jmri.managers.configurexml.AbstractNamedB
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(OnChangeActionXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OnChangeActionXml.class);
 }

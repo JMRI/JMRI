@@ -4,17 +4,19 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeActionXml;
+import jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeXml;
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalBooleanActionManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
@@ -46,26 +48,26 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeActionXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDB1"));
         Element socketElement = new Element("socket");
         e2.addContent(socketElement);
         socketElement.addContent(new Element("socketName").addContent("A"));
         socketElement.addContent(new Element("systemName").addContent("IQDA2"));
-        e2.setAttribute("whichChange", "CHANGE_TO_TRUE");
+        e2.setAttribute("trigger", "CHANGE_TO_TRUE");
         b.loadActions(e);
         
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeActionXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDB2"));
         socketElement = new Element("socket");
         e2.addContent(socketElement);
         socketElement.addContent(new Element("socketName").addContent("A"));
         socketElement.addContent(new Element("systemName").addContent("IQDA2"));
-        e2.setAttribute("whichChange", "CHANGE_TO_TRUE");
+        e2.setAttribute("trigger", "CHANGE_TO_TRUE");
         b.loadActions(e);
         
         // Test trying to load a class with private constructor
@@ -202,7 +204,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
     
     // This class is loaded by reflection. The class cannot be private since
     // Spotbugs will in that case flag it as "is never used locally"
-    class PrivateConstructorXml extends OnChangeActionXml {
+    class PrivateConstructorXml extends OnChangeXml {
         private PrivateConstructorXml() {
         }
     }

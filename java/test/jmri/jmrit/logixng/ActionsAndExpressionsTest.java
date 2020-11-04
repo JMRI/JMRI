@@ -83,7 +83,7 @@ public class ActionsAndExpressionsTest {
             String fullConfigName;
             
             // Ignore this for now
-/*            
+            
             // Check that all actions and expressions has a xml class
             Object configureXml = null;
             fullConfigName = packageName + ".configurexml." + file + "Xml";
@@ -97,7 +97,7 @@ public class ActionsAndExpressionsTest {
                 System.out.format("Class %s.%s has no configurexml class%n", packageName, file);
                 errorsFound = true;
             }
-*/            
+            
             // Disable for now
 //            Assert.assertNotNull(String.format("Class %s has xml class%n", file), configureXml);
             

@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng;
 
+import java.io.PrintWriter;
+import java.util.Locale;
+
 import jmri.Manager;
 
 // import org.slf4j.Logger;
@@ -93,6 +96,23 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param s true if LogixNG should be disabled when loaded
      */
     public void setLoadDisabled(boolean s);
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(PrintWriter writer, String indent);
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(Locale locale, PrintWriter writer, String indent);
     
     /**
      * Test if parameter is a properly formatted system name.
