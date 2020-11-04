@@ -5,6 +5,8 @@
  */
 package jmri.jmrit.display.modulesEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -400,6 +402,7 @@ final public class ModulesEditor extends PanelEditor {
     private int gridSize2nd = 10;
 
     @Nonnull
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "coloToColorName only returns null if null passed to it")
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
