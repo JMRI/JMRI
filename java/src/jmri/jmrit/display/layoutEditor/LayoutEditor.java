@@ -3087,7 +3087,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // check Track Segments, if any
         for (TrackSegmentView tsv : getTrackSegmentViews()) {
-            if (r.contains(tsv.getCentreSeg())) {
+            if (r.contains(tsv.calcCentreSeg())) {
                 result = tsv.getTrackSegment();
                 break;
             }

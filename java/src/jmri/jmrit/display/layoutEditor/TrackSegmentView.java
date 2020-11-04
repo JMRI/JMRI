@@ -513,7 +513,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     }
                 }
             }
-            p = getCentreSeg();
+            p = calcCentreSeg();
             if (r.contains(p)) {
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance <= minDistance) {
@@ -537,7 +537,7 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = getCentreSeg();
+        Point2D result = calcCentreSeg();
         if (connectionType == HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
         } else if (HitPointType.isBezierHitType(connectionType)) {
@@ -1505,7 +1505,7 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     public void splitTrackSegment() {
         // create a new anchor
-        Point2D p = getCentreSeg();
+        Point2D p = calcCentreSeg();
         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
         // link it to me
         layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, trackSegment, HitPointType.TRACK);
