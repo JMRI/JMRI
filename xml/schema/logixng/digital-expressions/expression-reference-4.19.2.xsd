@@ -25,41 +25,48 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalBooleanAction_OnChangeType">
+    <xs:complexType name="LogixNG_DigitalExpression_ExpressionReferenceType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a OnChange class.
+          Define the XML stucture for storing the contents of a ExpressionOBlock class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.OnChangeXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionOBlock</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
-        
+
             <xs:sequence>
+
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="socket" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
+              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="is_isNot" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="IS"/>
+                    <xs:enumeration value="IS_NOT"/>
+                  </xs:restriction>
+                </xs:simpleType>
               </xs:element>
+
+              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="OFF"/>
+                    <xs:enumeration value="ON"/>
+                    <xs:enumeration value="OTHER"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
+<!--              <xs:element name="enabled" type="yesNoType" /> -->
+
             </xs:sequence>
-            <xs:attribute name="trigger" use="required">
-              <xs:simpleType>
-                <xs:restriction base="xs:token">
-                  <xs:enumeration value="CHANGE_TO_TRUE"/>
-                  <xs:enumeration value="CHANGE_TO_FALSE"/>
-                  <xs:enumeration value="CHANGE"/>
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:attribute>
-            <xs:attribute name="enabled" type="yesNoType" />
+<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
-        
+
     </xs:complexType>
 
 </xs:schema>

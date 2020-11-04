@@ -25,6 +25,7 @@
             "
         >
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-boolean-actions/many-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-boolean-actions/on-change-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_DigitalBooleanActionManagerType">
@@ -41,7 +42,8 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="on-change"         type="LogixNG_DigitalBooleanAction_OnChangeType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="many"         type="LogixNG_DigitalBooleanAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="on-change"    type="LogixNG_DigitalBooleanAction_OnChangeType" minOccurs="0" maxOccurs="unbounded" />
             
           </xs:choice>
       </xs:sequence>

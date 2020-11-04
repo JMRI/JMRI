@@ -31,7 +31,7 @@ public class CallModuleXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public Element store(Object o) {
         CallModule p = (CallModule) o;
 
-        Element element = new Element("action-call-module");
+        Element element = new Element("call-module");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         

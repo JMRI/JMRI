@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalBooleanAction_OnChangeType">
+    <xs:complexType name="LogixNG_DigitalBooleanAction_ManyType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a OnChange class.
+          Define the XML stucture for storing the contents of a Many class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.OnChangeXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ManyXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -48,6 +48,7 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
+<!--
             <xs:attribute name="trigger" use="required">
               <xs:simpleType>
                 <xs:restriction base="xs:token">
@@ -57,6 +58,7 @@
                 </xs:restriction>
               </xs:simpleType>
             </xs:attribute>
+-->
             <xs:attribute name="enabled" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
         

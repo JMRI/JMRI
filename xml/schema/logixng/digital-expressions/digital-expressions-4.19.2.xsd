@@ -34,9 +34,15 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-local-variable-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-memory-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-oblock-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reference-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-script-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-sensor-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalhead-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-signalmast-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-turnout-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-warrant-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/false-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/formula-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/hold-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/or-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/reset-on-true-4.19.2.xsd"/>
@@ -67,9 +73,15 @@
             <xs:element name="expression-local-variable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-memory"  type="LogixNG_DigitalExpression_ExpressionMemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-oblock"  type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-reference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-script"  type="LogixNG_DigitalExpression_ExpressionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-sensor"  type="LogixNG_DigitalExpression_ExpressionSensorType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-signalhead"  type="LogixNG_DigitalExpression_ExpressionSignalHeadType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-signalmast"  type="LogixNG_DigitalExpression_ExpressionSignalMastType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-turnout" type="LogixNG_DigitalExpression_ExpressionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-warrant" type="LogixNG_DigitalExpression_ExpressionWarrantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="false"              type="LogixNG_DigitalExpression_FalseType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="formula"            type="LogixNG_DigitalExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="hold"               type="LogixNG_DigitalExpression_HoldType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="or"                 type="LogixNG_DigitalExpression_OrType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="reset-on-true"      type="LogixNG_DigitalExpression_ResetOnTrueType" minOccurs="0" maxOccurs="unbounded" />
