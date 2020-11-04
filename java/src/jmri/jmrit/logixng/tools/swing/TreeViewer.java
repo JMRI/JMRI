@@ -92,6 +92,7 @@ public class TreeViewer extends JmriJFrame {
         
         // Create a JTree and tell it to display our model
         tree = new JTree();
+        ToolTipManager.sharedInstance().registerComponent(tree);
         tree.setModel(femaleSocketTreeModel);
         tree.setCellRenderer(new FemaleSocketTreeRenderer());
         
@@ -244,7 +245,11 @@ public class TreeViewer extends JmriJFrame {
             
             JLabel connectedItemLabel = new JLabel();
             if (socket.isConnected()) {
-                connectedItemLabel.setText(socket.getConnectedSocket().getLongDescription());
+                MaleSocket connectedSocket = socket.getConnectedSocket();
+                connectedItemLabel.setText(connectedSocket.getLongDescription());
+                if (connectedSocket.getComment() != null) {
+                    panel.setToolTipText(connectedSocket.getComment());
+                }
             }
             
             panel.add(connectedItemLabel);
