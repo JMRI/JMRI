@@ -247,7 +247,7 @@ abstract public class LayoutTrackView {
         x -= metrics.stringWidth(name) / 2;
 
         // determine the Y coordinate for the text
-        y += (int) (metrics.getHeight() / 2);
+        y += metrics.getHeight() / 2;
 
         // (note we add the ascent, as in java 2d 0 is top of the screen)
         //y += (int) metrics.getAscent();
