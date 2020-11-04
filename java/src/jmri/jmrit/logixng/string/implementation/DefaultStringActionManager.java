@@ -110,6 +110,14 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameStringActions" : "BeanNameStringAction");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteStringAction(MaleStringActionSocket x) {
+        // delete the StringAction
+        deregister(x);
+        x.dispose();
+    }
     
     static volatile DefaultStringActionManager _instance = null;
 

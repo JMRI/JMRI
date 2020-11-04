@@ -72,12 +72,12 @@ public interface AnalogActionManager extends BaseManager<MaleAnalogActionSocket>
         return getSystemNamePrefix() + "AA";
     }
 
-    /*.*
+    /**
      * Delete Action by removing it from the manager. The Action must first be
      * deactivated so it stops processing.
      *
      * @param x the Action to delete
      */
-//    void deleteAction(Action x);
+    void deleteAnalogAction(MaleAnalogActionSocket x);
     
 }

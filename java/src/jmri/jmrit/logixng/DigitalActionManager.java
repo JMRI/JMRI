@@ -50,12 +50,12 @@ public interface DigitalActionManager extends BaseManager<MaleDigitalActionSocke
         return getSystemNamePrefix() + "DA";
     }
 
-    /*.*
+    /**
      * Delete DigitalActionBean by removing it from the manager. The DigitalActionBean must first be
      * deactivated so it stops processing.
      *
      * @param x the DigitalActionBean to delete
      */
-//    void deleteAction(DigitalActionBean x);
+    void deleteDigitalAction(MaleDigitalActionSocket x);
     
 }

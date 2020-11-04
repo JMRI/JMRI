@@ -79,11 +79,11 @@ public interface DigitalExpressionManager extends BaseManager<MaleDigitalExpress
     }
 
     /**
-     * Delete Expression by removing it from the manager. The Expression must
+     * Delete DigitalExpression by removing it from the manager. The Expression must
      * first be deactivated so it stops processing.
      *
-     * @param x the Expression to delete
+     * @param x the DigitalExpression to delete
      */
-//    void deleteExpression(DigitalExpressionBean x);
+    void deleteDigitalExpression(MaleDigitalExpressionSocket x);
 
 }

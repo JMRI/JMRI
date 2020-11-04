@@ -72,12 +72,12 @@ public interface StringActionManager extends BaseManager<MaleStringActionSocket>
         return getSystemNamePrefix() + "SA";
     }
 
-    /*.*
-     * Delete Action by removing it from the manager. The Action must first be
+    /**
+     * Delete StringAction by removing it from the manager. The Action must first be
      * deactivated so it stops processing.
      *
-     * @param x the Action to delete
+     * @param x the StringAction to delete
      */
-//    void deleteAction(Action x);
+    void deleteStringAction(MaleStringActionSocket x);
     
 }

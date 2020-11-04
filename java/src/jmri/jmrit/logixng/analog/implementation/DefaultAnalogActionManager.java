@@ -82,6 +82,14 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         return Bundle.getMessage("BeanNameAnalogAction");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void deleteAnalogAction(MaleAnalogActionSocket x) {
+        // delete the MaleAnalogActionSocket
+        deregister(x);
+        x.dispose();
+    }
+
     @Override
     public char typeLetter() {
         return 'Q';

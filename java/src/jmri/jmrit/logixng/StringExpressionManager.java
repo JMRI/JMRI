@@ -80,11 +80,11 @@ public interface StringExpressionManager extends BaseManager<MaleStringExpressio
     }
 
     /**
-     * Delete Expression by removing it from the manager. The Expression must
+     * Delete StringExpression by removing it from the manager. The Expression must
      * first be deactivated so it stops processing.
      *
-     * @param x the Expression to delete
+     * @param x the StringExpression to delete
      */
-//    void deleteExpression(Expression x);
+    void deleteStringExpression(MaleStringExpressionSocket x);
 
 }

@@ -124,6 +124,14 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameStringExpressions" : "BeanNameStringExpression");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteStringExpression(MaleStringExpressionSocket x) {
+        // delete the MaleStringExpressionSocket
+        deregister(x);
+        x.dispose();
+    }
     
     static volatile DefaultStringExpressionManager _instance = null;
 

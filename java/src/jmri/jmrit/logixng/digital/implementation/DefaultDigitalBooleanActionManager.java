@@ -111,6 +111,14 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameDigitalBooleanActions" : "BeanNameDigitalBooleanAction");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x) {
+        // delete the MaleDigitalBooleanActionSocket
+        deregister(x);
+        x.dispose();
+    }
     
     static volatile DefaultDigitalBooleanActionManager _instance = null;
 

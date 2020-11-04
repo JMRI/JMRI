@@ -124,6 +124,14 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameDigitalExpressions" : "BeanNameDigitalExpression");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteDigitalExpression(MaleDigitalExpressionSocket x) {
+        // delete the MaleDigitalExpressionSocket
+        deregister(x);
+        x.dispose();
+    }
     
     static volatile DefaultDigitalExpressionManager _instance = null;
 

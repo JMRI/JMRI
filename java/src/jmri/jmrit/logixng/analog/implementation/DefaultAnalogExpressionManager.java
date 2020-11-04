@@ -87,6 +87,14 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         return Bundle.getMessage("BeanNameAnalogExpression");
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void deleteAnalogExpression(MaleAnalogExpressionSocket x) {
+        // delete the MaleAnalogExpressionSocket
+        deregister(x);
+        x.dispose();
+    }
+
     @Override
     public char typeLetter() {
         return 'Q';

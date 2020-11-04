@@ -72,12 +72,12 @@ public interface DigitalBooleanActionManager extends BaseManager<MaleDigitalBool
         return getSystemNamePrefix() + "DB";
     }
 
-    /*.*
-     * Delete DigitalBooleanActionBean by removing it from the manager. The DigitalBooleanActionBean must first be
+    /**
+     * Delete DigitalBooleanAction by removing it from the manager. The DigitalBooleanActionBean must first be
      * deactivated so it stops processing.
      *
-     * @param x the DigitalBooleanActionBean to delete
+     * @param x the DigitalBooleanAction to delete
      */
-//    void deleteAction(DigitalBooleanActionBean x);
+    void deleteDigitalBooleanAction(MaleDigitalBooleanActionSocket x);
     
 }

@@ -100,6 +100,14 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameDigitalActions" : "BeanNameDigitalAction");
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deleteDigitalAction(MaleDigitalActionSocket x) {
+        // delete the MaleDigitalActionSocket
+        deregister(x);
+        x.dispose();
+    }
     
     static volatile DefaultDigitalActionManager _instance = null;
 
