@@ -61,6 +61,11 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             else h.removeTurnout();
         }
 
+        Element turnoutState = shared.getChild("turnoutState");
+        if (turnoutState != null) {
+            h.setTurnoutState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

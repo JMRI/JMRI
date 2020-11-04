@@ -5,8 +5,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ActionSensor;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -60,9 +58,14 @@ public class ActionSensorXml extends jmri.managers.configurexml.AbstractNamedBea
             else h.removeSensor();
         }
 
+        Element sensorState = shared.getChild("sensorState");
+        if (sensorState != null) {
+            h.setSensorState(ActionSensor.SensorState.valueOf(sensorState.getTextTrim()));
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ActionSensorXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSensorXml.class);
 }

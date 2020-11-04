@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.*;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
 
 import org.jdom2.Element;
@@ -61,6 +62,16 @@ public class ExpressionLightXml extends jmri.managers.configurexml.AbstractNamed
             Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
             if (t != null) h.setLight(t);
             else h.removeLight();
+        }
+
+        Element is_IsNot = shared.getChild("is_isNot");
+        if (is_IsNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
+        Element lightState = shared.getChild("lightState");
+        if (lightState != null) {
+            h.setLightState(ExpressionLight.LightState.valueOf(lightState.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

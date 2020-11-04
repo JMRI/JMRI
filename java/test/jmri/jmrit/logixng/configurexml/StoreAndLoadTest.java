@@ -221,7 +221,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-        
+/*        
         ActionTimer actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(index++).connect(maleSocket);
@@ -231,7 +231,7 @@ public class StoreAndLoadTest {
         actionTimer.setDelay(100);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(index++).connect(maleSocket);
-        
+*/        
         
         ActionTurnout actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
@@ -298,6 +298,15 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        //================================================================================
+        //================================================================================
+        //================================================================================
+        //================================================================================
+        //================================================================================
+        //================================================================================
+        //================================================================================
+        //================================================================================
+/*        
         jmri.jmrit.logixng.digital.boolean_actions.Many booleanMany =
                 new jmri.jmrit.logixng.digital.boolean_actions.Many(digitalBooleanActionManager.getAutoSystemName(), null);
         maleSocket = digitalBooleanActionManager.registerAction(booleanMany);
@@ -313,7 +322,7 @@ public class StoreAndLoadTest {
         onChange.setComment("A comment");
         maleSocket = digitalBooleanActionManager.registerAction(onChange);
         booleanMany.getChild(1).connect(maleSocket);
-        
+*/        
         
         
         
@@ -581,7 +590,7 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
-        
+/*        
         ExpressionTimer expressionTimer = new ExpressionTimer(digitalExpressionManager.getAutoSystemName(), null);
         expressionTimer.setTimerType(ExpressionTimer.TimerType.REPEAT_DOUBLE_DELAY);
         maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
@@ -593,7 +602,7 @@ public class StoreAndLoadTest {
         expressionTimer.setTimerType(ExpressionTimer.TimerType.WAIT_ONCE_TRIG_ONCE);
         maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
         and.getChild(index++).connect(maleSocket);
-        
+*/        
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setTriggerOnChange(false);
@@ -859,7 +868,7 @@ public class StoreAndLoadTest {
                 stringWriter = new StringWriter();
                 printWriter = new PrintWriter(stringWriter);
                 logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
-
+                
                 if (!originalTree.equals(stringWriter.toString())) {
                     log.error("--------------------------------------------");
                     log.error("Old tree:");
@@ -868,10 +877,19 @@ public class StoreAndLoadTest {
                     log.error("New tree:");
                     log.error("XXX"+stringWriter.toString()+"XXX");
                     log.error("--------------------------------------------");
-
+                    
+                    System.out.println("--------------------------------------------");
+                    System.out.println("Old tree:");
+                    System.out.println("XXX"+originalTree+"XXX");
+                    System.out.println("--------------------------------------------");
+                    System.out.println("New tree:");
+                    System.out.println("XXX"+stringWriter.toString()+"XXX");
+                    System.out.println("--------------------------------------------");
+                    
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
-                    throw new RuntimeException("tree has changed");
+                    Assert.fail("tree has changed");
+//                    throw new RuntimeException("tree has changed");
                 }
             } else {
                 Assert.fail("Failed to load panel");

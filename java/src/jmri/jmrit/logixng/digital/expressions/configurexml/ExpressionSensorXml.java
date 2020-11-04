@@ -5,10 +5,10 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -62,9 +62,19 @@ public class ExpressionSensorXml extends jmri.managers.configurexml.AbstractName
             else h.removeSensor();
         }
 
+        Element is_IsNot = shared.getChild("is_isNot");
+        if (is_IsNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
+        Element sensorState = shared.getChild("sensorState");
+        if (sensorState != null) {
+            h.setSensorState(ExpressionSensor.SensorState.valueOf(sensorState.getTextTrim()));
+        }
+
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ExpressionSensorXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorXml.class);
 }

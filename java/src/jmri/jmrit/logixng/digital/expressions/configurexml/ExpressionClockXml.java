@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.*;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.digital.expressions.ExpressionClock;
 
 import org.jdom2.Element;
@@ -40,7 +41,7 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
 //            element.addContent(new Element("light").addContent(light.getName()));
 //        }
         
-//        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
+        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
 //        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
 
         return element;
@@ -53,6 +54,11 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
         ExpressionClock h = new ExpressionClock(sys, uname);
 
         loadCommon(h, shared);
+
+        Element is_IsNot = shared.getChild("is_isNot");
+        if (is_IsNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
 
 //        Element lightName = shared.getChild("light");
 //        if (lightName != null) {

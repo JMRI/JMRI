@@ -62,6 +62,11 @@ public class ActionLightXml extends jmri.managers.configurexml.AbstractNamedBean
             else h.removeLight();
         }
 
+        Element lightState = shared.getChild("lightState");
+        if (lightState != null) {
+            h.setLightState(ActionLight.LightState.valueOf(lightState.getTextTrim()));
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
