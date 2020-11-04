@@ -669,18 +669,20 @@ final public class ModulesEditor extends PanelEditor {
      */
     @Override
     public void paintTargetPanel(@Nonnull Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
+        if (g instanceof Graphics2D) {
+            Graphics2D g2 = (Graphics2D) g;
 
-        g2.setRenderingHints(new RenderingHints(
-                RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON));
+            g2.setRenderingHints(new RenderingHints(
+                    RenderingHints.KEY_ANTIALIASING,
+                    RenderingHints.VALUE_ANTIALIAS_ON));
 
-        if (drawGrid) {
-            drawGrid(g2);
-        }
+            if (drawGrid) {
+                drawGrid(g2);
+            }
 
-        for (LEModule module : modules) {
-            module.draw(g2);
+            for (LEModule module : modules) {
+                module.draw(g2);
+            }
         }
     }
 
