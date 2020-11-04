@@ -1,0 +1,346 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+
+< head>
+
+<!-- Copyright 2020 Jerry Grochow -->
+ 
+  <titre>Support matériel : Utilisation d'Arduinos avec JMRI</titre>
+  
+  <meta name="author" content="Jerry Grochow">
+  <meta name="keywords" content="JMRI arduino DCC++ CMRI serial">
+  
+     <!--#include virtual="/Style.shtml" -->
+
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+    <h1><a name="top" id="top">Support matériel : Utilisation d'Arduinos avec JMRI</a></h1>
+    
+    <img src="http://www.motorhomesites.org.uk/wp-content/uploads/2018/01/JMRIArduinoTitlepic.jpg" 
+    alt="Benson Valley Railway" align="middle" height="192" width="360">
+    <p style="font-size:60%">Crédit photo:<a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
+    http://www.motorhomesites.org.uk/jmri-arduino-setup</a></p>
+    
+    <p>
+    <a href="https://en.wikipedia.org/wiki/arduino" target="_blank">Les microcontrôleurs Arduino</a>
+    sont des ordinateurs spéciaux qui, grâce à des capteurs appropriés et à d'autres éléments électroniques,
+    peuvent être utilisé pour émuler les centrales et les décodeurs de DCC, pour commander les aiguillage, pour éclairer les bâtiments et les paysages, 
+    et animer à peu près tout ce qui se trouve dans votre réseau - le tout sous le contrôle de JMRI.
+    </p>
+    
+    <ul class="snav">
+        <li><a href="#intro">Intro</a></li>
+        <li><a href="#connect">Connexion</a></li>
+        <li><a href="#using">Utilisation des fonctionnalités de JMRI</a></li>
+        <li><a href="#exemple-CMRI">Nœud CMRI étape par étape </a></li>
+    </ul>
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->    
+    <h2><a name="intro" id="intro">Introduction à l'utilisation d'Arduinos avec JMRI </a></h2>
+
+    <p>
+    Utiliser des arduinos pour votre réseau n'est pas aussi difficile que vous le pensiez.  Vous pouvez obtenir un 
+    système d'occupation de canton, et de communication avec vos capteurs et panneaux en JMRI
+    en quelques heures seulement.  Vous pouvez également concevoir une animation du réseau personnalisée qui est
+    déclenchée par Logix ou un script Jython et il faut des jours pour en comprendre tous les rouages.  Vous pouvez même 
+    utilisez un arduino comme Centrale DCC avec<a href="../dccpp/index.shtml"> DCC++</a>. C'est vous qui décidez.
+    </p>
+
+    <p>
+    Un logiciel pour développer du code sur votre arduino est gratuit en ligne à l'adresse suivante : <a href="https://www.arduino.cc/" target="_blank">
+    arduino.cc</a>. 
+    </p>
+ 
+    <p>
+    Les arduinos peuvent être utilisés de nombreuses façons sur votre réseau grâce à JMRI :
+    </p>
+    
+    <ul>
+        <li>En tant que Centrale DCC</li>
+        <li>Comme un décodeur DCC installé dans une locomotive</li>
+        <li>Comme un décodeur DCC relié à un dispositif auxiliaire, y compris les aiguillages et les lumières</li>
+        <li>Pour détecter l'occupation d'un canton à l'aide de capteurs de consomation de courant, infrarouges, photo-optiques ou autres</li>
+        <li>Contrôler un relais pour activer ou désactiver des accessoires</li>.
+        <li>Pour contrôler directement les lumières et créer divers effets d'éclairage</li>
+        <li>Pour commander des moteurs de différents types (via des tableaux optionnels de commande de moteur), comme pour déplacer des panneaux de signalisation, des grandes roues, etc.</li>
+        <li>Associer l'occupation du cantons et le contrôle de moteurs pour créer des animations déclenchées</li>
+        <li>Contrôler les servomoteurs pour créer d'autres types d'animations, y compris le fonctionnement des aiguillages, le franchissement des portes, et bien d'autres encore.</li>
+    </ul>
+
+    <p>
+    JMRI fournit une assistance pour utiliser un arduino comme centrale DCC (<a href="../dccpp/index.shtml">
+    DCC++</a>) ou en tant que décodeur DCC (en configurant un fichier de définition de <a href="../../apps/DecoderPro/CreateDecoder.shtml">décodeur </a>. 
+    Vous pouvez également utiliser des arduinos pour contrôler un ou plusieurs appareils auxiliaires de votre réseau en connectant l'arduino à 
+    votre ordinateur en exécutant JMRI soit par la voies (auquel cas il 
+    recevra les commandes comme tout autre décodeur) ou par un réseau auxiliaire tel que<a href="../cmri/CMRI.shtml"> C/MRI </a>
+    ou <a href="../loconet/Digitrax.shtml">Loconet </a>dans ce cas, ils communiqueront avec JMRI
+    en suivant les règles de ce protocole.  Les sections ci-dessous vous aideront à démarrer.
+    </p>
+    
+
+    <h3>Référence de Matériel supplémentaire</h3>
+    
+    <p>
+    Vous pouvez trouver des informations sur des projets typiques à différents endroits sur le web.  En voici quelques-uns :
+    </p>
+    
+    <ul>
+        <li>Pour les questions sur l'utilisation des arduinos avec le modélisme ferroviaire (y compris l'utilisation avec  JMRI), allez au <a href="https://groups.io/g/arduini" target="_blank"> groupe de discussion "arduini" d</a></li>
+        <li>Pour des exemples d'animations, de décodeurs DCC, et autres, voir <a href="https://model-railroad-hobbyist.com/blog/geoff-bunza" target="_blank">
+        Le blog de Geoff Bunza</a>. [Beaucoup d'entre eux peuvent facilement être adaptés pour communiquer avec JMRI.]</li>
+        <li>Pour obtenir un code arduino permettant de mettre en œuvre un certain nombre des sujets énumérés ci-dessus, allez à 
+        <a href="https://github.com/Arduini-Projects" target="_blank">cette page dans Github.</a>
+        Saisissez également des termes de recherche tels que "arduino", "chemin de fer miniature", "DCC" et, bien sûr, "JMRI".  
+        <li>Pour tout ce qui concerne les arduinos et les JMRI, allez sur <a href="https://www.youtube.com/results?search_query=model+railroading+jmri+arduino" target="_blank">
+        YouTube pour des centaines de vidéos</a>, certaines avec des descriptions très détaillées sur la façon de configurer JMRI pour interagir avec les arduinos.</li>
+    </ul>
+    
+    <p>
+    De nouveaux blogs et vidéos sont créés presque quotidiennement pour décrire les utilisations supplémentaires des arduinos sur le chemin de fer. 
+    Avec l'introduction constante de nouveaux capteurs et contrôleurs à connecter aux broches d'un arduino, il y a à peine un objet contrôlable électroniquement qui ne peut pas être contrôlé via  JMRI.
+    </p>
+
+    <p><a href="#top">[Aller en haut de la page]</a><</p>     
+ 
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+    <h2><a name="connect" id="connect">Connexion à JMRI </a></h2>
+
+    <ul class="snav">
+        <li><a href="#CMRI">CMRI</a></li>
+        <li><a href="#serial">Série</a><</li>
+        <li><a href="#multi">RS485</a></li>
+    </ul>
+ 
+
+    <p>
+    Les Arduinos communiquent avec votre ordinateur Windows, Mac ou Linux de différentes manières 
+    en fonction de la fonction qu'ils exercent :
+    </p>
+    
+    <ul>
+    <li>via un port USB si elle agit comme une <a href="../dccpp/index.shtml">Centrale DCC.</a></li>
+    <li>via connexion à la voie ou une connexion à <a href="../loconet/Digitrax.shtml">Loconet </a>
+    (nécessite un circuit supplémentaire) ou <a href="../can/cbus/index.shtml#thirdpary">CBUS MERG </a> réseau
+    agissant comme un décodeur DCC (voir, par exemple, this<a href="https://github.com/mrrwa/NmraDcc" target="_blank">
+    bibliothèque arduino sur Github</a>)</li>
+    <li>via un port USB si vous émulez un <a href="#CMRI">nœud de CMRI</a></li>
+    <li>via TCP/IP en utilisant le <a href="../mqtt/index.shtml">protocole MQTT</a></li>
+    <li>via un port USB pour les communications directes <a href="#serial">sérielles </a></li>
+    <li>via un connecteur USB-RS485 si <a href="#multi"> de multiples arduinos sont connectés</a> via un réseau RS485</li>.
+    </ul>
+    
+    <p> Les sections suivantes fournissent des conseils pour utiliser certaines des différentes approches de communication.</p>
+
+    
+    <h3><a name="CMRI" id="CMRI">Emulation d'un nœud CMRI</a></h3>
+    
+    <p>
+    L'un des moyens les plus simples de faire communiquer votre arduino avec JMRI est d'installer un logiciel qui
+    lui permet d'émuler un nœud CMRI. Voir <a href="../cmri/index.shtml">la page d'aide CMRI</a> pour  
+    l'informations sur l'utilisation des nœuds CMRI avec JMRI]. Sur l'arduino, installez un des 
+    C/MRI et l'inclure dans votre croquis (par exemple, la bibliothèque de Michael Adams
+    <a href="https://github.com/madleech/ArduinoCMRI" target="blank_"> disponible sur Github</a> (
+    voir aussi <a href="http://www.motorhomesites.org.uk/jmri-arduino-setup/" target="_blank">
+    Site web de Stephen Brackstone </a> pour un exemple d'utilisation). Voir aussi<a href="#exemple-CMRI">
+     ci-dessous </a>pour un ensemble d'étapes permettant de fonctionner avec un arduino comme nœud CMRI avec JMRI.
+    </p>
+    
+    <p>Certaines notes intéressantes pour programmer votre arduino en tant que nœud CMRI:</p>
+    
+    <ul>
+    <li>
+    Veillez à régler la vitesse de communication (vitesse de transmission) de la même manière dans votre sketch arduino et dans
+    JMRI <a href="../cmri/CMRI.shtml#L215">connexion du système CMRI </a>.  Le débit en bauds ne sera 
+    visible dans la fenêtre Préférences->Connexions de JMRI si vous cochez la case "Autres
+    Paramètres de connexion".
+    </li>
+    <li>
+    Lors de la définition des objets JMRI tels que les capteurs et les aiguillages qui sont identifiés avec des bits
+    CMRI , JMRI commence à numéroter les bits CMRI avec 1 alors que le logiciel CMRI commun pour les arduinoscommencent avec 0
+    L'écriture ("setting") CMRI bit 0 dans un sketch arduino met JMRI CMRI input bit 1
+    pour le nœud approprié.  Ainsi, un capteur JMRI nommé CS2001 (bit 1 sur
+    Le nœud 2) sera contrôlé en mettant le bit 0 du CMRI dans le code dans un sketch arduino. La lecture ("obtention") du bit 0 CMRI dans un sketch Arduino lira le bit contrôlant l'aiguillage JMRI ou la lumière attachée au bit 1 de sortie CMRI dans JMRI, par exemple CT2001 ou CL2001 (notez que vous ne pouvez pas avoir à la fois une Lumière et un Aiguillage contrôlant le même bit de sortie). Voir aussi l'exemple de configuration ci-dessous</a>.
+    </li>.
+    <li>
+    Lorsque vous utilisez des arduinos pour contrôler les aiguillage JMRI, n'oubliez pas que le comportement JMRI est différent si l'aiguillage
+    est défini pour avoir une sortie en régime permanent par rapport à une sortie pulsée 
+    (voir <a href="../cmri/CMRI.shtml#L519"> Options d'aiguillage dans CMRI</a> pour plus d'informations). Il est plus facile de régler l'aiguillage JMRI pour avoir une sortie stable et d'utiliser la programmation arduino pour prendre les mesures appropriées en fonction du type de commutation d'aiguillage que vous utilisez.
+    </li>
+    <li>
+    Le retour d'information sur l'aiguillage fonctionne différemment pour le CMRI que pour les autres réseaux lorsqu'il utilise également le TCO
+    dans le cadre de votre exploitation.  Il est facile de programmer un arduino pour que les interrupteurs dévient votre aiguillage, le comportement JMRI peut ne pas être celui auquel vous vous attendez (si vous essayez d'envoyer des rétrosignalisation à JMRI,
+   JMRI va effectivement les ignorer et tenter de repositionner l'aiguillage conforme à celui de la table d'aiguillage JMRI tel qu'il devrait l'être). Voir les<a href="../cmri/CMRI.shtml#L519"> Options d'Aiguillage dans CMRI </a> pour les informations correctes. 
+    </li>
+    <li>
+    Le <a href="../cmri/CMRI.shtml#L568">gestionnaire de réseau CMRI</a> peut être utilisé pour activer et désactiver la communication
+    avec n'importe quel nœud CMRI que vous souhaitez, ce qui est utile si un ou plusieurs sont temporairement mis hors service ou en cours de test.
+    </li>
+    <li>
+    Lorsque vous changez l'état de plusieurs appareils connectés au CMRI (disons deux aiguillages) en un seul 
+    <a href="../../tools/Routes.shtml">Route</a> ou <a href="../../tools/Logix.shtml">Logix</a>, 
+    vous ne pouvez pas être sûr d'obtenir les deux bits la première fois que votre programme arduino les demande. Après un délai
+     (généralement une fraction de seconde), vous le ferez, mais programmez votre sketch arduino pour être sensible à cette question.    
+    </li>
+    </ul>
+     
+    <p>Voir aussi la section ci-dessous pour un <a href="#exemple-CMRI">Exemple de création étape par étape d'un nœud CMRI à base d'arduino.</a></p>
+     
+    <p><a href="#top">[Aller en haut de la page]</a><</p>     
+
+
+    <h3><a name="serial" id="serial">Communication série</a></h3>
+    
+    <p>
+    Les Arduinos peuvent être directement connectés à un port USB et utiliser des communications série via un
+    <a href="../../tools/scripting/index.shtml">script Jython </a> exécuté en JMRI.  Un    
+    exemple est inclus dans <a href="../../../../../jython/SerialPortTest.py">le répertoire JMRI Jython.</a>
+    Geoff Bunza décrit un <a href="https://model-railroad-hobbyist.com/node/34392"
+    target="_blank">script de communication série pour la collecte des données des capteurs</a> d'un arduino.
+    Il n'est pas nécessaire de configurer une connexion au système JMRI pour utiliser des communications série directes.
+    </p>
+
+    <p><a href="#top">[Aller en haut de la page]</a><</p>     
+
+ 
+    <h3><a name="multi" id="multi">Utilisation de plusieurs arduinos via RS-485</a></h3>
+    
+    <p class="im">
+    <img src="images/rs485chain.jpg" alt="RS485 Daisy Chain" align="right" height="211" width="396">
+    JMRI ne permet de configurer qu'une seule connexion CMRI pour votre reseau. Si votre arduino
+    est connecté via un câble USB, c'est-à-dire un seul arduino.  Cependant, vous pouvez connecter un
+    Un câble RS-485 (deux fils) au port USB et connectez plusieurs arduinos en "guirlande" (chacun
+    arduino connecté au suivant et enfin une connexion à l'ordinateur), comme le montre ce schéma :
+    </p>
+    
+    <p>
+    Connectez chaque arduino à une carte de communication RS-485 via les broches série de votre arduino.
+    Il existe plusieurs sources pour la carte de communication RS-485 dont
+    les prix varient de quelques dollars à plus de 30 dollars. Vous aurez également besoin d'un simple USB-RS485
+    également disponible auprès de plusieurs sources.
+    </p>
+    
+    <p>Voir <a href="http://www.motorhomesites.org.uk/control-single-turnout-with-rs485-and-cmri/" target="_blank">
+    Stephen Brackstone à nouveau </a> pour une bonne description de la façon de procéder.
+    </p>
+    
+    <p>Incluez ensuite une bibliothèque RS-485 dans votre sketch d'arduino (par exemple, 
+    <a href="https://github.com/madleech/Auto485" target="_blank">
+    celui-ci par Michael Adams</a>).  Assurez-vous que chaque arduino se voit attribuer un numéro de nœud CMRI différent
+    numéro.  Vous n'avez pas besoin de logiciel supplémentaire sur votre ordinateur.
+    Il suffit d'indiquer à JMRI à quel port USB le convertisseur est connecté et tous les arduinos sur le RS485
+    sera vu par le JMRI.
+    </p>
+
+    <p><a href="#top">[Aller en haut de la page]</a></p>     
+  
+
+ <!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->     
+    <h2><a name="using" id="using">Utilisation des fonctions et outils de JMRI avec Arduinos</a></h2>
+    
+    <p>
+    Les Arduinos peuvent être connectés à presque tous les composants électroniques utilisés sur un réseau, notamment
+    moteurs d'aiguillage, relais d'aiguillage, éclairage à leds et une grande variété de capteurs.  Vous pouvez, 
+    par exemple, définir un <a href="../../tools/Sensors.shtml">capteur dans JMRI </a>
+    qui est identifié par un bit d'entrée CMRI et un <a href="../../tools/Turnouts.shtml">aiguillaget</a> identifié
+    avec un bit de sortie CMRI, qui sont tous deux traités par un arduino pour contrôler un moteur d'aiguillage.  Ou bien, vous
+    peut identifier ces capteurs et ces aiguillages comme étant "internes" (objets JMRI non associés à  
+    sur votre réseau) et utilisez un <a href="../../tools/scripting/index.shtml">script</a> pour traiter les 
+    données quicirculent dans les deux sens vers l'arduino.
+    </p>
+    
+    <p>Voici quelques exemples avec des liens vers des articles explicatifs et/ou du code arduino dont vous pouvez vous inspirer:</p>
+    
+    <ul>
+    <li>Les détecteurs d'occupation de Cantons : Connectez un arduino à plusieurs détecteurs d'occupation de cantons et définissez des capteurs JMRI pour signaler si des cantons sont occupés.
+    Les TCO afficheront des voies changeant de couleur au fur et à mesure que les bcantons passent de l'état inoccupé à l'état occupé et vice-versa.
+    <li>Détecteurs de localisation : Connectez un arduino à un capteur "ponctuel" tel qu'un module poptocoupleur, un module infrarouge, un lecteur à effet Hall, un lecteur RFID,
+    etc.  Définissez un capteur JMRI qui s'active lorsque le capteur physique est actif et utilisez-le pour contrôler les itinéraires,
+    Logix, ou autre action "déclenchée" par JMRI.</li>
+    <li>Contrôle de l'aiguillage : Connecter un arduino à un moteur d'aiguillage ou à une moteur de commutation (il faudra utiliser une carte de circuit imprimé auxiliaire pour alimenter ces dispositifs).
+    Définissez un aiguillage en JMRI et un capteur pour le retour d'information. Si l'arduino reçoit une demande pour que JMRI le dévie
+    (via le protocole réseau que vous avez choisi - voir <a href="#connect">ci-dessus</a>), faites dévier l'aiguillage par l'arduino
+    et régler le capteur.</li>
+    <li>Contrôle multiple des aiguillages par communication série : Voir étape par étape et code de Geoff Bunza 
+    <a href="https://model-railroad-hobbyist.com/node/34417" target="_blank"> here.</a></li>
+    <li>Déclenchement de Logix : Connectez un arduino à un interrupteur ou à un bouton-poussoir du panneau de commande. Définissez un capteur JMRI qui est utilisé pour déclencher un Logix pour
+    faire quelque chose (par exemple, organiser des animations, allumer des lumières, etc.)  Programmez l'arduino pour qu'il règle le capteur lorsque l'interrupteur est activé. </li>
+    <li>Contrôle de la lumière ou de l'animation : Ajoutez un contrôleur de moteur à votre arduino, créez un <a href="../../tools/Lights.shtml">objet lumineux JMRI</a>
+    pour envoyer une commande de contrôle,
+    créer quelques capteurs dans le JMRI pour obtenir un retour d'information, et utiliser ce <a href="https://github.com/jerryg2003/MRR-arduino-auxmotorcontrol" target="_blank">
+   sketch pour contrôler un moteur auxiliaire, </a> comme celui d'une grande roue.  Utilisez <a href="../../tools/Lights.shtml"> Objets lumineux de JMRI</a>
+    pour envoyer des commandes pour modifier la vitesse ou d'autres caractéristiques de l'animation, soit par des communications en série, soit en utilisant
+    les techniques de communication par octet examinées sur <a href="ArduinoCMRIByteComm.shtml">cette page.</a></li>
+    <li>Speedomètre : surveiller le temps de déclenchement d'une locomotive entre deux (ou plusieurs) capteurs, et en utilisant 
+    la distance qui les sépare, calculer sa vitesse.  Envoyez ces informations à JMRI soit par des communications en série, soit en utilisant
+    les techniques de communication par octets discutées sur <a href="ArduinoCMRIByteComm.shtml">cette page.</a></li>
+    <li>Compteur de voitures : à l'aide de détecteurs de position placés au-dessus du niveau des wagons et des attelages, faites un sketch arduino
+    pour compter les voitures au fur et à mesure qu'elles passent. Connectez-vous à JMRI via <a href="#serial"> une communications série </a> et écrivez un 
+    <a href="../../tools/scripting/index.shtml">script </a>pour écrire le nombre sur un <a href="../../tools/Memories.shtml">objet mémoire JMRI</a>
+    qui peut s'afficher sur un <a href="../../apps/PanelPro/index.shtml">panneau affichant votre réseau</a></li>
+    <li>Décodeur DCC : Transformez votre arduino en un <a href="https://github.com/mrrwa/NmraDcc" target="_blank">décodeur compatible CMRI</a>.  
+    Utilisez <a href="../../apps/DecoderPro/index.shtml">DecoderPro </a>pour modifier les variables de configuration.</li>
+    </ul>
+    
+    <p>
+    Les possibilités sont presque infinies.
+    </p>
+
+    <p><a href="#top">[Aller en haut de la page]</a></p>     
+
+  
+<!-- *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*= -->
+ 
+    <h2><a name="example-CMRI" id="example-CMRI">Exemple étape par étape de l'utilisation d'Arduino comme nœud CMRI</a></h2>
+      
+    <p>
+    Dans cet exemple, nous allons parcourir les principales étapes de l'utilisation d'un arduino pour surveiller un capteur d'occupation de canton et 
+    JMRI utilisant ce capteur pour changer la couleur de la voie de la section occupée sur un panneau de contrôle
+    Il ne s'agit pas d'un tutoriel sur les arduinos ou sur JMRI, mais plutôt d'un guide pour quelqu'un qui, de manière générale est
+    familier avec les deux, mais en essayant de les utiliser ensemble.  On peut trouver bien plus d'informations en consultant certaines des 
+    références énumérées dans <a href="#intro">l'introduction ci-dessus.</a>
+    </p>
+    
+    <ul>
+    <li>Connectez d'abord le détecteur d'occupation de canton (BOD) que vous utilisez aux broches appropriées de l'arduino.</li>
+    <li>Utilisation de l'IDE <a href="https://www.arduino.cc/en/main/software" target="_blank">arduino 
+    (environnement de développement intégré)</a> ou autre environnement de développement, créer (ou télécharger) un
+    sketch (programme arduino) qui inclut la bibliothèque CMRI.</li>
+    <li>Dans le skecth, attribuez à ce nœud CMRI émulé le nœud 1.</li>
+    <li>Dans le croquis, utilisez le bit 0 pour envoyer l'état du capteur (inoccupé=0 ou occupé=1).  Certains capteurs
+    indique un canton occupé par un signal LOW sur la broche de l'arduino alors que les autres passeront en HIGH - être sûr
+    de savoir quel est l'information pour votre capteur particulier, donc vous réglez le bit CMRI de manière appropriée.</li>
+    <li> Connectez le port USB de votre arduino à un câble USB et ensuite à votre ordinateur.</li>
+    <li>Notez le port USB auquel l'arduino est connecté (sur une machine Windows, par exemple, allez dans le gestionnaire de périphériques et voyez
+    quel numéro de port apparaît lorsque vous branchez le câble arduino sur un port USB).</li>
+    <li>Téléchargez le sketch de votre environnement de développement vers votre arduino.</li>
+    <li>Ouvrez <a href="../../apps/PanelPro/index.shtml">JMRI PanelPro.</a></li>
+    <li>Sélectionnez Édition->Préférences->Connexions dans les menus déroulants, puis "+" pour ajouter une nouvelle connexion.</li>
+    <li>Sélectionnez "CMRI" et "Serie" puis le port série auquel votre arduino est connecté comme indiqué 
+    <a href="../cmri/CMRI.shtml#L215"> içi.</a>
+    REMARQUE : vous ne pourrez pas faire fonctionner simultanément le moniteur série arduino IDE et JMRI, quel que soit l'appareil ouvert le
+    second verra que le port est utilisé.</li>
+    <li>Cochez "Additional Connection Settings" et sélectionnez le même "Baud rate" (vitesse de communication série) que
+    que vous avez utilisé dans le sketch arduino.</li>
+    <li>Cliquez sur "Configurer Nœud" et ensuite sur "Ajouter Nœud".  Lorsque la fenêtre "Ajouter un nœud" s'ouvre, modifiez l'"Adresse du nœud"
+    à 1 et cliquez sur "Ajouter un nœud" comme indiqué<a href="../cmri/CMRI.shtml#L296"> ici.</a>
+    Fermez cette fenêtre et cliquez sur "Terminé".  N'OUBLIEZ PAS dDE CLIQUER sur "Enregistrer" dans la fenêtre des préférences.
+    <li>Ouvrir la table <a href="../../tools/Sensors.shtml">capteurs </a>et créer un capteur CMRI avec le nom de système 1001 (premier bit CMRI sur le nœud 1)</li>
+    <li>Ouvrir la table <a href="../../help/fr/html/tools/Blocks.shtml">canton </a>et créer un canton. set occupancy sensir t$ la sensir que vous venez de créer.</li>
+    <li>Allez à un panneau que vous avez créé et attribuez le canton que vous venez de créer à la section de voie appropriée.</li>
+    <li> Faites circuler les trains et regardez l'action ! </li> 
+    </ul>
+     
+    <p><a href="#top">[Aller en haut de la page]</a></p>
+    
+
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
