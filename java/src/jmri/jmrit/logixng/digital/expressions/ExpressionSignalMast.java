@@ -68,7 +68,8 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     }
     
     public void setAspect(String aspect) {
-        _signalMastAspect = aspect;
+        if (aspect == null) _signalMastAspect = "";
+        else _signalMastAspect = aspect;
     }
     
     public String getAspect() {
@@ -181,13 +182,11 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
         } else {
             turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        String aspect;
-        if ((_signalMastHandle != null) && (_signalMastHandle.getBean() != null)) {
-            aspect = _signalMastHandle.getBean().getAspect();
+        if ((_queryType == QueryType.Aspect) || (_queryType == QueryType.NotAspect)) {
+            return Bundle.getMessage(locale, "SignalMast_LongAspect", turnoutName, _queryType._text, _signalMastAspect.isEmpty() ? "''" : _signalMastAspect);
         } else {
-            aspect = "";
+            return Bundle.getMessage(locale, "SignalMast_Long", turnoutName, _queryType._text);
         }
-        return Bundle.getMessage(locale, "SignalMast_Long", turnoutName, _queryType._text, aspect);
     }
     
     /** {@inheritDoc} */

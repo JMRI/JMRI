@@ -22,20 +22,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Evaluates the state of a Memory.
+ * Evaluates the state of a local variable.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2020
  */
 public class ExpressionLocalVariable extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private String _variableName;
-    private VariableOperation _variableOperation = VariableOperation.EQUAL;
-    private CompareTo _compareTo = CompareTo.VALUE;
+    private VariableOperation _variableOperation = VariableOperation.Equal;
+    private CompareTo _compareTo = CompareTo.Value;
     private boolean _caseInsensitive = false;
     private String _constantValue = "";
-    private NamedBeanHandle<Memory> _otherMemoryHandle;
-    private boolean _listenToOtherMemory = false;
+    private NamedBeanHandle<Memory> _memoryHandle;
+    private boolean _listenToMemory = true;
+//    private boolean _listenToMemory = false;
     
     public ExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -51,35 +52,50 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return _variableName;
     }
     
-    public void setOtherMemory(@Nonnull String memoryName) {
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        setOtherMemory(memory);
-        if (memory == null) {
+    public void setMemory(@Nonnull String memoryName) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
+        Memory memory = memoryManager.getMemory(memoryName);
+        if (memory != null) {
+            setMemory(memory);
+        } else {
+            removeMemory();
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
-    public void setOtherMemory(@Nonnull NamedBeanHandle<Memory> handle) {
-        assertListenersAreNotRegistered(log, "setOtherMemory");
-        _otherMemoryHandle = handle;
-    }
-    
-    public void setOtherMemory(@CheckForNull Memory memory) {
-        assertListenersAreNotRegistered(log, "setOtherMemory");
-        if (memory != null) {
-            if (_otherMemoryHandle != null) {
-                InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-            }
-            _otherMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                    .getNamedBeanHandle(memory.getDisplayName(), memory);
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        _memoryHandle = handle;
+        if (_memoryHandle != null) {
+            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
-            _otherMemoryHandle = null;
-            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
-    public NamedBeanHandle<Memory> getOtherMemory() {
-        return _otherMemoryHandle;
+    public void setMemory(@CheckForNull Memory memory) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        if (memory != null) {
+            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(memory.getDisplayName(), memory);
+            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+        } else {
+            _memoryHandle = null;
+            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
+        }
+    }
+    
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "removeMemory");
+        if (_memoryHandle != null) {
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            _memoryHandle = null;
+        }
+    }
+    
+    public NamedBeanHandle<Memory> getMemory() {
+        return _memoryHandle;
     }
     
     public void setConstantValue(String constantValue) {
@@ -90,8 +106,8 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         return _constantValue;
     }
     
-    public void setVariableOperation(VariableOperation memoryOperation) {
-        _variableOperation = memoryOperation;
+    public void setVariableOperation(VariableOperation variableOperation) {
+        _variableOperation = variableOperation;
     }
     
     public VariableOperation getVariableOperation() {
@@ -187,17 +203,17 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
                 log.debug("Compare numbers: n1= {} to n2= {}", n1, n2);
                 switch (_variableOperation) // both are numbers
                 {
-                    case LESS_THAN:
+                    case LessThan:
                         return (n1 < n2);
-                    case LESS_THAN_OR_EQUAL:
+                    case LessThanOrEqual:
                         return (n1 <= n2);
-                    case EQUAL:
+                    case Equal:
                         return (n1 == n2);
-                    case NOT_EQUAL:
+                    case NotEqual:
                         return (n1 != n2);
-                    case GREATER_THAN_OR_EQUAL:
+                    case GreaterThanOrEqual:
                         return (n1 >= n2);
-                    case GREATER_THAN:
+                    case GreaterThan:
                         return (n1 > n2);
                     default:
                         throw new IllegalArgumentException("_memoryOperation has unknown value: "+_variableOperation.name());
@@ -220,32 +236,32 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
             compare = value1.compareTo(value2);
         }
         switch (_variableOperation) {
-            case LESS_THAN:
+            case LessThan:
                 if (compare < 0) {
                     return true;
                 }
                 break;
-            case LESS_THAN_OR_EQUAL:
+            case LessThanOrEqual:
                 if (compare <= 0) {
                     return true;
                 }
                 break;
-            case EQUAL:
+            case Equal:
                 if (compare == 0) {
                     return true;
                 }
                 break;
-            case NOT_EQUAL:
+            case NotEqual:
                 if (compare != 0) {
                     return true;
                 }
                 break;
-            case GREATER_THAN_OR_EQUAL:
+            case GreaterThanOrEqual:
                 if (compare >= 0) {
                     return true;
                 }
                 break;
-            case GREATER_THAN:
+            case GreaterThan:
                 if (compare > 0) {
                     return true;
                 }
@@ -274,43 +290,43 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         boolean result;
         
         switch (_compareTo) {
-            case VALUE:
+            case Value:
                 otherValue = _constantValue;
                 break;
-            case MEMORY:
-                otherValue = getString(_otherMemoryHandle.getBean().getValue());
+            case Memory:
+                otherValue = getString(_memoryHandle.getBean().getValue());
                 break;
             default:
                 throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
         }
         
         switch (_variableOperation) {
-            case LESS_THAN:
+            case LessThan:
                 // fall through
-            case LESS_THAN_OR_EQUAL:
+            case LessThanOrEqual:
                 // fall through
-            case EQUAL:
+            case Equal:
                 // fall through
-            case NOT_EQUAL:
+            case NotEqual:
                 // fall through
-            case GREATER_THAN_OR_EQUAL:
+            case GreaterThanOrEqual:
                 // fall through
-            case GREATER_THAN:
+            case GreaterThan:
                 result = compare(variableValue, otherValue, _caseInsensitive);
                 break;
                 
-            case IS_NULL:
+            case IsNull:
                 result = variableValue == null;
                 break;
-            case IS_NOT_NULL:
+            case IsNotNull:
                 result = variableValue != null;
                 break;
                 
-            case MATCH_REGEX:
+            case MatchRegex:
                 result = matchRegex(variableValue, otherValue);
                 break;
                 
-            case NOT_MATCH_REGEX:
+            case NotMatchRegex:
                 result = !matchRegex(variableValue, otherValue);
                 break;
                 
@@ -344,24 +360,24 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     @Override
     public String getLongDescription(Locale locale) {
-        String otherMemoryName;
-        if (_otherMemoryHandle != null) {
-            otherMemoryName = _otherMemoryHandle.getBean().getDisplayName();
+        String memoryName;
+        if (_memoryHandle != null) {
+            memoryName = _memoryHandle.getBean().getDisplayName();
         } else {
-            otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
+            memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
         String message;
         String other;
         switch (_compareTo) {
-            case VALUE:
+            case Value:
                 message = "Variable_Long_CompareConstant";
                 other = _constantValue;
                 break;
                 
-            case MEMORY:
+            case Memory:
                 message = "Variable_Long_CompareMemory";
-                other = otherMemoryName;
+                other = memoryName;
                 break;
                 
             default:
@@ -369,27 +385,27 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
         }
         
         switch (_variableOperation) {
-            case LESS_THAN:
+            case LessThan:
                 // fall through
-            case LESS_THAN_OR_EQUAL:
+            case LessThanOrEqual:
                 // fall through
-            case EQUAL:
+            case Equal:
                 // fall through
-            case NOT_EQUAL:
+            case NotEqual:
                 // fall through
-            case GREATER_THAN_OR_EQUAL:
+            case GreaterThanOrEqual:
                 // fall through
-            case GREATER_THAN:
+            case GreaterThan:
                 return Bundle.getMessage(locale, message, _variableName, _variableOperation._text, other);
                 
-            case IS_NULL:
+            case IsNull:
                 // fall through
-            case IS_NOT_NULL:
+            case IsNotNull:
                 return Bundle.getMessage(locale, "Variable_Long_CompareNull", _variableName, _variableOperation._text);
                 
-            case MATCH_REGEX:
+            case MatchRegex:
                 // fall through
-            case NOT_MATCH_REGEX:
+            case NotMatchRegex:
                 return Bundle.getMessage(locale, "Variable_Long_CompareRegex", _variableName, _variableOperation._text);
                 
             default:
@@ -407,7 +423,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_variableName != null)) {
-            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToMemory) _memoryHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -416,7 +432,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToMemory) _memoryHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = false;
         }
     }
@@ -437,16 +453,16 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     
     
     public enum VariableOperation {
-        LESS_THAN(Bundle.getMessage("MemoryOperation_LessThan"), true),
-        LESS_THAN_OR_EQUAL(Bundle.getMessage("MemoryOperation_LessThanOrEqual"), true),
-        EQUAL(Bundle.getMessage("MemoryOperation_Equal"), true),
-        GREATER_THAN_OR_EQUAL(Bundle.getMessage("MemoryOperation_GreaterThanOrEqual"), true),
-        GREATER_THAN(Bundle.getMessage("MemoryOperation_GreaterThan"), true),
-        NOT_EQUAL(Bundle.getMessage("MemoryOperation_NotEqual"), true),
-        IS_NULL(Bundle.getMessage("MemoryOperation_IsNull"), false),
-        IS_NOT_NULL(Bundle.getMessage("MemoryOperation_IsNotNull"), false),
-        MATCH_REGEX(Bundle.getMessage("MemoryOperation_MatchRegEx"), true),
-        NOT_MATCH_REGEX(Bundle.getMessage("MemoryOperation_NotMatchRegEx"), true);
+        LessThan(Bundle.getMessage("VariableOperation_LessThan"), true),
+        LessThanOrEqual(Bundle.getMessage("VariableOperation_LessThanOrEqual"), true),
+        Equal(Bundle.getMessage("VariableOperation_Equal"), true),
+        GreaterThanOrEqual(Bundle.getMessage("VariableOperation_GreaterThanOrEqual"), true),
+        GreaterThan(Bundle.getMessage("VariableOperation_GreaterThan"), true),
+        NotEqual(Bundle.getMessage("VariableOperation_NotEqual"), true),
+        IsNull(Bundle.getMessage("VariableOperation_IsNull"), false),
+        IsNotNull(Bundle.getMessage("VariableOperation_IsNotNull"), false),
+        MatchRegex(Bundle.getMessage("VariableOperation_MatchRegEx"), true),
+        NotMatchRegex(Bundle.getMessage("VariableOperation_NotMatchRegEx"), true);
         
         private final String _text;
         private final boolean _extraValue;
@@ -469,8 +485,8 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     
     
     public enum CompareTo {
-        VALUE,
-        MEMORY;
+        Value,
+        Memory;
     }
     
     

@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ActionLocalVariable class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariable</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLocalVariableXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -40,17 +40,22 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
+              <xs:element name="variableOperation" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="TOGGLE"/>
+                    <xs:enumeration value="SetToNull"/>
+                    <xs:enumeration value="SetToString"/>
+                    <xs:enumeration value="CopyVariableToVariable"/>
+                    <xs:enumeration value="CopyMemoryToVariable"/>
+                    <xs:enumeration value="CalculateFormula"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+
+              <xs:element name="data" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
             

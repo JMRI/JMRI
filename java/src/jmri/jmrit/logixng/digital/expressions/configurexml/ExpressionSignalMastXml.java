@@ -18,9 +18,9 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
     }
     
     /**
-     * Default implementation for storing the contents of a SE8cSignalHead
+     * Default implementation for storing the contents of a SE8cSignalMast
      *
-     * @param o Object to store, of type TripleLightSignalHead
+     * @param o Object to store, of type TripleLightSignalMast
      * @return Element containing the complete info
      */
     @Override
@@ -35,13 +35,14 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        NamedBeanHandle<SignalMast> signalMast = p.getSignalMast();
+        if (signalMast != null) {
+            element.addContent(new Element("signalMast").addContent(signalMast.getName()));
+        }
         
-//        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        element.addContent(new Element("queryType").addContent(p.getQueryType().name()));
+        
+        element.addContent(new Element("aspect").addContent(p.getAspect()));
 
         return element;
     }
@@ -54,12 +55,22 @@ public class ExpressionSignalMastXml extends jmri.managers.configurexml.Abstract
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element signalMastName = shared.getChild("signalMast");
+        if (signalMastName != null) {
+            SignalMast signalMast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(signalMastName.getTextTrim());
+            if (signalMast != null) h.setSignalMast(signalMast);
+            else h.removeSignalMast();
+        }
+
+        Element queryType = shared.getChild("queryType");
+        if (queryType != null) {
+            h.setQueryType(ExpressionSignalMast.QueryType.valueOf(queryType.getTextTrim()));
+        }
+        
+        Element apperanceElement = shared.getChild("aspect");
+        if (apperanceElement != null) {
+            h.setAspect(apperanceElement.getTextTrim());
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

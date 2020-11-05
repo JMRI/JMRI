@@ -390,7 +390,11 @@ public class DefaultFemaleGenericExpressionSocket
     /** {@inheritDoc} */
     @Override
     public MaleSocket getConnectedSocket() {
-        return _currentActiveSocket.getConnectedSocket();
+        if (_currentActiveSocket != null) {
+            return _currentActiveSocket.getConnectedSocket();
+        } else {
+            return null;
+        }
     }
 
     /** {@inheritDoc} */

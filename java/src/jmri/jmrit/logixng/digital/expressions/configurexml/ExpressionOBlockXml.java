@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions.configurexml;
 
 import jmri.*;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.digital.expressions.ExpressionOBlock;
@@ -36,13 +37,13 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        OBlock oblock = p.getOBlock();
+        if (oblock != null) {
+            element.addContent(new Element("oblock").addContent(oblock.getSystemName()));
+        }
         
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        element.addContent(new Element("oblockStatus").addContent(p.getOBlockStatus().name()));
 
         return element;
     }
@@ -55,16 +56,22 @@ public class ExpressionOBlockXml extends jmri.managers.configurexml.AbstractName
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element oblockName = shared.getChild("oblock");
+        if (oblockName != null) {
+            OBlock t = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
+                    .getOBlock(oblockName.getTextTrim());
+            if (t != null) h.setOBlock(t);
+            else h.removeOBlock();
+        }
 
         Element is_IsNot = shared.getChild("is_isNot");
         if (is_IsNot != null) {
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
+        Element oblockStatus = shared.getChild("oblockStatus");
+        if (oblockStatus != null) {
+            h.setOBlockStatus(OBlock.OBlockStatus.valueOf(oblockStatus.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

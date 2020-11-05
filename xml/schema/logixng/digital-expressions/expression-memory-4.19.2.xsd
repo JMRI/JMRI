@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionMemory class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionMemory</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionMemoryXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -41,40 +41,40 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="other-memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="otherMemory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="memory-operation" minOccurs="1" maxOccurs="1">
+              <xs:element name="compareTo" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="LESS_THAN"/>
-                    <xs:enumeration value="LESS_THAN_OR_EQUAL"/>
-                    <xs:enumeration value="EQUAL"/>
-                    <xs:enumeration value="GREATER_THAN_OR_EQUAL"/>
-                    <xs:enumeration value="GREATER_THAN"/>
-                    <xs:enumeration value="NOT_EQUAL"/>
-                    <xs:enumeration value="IS_NULL"/>
-                    <xs:enumeration value="IS_NOT_NULL"/>
-                    <xs:enumeration value="MATCH_REGEX"/>
-                    <xs:enumeration value="NOT_MATCH_REGEX"/>
+                    <xs:enumeration value="Value"/>
+                    <xs:enumeration value="Memory"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="compare-to" minOccurs="1" maxOccurs="1">
+              <xs:element name="memoryOperation" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="VALUE"/>
-                    <xs:enumeration value="MEMORY"/>
+                    <xs:enumeration value="LessThan"/>
+                    <xs:enumeration value="LessThanOrEqual"/>
+                    <xs:enumeration value="Equal"/>
+                    <xs:enumeration value="GreaterThanOrEqual"/>
+                    <xs:enumeration value="GreaterThan"/>
+                    <xs:enumeration value="NotEqual"/>
+                    <xs:enumeration value="IsNull"/>
+                    <xs:enumeration value="IsNotNull"/>
+                    <xs:enumeration value="MatchRegex"/>
+                    <xs:enumeration value="NotMatchRegex"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
+              <xs:element name="caseInsensitive" type="yesNoType" />
+
+              <xs:element name="constant" type="xs:string" />
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
-            <xs:attribute name="case-sensitive" type="yesNoType" />
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>

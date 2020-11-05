@@ -27,21 +27,27 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
     public Element store(Object o) {
         ExpressionLocalVariable p = (ExpressionLocalVariable) o;
 
-//        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
-        
         Element element = new Element("expression-local-variable");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        String variableName = p.getVariableName();
+        if (variableName != null) {
+            element.addContent(new Element("variable").addContent(variableName));
+        }
         
-//        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        NamedBeanHandle<Memory> memoryName = p.getMemory();
+        if (memoryName != null) {
+            element.addContent(new Element("memory").addContent(memoryName.getName()));
+        }
+        
+        element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
+        element.addContent(new Element("variableOperation").addContent(p.getVariableOperation().name()));
+        element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
+        
+        element.addContent(new Element("constant").addContent(p.getConstantValue()));
 
         return element;
     }
@@ -54,16 +60,43 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element variableName = shared.getChild("variable");
+        if (variableName != null) {
+            h.setVariable(variableName.getTextTrim());
+        }
+
+        Element memoryName = shared.getChild("memory");
+        if (memoryName != null) {
+            Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+            if (t != null) h.setMemory(t);
+            else h.removeMemory();
+        }
+
+        Element compareTo = shared.getChild("compareTo");
+        if (compareTo != null) {
+            h.setCompareTo(ExpressionLocalVariable.CompareTo.valueOf(compareTo.getTextTrim()));
+        }
+
+        Element variableOperation = shared.getChild("variableOperation");
+        if (variableOperation != null) {
+            h.setVariableOperation(ExpressionLocalVariable.VariableOperation.valueOf(variableOperation.getTextTrim()));
+        }
+
+        Element caseInsensitive = shared.getChild("variableOperation");
+        if (caseInsensitive != null) {
+            h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
+        } else {
+            h.setCaseInsensitive(false);
+        }
+
+        Element data = shared.getChild("constant");
+        if (data != null) {
+            h.setConstantValue(data.getTextTrim());
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
 }

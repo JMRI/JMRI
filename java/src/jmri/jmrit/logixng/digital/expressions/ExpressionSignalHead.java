@@ -181,7 +181,11 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
         } else {
             appearence = "";
         }
-        return Bundle.getMessage(locale, "SignalHead_Long", turnoutName, _queryType._text, appearence);
+        if ((_queryType == QueryType.Appearance) || (_queryType == QueryType.NotAppearance)) {
+            return Bundle.getMessage(locale, "SignalHead_LongApperance", turnoutName, _queryType._text, appearence);
+        } else {
+            return Bundle.getMessage(locale, "SignalHead_Long", turnoutName, _queryType._text);
+        }
     }
     
     /** {@inheritDoc} */

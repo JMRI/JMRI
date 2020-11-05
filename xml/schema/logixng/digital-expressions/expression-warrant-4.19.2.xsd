@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_FormulaType">
+    <xs:complexType name="LogixNG_DigitalExpression_ExpressionWarrantType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Formula class.
+          Define the XML stucture for storing the contents of a Warrant class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.Formula</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.WarrantXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

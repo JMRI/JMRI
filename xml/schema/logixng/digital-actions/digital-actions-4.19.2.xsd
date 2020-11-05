@@ -36,7 +36,6 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.19.2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/hold-anything-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/logix-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.19.2.xsd"/>
@@ -57,18 +56,17 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
             
-            <xs:element name="action-light"      type="LogixNG_DigitalAction_LightType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="action-light"      type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-listen-on-beans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-local-variable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-memory"     type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-script"     type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-sensor"     type="LogixNG_DigitalAction_SensorType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="action-sensor"     type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-timer"      type="LogixNG_DigitalAction_ActionTimerType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="action-turnout"    type="LogixNG_DigitalAction_TurnoutType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="action-turnout"    type="LogixNG_DigitalAction_ActionTurnoutType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="call-module"       type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="do-analog-action"  type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="do-string-action"  type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="hold-anything"     type="LogixNG_DigitalAction_HoldAnythingType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="if-then-else"      type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="many"              type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />

@@ -28,10 +28,10 @@
     <xs:complexType name="LogixNG_DigitalExpression_OrType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionHoldAnything class.
+          Define the XML stucture for storing the contents of a Or class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.And</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.OrXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

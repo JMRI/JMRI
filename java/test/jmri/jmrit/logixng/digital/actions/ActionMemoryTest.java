@@ -81,20 +81,20 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         memory.setValue("Old value");
         
         action2 = new ActionMemory("IQDA321", null);
-        action2.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_NULL);
+        action2.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set memory '' to null", action2.getLongDescription());
         
         action2 = new ActionMemory("IQDA321", "My memory");
-        action2.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        action2.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
         action2.setData("New value");
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My memory", action2.getUserName());
         Assert.assertEquals("String matches", "Set memory '' to \"New value\"", action2.getLongDescription());
         
         action2 = new ActionMemory("IQDA321", null);
-        action2.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        action2.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         action2.setMemory(memory);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
         action2.setOtherMemory(otherMemory);
@@ -183,14 +183,14 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("memory has correct value", "", memory.getValue());
         
         // Test to set memory to null
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_NULL);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
         // Execute the setMemoryOperation
         conditionalNG.execute();
         // The action should now be executed so the memory should be set
         Assert.assertEquals("memory has correct value", null, memory.getValue());
         
         // Test to set memory to string
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
         actionMemory.setData("New value");
         // Execute the conditional
         conditionalNG.execute();
@@ -201,7 +201,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         memory.setValue("A value");
         otherMemory.setValue("Some other value");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         actionMemory.setOtherMemory(otherMemory);
         // Execute the conditional
         conditionalNG.execute();
@@ -270,14 +270,14 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testLongDescription() throws ParserException {
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_NULL);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToNull);
         Assert.assertEquals("String matches", "Set memory IM1 to null", _base.getLongDescription());
         
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
         actionMemory.setData("Some new value");
         Assert.assertEquals("String matches", "Set memory IM1 to \"Some new value\"", _base.getLongDescription());
         
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         actionMemory.setOtherMemory(otherMemory);
         Assert.assertEquals("String matches", "Copy memory IM99 to memory IM1", _base.getLongDescription());
@@ -322,7 +322,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionMemory = new ActionMemory(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionMemory.setMemory(memory);
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SET_TO_STRING);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.SetToString);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionMemory);
         conditionalNG.getChild(0).connect(socket);
         

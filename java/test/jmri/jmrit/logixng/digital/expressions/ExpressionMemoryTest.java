@@ -153,27 +153,27 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testMemoryOperation() {
-        Assert.assertEquals("String matches", "is less than", ExpressionMemory.MemoryOperation.LESS_THAN.toString());
-        Assert.assertEquals("String matches", "is less than or equal", ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL.toString());
-        Assert.assertEquals("String matches", "is equal to", ExpressionMemory.MemoryOperation.EQUAL.toString());
-        Assert.assertEquals("String matches", "is greater than or equal to", ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL.toString());
-        Assert.assertEquals("String matches", "is greater than", ExpressionMemory.MemoryOperation.GREATER_THAN.toString());
-        Assert.assertEquals("String matches", "is not equal to", ExpressionMemory.MemoryOperation.NOT_EQUAL.toString());
-        Assert.assertEquals("String matches", "is null", ExpressionMemory.MemoryOperation.IS_NULL.toString());
-        Assert.assertEquals("String matches", "is not null", ExpressionMemory.MemoryOperation.IS_NOT_NULL.toString());
-        Assert.assertEquals("String matches", "does match regular expression", ExpressionMemory.MemoryOperation.MATCH_REGEX.toString());
-        Assert.assertEquals("String matches", "does not match regular expression", ExpressionMemory.MemoryOperation.NOT_MATCH_REGEX.toString());
+        Assert.assertEquals("String matches", "is less than", ExpressionMemory.MemoryOperation.LessThan.toString());
+        Assert.assertEquals("String matches", "is less than or equal", ExpressionMemory.MemoryOperation.LessThanOrEqual.toString());
+        Assert.assertEquals("String matches", "is equal to", ExpressionMemory.MemoryOperation.Equal.toString());
+        Assert.assertEquals("String matches", "is greater than or equal to", ExpressionMemory.MemoryOperation.GreaterThanOrEqual.toString());
+        Assert.assertEquals("String matches", "is greater than", ExpressionMemory.MemoryOperation.GreaterThan.toString());
+        Assert.assertEquals("String matches", "is not equal to", ExpressionMemory.MemoryOperation.NotEqual.toString());
+        Assert.assertEquals("String matches", "is null", ExpressionMemory.MemoryOperation.IsNull.toString());
+        Assert.assertEquals("String matches", "is not null", ExpressionMemory.MemoryOperation.IsNotNull.toString());
+        Assert.assertEquals("String matches", "does match regular expression", ExpressionMemory.MemoryOperation.MatchRegex.toString());
+        Assert.assertEquals("String matches", "does not match regular expression", ExpressionMemory.MemoryOperation.NotMatchRegex.toString());
         
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.LESS_THAN.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.EQUAL.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.GREATER_THAN.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.NOT_EQUAL.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionMemory.MemoryOperation.IS_NULL.hasExtraValue());
-        Assert.assertFalse("operation has not extra value", ExpressionMemory.MemoryOperation.IS_NOT_NULL.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.MATCH_REGEX.hasExtraValue());
-        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.NOT_MATCH_REGEX.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.LessThan.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.LessThanOrEqual.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.Equal.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.GreaterThanOrEqual.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.GreaterThan.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.NotEqual.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", ExpressionMemory.MemoryOperation.IsNull.hasExtraValue());
+        Assert.assertFalse("operation has not extra value", ExpressionMemory.MemoryOperation.IsNotNull.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.MatchRegex.hasExtraValue());
+        Assert.assertTrue("operation has extra value", ExpressionMemory.MemoryOperation.NotMatchRegex.hasExtraValue());
     }
     
     @Test
@@ -212,8 +212,8 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.Equal);
         expressionMemory.setConstantValue("New value");
         
         // The action is not yet executed so the atomic boolean should be false

@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a DoStringAction class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionIfThen</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.DoStringActionXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         

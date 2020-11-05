@@ -28,10 +28,10 @@
     <xs:complexType name="LogixNG_DigitalAction_ShutdownComputerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionHoldAnything class.
+          Define the XML stucture for storing the contents of a ShutdownComputer class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionIfThen</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ShutdownComputerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         

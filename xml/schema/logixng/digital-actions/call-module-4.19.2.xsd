@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a CallModule class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.CallModule</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.CallModuleXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         

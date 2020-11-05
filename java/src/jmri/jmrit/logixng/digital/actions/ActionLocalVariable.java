@@ -18,22 +18,21 @@ import jmri.MemoryManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.variables.LocalVariableExpressionVariable;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This action sets the value of a memory.
+ * This action sets the value of a local variable.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2020
  */
 public class ActionLocalVariable extends AbstractDigitalAction implements VetoableChangeListener {
 
     private String _variableName;
-    private NamedBeanHandle<Memory> _otherMemoryHandle;
-    private VariableOperation _variableOperation = VariableOperation.SET_TO_STRING;
+    private NamedBeanHandle<Memory> _memoryHandle;
+    private VariableOperation _variableOperation = VariableOperation.SetToString;
     private String _data = "";
     private ExpressionNode _expressionNode;
     
@@ -51,44 +50,54 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         return _variableName;
     }
     
-    public void setOtherMemory(String memoryName) {
+    public void setMemory(@Nonnull String memoryName) {
+        assertListenersAreNotRegistered(log, "setMemory");
         MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
         Memory memory = memoryManager.getMemory(memoryName);
         if (memory != null) {
-            _otherMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-            memoryManager.addVetoableChangeListener(this);
+            setMemory(memory);
         } else {
-            _otherMemoryHandle = null;
-            memoryManager.removeVetoableChangeListener(this);
+            removeMemory();
+            log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
-    public void setOtherMemory(NamedBeanHandle<Memory> handle) {
-        _otherMemoryHandle = handle;
-        if (_otherMemoryHandle != null) {
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
+        assertListenersAreNotRegistered(log, "setMemory");
+        _memoryHandle = handle;
+        if (_memoryHandle != null) {
             InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
-    public void setOtherMemory(@CheckForNull Memory memory) {
+    public void setMemory(@CheckForNull Memory memory) {
+        assertListenersAreNotRegistered(log, "setMemory");
         if (memory != null) {
-            _otherMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(memory.getDisplayName(), memory);
             InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
-            _otherMemoryHandle = null;
+            _memoryHandle = null;
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
-    public NamedBeanHandle<Memory> getOtherMemory() {
-        return _otherMemoryHandle;
+    public void removeMemory() {
+        assertListenersAreNotRegistered(log, "removeMemory");
+        if (_memoryHandle != null) {
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+            _memoryHandle = null;
+        }
     }
     
-    public void setVariableOperation(VariableOperation memoryOperation) throws ParserException {
-        _variableOperation = memoryOperation;
+    public NamedBeanHandle<Memory> getMemory() {
+        return _memoryHandle;
+    }
+    
+    public void setVariableOperation(VariableOperation variableOperation) throws ParserException {
+        _variableOperation = variableOperation;
         parseFormula();
     }
     
@@ -106,7 +115,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     }
     
     private void parseFormula() throws ParserException {
-        if (_variableOperation == VariableOperation.FORMULA) {
+        if (_variableOperation == VariableOperation.CalculateFormula) {
             Map<String, Variable> variables = new HashMap<>();
             
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
@@ -118,22 +127,20 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-/*        
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
+                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
                     PropertyChangeEvent e = new PropertyChangeEvent(this, "DoNotDelete", null, null);
                     throw new PropertyVetoException(Bundle.getMessage("Memory_MemoryInUseMemoryExpressionVeto", getDisplayName()), e); // NOI18N
                 }
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(getMemory().getBean())) {
+                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
                 }
             }
         }
-*/        
     }
     
     /** {@inheritDoc} */
@@ -161,15 +168,15 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         ThreadingUtil.runOnLayout(() -> {
             
             switch (_variableOperation) {
-                case SET_TO_NULL:
+                case SetToNull:
                     symbolTable.setValue(_variableName, null);
                     break;
                     
-                case SET_TO_STRING:
+                case SetToString:
                     symbolTable.setValue(_variableName, _data);
                     break;
                     
-                case COPY_VARIABLE_TO_VARIABLE:
+                case CopyVariableToVariable:
                     Object variableValue =
                             InstanceManager.getDefault(LogixNG_Manager.class)
                                     .getSymbolTable().getValue(_data);
@@ -177,15 +184,15 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                     symbolTable.setValue(_variableName, variableValue);
                     break;
                     
-                case COPY_MEMORY_TO_VARIABLE:
-                    if (_otherMemoryHandle != null) {
-                        symbolTable.setValue(_variableName, _otherMemoryHandle.getBean().getValue());
+                case CopyMemoryToVariable:
+                    if (_memoryHandle != null) {
+                        symbolTable.setValue(_variableName, _memoryHandle.getBean().getValue());
                     } else {
                         log.error("setLocalVariable should copy memory to variable but memory is null");
                     }
                     break;
                     
-                case FORMULA:
+                case CalculateFormula:
                     if (_data.isEmpty()) {
                         symbolTable.setValue(_variableName, null);
                     } else {
@@ -226,22 +233,22 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     @Override
     public String getLongDescription(Locale locale) {
         String copyToMemoryName;
-        if (_otherMemoryHandle != null) {
-            copyToMemoryName = _otherMemoryHandle.getBean().getDisplayName();
+        if (_memoryHandle != null) {
+            copyToMemoryName = _memoryHandle.getBean().getDisplayName();
         } else {
             copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
         switch (_variableOperation) {
-            case SET_TO_NULL:
+            case SetToNull:
                 return Bundle.getMessage(locale, "LocalVariable_Long_Null", _variableName);
-            case SET_TO_STRING:
+            case SetToString:
                 return Bundle.getMessage(locale, "LocalVariable_Long_Value", _variableName, _data);
-            case COPY_VARIABLE_TO_VARIABLE:
+            case CopyVariableToVariable:
                 return Bundle.getMessage(locale, "LocalVariable_Long_CopyVariableToVariable", _data, _variableName);
-            case COPY_MEMORY_TO_VARIABLE:
+            case CopyMemoryToVariable:
                 return Bundle.getMessage(locale, "LocalVariable_Long_CopyMemoryToVariable", copyToMemoryName, _variableName);
-            case FORMULA:
+            case CalculateFormula:
                 return Bundle.getMessage(locale, "LocalVariable_Long_Formula", _variableName, _data);
             default:
                 throw new IllegalArgumentException("_memoryOperation has invalid value: " + _variableOperation.name());
@@ -271,11 +278,11 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
     
     
     public enum VariableOperation {
-        SET_TO_NULL,
-        SET_TO_STRING,
-        COPY_VARIABLE_TO_VARIABLE,
-        COPY_MEMORY_TO_VARIABLE,
-        FORMULA;
+        SetToNull,
+        SetToString,
+        CopyVariableToVariable,
+        CopyMemoryToVariable,
+        CalculateFormula;
     }
     
     private final static Logger log = LoggerFactory.getLogger(ActionLocalVariable.class);

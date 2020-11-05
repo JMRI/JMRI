@@ -28,10 +28,10 @@
     <xs:complexType name="LogixNG_DigitalExpression_TriggerOnceType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionHoldAnything class.
+          Define the XML stucture for storing the contents of a TriggerOnce class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.And</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.TriggerOnceXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

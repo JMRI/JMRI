@@ -7,8 +7,6 @@ import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
 
 import org.jdom2.Element;
 
-import jmri.jmrit.logixng.Is_IsNot_Enum;
-
 /**
  * Handle XML configuration for ActionLightXml objects.
  *
@@ -42,15 +40,14 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
         }
         NamedBeanHandle otherMemory = p.getOtherMemory();
         if (otherMemory != null) {
-            element.addContent(new Element("other-memory").addContent(otherMemory.getName()));
+            element.addContent(new Element("otherMemory").addContent(otherMemory.getName()));
         }
-        String constantValue = p.getConstantValue();
-        if (constantValue != null) {
-            element.addContent(new Element("constant").addContent(constantValue));
-        }
-        element.addContent(new Element("memory-operation").addContent(p.getMemoryOperation().name()));
-        element.addContent(new Element("compare-to").addContent(p.getCompareTo().name()));
-        element.setAttribute("case-sensitive", p.getCaseInsensitive() ? "yes" : "no");
+        
+        element.addContent(new Element("compareTo").addContent(p.getCompareTo().name()));
+        element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
+        element.addContent(new Element("caseInsensitive").addContent(p.getCaseInsensitive() ? "yes" : "no"));
+        
+        element.addContent(new Element("constant").addContent(p.getConstantValue()));
 
         return element;
     }
@@ -70,9 +67,11 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             else h.removeMemory();
         }
 
-        Element otherMemoryName = shared.getChild("other-memory");
+        Element otherMemoryName = shared.getChild("otherMemory");
         if (otherMemoryName != null) {
-            h.setOtherMemory(InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim()));
+            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
+            if (m != null) h.setOtherMemory(m);
+            else h.removeOtherMemory();
         }
 
         Element constant = shared.getChild("constant");
@@ -80,17 +79,22 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             h.setConstantValue(constant.getText());
         }
 
-        Element memoryOperation = shared.getChild("memory-operation");
+        Element memoryOperation = shared.getChild("memoryOperation");
         if (memoryOperation != null) {
             h.setMemoryOperation(ExpressionMemory.MemoryOperation.valueOf(memoryOperation.getTextTrim()));
         }
 
-        Element compareTo = shared.getChild("compare-to");
+        Element compareTo = shared.getChild("compareTo");
         if (compareTo != null) {
             h.setCompareTo(ExpressionMemory.CompareTo.valueOf(compareTo.getTextTrim()));
         }
 
-        h.setCaseInsensitive("yes".equals(shared.getAttributeValue("case-sensitive", "no")));
+        Element caseInsensitive = shared.getChild("variableOperation");
+        if (caseInsensitive != null) {
+            h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
+        } else {
+            h.setCaseInsensitive(false);
+        }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;

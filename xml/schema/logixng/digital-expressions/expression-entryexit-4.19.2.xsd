@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionEntryExit class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionEntryExit</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionEntryExitXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

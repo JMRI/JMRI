@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ActionTimer class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionTimer</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionTimerXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         

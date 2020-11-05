@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionSignalHead class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSignalHead</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSignalHeadXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -40,31 +40,24 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="sensor" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="signalHead" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="is_isNot" minOccurs="0" maxOccurs="1">
+              <xs:element name="queryType" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="IS"/>
-                    <xs:enumeration value="IS_NOT"/>
+                    <xs:enumeration value="Appearance"/>
+                    <xs:enumeration value="NotAppearance"/>
+                    <xs:enumeration value="Lit"/>
+                    <xs:enumeration value="NotLit"/>
+                    <xs:enumeration value="Held"/>
+                    <xs:enumeration value="NotHeld"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="sensorState" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="INACTIVE"/>
-                    <xs:enumeration value="ACTIVE"/>
-                    <xs:enumeration value="OTHER"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
+              <xs:element name="apperance" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>

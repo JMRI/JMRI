@@ -27,22 +27,28 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
     public Element store(Object o) {
         ExpressionSignalHead p = (ExpressionSignalHead) o;
 
-//        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
-        
         Element element = new Element("expression-signalhead");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        NamedBeanHandle<SignalHead> signalHead = p.getSignalHead();
+        if (signalHead != null) {
+            element.addContent(new Element("signalHead").addContent(signalHead.getName()));
+        }
         
-//        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
-
+        element.addContent(new Element("queryType").addContent(p.getQueryType().name()));
+        
+        element.addContent(new Element("apperance").addContent(Integer.toString(p.getAppearance())));
+/*        
+        int apperance = p.getAppearance();
+        String apperanceKey = "";
+        if (p.getSignalHead() != null) {
+            apperanceKey = p.getSignalHead().getBean().getAppearanceKey(apperance);
+        }
+        element.addContent(new Element("apperanceKey").addContent(apperanceKey));
+*/
         return element;
     }
     
@@ -54,16 +60,39 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element signalHeadName = shared.getChild("signalHead");
+        if (signalHeadName != null) {
+            SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(signalHeadName.getTextTrim());
+            if (signalHead != null) h.setSignalHead(signalHead);
+            else h.removeSignalHead();
+        }
 
+        Element queryType = shared.getChild("queryType");
+        if (queryType != null) {
+            h.setQueryType(ExpressionSignalHead.QueryType.valueOf(queryType.getTextTrim()));
+        }
+        
+        Element apperanceElement = shared.getChild("apperance");
+        if (apperanceElement != null) {
+            try {
+                int apperance = Integer.parseInt(apperanceElement.getTextTrim());
+                h.setAppearance(apperance);
+            } catch (NumberFormatException e) {
+                log.error("cannot parse apperance: " + apperanceElement.getTextTrim(), e);
+            }
+        }
+/*
+        Element apperanceKeyElement = shared.getChild("apperanceKey");
+        if (apperanceKeyElement != null) {
+            String apperanceKey = apperanceKeyElement.getTextTrim();
+            if (!apperanceKey.isEmpty() && (signalHead != null)) {
+                h.setAppearance(signalHead.getApperance(apperanceKey));
+            }
+        }
+*/
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
 }

@@ -278,8 +278,8 @@ public class StoreAndLoad_temp_Test {
         ExpressionMemory expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:11026", null);
         expressionMemory.setMemory(memory1);
         expressionMemory.setConstantValue("Some constant value");
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
         expressionMemory.setCaseInsensitive(true);
         MaleSocket socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
         socketOr.getChild(index++).connect(socketMemory);
@@ -287,8 +287,8 @@ public class StoreAndLoad_temp_Test {
         expressionMemory = new ExpressionMemory(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:12026", null);
         expressionMemory.setMemory(memory2);
         expressionMemory.setOtherMemory(memory3);
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
         expressionMemory.setCaseInsensitive(false);
         socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
         socketOr.getChild(index++).connect(socketMemory);

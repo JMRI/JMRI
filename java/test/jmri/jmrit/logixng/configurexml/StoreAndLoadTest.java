@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
+import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.*;
@@ -68,6 +69,15 @@ public class StoreAndLoadTest {
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
         Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
         
+        InstanceManager.getDefault(SignalHeadManager.class)
+                .register(new VirtualSignalHead("IH1"));
+        
+        // The signal head IH1 created above is also used here in signal mast IF$shsm:AAR-1946:CPL(IH1)
+        InstanceManager.getDefault(SignalMastManager.class)
+                .provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        
+        InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
+                .register(new OBlock("OB99"));
         
         LogixNG_Manager logixNG_Manager = InstanceManager.getDefault(LogixNG_Manager.class);
         ConditionalNG_Manager conditionalNGManager = InstanceManager.getDefault(ConditionalNG_Manager.class);
@@ -176,7 +186,7 @@ public class StoreAndLoadTest {
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
         actionMemory.setOtherMemory(memory2);
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.COPY_MEMORY_TO_MEMORY);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CopyMemoryToMemory);
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -184,7 +194,7 @@ public class StoreAndLoadTest {
         actionMemory.setComment("A comment");
         actionMemory.setMemory(memory1);
         actionMemory.setData("n + 3");
-        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.FORMULA);
+        actionMemory.setMemoryOperation(ActionMemory.MemoryOperation.CalculateFormula);
         maleSocket = digitalActionManager.registerAction(actionMemory);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -467,44 +477,49 @@ public class StoreAndLoadTest {
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
         expressionLocalVariable.setConstantValue("10");
         expressionLocalVariable.setCaseInsensitive(true);
-        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.VALUE);
-        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GREATER_THAN);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.GreaterThan);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(index++).connect(maleSocket);
         
         expressionLocalVariable = new ExpressionLocalVariable(digitalExpressionManager.getAutoSystemName(), null);
         expressionLocalVariable.setComment("A comment");
-        expressionLocalVariable.setOtherMemory(memory2);
+        expressionLocalVariable.setVariable("MyVar");
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
+        expressionLocalVariable.setMemory(memory2);
         expressionLocalVariable.setCaseInsensitive(false);
-        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.MEMORY);
-        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LESS_THAN);
+        expressionLocalVariable.setCompareTo(ExpressionLocalVariable.CompareTo.Memory);
+        expressionLocalVariable.setVariableOperation(ExpressionLocalVariable.VariableOperation.LessThan);
         maleSocket = digitalExpressionManager.registerExpression(expressionLocalVariable);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionMemory expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         and.getChild(index++).connect(maleSocket);
         
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
         expressionMemory.setMemory(memory1);
         expressionMemory.setConstantValue("10");
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Value);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         and.getChild(index++).connect(maleSocket);
         
         expressionMemory = new ExpressionMemory(digitalExpressionManager.getAutoSystemName(), null);
         expressionMemory.setComment("A comment");
         expressionMemory.setMemory(memory2);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         expressionMemory.setOtherMemory(memory3);
-        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
-        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.Memory);
         maleSocket = digitalExpressionManager.registerExpression(expressionMemory);
         and.getChild(index++).connect(maleSocket);
         
@@ -517,7 +532,7 @@ public class StoreAndLoadTest {
         
         expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setComment("A comment");
-        expressionOBlock.setOBlock("OB1");
+        expressionOBlock.setOBlock("OB99");
         expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Occupied);
         expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
@@ -572,9 +587,24 @@ public class StoreAndLoadTest {
         
         expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalHead.setComment("A comment");
-        expressionSignalHead.setSignalHead("Something");
+        expressionSignalHead.setSignalHead("IH1");
         expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Lit);
         expressionSignalHead.setAppearance(SignalHead.FLASHLUNAR);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Appearance);
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalHead = new ExpressionSignalHead(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalHead.setComment("A comment");
+        expressionSignalHead.setSignalHead("IH1");
+        expressionSignalHead.setQueryType(ExpressionSignalHead.QueryType.Appearance);
+        expressionSignalHead.setAppearance(SignalHead.FLASHYELLOW);
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalHead);
         and.getChild(index++).connect(maleSocket);
         
@@ -585,8 +615,25 @@ public class StoreAndLoadTest {
         
         expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
         expressionSignalMast.setComment("A comment");
-        expressionSignalMast.setSignalMast("Something");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Lit);
+        expressionSignalMast.setAspect("Medium Approach Slow");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Aspect);
+        expressionSignalMast.setAspect("");
+        maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
+        and.getChild(index++).connect(maleSocket);
+        
+        expressionSignalMast = new ExpressionSignalMast(digitalExpressionManager.getAutoSystemName(), null);
+        expressionSignalMast.setComment("A comment");
+        expressionSignalMast.setSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        expressionSignalMast.setQueryType(ExpressionSignalMast.QueryType.Aspect);
+        expressionSignalMast.setAspect("Medium Approach Slow");
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         

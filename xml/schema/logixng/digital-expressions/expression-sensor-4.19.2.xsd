@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionSensor class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensor</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

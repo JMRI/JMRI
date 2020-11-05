@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionLocalVariable class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionLocalVariable</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionLocalVariableXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -40,31 +40,41 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="variable" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="is_isNot" minOccurs="0" maxOccurs="1">
+              <xs:element name="compareTo" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="IS"/>
-                    <xs:enumeration value="IS_NOT"/>
+                    <xs:enumeration value="Value"/>
+                    <xs:enumeration value="Memory"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
+              <xs:element name="variableOperation" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="OTHER"/>
+                    <xs:enumeration value="LessThan"/>
+                    <xs:enumeration value="LessThanOrEqual"/>
+                    <xs:enumeration value="Equal"/>
+                    <xs:enumeration value="GreaterThanOrEqual"/>
+                    <xs:enumeration value="GreaterThan"/>
+                    <xs:enumeration value="NotEqual"/>
+                    <xs:enumeration value="IsNull"/>
+                    <xs:enumeration value="IsNotNull"/>
+                    <xs:enumeration value="MatchRegex"/>
+                    <xs:enumeration value="NotMatchRegex"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
+              <xs:element name="caseInsensitive" type="yesNoType" />
+
+              <xs:element name="constant" type="xs:string" />
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>

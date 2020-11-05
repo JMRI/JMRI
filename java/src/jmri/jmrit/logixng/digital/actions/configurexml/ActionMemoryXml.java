@@ -1,14 +1,14 @@
 package jmri.jmrit.logixng.digital.actions.configurexml;
 
 import jmri.InstanceManager;
-import jmri.Light;
-import jmri.LightManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ActionMemory;
+import jmri.jmrit.logixng.util.parser.ParserException;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -37,12 +37,19 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
         
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        NamedBeanHandle<Memory> memory = p.getMemory();
+        if (memory != null) {
+            element.addContent(new Element("memory").addContent(memory.getName()));
+        }
         
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        NamedBeanHandle<Memory> otherMemoryName = p.getOtherMemory();
+        if (otherMemoryName != null) {
+            element.addContent(new Element("otherMemory").addContent(otherMemoryName.getName()));
+        }
+        
+        element.addContent(new Element("memoryOperation").addContent(p.getMemoryOperation().name()));
+        
+        element.addContent(new Element("data").addContent(p.getData()));
 
         return element;
     }
@@ -55,16 +62,41 @@ public class ActionMemoryXml extends jmri.managers.configurexml.AbstractNamedBea
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element memoryName = shared.getChild("memory");
+        if (memoryName != null) {
+            Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
+            if (t != null) h.setMemory(t);
+            else h.removeMemory();
+        }
+
+        Element otherMemoryName = shared.getChild("otherMemory");
+        if (otherMemoryName != null) {
+            Memory t = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
+            if (t != null) h.setOtherMemory(t);
+            else h.removeOtherMemory();
+        }
+
+        Element queryType = shared.getChild("memoryOperation");
+        if (queryType != null) {
+            try {
+                h.setMemoryOperation(ActionMemory.MemoryOperation.valueOf(queryType.getTextTrim()));
+            } catch (ParserException e) {
+                log.error("cannot set memory operation: " + queryType.getTextTrim(), e);
+            }
+        }
+
+        Element data = shared.getChild("data");
+        if (data != null) {
+            try {
+                h.setData(data.getTextTrim());
+            } catch (ParserException e) {
+                log.error("cannot set data: " + data.getTextTrim(), e);
+            }
+        }
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ActionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
 }

@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_LightType">
+    <xs:complexType name="LogixNG_DigitalAction_ActionLightType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionHoldAnything class.
+          Define the XML stucture for storing the contents of a ActionLight class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionIfThen</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         

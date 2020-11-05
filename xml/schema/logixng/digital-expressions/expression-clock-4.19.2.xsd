@@ -28,10 +28,10 @@
     <xs:complexType name="LogixNG_DigitalExpression_ExpressionClockType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ExpressionLight class.
+          Define the XML stucture for storing the contents of a ExpressionClock class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionClock</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionClockXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

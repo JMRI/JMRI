@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionTurnout class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnout</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

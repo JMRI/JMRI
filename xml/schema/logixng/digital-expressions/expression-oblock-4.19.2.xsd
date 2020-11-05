@@ -31,7 +31,7 @@
           Define the XML stucture for storing the contents of a ExpressionOBlock class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionOBlock</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionOBlockXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -40,7 +40,7 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="oblock" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="is_isNot" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
@@ -51,20 +51,21 @@
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
+              <xs:element name="oblockStatus" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="OTHER"/>
+                    <xs:enumeration value="Unoccupied"/>
+                    <xs:enumeration value="Occupied"/>
+                    <xs:enumeration value="Allocated"/>
+                    <xs:enumeration value="Running"/>
+                    <xs:enumeration value="OutOfService"/>
+                    <xs:enumeration value="Dark"/>
+                    <xs:enumeration value="TrackError"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
-
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>

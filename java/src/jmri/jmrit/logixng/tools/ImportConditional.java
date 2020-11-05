@@ -364,19 +364,19 @@ public class ImportConditional {
         
         switch (cv.getNum1()) {
             case ConditionalVariable.EQUAL:
-                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.Equal);
                 break;
             case ConditionalVariable.LESS_THAN:
-                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN);
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThan);
                 break;
             case ConditionalVariable.LESS_THAN_OR_EQUAL:
-                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL);
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.LessThanOrEqual);
                 break;
             case ConditionalVariable.GREATER_THAN:
-                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN);
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThan);
                 break;
             case ConditionalVariable.GREATER_THAN_OR_EQUAL:
-                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL);
+                expression.setMemoryOperation(ExpressionMemory.MemoryOperation.GreaterThanOrEqual);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -386,17 +386,17 @@ public class ImportConditional {
         Memory memory;
         switch (cv.getType()) {
             case MEMORY_EQUALS:
-                expression.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+                expression.setCompareTo(ExpressionMemory.CompareTo.Value);
                 expression.setCaseInsensitive(false);
                 expression.setConstantValue(cv.getDataString());
                 break;
             case MEMORY_EQUALS_INSENSITIVE:
-                expression.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+                expression.setCompareTo(ExpressionMemory.CompareTo.Value);
                 expression.setCaseInsensitive(true);
                 expression.setConstantValue(cv.getDataString());
                 break;
             case MEMORY_COMPARE:
-                expression.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+                expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(false);
                 expression.setOtherMemory(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());
@@ -406,7 +406,7 @@ public class ImportConditional {
                 }
                 break;
             case MEMORY_COMPARE_INSENSITIVE:
-                expression.setCompareTo(ExpressionMemory.CompareTo.MEMORY);
+                expression.setCompareTo(ExpressionMemory.CompareTo.Memory);
                 expression.setCaseInsensitive(true);
                 expression.setOtherMemory(cv.getDataString());
                 memory = InstanceManager.getDefault(MemoryManager.class).getMemory(cv.getDataString());

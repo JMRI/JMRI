@@ -83,6 +83,23 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         return _expressionEntries.get(index)._socketSystemName;
     }
     
+    public final void setFormula(String formula) throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+        for (int i=0; i < getChildCount(); i++) {
+            Variable v = new GenericExpressionVariable((FemaleGenericExpressionSocket)getChild(i));
+            variables.put(v.getName(), v);
+        }
+        _expressionNode = parser.parseExpression(formula);
+        // parseExpression() may throw an exception and we don't want to set
+        // the field _formula until we now parseExpression() has succeeded.
+        _formula = formula;
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
     private FemaleGenericExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         
@@ -170,23 +187,6 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         }
     }
 
-    public String getFormula() {
-        return _formula;
-    }
-    
-    public final void setFormula(String formula) throws ParserException {
-        Map<String, Variable> variables = new HashMap<>();
-        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-        for (int i=0; i < getChildCount(); i++) {
-            Variable v = new GenericExpressionVariable((FemaleGenericExpressionSocket)getChild(i));
-            variables.put(v.getName(), v);
-        }
-        _expressionNode = parser.parseExpression(formula);
-        // parseExpression() may throw an exception and we don't want to set
-        // the field _formula until we now parseExpression() has succeeded.
-        _formula = formula;
-    }
-    
     private void checkFreeSocket() {
         int numChilds = getChildCount();
         boolean hasFreeSocket = false;

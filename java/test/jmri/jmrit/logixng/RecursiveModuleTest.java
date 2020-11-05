@@ -115,8 +115,8 @@ public class RecursiveModuleTest {
         ExpressionLocalVariable expressionLocalVariable913 = new ExpressionLocalVariable("IQDE913", null);
         expressionLocalVariable913.setVariable("n");
         expressionLocalVariable913.setConstantValue("0");
-        expressionLocalVariable913.setCompareTo(ExpressionLocalVariable.CompareTo.VALUE);
-        expressionLocalVariable913.setVariableOperation(ExpressionLocalVariable.VariableOperation.EQUAL);
+        expressionLocalVariable913.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
+        expressionLocalVariable913.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
         MaleSocket maleSocket913 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLocalVariable913);
         ifThenElseSocket912.getChild(0).connect(maleSocket913);
@@ -124,7 +124,7 @@ public class RecursiveModuleTest {
         ActionLocalVariable actionLocalVariable914 = new ActionLocalVariable("IQDA914", null);
         actionLocalVariable914.setVariable("result");
         actionLocalVariable914.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
-        actionLocalVariable914.setVariableOperation(ActionLocalVariable.VariableOperation.FORMULA);
+        actionLocalVariable914.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket914 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable914);
         ifThenElseSocket912.getChild(1).connect(maleSocket914);
@@ -139,8 +139,8 @@ public class RecursiveModuleTest {
         ExpressionLocalVariable expressionLocalVariable916 = new ExpressionLocalVariable("IQDE916", null);
         expressionLocalVariable916.setVariable("n");
         expressionLocalVariable916.setConstantValue("1");
-        expressionLocalVariable916.setCompareTo(ExpressionLocalVariable.CompareTo.VALUE);
-        expressionLocalVariable916.setVariableOperation(ExpressionLocalVariable.VariableOperation.EQUAL);
+        expressionLocalVariable916.setCompareTo(ExpressionLocalVariable.CompareTo.Value);
+        expressionLocalVariable916.setVariableOperation(ExpressionLocalVariable.VariableOperation.Equal);
         MaleSocket maleSocket916 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLocalVariable916);
         ifThenElse915.getChild(0).connect(maleSocket916);
@@ -148,7 +148,7 @@ public class RecursiveModuleTest {
         ActionLocalVariable actionLocalVariable917 = new ActionLocalVariable("IQDA917", null);
         actionLocalVariable917.setVariable("result");
         actionLocalVariable917.setData("1");   // Since this is a formula, it's the number 1, not the string "1"
-        actionLocalVariable917.setVariableOperation(ActionLocalVariable.VariableOperation.FORMULA);
+        actionLocalVariable917.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket917 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable917);
         ifThenElse915.getChild(1).connect(maleSocket917);
@@ -181,7 +181,7 @@ public class RecursiveModuleTest {
         ActionLocalVariable actionLocalVariable933 = new ActionLocalVariable("IQDA933", null);
         actionLocalVariable933.setVariable("result");
         actionLocalVariable933.setData("temp1 + temp2");
-        actionLocalVariable933.setVariableOperation(ActionLocalVariable.VariableOperation.FORMULA);
+        actionLocalVariable933.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         MaleSocket maleSocket933 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLocalVariable933);
         manySocket921.getChild(2).connect(maleSocket933);
