@@ -144,14 +144,15 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     public void test_translateAndScaleCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
-            Point2D expected = new Point2D.Double(50.0, 50.0);
-            Assert.assertEquals("trackSegment.getCentreSeg()", expected, segmentView.getCentreSeg());
-            expected = new Point2D.Double(215.0, 226.5);
-            Assert.assertEquals("trackSegment.calcCentreSeg()", expected, segmentView.calcCentreSeg());
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(50.0, 50.0), segmentView.getCentreSeg());
+            Assert.assertEquals("trackSegment.calcCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.calcCentreSeg());
             segmentView.translateCoords((float) 111.1, (float) 222.2);
             Assert.assertEquals("segmentView.translateCoords()", new Point2D.Double(326.0999984741211, 448.6999969482422), segmentView.getCoordsCenter());
             segmentView.scaleCoords((float) 2.2, (float) 3.3);
             Assert.assertEquals("trackSegment.scaleCoords()", new Point2D.Double(717.4200121927261, 1480.709968533516), segmentView.getCoordsCenter());
+
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(717.4200121927261, 1480.709968533516), segmentView.getCentreSeg());
+            Assert.assertEquals("trackSegment.calcCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.calcCentreSeg());
         }
     }
 
@@ -159,11 +160,14 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     public void test_setCoordsCenter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
-
-            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.calcCentreSeg());
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(50.0, 50.0), segmentView.getCentreSeg());
+            Assert.assertEquals("trackSegment.calcCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.calcCentreSeg());
             Point2D newC = new Point2D.Double(311.1, 422.2);
             segmentView.setCoordsCenter(newC);
             Assert.assertEquals("segmentView.setCoordsCenter(p)", newC, segmentView.getCoordsCenter());
+
+            Assert.assertEquals("trackSegment.getCentreSeg()", new Point2D.Double(311.1, 422.2), segmentView.getCentreSeg());
+            Assert.assertEquals("trackSegment.calcCentreSeg()", new Point2D.Double(215.0, 226.5), segmentView.calcCentreSeg());
         }
     }
 
