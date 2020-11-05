@@ -172,7 +172,7 @@ changement d'&#233;tat du capteur.</li>
 
 	<li><b>Permissive</b> -L'option permissive est utilis&#233;e pour identifier
 	les Cantons dans lesquels un train peut entrer m&#234;me s'il est d&#233;j&#224; occup&#233;. 
-	Cette option est utilis&#233;e avec cetains outils d'automatisme et de logiques 
+	Cette option est utilis&#233;e avec certains outils d'automatisme et de logiques 
 	pour aider &#224; d&#233;terminer si un Train peut entrer dans un Canton occup&#233; 
 	et quel Aspect doit &#234;tre affich&#233; sur son M&#226;t de Signalisation.</li>
 </ul>
