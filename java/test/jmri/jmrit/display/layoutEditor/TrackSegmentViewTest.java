@@ -144,9 +144,10 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     public void test_translateAndScaleCoords() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (segmentView != null)) {
-
-            Point2D expected = new Point2D.Double(215.0, 226.5);
-            Assert.assertEquals("trackSegment.getCentreSeg()", expected, segmentView.calcCentreSeg());
+            Point2D expected = new Point2D.Double(50.0, 50.0);
+            Assert.assertEquals("trackSegment.getCentreSeg()", expected, segmentView.getCentreSeg());
+            expected = new Point2D.Double(215.0, 226.5);
+            Assert.assertEquals("trackSegment.calcCentreSeg()", expected, segmentView.calcCentreSeg());
             segmentView.translateCoords((float) 111.1, (float) 222.2);
             Assert.assertEquals("segmentView.translateCoords()", new Point2D.Double(326.0999984741211, 448.6999969482422), segmentView.getCoordsCenter());
             segmentView.scaleCoords((float) 2.2, (float) 3.3);
