@@ -513,7 +513,7 @@ public class TrackSegmentView extends LayoutTrackView {
                     }
                 }
             }
-            p = calcCentreSeg();
+            p = getCentreSeg();
             if (r.contains(p)) {
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance <= minDistance) {
@@ -537,7 +537,7 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     public Point2D getCoordsForConnectionType(HitPointType connectionType) {
-        Point2D result = calcCentreSeg();
+        Point2D result = getCentreSeg();
         if (connectionType == HitPointType.TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
         } else if (HitPointType.isBezierHitType(connectionType)) {
@@ -551,8 +551,6 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     public Rectangle2D getBounds() {
-        Rectangle2D result;
-
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
             ep1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -561,11 +559,14 @@ public class TrackSegmentView extends LayoutTrackView {
             ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
 
-        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
+        Rectangle2D result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
         result.add(ep2);
 
-        if (isCircle()) {
-            result.add(getCoordsCenterCircle());
+        if (isArc()) {
+            result.add(getCentreSeg());
+            if (isCircle()) {
+                result.add(getCoordsCenterCircle());
+            }
         } else if (isBezier()) {
             for (int index = 0; index < bezierControlPoints.size(); index++) {
                 result.add(bezierControlPoints.get(index));
@@ -1505,7 +1506,7 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     public void splitTrackSegment() {
         // create a new anchor
-        Point2D p = calcCentreSeg();
+        Point2D p = getCentreSeg();
         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
         // link it to me
         layoutEditor.setLink(newAnchor, HitPointType.POS_POINT, trackSegment, HitPointType.TRACK);
@@ -1896,13 +1897,6 @@ public class TrackSegmentView extends LayoutTrackView {
      * @return the location of the middle of the segment (on the segment)
      */
     public Point2D getCentreSeg() {
-        return super.getCoordsCenter();
-    }
-
-    /**
-     * @return the location of the middle of the segment (on the segment)
-     */
-    public Point2D calcCentreSeg() {
         Point2D result = MathUtil.zeroPoint2D;
 
         if ((getConnect1() != null) && (getConnect2() != null)) {
@@ -1911,9 +1905,9 @@ public class TrackSegmentView extends LayoutTrackView {
             Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
             if (isCircle()) {
-                result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
+                result = getCoordsCenter();
             } else if (isArc()) {
-                super.setCoordsCenter(MathUtil.midPoint(getBounds()));
+                super.setCoordsCenter(MathUtil.midPoint(ep1, ep2));
                 if (isFlip()) {
                     Point2D t = ep1;
                     ep1 = ep2;
@@ -2262,7 +2256,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(trackEditControlCircleAt(calcCentreSeg()));
+        g2.draw(trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
     @Override
