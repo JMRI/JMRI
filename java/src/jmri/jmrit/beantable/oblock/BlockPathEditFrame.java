@@ -14,9 +14,10 @@ import javax.annotation.CheckForNull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Vector;
 
 /**
- * Defines a GUI for editing OBlocks - Path objects in the tabbed Table interface.
+ * Defines a GUI for editing OBlock - OPath objects in the tabbed Table interface.
  * Based on {@link jmri.jmrit.audio.swing.AudioSourceFrame} and
  * {@link jmri.jmrit.beantable.routetable.AbstractRouteAddEditFrame}
  *
@@ -35,22 +36,21 @@ public class BlockPathEditFrame extends JmriJFrame {
     OBlock _block;
     OPath _path;
     PortalManager pm;
-//    List<BeanSetting> settings;
 
     // UI components for Add/Edit Path
     JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
-    JTextField blockName = new JTextField(15);
-    JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Path")));
+    JLabel blockName = new JLabel();
+    JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")));
     JTextField userName = new JTextField(15);
+    JLabel userNameLabel = new JLabel();
     JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
     JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
-    private final JComboBox<Portal> fromPortalComboBox = new JComboBox<>();
-    private final JComboBox<Portal> toPortalComboBox = new JComboBox<>();
+    private JComboBox<Portal> fromPortalComboBox = new JComboBox<>();
+    private JComboBox<Portal> toPortalComboBox = new JComboBox<>();
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
 
-    private final static String PREFIX = "OB";
     private final BlockPathEditFrame frame = this;
-    private boolean _newPath;
+    private boolean _newPath = false;
 
     protected final OBlockManager oblockManager = InstanceManager.getDefault(OBlockManager.class);
     protected PortalManager portalManager;
@@ -89,10 +89,16 @@ public class BlockPathEditFrame extends JmriJFrame {
     public BlockPathEditFrame(String title, OBlock block, OPath path) {
         super(title, true, true);
         _block = block;
+        if (path == null) {
+            _newPath = true;
+        }
         _path = path;
         pm = InstanceManager.getDefault(PortalManager.class);
         PathTurnoutTableModel _tmodel = new PathTurnoutTableModel(path, this);
+        log.debug("TurnoutModel.size = {}", _tmodel.getRowCount());
         layoutFrame();
+        fromPortalComboBox = new JComboBox<Portal>((Vector<Portal>) _block.getPortals());
+        toPortalComboBox = new JComboBox<Portal>((Vector<Portal>) _block.getPortals());
         if (path != null) {
             populateFrame(path);
         }
@@ -103,50 +109,54 @@ public class BlockPathEditFrame extends JmriJFrame {
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 
-        JPanel p;
+        JPanel p = new JPanel();
 
-        p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(blockLabel);
-        p.add(blockName);
-        blockName.setEditable(false);
-        p.add(pathLabel);
-        p.add(userName);
-        p.add(fromPortalLabel);
-        p.add(fromPortalComboBox);
-        p.add(toPortalLabel);
-        p.add(toPortalComboBox);
-        main.add(p);
+        JPanel p1 = new JPanel();
+        p1.setLayout(new FlowLayout());
+        p1.add(blockName);
+        if (_newPath) {
+            p1.add(pathLabel);
+        } else {
+            p1.add(_userName);
+        }
+        p1.add(fromPortalLabel);
+        p1.add(fromPortalComboBox);
+        p1.add(toPortalLabel);
+        p1.add(toPortalComboBox);
+        p.add(p);
 
-        // add Turnout table + Add button
+        p.add(Box.createVerticalGlue());
 
-        p = new JPanel();
-        p.add(statusBar);
+        // TODO add Turnout table + Add button EBR
+
+        JPanel p2 = new JPanel();
+        p2.add(statusBar);
 
         JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
         JButton apply;
-        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener(this::createPressed);
         JButton ok;
-        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             createPressed(e);
             frame.dispose();
         });
-        frame.getContentPane().add(p);
+        p.add(p2, BorderLayout.SOUTH);
 
-        frame.add(scroll);
+        frame.getContentPane().add(p);
+        //frame.add(scroll);
     }
 
     /**
      * Populate the Edit OBlock frame with default values.
      */
     public void resetFrame() {
-        userName.setText(null);
+        _userName.setText(null);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -160,22 +170,23 @@ public class BlockPathEditFrame extends JmriJFrame {
         if (p == null) {
             throw new IllegalArgumentException("Null OPath object");
         }
-        userName.setText(p.getName());
+        _userName.setText(p.getName());
+        userNameLabel.setText(p.getName());
         fromPortalComboBox.setSelectedItem(p.getFromPortal());
         toPortalComboBox.setSelectedItem(p.getToPortal());
         _newPath = false;
     }
 
     private void createPressed(ActionEvent e) {
-        String user = userName.getText().trim();
+        String user = _userName.getText().trim();
         if (user.equals("")) {
             // warn/help bar red
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
-            userName.setBackground(Color.red);
+            _userName.setBackground(Color.red);
             return;
         } else {
-            userName.setBackground(Color.white);
+            _userName.setBackground(Color.white);
         }
 
         OPath path = new OPath(_block, user);
@@ -194,7 +205,9 @@ public class BlockPathEditFrame extends JmriJFrame {
             }
         }
         // Notify changes
-        _tmodel.fireTableDataChanged();
+        if (_tmodel != null) {
+            _tmodel.fireTableDataChanged();
+        }
     }
 
     protected JPanel getButtonPanel() {

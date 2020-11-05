@@ -10,7 +10,6 @@ import javax.swing.table.AbstractTableModel;
 import jmri.*;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.OPath;
-import jmri.jmrit.logix.Portal;
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

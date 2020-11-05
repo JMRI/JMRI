@@ -347,7 +347,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
 
                         @Override
                         public void run() {
-                            editButton(b); // don't really want to stop Route w/o user action
+                            editButton(b); // don't really want to stop Block w/o user action
                         }
                     }
                     WindowMaker t = new WindowMaker(b);

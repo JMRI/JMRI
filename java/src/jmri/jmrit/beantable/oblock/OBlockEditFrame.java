@@ -109,77 +109,76 @@ public class OBlockEditFrame extends JmriJFrame {
         p1 = new JPanel();
         p1.add(comment);
         p.add(p1);
-        frame.getContentPane().add(p);
 
-        p = new JPanel();
-        //p.setLayout(new FlowLayout());
-        p1 = new JPanel();
-        p1.add(lengthLabel);
+        JPanel p2 = new JPanel();
+        p2.add(lengthLabel);
         lengthLabel.setLabelFor(length);
-        p1.add(length);
-        p1.add(unit);
-        p.add(p1);
+        p2.add(length);
+        p2.add(unit);
+        p.add(p2);
 
-        p1 = new JPanel();
-        p1.add(curveLabel);
+        p2 = new JPanel();
+        p2.add(curveLabel);
         curveLabel.setLabelFor(curveBox);
-        p1.add(curveBox);
-        p.add(p1);
+        p2.add(curveBox);
 
-        p1 = new JPanel();
-        p.add(currentLabel);
+        p2.add(currentLabel);
         currentLabel.setLabelFor(current);
-        p.add(current);
-        p.add(p1);
+        p2.add(current);
+        p.add(p2);
 
-        p1 = new JPanel();
-        p1.add(sensorLabel);
+        JPanel p3 = new JPanel();
+        p3.add(sensorLabel);
         sensorLabel.setLabelFor(sensorBox);
-        p1.add(sensorBox);
-        p.add(p1);
+        p3.add(sensorBox);
+        sensorBox.setAllowNull(true);
 
-        p1 = new JPanel();
-        p1.add(errorSensorLabel);
+        p3.add(errorSensorLabel);
         errorSensorLabel.setLabelFor(errorSensorBox);
-        p1.add(errorSensorBox);
-        p.add(p1);
+        p3.add(errorSensorBox);
+        errorSensorBox.setAllowNull(true);
+        p.add(p3);
 
-        p1 = new JPanel();
-        p1.setLayout(new BorderLayout(10, 10));
-        p1.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        p1.add(_pathTablePane, BorderLayout.CENTER);
-        p.add(p1);
+        JPanel ptbl = new JPanel();
+        ptbl.setLayout(new BorderLayout(10, 10));
+        ptbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        ptbl.add(_pathTablePane, BorderLayout.CENTER);
 
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BorderLayout(10, 10));
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
-        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
-        p1.add(buttonPane, BorderLayout.SOUTH);
+        JPanel tblButtons = new JPanel();
+        tblButtons.setLayout(new BorderLayout(10, 10));
+        tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+        tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
+
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
             _core.addPathPane(obm.getOBlock(_oblock));
         };
         addButton.addActionListener(addPathAction);
         addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
-        buttonPane.add(addButton);
+        tblButtons.add(addButton);
         // TODO add more, like a button Add... to frame?
-        frame.getContentPane().add(p);
+        ptbl.add(tblButtons, BorderLayout.SOUTH);
+        p.add(ptbl);
 
-        p = new JPanel();
+        p.add(Box.createVerticalGlue());
+
+        JPanel buttons = new JPanel();
         JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        buttons.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
         JButton apply;
-        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+        buttons.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener(this::applyPressed);
         JButton ok;
-        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        buttons.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
+        p.add(buttons);
+
         frame.getContentPane().add(p);
 
         //frame.add(scroll);

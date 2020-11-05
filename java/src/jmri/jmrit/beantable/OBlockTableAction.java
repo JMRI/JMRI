@@ -552,7 +552,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
     void addPortalPressed(ActionEvent e) {
         if (portalFrame == null) {
-            portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portals);
+            portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), null, portals);
         }
         //portalFrame.updatePortalList();
         portalFrame.resetFrame();

@@ -635,7 +635,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case EDIT_COL:
                 if (_tabbed) {
-                    log.debug("Edit clicked, opening Block Edit Pane");
                     _parent.openBlockPathPane(block.getSystemName());
                 } else {
                     _parent.openBlockPathFrame(block.getSystemName());

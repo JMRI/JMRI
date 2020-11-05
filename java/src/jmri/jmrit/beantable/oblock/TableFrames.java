@@ -630,7 +630,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //                    // plus Add New entry pane
 //                }
 //            }
-//        } else { // for _desktop, created from/stored in Portal
+//        } else { // stand alone frame only used for _desktop, created from/stored in Portal
             openPathTurnoutFrame(pathTurnoutName);
 //        }
     }
@@ -791,17 +791,36 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     protected boolean openOBlockEditor(String sysName) {
         int result = 0;
         if (sysName != null) {
-            // new OBlock is initially created from [Add OBlock...] button in table
+            // this is for Edit, new OBlocks created from [Add OBlock...] button in table
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
-            //JTable table = new JTable(getBlockPathTableModel(block));
-            //BlockPathJPanel panel = new BlockPathJPanel(sysName);
-            BlockPathJPanel panel = makeBlockPathEditPanel(block);
-            //panel.add(table);
-            OBlockEditFrame obef = new OBlockEditFrame(Bundle.getMessage("TitleBlockEditor", sysName), sysName,
-                    _oBlockModel, panel, this);
-            obef.setVisible(true);
-            log.debug("path table created for block {}", block);
-            result = 1;
+            if (block != null){
+                BlockPathJPanel panel = makeBlockPathEditPanel(block);
+                // Option 1: our own panel EBR
+    //            OBlockEditFrame obef = new OBlockEditFrame(Bundle.getMessage("TitleBlockEditor", sysName), sysName,
+    //                    _oBlockModel, panel, this);
+    //            obef.setVisible(true);
+                // Option 2: use BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
+                class WindowMaker implements Runnable {
+                    final OBlock ob;
+                    final BlockPathJPanel panel;
+                    WindowMaker(OBlock ob, BlockPathJPanel panel) {
+                        this.ob = ob;
+                        this.panel = panel;
+                    }
+                    @Override
+                    public void run() {
+                        jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
+                        beanEdit.setBean(ob);
+                        beanEdit.setTablePanel(panel);
+                        beanEdit.actionPerformed(null);
+                    }
+                }
+                WindowMaker t = new WindowMaker(block, panel);
+                javax.swing.SwingUtilities.invokeLater(t);
+                //editButton(b);
+                log.debug("path table created for block {}", block);
+                result = 1;
+            }
         }
         return (result == 1);
     }
@@ -1040,6 +1059,22 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         panel.add(bpTable);
 
+        // Add Path Button
+        JPanel tblButtons = new JPanel();
+        tblButtons.setLayout(new BorderLayout(10, 10));
+        tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+        tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
+
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
+        ActionListener addPathAction = e -> {
+            addPathPane(block);
+        };
+        addButton.addActionListener(addPathAction);
+        addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
+        tblButtons.add(addButton);
+        // add [Add Path...] button to frame
+        panel.add(tblButtons);
+
         //panel.pack();
         return panel;
     }
@@ -1065,7 +1100,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     // ***************** Block-Path JPanel class for _tabbed **************************
-    protected static class BlockPathJPanel extends JPanel {
+    public static class BlockPathJPanel extends JPanel {
 
         BlockPathTableModel blockPathModel;
 

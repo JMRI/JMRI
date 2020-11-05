@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-import jmri.AudioException;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
@@ -18,8 +17,6 @@ import java.awt.event.ActionEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static jmri.jmrit.display.layoutEditor.LayoutEditor.setupComboBox;
-
 /**
  * Defines a GUI for editing OBlocks - Portal objects in the tabbed Table interface.
  * Based on AudioSourceFrame.
@@ -30,10 +27,7 @@ import static jmri.jmrit.display.layoutEditor.LayoutEditor.setupComboBox;
 public class PortalEditFrame extends JmriJFrame {
 
     JPanel main = new JPanel();
-    private final JScrollPane scroll
-            = new JScrollPane(main,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    private final JScrollPane scroll = new JScrollPane(main, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     PortalTableModel model;
     PortalManager pm;
@@ -43,6 +37,7 @@ public class PortalEditFrame extends JmriJFrame {
     // UI components for Add/Edit Portal
     JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")));
     JTextField userName = new JTextField(15);
+    JLabel portalName = new JLabel();
     JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
     JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
     private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
@@ -51,14 +46,23 @@ public class PortalEditFrame extends JmriJFrame {
 
     private final static String PREFIX = "OB";
     private final PortalEditFrame frame = this;
-    private boolean _newPortal;
+    private Portal _portal;
+    private boolean _newPortal = false;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public PortalEditFrame(String title, PortalTableModel model) {
+    public PortalEditFrame(@Nonnull String title, Portal portal, PortalTableModel model) {
         super(title);
         this.model = model;
+        if (portal == null) {
+            _newPortal = true;
+        } else {
+            _portal = portal;
+        }
         pm = InstanceManager.getDefault(PortalManager.class);
         layoutFrame();
+        if (portal != null) {
+            populateFrame(portal);
+        }
     }
 
     public void layoutFrame() {
@@ -70,33 +74,40 @@ public class PortalEditFrame extends JmriJFrame {
 
         p = new JPanel();
         p.setLayout(new FlowLayout());
-        p.add(portalLabel);
-        p.add(userName);
-        p.add(fromBlockLabel);
-        p.add(fromBlockComboBox);
-        p.add(toBlockLabel);
-        p.add(toBlockComboBox);
-        main.add(p);
 
-        p = new JPanel();
-        p.add(statusBar);
+        JPanel p1 = new JPanel();
+        p1.add(portalLabel);
+        p1.add(userName);
+        p1.add(fromBlockLabel);
+        p1.add(fromBlockComboBox);
+        fromBlockComboBox.setAllowNull(true);
+        p1.add(toBlockLabel);
+        p1.add(toBlockComboBox);
+        toBlockComboBox.setAllowNull(true);
+        p.add(p1);
+
+        // put buttons at the bottom
+        JPanel p2 = new JPanel();
+        p2.add(statusBar);
         JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
         JButton apply;
-        p.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener(this::applyPressed);
         JButton ok;
-        p.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             applyPressed(e);
             frame.dispose();
         });
-        frame.getContentPane().add(p);
+        p.add(p2, BorderLayout.SOUTH);
+        main.add(p);
 
-        frame.add(scroll);
+        frame.getContentPane().add(main);
+        //frame.add(scroll);
     }
 
     /**
@@ -118,8 +129,12 @@ public class PortalEditFrame extends JmriJFrame {
             throw new IllegalArgumentException("Null OBlock object");
         }
         userName.setText(p.getName());
-        fromBlockComboBox.setSelectedItemByName(p.getFromBlockName());
-        toBlockComboBox.setSelectedItemByName(p.getToBlockName());
+        if (p.getFromBlockName() != null) {
+            fromBlockComboBox.setSelectedItemByName(p.getFromBlockName());
+        }
+        if (p.getToBlockName() != null) {
+            toBlockComboBox.setSelectedItemByName(p.getToBlockName());
+        }
         _newPortal = false;
     }
 
@@ -134,22 +149,28 @@ public class PortalEditFrame extends JmriJFrame {
         } else {
             userName.setBackground(Color.white);
         }
-        Portal portal = pm.providePortal(user);
-        if (portal != null) {
-            //      try {
-            OBlock block = fromBlockComboBox.getItemAt(fromBlockComboBox.getSelectedIndex());
-            if (block != null) {
-                portal.setFromBlock(block, true);
-            }
-            block = toBlockComboBox.getItemAt(toBlockComboBox.getSelectedIndex());
-            if (block != null) {
-                portal.setToBlock(block, true);
-            //  } catch (IllegalArgumentException ex) {
-            //     JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            }
+        if (_newPortal) {
+            _portal = pm.providePortal(user);
+        } else {
+            _portal.setName(user);
         }
-        // Notify changes
-        model.fireTableDataChanged();
+        if (_portal != null) {
+            try {
+                OBlock block = fromBlockComboBox.getItemAt(fromBlockComboBox.getSelectedIndex());
+                if (block != null) {
+                    _portal.setFromBlock(block, true);
+                }
+                block = toBlockComboBox.getItemAt(toBlockComboBox.getSelectedIndex());
+                if (block != null) {
+                    _portal.setToBlock(block, true);
+                }
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+
+            }
+            // Notify changes
+            model.fireTableDataChanged();
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);

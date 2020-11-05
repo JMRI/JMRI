@@ -268,9 +268,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
     private boolean editPortal(Portal portal) {
         if (_tabbed) {
-            JOptionPane.showMessageDialog(null, "TODO open PortalEditFrame",
-                    Bundle.getMessage("MessageTitle"), JOptionPane.WARNING_MESSAGE);
-            // TODO EBR open PortalEditFrame
+            // open PortalEditFrame
+            PortalEditFrame portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portal, this);
+            portalFrame.setVisible(true);
+            return true;
         }
         return false;
     }

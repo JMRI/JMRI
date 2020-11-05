@@ -49,7 +49,7 @@ public class OBlockTablePanel extends JPanel {
     private JScrollPane signalDataScroll;
     private JScrollPane blockportalDataScroll;
 
-    private JTabbedPane oblockTabs;
+    private final JTabbedPane oblockTabs;
     TableFrames _tf;
     Box bottomBox;                  // panel at bottom for extra buttons etc
     int bottomBoxIndex;             // index to insert extra stuff
