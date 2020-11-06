@@ -48,11 +48,7 @@ import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.actions.*;
 import jmri.jmrit.logixng.analog.expressions.*;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.string.actions.*;
-import jmri.jmrit.logixng.string.expressions.*;
 import jmri.util.*;
 
 import org.junit.*;
@@ -68,21 +64,7 @@ public class StoreAndLoadTest {
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
         Assert.assertFalse(GraphicsEnvironment.isHeadless());
-/*        
-        // FOR TESTING ONLY. REMOVE LATER.
-        if (1==0) {
-            if (!GraphicsEnvironment.isHeadless()) {
-
-                for (jmri.Logix l : InstanceManager.getDefault(jmri.LogixManager.class).getNamedBeanSet()) {
-                    String sysName = l.getSystemName();
-                    if (!sysName.equals("SYS") && !sysName.startsWith("RTX")) {
-                        jmri.jmrit.logixng.tools.ImportLogix il = new jmri.jmrit.logixng.tools.ImportLogix(l);
-                        il.doImport();
-                    }
-                }
-            }
-        }
-*/        
+        
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
         Light light2 = InstanceManager.getDefault(LightManager.class).provide("IL2");
