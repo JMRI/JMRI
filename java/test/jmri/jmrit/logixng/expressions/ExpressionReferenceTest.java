@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.ExpressionReference;
-import jmri.jmrit.logixng.expressions.True;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -12,7 +9,6 @@ import jmri.LightManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
-import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;

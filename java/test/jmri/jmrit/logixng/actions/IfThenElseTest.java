@@ -1,14 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.actions.ActionMemory;
-import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.True;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;

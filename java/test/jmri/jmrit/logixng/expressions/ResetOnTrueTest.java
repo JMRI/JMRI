@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.ResetOnTrue;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;

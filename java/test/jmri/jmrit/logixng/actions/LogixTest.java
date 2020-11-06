@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.actions;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.True;
-import jmri.jmrit.logixng.actions.Logix;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;

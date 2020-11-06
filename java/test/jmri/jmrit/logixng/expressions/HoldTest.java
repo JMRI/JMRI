@@ -1,11 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.Hold;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -20,7 +14,6 @@ import org.junit.Test;
 
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 
 /**
  * Test Hold

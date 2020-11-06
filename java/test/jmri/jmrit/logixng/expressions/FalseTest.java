@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.False;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;

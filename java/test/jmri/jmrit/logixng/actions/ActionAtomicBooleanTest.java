@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;

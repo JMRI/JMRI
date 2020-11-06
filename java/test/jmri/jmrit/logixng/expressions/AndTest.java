@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.And;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,7 +24,6 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.Many;
 
 /**
  * Test And

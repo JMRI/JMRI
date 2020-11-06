@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import jmri.jmrit.logixng.actions.swing.IfThenElseSwing;
-
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;

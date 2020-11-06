@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.Bundle;
-
 import java.util.Locale;
 
 import org.junit.Assert;

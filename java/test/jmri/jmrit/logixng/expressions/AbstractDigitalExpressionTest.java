@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

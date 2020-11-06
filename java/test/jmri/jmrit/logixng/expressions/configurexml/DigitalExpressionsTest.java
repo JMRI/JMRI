@@ -1,17 +1,5 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
-import jmri.jmrit.logixng.expressions.configurexml.FalseXml;
-import jmri.jmrit.logixng.expressions.configurexml.ExpressionTimerXml;
-import jmri.jmrit.logixng.expressions.configurexml.TrueXml;
-import jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml;
-import jmri.jmrit.logixng.expressions.configurexml.OrXml;
-import jmri.jmrit.logixng.expressions.configurexml.AntecedentXml;
-import jmri.jmrit.logixng.expressions.configurexml.AndXml;
-import jmri.jmrit.logixng.expressions.configurexml.ResetOnTrueXml;
-import jmri.jmrit.logixng.expressions.configurexml.ExpressionLightXml;
-import jmri.jmrit.logixng.expressions.configurexml.HoldXml;
-import jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml;
-import jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;

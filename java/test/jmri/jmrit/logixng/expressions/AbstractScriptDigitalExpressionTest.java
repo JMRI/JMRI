@@ -1,14 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.AbstractScriptDigitalExpression;
-import jmri.jmrit.logixng.expressions.ExpressionScript;
-
 import java.beans.PropertyVetoException;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -16,14 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
 /**
  * Base class for classes that tests DigitalAction

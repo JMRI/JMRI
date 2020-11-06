@@ -1,14 +1,5 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml;
-import jmri.jmrit.logixng.actions.configurexml.ActionLightXml;
-import jmri.jmrit.logixng.actions.configurexml.ManyXml;
-import jmri.jmrit.logixng.actions.configurexml.IfThenElseXml;
-import jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml;
-import jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml;
-import jmri.jmrit.logixng.actions.configurexml.DoStringActionXml;
-import jmri.jmrit.logixng.actions.configurexml.ActionSensorXml;
-import jmri.jmrit.logixng.actions.configurexml.ShutdownComputerXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;

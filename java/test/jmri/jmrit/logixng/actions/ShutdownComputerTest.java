@@ -1,15 +1,10 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.ShutdownComputer;
-
-import java.lang.reflect.Field;
-
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.managers.DefaultShutDownManager;
 import jmri.util.*;
 
-import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

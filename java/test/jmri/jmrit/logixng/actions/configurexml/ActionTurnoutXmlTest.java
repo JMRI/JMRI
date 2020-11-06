@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

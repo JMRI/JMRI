@@ -5,7 +5,6 @@ import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Memory;

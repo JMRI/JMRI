@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions.swing;
 
-import jmri.jmrit.logixng.expressions.swing.ExpressionLightSwing;
-
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;

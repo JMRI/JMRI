@@ -1,13 +1,9 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.True;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;

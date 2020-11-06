@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.Formula;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;

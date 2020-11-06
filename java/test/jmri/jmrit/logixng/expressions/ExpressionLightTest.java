@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.ExpressionLight;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;

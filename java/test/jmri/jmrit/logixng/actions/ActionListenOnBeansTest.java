@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;

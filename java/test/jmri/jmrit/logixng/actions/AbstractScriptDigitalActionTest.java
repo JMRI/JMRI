@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.AbstractScriptDigitalAction;
-
 import java.beans.PropertyVetoException;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -10,7 +8,6 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
-import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

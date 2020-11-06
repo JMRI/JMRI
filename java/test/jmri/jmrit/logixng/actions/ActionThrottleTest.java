@@ -1,14 +1,9 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.ActionThrottle;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Memory;
 import jmri.MemoryManager;

@@ -1,11 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.TriggerOnce;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;

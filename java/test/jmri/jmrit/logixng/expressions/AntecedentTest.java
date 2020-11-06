@@ -1,9 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.Antecedent;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.False;
-import jmri.jmrit.logixng.expressions.True;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -11,9 +7,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;

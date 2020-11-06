@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.ActionTurnout;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 
