@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.Many;
+import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -114,7 +114,7 @@ public class DefaultLogixNGManagerTest {
             FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
             MaleDigitalActionSocket actionManySocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+                            .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionManySocket);
 //            femaleSocket.setLock(Base.Lock.HARD_LOCK);
 

@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -90,8 +90,8 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.boolean_actions.Many.class);
-        classes.add(jmri.jmrit.logixng.digital.boolean_actions.OnChange.class);
+        classes.add(jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanMany.class);
+        classes.add(jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
@@ -119,7 +119,7 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _action = new MyOnChangeAction("IQDB321");
-        OnChange otherAction = new MyOnChangeAction("IQDB322");
+        DigitalBooleanOnChange otherAction = new MyOnChangeAction("IQDB322");
         manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         maleSocket = ((DigitalBooleanActionManager)manager).registerAction(_action);
         otherMaleSocket = ((DigitalBooleanActionManager)manager).registerAction(otherAction);
@@ -143,12 +143,12 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
     
     
     
-    private class MyOnChangeAction extends OnChange {
+    private class MyOnChangeAction extends DigitalBooleanOnChange {
         
         private boolean _hasBeenSetup = false;
         
         public MyOnChangeAction(String systemName) {
-            super(systemName, null, OnChange.Trigger.CHANGE);
+            super(systemName, null, DigitalBooleanOnChange.Trigger.CHANGE);
         }
         
         /** {@inheritDoc} */

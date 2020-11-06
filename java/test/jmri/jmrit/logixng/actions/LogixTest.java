@@ -6,7 +6,7 @@ import jmri.jmrit.logixng.expressions.True;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;
@@ -194,7 +194,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         DigitalBooleanActionManager m1 = InstanceManager.getDefault(DigitalBooleanActionManager.class);
         
         MaleSocket childSocket0 = m0.registerExpression(new ExpressionMemory("IQDE52", null));
-        MaleSocket childSocket1 = m1.registerAction(new OnChange("IQDB554", null, OnChange.Trigger.CHANGE));
+        MaleSocket childSocket1 = m1.registerAction(new DigitalBooleanOnChange("IQDB554", null, DigitalBooleanOnChange.Trigger.CHANGE));
         
         Logix expression = new Logix("IQDA321", null);
         Assert.assertNotNull("exists", expression);
@@ -322,7 +322,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         actionLogix.getChild(0).connect(maleSocket2);
         
-        OnChange actionOnChange = new OnChange("IQDB4", null, OnChange.Trigger.CHANGE);
+        DigitalBooleanOnChange actionOnChange = new DigitalBooleanOnChange("IQDB4", null, DigitalBooleanOnChange.Trigger.CHANGE);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
         actionLogix.getChild(1).connect(maleSocket2);

@@ -92,7 +92,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.actions.Many.class);
+        classes.add(jmri.jmrit.logixng.string.actions.StringMany.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

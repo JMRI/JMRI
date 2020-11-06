@@ -20,7 +20,7 @@ public class Factory implements AnalogExpressionFactory {
         Set<Map.Entry<Category, Class<? extends Base>>> analogExpressionClasses = new HashSet<>();
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionConstant.class));
         analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogExpressionMemory.class));
-        analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Formula.class));
+        analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, AnalogFormula.class));
         return analogExpressionClasses;
     }
 

@@ -26,7 +26,7 @@ public class StringActionsTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new ManyXml();
+        b = new StringManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

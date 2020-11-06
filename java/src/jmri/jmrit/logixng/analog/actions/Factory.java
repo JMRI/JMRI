@@ -19,7 +19,7 @@ public class Factory implements AnalogActionFactory {
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> analogActionClasses = new HashSet<>();
         analogActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, AnalogActionMemory.class));
-        analogActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Many.class));
+        analogActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, AnalogMany.class));
         return analogActionClasses;
     }
 

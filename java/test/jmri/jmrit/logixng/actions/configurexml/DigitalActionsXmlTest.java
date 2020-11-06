@@ -57,7 +57,7 @@ public class DigitalActionsXmlTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new ManyXml();
+        b = new DigitalManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

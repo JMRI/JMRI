@@ -4,7 +4,7 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.CallModule;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.actions.Many;
+import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
@@ -104,7 +104,7 @@ public class RecursiveModuleTest {
         module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
-        Many many901 = new Many("IQDA901", null);
+        DigitalMany many901 = new DigitalMany("IQDA901", null);
         MaleSocket manySocket901 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
         module.getRootSocket().connect(manySocket901);
@@ -159,7 +159,7 @@ public class RecursiveModuleTest {
         
         
         
-        Many many921 = new Many("IQDA921", null);
+        DigitalMany many921 = new DigitalMany("IQDA921", null);
         MaleSocket manySocket921 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many921);
         ifThenElse915.getChild(2).connect(manySocket921);
@@ -204,7 +204,7 @@ public class RecursiveModuleTest {
         
 //        conditionalNG.addLocalVariable("n", SymbolTable.InitialValueType.Memory, "IMN");
         
-        Many many = new Many("IQDA1", null);
+        DigitalMany many = new DigitalMany("IQDA1", null);
         MaleSocket manySocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many);
         conditionalNG.getChild(0).connect(manySocket);

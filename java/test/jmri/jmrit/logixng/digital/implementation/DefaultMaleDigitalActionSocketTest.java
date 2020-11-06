@@ -11,7 +11,7 @@ import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.actions.Many;
+import jmri.jmrit.logixng.actions.DigitalMany;
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalActionSocket.DigitalActionDebugConfig;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
@@ -38,7 +38,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     
     @Test
     public void testCtor() {
-        DigitalActionBean action = new Many("IQDA321", null);
+        DigitalActionBean action = new DigitalMany("IQDA321", null);
         Assert.assertNotNull("exists", new DefaultMaleDigitalActionSocket(manager, action));
     }
     

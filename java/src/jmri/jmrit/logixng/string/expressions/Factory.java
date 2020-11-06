@@ -20,7 +20,7 @@ public class Factory implements StringExpressionFactory {
         Set<Map.Entry<Category, Class<? extends Base>>> stringExpressionClasses = new HashSet<>();
         stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringExpressionConstant.class));
         stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, StringExpressionMemory.class));
-        stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Formula.class));
+        stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, StringFormula.class));
         return stringExpressionClasses;
     }
 

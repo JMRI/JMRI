@@ -37,7 +37,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        Many action = new Many("IQAA999", null);
+        AnalogMany action = new AnalogMany("IQAA999", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
         return maleSocket;
@@ -63,7 +63,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new Many(systemName, null);
+        return new AnalogMany(systemName, null);
     }
     
     @Override

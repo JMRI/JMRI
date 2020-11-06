@@ -32,7 +32,7 @@ public class Factory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoStringAction.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, IfThenElse.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
-        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Many.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.EXRAVAGANZA, ShutdownComputer.class));
         return digitalActionClasses;
     }

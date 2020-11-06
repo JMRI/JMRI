@@ -103,7 +103,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.analog.expressions.Formula.class);
+        classes.add(jmri.jmrit.logixng.analog.expressions.AnalogFormula.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

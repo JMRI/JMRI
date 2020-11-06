@@ -103,7 +103,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.expressions.Formula.class);
+        classes.add(jmri.jmrit.logixng.string.expressions.StringFormula.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

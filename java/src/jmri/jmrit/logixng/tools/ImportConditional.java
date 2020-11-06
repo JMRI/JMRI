@@ -29,7 +29,7 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -210,18 +210,18 @@ public class ImportConditional {
         for (int i=0; i < conditionalActions.size(); i++) {
             ConditionalAction ca = conditionalActions.get(i);
             
-            OnChange.Trigger trigger;
+            DigitalBooleanOnChange.Trigger trigger;
             switch (ca.getOption()) {
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                    trigger = OnChange.Trigger.CHANGE_TO_TRUE;
+                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_TRUE;
                     break;
                     
                 case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                    trigger = OnChange.Trigger.CHANGE_TO_FALSE;
+                    trigger = DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE;
                     break;
                     
                 case Conditional.ACTION_OPTION_ON_CHANGE:
-                    trigger = OnChange.Trigger.CHANGE;
+                    trigger = DigitalBooleanOnChange.Trigger.CHANGE;
                     break;
                     
                 default:
@@ -230,7 +230,7 @@ public class ImportConditional {
             }
             
             DigitalBooleanActionBean booleanAction =
-                    new OnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
+                    new DigitalBooleanOnChange(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null, trigger);
             
             buildAction(booleanAction, ca);
             

@@ -92,7 +92,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.analog.actions.Many.class);
+        classes.add(jmri.jmrit.logixng.analog.actions.AnalogMany.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

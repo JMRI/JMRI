@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="9:13 PM">
+    <memory value="10:26 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 06 21:13:06 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 06 22:26:37 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -619,7 +619,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDE:AUTO:0041</systemName>
       <comment>A comment</comment>
     </false>
-    <formula class="jmri.jmrit.logixng.expressions.configurexml.FormulaXml">
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
       <systemName>IQDE:AUTO:0042</systemName>
       <expressions>
         <socket>
@@ -628,7 +628,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </expressions>
       <formula />
     </formula>
-    <formula class="jmri.jmrit.logixng.expressions.configurexml.FormulaXml">
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
       <systemName>IQDE:AUTO:0043</systemName>
       <comment>A comment</comment>
       <expressions>
@@ -715,7 +715,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </true>
   </logixngDigitalExpressions>
   <logixngDigitalActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionManagerXml">
-    <many class="jmri.jmrit.logixng.actions.configurexml.ManyXml">
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
       <systemName>IQDA901</systemName>
       <actions>
         <socket>
@@ -723,7 +723,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </socket>
       </actions>
     </many>
-    <many class="jmri.jmrit.logixng.actions.configurexml.ManyXml">
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
       <systemName>IQDA:AUTO:0001</systemName>
       <actions>
         <socket>
@@ -1017,7 +1017,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:0028</systemName>
       <comment>A comment</comment>
     </logix>
-    <many class="jmri.jmrit.logixng.actions.configurexml.ManyXml">
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
       <systemName>IQDA:AUTO:0029</systemName>
       <actions>
         <socket>
@@ -1025,7 +1025,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </socket>
       </actions>
     </many>
-    <many class="jmri.jmrit.logixng.actions.configurexml.ManyXml">
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
       <systemName>IQDA:AUTO:0030</systemName>
       <comment>A comment</comment>
       <actions>
@@ -1087,9 +1087,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Fri Nov 06 21:13:23 CET 2020</date>
+      <date>Fri Nov 06 22:26:51 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-06T20:09:50Z+RUNKNOWN on Fri Nov 06 21:13:23 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-06T21:23:13Z+RUNKNOWN on Fri Nov 06 22:26:51 CET 2020-->
 </layout-config>

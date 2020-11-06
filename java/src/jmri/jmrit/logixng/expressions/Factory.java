@@ -35,7 +35,7 @@ public class Factory implements DigitalExpressionFactory {
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionTurnout.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ExpressionWarrant.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, False.class));
-        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Formula.class));
+        expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalFormula.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Hold.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Or.class));
         expressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ResetOnTrue.class));

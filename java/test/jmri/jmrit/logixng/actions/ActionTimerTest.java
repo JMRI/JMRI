@@ -33,7 +33,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        Many action = new Many("IQDA999", null);
+        DigitalMany action = new DigitalMany("IQDA999", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
         return maleSocket;

@@ -42,7 +42,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        Many action = new Many("IQSA999", null);
+        StringMany action = new StringMany("IQSA999", null);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(StringActionManager.class).registerAction(action);
         return maleSocket;
@@ -68,7 +68,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new Many(systemName, null);
+        return new StringMany(systemName, null);
     }
     
     @Override

@@ -2,7 +2,7 @@ package jmri.jmrit.logixng;
 
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.Many;
+import jmri.jmrit.logixng.actions.DigitalMany;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -452,7 +452,7 @@ public class LogixNGTest {
             FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
             MaleDigitalActionSocket actionManySocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new Many(digitalActionManager.getAutoSystemName(), null));
+                            .registerAction(new DigitalMany(digitalActionManager.getAutoSystemName(), null));
             femaleSocket.connect(actionManySocket);
 //            femaleSocket.setLock(Base.Lock.HARD_LOCK);
 

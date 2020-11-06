@@ -26,7 +26,7 @@ public class AnalogActionsTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new ManyXml();
+        b = new AnalogManyXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");

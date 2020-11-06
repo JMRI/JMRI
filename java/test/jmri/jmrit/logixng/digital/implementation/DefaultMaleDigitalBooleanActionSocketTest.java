@@ -11,7 +11,7 @@ import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogActionSocketTes
 import jmri.util.JUnitUtil;
 
 import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
+import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
 
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocket.DigitalBooleanActionDebugConfig;
 
@@ -38,7 +38,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     
     @Test
     public void testCtor() {
-        DigitalBooleanActionBean action = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
+        DigitalBooleanActionBean action = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", new DefaultMaleDigitalBooleanActionSocket(manager, action));
     }
     
@@ -156,7 +156,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        DigitalBooleanActionBean actionA = new OnChange("IQDB321", null, OnChange.Trigger.CHANGE);
+        DigitalBooleanActionBean actionA = new DigitalBooleanOnChange("IQDB321", null, DigitalBooleanOnChange.Trigger.CHANGE);
         Assert.assertNotNull("exists", actionA);
         DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
         Assert.assertNotNull("exists", actionA);
