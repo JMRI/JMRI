@@ -1,8 +1,12 @@
 package jmri.jmrit.logixng;
 
+import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.actions.CallModule;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.actions.Many;
 import jmri.*;
-import jmri.jmrit.logixng.digital.actions.*;
-import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLocalVariable;
 import jmri.util.JUnitUtil;
 

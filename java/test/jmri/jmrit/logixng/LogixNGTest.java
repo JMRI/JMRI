@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng;
 
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.Many;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Locale;
@@ -8,7 +12,6 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
-import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.digital.expressions.And;

@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 

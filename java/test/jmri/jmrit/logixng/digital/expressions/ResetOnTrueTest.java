@@ -12,8 +12,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
 
 /**
  * Test ResetOnTrue

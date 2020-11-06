@@ -1,5 +1,14 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.actions.ShutdownComputer;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.Many;
+import jmri.jmrit.logixng.actions.ActionLight;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.DoStringAction;
+
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyVetoException;
 import java.io.*;
@@ -21,13 +30,12 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
-import jmri.jmrit.logixng.digital.actions.ActionThrottle;
+import jmri.jmrit.logixng.actions.ActionThrottle;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 

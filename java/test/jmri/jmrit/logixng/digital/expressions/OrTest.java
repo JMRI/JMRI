@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

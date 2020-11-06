@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng.tools;
 
+import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.ActionLight;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -10,8 +14,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.*;
-import jmri.jmrit.logixng.digital.actions.Logix;
+import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.*;
 

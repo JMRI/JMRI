@@ -197,8 +197,8 @@ public class ActionsAndExpressionsTest {
                 new String[]{"AbstractAnalogExpression","Bundle","Factory"});
         
         checkFolder(
-                getPath("digital/actions"),
-                "jmri.jmrit.logixng.digital.actions",
+                getPath("actions"),
+                "jmri.jmrit.logixng.actions",
                 getDigitalActionClasses(),
                 new String[]{"AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","Bundle","Factory"});
         

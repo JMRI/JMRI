@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -86,31 +86,31 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionLocalVariable.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionMemory.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionScript.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionThrottle.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionTurnout.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionLocalVariable.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionMemory.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionThrottle.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionTurnout.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.DoAnalogAction.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.DoStringAction.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.IfThenElse.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.Many.class);
+        classes.add(jmri.jmrit.logixng.actions.DoAnalogAction.class);
+        classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
+        classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
+        classes.add(jmri.jmrit.logixng.actions.Many.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.ActionTimer.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.CallModule.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.Logix.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
+        classes.add(jmri.jmrit.logixng.actions.CallModule.class);
+        classes.add(jmri.jmrit.logixng.actions.Logix.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.actions.ShutdownComputer.class);
+        classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
         map.put(Category.EXRAVAGANZA, classes);
         
         Assert.assertTrue("maps are equal",

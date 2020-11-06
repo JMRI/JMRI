@@ -17,8 +17,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 
 /**

@@ -9,9 +9,9 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.logixng.digital.actions.AbstractDigitalAction;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.actions.AbstractDigitalAction;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.Many;
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalActionSocket.DigitalActionDebugConfig;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 

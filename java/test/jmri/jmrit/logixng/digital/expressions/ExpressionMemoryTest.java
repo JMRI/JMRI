@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.expressions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -19,10 +20,11 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

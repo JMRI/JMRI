@@ -3,8 +3,8 @@ package jmri.jmrit.logixng.implementation;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.Many;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

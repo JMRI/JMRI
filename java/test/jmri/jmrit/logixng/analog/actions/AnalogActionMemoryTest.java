@@ -2,11 +2,13 @@ package jmri.jmrit.logixng.analog.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

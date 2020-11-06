@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
@@ -10,18 +11,20 @@ import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
 
 /**
  * Test And

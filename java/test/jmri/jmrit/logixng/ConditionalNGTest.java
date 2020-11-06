@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.actions.Many;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

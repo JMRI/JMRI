@@ -17,8 +17,8 @@ import jmri.SensorManager;
 import jmri.TurnoutManager;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

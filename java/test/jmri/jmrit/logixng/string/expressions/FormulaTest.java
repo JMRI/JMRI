@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.DoStringAction;
+import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.util.parser.ParserException;

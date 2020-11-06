@@ -10,8 +10,8 @@ import jmri.Memory;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.Antecedent.ExpressionEntry;
 import jmri.util.JUnitUtil;
 

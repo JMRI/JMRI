@@ -7,7 +7,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.DoStringAction;
+import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;

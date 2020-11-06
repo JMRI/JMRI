@@ -1,11 +1,11 @@
 package jmri.jmrit.logixng.digital.boolean_actions;
 
+import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.digital.actions.*;
-import jmri.jmrit.logixng.digital.actions.Logix;
+import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange.Trigger;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
@@ -40,7 +40,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
     @Override
     public MaleSocket getConnectableChild() {
         DigitalActionBean childAction =
-                new jmri.jmrit.logixng.digital.actions.Many("IQDA999", null);
+                new jmri.jmrit.logixng.actions.Many("IQDA999", null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(childAction);
         return maleSocketChild;

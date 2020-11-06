@@ -1,5 +1,21 @@
 package jmri.jmrit.logixng.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
+import jmri.jmrit.logixng.actions.ActionThrottle;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.ActionScript;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.actions.ShutdownComputer;
+import jmri.jmrit.logixng.actions.ActionMemory;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.CallModule;
+import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.ActionLight;
+import jmri.jmrit.logixng.actions.DoStringAction;
+
 import java.beans.PropertyVetoException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,7 +27,6 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.*;
 import jmri.jmrit.logixng.analog.expressions.*;
-import jmri.jmrit.logixng.digital.actions.*;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.*;
@@ -30,6 +45,7 @@ public class StoreAndLoadTest {
     
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
+        Assert.assertFalse(GraphicsEnvironment.isHeadless());
 /*        
         // FOR TESTING ONLY. REMOVE LATER.
         if (1==0) {
@@ -112,7 +128,7 @@ public class StoreAndLoadTest {
         module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
-        jmri.jmrit.logixng.digital.actions.Many many901 = new jmri.jmrit.logixng.digital.actions.Many("IQDA901", null);
+        jmri.jmrit.logixng.actions.Many many901 = new jmri.jmrit.logixng.actions.Many("IQDA901", null);
         MaleSocket manySocket901 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
         module.getRootSocket().connect(manySocket901);
@@ -141,8 +157,7 @@ public class StoreAndLoadTest {
         
         FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
         MaleDigitalActionSocket actionManySocket =
-                digitalActionManager.registerAction(
-                                new jmri.jmrit.logixng.digital.actions.Many(
+                digitalActionManager.registerAction(new jmri.jmrit.logixng.actions.Many(
                                         digitalActionManager.getAutoSystemName(), null));
         femaleSocket.connect(actionManySocket);
         femaleSocket.setLock(Base.Lock.HARD_LOCK);
@@ -305,12 +320,12 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
-        jmri.jmrit.logixng.digital.actions.Logix logix =
-                new jmri.jmrit.logixng.digital.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        jmri.jmrit.logixng.actions.Logix logix =
+                new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-        logix = new jmri.jmrit.logixng.digital.actions.Logix(digitalActionManager.getAutoSystemName(), null);
+        logix = new jmri.jmrit.logixng.actions.Logix(digitalActionManager.getAutoSystemName(), null);
         logix.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(index++).connect(maleSocket);
@@ -345,12 +360,12 @@ public class StoreAndLoadTest {
         
         
         
-        jmri.jmrit.logixng.digital.actions.Many many =
-                new jmri.jmrit.logixng.digital.actions.Many(digitalActionManager.getAutoSystemName(), null);
+        jmri.jmrit.logixng.actions.Many many =
+                new jmri.jmrit.logixng.actions.Many(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-        many = new jmri.jmrit.logixng.digital.actions.Many(digitalActionManager.getAutoSystemName(), null);
+        many = new jmri.jmrit.logixng.actions.Many(digitalActionManager.getAutoSystemName(), null);
         many.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(many);
         actionManySocket.getChild(index++).connect(maleSocket);

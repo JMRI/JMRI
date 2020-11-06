@@ -5,7 +5,7 @@ import java.util.Locale;
 import jmri.*;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.digital.actions.Many;
+import jmri.jmrit.logixng.actions.Many;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

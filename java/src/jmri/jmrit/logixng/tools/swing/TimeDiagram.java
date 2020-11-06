@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.tools.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -16,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
+
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.logixng.LogixNG;

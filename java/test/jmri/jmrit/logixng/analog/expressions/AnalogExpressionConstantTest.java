@@ -8,7 +8,7 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

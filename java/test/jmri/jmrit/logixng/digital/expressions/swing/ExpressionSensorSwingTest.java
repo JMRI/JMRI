@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterfaceTestBase;
 import jmri.util.JUnitUtil;
