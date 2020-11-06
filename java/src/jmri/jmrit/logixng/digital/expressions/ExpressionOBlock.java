@@ -24,7 +24,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private OBlock _oblock;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private OBlock.OBlockStatus _oblockStatus = OBlock.OBlockStatus.Unoccupied;
 
     public ExpressionOBlock(String sys, String user)
@@ -114,7 +114,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         
         boolean result = (_oblock.getState() == _oblockStatus.getStatus());
         
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return result;
         } else {
             return !result;

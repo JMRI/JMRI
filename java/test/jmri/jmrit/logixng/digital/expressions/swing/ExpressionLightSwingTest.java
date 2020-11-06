@@ -63,13 +63,13 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
         new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
-        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS_NOT);
-        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.OFF);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);
+        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.Off);
         
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL1", expression.getLight().getBean().getSystemName());
-        Assert.assertEquals(ExpressionLight.LightState.OFF, expression.getLightState());
+        Assert.assertEquals(ExpressionLight.LightState.Off, expression.getLightState());
     }
 
     @Test
@@ -93,13 +93,13 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
         new JTextFieldOperator(jdo, 3).enterText("IL99");
-        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
-        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.ON);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.Is);
+        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionLight.LightState.On);
         
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL99", expression.getLight().getBean().getSystemName());
-        Assert.assertEquals(ExpressionLight.LightState.ON, expression.getLightState());
+        Assert.assertEquals(ExpressionLight.LightState.On, expression.getLightState());
     }
     
     @Test

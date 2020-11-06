@@ -27,8 +27,8 @@ public class ExpressionLight extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Light> _lightHandle;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
-    private LightState _lightState = LightState.ON;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private LightState _lightState = LightState.On;
 
     public ExpressionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -122,7 +122,7 @@ public class ExpressionLight extends AbstractDigitalExpression
         if (_lightHandle == null) return false;
         
         LightState currentLightState = LightState.get(_lightHandle.getBean().getCommandedState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentLightState == _lightState;
         } else {
             return currentLightState != _lightState;
@@ -201,9 +201,9 @@ public class ExpressionLight extends AbstractDigitalExpression
     
     
     public enum LightState {
-        OFF(Light.OFF, Bundle.getMessage("StateOff")),
-        ON(Light.ON, Bundle.getMessage("StateOn")),
-        OTHER(-1, Bundle.getMessage("LightOtherStatus"));
+        Off(Light.OFF, Bundle.getMessage("StateOff")),
+        On(Light.ON, Bundle.getMessage("StateOn")),
+        Other(-1, Bundle.getMessage("LightOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -216,13 +216,13 @@ public class ExpressionLight extends AbstractDigitalExpression
         static public LightState get(int id) {
             switch (id) {
                 case Light.OFF:
-                    return OFF;
+                    return Off;
                     
                 case Light.ON:
-                    return ON;
+                    return On;
                     
                 default:
-                    return OTHER;
+                    return Other;
             }
         }
         

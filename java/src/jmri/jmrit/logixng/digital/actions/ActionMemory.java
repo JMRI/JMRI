@@ -178,10 +178,10 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
             }
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
-                if (evt.getOldValue().equals(_memoryHandle.getBean())) {
+                if ((_memoryHandle != null) && evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
                 }
-                if (evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
                     removeOtherMemory();
                 }
             }

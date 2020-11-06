@@ -24,7 +24,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private Warrant _warrant;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private Type _type = Type.ROUTE_ALLOCATED;
 
     public ExpressionWarrant(String sys, String user)
@@ -133,7 +133,7 @@ public class ExpressionWarrant extends AbstractDigitalExpression
             default:
                 throw new UnsupportedOperationException("_type has unknown value: " + _type.name());
         }
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return result;
         } else {
             return !result;

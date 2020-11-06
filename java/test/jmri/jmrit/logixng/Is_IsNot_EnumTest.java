@@ -17,13 +17,13 @@ public class Is_IsNot_EnumTest {
     @Test
     public void testEnum() {
         Assert.assertTrue("toString is correct",
-                "is".equals(Is_IsNot_Enum.IS.toString()));
+                "is".equals(Is_IsNot_Enum.Is.toString()));
         Assert.assertTrue("toString is correct",
-                "is not".equals(Is_IsNot_Enum.IS_NOT.toString()));
+                "is not".equals(Is_IsNot_Enum.IsNot.toString()));
         Assert.assertTrue("Enum is correct",
-                Is_IsNot_Enum.IS == Is_IsNot_Enum.valueOf("IS"));
+                Is_IsNot_Enum.Is == Is_IsNot_Enum.valueOf("Is"));
         Assert.assertTrue("Enum is correct",
-                Is_IsNot_Enum.IS_NOT == Is_IsNot_Enum.valueOf("IS_NOT"));
+                Is_IsNot_Enum.IsNot == Is_IsNot_Enum.valueOf("IsNot"));
     }
     
     // The minimal setup for log4J

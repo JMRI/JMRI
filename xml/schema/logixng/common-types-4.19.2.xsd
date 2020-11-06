@@ -25,26 +25,11 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionTimerType">
-      <xs:annotation>
-        <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionTimer class.
-        </xs:documentation>
-        <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionTimerXml</jmri:usingclass>
-        </xs:appinfo>
-      </xs:annotation>
-        
-            <xs:sequence>
-
-              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-
-            </xs:sequence>
-            
-			<xs:attribute name="class" type="classType" use="required"/>
-        
-    </xs:complexType>
+    <xs:simpleType name="LogixNG_Is_IsNot_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Is"/>
+        <xs:enumeration value="IsNot"/>
+      </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

@@ -40,17 +40,6 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
-
-              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="TOGGLE"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
 
             </xs:sequence>
             

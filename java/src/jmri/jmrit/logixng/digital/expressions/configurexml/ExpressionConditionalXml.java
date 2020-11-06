@@ -36,13 +36,13 @@ public class ExpressionConditionalXml extends jmri.managers.configurexml.Abstrac
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        Conditional conditional = p.getConditional();
+        if (conditional != null) {
+            element.addContent(new Element("conditional").addContent(conditional.getSystemName()));
+        }
         
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        element.addContent(new Element("conditionalState").addContent(p.getConditionalState().name()));
 
         return element;
     }
@@ -55,16 +55,21 @@ public class ExpressionConditionalXml extends jmri.managers.configurexml.Abstrac
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element conditionalName = shared.getChild("conditional");
+        if (conditionalName != null) {
+            Conditional t = InstanceManager.getDefault(ConditionalManager.class).getBySystemName(conditionalName.getTextTrim());
+            if (t != null) h.setConditional(t);
+            else h.removeConditional();
+        }
 
         Element is_IsNot = shared.getChild("is_isNot");
         if (is_IsNot != null) {
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
+        Element type = shared.getChild("conditionalState");
+        if (type != null) {
+            h.setConditionalState(ExpressionConditional.ConditionalState.valueOf(type.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

@@ -248,7 +248,7 @@ public class OnChangeTest extends AbstractDigitalBooleanActionTestBase {
         
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         _actionTurnout.setTurnout(turnout);
-        _actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        _actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
         
         // Ensure last execute is false
         _actionOnChange.execute(false);

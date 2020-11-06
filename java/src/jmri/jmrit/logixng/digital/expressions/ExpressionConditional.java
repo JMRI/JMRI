@@ -25,8 +25,8 @@ public class ExpressionConditional extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private Conditional _conditional;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
-    private ConditionalState _conditionalState = ConditionalState.TRUE;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private ConditionalState _conditionalState = ConditionalState.True;
 
     public ExpressionConditional(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -114,7 +114,7 @@ public class ExpressionConditional extends AbstractDigitalExpression
         if (_conditional == null) return false;
         
         ConditionalState currentConditionalState = ConditionalState.get(_conditional.getState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentConditionalState == _conditionalState;
         } else {
             return currentConditionalState != _conditionalState;
@@ -193,9 +193,9 @@ public class ExpressionConditional extends AbstractDigitalExpression
     
     
     public enum ConditionalState {
-        FALSE(Conditional.FALSE, Bundle.getMessage("ConditionalStateFalse")),
-        TRUE(Conditional.TRUE, Bundle.getMessage("ConditionalStateTrue")),
-        OTHER(-1, Bundle.getMessage("ConditionalOtherStatus"));
+        False(Conditional.FALSE, Bundle.getMessage("ConditionalStateFalse")),
+        True(Conditional.TRUE, Bundle.getMessage("ConditionalStateTrue")),
+        Other(-1, Bundle.getMessage("ConditionalOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -208,13 +208,13 @@ public class ExpressionConditional extends AbstractDigitalExpression
         static public ConditionalState get(int id) {
             switch (id) {
                 case Conditional.FALSE:
-                    return FALSE;
+                    return False;
                     
                 case Conditional.TRUE:
-                    return TRUE;
+                    return True;
                     
                 default:
-                    return OTHER;
+                    return Other;
             }
         }
         

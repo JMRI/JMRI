@@ -29,8 +29,8 @@ public class ExpressionSensor extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Sensor> _sensorHandle;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
-    private SensorState _sensorState = SensorState.ACTIVE;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private SensorState _sensorState = SensorState.Active;
 
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -124,7 +124,7 @@ public class ExpressionSensor extends AbstractDigitalExpression
         if (_sensorHandle == null) return false;
         
         SensorState currentSensorState = SensorState.get(_sensorHandle.getBean().getCommandedState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentSensorState == _sensorState;
         } else {
             return currentSensorState != _sensorState;
@@ -203,9 +203,9 @@ public class ExpressionSensor extends AbstractDigitalExpression
     
     
     public enum SensorState {
-        INACTIVE(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
-        ACTIVE(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
-        OTHER(-1, Bundle.getMessage("SensorOtherStatus"));
+        Inactive(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
+        Active(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
+        Other(-1, Bundle.getMessage("SensorOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -218,13 +218,13 @@ public class ExpressionSensor extends AbstractDigitalExpression
         static public SensorState get(int id) {
             switch (id) {
                 case Sensor.INACTIVE:
-                    return INACTIVE;
+                    return Inactive;
                     
                 case Sensor.ACTIVE:
-                    return ACTIVE;
+                    return Active;
                     
                 default:
-                    return OTHER;
+                    return Other;
             }
         }
         

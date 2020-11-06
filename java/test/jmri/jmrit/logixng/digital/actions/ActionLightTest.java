@@ -34,13 +34,13 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testLightState() {
-        Assert.assertEquals("String matches", "Off", ActionLight.LightState.OFF.toString());
-        Assert.assertEquals("String matches", "On", ActionLight.LightState.ON.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionLight.LightState.TOGGLE.toString());
+        Assert.assertEquals("String matches", "Off", ActionLight.LightState.Off.toString());
+        Assert.assertEquals("String matches", "On", ActionLight.LightState.On.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionLight.LightState.Toggle.toString());
         
-        Assert.assertTrue("objects are equal", ActionLight.LightState.OFF == ActionLight.LightState.get(Light.OFF));
-        Assert.assertTrue("objects are equal", ActionLight.LightState.ON == ActionLight.LightState.get(Light.ON));
-        Assert.assertTrue("objects are equal", ActionLight.LightState.TOGGLE == ActionLight.LightState.get(-1));
+        Assert.assertTrue("objects are equal", ActionLight.LightState.Off == ActionLight.LightState.get(Light.OFF));
+        Assert.assertTrue("objects are equal", ActionLight.LightState.On == ActionLight.LightState.get(Light.ON));
+        Assert.assertTrue("objects are equal", ActionLight.LightState.Toggle == ActionLight.LightState.get(-1));
         
         boolean hasThrown = false;
         try {
@@ -205,21 +205,21 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
         
         // Test to set light to off
-        actionLight.setLightState(ActionLight.LightState.OFF);
+        actionLight.setLightState(ActionLight.LightState.Off);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.OFF);
         
         // Test to set light to toggle
-        actionLight.setLightState(ActionLight.LightState.TOGGLE);
+        actionLight.setLightState(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on",light.getCommandedState() == Light.ON);
         
         // Test to set light to toggle
-        actionLight.setLightState(ActionLight.LightState.TOGGLE);
+        actionLight.setLightState(ActionLight.LightState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the light should be on
@@ -328,7 +328,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionLight = new ActionLight(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionLight.setLight(light);
-        actionLight.setLightState(ActionLight.LightState.ON);
+        actionLight.setLightState(ActionLight.LightState.On);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         conditionalNG.getChild(0).connect(socket);
         

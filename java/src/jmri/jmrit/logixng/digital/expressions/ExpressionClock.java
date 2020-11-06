@@ -18,7 +18,7 @@ import jmri.jmrit.logixng.*;
  */
 public class ExpressionClock extends AbstractDigitalExpression implements PropertyChangeListener {
 
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private Type _type = Type.FastClock;
     private Timebase fastClock;
     private int _beginTime = 0;
@@ -110,7 +110,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
             result = _beginTime <= currentMinutes || currentMinutes <= _endTime;
         }
         
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return result;
         } else {
             return !result;

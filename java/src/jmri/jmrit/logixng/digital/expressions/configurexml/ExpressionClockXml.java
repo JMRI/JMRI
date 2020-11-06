@@ -28,21 +28,16 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
     public Element store(Object o) {
         ExpressionClock p = (ExpressionClock) o;
 
-//        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
-        
         Element element = new Element("expression-clock");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
-        
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        element.addContent(new Element("type").addContent(p.getType().name()));
+        element.addContent(new Element("beginTime").addContent(Integer.toString(p.getBeginTime())));
+        element.addContent(new Element("endTime").addContent(Integer.toString(p.getEndTime())));
 
         return element;
     }
@@ -60,16 +55,36 @@ public class ExpressionClockXml extends jmri.managers.configurexml.AbstractNamed
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
         }
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element type = shared.getChild("type");
+        if (type != null) {
+            h.setType(ExpressionClock.Type.valueOf(type.getTextTrim()));
+        }
+        
+        int beginTime = 0;
+        int endTime = 0;
+        Element beginTimeElement = shared.getChild("beginTime");
+        Element endTimeElement = shared.getChild("endTime");
+        
+        if (beginTimeElement != null) {
+            try {
+                beginTime = Integer.parseInt(beginTimeElement.getTextTrim());
+            } catch (NumberFormatException e) {
+                log.error("cannot parse beginTime: " + beginTimeElement.getTextTrim(), e);
+            }
+        }
+        if (endTimeElement != null) {
+            try {
+                endTime =  Integer.parseInt(endTimeElement.getTextTrim());
+                h.setRange(beginTime, endTime);
+            } catch (NumberFormatException e) {
+                log.error("cannot parse endTime: " + endTimeElement.getTextTrim(), e);
+            }
+        }
+        h.setRange(beginTime, endTime);
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionClockXml.class);
 }

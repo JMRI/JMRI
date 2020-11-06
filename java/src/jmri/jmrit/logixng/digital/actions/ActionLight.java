@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Light> _lightHandle;
-    private LightState _lightState = LightState.ON;
+    private LightState _lightState = LightState.On;
     
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -112,7 +112,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         
         final Light t = _lightHandle.getBean();
         ThreadingUtil.runOnLayout(() -> {
-            if (_lightState == LightState.TOGGLE) {
+            if (_lightState == LightState.Toggle) {
                 if (t.getCommandedState() == Light.OFF) {
                     t.setCommandedState(Light.ON);
                 } else {
@@ -178,9 +178,9 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     
     
     public enum LightState {
-        OFF(Light.OFF, Bundle.getMessage("StateOff")),
-        ON(Light.ON, Bundle.getMessage("StateOn")),
-        TOGGLE(TOGGLE_ID, Bundle.getMessage("LightToggleStatus"));
+        Off(Light.OFF, Bundle.getMessage("StateOff")),
+        On(Light.ON, Bundle.getMessage("StateOn")),
+        Toggle(TOGGLE_ID, Bundle.getMessage("LightToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -193,13 +193,13 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         static public LightState get(int id) {
             switch (id) {
                 case Light.OFF:
-                    return OFF;
+                    return Off;
                     
                 case Light.ON:
-                    return ON;
+                    return On;
                     
                 case TOGGLE_ID:
-                    return TOGGLE;
+                    return Toggle;
                     
                 default:
                     throw new IllegalArgumentException("invalid light state");

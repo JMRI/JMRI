@@ -18,7 +18,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <jmriversion>
     <major>4</major>
     <minor>21</minor>
-    <test>1</test>
+    <test>3</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -79,7 +79,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM4</systemName>
     </memory>
-    <memory value="5:16 PM">
+    <memory value="11:22 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -89,33 +89,52 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jun 30 17:16:35 CEST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 06 11:22:42 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
-    <logixng enabled="yes">
+    <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
-      <userName>A logixNG</userName>
+      <userName>An empty logixNG</userName>
+      <conditionalngs />
+    </logixng>
+    <logixng enabled="no">
+      <systemName>IQ:AUTO:0002</systemName>
+      <userName>A logixNG with an empty conditionlNG</userName>
       <conditionalngs>
         <conditionalNG_SystemName>IQC:AUTO:0001</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
-    <logixng enabled="no">
-      <systemName>IQ:AUTO:0002</systemName>
-      <userName>Another logixNG</userName>
+    <logixng enabled="yes">
+      <systemName>IQ:AUTO:0003</systemName>
+      <userName>A logixNG</userName>
       <conditionalngs>
         <conditionalNG_SystemName>IQC:AUTO:0002</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
-    <logixng enabled="yes">
-      <systemName>IQ:AUTO:0003</systemName>
-      <userName>Yet another logixNG</userName>
+    <logixng enabled="no">
+      <systemName>IQ:AUTO:0004</systemName>
+      <userName>Another logixNG</userName>
       <conditionalngs>
         <conditionalNG_SystemName>IQC:AUTO:0003</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
+    <logixng enabled="yes">
+      <systemName>IQ:AUTO:0005</systemName>
+      <userName>Yet another logixNG</userName>
+      <conditionalngs>
+        <conditionalNG_SystemName>IQC:AUTO:0004</conditionalNG_SystemName>
+      </conditionalngs>
+    </logixng>
   </logixngs>
   <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
-    <conditionalng enabled="yes">
+    <conditionalng enabled="no">
       <systemName>IQC:AUTO:0001</systemName>
+      <userName>An empty conditionalNG</userName>
+      <socket>
+        <socketName />
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0002</systemName>
       <userName>A conditionalNG</userName>
       <socket>
         <socketName />
@@ -123,14 +142,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </socket>
     </conditionalng>
     <conditionalng enabled="yes">
-      <systemName>IQC:AUTO:0002</systemName>
+      <systemName>IQC:AUTO:0003</systemName>
       <socket>
         <socketName />
         <systemName>IQDA:AUTO:0003</systemName>
       </socket>
     </conditionalng>
     <conditionalng enabled="yes">
-      <systemName>IQC:AUTO:0003</systemName>
+      <systemName>IQC:AUTO:0004</systemName>
       <userName>Yet another conditionalNG</userName>
       <socket>
         <socketName />
@@ -208,26 +227,34 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </socket>
         <socket>
           <socketName>E17</socketName>
-          <systemName>IQDE:AUTO:00027</systemName>
+          <systemName>IQDE:AUTO:11026</systemName>
         </socket>
         <socket>
           <socketName>E18</socketName>
-          <systemName>IQDE:AUTO:00028</systemName>
+          <systemName>IQDE:AUTO:12026</systemName>
         </socket>
         <socket>
           <socketName>E19</socketName>
-          <systemName>IQDE:AUTO:00029</systemName>
+          <systemName>IQDE:AUTO:00027</systemName>
         </socket>
         <socket>
           <socketName>E20</socketName>
-          <systemName>IQDE:AUTO:00030</systemName>
+          <systemName>IQDE:AUTO:00028</systemName>
         </socket>
         <socket>
           <socketName>E21</socketName>
-          <systemName>IQDE:AUTO:00031</systemName>
+          <systemName>IQDE:AUTO:00029</systemName>
         </socket>
         <socket>
           <socketName>E22</socketName>
+          <systemName>IQDE:AUTO:00030</systemName>
+        </socket>
+        <socket>
+          <socketName>E23</socketName>
+          <systemName>IQDE:AUTO:00031</systemName>
+        </socket>
+        <socket>
+          <socketName>E24</socketName>
         </socket>
       </expressions>
     </or>
@@ -272,21 +299,21 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:00005</systemName>
       <turnout>IT3</turnout>
-      <is_isNot>IS</is_isNot>
-      <turnoutState>THROWN</turnoutState>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Thrown</turnoutState>
     </expression-turnout>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:00006</systemName>
       <userName>My new turnout</userName>
       <turnout>IT4</turnout>
-      <is_isNot>IS</is_isNot>
-      <turnoutState>CLOSED</turnoutState>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Closed</turnoutState>
     </expression-turnout>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:00007</systemName>
       <turnout>IT5</turnout>
-      <is_isNot>IS_NOT</is_isNot>
-      <turnoutState>OTHER</turnoutState>
+      <is_isNot>IsNot</is_isNot>
+      <turnoutState>Other</turnoutState>
     </expression-turnout>
     <antecedent class="jmri.jmrit.logixng.digital.expressions.configurexml.AntecedentXml">
       <systemName>IQDE:AUTO:00008</systemName>
@@ -428,45 +455,63 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <expression-light class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:00026</systemName>
       <light>IL1</light>
-      <is_isNot>IS</is_isNot>
-      <lightState>ON</lightState>
+      <is_isNot>Is</is_isNot>
+      <lightState>On</lightState>
     </expression-light>
     <expression-light class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionLightXml">
       <systemName>IQDE:AUTO:00027</systemName>
       <userName>My light</userName>
-      <is_isNot>IS</is_isNot>
-      <lightState>ON</lightState>
+      <is_isNot>Is</is_isNot>
+      <lightState>On</lightState>
     </expression-light>
     <expression-sensor class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:00028</systemName>
       <sensor>IS100</sensor>
-      <is_isNot>IS</is_isNot>
-      <sensorState>ACTIVE</sensorState>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
     </expression-sensor>
     <expression-sensor class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:00029</systemName>
       <userName>My sensor</userName>
-      <is_isNot>IS</is_isNot>
-      <sensorState>ACTIVE</sensorState>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
     </expression-sensor>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:00030</systemName>
       <turnout>IT1</turnout>
-      <is_isNot>IS</is_isNot>
-      <turnoutState>THROWN</turnoutState>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Thrown</turnoutState>
     </expression-turnout>
     <expression-turnout class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml">
       <systemName>IQDE:AUTO:00031</systemName>
       <userName>My turnout</userName>
-      <is_isNot>IS</is_isNot>
-      <turnoutState>THROWN</turnoutState>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Thrown</turnoutState>
     </expression-turnout>
     <expression-sensor class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:10028</systemName>
-      <is_isNot>IS</is_isNot>
-      <sensorState>ACTIVE</sensorState>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
     </expression-sensor>
+    <expression-memory class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionMemoryXml">
+      <systemName>IQDE:AUTO:11026</systemName>
+      <memory>IM1</memory>
+      <compareTo>Value</compareTo>
+      <memoryOperation>GreaterThan</memoryOperation>
+      <caseInsensitive>yes</caseInsensitive>
+      <constant>Some constant value</constant>
+    </expression-memory>
+    <expression-memory class="jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionMemoryXml">
+      <systemName>IQDE:AUTO:12026</systemName>
+      <memory>IM2</memory>
+      <otherMemory>IM3</otherMemory>
+      <compareTo>Memory</compareTo>
+      <memoryOperation>LessThan</memoryOperation>
+      <caseInsensitive>no</caseInsensitive>
+      <constant />
+    </expression-memory>
   </logixngDigitalExpressions>
+  <logixngDigitalActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionManagerXml" />
   <logixngDigitalActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalActionManagerXml">
     <many class="jmri.jmrit.logixng.digital.actions.configurexml.ManyXml">
       <systemName>IQDA:AUTO:0001</systemName>
@@ -660,27 +705,27 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     </shutdown-computer>
     <action-light class="jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml">
       <systemName>IQDA:AUTO:00018</systemName>
-      <lightState>ON</lightState>
+      <lightState>On</lightState>
     </action-light>
     <action-sensor class="jmri.jmrit.logixng.digital.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:00020</systemName>
-      <sensorState>ACTIVE</sensorState>
+      <sensorState>Active</sensorState>
     </action-sensor>
     <action-sensor class="jmri.jmrit.logixng.digital.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:00021</systemName>
       <userName>My sensor action</userName>
       <sensor>IS2</sensor>
-      <sensorState>ACTIVE</sensorState>
+      <sensorState>Active</sensorState>
     </action-sensor>
     <action-turnout class="jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:00022</systemName>
-      <turnoutState>THROWN</turnoutState>
+      <turnoutState>Thrown</turnoutState>
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:00023</systemName>
       <userName>My turnout action</userName>
       <turnout>IT2</turnout>
-      <turnoutState>THROWN</turnoutState>
+      <turnoutState>Thrown</turnoutState>
     </action-turnout>
     <do-analog-action class="jmri.jmrit.logixng.digital.actions.configurexml.DoAnalogActionXml">
       <systemName>IQDA:AUTO:00101</systemName>
@@ -716,7 +761,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IQDA:AUTO:10019</systemName>
       <userName>My light action</userName>
       <light>IL2</light>
-      <lightState>ON</lightState>
+      <lightState>On</lightState>
     </action-light>
     <throttle class="jmri.jmrit.logixng.digital.actions.configurexml.ActionThrottleXml">
       <systemName>IQDA:AUTO:10023</systemName>
@@ -800,9 +845,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Jun 30 17:16:35 CEST 2020</date>
+      <date>Fri Nov 06 11:22:42 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.1ish+daniel+2020-06-30T15:14:33Z+RUNKNOWN on Tue Jun 30 17:16:35 CEST 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-06T10:19:17Z+RUNKNOWN on Fri Nov 06 11:22:42 CET 2020-->
 </layout-config>

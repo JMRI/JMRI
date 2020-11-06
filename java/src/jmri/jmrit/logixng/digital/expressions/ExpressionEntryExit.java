@@ -24,7 +24,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private DestinationPoints _dp;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private EntryExitState _entryExitState = EntryExitState.ACTIVE;
 
     public ExpressionEntryExit(String sys, String user)
@@ -115,7 +115,7 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
         if (_dp == null) return false;
         
         EntryExitState currentEntryExitState = EntryExitState.get(_dp.getState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentEntryExitState == _entryExitState;
         } else {
             return currentEntryExitState != _entryExitState;

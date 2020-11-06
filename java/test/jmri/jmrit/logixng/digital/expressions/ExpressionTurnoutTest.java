@@ -155,19 +155,19 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testTurnoutState() {
-        Assert.assertEquals("String matches", "Closed", ExpressionTurnout.TurnoutState.CLOSED.toString());
-        Assert.assertEquals("String matches", "Thrown", ExpressionTurnout.TurnoutState.THROWN.toString());
-        Assert.assertEquals("String matches", "Other", ExpressionTurnout.TurnoutState.OTHER.toString());
+        Assert.assertEquals("String matches", "Closed", ExpressionTurnout.TurnoutState.Closed.toString());
+        Assert.assertEquals("String matches", "Thrown", ExpressionTurnout.TurnoutState.Thrown.toString());
+        Assert.assertEquals("String matches", "Other", ExpressionTurnout.TurnoutState.Other.toString());
         
-        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.CLOSED == ExpressionTurnout.TurnoutState.get(Turnout.CLOSED));
-        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.THROWN == ExpressionTurnout.TurnoutState.get(Turnout.THROWN));
-        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(Turnout.UNKNOWN));
-        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(Turnout.INCONSISTENT));
-        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(-1));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.Closed == ExpressionTurnout.TurnoutState.get(Turnout.CLOSED));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.Thrown == ExpressionTurnout.TurnoutState.get(Turnout.THROWN));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.Other == ExpressionTurnout.TurnoutState.get(Turnout.UNKNOWN));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.Other == ExpressionTurnout.TurnoutState.get(Turnout.INCONSISTENT));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.Other == ExpressionTurnout.TurnoutState.get(-1));
         
-        Assert.assertEquals("ID matches", Turnout.CLOSED, ExpressionTurnout.TurnoutState.CLOSED.getID());
-        Assert.assertEquals("ID matches", Turnout.THROWN, ExpressionTurnout.TurnoutState.THROWN.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionTurnout.TurnoutState.OTHER.getID());
+        Assert.assertEquals("ID matches", Turnout.CLOSED, ExpressionTurnout.TurnoutState.Closed.getID());
+        Assert.assertEquals("ID matches", Turnout.THROWN, ExpressionTurnout.TurnoutState.Thrown.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionTurnout.TurnoutState.Other.getID());
     }
     
     @Test
@@ -189,12 +189,12 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
         Assert.assertTrue("Turnout IT1 is Closed".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Turnout IT1 is not Closed".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.OTHER);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Other);
         Assert.assertTrue("Turnout IT1 is not Other".equals(expressionTurnout.getLongDescription()));
     }
     
@@ -208,8 +208,8 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionTurnout.setTurnout(turnout);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
@@ -236,7 +236,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         
         // Test IS_NOT
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Throw the switch. This should not execute the conditional.
         turnout.setCommandedState(Turnout.THROWN);
         // The action should now be executed so the atomic boolean should be true

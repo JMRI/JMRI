@@ -45,9 +45,9 @@
               <xs:element name="turnoutState" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="CLOSED"/>
-                    <xs:enumeration value="THROWN"/>
-                    <xs:enumeration value="TOGGLE"/>
+                    <xs:enumeration value="Closed"/>
+                    <xs:enumeration value="Thrown"/>
+                    <xs:enumeration value="Toggle"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

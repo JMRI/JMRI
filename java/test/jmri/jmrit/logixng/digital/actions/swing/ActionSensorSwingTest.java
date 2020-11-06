@@ -59,11 +59,11 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
         new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.INACTIVE);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Inactive);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IS1", action.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.INACTIVE, action.getSensorState());
+        Assert.assertEquals(ActionSensor.SensorState.Inactive, action.getSensorState());
     }
 
     @Test
@@ -84,11 +84,11 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JRadioButtonOperator(jdo, 1).clickMouse();
         new JTextFieldOperator(jdo, 3).enterText("IS99");
         
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.ACTIVE);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionSensor.SensorState.Active);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IS99", action.getSensor().getBean().getSystemName());
-        Assert.assertEquals(ActionSensor.SensorState.ACTIVE, action.getSensorState());
+        Assert.assertEquals(ActionSensor.SensorState.Active, action.getSensorState());
     }
     
     // The minimal setup for log4J

@@ -34,13 +34,13 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSensorState() {
-        Assert.assertEquals("String matches", "Inactive", ActionSensor.SensorState.INACTIVE.toString());
-        Assert.assertEquals("String matches", "Active", ActionSensor.SensorState.ACTIVE.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionSensor.SensorState.TOGGLE.toString());
+        Assert.assertEquals("String matches", "Inactive", ActionSensor.SensorState.Inactive.toString());
+        Assert.assertEquals("String matches", "Active", ActionSensor.SensorState.Active.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionSensor.SensorState.Toggle.toString());
         
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.INACTIVE == ActionSensor.SensorState.get(Sensor.INACTIVE));
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.ACTIVE == ActionSensor.SensorState.get(Sensor.ACTIVE));
-        Assert.assertTrue("objects are equal", ActionSensor.SensorState.TOGGLE == ActionSensor.SensorState.get(-1));
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Inactive == ActionSensor.SensorState.get(Sensor.INACTIVE));
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Active == ActionSensor.SensorState.get(Sensor.ACTIVE));
+        Assert.assertTrue("objects are equal", ActionSensor.SensorState.Toggle == ActionSensor.SensorState.get(-1));
         
         boolean hasThrown = false;
         try {
@@ -204,21 +204,21 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
         // Test to set sensor to inactive
-        actionSensor.setSensorState(ActionSensor.SensorState.INACTIVE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Inactive);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
         
         // Test to set sensor to toggle
-        actionSensor.setSensorState(ActionSensor.SensorState.TOGGLE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
         Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
         // Test to set sensor to toggle
-        actionSensor.setSensorState(ActionSensor.SensorState.TOGGLE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the sensor should be active
@@ -327,7 +327,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         conditionalNG.setRunOnGUIDelayed(false);
         actionSensor = new ActionSensor(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionSensor.setSensor(sensor);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Active);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
         conditionalNG.getChild(0).connect(socket);
         

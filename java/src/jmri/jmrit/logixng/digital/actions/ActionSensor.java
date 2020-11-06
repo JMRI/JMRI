@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 public class ActionSensor extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Sensor> _sensorHandle;
-    private SensorState _sensorState = SensorState.ACTIVE;
+    private SensorState _sensorState = SensorState.Active;
     
     public ActionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -114,7 +114,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         
         final Sensor t = _sensorHandle.getBean();
         ThreadingUtil.runOnLayout(() -> {
-            if (_sensorState == SensorState.TOGGLE) {
+            if (_sensorState == SensorState.Toggle) {
                 if (t.getCommandedState() == Sensor.INACTIVE) {
                     t.setCommandedState(Sensor.ACTIVE);
                 } else {
@@ -180,9 +180,9 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     
     
     public enum SensorState {
-        INACTIVE(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
-        ACTIVE(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
-        TOGGLE(TOGGLE_ID, Bundle.getMessage("SensorToggleStatus"));
+        Inactive(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
+        Active(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
+        Toggle(TOGGLE_ID, Bundle.getMessage("SensorToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -195,13 +195,13 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         static public SensorState get(int id) {
             switch (id) {
                 case Sensor.INACTIVE:
-                    return INACTIVE;
+                    return Inactive;
                     
                 case Sensor.ACTIVE:
-                    return ACTIVE;
+                    return Active;
                     
                 case TOGGLE_ID:
-                    return TOGGLE;
+                    return Toggle;
                     
                 default:
                     throw new IllegalArgumentException("invalid sensor state");

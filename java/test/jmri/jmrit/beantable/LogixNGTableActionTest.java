@@ -414,8 +414,8 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         // Select to use sensor IS1
         new JComboBoxOperator(addItemDialog, 0).setSelectedIndex(1);
-        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(Is_IsNot_Enum.IS);
-        new JComboBoxOperator(addItemDialog, 2).setSelectedItem(ExpressionSensor.SensorState.ACTIVE);
+        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(Is_IsNot_Enum.Is);
+        new JComboBoxOperator(addItemDialog, 2).setSelectedItem(ExpressionSensor.SensorState.Active);
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());
@@ -443,7 +443,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         
         // Select to use sensor IS1
         new JComboBoxOperator(addItemDialog, 0).setSelectedIndex(1);
-        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.THROWN);
+        new JComboBoxOperator(addItemDialog, 1).setSelectedItem(ActionTurnout.TurnoutState.Thrown);
         new JButtonOperator(addItemDialog, Bundle.getMessage("ButtonCreate")).push();  // NOI18N
         
         Assert.assertTrue("Is connected", conditionalNG.getChild(0).isConnected());

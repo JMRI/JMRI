@@ -314,10 +314,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case SENSOR_ACTIVE:
-                expression.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+                expression.setSensorState(ExpressionSensor.SensorState.Active);
                 break;
             case SENSOR_INACTIVE:
-                expression.setSensorState(ExpressionSensor.SensorState.INACTIVE);
+                expression.setSensorState(ExpressionSensor.SensorState.Inactive);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -339,10 +339,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case TURNOUT_CLOSED:
-                expression.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
+                expression.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
                 break;
             case TURNOUT_THROWN:
-                expression.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+                expression.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -420,6 +420,7 @@ public class ImportConditional {
                         Bundle.getMessage("ConditionalBadMemoryType", cv.getType().toString()));
         }
         
+        expression.setListenToOtherMemory(false);
         expression.setTriggerOnChange(cv.doTriggerActions());
         
         return expression;
@@ -435,10 +436,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case LIGHT_ON:
-                expression.setLightState(ExpressionLight.LightState.ON);
+                expression.setLightState(ExpressionLight.LightState.On);
                 break;
             case LIGHT_OFF:
-                expression.setLightState(ExpressionLight.LightState.OFF);
+                expression.setLightState(ExpressionLight.LightState.Off);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -583,10 +584,10 @@ public class ImportConditional {
         
         switch (cv.getType()) {
             case CONDITIONAL_TRUE:
-                expression.setConditionalState(ExpressionConditional.ConditionalState.TRUE);
+                expression.setConditionalState(ExpressionConditional.ConditionalState.True);
                 break;
             case CONDITIONAL_FALSE:
-                expression.setConditionalState(ExpressionConditional.ConditionalState.FALSE);
+                expression.setConditionalState(ExpressionConditional.ConditionalState.False);
                 break;
             default:
                 throw new InvalidConditionalVariableException(
@@ -685,15 +686,15 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setSensorState(ActionSensor.SensorState.TOGGLE);
+                        action.setSensorState(ActionSensor.SensorState.Toggle);
                         break;
                         
                     case Sensor.INACTIVE:
-                        action.setSensorState(ActionSensor.SensorState.INACTIVE);
+                        action.setSensorState(ActionSensor.SensorState.Inactive);
                         break;
                         
                     case Sensor.ACTIVE:
-                        action.setSensorState(ActionSensor.SensorState.ACTIVE);
+                        action.setSensorState(ActionSensor.SensorState.Active);
                         break;
                         
                     default:
@@ -733,15 +734,15 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setTurnoutState(ActionTurnout.TurnoutState.TOGGLE);
+                        action.setTurnoutState(ActionTurnout.TurnoutState.Toggle);
                         break;
                         
                     case Turnout.CLOSED:
-                        action.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+                        action.setTurnoutState(ActionTurnout.TurnoutState.Closed);
                         break;
                         
                     case Turnout.THROWN:
-                        action.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+                        action.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
                         break;
                         
                     default:
@@ -784,15 +785,15 @@ public class ImportConditional {
                 
                 switch (ca.getActionData()) {
                     case jmri.Route.TOGGLE:
-                        action.setLightState(ActionLight.LightState.TOGGLE);
+                        action.setLightState(ActionLight.LightState.Toggle);
                         break;
                         
                     case Light.OFF:
-                        action.setLightState(ActionLight.LightState.OFF);
+                        action.setLightState(ActionLight.LightState.Off);
                         break;
                         
                     case Light.ON:
-                        action.setLightState(ActionLight.LightState.ON);
+                        action.setLightState(ActionLight.LightState.On);
                         break;
                         
                     default:

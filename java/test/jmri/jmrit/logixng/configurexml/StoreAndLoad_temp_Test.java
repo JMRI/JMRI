@@ -175,21 +175,21 @@ public class StoreAndLoad_temp_Test {
 
         ExpressionTurnout expressionTurnout3 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00005", null);
         expressionTurnout3.setTurnout(turnout3);
-        expressionTurnout3.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        expressionTurnout3.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
         MaleSocket socketTurnout3 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout3);
         expressionAnd.getChild(0).connect(socketTurnout3);
 
         ExpressionTurnout expressionTurnout4 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00006", "My new turnout");
         expressionTurnout4.setTurnout(turnout4);
-        expressionTurnout4.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
-        expressionTurnout4.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionTurnout4.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout4.set_Is_IsNot(Is_IsNot_Enum.Is);
         MaleSocket socketTurnout4 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout4);
         expressionAnd.getChild(1).connect(socketTurnout4);
 
         ExpressionTurnout expressionTurnout5 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00007", null);
         expressionTurnout5.setTurnout(turnout5);
-        expressionTurnout5.setTurnoutState(ExpressionTurnout.TurnoutState.OTHER);
-        expressionTurnout5.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionTurnout5.setTurnoutState(ExpressionTurnout.TurnoutState.Other);
+        expressionTurnout5.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         MaleSocket socketTurnout5 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout5);
         expressionAnd.getChild(2).connect(socketTurnout5);
 
@@ -270,8 +270,8 @@ public class StoreAndLoad_temp_Test {
 
         ExpressionLight expressionLight = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00026", null);
         expressionLight.setLight(light1);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.ON);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionLight.setLightState(ExpressionLight.LightState.On);
         MaleSocket socketLight = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight);
         socketOr.getChild(index++).connect(socketLight);
 
@@ -295,36 +295,36 @@ public class StoreAndLoad_temp_Test {
 
         ExpressionLight expressionLight2 = new ExpressionLight(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00027", "My light");
         expressionLight2.removeLight();
-        expressionLight2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight2.setLightState(ExpressionLight.LightState.ON);
+        expressionLight2.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionLight2.setLightState(ExpressionLight.LightState.On);
         MaleSocket socketLight2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight2);
         socketOr.getChild(index++).connect(socketLight2);
 
         ExpressionSensor expressionSensor = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00028", null);
         expressionSensor.setSensor(sensor1);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Active);
         MaleSocket socketSensor = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
         socketOr.getChild(index++).connect(socketSensor);
 
         ExpressionSensor expressionSensor2 = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00029", "My sensor");
         expressionSensor2.removeSensor();
-        expressionSensor2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor2.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+        expressionSensor2.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor2.setSensorState(ExpressionSensor.SensorState.Active);
         MaleSocket socketSensor2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor2);
         socketOr.getChild(index++).connect(socketSensor2);
 
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00030", null);
         expressionTurnout.setTurnout(turnout1);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
         MaleSocket socketTurnout = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout);
         socketOr.getChild(index++).connect(socketTurnout);
 
         ExpressionTurnout expressionTurnout2 = new ExpressionTurnout(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:00031", "My turnout");
         expressionTurnout2.removeTurnout();
-        expressionTurnout2.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout2.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        expressionTurnout2.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionTurnout2.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
         MaleSocket socketTurnout2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout2);
         socketOr.getChild(index++).connect(socketTurnout2);
 
@@ -372,37 +372,37 @@ public class StoreAndLoad_temp_Test {
 
         ActionLight actionLight = new ActionLight(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00018", null);
 //                    actionLight.setLight(light2);
-        actionLight.setLightState(ActionLight.LightState.ON);
+        actionLight.setLightState(ActionLight.LightState.On);
         socketLight2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         socketSecondMany.getChild(index++).connect(socketLight2);
 
         actionLight = new ActionLight(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10019", "My light action");
         actionLight.setLight(light2);
-        actionLight.setLightState(ActionLight.LightState.ON);
+        actionLight.setLightState(ActionLight.LightState.On);
         socketLight2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionLight);
         socketSecondMany.getChild(index++).connect(socketLight2);
 
         ActionSensor actionSensor = new ActionSensor(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00020", null);
 //                    actionSensor.setSensor(sensor2);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Active);
         socketSensor2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
         socketSecondMany.getChild(index++).connect(socketSensor2);
 
         actionSensor = new ActionSensor(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00021", "My sensor action");
         actionSensor.setSensor(sensor2);
-        actionSensor.setSensorState(ActionSensor.SensorState.ACTIVE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Active);
         socketSensor2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionSensor);
         socketSecondMany.getChild(index++).connect(socketSensor2);
 
         ActionTurnout actionTurnout = new ActionTurnout(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00022", null);
 //                    actionTurnout.setTurnout(turnout2);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
         socketTurnout2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         socketSecondMany.getChild(index++).connect(socketTurnout2);
 
         actionTurnout = new ActionTurnout(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:00023", "My turnout action");
         actionTurnout.setTurnout(turnout2);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
         socketTurnout2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         socketSecondMany.getChild(index++).connect(socketTurnout2);
 
@@ -418,8 +418,8 @@ public class StoreAndLoad_temp_Test {
         sensorDirection.setCommandedState(Sensor.ACTIVE);
         ExpressionSensor directionSensor = new ExpressionSensor(logixNG_Manager.getSystemNamePrefix()+"DE:AUTO:10028", null);
         expressionSensor.setSensor(sensorDirection);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Active);
         MaleSocket socketDirectionSensor = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(directionSensor);
 
         ActionThrottle actionThrottle = new ActionThrottle(logixNG_Manager.getSystemNamePrefix()+"DA:AUTO:10023", "My throttle action");

@@ -155,19 +155,19 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testLightState() {
-        Assert.assertEquals("String matches", "Off", ExpressionLight.LightState.OFF.toString());
-        Assert.assertEquals("String matches", "On", ExpressionLight.LightState.ON.toString());
-        Assert.assertEquals("String matches", "Other", ExpressionLight.LightState.OTHER.toString());
+        Assert.assertEquals("String matches", "Off", ExpressionLight.LightState.Off.toString());
+        Assert.assertEquals("String matches", "On", ExpressionLight.LightState.On.toString());
+        Assert.assertEquals("String matches", "Other", ExpressionLight.LightState.Other.toString());
         
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OFF == ExpressionLight.LightState.get(Light.OFF));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.ON == ExpressionLight.LightState.get(Light.ON));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(Light.UNKNOWN));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(Light.INCONSISTENT));
-        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(-1));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Off == ExpressionLight.LightState.get(Light.OFF));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.On == ExpressionLight.LightState.get(Light.ON));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(Light.UNKNOWN));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(Light.INCONSISTENT));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.Other == ExpressionLight.LightState.get(-1));
         
-        Assert.assertEquals("ID matches", Light.ON, ExpressionLight.LightState.ON.getID());
-        Assert.assertEquals("ID matches", Light.OFF, ExpressionLight.LightState.OFF.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionLight.LightState.OTHER.getID());
+        Assert.assertEquals("ID matches", Light.ON, ExpressionLight.LightState.On.getID());
+        Assert.assertEquals("ID matches", Light.OFF, ExpressionLight.LightState.Off.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionLight.LightState.Other.getID());
     }
     
     @Test
@@ -189,12 +189,12 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.OFF);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionLight.setLightState(ExpressionLight.LightState.Off);
         Assert.assertTrue("Light IL1 is Off".equals(expressionLight.getLongDescription()));
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Light IL1 is not Off".equals(expressionLight.getLongDescription()));
-        expressionLight.setLightState(ExpressionLight.LightState.OTHER);
+        expressionLight.setLightState(ExpressionLight.LightState.Other);
         Assert.assertTrue("Light IL1 is not Other".equals(expressionLight.getLongDescription()));
     }
     
@@ -231,7 +231,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         
         // Test IS_NOT
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Turn the light on. This should not execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true

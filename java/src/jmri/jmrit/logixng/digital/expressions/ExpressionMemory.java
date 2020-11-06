@@ -124,6 +124,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _constantValue;
     }
     
+    public void setListenToOtherMemory(boolean listenToOtherMemory) {
+        this._listenToOtherMemory = listenToOtherMemory;
+    }
+    
+    public boolean getListenToOtherMemory() {
+        return _listenToOtherMemory;
+    }
+    
     public void setMemoryOperation(MemoryOperation memoryOperation) {
         _memoryOperation = memoryOperation;
     }
@@ -173,7 +181,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                 if (evt.getOldValue().equals(_memoryHandle.getBean())) {
                     removeMemory();
                 }
-                if (evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
+                if ((_otherMemoryHandle != null) && evt.getOldValue().equals(_otherMemoryHandle.getBean())) {
                     removeOtherMemory();
                 }
             }
@@ -460,7 +468,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_memoryHandle != null)) {
             _memoryHandle.getBean().addPropertyChangeListener("value", this);
-            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToOtherMemory && (_otherMemoryHandle != null)) {
+                _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
             _listenersAreRegistered = true;
         }
     }
@@ -470,7 +480,9 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _memoryHandle.getBean().removePropertyChangeListener("value", this);
-            if (_listenToOtherMemory) _otherMemoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToOtherMemory && (_otherMemoryHandle != null)) {
+                _otherMemoryHandle.getBean().removePropertyChangeListener("value", this);
+            }
             _listenersAreRegistered = false;
         }
     }

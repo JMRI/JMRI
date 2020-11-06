@@ -28,21 +28,16 @@ public class ExpressionReferenceXml extends jmri.managers.configurexml.AbstractN
     public Element store(Object o) {
         ExpressionReference p = (ExpressionReference) o;
 
-//        if (p.getLightName() == null) throw new RuntimeException("aaaaa");
-        
         Element element = new Element("expression-reference");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
+        element.addContent(new Element("reference").addContent(p.getReference()));
         
         element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        element.addContent(new Element("pointsTo").addContent(p.getPointsTo().name()));
 
         return element;
     }
@@ -55,16 +50,19 @@ public class ExpressionReferenceXml extends jmri.managers.configurexml.AbstractN
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
+        Element reference = shared.getChild("reference");
+        if (reference != null) {
+            h.setReference(reference.getTextTrim());
+        }
 
         Element is_IsNot = shared.getChild("is_isNot");
         if (is_IsNot != null) {
             h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_IsNot.getTextTrim()));
+        }
+
+        Element type = shared.getChild("pointsTo");
+        if (type != null) {
+            h.setPointsTo(ExpressionReference.PointsTo.valueOf(type.getTextTrim()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

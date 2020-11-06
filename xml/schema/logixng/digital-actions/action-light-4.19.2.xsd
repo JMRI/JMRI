@@ -45,9 +45,9 @@
               <xs:element name="lightState" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="TOGGLE"/>
+                    <xs:enumeration value="Off"/>
+                    <xs:enumeration value="On"/>
+                    <xs:enumeration value="Toggle"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

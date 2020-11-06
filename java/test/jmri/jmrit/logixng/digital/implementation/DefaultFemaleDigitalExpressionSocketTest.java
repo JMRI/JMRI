@@ -75,7 +75,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         _femaleSocket.connect(maleSocket);
         Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         _expression.setTurnout(t);
-        _expression.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
+        _expression.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
         t.setState(Turnout.CLOSED);
         Assert.assertFalse("turnout is not thrown", ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).evaluate());
         t.setState(Turnout.THROWN);

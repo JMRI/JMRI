@@ -31,8 +31,8 @@ public class ExpressionReference extends AbstractDigitalExpression
 //        implements PropertyChangeListener, VetoableChangeListener {
 
     private String _reference;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
-    private PointsTo _pointsTo = PointsTo.NOTHING;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private PointsTo _pointsTo = PointsTo.Nothing;
 
     public ExpressionReference(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -56,8 +56,8 @@ public class ExpressionReference extends AbstractDigitalExpression
         return _is_IsNot;
     }
     
-    public void setPointsTo(PointsTo state) {
-        _pointsTo = state;
+    public void setPointsTo(PointsTo pointsTo) {
+        _pointsTo = pointsTo;
     }
     
     public PointsTo getPointsTo() {
@@ -103,46 +103,46 @@ public class ExpressionReference extends AbstractDigitalExpression
         NamedBean t;
 
         switch (_pointsTo) {
-            case NOTHING:
+            case Nothing:
                 result = "".equals(ref);
                 break;
             
-            case TABLE:
+            case LogixNGTable:
                 t = InstanceManager.getDefault(NamedTableManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case AUDIO:
+            case Audio:
                 t = InstanceManager.getDefault(AudioManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case LIGHT:
+            case Light:
                 t = InstanceManager.getDefault(LightManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case MEMORY:
+            case Memory:
                 t = InstanceManager.getDefault(MemoryManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case SENSOR:
+            case Sensor:
                 t = InstanceManager.getDefault(SensorManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case SIGNAL_HEAD:
+            case SignalHead:
                 t = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case SIGNAL_MAST:
+            case SignalMast:
                 t = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
             
-            case TURNOUT:
+            case Turnout:
                 t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(ref);
                 result = (t != null);
                 break;
@@ -151,7 +151,7 @@ public class ExpressionReference extends AbstractDigitalExpression
                 throw new UnsupportedOperationException("_pointsTo has unknown value: "+_pointsTo.name());
         }
         
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return result;
         } else {
             return !result;
@@ -187,7 +187,13 @@ public class ExpressionReference extends AbstractDigitalExpression
         } else {
             reference = Bundle.getMessage(locale, "ReferenceNotSelected");
         }
-        return Bundle.getMessage(locale, "Reference_Long", reference, _is_IsNot.toString(), _pointsTo._text);
+        
+        return Bundle.getMessage(
+                locale,
+                "Reference_Long",
+                reference.isEmpty() ? "''" : reference,
+                _is_IsNot.toString(),
+                _pointsTo._text);
     }
     
     /** {@inheritDoc} */
@@ -230,15 +236,15 @@ public class ExpressionReference extends AbstractDigitalExpression
     
     
     public enum PointsTo {
-        NOTHING(Bundle.getMessage("ReferencePointsTo_Nothing")),
-        TABLE(Bundle.getMessage("ReferencePointsTo_Table")),
-        AUDIO(Bundle.getMessage("ReferencePointsTo_Audio")),
-        LIGHT(Bundle.getMessage("ReferencePointsTo_Light")),
-        MEMORY(Bundle.getMessage("ReferencePointsTo_Memory")),
-        SENSOR(Bundle.getMessage("ReferencePointsTo_Sensor")),
-        SIGNAL_HEAD(Bundle.getMessage("ReferencePointsTo_SignalHead")),
-        SIGNAL_MAST(Bundle.getMessage("ReferencePointsTo_SignalMast")),
-        TURNOUT(Bundle.getMessage("ReferencePointsTo_Turnout"));
+        Nothing(Bundle.getMessage("ReferencePointsTo_Nothing")),
+        Audio(Bundle.getMessage("ReferencePointsTo_Audio")),
+        Light(Bundle.getMessage("ReferencePointsTo_Light")),
+        Memory(Bundle.getMessage("ReferencePointsTo_Memory")),
+        Sensor(Bundle.getMessage("ReferencePointsTo_Sensor")),
+        SignalHead(Bundle.getMessage("ReferencePointsTo_SignalHead")),
+        SignalMast(Bundle.getMessage("ReferencePointsTo_SignalMast")),
+        Turnout(Bundle.getMessage("ReferencePointsTo_Turnout")),
+        LogixNGTable(Bundle.getMessage("ReferencePointsTo_LogixNGTable"));
         
         private final String _text;
         

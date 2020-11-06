@@ -73,12 +73,12 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ? ", 1);
         
         new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
-        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS_NOT);
-        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.CLOSED);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IsNot);
+        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.Closed);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IT1", expression.getTurnout().getBean().getSystemName());
-        Assert.assertEquals(ExpressionTurnout.TurnoutState.CLOSED, expression.getTurnoutState());
+        Assert.assertEquals(ExpressionTurnout.TurnoutState.Closed, expression.getTurnoutState());
     }
     
     @Test
@@ -103,12 +103,12 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         new JRadioButtonOperator(jdo, 1).clickMouse();
         new JTextFieldOperator(jdo, 3).enterText("IT99");
         
-        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.IS);
-        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.THROWN);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(Is_IsNot_Enum.Is);
+        new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.Thrown);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IT99", expression.getTurnout().getBean().getSystemName());
-        Assert.assertEquals(ExpressionTurnout.TurnoutState.THROWN, expression.getTurnoutState());
+        Assert.assertEquals(ExpressionTurnout.TurnoutState.Thrown, expression.getTurnoutState());
     }
     
     // The minimal setup for log4J

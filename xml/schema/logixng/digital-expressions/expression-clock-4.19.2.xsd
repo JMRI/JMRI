@@ -40,31 +40,22 @@
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 
-              <xs:element name="is_isNot" minOccurs="0" maxOccurs="1">
+              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="type" minOccurs="0" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="IS"/>
-                    <xs:enumeration value="IS_NOT"/>
+                    <xs:enumeration value="SystemClock"/>
+                    <xs:enumeration value="FastClock"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
 
-              <xs:element name="lightState" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="OFF"/>
-                    <xs:enumeration value="ON"/>
-                    <xs:enumeration value="OTHER"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-
-<!--              <xs:element name="enabled" type="yesNoType" /> -->
+              <xs:element name="beginTime" type="xs:int" />
+              <xs:element name="endTime" type="xs:int" />
 
             </xs:sequence>
-<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
             <xs:attribute name="class" type="classType" use="required"/>
 
     </xs:complexType>

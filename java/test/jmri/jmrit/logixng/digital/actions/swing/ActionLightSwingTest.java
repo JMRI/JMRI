@@ -59,11 +59,11 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         JDialogOperator jdo = editItem(conditionalNG, "Edit ConditionalNG IQC1", "Edit ! ", 0);
         
         new JComboBoxOperator(jdo, 0).setSelectedIndex(1);
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.OFF);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL1", action.getLight().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.OFF, action.getLightState());
+        Assert.assertEquals(ActionLight.LightState.Off, action.getLightState());
     }
 
     @Test
@@ -83,11 +83,11 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         
         new JRadioButtonOperator(jdo, 1).clickMouse();
         new JTextFieldOperator(jdo, 3).enterText("IL99");
-        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.ON);
+        new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.On);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IL99", action.getLight().getBean().getSystemName());
-        Assert.assertEquals(ActionLight.LightState.ON, action.getLightState());
+        Assert.assertEquals(ActionLight.LightState.On, action.getLightState());
     }
     
     // The minimal setup for log4J

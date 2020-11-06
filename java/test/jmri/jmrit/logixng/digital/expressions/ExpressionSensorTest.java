@@ -155,19 +155,19 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSensorState() {
-        Assert.assertEquals("String matches", "Inactive", ExpressionSensor.SensorState.INACTIVE.toString());
-        Assert.assertEquals("String matches", "Active", ExpressionSensor.SensorState.ACTIVE.toString());
-        Assert.assertEquals("String matches", "Other", ExpressionSensor.SensorState.OTHER.toString());
+        Assert.assertEquals("String matches", "Inactive", ExpressionSensor.SensorState.Inactive.toString());
+        Assert.assertEquals("String matches", "Active", ExpressionSensor.SensorState.Active.toString());
+        Assert.assertEquals("String matches", "Other", ExpressionSensor.SensorState.Other.toString());
         
-        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.INACTIVE == ExpressionSensor.SensorState.get(Sensor.INACTIVE));
-        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.ACTIVE == ExpressionSensor.SensorState.get(Sensor.ACTIVE));
-        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(Sensor.UNKNOWN));
-        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(Sensor.INCONSISTENT));
-        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(-1));
+        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Inactive == ExpressionSensor.SensorState.get(Sensor.INACTIVE));
+        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Active == ExpressionSensor.SensorState.get(Sensor.ACTIVE));
+        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(Sensor.UNKNOWN));
+        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(Sensor.INCONSISTENT));
+        Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.Other == ExpressionSensor.SensorState.get(-1));
         
-        Assert.assertEquals("ID matches", Sensor.INACTIVE, ExpressionSensor.SensorState.INACTIVE.getID());
-        Assert.assertEquals("ID matches", Sensor.ACTIVE, ExpressionSensor.SensorState.ACTIVE.getID());
-        Assert.assertEquals("ID matches", -1, ExpressionSensor.SensorState.OTHER.getID());
+        Assert.assertEquals("ID matches", Sensor.INACTIVE, ExpressionSensor.SensorState.Inactive.getID());
+        Assert.assertEquals("ID matches", Sensor.ACTIVE, ExpressionSensor.SensorState.Active.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionSensor.SensorState.Other.getID());
     }
     
     @Test
@@ -189,12 +189,12 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("Get sensor", expressionSensor.getShortDescription());
         Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
         expressionSensor.setSensor(sensor);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.INACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Inactive);
         Assert.assertTrue("Sensor IS1 is Inactive".equals(expressionSensor.getLongDescription()));
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         Assert.assertTrue("Sensor IS1 is not Inactive".equals(expressionSensor.getLongDescription()));
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.OTHER);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Other);
         Assert.assertTrue("Sensor IS1 is not Other".equals(expressionSensor.getLongDescription()));
     }
     
@@ -208,8 +208,8 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(false);
         
         expressionSensor.setSensor(sensor);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Active);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
@@ -236,7 +236,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         
         // Test IS_NOT
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         // Activate the sensor. This should not execute the conditional.
         sensor.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true

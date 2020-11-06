@@ -45,9 +45,9 @@
               <xs:element name="sensorState" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">
-                    <xs:enumeration value="INACTIVE"/>
-                    <xs:enumeration value="ACTIVE"/>
-                    <xs:enumeration value="OTHER"/>
+                    <xs:enumeration value="Inactive"/>
+                    <xs:enumeration value="Active"/>
+                    <xs:enumeration value="Toggle"/>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>

@@ -142,13 +142,13 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testTurnoutState() {
-        Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.CLOSED.toString());
-        Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.THROWN.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionTurnout.TurnoutState.TOGGLE.toString());
+        Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.Closed.toString());
+        Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.Thrown.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionTurnout.TurnoutState.Toggle.toString());
         
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.CLOSED == ActionTurnout.TurnoutState.get(Turnout.CLOSED));
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.THROWN == ActionTurnout.TurnoutState.get(Turnout.THROWN));
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.TOGGLE == ActionTurnout.TurnoutState.get(-1));
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Closed == ActionTurnout.TurnoutState.get(Turnout.CLOSED));
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Thrown == ActionTurnout.TurnoutState.get(Turnout.THROWN));
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.Toggle == ActionTurnout.TurnoutState.get(-1));
         
         boolean hasThrown = false;
         try {
@@ -204,21 +204,21 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to closed
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
         
         // Test to set turnout to toggle
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.TOGGLE);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to toggle
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.TOGGLE);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
@@ -327,7 +327,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionTurnout.setTurnout(turnout);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.THROWN);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         conditionalNG.getChild(0).connect(socket);
         

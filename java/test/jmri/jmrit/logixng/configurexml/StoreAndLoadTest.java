@@ -67,7 +67,15 @@ public class StoreAndLoadTest {
         Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Memory memory2 = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         Memory memory3 = InstanceManager.getDefault(MemoryManager.class).provide("IM3");
-        Memory memory4 = InstanceManager.getDefault(MemoryManager.class).provide("IM4");
+        
+        LogixManager logixManager = InstanceManager.getDefault(LogixManager.class);
+        ConditionalManager conditionalManager = InstanceManager.getDefault(ConditionalManager.class);
+        
+        jmri.Logix logixIX1 = logixManager.createNewLogix("IX1", null);
+        logixIX1.setEnabled(true);
+        
+        Conditional conditionalIX1C1 = conditionalManager.createNewConditional("IX1C1", "First conditional");
+        logixIX1.addConditional(conditionalIX1C1.getSystemName(), 0);
         
         InstanceManager.getDefault(SignalHeadManager.class)
                 .register(new VirtualSignalHead("IH1"));
@@ -150,7 +158,7 @@ public class StoreAndLoadTest {
         actionLight = new ActionLight(digitalActionManager.getAutoSystemName(), null);
         actionLight.setComment("A comment");
         actionLight.setLight(light1);
-        actionLight.setLightState(ActionLight.LightState.OFF);
+        actionLight.setLightState(ActionLight.LightState.Off);
         maleSocket = digitalActionManager.registerAction(actionLight);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -217,7 +225,7 @@ public class StoreAndLoadTest {
         actionSensor = new ActionSensor(digitalActionManager.getAutoSystemName(), null);
         actionSensor.setComment("A comment");
         actionSensor.setSensor(sensor1);
-        actionSensor.setSensorState(ActionSensor.SensorState.INACTIVE);
+        actionSensor.setSensorState(ActionSensor.SensorState.Inactive);
         maleSocket = digitalActionManager.registerAction(actionSensor);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -250,7 +258,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.CLOSED);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(index++).connect(maleSocket);
         
@@ -413,7 +421,7 @@ public class StoreAndLoadTest {
         
         ExpressionClock expressionClock = new ExpressionClock(digitalExpressionManager.getAutoSystemName(), null);
         expressionClock.setType(ExpressionClock.Type.SystemClock);
-        expressionClock.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionClock.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionClock);
         and.getChild(index++).connect(maleSocket);
         
@@ -421,29 +429,29 @@ public class StoreAndLoadTest {
         expressionClock.setComment("A comment");
         expressionClock.setRange(10, 20);
         expressionClock.setType(ExpressionClock.Type.FastClock);
-        expressionClock.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionClock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionClock);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionConditional expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
-        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.TRUE);
-        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.True);
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
         and.getChild(index++).connect(maleSocket);
         
         expressionConditional = new ExpressionConditional(digitalExpressionManager.getAutoSystemName(), null);
         expressionConditional.setComment("A comment");
-        expressionConditional.setConditional("IXC1");
-        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.FALSE);
-        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionConditional.setConditional("IX1C1");
+        expressionConditional.setConditionalState(ExpressionConditional.ConditionalState.False);
+        expressionConditional.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionConditional);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionEntryExit expressionEntryExit = new ExpressionEntryExit(digitalExpressionManager.getAutoSystemName(), null);
         expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.ACTIVE);
-        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(index++).connect(maleSocket);
         
@@ -451,22 +459,22 @@ public class StoreAndLoadTest {
         expressionEntryExit.setComment("A comment");
         expressionEntryExit.setDestinationPoints("Something");
         expressionEntryExit.setEntryExitState(ExpressionEntryExit.EntryExitState.INACTIVE);
-        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionEntryExit.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionEntryExit);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionLight expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
-        expressionLight.setLightState(ExpressionLight.LightState.ON);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionLight.setLightState(ExpressionLight.LightState.On);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
         
         expressionLight = new ExpressionLight(digitalExpressionManager.getAutoSystemName(), null);
         expressionLight.setComment("A comment");
         expressionLight.setLight(light1);
-        expressionLight.setLightState(ExpressionLight.LightState.OFF);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionLight.setLightState(ExpressionLight.LightState.Off);
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionLight);
         and.getChild(index++).connect(maleSocket);
         
@@ -526,7 +534,7 @@ public class StoreAndLoadTest {
         
         ExpressionOBlock expressionOBlock = new ExpressionOBlock(digitalExpressionManager.getAutoSystemName(), null);
         expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Dark);
-        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
         and.getChild(index++).connect(maleSocket);
         
@@ -534,22 +542,22 @@ public class StoreAndLoadTest {
         expressionOBlock.setComment("A comment");
         expressionOBlock.setOBlock("OB99");
         expressionOBlock.setOBlockStatus(OBlock.OBlockStatus.Occupied);
-        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionOBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionOBlock);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionReference expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
-        expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
-        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionReference.setPointsTo(ExpressionReference.PointsTo.LogixNGTable);
+        expressionReference.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionReference);
         and.getChild(index++).connect(maleSocket);
         
         expressionReference = new ExpressionReference(digitalExpressionManager.getAutoSystemName(), null);
         expressionReference.setComment("A comment");
         expressionReference.setReference("IL1");
-        expressionReference.setPointsTo(ExpressionReference.PointsTo.LIGHT);
-        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionReference.setPointsTo(ExpressionReference.PointsTo.Light);
+        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionReference);
         and.getChild(index++).connect(maleSocket);
         
@@ -567,16 +575,16 @@ public class StoreAndLoadTest {
         
         
         ExpressionSensor expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Active);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
         
         expressionSensor = new ExpressionSensor(digitalExpressionManager.getAutoSystemName(), null);
         expressionSensor.setComment("A comment");
         expressionSensor.setSensor(sensor1);
-        expressionSensor.setSensorState(ExpressionSensor.SensorState.INACTIVE);
-        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionSensor.setSensorState(ExpressionSensor.SensorState.Inactive);
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionSensor);
         and.getChild(index++).connect(maleSocket);
         
@@ -653,8 +661,8 @@ public class StoreAndLoadTest {
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setTriggerOnChange(false);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Thrown);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);
         
@@ -662,15 +670,15 @@ public class StoreAndLoadTest {
         expressionTurnout.setComment("A comment");
         expressionTurnout.setTurnout(turnout1);
         expressionTurnout.setTriggerOnChange(true);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.Closed);
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionTurnout);
         and.getChild(index++).connect(maleSocket);
         
         
         ExpressionWarrant expressionWarrant = new ExpressionWarrant(digitalExpressionManager.getAutoSystemName(), null);
         expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_FREE);
-        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IS);
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.Is);
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
         and.getChild(index++).connect(maleSocket);
         
@@ -678,7 +686,7 @@ public class StoreAndLoadTest {
         expressionWarrant.setComment("A comment");
         expressionWarrant.setWarrant("Something");
         expressionWarrant.setType(ExpressionWarrant.Type.ROUTE_SET);
-        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        expressionWarrant.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         maleSocket = digitalExpressionManager.registerExpression(expressionWarrant);
         and.getChild(index++).connect(maleSocket);
         
@@ -761,20 +769,44 @@ public class StoreAndLoadTest {
         
         
         
-        
-        if (1==0) {
+/*        
+        if (1==1) {
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
             PrintWriter printWriter = new PrintWriter(stringWriter);
             logixNG_Manager.printTree(Locale.ENGLISH, printWriter, treeIndent);
             
+            System.out.println("--------------------------------------------");
+            System.out.println("The current tree:");
+            System.out.println("XXX"+stringWriter.toString()+"XXX");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            System.out.println("--------------------------------------------");
+            
             log.error("--------------------------------------------");
-            log.error("New tree:");
+            log.error("The current tree:");
             log.error("XXX"+stringWriter.toString()+"XXX");
             log.error("--------------------------------------------");
-            return;
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+            log.error("--------------------------------------------");
+//            return;
         }
-        
+*/        
         
         
         
@@ -924,7 +956,7 @@ public class StoreAndLoadTest {
                     log.error("New tree:");
                     log.error("XXX"+stringWriter.toString()+"XXX");
                     log.error("--------------------------------------------");
-                    
+/*                    
                     System.out.println("--------------------------------------------");
                     System.out.println("Old tree:");
                     System.out.println("XXX"+originalTree+"XXX");
@@ -932,7 +964,7 @@ public class StoreAndLoadTest {
                     System.out.println("New tree:");
                     System.out.println("XXX"+stringWriter.toString()+"XXX");
                     System.out.println("--------------------------------------------");
-                    
+*/                    
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
                     Assert.fail("tree has changed");

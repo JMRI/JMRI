@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Turnout> _turnoutHandle;
-    private TurnoutState _turnoutState = TurnoutState.THROWN;
+    private TurnoutState _turnoutState = TurnoutState.Thrown;
     
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -112,7 +112,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         
         final Turnout t = _turnoutHandle.getBean();
         ThreadingUtil.runOnLayout(() -> {
-            if (_turnoutState == TurnoutState.TOGGLE) {
+            if (_turnoutState == TurnoutState.Toggle) {
                 if (t.getCommandedState() == Turnout.CLOSED) {
                     t.setCommandedState(Turnout.THROWN);
                 } else {
@@ -178,9 +178,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     
     
     public enum TurnoutState {
-        CLOSED(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
-        THROWN(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        TOGGLE(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus"));
+        Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
+        Thrown(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
+        Toggle(TOGGLE_ID, Bundle.getMessage("TurnoutToggleStatus"));
         
         private final int _id;
         private final String _text;
@@ -193,13 +193,13 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         static public TurnoutState get(int id) {
             switch (id) {
                 case Turnout.CLOSED:
-                    return CLOSED;
+                    return Closed;
                     
                 case Turnout.THROWN:
-                    return THROWN;
+                    return Thrown;
                     
                 case TOGGLE_ID:
-                    return TOGGLE;
+                    return Toggle;
                     
                 default:
                     throw new IllegalArgumentException("invalid turnout state");

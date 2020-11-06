@@ -7,8 +7,8 @@ package jmri.jmrit.logixng;
  */
 public enum Is_IsNot_Enum {
 
-    IS(Bundle.getMessage("IsIsNotEnum_Is")),
-    IS_NOT(Bundle.getMessage("IsIsNotEnum_IsNot"));
+    Is(Bundle.getMessage("IsIsNotEnum_Is")),
+    IsNot(Bundle.getMessage("IsIsNotEnum_IsNot"));
 
     private final String _text;
 

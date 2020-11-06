@@ -27,8 +27,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Turnout> _turnoutHandle;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
-    private TurnoutState _turnoutState = TurnoutState.THROWN;
+    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
+    private TurnoutState _turnoutState = TurnoutState.Thrown;
 
     public ExpressionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -122,7 +122,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         if (_turnoutHandle == null) return false;
         
         TurnoutState currentTurnoutState = TurnoutState.get(_turnoutHandle.getBean().getCommandedState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
+        if (_is_IsNot == Is_IsNot_Enum.Is) {
             return currentTurnoutState == _turnoutState;
         } else {
             return currentTurnoutState != _turnoutState;
@@ -203,9 +203,9 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     
     
     public enum TurnoutState {
-        CLOSED(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
-        THROWN(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        OTHER(-1, Bundle.getMessage("TurnoutOtherStatus"));
+        Closed(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
+        Thrown(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
+        Other(-1, Bundle.getMessage("TurnoutOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -218,13 +218,13 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         static public TurnoutState get(int id) {
             switch (id) {
                 case Turnout.CLOSED:
-                    return CLOSED;
+                    return Closed;
                     
                 case Turnout.THROWN:
-                    return THROWN;
+                    return Thrown;
                     
                 default:
-                    return OTHER;
+                    return Other;
             }
         }
         
