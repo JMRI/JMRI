@@ -113,25 +113,6 @@
       changer votre itin&eacute;raire, utiliser la fonction
       "Modifier" et "Mise &agrave; jour Itin&eacute;raire "pour
       modifier votre itin&eacute;raire.</p>
-
-      <p>La fonction de verrouillage de l'aiguillage vous permet de
-      d&eacute;sactiver de mani&egrave;re s&eacute;lective les
-      accessoires (aiguillages) commandes &agrave; partir de
-      commandes manuelles et/ou boutons-poussoirs locaux
-      c&acirc;bl&eacute;s. JMRI d&eacute;sactive les boutons
-      poussoirs en envoyant une commande de d&eacute;sactivation de
-      boutons poussoirs au d&eacute;codeur d'aiguillage lorsque la
-      route est bloqu&eacute;e, et autorise les boutons poussoirs
-      lorsque la route est d&eacute;verrouill&eacute;e. Lors du
-      verrouillage d'un aiguillage &agrave; partir d'un pupitre de
-      commande manuelle , le programme JMRI surveillera suivra
-      l'adresse accessoire de l'aiguillage et si elle
-      d&eacute;tecte une commande de changement en provenance d'un
-      pupitre, va annuler la commande imm&eacute;diatement en
-      envoyant la commande oppos&eacute;e &agrave; l'aiguillage.
-      Tous les aiguillages qui sont surveill&eacute;s par le
-      programme JMRI et qui sont inclus dans l'itin&eacute;raire
-      seront verrouill&eacute;s.</p>
       
       <h2><a name="Turnout Lock feature"> Fonction Verrouillage Aiguillage</a> </h2
 
@@ -165,8 +146,7 @@
       r&eacute;seau.</p>
 
       <p> Pour plus d'informations sur la d&#233;finition du verrouillage 
-      des aiguillages, voir la <a href= 
-      "TurnoutTable.shtml#Turnout%20lock%20feature"> page Tableau Aiguillage</a>. </p>
+      des aiguillages, voir la <a href= "TurnoutTable.shtml#Turnout%20lock%20feature"> page Tableau Aiguillage</a>. </p>
 
        <p> Retour &#224; la <a href="RouteTable.shtml"> page d'aide du Tableau Iin&#233;raire</a>. </p>
 		 <!--#include virtual="/Footer" -->
