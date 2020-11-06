@@ -18,7 +18,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class DigitalBooleanOnChangeActionSwingTest {
+public class DigitalBooleanOnChangeSwingTest {
 
     @Test
     public void testCtor() {

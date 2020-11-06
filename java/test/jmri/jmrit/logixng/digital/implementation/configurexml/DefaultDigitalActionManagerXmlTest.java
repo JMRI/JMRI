@@ -7,7 +7,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml;
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalActionManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -51,7 +50,7 @@ public class DefaultDigitalActionManagerXmlTest {
         
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA2"));
         b.loadActions(e);

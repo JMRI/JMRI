@@ -3,10 +3,10 @@ package jmri.jmrit.logixng.digital.implementation.configurexml;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
 import jmri.jmrit.logixng.digital.boolean_actions.configurexml.DigitalBooleanOnChangeXml;
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalBooleanActionManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -16,10 +16,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
 
 /**
  *
@@ -48,7 +44,7 @@ public class DefaultDigitalBooleanActionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.digital.boolean_actions.configurexml.DigitalBooleanOnChangeXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDB1"));
         Element socketElement = new Element("socket");

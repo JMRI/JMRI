@@ -15,7 +15,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class DigitalBooleanOnChangeActionXmlTest {
+public class DigitalBooleanOnChangeXmlTest {
 
     @Test
     public void testLoad() throws JmriConfigureXmlException {

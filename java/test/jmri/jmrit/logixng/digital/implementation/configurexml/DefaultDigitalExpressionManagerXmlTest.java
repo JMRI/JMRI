@@ -7,7 +7,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml;
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalExpressionManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -44,14 +43,14 @@ public class DefaultDigitalExpressionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDE1"));
         b.loadExpressions(e);
         
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDE2"));
         b.loadExpressions(e);
