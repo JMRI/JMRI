@@ -25,7 +25,7 @@ import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 
 /**
- * Test And
+ * Test True
  * 
  * @author Daniel Bergqvist 2018
  */

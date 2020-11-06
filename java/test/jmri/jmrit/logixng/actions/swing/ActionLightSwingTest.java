@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Test ActionLight
+ * Test ActionLightSwing
  * 
  * @author Daniel Bergqvist 2018
  */

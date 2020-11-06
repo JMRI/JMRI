@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ActionTurnoutXml
+ * Test DigitalExpressions
  * 
  * @author Daniel Bergqvist 2019
  */

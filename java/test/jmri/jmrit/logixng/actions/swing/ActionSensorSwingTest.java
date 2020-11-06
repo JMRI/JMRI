@@ -19,7 +19,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Test ActionSensor
+ * Test ActionSensorSwing
  * 
  * @author Daniel Bergqvist 2018
  */

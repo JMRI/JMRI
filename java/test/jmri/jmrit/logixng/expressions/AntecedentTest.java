@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test And
+ * Test Antecedent
  * 
  * @author Daniel Bergqvist 2018
  */

@@ -19,7 +19,7 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
- * Test And
+ * Test Formula
  * 
  * @author Daniel Bergqvist 2018
  */

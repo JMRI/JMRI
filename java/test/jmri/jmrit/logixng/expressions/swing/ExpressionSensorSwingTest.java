@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Test ActionSensor
+ * Test ExpressionSensorSwing
  * 
  * @author Daniel Bergqvist 2018
  */

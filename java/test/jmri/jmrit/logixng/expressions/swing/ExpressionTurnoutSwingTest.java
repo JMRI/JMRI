@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.operators.*;
 
 /**
- * Test ActionTurnout
+ * Test ExpressionTurnoutSwing
  * 
  * @author Daniel Bergqvist 2018
  */

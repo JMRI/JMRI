@@ -19,7 +19,6 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-// public class AbstractScriptDigitalActionTest extends AbstractDigitalActionTestBase {
 public class AbstractScriptDigitalActionTest {
 
     private LogixNG logixNG;

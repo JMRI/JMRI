@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ActionLight
+ * Test HoldSwing
  * 
  * @author Daniel Bergqvist 2018
  */

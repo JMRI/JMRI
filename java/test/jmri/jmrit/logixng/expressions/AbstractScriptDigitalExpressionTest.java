@@ -12,7 +12,7 @@ import org.junit.Test;
 import jmri.jmrit.logixng.DigitalExpression;
 
 /**
- * Base class for classes that tests DigitalAction
+ * Base class for classes that tests DigitalExpression
  */
 public class AbstractScriptDigitalExpressionTest {
 

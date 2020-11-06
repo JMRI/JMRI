@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ExpressionTimer
+ * Test FemaleSocket
  * 
  * @author Daniel Bergqvist 2018
  */
