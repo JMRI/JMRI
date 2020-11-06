@@ -1,60 +1,332 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec 2013-10-12 -->
-
+<!-- Translated by Herv&#233; Blorec 2020-06-11 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Signal Masts Repeater</title>
+  <title>JMRI: R&#233;p&#233;teur de M&#226;t de Signalisation</title>
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <meta content="Kevin Dickerson" name="Author">
+  "text/html; charset=utf-8">
+  <meta name="author" content="Kevin Dickerson">
+  <meta name="author" content="B. Milhaupt">
+  <meta name="Date.Modified" content="20200107">
   <meta name="keywords" content="JMRI help Signal Mast Repeater">
-  <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>M&acirc;t Signal R&eacute;p&eacute;teur</h1>
 
-      <p>L'outil M&acirc;t Signal R&eacute;p&eacute;teur vous
-      permet de configurer un m&acirc;t signal pour qu'il suive
-      l'&eacute;tat d'un autre, ou pour les deux M&acirc;ts Signaux
-      mettre &agrave; jours l'&eacute;tat
-      &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;des autres.<br>
-      Pour que cela fonctionne chaque M&acirc;tSignal doit
-      &ecirc;tre du m&ecirc;me syst&egrave;me de signal et Type de
-      m&acirc;t.<br>
-      Quand un M&acirc;t principal est choisi dans la liste au bas
-      de l'&eacute;cran la liste d'esclaves est remplie avec les
-      M&acirc;tsSignaux correspondants du m&ecirc;me type. S'il n'y
-      a pas M&acirc;ts valides alors la possibilit&eacute; de
-      s&eacute;lectionner l'esclave restera
-      d&eacute;sactiv&eacute;e.</p>
+      <h1>R&#233;p&#233;teur de M&#226;t de Signalisation</h1>
 
-      <p>Dans le tableau principal, il est possible de choisir la
-      direction dans laquelle les mises &agrave; jour auront lieu,
-      soit ma&icirc;tre &agrave; l'esclave, l'esclave au
-      ma&icirc;tre ou Bidirectionnel. Vous pouvez &eacute;galement
-      activer/d&eacute;sactiver le r&eacute;p&eacute;teur avec sa
-      suppression de cet &eacute;cran.</p>
+      <p>L'outil R&#233;p&#233;teur de M&#226;t de Signalisation vous permet de configurer un M&#226;t de Signalisation pour suivre 
+      l'&#233;tat d'un autre, ou soit pour un changement ou bien sur le M&#226;t de Signalisation pour forcer l'autre au m&#234;me &#233;tat.</p>
 
-      <p><!--#include virtual="/Footer" --></p>
-    </div>
-  </div>
+      <p>Les r&#233;p&#233;teurs de M&#226;t de Signalisation exigent que les deux M&#226;ts de Signalisation soient du m&#234;me Syst&#232;me de
+      signalisation et du m&#234;me type de m&#226;t.  Les r&#233;p&#233;teurs de M&#226;t de Signalisation ne peuvent pas   &#234;tre configur&#233; 
+      entre des m&#226;ts de types diff&#233;rents ou entre des signaux de diff&#233;rents  syst&#232;mes de signalisation.</p>
+      
+      <h2>Configuration d'un r&#233;p&#233;teur</h2>
+      
+      <p>Le tableau R&#233;p&#233;teur de M&#226;t de Signalisation est accessible via le menu d&#233;roulant "Outils  en haut de la 
+      en&#234;tre de la table des M&#226;ts de Signalisation.</p>
+      
+      <h3>Ajouter un r&#233;p&#233;teur</h3>
+      
+      <p>Lors de la cr&#233;ation d'un nouveau r&#233;p&#233;teur,  un m&#226;t principal est s&#233;lectionn&#233; dans le  en bas de la 
+      fen&#234;tre, la liste d&#233;roulante Esclave sera aliment&#233;e par les M&#226;ts de Signalisation du syst&#232;me de signalisation 
+      correspondant etdutype de m&#226;t. S'il n'y a pas de m&#226;ts valables, l'option de s&#233;lectionner le type de m&#226;t Esclave 
+      restera d&#233;sactiv&#233;, avec une liste vide.</p>
+      
+      <p>Une fois qu'un m&#226;t ma&#238;tre et un m&#226;t esclave ont &#233;t&#233; s&#233;lectionn&#233;s, le bouton "Ajouter peut &#234;tre
+      activ&#233; pour ajouter le R&#233;p&#233;teur &#224; la liste en haut de la fen&#234;tre.</p>
+
+      <h3>Configuration du fonctionnement d'un r&#233;p&#233;teur</h3>
+      
+      <p>La fonction "R&#233;p&#233;tition" peut fonctionner selon l'un des trois modes qui d&#233;finissent la (les) direction(s) dans laquelle
+      (lesquelles) la "fonction de r&#233;p&#233;tition" se produit. La direction de r&#233;p&#233;tition pour un r&#233;p&#233;teur donn&#233; 
+      est configur&#233;e dans la partie sup&#233;rieure  de la fen&#234;tre de l'outil R&#233;p&#233;teur de M&#226;t de Signalisation &#224; 
+      l'aide d'un bouton dans la colonne intitul&#233;e "Mise &#224; jour" Cette colonne se trouve g&#233;n&#233;ralement entre le ma&#238;tre et 
+      les colonnes des noms d'esclaves.  L'activation des s&#233;quences de boutons &#224; travers les trois modes disponibles. Chaque mode est 
+      indiqu&#233; sur le bouton par un ou  deux repr&#233;sentations en forme de fl&#232;ches du sens dans lequel les r&#233;p&#233;titions 
+      sont effectu&#233;es:</p>
+      <table border="2">
+          <tr>
+              <td align="center"><img src="images/SignalMastRepeaterMaster-to-SlaveButton.png" 
+                   alt="Master to Slave repeat button image" ></td>
+              <td align="center">indique que les changements d'aspect du m&#226;t Ma&#238;tre
+           sont r&#233;p&#233;t&#233;s au m&#226;t Esclave.</td>
+          </tr>
+          <tr>
+              <td align="center"><img src="images/SignalMastRepeaterSlave-to-MasterButton.png" 
+                   alt="Image du bouton de r&#233;p&#233;tition du ma&#238;tre &#224; l'esclave"></td>
+              <td align="center">indique que Les changements d'aspect du m&#226;t Esclave
+           sont r&#233;p&#233;t&#233;s au m&#226;t Principal.
+          </tr>
+          <tr>
+              <td align="center"><img src="images/SignalMastRepeaterBidirectionalButton.png" 
+                   alt="Image du bouton de r&#233;p&#233;tition du ma&#238;tre &#224; l'esclave"></td>
+              <td align="center">indique que toutchangement d'aspect du m&#226;t Ma&#238;tre est r&#233;p&#233;t&#233; sur le m&#226;t
+              Esclave, et tout changement d'aspect du m&#226;t Esclave est r&#233;p&#233;t&#233; au m&#226;t Principal.</td>
+          </tr>
+      </table>
+          
+      <p>Par d&#233;faut, un r&#233;p&#233;teur est activ&#233; lors de sa cr&#233;ation.  Il est possible de 
+          d&#233;sactiver un r&#233;p&#233;teur individuel en d&#233;cochant la case dans la colonne "Activer"
+          pour la ligne particuli&#232;re contenant le r&#233;p&#233;teur.  Cela peut &#234;tre utile pour 
+          d&#233;boguer l'effet de votre r&#233;p&#233;teur sur le r&#233;seau.</p>
+
+      <h2>Un cas d'utilisation pour un r&#233;p&#233;teur de M&#226;t de Signalisation</h2>
+      <p></p>Dans les cas o&#249; il y a plusieurs itin&#233;raires entre un M&#226;t de Signalisation "source" et un M&#226;t de 
+      Signalisation "destination", sans M&#226;t de Signalisation interm&#233;diaire, le projet de "recherche" logique de M&#226;t de 
+      Signalisation JMRI n'identifiera que <strong>un</strong> des itin&#233;raires valides.  La logique de M&#226;t de Signalisation 
+      de JMRI ignore toutes les autres itin&#233;raires existantes et ne g&#233;n&#232;re aucune logique dans la logique du m&#226;t 
+      de source pour ces itin&#233;raires non recherch&#233;s. Le panneau de l'&#233;diteur de r&#233;seau ci-dessous montre une disposition
+      de voie o&#249; cette lacune de la logique de M&#226;t de Signalisation peut &#234;tre vue.  Pour ce panneau, il y a trois 
+      itin&#233;raires diff&#233;rentes du signal RA2.</p>
+      <p> La logique de "recherche" du M&#226;t de Signalisation du JMRI ne permet de trouver que deux des trois itin&#233;raires :
+      <ul>
+          <li>Itin&#233;raire 1 - un itin&#233;raire de RA2 &#224; RA173, via l'aiguillage 1 "d&#233;vi&#233;" (divergent) et l'aiguillage 5 ; "direct" ; et</li>
+          <li>Itin&#233;raire 2 - un itin&#233;raire de lRA2 &#224; RA171, via l'aiguillage 1 "direct")</li>
+      </ul>
+          
+      <p>La recherche logique du M&#226;t de Signalisation de JMRI pour RA2 ne parvient pas &#224; trouver automatiquement le dernier itin&#233;raire :
+      <ul>
+          <li>Itin&#233;raire 3 - un itin&#233;raire de RA2 &#224; RA173 via le commutateur 1 direct et le commutateur 3 d&#233;vi&#233;; et Interrupteur 5 d&#233;vi&#233;. </li>
+      </ul>
+      
+      <p>Chacun des trois itin&#233;raires est examin&#233; s&#233;par&#233;ment ci-dessous.</p>
+
+      <h3>Exemple d'itin&#233;raire 1</h3>
+      <p>Cette itin&#233;raire part du signal RA2, via l'aiguillage 1 "d&#233;vi&#233;" (lanc&#233;), et l'aiguillage 5 "direct" (ferm&#233;), pour 
+      signaler RA173, et est indiqu&#233;e ci-dessous.</p>
+
+      <img src="images/SignalMastRepeaterItin&#233;raire1.png" alt="un exemple montrant une itin&#233;raire correctement d&#233;couverte entre le M&#226;t 
+      de Signalisation RA2 et le M&#226;t de Signalisation RA173.">
+      <p>L'itin&#233;raire 1 a &#233;t&#233; correctement trouv&#233; par la logique du M&#226;t de Signalisation et est indiqu&#233; dans la rang&#233;e 
+      sup&#233;rieure de l'image de la fen&#234;tre Logique du M&#226;t de Signalisation, en bas. Pour l'Itin&#233;raire 1 la logique est activ&#233;e 
+      (coch&#233;e).  Dans les conditions indiqu&#233;es dans l'image ci-dessus, l'itin&#233;raire 1 est actuellement un itin&#233;raire actif, comme 
+      indiqu&#233; par le les coches associ&#233;es.  L'examen des conditions indiqu&#233;es ci-dessus montre que RA2 pr&#233;sente un aspect 
+      "D&#233;vi&#233; Libre" (Rouge sur Vert sur Rouge).</p>
+      <img src="images/SignalMastRepeaterItin&#233;raire1SMLogic.png" alt="an example showing the signal mast logic for the properly-discovered route 
+      from signal mast RA2 to signal mast RA173.">
+
+      <h3>Exemple de itin&#233;raire 2</h3>
+      <p>Cet itin&#233;raire provient du signal RA2, via l'aiguillage 1 "direct" (ferm&#233;), et l'aiguillage 3
+          "direct" (ferm&#233;), pour signaler RA171, et est indiqu&#233; ci-dessous.</p>
+      <img src="images/SignalMastRepeaterItin&#233;raire2.png" alt="an example showing a properly-discovered route from signal mast RA2 to signal mast RA171.">
+      <p>La itin&#233;raire 2 a &#233;t&#233; correctement d&#233;couverte par le Signal Mast Logic et est indiqu&#233;e dans la deuxi&#232;me ligne de 
+      l'image de la fen&#234;tre Signal Mast Logic, ci-dessous.  La logique de la itin&#233;raire 2 est activ&#233;e (coch&#233;e).  Dans les conditions 
+      illustr&#233;es dans l'image ci-dessus, la itin&#233;raire 2 est actuellement une itin&#233;raire active, comme l'indiquent les coches associ&#233;es.  
+      L'examen des conditions montr&#233;es ci-dessus montre que RA2 pr&#233;sente un aspect "clair" (vert sur rouge sur rouge).</p>
+      <img src="images/SignalMastRepeaterItin&#233;raire2SMLogic.png" alt="an example showing the signal mast logic for the properly-discovered route 
+      from signal mast RA2 to signal mast RA171.">
+
+      <h3>Exemple d'itin&#233;raire 3 (itin&#233;raire non recherch&#233;)</h3>
+      <p>L'itin&#233;raire 3 n'est pas recherch&#233; par la logique du M&#226;t de Signalisation.  Cet itin&#233;raire provient de signal RA2, via le 
+      l'aiguillage 1 "direct" (ferm&#233;), l'aiguillage 3 "d&#233;vi&#233;" (lanc&#233;) et l'aiguillage 5 "d&#233;vi&#233;" (lanc&#233;) pour signaler 
+      RA173, et est indiqu&#233; ci-dessous.</p>
+      <img src="images/SignalMastRepeaterItin&#233;raire3.png" alt=""an example showing two different routes from one signal mast to its destination 
+      signal mast">
+      <p>Notez que le signal RA2 ne <strong>pas</strong> donne une meilleure indication  que "Stop" dans ces conditions, car il n'y a pas d'entr&#233;e 
+      Signal Logic  qui a d&#233;couvert le chemin de RA2 &#224; RA173 par cette voie.</p>
+      <img src="images/SignalMastRepeaterItin&#233;raire3NoSMLogic.png" alt="Signal Mast Logic automatically generated by the 'discovery' process">
+      <p>Notez qu'aucune des deux lignes du tableau logique du M&#226;t de Signalisation ci-dessus sont marqu&#233;s comme "Actifs", car les exigences 
+      de ces deux signaux en mati&#232;re d'itin&#233;raire Les entr&#233;es de la logique du m&#226;t ne sont pas satisfaites.</p>
+
+      <h2>Pourquoi la d&#233;couverte de la logique du M&#226;t de Signalisation rate la troisi&#232;me voie</h2>
+      <p>Lors de la d&#233;couverte de paires de m&#226;ts entre lesquels cr&#233;er un signal  Logique de m&#226;t, JMRI <strong>ne trouve qu'un seul 
+      chemin</strong> entre un M&#226;t de Signalisation donn&#233;  paire.  Le processus de d&#233;couverte de JMRI <strong>continue alors de chercher 
+      d'autres voies entre ces deux M&#226;ts de Signalisation</strong>, et passe &#224; la d&#233;couverte d'une autre paire de M&#226;ts de Signalisation.</p>
+      <p>Il y a plusieurs raisons techniques &#224; cela et, au moins pour le proche avenir, on ne s'attend pas &#224; ce que  ce comportement change. 
+      Une solution de contournement s'impose.</p>
+
+      <h2>Le contournement</h2>
+
+      <p>Cette explication du probl&#232;me contient un indice sur la mani&#232;re de r&#233;soudre le probl&#232;me - La logique du M&#226;t de 
+      Signalisation de JMRI fonctionne avec des paires de signaux uniques.  Ce qui implique qu'un M&#226;t de Signalisation qui reproduit le comportement 
+      de RA173 pourrait permettre la cr&#233;ation d'une logique de M&#226;t de Signalisation pour l'itin&#233;raire cherch&#233; de RA2 &#224; RA173.</p>
+        <p>La duplication du M&#226;t de Signalisation RA173 s'av&#232;re &#234;tre une excellente id&#233;e ! Et c'est le d&#233;but de la solution !
+
+      <p>Mais un point donn&#233; sur un panneau de l'&#233;diteur der&#233;seau ne peut avoir que <strong>un</strong>  M&#226;t de Signalisation 
+      r&#233;gissant le mouvement dans une direction donn&#233;e.  Cela signifie que le double M&#226;t de Signalisation <strong>pas possible</strong> 
+      &#234;tre attach&#233; au m&#234;me endroit sur le panneau.  Et, dans un rond-point  Cela signifie &#233;galement que la cherche de la logique du 
+      M&#226;t de Signalisation <strong> est incapable</strong> d'identifier le chemin alternatif vers le double de RA173.</p>
+
+      <p>Pour ce faire, il faut un travail manuel - il est n&#233;cessaire de  cr&#233;er manuellement l'entr&#233;e Signal Mast Logic que nous aurions 
+      pr&#233;f&#233;r&#233;e voir cr&#233;e par la recherche Logique Mat de Signalisation. C'est l&#224; que l"Ajouter Logique Signal"  sur la fen&#234;tre 
+      "Logique Mat de Signalisation" du signal entre en jeu.</p>
+
+      <h2>Contournement par l'exemple</h2>
+      <p>Les &#233;tapes pour contourner le d&#233;faut de recherche du M&#226;t de Signalisation d&#233;crit ci-dessus sont:</p>
+      <ol>
+          <li>Cr&#233;er un double M&#226;t de Signalisation de "destination";</li>
+          <li>Configurer le m&#226;t en double comme un r&#233;p&#233;teur de M&#226;t de Signalisation pour le 
+              M&#226;t de Signalisation de destination primaire;</li>
+          <li>Placez le M&#226;t de Signalisation virtuel sur le panneau de l'&#233;diteur de r&#233;seau;</li>
+          <li>Cr&#233;er manuellement la logique de M&#226;t de Signalisation requise;</li>
+          <li>Tester la logique.</li>
+      </ol>
+      <p>Les &#233;tapes sont d&#233;taill&#233;es ici:</p>
+      <ol>
+          <li>Cr&#233;er le double du M&#226;t de Signalisation de destination
+              <ol>
+                  <li>Ouvrir le <a href="SignalMastTable.shtml">Tableau des M&#226;ts de Signalisation</a>, via "Outils"->"Tableaux"->"M&#226;ts de 
+                  signalisation".</li>
+                  <li><a href="AddEditSignalingLogic.shtml">Add</a> le faux M&#226;t de Signalisation est presque identique au M&#226;t de Signalisation 
+                  physique, qui est RA173 dans ce cas.  Pour faciliter la consultation, choisissez un nom similaire &#224; celui du m&#226;t &#224; imiter -
+                  dans le cas pr&#233;sent, "RA173 Virtuel ".<br>Ce m&#226;t factice doit utiliser le m&#234;me "syst&#232;me de signalisation" que le 
+                  m&#226;t qu'il doit imiter, et il doit &#234;tre du m&#234;me "type de M&#226;t".  Le r&#233;p&#233;teur n'a pas besoin d'utiliser le 
+                  m&#234;me type du "M&#224;t Pilote".<br> Si aucune repr&#233;sentation physique du m&#226;t r&#233;p&#233;t&#233; n'est requise, le type 
+                  de "M&#224;t virtuel" de M&#224;t Pilote peut &#234;tre utilis&#233;.  Si le type de M&#224;t Pilote choisi utilise une ou plusieurs adresses
+                  mat&#233;rielles, veillez &#224; utiliser des informations d'adresse qui ne sont pas d&#233;j&#224; utilis&#233;es par un  autre mat&#233;riel 
+                  du r&#233;seau ou autres m&#226;ts virtuels.</li>
+              </ol>
+          </li>
+          <li>Configurer le M&#226;t de Signalisation en double pour r&#233;p&#233;ter le M&#226;t de Signalisation physique
+              <ol>
+                  <li>S&#233;lectionnez le menu d&#233;roulant "Outils" sur l'outil du Tableau des M&#226;ts de Signalisation.  S&#233;lectionnez 
+                  "R&#233;p&#233;teur".  Cela ouvre la fen&#234;tre "R&#233;p&#233;teurs de M&#226;t de Signalisation" et la liste des signaux "Ma&#238;tre" 
+                  pr&#233;-remplit en bas de la fen&#234;tree avec tous les M&#226;ts de Signalisation disponibles.</li>
+                  <li>En bas de la fen&#234;tre, s&#233;lectionnez le signal "Ma&#238;tre" - dans ce cas, le m&#226;t "RA173".  L'outil  pr&#233;-remplira 
+                  alors la liste des M&#226;ts de Signalisation "Esclaves" qui utilisent les m&#234;mes syst&#232;me de signalisation et type de m&#226;t 
+                  comme le m&#226;t principal s&#233;lectionn&#233;.</li>
+                  <li>S&#233;lectionnez le M&#226;t de Signalisation "esclave" pour agir en conjonction avec le M&#226;t de Signalisation principal 
+                  s&#233;lectionn&#233; - dans ce cas, le m&#226;t "RA173 Virtuel".<p> <img src="images/SignalMastRepeaterCreation0.png"/> </li>
+                  <li>Activer le bouton "Ajouter".  Cela placera une nouvelle ligne dans le tableau  de r&#233;p&#233;teurs dans la partie sup&#233;rieure de 
+                  la fen&#234;tre.</li>
+                  <li>La pointe de la fl&#232;che dans le tableau pour "RA173" et "RA173 virtuel" d&#233;termine si les modifications apport&#233;es &#224; 
+                  un M&#226;t de Signalisation seront r&#233;percut&#233;es par l'autre m&#226;t.  Par d&#233;faut, un changement sur un m&#226;t sera 
+                  refl&#233;t&#233; d'autre part, comme le montre le bouton ci-dessous : "<br>
+                  <img src="images/SignalMastRepeaterBidirectionalButton.png" 
+                   alt="Master to Slave repeat button image">
+                  <p>Cliquez sur ce bouton pour faire d&#233;filer les fl&#232;ches de mani&#232;re &#224; ce qu'il y ait  une seule pointe de fl&#232;che, 
+                  et elle doit pointer vers "RA173 Virtuel".  Cela signifie que les modifications apport&#233;es &#224; l'indication de RA173 seront 
+                  refl&#233;t&#233;es sur le RA173 virtuel, mais que les changements sur la RA173 virtuel ne seront pas r&#233;fl&#233;chi sur la RA173. 
+                  Ceci est illustr&#233; ci-dessous.
+                  <img src="images/SignalMastRepeaterCreation.png"/> </li>
+                  <li> Vous pouvez maintenant fermer la fen&#234;tre du r&#233;p&#233;teur de M&#226;t de Signalisation. </li>
+              </ol>
+          </li>
+            <li>En option, placez le double du M&#226;t de Signalisation sur le panneau de l'&#201;diteur de R&#233;seau.<br>  (Notez que le fait de placer 
+            le double du M&#226;t de Signalisation sur l'&#201;diteur de R&#233;seaun'offre aucun avantage fonctionnel &#233;vident pour ce r&#233;p&#233;titeur 
+            en cas d'utilisation, et se fait principalement &#224; des fins de d&#233;bogage).
+              <ol>
+                  <li>Placez le nouveau M&#226;t de Signalisation virtuel quelque part sur le panneau de l'&#201;diteur de R&#233;seau.  Il est n&#233;cessaire 
+                  de s&#233;lectionner le bouton radio "Ic&#244;ne Mat de Signalisation". et s&#233;lectionnez le nouveau m&#226;t factice dans la fen&#234;tre  
+                  bo&#238;te de s&#233;lection.</li>
+                  <li>Placez l'ic&#244;ne sur le panneau &#224; un endroit qui fait  sens pour vous.  J'ai choisi de le placer imm&#233;diatement en dessous 
+                  de RA173, comme pr&#233;sent&#233; ci-dessous.<p>
+                  <img src="images/SignalMastRepeaterIconPlaced.png"/></li>
+                  <li> Vous pouvez cliquer avec le bouton droit de la souris sur le M&#226;t de Signalisation virtuel et s&#233;lectionnez l'option pour 
+                  "cacher" l'ic&#244;ne du M&#226;t de Signalisation lorsqu'il n'est pas en mode "&#233;dition".  Pour les besoins de cet exemple, l'ic&#244;ne reste non cach&#233;.</li>
+              </ol>
+          </li>
+          <li>Cr&#233;er la logique du M&#226;t de Signalisation pour l'itin&#233;raire non d&#233;couvert.
+              <ol>
+              <li>Cliquez &#224; droite sur RA2 et s&#233;lectionnez la "Logique du M&#226;t de Signalisation" : RA2". Cela ouvre les "paires de M&#226;ts 
+              de Signalisation" : RA2" (Pour plus d'informations, voir la section "Paires de m&#226;ts de signaux : RA2"), voir <a href="AddEditSignalingLogic.shtml">Ajouter/modifier la logique du M&#226;t de Signalisation</a>.)</li>
+              <li>S&#233;lectionnez le m&#226;t de destination "RA173 Virtuel".<p>
+              <img src="images/SignalMastRepeaterCreationSelectDestination.png"/></li>
+              <li>Ajouter les "Cantons" associ&#233;s &#224; l'itin&#233;raire.
+                  <ol>
+                    <li>Dans la section "Cantons", s&#233;lectionnez tous les cantons entre le signal RA2 et le signal de d&#233;part (virtuel) RA173 qui 
+                    sont sur l'itin&#233;raire "non d&#233;couvert". Dans ce cas, les cantons 2, 3, 4, 7 et 8 sont sur le chemin "non d&#233;couvert".  
+                    Ils doivent &#234;tre entr&#233;s comme "inoccup&#233;s", car le signal RA2 <strong>ne doit pas</strong> indique autre chose 
+                    que "Stop" si l'un de ces cantons est occup&#233;. Cette configuration est pr&#233;sent&#233; ci-dessous.
+                    <img src="images/SignalMastRepeaterCreationBlocks.png"/></li>
+                  </ol>
+              </li>
+              <li>Ajouter les "Aiguillages", et leurs positions, associ&#233;s &#224; l'itin&#233;raire.
+                  <ol>
+                    <li>S&#233;lectionnez l'onglet "Aiguillages". "Inclure" chacun des Aiguillages, et la direction d&#233;vi&#233;e requise, pour ces 
+                    aiguillages sur le parcours du chemin non d&#233;couvert entre le signal d'entr&#233;e RA2 et le signal de sortie signal (virtuel) 
+                    RA173. Dans ce cas, l'Aiguillage 1 doit &#234;tre "direct" (normal), l'Aiguillage 3 doit   doit &#234;tre "d&#233;vi&#233;" 
+                    (invers&#233;), et l'Aiguillage 5 doit &#234;tre "d&#233;vi&#233;" (invers&#233;) sur cet itin&#233;raire.  Cette configuration est 
+                    illustr&#233;e ci-dessous.<p>
+                    <img src="images/SignalMastRepeaterCreationTurnouts.png"/></li>
+                  </ol>
+              </li>
+              <li>Si n&#233;cessaire, ajoutez tout "M&#226;t de Signalisation" oppos&#233; associ&#233; &#224; l'itin&#233;raire.  C'est souvent une 
+              exigence pour les signaux sur le territoire de la CTC.
+                  <ol>
+                    <li>Si vous jugez n&#233;cessaire prot&#232;ger absolument le signal RA2 de l'effacement lorsque le signal LA4 s'oppose absolument 
+                    &#224; rien de moins restrictif que "stop", alors le M&#226;t de Signalisation LA4 doit &#234;tre inclus dans l'onglet "Logique du
+                    M&#226;t de Signalisation" de la RA4 . L'entr&#233;e logique du M&#226;t de Signalisation de RA2 doit exiger que LA4 soit &#224; "Stop".  
+                    Cette configuration est illustr&#233;e ci-dessous.<p>
+              <img src="images/SignalMastRepeaterCreationMasts.png"/></li>
+                  </ol>
+              </li>
+              </ol>
+              <p>La liste de logique de M&#226;t de Signalisation qui en r&#233;sulte pour RA2 semble similaire &#224; l'image ci-dessous, bien que 
+              l'&#233;l&#233;ment logique "Actif" puisse &#234;tre s&#233;lectionn&#233; diff&#233;remment, ou aucun &#233;l&#233;ment "actif" ne 
+              peut &#234;tre affich&#233;, selon lesconditions du r&#233;seau.</p>
+              <img src="images/SignalMastRepeaterFinalSignalMastLogic.png"/>
+          </li>
+          <li>S&#233;lectionnez le bouton "Mise &#224; jour Logique Signal" pour apporter les changements &#224; la Logique M&#226;t de signalisation RA2.</li>
+          <li>Sauvegardez votre travail! S&#233;lectionnez "Fichier"->"Enregistrer les panneaux...".  </li>
+          <li>Quitter le mode "Edition" de l'&#201;diteur de R&#233;seau.</li>
+      </ol>
+
+      Voil&#224; qui compl&#232;te les changements !
+      <h3>Tester la solution de contournement</h3>
+      <ul>
+           <li>Cliquez sur l'Aiguillage 1 jusqu'&#224; ce qu'il soit "direct" (normal, ligne droite, ...). Cliquez sur l'Aiguillage 2 jusqu'&#224; ce 
+           qu'il soit "direct".  Cliquez sur le signal RA171 jusqu'&#224; ce qu'il donne une indication moins restrictive que "Stop et Poursuivre".  
+           Vous devriez obtenir  une indication sup&#233;rieure &#224; "stop" sur RA2.  Si ce n'est pas le cas, assurez-vous que les capteurs associ&#233;s 
+           aux cantons du trajet sont tous "inoccup&#233;s" (c'est-&#224;-dire inactifs).</li>
+          <li>Une fois que vous avez RA2 pour passer automatiquement de "Stop", cliquez sur RA171 pour passer ses indications disponibles et regarder 
+          pour voir quelles indications apparaissent sur RA2. Il convient de noter que les param&#232;tres de "vitesse" pour les aiguillages et les 
+          cantons du chemin peuvent tous affecter l'indications vues sur RA2.  Voir ci-dessous.</li>
+          <li>Interrupteur de ligne 1 en position divergente, et interrupteur de ligne 5 en position droite position.  Cliquez sur le signal RA173 
+          jusqu'&#224; ce qu'il donne une indication qui est  moins restrictif que "Stop et Poursuivre".  Vous devriez obtenir automatiquement une 
+          indication sup&#233;rieure &#224; "stop" sur RA2.  Si ce n'est pas le cas, assurez-vous que le les capteurs associ&#233;s aux cantons du 
+          trajet sont tous "inoccup&#233;s" (c'est-&#224;-dire inactifs).</li>
+          <li>Une fois que vous obtenez RA2 pour mettre &#224; niveau automatiquement &#224; partir de "Stop", cliquez sur RA173 pour parcourir les 
+          indications disponibles et regarder  pour voir quelles indications figurent sur RA2. Notez que les r&#233;glages de "Vitesse" des aiguillages 
+          et des cantons du chemin peuvent tous affecter les indications vues sur RA2.</li>
+          <li> Puis tester l'itin&#233;raire qui n'a pas &#233;t&#233; trouv&#233; par le processus de "recherche".  Commutateur de ligne 1 "normal", 
+          commutateur 3 "d&#233;vi&#233;" et commutateur 5 "d&#233;vi&#233;". Cela devrait activer l'itin&#233;raire saisi manuellement dans la logique du M&#226;t de Signalisation, et devrait permettre de modifier la RA173 pour affecter le signal RA2. Cela devrait permettre &#224; RA2 d'afficher correctement autre chose que "Stop", comme indiqu&#233; ici.<p>
+              <img src="images/SignalMastRepeaterItin&#233;raire3Functioning.png"/>
+          </li>
+      </ul>
+
+      <p>Les param&#232;tres de vitesse pour les aiguillages et les cantons dans un chemin donn&#233; peuvent tous influencer l'aspect indiqu&#233; 
+      sur le signal. La vitesse la plus lente sur une partie de l'itin&#233;raire limitera l'indication du signal &#224; celle qui permet la vitesse 
+      (ou une vitesse  la plus faible, si cette vitesse sp&#233;cifique n'est pas disponible par indication du signal).</p>
+      <p><strong>Note:</strong>Si les aiguillages individuels sont laiss&#233;s &#224; la valeurs "par d&#233;faut", alors tout itin&#233;raire avec 
+      un aiguillage d&#233;vi&#233; forcent automatiquement le signal &#224; une "restriction" de vitesse maximale pour l'itin&#233;raire. Pour r&#233;aliser 
+      les images ci-dessus, il a fallu  modifier les vitesses "d&#233;vi&#233;" de l'aiguillage (dans le tableau des aiguillages) pour &#234;tre au moins "Lent", 
+      comme indiqu&#233; ci-dessous.  Pour le syst&#232;me de signalisation s&#233;lectionn&#233;, que c'&#233;tait suffisant pour permettre &#224; la logique 
+      u M&#226;t de Signalisation de choisir "D&#233;vi&#233; Libre".   (Rouge-Vert-Rouge) pour les itin&#233;raires o&#249; un aiguillage a n&#233;cessit&#233; 
+      un itin&#233;raire.</p>  <img src="images/SignalMastRepeaterTurnoutSettings.png"/> <h3>Une note g&#233;n&#233;rale sur les r&#233;p&#233;teurs de signaux 
+      et les itin&#233;raires multiples</h3>
+      <p>Ce concept peut &#234;tre &#233;tendu aux situations o&#249; "n" itin&#233;raires sont disponibles  d'un M&#226;t de Signalisation &#224; un autre. 
+      Avec "n" itin&#233;raires, la recherche ne trouvera qu'un seul de ces "n" itin&#233;raires.  En utilisant la solution de contournement d&#233;crite 
+      ci-dessus, il est n&#233;cessaire de cr&#233;er des r&#233;p&#233;teurs de M&#226;t de Signalisation "n-1" pour le m&#226;t destination. 
+      Et il est n&#233;cessaire de cr&#233;er manuellement des entr&#233;es logiques "n-1" pour le M&#226;t de Signalisation du m&#226;t du signal 
+      source &#224; chacune des copies virtuelles du m&#226;t destination. (L'exemple donn&#233; ci-dessus d&#233;crit le cas o&#249; la valeur 
+      de "n"  &#233;tait 2.)</p>
+
+      <h1>Voir aussi</h1>
+      Pour des informations connexes, :
+      <ul>
+          <li>La <a href="../../../../html/tools/signaling/index.shtml#tools">Signalisation</a> :page d'aide principale.</li>
+          <li>L' <a href="AspectSignaling.shtml">Aspect
+                  Signalisation</a>: page d'aide.</li>
+          <li>Le <a href="../../../../html/tools/signaling/SignalMasts.shtml">M&#226;t de Signalisation</a>: documentation .</li>
+          <li>La <a href="SignalMastTable.shtml"> des M&#226;ts de Signalisation</a>: page d'aide.</li>
+          <li>L' <a href="SignalMastAddEdit.shtml">Ajout de M&#226;ts de Signalisation</a>: page d'aide.</li>
+          <li>La <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Logique du M&#226;t de Signalisation</a>: introduction.</li>
+          <li>La <a href="SignalMastLogicTable.shtml">Table Logique du M&#226;t de Signalisation</a>: page d'aide.</li>
+          <li> <a href="AddEditSignalingLogic.shtml">Ajouter/modifier la Logique du M&#226;t de Signalisation</a>: page d'aide.</li>
+      </ul>
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
