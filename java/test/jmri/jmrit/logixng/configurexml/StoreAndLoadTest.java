@@ -1024,7 +1024,7 @@ public class StoreAndLoadTest {
         JUnitUtil.initWarrantManager();
         
 //        JUnitUtil.initLogixNGManager();
-   }
+    }
 
     @After
     public void tearDown() {
