@@ -9,7 +9,7 @@ import javax.swing.tree.TreePath;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
 
 import jmri.util.*;

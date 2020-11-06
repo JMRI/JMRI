@@ -5,7 +5,7 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;

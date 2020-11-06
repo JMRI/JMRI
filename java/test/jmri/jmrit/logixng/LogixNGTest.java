@@ -14,8 +14,8 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.Base.Lock;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
-import jmri.jmrit.logixng.digital.expressions.And;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

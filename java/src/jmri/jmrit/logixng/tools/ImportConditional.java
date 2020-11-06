@@ -1,5 +1,19 @@
 package jmri.jmrit.logixng.tools;
 
+import jmri.jmrit.logixng.expressions.ExpressionConditional;
+import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
+import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
+import jmri.jmrit.logixng.expressions.ExpressionLight;
+import jmri.jmrit.logixng.expressions.ExpressionClock;
+import jmri.jmrit.logixng.expressions.ExpressionWarrant;
+import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
+import jmri.jmrit.logixng.expressions.ExpressionOBlock;
+import jmri.jmrit.logixng.expressions.Or;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.Antecedent;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.actions.ActionTurnout;
@@ -16,7 +30,6 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.digital.expressions.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

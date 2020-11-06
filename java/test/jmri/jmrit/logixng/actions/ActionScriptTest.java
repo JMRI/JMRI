@@ -7,8 +7,8 @@ import jmri.InstanceManager;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.digital.expressions.True;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.True;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

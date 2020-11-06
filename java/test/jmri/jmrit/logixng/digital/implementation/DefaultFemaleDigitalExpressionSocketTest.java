@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -99,36 +99,36 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionClock.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionConditional.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionEntryExit.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionLight.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionLocalVariable.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionMemory.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionOBlock.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionReference.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionScript.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSensor.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSignalHead.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionSignalMast.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionTurnout.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionWarrant.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionClock.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionConditional.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionEntryExit.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionLight.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionLocalVariable.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionOBlock.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionReference.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionScript.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSensor.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalHead.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionSignalMast.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionWarrant.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.expressions.And.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.Antecedent.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.Formula.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.Or.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ExpressionTimer.class);
+        classes.add(jmri.jmrit.logixng.expressions.And.class);
+        classes.add(jmri.jmrit.logixng.expressions.Antecedent.class);
+        classes.add(jmri.jmrit.logixng.expressions.Formula.class);
+        classes.add(jmri.jmrit.logixng.expressions.Or.class);
+        classes.add(jmri.jmrit.logixng.expressions.ExpressionTimer.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.expressions.False.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.Hold.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.ResetOnTrue.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.TriggerOnce.class);
-        classes.add(jmri.jmrit.logixng.digital.expressions.True.class);
+        classes.add(jmri.jmrit.logixng.expressions.False.class);
+        classes.add(jmri.jmrit.logixng.expressions.Hold.class);
+        classes.add(jmri.jmrit.logixng.expressions.ResetOnTrue.class);
+        classes.add(jmri.jmrit.logixng.expressions.TriggerOnce.class);
+        classes.add(jmri.jmrit.logixng.expressions.True.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

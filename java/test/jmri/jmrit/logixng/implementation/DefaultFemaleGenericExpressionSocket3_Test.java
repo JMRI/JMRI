@@ -4,7 +4,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket.SocketType;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
-import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.string.expressions.StringExpressionConstant;
 import jmri.util.JUnitUtil;
 

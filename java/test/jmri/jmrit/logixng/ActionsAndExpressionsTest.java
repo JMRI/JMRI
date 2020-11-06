@@ -209,8 +209,8 @@ public class ActionsAndExpressionsTest {
                 new String[]{"AbstractDigitalBooleanAction","Bundle","Factory"});
         
         checkFolder(
-                getPath("digital/expressions"),
-                "jmri.jmrit.logixng.digital.expressions",
+                getPath("expressions"),
+                "jmri.jmrit.logixng.expressions",
                 getDigitalExpressionClasses(),
                 new String[]{"AbstractDigitalExpression","AbstractScriptDigitalExpression","Bundle","Factory"});
         

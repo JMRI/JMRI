@@ -9,9 +9,9 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpression;
-import jmri.jmrit.logixng.digital.expressions.And;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
+import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;

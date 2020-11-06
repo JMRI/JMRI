@@ -7,7 +7,7 @@ import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.Many;
 import jmri.*;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
-import jmri.jmrit.logixng.digital.expressions.ExpressionLocalVariable;
+import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;

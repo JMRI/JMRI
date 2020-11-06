@@ -1,5 +1,28 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.expressions.ExpressionReference;
+import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
+import jmri.jmrit.logixng.expressions.ResetOnTrue;
+import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
+import jmri.jmrit.logixng.expressions.Or;
+import jmri.jmrit.logixng.expressions.ExpressionClock;
+import jmri.jmrit.logixng.expressions.Hold;
+import jmri.jmrit.logixng.expressions.TriggerOnce;
+import jmri.jmrit.logixng.expressions.Antecedent;
+import jmri.jmrit.logixng.expressions.ExpressionWarrant;
+import jmri.jmrit.logixng.expressions.ExpressionOBlock;
+import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.expressions.ExpressionScript;
+import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.ExpressionConditional;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionLight;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.True;
+import jmri.jmrit.logixng.expressions.False;
+import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
+
 import java.awt.GraphicsEnvironment;
 
 import jmri.jmrit.logixng.actions.ActionThrottle;
@@ -28,7 +51,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.*;
 import jmri.jmrit.logixng.analog.expressions.*;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.*;
 import jmri.jmrit.logixng.string.expressions.*;
 import jmri.util.*;
@@ -716,12 +738,12 @@ public class StoreAndLoadTest {
         and.getChild(index++).connect(maleSocket);
         
         
-        jmri.jmrit.logixng.digital.expressions.Formula formula =
-                new jmri.jmrit.logixng.digital.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
+        jmri.jmrit.logixng.expressions.Formula formula =
+                new jmri.jmrit.logixng.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
         maleSocket = digitalExpressionManager.registerExpression(formula);
         and.getChild(index++).connect(maleSocket);
         
-        formula = new jmri.jmrit.logixng.digital.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
+        formula = new jmri.jmrit.logixng.expressions.Formula(digitalExpressionManager.getAutoSystemName(), null);
         formula.setComment("A comment");
         formula.setFormula("n + 1");
         maleSocket = digitalExpressionManager.registerExpression(formula);

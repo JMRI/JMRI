@@ -4,7 +4,7 @@ import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange.Trigger;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;

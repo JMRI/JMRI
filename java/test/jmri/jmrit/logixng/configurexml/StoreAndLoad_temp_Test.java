@@ -1,5 +1,18 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.expressions.ResetOnTrue;
+import jmri.jmrit.logixng.expressions.Or;
+import jmri.jmrit.logixng.expressions.Hold;
+import jmri.jmrit.logixng.expressions.ExpressionTimer;
+import jmri.jmrit.logixng.expressions.TriggerOnce;
+import jmri.jmrit.logixng.expressions.Antecedent;
+import jmri.jmrit.logixng.expressions.And;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.ExpressionLight;
+import jmri.jmrit.logixng.expressions.True;
+import jmri.jmrit.logixng.expressions.False;
 import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.IfThenElse;
@@ -30,7 +43,6 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.expressions.*;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
 import jmri.jmrit.logixng.Is_IsNot_Enum;

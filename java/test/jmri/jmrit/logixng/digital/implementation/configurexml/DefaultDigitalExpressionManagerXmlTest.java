@@ -4,12 +4,13 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.digital.expressions.configurexml.ExpressionTurnoutXml;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml;
 import jmri.jmrit.logixng.digital.implementation.DefaultDigitalExpressionManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;

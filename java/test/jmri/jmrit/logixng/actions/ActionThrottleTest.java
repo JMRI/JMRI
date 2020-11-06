@@ -20,8 +20,8 @@ import jmri.ThrottleManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
 import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.digital.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

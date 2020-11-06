@@ -24,7 +24,7 @@ import javax.swing.JMenuBar;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
+import jmri.jmrit.logixng.expressions.ExpressionTurnout;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.DigitalExpressionBean;
