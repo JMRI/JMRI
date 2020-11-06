@@ -94,5 +94,5 @@ public class ExpressionSignalHeadXml extends jmri.managers.configurexml.Abstract
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSignalHeadXml.class);
 }

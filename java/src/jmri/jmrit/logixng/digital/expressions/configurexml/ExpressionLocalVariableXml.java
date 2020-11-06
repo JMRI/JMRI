@@ -98,5 +98,5 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLocalVariableXml.class);
 }

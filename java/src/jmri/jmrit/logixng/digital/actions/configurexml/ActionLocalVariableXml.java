@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.actions.configurexml;
 import jmri.*;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.digital.actions.ActionLocalVariable;
-import jmri.jmrit.logixng.digital.actions.ActionMemory;
 import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
@@ -94,5 +93,5 @@ public class ActionLocalVariableXml extends jmri.managers.configurexml.AbstractN
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLocalVariableXml.class);
 }
