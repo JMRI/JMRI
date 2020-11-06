@@ -82,7 +82,7 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
             h.setVariableOperation(ExpressionLocalVariable.VariableOperation.valueOf(variableOperation.getTextTrim()));
         }
 
-        Element caseInsensitive = shared.getChild("variableOperation");
+        Element caseInsensitive = shared.getChild("caseInsensitive");
         if (caseInsensitive != null) {
             h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
         } else {
@@ -98,5 +98,5 @@ public class ExpressionLocalVariableXml extends jmri.managers.configurexml.Abstr
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
 }

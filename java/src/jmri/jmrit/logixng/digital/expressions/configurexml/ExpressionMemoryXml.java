@@ -89,7 +89,7 @@ public class ExpressionMemoryXml extends jmri.managers.configurexml.AbstractName
             h.setCompareTo(ExpressionMemory.CompareTo.valueOf(compareTo.getTextTrim()));
         }
 
-        Element caseInsensitive = shared.getChild("variableOperation");
+        Element caseInsensitive = shared.getChild("caseInsensitive");
         if (caseInsensitive != null) {
             h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
         } else {

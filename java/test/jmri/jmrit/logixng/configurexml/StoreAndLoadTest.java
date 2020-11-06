@@ -1019,11 +1019,11 @@ public class StoreAndLoadTest {
         
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
-        JUnitUtil.initSignalMastLogicManager();
+//        JUnitUtil.initSignalMastLogicManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initWarrantManager();
         
-        JUnitUtil.initLogixNGManager();
+//        JUnitUtil.initLogixNGManager();
    }
 
     @After

@@ -49,6 +49,7 @@ public class DefaultDigitalActionManagerXml extends jmri.managers.configurexml.A
         Element actions = new Element("logixngDigitalActions");
         setStoreElementClass(actions);
         DigitalActionManager tm = (DigitalActionManager) o;
+//        System.out.format("DefaultDigitalActionManagerXml: manager: %s%n", tm);
         if (tm != null) {
             for (DigitalActionBean action : tm.getNamedBeanSet()) {
                 log.debug("action system name is " + action.getSystemName());  // NOI18N

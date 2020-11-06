@@ -87,7 +87,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
         if (memory != null) {
             setOtherMemory(memory);
         } else {
-            removeMemory();
+            removeOtherMemory();
             log.error("memory \"{}\" is not found", memoryName);
         }
     }
