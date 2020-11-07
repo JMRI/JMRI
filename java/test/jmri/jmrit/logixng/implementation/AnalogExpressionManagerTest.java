@@ -1,14 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
-import jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager;
-
 import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

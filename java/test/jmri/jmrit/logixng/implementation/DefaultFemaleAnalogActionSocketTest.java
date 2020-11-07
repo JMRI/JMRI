@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import jmri.jmrit.logixng.implementation.DefaultFemaleAnalogActionSocket;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

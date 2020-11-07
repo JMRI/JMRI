@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import jmri.jmrit.logixng.implementation.DefaultMaleDigitalExpressionSocket;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Locale;
