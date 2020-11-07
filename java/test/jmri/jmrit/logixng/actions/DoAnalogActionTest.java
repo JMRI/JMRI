@@ -3,9 +3,8 @@ package jmri.jmrit.logixng.actions;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

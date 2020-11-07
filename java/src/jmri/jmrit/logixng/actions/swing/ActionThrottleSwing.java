@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionThrottle;
 /**
  * Configures an ActionThrottle object with a Swing JPanel.
  */
-public class ActionThrottleSwing extends AbstractActionSwing {
+public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

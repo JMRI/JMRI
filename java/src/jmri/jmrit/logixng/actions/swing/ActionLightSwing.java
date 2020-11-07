@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ActionLight object with a Swing JPanel.
  */
-public class ActionLightSwing extends AbstractActionSwing {
+public class ActionLightSwing extends AbstractDigitalActionSwing {
 
     private BeanSelectCreatePanel<Light> lightBeanPanel;
     private JComboBox<LightState> stateComboBox;

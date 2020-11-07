@@ -10,8 +10,8 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogActionSocketTest;
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
-import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.AbstractDigitalBooleanAction;
+import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
 
 import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalBooleanActionSocket.DigitalBooleanActionDebugConfig;
 

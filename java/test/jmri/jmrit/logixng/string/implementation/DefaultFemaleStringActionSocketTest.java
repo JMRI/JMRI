@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.string.actions.StringActionMemory;
+import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -88,11 +88,11 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.actions.StringActionMemory.class);
+        classes.add(jmri.jmrit.logixng.actions.StringActionMemory.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.actions.StringMany.class);
+        classes.add(jmri.jmrit.logixng.actions.StringMany.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

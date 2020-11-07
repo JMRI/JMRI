@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class IfThenElseSwing extends AbstractActionSwing {
+public class IfThenElseSwing extends AbstractDigitalActionSwing {
 
     IfThenElse.Type type = IfThenElse.Type.TRIGGER_ACTION;
     

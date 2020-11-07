@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.util.JUnitUtil;

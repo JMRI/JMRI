@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionTimer;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ActionTimerSwing extends AbstractActionSwing {
+public class ActionTimerSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

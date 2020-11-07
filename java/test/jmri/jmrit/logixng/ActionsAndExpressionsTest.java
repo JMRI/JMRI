@@ -182,49 +182,57 @@ public class ActionsAndExpressionsTest {
         return InstanceManager.getDefault(StringExpressionManager.class).getExpressionClasses();
     }
     
+    public void addClasses(Map<Category, List<Class<? extends Base>>> classes, Map<Category, List<Class<? extends Base>>> newClasses) {
+            newClasses.entrySet().forEach((entry) -> {
+//                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
+                entry.getValue().forEach((clazz) -> {
+                    classes.get(entry.getKey()).add(clazz);
+                });
+            });
+    }
+    
     @Test
     public void testGetBeanType() {
-        checkFolder(
-                getPath("analog/actions"),
-                "jmri.jmrit.logixng.analog.actions",
-                getAnalogActionClasses(),
-                new String[]{"AbstractAnalogAction","Bundle","Factory"});
-        
-        checkFolder(
-                getPath("analog/expressions"),
-                "jmri.jmrit.logixng.analog.expressions",
-                getAnalogExpressionClasses(),
-                new String[]{"AbstractAnalogExpression","Bundle","Factory"});
+        Map<Category, List<Class<? extends Base>>> classes = new HashMap<>();
+        for (Category category : Category.values()) {
+            classes.put(category, new ArrayList<>());
+        }
+        addClasses(classes, getAnalogActionClasses());
+        addClasses(classes, getDigitalActionClasses());
+        addClasses(classes, getDigitalBooleanActionClasses());
+        addClasses(classes, getStringActionClasses());
         
         checkFolder(
                 getPath("actions"),
                 "jmri.jmrit.logixng.actions",
-                getDigitalActionClasses(),
-                new String[]{"AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","Bundle","Factory"});
+                classes,
+                new String[]{
+                    "Bundle",
+                    "AbstractAnalogAction","AnalogFactory",         // Analog
+                    "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
+                    "AbstractDigitalBooleanAction","DigitalBooleanFactory",     // Boolean digital
+                    "AbstractStringAction","StringFactory"          // String
+                });
         
-        checkFolder(
-                getPath("digital/boolean_actions"),
-                "jmri.jmrit.logixng.digital.boolean_actions",
-                getDigitalBooleanActionClasses(),
-                new String[]{"AbstractDigitalBooleanAction","Bundle","Factory"});
+        
+        classes = new HashMap<>();
+        for (Category category : Category.values()) {
+            classes.put(category, new ArrayList<>());
+        }
+        addClasses(classes, getAnalogExpressionClasses());
+        addClasses(classes, getDigitalExpressionClasses());
+        addClasses(classes, getStringExpressionClasses());
         
         checkFolder(
                 getPath("expressions"),
                 "jmri.jmrit.logixng.expressions",
-                getDigitalExpressionClasses(),
-                new String[]{"AbstractDigitalExpression","AbstractScriptDigitalExpression","Bundle","Factory"});
-        
-        checkFolder(
-                getPath("string/actions"),
-                "jmri.jmrit.logixng.string.actions",
-                getStringActionClasses(),
-                new String[]{"AbstractStringAction","Bundle","Factory"});
-        
-        checkFolder(
-                getPath("string/expressions"),
-                "jmri.jmrit.logixng.string.expressions",
-                getStringExpressionClasses(),
-                new String[]{"AbstractStringExpression","Bundle","Factory"});
+                classes,
+                new String[]{
+                    "Bundle",
+                    "AbstractAnalogExpression","AnalogFactory",     // Analog
+                    "AbstractDigitalExpression","AbstractScriptDigitalExpression","DigitalFactory",     // Digital
+                    "AbstractStringExpression","StringFactory"      // String
+                });
         
         Assert.assertFalse("No errors found", errorsFound);
     }

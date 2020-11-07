@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionScript;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ActionScriptSwing extends AbstractActionSwing {
+public class ActionScriptSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

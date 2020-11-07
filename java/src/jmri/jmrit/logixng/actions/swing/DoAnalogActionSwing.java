@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.DoAnalogAction;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class DoAnalogActionSwing extends AbstractActionSwing {
+public class DoAnalogActionSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

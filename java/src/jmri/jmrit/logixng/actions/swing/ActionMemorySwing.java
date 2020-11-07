@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionMemory;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ActionMemorySwing extends AbstractActionSwing {
+public class ActionMemorySwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

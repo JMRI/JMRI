@@ -4,12 +4,13 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml;
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogExpressionManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;

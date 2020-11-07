@@ -9,8 +9,8 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.logixng.analog.actions.AbstractAnalogAction;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
+import jmri.jmrit.logixng.actions.AbstractAnalogAction;
+import jmri.jmrit.logixng.actions.AnalogActionMemory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

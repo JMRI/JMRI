@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.CallModule;
 /**
  * Configures an ModuleDigitalAction object with a Swing JPanel.
  */
-public class CallModuleSwing extends AbstractActionSwing {
+public class CallModuleSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

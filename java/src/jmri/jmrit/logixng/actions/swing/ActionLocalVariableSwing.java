@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 /**
  * Configures an ActionLocalVariable object with a Swing JPanel.
  */
-public class ActionLocalVariableSwing extends AbstractActionSwing {
+public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

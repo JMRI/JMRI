@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ShutdownComputer;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ShutdownComputerSwing extends AbstractActionSwing {
+public class ShutdownComputerSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

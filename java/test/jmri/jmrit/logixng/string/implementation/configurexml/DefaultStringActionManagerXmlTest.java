@@ -4,12 +4,13 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.string.actions.StringActionMemory;
-import jmri.jmrit.logixng.string.actions.configurexml.StringActionMemoryXml;
+import jmri.jmrit.logixng.actions.StringActionMemory;
+import jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml;
 import jmri.jmrit.logixng.string.implementation.DefaultStringActionManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Assert;

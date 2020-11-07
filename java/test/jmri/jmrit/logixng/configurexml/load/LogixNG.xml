@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="10:26 PM">
+    <memory value="12:55 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 06 22:26:37 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Nov 07 00:55:01 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -1074,10 +1074,10 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   </logixngDigitalActions>
   <logixngDigitalBooleanActions class="jmri.jmrit.logixng.digital.implementation.configurexml.DefaultDigitalBooleanActionManagerXml" />
   <logixngAnalogExpressions class="jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogExpressionManagerXml">
-    <analog-expression-memory class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml">
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0001</systemName>
     </analog-expression-memory>
-    <analog-expression-memory class="jmri.jmrit.logixng.analog.expressions.configurexml.AnalogExpressionMemoryXml">
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
       <systemName>IQAE:AUTO:0002</systemName>
     </analog-expression-memory>
   </logixngAnalogExpressions>
@@ -1087,9 +1087,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Fri Nov 06 22:26:51 CET 2020</date>
+      <date>Sat Nov 07 00:55:23 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-06T21:23:13Z+RUNKNOWN on Fri Nov 06 22:26:51 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-06T23:52:12Z+RUNKNOWN on Sat Nov 07 00:55:23 CET 2020-->
 </layout-config>

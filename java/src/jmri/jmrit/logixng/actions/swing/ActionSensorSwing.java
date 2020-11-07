@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ActionSensor object with a Swing JPanel.
  */
-public class ActionSensorSwing extends AbstractActionSwing {
+public class ActionSensorSwing extends AbstractDigitalActionSwing {
 
     private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
     private JComboBox<SensorState> stateComboBox;

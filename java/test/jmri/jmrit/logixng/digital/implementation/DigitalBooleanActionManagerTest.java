@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBase;
-import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

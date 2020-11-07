@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket.SocketType;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.string.expressions.StringExpressionConstant;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
+import jmri.jmrit.logixng.expressions.StringExpressionConstant;
+import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

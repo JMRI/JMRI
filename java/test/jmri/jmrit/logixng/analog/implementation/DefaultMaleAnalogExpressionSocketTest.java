@@ -9,8 +9,8 @@ import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 
-import jmri.jmrit.logixng.analog.expressions.AbstractAnalogExpression;
-import jmri.jmrit.logixng.analog.expressions.AnalogExpressionMemory;
+import jmri.jmrit.logixng.expressions.AbstractAnalogExpression;
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
 
 import org.junit.Assert;

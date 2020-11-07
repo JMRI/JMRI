@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.DigitalMany;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class DigitalManySwing extends AbstractActionSwing {
+public class DigitalManySwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

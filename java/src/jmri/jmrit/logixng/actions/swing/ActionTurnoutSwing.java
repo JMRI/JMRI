@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ActionTurnoutSwing extends AbstractActionSwing {
+public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
     private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
     private JComboBox<TurnoutState> stateComboBox;

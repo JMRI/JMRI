@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -90,8 +90,8 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanMany.class);
-        classes.add(jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalBooleanMany.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalBooleanOnChange.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();

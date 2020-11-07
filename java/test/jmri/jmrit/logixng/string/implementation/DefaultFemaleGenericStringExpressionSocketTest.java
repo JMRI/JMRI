@@ -6,7 +6,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
+import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.*;

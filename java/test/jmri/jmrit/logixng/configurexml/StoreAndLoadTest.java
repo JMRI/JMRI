@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.configurexml;
 
+import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionReference;
 import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
 import jmri.jmrit.logixng.expressions.ResetOnTrue;
@@ -48,7 +49,6 @@ import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.expressions.*;
 import jmri.util.*;
 
 import org.junit.*;

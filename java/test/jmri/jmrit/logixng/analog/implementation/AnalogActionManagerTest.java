@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractBase;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
+import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

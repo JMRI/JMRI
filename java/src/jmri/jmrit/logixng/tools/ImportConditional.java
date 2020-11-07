@@ -29,7 +29,7 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
-import jmri.jmrit.logixng.digital.boolean_actions.DigitalBooleanOnChange;
+import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ActionListenOnBeansSwing extends AbstractActionSwing {
+public class ActionListenOnBeansSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

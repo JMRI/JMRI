@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.string.expressions.StringExpressionMemory;
+import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -98,12 +98,12 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         
         List<Class<? extends Base>> classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.expressions.StringExpressionConstant.class);
-        classes.add(jmri.jmrit.logixng.string.expressions.StringExpressionMemory.class);
+        classes.add(jmri.jmrit.logixng.expressions.StringExpressionConstant.class);
+        classes.add(jmri.jmrit.logixng.expressions.StringExpressionMemory.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrit.logixng.string.expressions.StringFormula.class);
+        classes.add(jmri.jmrit.logixng.expressions.StringFormula.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
