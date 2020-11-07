@@ -41,9 +41,9 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
 //                log.error("Class: {}", clazz.getName());
                 
                 switch (clazz.getName()) {
-                    case "jmri.jmrit.logixng.digital.actions.Many":
-                    case "jmri.jmrit.logixng.digital.actions.IfThenElse":
-                    case "jmri.jmrit.logixng.digital.actions.Logix":
+                    case "jmri.jmrit.logixng.actions.Many":
+                    case "jmri.jmrit.logixng.actions.IfThenElse":
+                    case "jmri.jmrit.logixng.actions.Logix":
                         allowed = true;
                         break;
                         

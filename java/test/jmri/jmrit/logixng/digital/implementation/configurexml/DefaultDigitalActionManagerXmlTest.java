@@ -43,7 +43,7 @@ public class DefaultDigitalActionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.digital.actions.configurexml.ActionTurnoutXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA1"));
         b.loadActions(e);
