@@ -49,6 +49,7 @@ public class DefaultIdTagManagerXml extends XmlFile {
     public void load() {
         log.debug("Loading...");
         try {
+            log.debug("Using file: {}", getDefaultIdTagFileName());
             readFile(getDefaultIdTagFileName());
         } catch (JDOMException | IOException ex) {
             log.error("Exception during IdTag file reading: {}", (Object) ex);

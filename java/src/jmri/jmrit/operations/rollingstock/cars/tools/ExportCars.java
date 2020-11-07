@@ -99,9 +99,10 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Destination"),
                     LOCATION_TRACK_SEPARATOR,
                     Bundle.getMessage("Track"),
-                    Bundle.getMessage("FinalDestination"),
+                        Bundle.getMessage("FinalDestination"),
                     LOCATION_TRACK_SEPARATOR,
-                    Bundle.getMessage("Track"));
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage("RFID_Tag"));
 
             // store car number, road, type, length, weight, color, owner, built date, location and track name
             for (Car car : _carList) {
@@ -136,7 +137,8 @@ public class ExportCars extends XmlFile {
                         car.getDestinationTrackName(),
                         car.getFinalDestinationName(),
                         LOCATION_TRACK_SEPARATOR,
-                        car.getFinalDestinationTrackName());
+                        car.getFinalDestinationTrackName(),
+                        car.getRfid());
             }
             fileOut.flush();
             fileOut.close();
