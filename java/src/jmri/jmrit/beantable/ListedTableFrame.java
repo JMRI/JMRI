@@ -114,7 +114,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         for (TabbedTableItemListArray item : tabbedTableItemListArrayArray) {
             // Here we add all the tables into the panel
             try {
-                TabbedTableItem<E> itemModel = new TabbedTableItem<E>(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
+                TabbedTableItem<E> itemModel = new TabbedTableItem<>(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
                 detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 tabbedTableArray.add(itemModel);
@@ -189,17 +189,17 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     }
 
     public void addTable(String aaClass, String choice, boolean stdModel) {
-        TabbedTableItemListArray itemBeingAdded = null;
+        TabbedTableItemListArray itemToAdd = null;
         for (TabbedTableItemListArray ttila : tabbedTableItemListArrayArray) {
             if (ttila.getClassAsString().equals(aaClass)) {
                 log.info("Class {} is already added", aaClass);
-                itemBeingAdded = ttila;
+                itemToAdd = ttila;
                 break;
             }
         }
-        if (itemBeingAdded == null) {
-            itemBeingAdded = new TabbedTableItemListArray(aaClass, choice, stdModel);
-            tabbedTableItemListArrayArray.add(itemBeingAdded);
+        if (itemToAdd == null) {
+            itemToAdd = new TabbedTableItemListArray(aaClass, choice, stdModel);
+            tabbedTableItemListArrayArray.add(itemToAdd);
         }
     }
 
@@ -378,7 +378,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
 
         void createDataModel() {
             dataModel = tableAction.getTableDataModel();
-            TableRowSorter<BeanTableDataModel> sorter = new TableRowSorter<>(dataModel);
+            TableRowSorter<BeanTableDataModel<E>> sorter = new TableRowSorter<>(dataModel);
             dataTable = dataModel.makeJTable(dataModel.getMasterClassName() + ":" + getItemString(), dataModel, sorter);
             dataScroll = new JScrollPane(dataTable);
 

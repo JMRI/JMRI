@@ -766,6 +766,25 @@ public final class JSON {
      * {@value #THROWN}
      */
     public static final int THROWN = 0x04;
+
+    /* OBlock status */
+    /**
+     * {@value #ALLOCATED}
+     */
+    public static final int ALLOCATED = 0x10;
+    /**
+     * {@value #RUNNING}
+     */
+    public static final int RUNNING = 0x20;
+    /**
+     * {@value #OUT_OF_SERVICE}
+     */
+    public static final int OUT_OF_SERVICE = 0x30;
+    /**
+     * {@value #TRACK_ERROR}
+     */
+    public static final int TRACK_ERROR = 0x40;
+
     /**
      * {@value #UNIT}
      *

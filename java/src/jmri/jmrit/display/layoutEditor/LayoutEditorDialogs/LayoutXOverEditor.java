@@ -1,30 +1,14 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import javax.annotation.*;
+import java.awt.*;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
-import jmri.*;
-import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
-import jmri.swing.NamedBeanComboBox;
-import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
+import javax.swing.border.TitledBorder;
+
+import jmri.BlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * MVC Editor component for LayoutXOver objects.
@@ -46,9 +30,9 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
      * Edit a XOver
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        log.trace("LayoutXOverEditor.editLayoutTrack({}) of a {}", layoutTrack, layoutTrack.getClass());
-        super.editLayoutTrack(layoutTrack);
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        log.trace("LayoutXOverEditor.editLayoutTrack({}) of a {}", layoutTrackView, layoutTrackView.getClass());
+        super.editLayoutTrack(layoutTrackView);
     }
     
 
@@ -128,7 +112,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
             layoutTurnout.setSecondTurnout(newName);
         } else {
             editLayoutTurnout2ndTurnoutCheckBox.setSelected(false);
-            layoutTurnout.setSecondTurnout(null);
+            layoutTurnout.setSecondTurnout("");
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
         }
         editLayoutTurnoutNeedRedraw = true;
@@ -150,7 +134,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -161,7 +145,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
@@ -172,7 +156,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         }
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
-            layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
+            layoutTurnoutView.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }

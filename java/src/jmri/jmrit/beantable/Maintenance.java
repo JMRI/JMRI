@@ -141,11 +141,11 @@ public class Maintenance {
                 names.add(name);
             }
         }
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         for (int i = 0; i < display.size(); i++) {
             listModel.addElement(display.get(i));
         }
-        JList<String> list = new JList<String>(listModel);
+        JList<String> list = new JList<>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JButton button = new JButton(Bundle.getMessage("ButtonDelete"));
@@ -268,7 +268,7 @@ public class Maintenance {
             Conditional c = cm.getBySystemName(name);
             if (c != null) {
                 List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
-                if (variableList.size() == 0) {
+                if (variableList.isEmpty()) {
                     String userName = c.getUserName();
                     display.add(MessageFormat.format(rbm.getString("OrphanName"),
                             new Object[]{"Conditional", userName, name}));
@@ -276,11 +276,11 @@ public class Maintenance {
                 }
             }
         }
-        DefaultListModel<String> listModel = new DefaultListModel<String>();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
         for (int i = 0; i < display.size(); i++) {
             listModel.addElement(display.get(i));
         }
-        JList<String> list = new JList<String>(listModel);
+        JList<String> list = new JList<>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JButton button = new JButton(Bundle.getMessage("ButtonDelete"));
@@ -1230,7 +1230,7 @@ public class Maintenance {
                 text.append(MessageFormat.format(rbm.getString("Orphan"), (Object[]) names));
             } else {
                 text.append(MessageFormat.format(rbm.getString("ReferenceFound"),
-                        new Object[]{Integer.valueOf(referenceCount), userName, sysName}));
+                        new Object[]{referenceCount, userName, sysName}));
             }
         }
         if (names[0] != null) {

@@ -25,7 +25,7 @@
     <xs:complexType name="SensorManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SensorManager implementation.
+          Define the XML structure for storing the contents of a SensorManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.managers.configurexml.AbstractSensorManagerConfigXML</jmri:usingclass>

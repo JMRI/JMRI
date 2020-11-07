@@ -25,35 +25,31 @@
    <div id="mainContent">
 
    <h1>JMRI: OperationsPro&trade;</h1>
-			The JMRI Operations program allows you to create computer generated
-			train Manifests for your railroad. A train
-			<a href="#PrintingManifests">Manifest</a> details the work that a
-			crew will perform during an operations session. The Manifest provides
-			a list of car pick up and set outs and shows where the cars are
-			located and where they should be eventually positioned on the
-			railroad. The program allows you to enter a roster of
-			<a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>,
-			define <a href="#Locations">locations</a> (stations) on the railroad,
-			and <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to
-			travel. The car roster includes information about the car, including
-			road, number, type of car, color, length, weight, load, date built,
-			and owner. Trains are assigned routes that define locations or
-			stations where cars can be picked up or set out. Features include the
-			ability to control what car types, roads, and car loads a location or
-			industry can service, the available track space for a location, and
-			the maximum length the train can be between any two locations in the
-			train's route.
+   The JMRI Operations program allows you to create computer generated train Manifests for your
+   railroad. A train
+   <a href="#PrintingManifests">Manifest</a> details the work that a crew will perform during an
+   operations session. The Manifest provides a list of car pick up and set outs and shows where the
+   cars are located and where they should be eventually positioned on the railroad. The program
+   allows you to enter a roster of
+   <a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>, define <a
+    href="#Locations">locations</a> (stations) on the railroad, and
+   <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to travel. The car roster includes
+   information about the car, including road, number, type of car, color, length, weight, load, date
+   built, and owner. Trains are assigned routes that define locations or stations where cars can be
+   picked up or set out. Features include the ability to control what car types, roads, and car
+   loads a location or industry can service, the available track space for a location, and the
+   maximum length the train can be between any two locations in the train's route.
 
-			<p>
-    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used to service
-    industries, and can optionally have
-    <a href="#Schedules">schedules</a> assigned to them which allows for very fine control over car movement and loads.
-    Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates
-    Manifests for each train and switch lists for any location. A
-    <a href="#SwitchList">switch list</a> for a location shows the work for all of the trains that will visit that
-    location. The program can also place
-    <a href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be taught to move in
-    the panel along with the train from location to location.
+   <p>
+    Locations can have <a href="#Sidings">spurs</a>, <a href="#Yards">yards</a>, <a href="#Staging">staging</a>
+    and <a href="#Interchange">classification/interchange</a> tracks. Spurs are used to service
+    industries, and can optionally have <a href="#Schedules">schedules</a> assigned to them which
+    allows for very fine and realistic control over car movement and loads. Trains can be configured to require a
+    caboose or car with Flashing Rear End Device (FRED). The program generates Manifests for each
+    train and switch lists for any location. A <a href="#SwitchList">switch list</a> for a location
+    shows the work for all of the trains that will visit that location. The program can also place <a
+     href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be
+    taught to move in the panel along with the train from location to location.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
