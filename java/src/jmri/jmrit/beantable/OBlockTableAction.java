@@ -242,9 +242,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             }
             fileMenu.add(otp.getPrintItem());
 
-            if (menuBar == null) {
-                menuBar = new JMenuBar();
-            }
+//            if (menuBar == null) {
+//                menuBar = new JMenuBar();
+//            }
             //setTitle();
             f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = korter
             f.setJMenuBar(tf.addMenus(menuBar));  // setJMenuBar(addMenus(this.getJMenuBar()));
@@ -270,10 +270,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                         }
                     }
                 }
-                JMenu opsMenu = new JMenu(Bundle.getMessage("MenuOptions"));
+                JMenu opsMenu = new JMenu(Bundle.getMessage("MenuOptions") + " Test");
                 // or add separate items, actionhandlers?
 
-        //            JMenu opsMenu = new JMenu(Bundle.getMessage("TurnoutAutomationMenu"));
         //            JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
         //            opsMenu.add(item);
         //            item.addActionListener(new ActionListener() {
@@ -282,7 +281,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //                    new TurnoutOperationFrame(finalF);
         //                }
         //            });
-        //            menuBar.add(opsMenu, pos + offset);
+                menuBar.add(opsMenu, pos + offset);
         //
         //            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
         //            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
@@ -351,82 +350,82 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     // heavier copy from ??
-    void addOBlock2Pressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (addOBlockFrame == null) {
-            addOBlockFrame = new JmriJFrame(Bundle.getMessage("TitleAddOBlock"), false, true);
-            addOBlockFrame.addHelpMenu("package.jmri.jmrit.beantable.OBlockAddEdit", true); // NOI18N
-            addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener oklistener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    createObPressed(e);
-                }
-            };
-            ActionListener cancellistener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelObPressed(e);
-                }
-            };
-            //addOBlockFrame.add(new AddNewBeanPanel(sysName, userName, numberToAddSpinner, addRangeCheckBox, _autoSystemNameCheckBox, "ButtonCreate", oklistener, cancellistener, statusBar));
-            //sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
-
-            addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
-            ActionListener createlistener = new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    createObPressed(e);
-                }
-            };
+//    void addOBlock2Pressed(ActionEvent e) {
+//        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+//        if (addOBlockFrame == null) {
+//            addOBlockFrame = new JmriJFrame(Bundle.getMessage("TitleAddOBlock"), false, true);
+//            addOBlockFrame.addHelpMenu("package.jmri.jmrit.beantable.OBlockAddEdit", true); // NOI18N
+//            addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
+//            ActionListener oklistener = new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    createObPressed(e);
+//                }
+//            };
 //            ActionListener cancellistener = new ActionListener() {
 //                @Override
 //                public void actionPerformed(ActionEvent e) {
 //                    cancelObPressed(e);
 //                }
 //            };
-            //            ActionListener rangeListener = new ActionListener() { // add rangeBox box turned on/off
-            //                @Override
-            //                public void actionPerformed(ActionEvent e) {
-            //                    canAddRange(e);
-            //                }
-            //            };
-            /* We use the proxy manager in this instance so that we can deal with
-             duplicate usernames in multiple classes */
-            //            configureManagerComboBox(prefixBox, turnoutManager, TurnoutManager.class);
-            //            userNameTextField.setName("userNameTextField"); // NOI18N
-            //            prefixBox.setName("prefixBox"); // NOI18N
-            // set up validation, zero text = false
-            JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
-            //addButton.addActionListener(createListener);
-            // create panel
-            //            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
-            //            addOBlockFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
-            //                    numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
-            //            // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
-            //            canAddRange(null);
-            //        }
-            //        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
-            addButton.setName("createButton"); // for GUI test NOI18N
-            // reset statusBarLabel text
-            //        statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
-            //        statusBarLabel.setForeground(Color.gray);
-
-//            sysName.setBackground(Color.white);
-//            // reset statusBar text
-//            statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
-//            statusBar.setForeground(Color.gray);
-//            if (pref.getSimplePreferenceState(systemNameAuto)) {
-//                _autoSystemNameCheckBox.setSelected(true);
-//            }
-//            addRangeCheckBox.setSelected(false);
-
-            addOBlockFrame.pack();
-            addOBlockFrame.setVisible(true);
-        }
-        //oblockFrame.updateOblockList(); // see AudioTableAction
-        //oblockFrame.resetFrame();
-    }
+//            //addOBlockFrame.add(new AddNewBeanPanel(sysName, userName, numberToAddSpinner, addRangeCheckBox, _autoSystemNameCheckBox, "ButtonCreate", oklistener, cancellistener, statusBar));
+//            //sysName.setToolTipText(Bundle.getMessage("SysNameToolTip", "B")); // override tooltip with bean specific letter
+//
+//            addOBlockFrame.getContentPane().setLayout(new BoxLayout(addOBlockFrame.getContentPane(), BoxLayout.Y_AXIS));
+//            ActionListener createlistener = new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    createObPressed(e);
+//                }
+//            };
+////            ActionListener cancellistener = new ActionListener() {
+////                @Override
+////                public void actionPerformed(ActionEvent e) {
+////                    cancelObPressed(e);
+////                }
+////            };
+//            //            ActionListener rangeListener = new ActionListener() { // add rangeBox box turned on/off
+//            //                @Override
+//            //                public void actionPerformed(ActionEvent e) {
+//            //                    canAddRange(e);
+//            //                }
+//            //            };
+//            /* We use the proxy manager in this instance so that we can deal with
+//             duplicate usernames in multiple classes */
+//            //            configureManagerComboBox(prefixBox, turnoutManager, TurnoutManager.class);
+//            //            userNameTextField.setName("userNameTextField"); // NOI18N
+//            //            prefixBox.setName("prefixBox"); // NOI18N
+//            // set up validation, zero text = false
+//            JButton addButton = new JButton(Bundle.getMessage("ButtonCreate"));
+//            //addButton.addActionListener(createListener);
+//            // create panel
+//            //            hardwareAddressValidator = new SystemNameValidator(hardwareAddressTextField, prefixBox.getSelectedItem(), true);
+//            //            addOBlockFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, hardwareAddressValidator, userNameTextField, prefixBox,
+//            //                    numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
+//            //            // tooltip for hardwareAddressTextField will be assigned next by canAddRange()
+//            //            canAddRange(null);
+//            //        }
+//            //        hardwareAddressTextField.setName("hwAddressTextField"); // for GUI test NOI18N
+//            addButton.setName("createButton"); // for GUI test NOI18N
+//            // reset statusBarLabel text
+//            //        statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+//            //        statusBarLabel.setForeground(Color.gray);
+//
+////            sysName.setBackground(Color.white);
+////            // reset statusBar text
+////            statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
+////            statusBar.setForeground(Color.gray);
+////            if (pref.getSimplePreferenceState(systemNameAuto)) {
+////                _autoSystemNameCheckBox.setSelected(true);
+////            }
+////            addRangeCheckBox.setSelected(false);
+//
+//            addOBlockFrame.pack();
+//            addOBlockFrame.setVisible(true);
+//        }
+//        //oblockFrame.updateOblockList(); // see AudioTableAction
+//        //oblockFrame.resetFrame();
+//    }
 
     void cancelObPressed(ActionEvent e) {
         addOBlockFrame.setVisible(false);
@@ -562,7 +561,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
     void addSignalPressed(ActionEvent e) {
         if (signalFrame == null) {
-            signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), signals);
+            signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), null, null, signals);
         }
         //signalFrame.updateSignalList();
         signalFrame.resetFrame();
@@ -622,6 +621,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 //isStateStored.setSelected(oblockManager.isStateStored());
                 break;
             case "UseFastClock":
+            default:
                 //isFastClockUsed.setSelected(portalManager.isFastClockUsed());
                 break;
         }

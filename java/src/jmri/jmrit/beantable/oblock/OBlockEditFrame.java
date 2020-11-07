@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jmri.Block.NONE;
+
 /**
  * GUI to edit OBlock objects in tabbed table interface.
  * Adapted from AbstractAudioFrame + -ListenerFrame.
@@ -26,11 +28,11 @@ public class OBlockEditFrame extends JmriJFrame {
     OBlockEditFrame frame = this;
     OBlockManager obm;
 
-    JPanel main = new JPanel();
-    private final JScrollPane scroll
-            = new JScrollPane(main,
-                    ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    //JPanel main = new JPanel();
+//    private final JScrollPane scroll
+//            = new JScrollPane(main,
+//                    ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+//                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     OBlockTableModel _model;
     String _oblock;
@@ -60,7 +62,6 @@ public class OBlockEditFrame extends JmriJFrame {
     TableFrames.BlockPathJPanel _pathTablePane;
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
     float baseLength;
-    private final static String PREFIX = "OB";
 
     /**
      * Standard constructor
@@ -88,12 +89,11 @@ public class OBlockEditFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        //main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
         frame.setSize(350, 400);
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        //p.setLayout(new FlowLayout());
 
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
@@ -151,7 +151,8 @@ public class OBlockEditFrame extends JmriJFrame {
 
         JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
-            _core.addPathPane(obm.getOBlock(_oblock));
+            //_core.openBlockPathPane(_oblock); // should open Path Edit EBR
+            _core.openPathEditor(_oblock, null);
         };
         addButton.addActionListener(addPathAction);
         addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
@@ -204,7 +205,11 @@ public class OBlockEditFrame extends JmriJFrame {
         sysName.setText(ob.getSystemName());
         userName.setText(ob.getUserName());
         length.setText(twoDigit.format(ob.getLengthCm()));
-        curveBox.setSelectedItem(ob.getCurvature());
+        if (ob.getCurvature() == -1) {
+            curveBox.setSelectedIndex(NONE);
+        } else {
+            curveBox.setSelectedItem(ob.getCurvature());
+        }
         sensorBox.setSelectedItem(ob.getSensor());
         // formatting?
 
@@ -232,7 +237,7 @@ public class OBlockEditFrame extends JmriJFrame {
             }
             ob.setComment(comment.getText());
             ob.setMetricUnits(unit.getText().equals(Bundle.getMessage("cm")));
-            ob.setLength((float) (baseLength));
+            ob.setLength(baseLength);
             // more?
 
             String msg = WarrantTableAction.getDefault().checkPathPortals(ob);

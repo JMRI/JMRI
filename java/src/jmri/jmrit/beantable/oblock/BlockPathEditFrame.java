@@ -14,6 +14,8 @@ import javax.annotation.CheckForNull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -26,16 +28,11 @@ import java.util.Vector;
  */
 public class BlockPathEditFrame extends JmriJFrame {
 
-    JPanel main = new JPanel();
-    private final JScrollPane scroll
-            = new JScrollPane(main,
-            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-    PathTurnoutTableModel _tmodel;
-    OBlock _block;
-    OPath _path;
-    PortalManager pm;
+//    JPanel main = new JPanel();
+//    private final JScrollPane scroll
+//            = new JScrollPane(main,
+//            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+//            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     // UI components for Add/Edit Path
     JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
@@ -43,10 +40,11 @@ public class BlockPathEditFrame extends JmriJFrame {
     JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")));
     JTextField userName = new JTextField(15);
     JLabel userNameLabel = new JLabel();
-    JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
-    JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
-    private JComboBox<Portal> fromPortalComboBox = new JComboBox<>();
-    private JComboBox<Portal> toPortalComboBox = new JComboBox<>();
+    JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromPortal")));
+    JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToPortal")));
+    String[] p0 = {""};
+    private final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
+    private final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
 
     private final BlockPathEditFrame frame = this;
@@ -69,36 +67,41 @@ public class BlockPathEditFrame extends JmriJFrame {
     final JTextField _userName = new JTextField(22);
     final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    JTextArea comment  = new JTextArea();
+    //JTextArea comment  = new JTextArea();
     final JLabel status1 = new JLabel();
     final JLabel status2 = new JLabel();
 
-    //    protected ArrayList<PathTurnout> _includedTurnoutList;
-    PathTurnoutTableModel _pathTurnoutTableModel;
-    JScrollPane _pathTurnoutScrollPane;
-    NamedBeanComboBox<OBlock> fromOBlock;
-    NamedBeanComboBox<OBlock> toOBlock;
+    OBlock _block;
+    OPath _path;
+    PathTurnoutTableModel _tomodel;
+    PortalManager pm;
+    TableFrames _core;
+    TableFrames.PathTurnoutJPanel _turnoutTablePane;
     boolean editMode = false;
 
     protected UserPreferencesManager pref;
-    //private final JRadioButton allButton = null;
-    protected boolean routeDirty = false;  // true to fire reminder to save work
-    //private boolean showAll = true;   // false indicates show only included Turnouts
+    protected boolean isDirty = false;  // true to fire reminder to save work
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public BlockPathEditFrame(String title, OBlock block, OPath path) {
+    public BlockPathEditFrame(String title, OBlock block, OPath path,
+                              TableFrames.PathTurnoutJPanel table, TableFrames parent) {
         super(title, true, true);
         _block = block;
+        _turnoutTablePane = table;
+        _core = parent;
         if (path == null) {
             _newPath = true;
+        } else {
+            _path = path;
+            _tomodel = table.getModel();
+            log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
         }
-        _path = path;
         pm = InstanceManager.getDefault(PortalManager.class);
-        PathTurnoutTableModel _tmodel = new PathTurnoutTableModel(path, this);
-        log.debug("TurnoutModel.size = {}", _tmodel.getRowCount());
         layoutFrame();
-        fromPortalComboBox = new JComboBox<Portal>((Vector<Portal>) _block.getPortals());
-        toPortalComboBox = new JComboBox<Portal>((Vector<Portal>) _block.getPortals());
+        for (Portal pi : pm.getPortalSet()) {
+            fromPortalComboBox.addItem(pi.getName());
+            toPortalComboBox.addItem(pi.getName());
+        }
         if (path != null) {
             populateFrame(path);
         }
@@ -107,9 +110,10 @@ public class BlockPathEditFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        frame.setSize(350, 400);
 
         JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
@@ -119,19 +123,47 @@ public class BlockPathEditFrame extends JmriJFrame {
         } else {
             p1.add(_userName);
         }
+        p.add(p1);
+
+        p1 = new JPanel();
         p1.add(fromPortalLabel);
         p1.add(fromPortalComboBox);
+        p.add(p1);
+
+        p1 = new JPanel();
         p1.add(toPortalLabel);
         p1.add(toPortalComboBox);
-        p.add(p);
+        p.add(p1);
+
+        JPanel ptbl = new JPanel();
+        ptbl.setLayout(new BorderLayout(10, 10));
+        ptbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        ptbl.add(_turnoutTablePane, BorderLayout.CENTER);
+
+        JPanel tblButtons = new JPanel();
+        tblButtons.setLayout(new BorderLayout(10, 10));
+        tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+        tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
+
+        JButton addButton = new JButton(Bundle.getMessage("ButtonAddTurnout"));
+        ActionListener addPathAction = e -> {
+            _core.addTurnoutPane(_path);
+        };
+        addButton.addActionListener(addPathAction);
+        addButton.setToolTipText(Bundle.getMessage("AddTurnoutTabbedPrompt"));
+        tblButtons.add(addButton);
+        // TODO add more, like a button Add... to frame?
+        ptbl.add(tblButtons, BorderLayout.SOUTH);
+        p.add(ptbl);
 
         p.add(Box.createVerticalGlue());
 
-        // TODO add Turnout table + Add button EBR
-
         JPanel p2 = new JPanel();
         p2.add(statusBar);
+        p.add(p2);
 
+        p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
@@ -149,7 +181,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         p.add(p2, BorderLayout.SOUTH);
 
         frame.getContentPane().add(p);
-        //frame.add(scroll);
+        //main.add(scroll);
     }
 
     /**
@@ -190,23 +222,23 @@ public class BlockPathEditFrame extends JmriJFrame {
         }
 
         OPath path = new OPath(_block, user);
-        if (path != null) {
+//        if (path != null) {
             try {
-                Portal fromPortal = fromPortalComboBox.getItemAt(fromPortalComboBox.getSelectedIndex());
+                Portal fromPortal = pm.providePortal((String) fromPortalComboBox.getSelectedItem());
                 if (fromPortal != null) {
                     path.setFromPortal(fromPortal);
                 }
-                fromPortal = toPortalComboBox.getItemAt(toPortalComboBox.getSelectedIndex());
+                fromPortal = pm.providePortal((String) toPortalComboBox.getSelectedItem());
                 if (fromPortal != null) {
                     path.setToPortal(fromPortal);
                 }
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
-        }
+//        }
         // Notify changes
-        if (_tmodel != null) {
-            _tmodel.fireTableDataChanged();
+        if (_tomodel != null) {
+            _tomodel.fireTableDataChanged();
         }
     }
 
@@ -223,7 +255,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         // Create button
         pb.add(createButton);
         createButton.addActionListener(this::createPressed);
-        createButton.setToolTipText(Bundle.getMessage("TooltipCreateRoute"));
+        createButton.setToolTipText(Bundle.getMessage("TooltipCreatePath"));
 
         // Show the initial buttons, and hide the others
         cancelButton.setVisible(true); // show CancelAdd button
@@ -245,24 +277,26 @@ public class BlockPathEditFrame extends JmriJFrame {
      * Cancel Add mode.
      */
     private void cancelAdd() {
-        if (routeDirty) {
+        if (isDirty) {
             showReminderMessage();
         }
         finishUpdate();
-        status1.setText(Bundle.getMessage("PathAddStatusInitial1", Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
-        //status2.setText(Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
-        routeDirty = false;
+        status1.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
+        //status2.setText(Bundle.getMessage("AddXStatusInitial2", Bundle.getMessage("Path"), Bundle.getMessage("ButtonEdit")));
+        isDirty = false;
         // hide addFrame
         setVisible(false);
-        _pathTurnoutTableModel.dispose();
+        if (_tomodel != null) {
+            _tomodel.dispose();
+        }
         closeFrame();
     }
 
     protected void closeFrame(){
-        // remind to save, if Route was created or edited
-        if (routeDirty) {
+        // remind to save, if Path was created or edited
+        if (isDirty) {
             showReminderMessage();
-            routeDirty = false;
+            isDirty = false;
         }
         // hide addFrame
         setVisible(false);
@@ -271,7 +305,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         if (editMode) {
             cancelEdit();
         }
-        _pathTurnoutTableModel.dispose();
+        _tomodel.dispose();
         this.dispose();
     }
 
@@ -280,8 +314,8 @@ public class BlockPathEditFrame extends JmriJFrame {
      */
     protected void cancelEdit() {
         if (editMode) {
-            status1.setText(Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
-            //status2.setText(Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
+            status1.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
+            //status2.setText(Bundle.getMessage("AddXStatusInitial2", Bundle.getMessage("Path"), Bundle.getMessage("ButtonEdit")));
             finishUpdate();
             // get out of edit mode
             editMode = false;
@@ -294,21 +328,20 @@ public class BlockPathEditFrame extends JmriJFrame {
 //        cancelIncludedOnly();
         // Provide feedback to user
         // switch GUI back to selection mode
-        //status2.setText(Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
+        //status2.setText(Bundle.getMessage("PathAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
         status2.setVisible(true);
-        setTitle(Bundle.getMessage("TitleAddRoute"));
+        setTitle(Bundle.getMessage("TitleAddPath"));
         clearPage();
-        // reactivate the Route
-        routeDirty = true;
+        // reactivate the Path
+        isDirty = true;
         // get out of edit mode
         editMode = false;
     }
 
     private void clearPage() {
-        //        _systemName.setText("");
         _userName.setText("");
-        fromOBlock.setSelectedItem(null);
-        toOBlock.setSelectedItem(null);
+        fromPortalComboBox.setSelectedItem(0);
+        toPortalComboBox.setSelectedItem(0);
         //        for (int i = _turnoutList.size() - 1; i >= 0; i--) {
         //            _turnoutList.get(i).setIncluded(false);
         //        }

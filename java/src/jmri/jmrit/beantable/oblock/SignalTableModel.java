@@ -63,7 +63,7 @@ public class SignalTableModel extends AbstractTableModel {
     private String[] tempRow;
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
-    private static class SignalRow {
+    protected static class SignalRow {
 
         NamedBean _signal;
         OBlock _fromBlock;
@@ -137,16 +137,16 @@ public class SignalTableModel extends AbstractTableModel {
 
     public void init() {
         makeList();
-        if (!_tabbed) {
-            initTempRow();
-        }
+        initTempRow();
     }
 
     void initTempRow() {
-        tempRow = new String[NUMCOLS];
-        tempRow[LENGTHCOL] = twoDigit.format(0.0);
-        tempRow[UNITSCOL] = Bundle.getMessage("in");
-        tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
+        if (!_tabbed) {
+            tempRow = new String[NUMCOLS];
+            tempRow[LENGTHCOL] = twoDigit.format(0.0);
+            tempRow[UNITSCOL] = Bundle.getMessage("in");
+            tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
+        }
     }
 
     // Rebuild _signalList CopyOnWriteArrayList<SignalRow>, copying Signals from Portal table
@@ -276,7 +276,7 @@ public class SignalTableModel extends AbstractTableModel {
         return null;
     }
 
-    private String checkDuplicateSignal(NamedBean signal) {
+    protected String checkDuplicateSignal(NamedBean signal) {
         log.debug("checkDuplSig checking for duplicate Signal in list by the same name");
         if (signal == null) {
             return null;
@@ -430,7 +430,7 @@ public class SignalTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
         if (_signalList.numberOfSignals() == row) { // this is the new entry in tempRow, not yet in _signalList
-            if (col == DELETE_COL) { // labeled "Clear"
+            if (col == DELETE_COL) { // labeled "Clear" in tempRow
                 initTempRow();
                 fireTableRowsUpdated(row, row);
                 return;
@@ -539,9 +539,9 @@ public class SignalTableModel extends AbstractTableModel {
                         // all checks passed, create new SignalRow to add to _signalList
                         SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, length, isMetric);
                         msg = setSignal(signalRow, false);
-                        if (msg==null) {
+                        if (msg == null) {
                             //if (signalRow.getLength() == 0) {
-                                log.error("#502 empty tempRow added to SignalList (now {})", _signalList.numberOfSignals());
+                                log.error("#544 empty tempRow added to SignalList (now {})", _signalList.numberOfSignals());
                             //}
                             _signalList.add(signalRow);                            
                         }
@@ -555,7 +555,7 @@ public class SignalTableModel extends AbstractTableModel {
             try {
                 signalRow = _signalList.get(row);
             } catch (IndexOutOfBoundsException e) {
-                // ignore, happens for unknown reason TODO fix
+                // ignore, happens for unknown reason, shows duplicate row during new entry TODO fix
                 //log.debug("setValue out of range");
                 return;
             }
@@ -709,7 +709,7 @@ public class SignalTableModel extends AbstractTableModel {
                     fireTableDataChanged();
                     break;
                 case EDIT_COL:
-                    editSignal(Portal.getSignal(signalRow.getSignal().getDisplayName()));
+                    editSignal(Portal.getSignal(signalRow.getSignal().getDisplayName()), signalRow);
                     break;
                 default:
                     // fall through
@@ -735,13 +735,15 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private boolean editSignal(NamedBean signal) {
+    private boolean editSignal(NamedBean signal, SignalRow sr) {
         if (_tabbed) {
             if (signal == null) {
                 return false;
             } else {
-                JOptionPane.showMessageDialog(null, "TODO open SignalEditFrame", Bundle.getMessage("MessageTitle"), JOptionPane.WARNING_MESSAGE);
-                // TODO EBR open SignalEditFrame
+                // open SignalEditFrame
+                SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, null, this);
+                // TODO run on new thread?
+                sef.setVisible(true);
                 return true;
             }
         }

@@ -269,7 +269,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     private boolean editPortal(Portal portal) {
         if (_tabbed) {
             // open PortalEditFrame
-            PortalEditFrame portalFrame = new PortalEditFrame(Bundle.getMessage("TitleAddPortal"), portal, this);
+            PortalEditFrame portalFrame = new PortalEditFrame(Bundle.getMessage("TitleEditPortal", portal.getName()), portal, this);
             portalFrame.setVisible(true);
             return true;
         }
@@ -335,6 +335,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             case "signals":
                 _parent.getSignalTableModel().propertyChange(e);
                 break;
+            default:
         }
     }
 

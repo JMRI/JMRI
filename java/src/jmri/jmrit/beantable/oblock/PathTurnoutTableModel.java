@@ -66,12 +66,12 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         _parent = parent; // is used to change the title, or dispose when item is deleted
     }
 
-    public PathTurnoutTableModel(OPath path, @Nonnull BlockPathEditFrame parent) { // for _tabbed
+    public PathTurnoutTableModel(OPath path) { // for _tabbed
         super();
         _path = path;
         _path.getBlock().addPropertyChangeListener(this);
         _tabbed = true;
-        _tabbedParent = parent; // is used to change the title, or dispose when item is deleted
+        //_tabbedParent = parent; // is -not- used to change the title, or dispose when item is deleted
     }
 
     public void removeListener() {
@@ -359,20 +359,20 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 fireTableDataChanged();
                 if (_path.equals(e.getOldValue())) { // path was deleted
                     removeListener();
-                    if (_tabbed) {
-                        _tabbedParent.dispose();
-                    } else {
+                    if (!_tabbed) {
+//                        _tabbedParent.dispose();
+//                    } else {
                         _parent.dispose();
                     }
                 }
             } else if (property.equals("pathName")) {
                 String title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getOldValue());
-                if (_tabbedParent.getTitle().equals(title)) {
+                if (!_tabbed && _parent.getTitle().equals(title)) {
                     title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getNewValue());
                 }
-                if (_tabbed) {
-                    _tabbedParent.setTitle(title);
-                } else {
+                if (!_tabbed) {
+//                    _tabbedParent.setTitle(title);
+//                } else {
                     _parent.setTitle(title);
                 }
             }

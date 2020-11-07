@@ -26,8 +26,8 @@ import org.slf4j.LoggerFactory;
  */
 public class PortalEditFrame extends JmriJFrame {
 
-    JPanel main = new JPanel();
-    private final JScrollPane scroll = new JScrollPane(main, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    //JPanel main = new JPanel();
+    //private final JScrollPane scroll = new JScrollPane(main, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     PortalTableModel model;
     PortalManager pm;
@@ -44,7 +44,6 @@ public class PortalEditFrame extends JmriJFrame {
     private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
 
-    private final static String PREFIX = "OB";
     private final PortalEditFrame frame = this;
     private Portal _portal;
     private boolean _newPortal = false;
@@ -55,6 +54,7 @@ public class PortalEditFrame extends JmriJFrame {
         this.model = model;
         if (portal == null) {
             _newPortal = true;
+            setTitle(Bundle.getMessage("TitleAddPortal"));
         } else {
             _portal = portal;
         }
@@ -67,28 +67,38 @@ public class PortalEditFrame extends JmriJFrame {
 
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+        frame.setSize(350, 200);
+        //main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
 
         JPanel p;
 
         p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
         JPanel p1 = new JPanel();
         p1.add(portalLabel);
         p1.add(userName);
+        p.add(p1);
+
+        p1 = new JPanel();
         p1.add(fromBlockLabel);
         p1.add(fromBlockComboBox);
         fromBlockComboBox.setAllowNull(true);
+
         p1.add(toBlockLabel);
         p1.add(toBlockComboBox);
         toBlockComboBox.setAllowNull(true);
         p.add(p1);
 
+        p.add(Box.createVerticalGlue());
+
+        p1 = new JPanel();
+        p1.add(statusBar);
+        p.add(p1);
+
         // put buttons at the bottom
         JPanel p2 = new JPanel();
-        p2.add(statusBar);
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> {
@@ -104,10 +114,9 @@ public class PortalEditFrame extends JmriJFrame {
             frame.dispose();
         });
         p.add(p2, BorderLayout.SOUTH);
-        main.add(p);
 
-        frame.getContentPane().add(main);
-        //frame.add(scroll);
+        //main.add(p);
+        frame.getContentPane().add(p);
     }
 
     /**
@@ -173,6 +182,6 @@ public class PortalEditFrame extends JmriJFrame {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);
+    //private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);
 
 }

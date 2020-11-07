@@ -428,8 +428,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 return JButton.class;
             case UNITSCOL:
                 return JToggleButton.class;
+            default:
+                return String.class;
         }
-        return String.class;
     }
 
     public int getPreferredWidth(int col) {
