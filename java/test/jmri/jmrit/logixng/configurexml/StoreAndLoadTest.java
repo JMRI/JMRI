@@ -63,7 +63,7 @@ public class StoreAndLoadTest {
     
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
-        Assert.assertFalse(GraphicsEnvironment.isHeadless());
+        Assert.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Light light1 = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light1.setCommandedState(Light.OFF);
