@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.util.parser;
 
-import java.util.Locale;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

@@ -23,8 +23,8 @@ import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.jmrit.logixng.util.parser.Variable;
-import jmri.jmrit.logixng.util.parser.variables.GenericExpressionVariable;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.GenericExpressionVariable;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.util.TypeConversionUtil;
 
 import org.slf4j.Logger;

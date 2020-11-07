@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.digital.log;
 
+import jmri.jmrit.logixng.log.LogReader;
+import jmri.jmrit.logixng.log.Log;
+import jmri.jmrit.logixng.log.LogWriter;
+import jmri.jmrit.logixng.log.LogRowArray;
+import jmri.jmrit.logixng.log.DefaultLog;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,9 +13,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import jmri.jmrit.logixng.digital.log.Log.InvalidFormatException;
-import jmri.jmrit.logixng.digital.log.Log.UnsupportedVersionException;
+
+import jmri.jmrit.logixng.log.Log.InvalidFormatException;
+import jmri.jmrit.logixng.log.Log.UnsupportedVersionException;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

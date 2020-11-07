@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
@@ -21,9 +23,10 @@ import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.jmrit.logixng.util.parser.Variable;
-import jmri.jmrit.logixng.util.parser.variables.GenericExpressionVariable;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.GenericExpressionVariable;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.util.TypeConversionUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

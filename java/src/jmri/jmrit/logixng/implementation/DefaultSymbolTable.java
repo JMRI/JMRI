@@ -8,8 +8,8 @@ import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.variables.LocalVariableExpressionVariable;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 
 /**
  * The default implementation of a NamedTable

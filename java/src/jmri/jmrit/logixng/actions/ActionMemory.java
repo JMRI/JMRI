@@ -17,7 +17,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;

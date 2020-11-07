@@ -1,14 +1,5 @@
 package jmri.jmrit.logixng.util.parser;
 
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeArithmeticOperator;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeIdentifier;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeFloatingNumber;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeFunction;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeComparingOperator;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeIntegerNumber;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeBooleanOperator;
-import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNodeString;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
