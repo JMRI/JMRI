@@ -44,14 +44,14 @@ public class DefaultStringActionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngStringExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.string.actions.configurexml.StringActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQSA1"));
         b.loadActions(e);
         
         e = new Element("logixngStringExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.string.actions.configurexml.StringActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.StringActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQSA2"));
         b.loadActions(e);

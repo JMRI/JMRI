@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.actions.AnalogMany;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +8,6 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

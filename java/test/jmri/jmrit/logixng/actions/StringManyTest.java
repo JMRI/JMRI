@@ -8,7 +8,6 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;

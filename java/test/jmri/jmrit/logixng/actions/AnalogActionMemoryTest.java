@@ -1,14 +1,10 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.actions.AnalogMany;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 

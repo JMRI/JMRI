@@ -7,7 +7,6 @@ import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml;
 import jmri.jmrit.logixng.analog.implementation.DefaultAnalogActionManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -44,14 +43,14 @@ public class DefaultAnalogActionManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.actions.configurexml.AnalogActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA1"));
         b.loadActions(e);
         
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.actions.configurexml.AnalogActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA2"));
         b.loadActions(e);

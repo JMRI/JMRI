@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
-import jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml;
-import jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;

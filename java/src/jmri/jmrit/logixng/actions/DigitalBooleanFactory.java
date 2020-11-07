@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.DigitalBooleanMany;
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
-
 import java.util.AbstractMap;
 import java.util.HashSet;
 import java.util.Map;

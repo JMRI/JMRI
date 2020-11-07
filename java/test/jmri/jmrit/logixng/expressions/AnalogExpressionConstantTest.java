@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
-
 import java.util.Locale;
 
 import jmri.InstanceManager;

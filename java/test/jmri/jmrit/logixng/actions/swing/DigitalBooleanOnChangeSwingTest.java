@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions.swing;
 
-import jmri.jmrit.logixng.actions.swing.DigitalBooleanOnChangeSwing;
-
 import java.awt.GraphicsEnvironment;
 
 import javax.swing.JPanel;

@@ -1,12 +1,8 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
-import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.actions.DigitalBooleanOnChange.Trigger;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
