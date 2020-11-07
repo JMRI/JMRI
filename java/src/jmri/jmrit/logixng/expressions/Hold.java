@@ -11,8 +11,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An Expression that keeps its status even if its child expression doesn't.
@@ -214,6 +212,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     public void disposeMe() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Hold.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Hold.class);
 
 }

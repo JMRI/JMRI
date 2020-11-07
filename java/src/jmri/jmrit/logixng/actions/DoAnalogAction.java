@@ -14,8 +14,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Executes an analog action with the result of an analog expression.
@@ -207,6 +205,6 @@ public class DoAnalogAction
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DoAnalogAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DoAnalogAction.class);
     
 }

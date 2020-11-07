@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * LogixNG Swing tools.
  * 
@@ -92,6 +89,6 @@ public final class SwingTools {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(SwingTools.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SwingTools.class);
 
 }

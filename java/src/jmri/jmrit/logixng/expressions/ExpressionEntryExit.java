@@ -12,8 +12,6 @@ import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Evaluates the state of a DestinationPoints.
@@ -231,6 +229,6 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionEntryExit.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionEntryExit.class);
     
 }

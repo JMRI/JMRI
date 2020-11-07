@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.expressions.AnalogExpressionConstant;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -57,5 +55,5 @@ public class AnalogExpressionConstantXml extends jmri.managers.configurexml.Abst
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstantXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionConstantXml.class);
 }

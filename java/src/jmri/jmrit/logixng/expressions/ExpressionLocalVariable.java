@@ -18,9 +18,6 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Evaluates the state of a local variable.
  * 
@@ -490,6 +487,6 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionLocalVariable.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLocalVariable.class);
     
 }

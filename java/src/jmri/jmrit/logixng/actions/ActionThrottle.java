@@ -21,8 +21,6 @@ import jmri.jmrit.logixng.MaleAnalogExpressionSocket;
 import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Runs an engine.
@@ -369,6 +367,6 @@ public class ActionThrottle extends AbstractDigitalAction
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActionThrottle.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottle.class);
 
 }

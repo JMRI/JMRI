@@ -18,8 +18,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.util.ReferenceUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Evaluates what a reference points to.
@@ -260,6 +258,6 @@ public class ExpressionReference extends AbstractDigitalExpression
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionReference.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionReference.class);
     
 }

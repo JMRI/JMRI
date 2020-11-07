@@ -14,8 +14,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Evaluates to True if any of the children expressions evaluate to true.
@@ -229,6 +227,6 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Or.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Or.class);
     
 }

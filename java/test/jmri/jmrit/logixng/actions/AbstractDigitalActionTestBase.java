@@ -8,7 +8,6 @@ import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
 /**
@@ -44,15 +43,6 @@ public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase
     @Test
     public void testGetBeanType() {
         Assert.assertTrue("String matches", "Digital action".equals(((DigitalActionBean)_base).getBeanType()));
-    }
-    
-    @Test
-    public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
-        // If the digital action implements the interface DigitalActionWithEnableExecution
-        // then this method must be overridden.
-        
-        Assert.assertFalse("digital action does not implement DigitalActionWithEnableExecution",
-                _base instanceof DigitalActionWithEnableExecution);
     }
     
 }

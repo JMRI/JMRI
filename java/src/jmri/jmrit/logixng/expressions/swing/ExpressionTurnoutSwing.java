@@ -22,9 +22,6 @@ import jmri.jmrit.logixng.expressions.ExpressionTurnout.TurnoutState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
@@ -164,6 +161,6 @@ public class ExpressionTurnoutSwing extends AbstractExpressionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionTurnoutSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnoutSwing.class);
     
 }

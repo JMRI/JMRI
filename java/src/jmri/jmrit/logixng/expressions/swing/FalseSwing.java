@@ -52,6 +52,6 @@ public class FalseSwing extends AbstractExpressionSwing {
     }
     
     
-//    private final static Logger log = LoggerFactory.getLogger(FalseSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FalseSwing.class);
     
 }

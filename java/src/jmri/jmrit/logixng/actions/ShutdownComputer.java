@@ -7,9 +7,6 @@ import jmri.ShutDownManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This action sets the state of a turnout.
  * 
@@ -85,5 +82,5 @@ public class ShutdownComputer extends AbstractDigitalAction {
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(ShutdownComputer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShutdownComputer.class);
 }

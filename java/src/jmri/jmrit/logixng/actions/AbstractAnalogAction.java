@@ -8,9 +8,6 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.AnalogActionBean;
 import jmri.jmrit.logixng.AnalogActionManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * The base class for LogixNG AnalogActions
  * 
@@ -97,5 +94,5 @@ public abstract class AbstractAnalogAction extends AbstractBase
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractAnalogAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAnalogAction.class);
 }

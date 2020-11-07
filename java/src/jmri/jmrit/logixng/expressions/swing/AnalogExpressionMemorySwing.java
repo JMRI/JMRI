@@ -20,9 +20,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an AnalogExpressionMemory object with a Swing JPanel.
  */
@@ -149,6 +146,6 @@ public class AnalogExpressionMemorySwing extends AbstractAnalogExpressionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionMemorySwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemorySwing.class);
     
 }

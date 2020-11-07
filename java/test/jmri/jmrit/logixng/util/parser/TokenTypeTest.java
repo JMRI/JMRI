@@ -9,8 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test Tokenizer
@@ -311,5 +309,5 @@ public class TokenTypeTest {
         JUnitUtil.tearDown();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(TokenTypeTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TokenTypeTest.class);
 }

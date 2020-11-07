@@ -5,8 +5,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.Locale;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This expression is a timer.
@@ -290,6 +288,6 @@ public class ExpressionTimer extends AbstractDigitalExpression {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionTimer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTimer.class);
     
 }

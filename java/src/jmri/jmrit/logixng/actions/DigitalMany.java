@@ -14,8 +14,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Execute many Actions in a specific order.
@@ -219,6 +217,6 @@ public class DigitalMany extends AbstractDigitalAction
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(DigitalMany.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalMany.class);
 
 }

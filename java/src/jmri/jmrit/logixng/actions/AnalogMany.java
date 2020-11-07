@@ -16,9 +16,6 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Execute many Actions in a specific order.
  * 
@@ -221,6 +218,6 @@ public class AnalogMany extends AbstractAnalogAction
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogMany.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogMany.class);
 
 }

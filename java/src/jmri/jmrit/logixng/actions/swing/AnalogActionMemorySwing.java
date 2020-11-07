@@ -20,9 +20,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an ActionMemory object with a Swing JPanel.
  */
@@ -149,6 +146,6 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogActionMemorySwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemorySwing.class);
     
 }

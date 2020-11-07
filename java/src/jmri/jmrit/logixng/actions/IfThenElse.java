@@ -10,12 +10,9 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Executes an action when the expression is True.
@@ -23,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class IfThenElse extends AbstractDigitalAction
-        implements FemaleSocketListener, DigitalActionWithEnableExecution {
+        implements FemaleSocketListener {
 
     /**
      * The type of Action. If the type is changed, the action is aborted if it
@@ -53,7 +50,6 @@ public class IfThenElse extends AbstractDigitalAction
         CONTINOUS_ACTION,
     }
 
-    private boolean _enableExecution = true;
     private Type _type;
     private boolean _lastExpressionResult = false;
     private String _ifExpressionSocketSystemName;
@@ -82,25 +78,8 @@ public class IfThenElse extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void setEnableExecution(boolean b) {
-        _enableExecution = b;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExecutionEnabled() {
-        return _enableExecution;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean isExternal() {
         return false;
-    }
-    
-    @Override
-    public void evaluateOnly() throws JmriException {
-        _lastExpressionResult = _ifExpressionSocket.evaluate();
     }
     
     /** {@inheritDoc} */
@@ -108,12 +87,10 @@ public class IfThenElse extends AbstractDigitalAction
     public void execute() throws JmriException {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
         
-        if (_enableExecution) {
-            if (_lastExpressionResult) {
-                _thenActionSocket.execute();
-            } else {
-                _elseActionSocket.execute();
-            }
+        if (_lastExpressionResult) {
+            _thenActionSocket.execute();
+        } else {
+            _elseActionSocket.execute();
         }
     }
 
@@ -355,6 +332,6 @@ public class IfThenElse extends AbstractDigitalAction
     public void disposeMe() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(IfThenElse.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElse.class);
 
 }

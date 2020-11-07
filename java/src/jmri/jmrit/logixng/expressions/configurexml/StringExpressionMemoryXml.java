@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.expressions.StringExpressionMemory;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -96,5 +94,5 @@ public class StringExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(StringExpressionMemoryXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionMemoryXml.class);
 }

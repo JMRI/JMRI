@@ -13,8 +13,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.StringExpressionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Executes an string action with the result of an string expression.
@@ -206,6 +204,6 @@ public class DoStringAction
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DoStringAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DoStringAction.class);
     
 }

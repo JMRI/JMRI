@@ -5,10 +5,6 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 
@@ -109,5 +105,5 @@ public abstract class AbstractAnalogExpression extends AbstractBase
     }
     
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractAnalogExpression.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractAnalogExpression.class);
 }

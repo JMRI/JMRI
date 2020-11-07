@@ -5,9 +5,6 @@ import java.util.Locale;
 
 import jmri.Manager;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Manager for LogixNG
  * 

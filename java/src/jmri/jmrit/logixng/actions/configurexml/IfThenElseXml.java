@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.actions.IfThenElse;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.MaleSocket;
 
@@ -120,5 +118,5 @@ public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(IfThenElseXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(IfThenElseXml.class);
 }

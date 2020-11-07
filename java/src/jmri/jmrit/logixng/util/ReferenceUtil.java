@@ -7,8 +7,6 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Utility methods to handle references
@@ -247,5 +245,5 @@ public class ReferenceUtil {
         public int v;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ReferenceUtil.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReferenceUtil.class);
 }

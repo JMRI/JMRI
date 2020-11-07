@@ -6,18 +6,14 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Emulates Logix.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
 public class Logix extends AbstractDigitalAction
-        implements FemaleSocketListener, DigitalActionWithEnableExecution {
+        implements FemaleSocketListener {
 
-    private boolean _enableExecution = true;
     private boolean _executeOnChange = true;
     private boolean _lastExpressionResult = false;
     private String _expressionSocketSystemName;
@@ -41,36 +37,16 @@ public class Logix extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void setEnableExecution(boolean b) {
-        _enableExecution = b;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExecutionEnabled() {
-        return _enableExecution;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean isExternal() {
         return false;
     }
     
     /** {@inheritDoc} */
     @Override
-    public void evaluateOnly() throws JmriException {
-        _lastExpressionResult = _expressionSocket.evaluate();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void execute() throws JmriException {
         boolean result = _expressionSocket.evaluate();
-        if (_enableExecution) {
-            if (!_executeOnChange || (result != _lastExpressionResult)) {
-                _actionSocket.execute(result);
-            }
+        if (!_executeOnChange || (result != _lastExpressionResult)) {
+            _actionSocket.execute(result);
         }
         _lastExpressionResult = result;
     }
@@ -255,6 +231,6 @@ public class Logix extends AbstractDigitalAction
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Logix.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Logix.class);
 
 }

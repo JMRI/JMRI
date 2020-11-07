@@ -7,8 +7,6 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -110,5 +108,5 @@ public abstract class AbstractDigitalExpression extends AbstractBase
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractDigitalExpression.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalExpression.class);
 }

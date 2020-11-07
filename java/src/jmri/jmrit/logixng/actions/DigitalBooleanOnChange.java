@@ -13,9 +13,6 @@ import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Executes an action depending on the parameter.
  * 
@@ -216,6 +213,6 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     public void disposeMe() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DigitalBooleanOnChange.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanOnChange.class);
 
 }

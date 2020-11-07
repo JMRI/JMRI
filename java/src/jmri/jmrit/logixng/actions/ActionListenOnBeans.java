@@ -30,9 +30,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.util.DuplicateKeyMap;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This action listens on some beans and runs the ConditionalNG on property change.
  * 
@@ -252,6 +249,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ActionListenOnBeans.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeans.class);
     
 }

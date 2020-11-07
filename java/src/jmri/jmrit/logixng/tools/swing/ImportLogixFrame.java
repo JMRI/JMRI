@@ -17,8 +17,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import jmri.util.JmriJFrame;
 import jmri.swing.JTitledSeparator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Imports Logixs to LogixNG
@@ -160,6 +158,6 @@ public final class ImportLogixFrame extends JmriJFrame {
     }
     
     
-//    private final static Logger log = LoggerFactory.getLogger(ImportLogixFrame.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogixFrame.class);
 
 }

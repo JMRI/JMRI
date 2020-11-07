@@ -18,8 +18,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.script.JmriScriptEngineManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Executes a script.
@@ -186,6 +184,6 @@ public class ActionScript extends AbstractDigitalAction {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ActionScript.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionScript.class);
     
 }

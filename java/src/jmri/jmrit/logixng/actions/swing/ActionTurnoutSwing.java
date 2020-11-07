@@ -21,9 +21,6 @@ import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
@@ -150,6 +147,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ActionTurnoutSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnoutSwing.class);
     
 }

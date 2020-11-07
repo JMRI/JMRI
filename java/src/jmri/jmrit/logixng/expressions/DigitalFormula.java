@@ -27,9 +27,6 @@ import jmri.jmrit.logixng.util.parser.GenericExpressionVariable;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.util.TypeConversionUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Evaluates to True if the formula evaluates to true
  * 
@@ -308,5 +305,5 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DigitalFormula.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalFormula.class);
 }

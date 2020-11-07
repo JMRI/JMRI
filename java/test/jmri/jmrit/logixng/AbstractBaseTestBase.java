@@ -17,8 +17,6 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test AbstractAnalogExpression
@@ -1008,6 +1006,6 @@ public abstract class AbstractBaseTestBase {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }

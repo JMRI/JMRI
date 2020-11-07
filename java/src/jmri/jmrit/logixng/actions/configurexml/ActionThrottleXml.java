@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.actions.ActionThrottle;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.MaleSocket;
 
@@ -115,5 +113,5 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ActionThrottleXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleXml.class);
 }

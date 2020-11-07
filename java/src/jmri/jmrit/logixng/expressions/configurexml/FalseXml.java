@@ -5,8 +5,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.expressions.False;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.DigitalExpressionBean;
 
@@ -52,5 +50,5 @@ public class FalseXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(FalseXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FalseXml.class);
 }

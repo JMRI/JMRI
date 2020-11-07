@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -67,5 +65,5 @@ public class AnalogExpressionMemoryXml extends jmri.managers.configurexml.Abstra
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
 }

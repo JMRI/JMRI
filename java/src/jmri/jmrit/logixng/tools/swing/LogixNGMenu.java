@@ -23,5 +23,5 @@ public class LogixNGMenu extends JMenu {
         add(new ImportLogixAction());
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(LogixNGMenu.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGMenu.class);
 }

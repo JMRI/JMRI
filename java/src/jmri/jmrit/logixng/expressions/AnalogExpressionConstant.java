@@ -6,9 +6,6 @@ import java.util.Locale;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Constant value.
  * This can be useful for example by the ActionThrottle.
@@ -108,6 +105,6 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstant.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionConstant.class);
     
 }

@@ -5,8 +5,6 @@ import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -189,5 +187,5 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         return InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixNGManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManagerXml.class);
 }

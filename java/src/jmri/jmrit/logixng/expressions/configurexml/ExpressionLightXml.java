@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.expressions.ExpressionLight;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -78,5 +76,5 @@ public class ExpressionLightXml extends jmri.managers.configurexml.AbstractNamed
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ExpressionLightXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLightXml.class);
 }

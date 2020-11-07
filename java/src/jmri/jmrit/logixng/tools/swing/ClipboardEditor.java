@@ -14,9 +14,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Editor of ConditionalNG
  * 
@@ -225,6 +222,6 @@ public class ClipboardEditor extends TreeViewer {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ClipboardEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardEditor.class);
 
 }

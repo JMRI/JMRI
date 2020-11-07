@@ -60,49 +60,6 @@ public class DefaultConditionalNG extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    public boolean supportsEnableExecution() {
-        if (_femaleRootSocket.isConnected()) {
-            return _femaleRootSocket.getConnectedSocket().getObject()
-                    instanceof DigitalActionWithEnableExecution;
-        } else {
-            // ConditionalNGs without a connected socket does not support
-            // enableExecution.
-            return false;
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void setEnableExecution(boolean b) {
-        if (supportsEnableExecution()
-                && (_femaleRootSocket.isConnected())
-                && (_femaleRootSocket.getConnectedSocket().getObject()
-                        instanceof DigitalActionWithEnableExecution)) {
-            Base action = _femaleRootSocket.getConnectedSocket().getObject();
-            ((DigitalActionWithEnableExecution)action).setEnableExecution(b);
-        } else {
-            log.error("This conditionalNG does not supports the method setEnableExecution()");
-            throw new UnsupportedOperationException("This conditionalNG does not supports the method setEnableExecution()");
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean isExecutionEnabled() {
-        if (supportsEnableExecution()
-                && (_femaleRootSocket.isConnected())
-                && (_femaleRootSocket.getConnectedSocket().getObject()
-                        instanceof DigitalActionWithEnableExecution)) {
-            Base action = _femaleRootSocket.getConnectedSocket().getObject();
-            return ((DigitalActionWithEnableExecution)action).isExecutionEnabled();
-        } else {
-            log.error("This conditionalNG does not supports the method isExecutionEnabled()");
-            throw new UnsupportedOperationException("This conditionalNG does not supports the method isExecutionEnabled()");
-        }
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void setRunOnGUIDelayed(boolean value) {
         _runOnGUIDelayed = value;
     }

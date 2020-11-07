@@ -21,9 +21,6 @@ import jmri.jmrit.logixng.actions.ActionLight;
 import jmri.jmrit.logixng.actions.ActionLight.LightState;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an ActionLight object with a Swing JPanel.
  */
@@ -150,6 +147,6 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ActionLightSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwing.class);
     
 }

@@ -12,8 +12,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.Antecedent;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -104,5 +102,5 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(AntecedentXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AntecedentXml.class);
 }

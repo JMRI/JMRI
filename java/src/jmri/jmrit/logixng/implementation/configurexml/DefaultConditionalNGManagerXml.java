@@ -10,8 +10,6 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGManager;
 import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the functionality for configuring ConditionalNGManagers
@@ -191,5 +189,5 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         return InstanceManager.getDefault(jmri.jmrit.logixng.ConditionalNG_Manager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalNGManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManagerXml.class);
 }

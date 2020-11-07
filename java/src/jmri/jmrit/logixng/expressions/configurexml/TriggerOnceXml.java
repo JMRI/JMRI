@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.TriggerOnce;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.DigitalExpressionBean;
 
@@ -82,5 +80,5 @@ public class TriggerOnceXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(TriggerOnceXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerOnceXml.class);
 }

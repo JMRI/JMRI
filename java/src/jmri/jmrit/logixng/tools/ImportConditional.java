@@ -31,9 +31,6 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.actions.DigitalBooleanOnChange;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Imports Logixs to LogixNG
  * 
@@ -857,6 +854,6 @@ public class ImportConditional {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ImportConditional.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportConditional.class);
 
 }

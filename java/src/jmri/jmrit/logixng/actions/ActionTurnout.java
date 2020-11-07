@@ -14,8 +14,6 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a turnout.
@@ -217,6 +215,6 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionTurnout.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTurnout.class);
     
 }

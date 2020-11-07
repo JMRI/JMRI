@@ -13,9 +13,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * An Expression that returns True only once while its child expression returns
  * True.
@@ -174,6 +171,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     public void disposeMe() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TriggerOnce.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerOnce.class);
 
 }

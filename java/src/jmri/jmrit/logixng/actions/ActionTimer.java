@@ -12,8 +12,6 @@ import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.util.ProtectedTimerTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Executes an action when the after some time.
@@ -210,6 +208,6 @@ public class ActionTimer extends AbstractDigitalAction
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ActionTimer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTimer.class);
 
 }

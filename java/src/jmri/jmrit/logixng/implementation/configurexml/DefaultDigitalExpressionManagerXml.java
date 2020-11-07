@@ -15,8 +15,6 @@ import jmri.jmrit.logixng.implementation.DefaultDigitalExpressionManager;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.util.ThreadingUtil;
@@ -186,5 +184,5 @@ public class DefaultDigitalExpressionManagerXml extends jmri.managers.configurex
         return InstanceManager.getDefault(jmri.jmrit.logixng.DigitalExpressionManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultDigitalExpressionManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultDigitalExpressionManagerXml.class);
 }

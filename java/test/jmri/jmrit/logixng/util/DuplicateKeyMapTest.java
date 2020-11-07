@@ -8,8 +8,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test ReferenceUtil
@@ -209,5 +207,5 @@ public class DuplicateKeyMapTest {
         JUnitUtil.tearDown();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(DuplicateKeyMapTest.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateKeyMapTest.class);
 }

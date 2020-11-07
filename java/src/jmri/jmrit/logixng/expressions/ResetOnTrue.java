@@ -4,8 +4,6 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This Expression has two expressions, the primary expression and the secondary
@@ -207,5 +205,5 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     public void disposeMe() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ResetOnTrue.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ResetOnTrue.class);
 }

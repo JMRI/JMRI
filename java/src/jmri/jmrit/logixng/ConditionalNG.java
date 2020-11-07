@@ -16,18 +16,6 @@ public interface ConditionalNG extends Base, NamedBean {
     public FemaleSocket getFemaleSocket();
     
     /**
-     * Determines whether this ConditionalNG supports enable execution. It does
-     * that if its action supports enable execution. An action for which
-     * execution is disabled will evaluate its expressions, if it has that, but
-     * not execute any actions.
-     * <p>
-     * Note that EnableExecution for LogixNG is the equivalent of enable for Logix.
-     * 
-     * @return true if execution is enbaled for the digital action, false otherwise
-     */
-    public boolean supportsEnableExecution();
-    
-    /**
      * Set whenether this ConditionalNG is enabled or disabled.
      * <P>
      * This method must call registerListeners() / unregisterListeners().
@@ -61,28 +49,6 @@ public interface ConditionalNG extends Base, NamedBean {
      * false otherwise.
      */
     public boolean getRunOnGUIDelayed();
-    
-    /**
-     * Enables or disables execution for the digital action of this ConditionalNG.
-     * An action which is disabled execution will evaluate its expressions, if
-     * it has that, but not execute any actions.
-     * <p>
-     * Note that enable execution for LogixNG is the equivalent of enable for Logix.
-     * 
-     * @param b if true, enables execution, otherwise disables execution
-     */
-    public void setEnableExecution(boolean b);
-    
-    /**
-     * Determines whether execution is enabled for this digital action. An
-     * action for which execution is disabled will evaluate its expressions,
-     * if it has that, but not execute any actions.
-     * <p>
-     * Note that EnableExecution for LogixNG is the equivalent of enable for Logix.
-     * 
-     * @return true if execution is enbaled for the digital action, false otherwise
-     */
-    public boolean isExecutionEnabled();
     
     /**
      * Execute the ConditionalNG.

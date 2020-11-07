@@ -6,8 +6,6 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -92,5 +90,5 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(StringActionMemoryXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemoryXml.class);
 }

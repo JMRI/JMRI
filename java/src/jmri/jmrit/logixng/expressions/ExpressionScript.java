@@ -20,8 +20,6 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.script.JmriScriptEngineManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Evaluates a script.
@@ -186,6 +184,6 @@ public class ExpressionScript extends AbstractDigitalExpression {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionScript.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionScript.class);
     
 }

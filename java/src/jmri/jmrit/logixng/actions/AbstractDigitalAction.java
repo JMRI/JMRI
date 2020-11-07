@@ -7,8 +7,6 @@ import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The base class for LogixNG Actions
@@ -95,5 +93,5 @@ public abstract class AbstractDigitalAction extends AbstractBase
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractDigitalAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalAction.class);
 }

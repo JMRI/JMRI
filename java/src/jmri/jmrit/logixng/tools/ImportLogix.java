@@ -5,9 +5,6 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Imports Logixs to LogixNG
  * 
@@ -61,6 +58,6 @@ public class ImportLogix {
         return _logixNG;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ImportLogix.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportLogix.class);
 
 }

@@ -22,9 +22,6 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.util.swing.BeanSelectCreatePanel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Configures an ExpressionSensor object with a Swing JPanel.
  */
@@ -164,6 +161,6 @@ public class ExpressionSensorSwing extends AbstractExpressionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionSensorSwing.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorSwing.class);
     
 }

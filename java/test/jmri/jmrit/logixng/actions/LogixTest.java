@@ -273,13 +273,6 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    @Override
-    public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
-        Assert.assertTrue("digital action implements DigitalActionWithEnableExecution",
-                _base instanceof DigitalActionWithEnableExecution);
-    }
-    
-    @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }

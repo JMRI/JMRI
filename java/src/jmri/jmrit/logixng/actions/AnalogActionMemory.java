@@ -12,9 +12,6 @@ import jmri.*;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Sets a Memory.
  * 
@@ -152,6 +149,6 @@ public class AnalogActionMemory extends AbstractAnalogAction
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogActionMemory.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
 
 }

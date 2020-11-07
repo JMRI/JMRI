@@ -11,8 +11,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.And;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logixng.DigitalExpressionBean;
 
@@ -90,5 +88,5 @@ public class AndXml extends jmri.managers.configurexml.AbstractNamedBeanManagerC
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(AndXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AndXml.class);
 }

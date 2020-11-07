@@ -19,8 +19,6 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The default implementation of LogixNG.
@@ -114,7 +112,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 //        return _enabled;
 //    }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultLogixNG.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNG.class);
 
     @Override
     public String getShortDescription(Locale locale) {

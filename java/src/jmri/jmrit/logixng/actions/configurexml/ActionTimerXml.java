@@ -8,8 +8,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionTimer;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
@@ -67,5 +65,5 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
         return true;
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(ActionLightXml.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightXml.class);
 }

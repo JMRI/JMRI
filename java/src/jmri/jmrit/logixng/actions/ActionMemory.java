@@ -20,9 +20,6 @@ import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.util.ThreadingUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This action sets the value of a memory.
  * 
@@ -335,6 +332,6 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         CalculateFormula;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ActionMemory.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionMemory.class);
     
 }
