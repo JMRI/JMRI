@@ -344,8 +344,8 @@ public class StoreAndLoadTest {
         //================================================================================
         //================================================================================
 /*        
-        jmri.jmrit.logixng.digital.boolean_actions.Many booleanMany =
-                new jmri.jmrit.logixng.digital.boolean_actions.Many(digitalBooleanActionManager.getAutoSystemName(), null);
+        jmri.jmrit.logixng.actions.Many booleanMany =
+                new jmri.jmrit.logixng.actions.Many(digitalBooleanActionManager.getAutoSystemName(), null);
         maleSocket = digitalBooleanActionManager.registerAction(booleanMany);
         logix.getChild(1).connect(maleSocket);
         

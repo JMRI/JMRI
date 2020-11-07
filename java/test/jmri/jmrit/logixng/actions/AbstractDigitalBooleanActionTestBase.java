@@ -38,7 +38,7 @@ public abstract class AbstractDigitalBooleanActionTestBase extends AbstractBaseT
         Assert.assertEquals("strings are equal", "On change", Bundle.getMessage(Locale.CANADA, "DigitalBooleanOnChange_Short"));
 //        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "DigitalBooleanOnChange_Long_Change", "IM1"));
         
-        // The bundle in jmri.jmrit.logixng.digital.boolean_actions doesn't
+        // The bundle in jmri.jmrit.logixng.actions doesn't
         // currently has a property that uses arguments so test a property
         // in jmri.jmrit.logixng bundle instead.
         Assert.assertEquals("strings are equal", "Test Bundle BB AA CC", Bundle.getMessage("TestBundle", "AA", "BB", "CC"));

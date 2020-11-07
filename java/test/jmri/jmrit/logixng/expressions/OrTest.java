@@ -155,7 +155,7 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
                     entry.getKey(), expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
 //                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                     expression.getChild(i).getClass().getName());
             Assert.assertFalse("expression female socket is not connected",
                     expression.getChild(i).isConnected());
@@ -216,7 +216,7 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
                     entry.getKey(), expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
 //                    "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                     expression.getChild(i).getClass().getName());
             Assert.assertFalse("expression female socket is not connected",
                     expression.getChild(i).isConnected());

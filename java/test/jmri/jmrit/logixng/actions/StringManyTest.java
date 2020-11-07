@@ -89,7 +89,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
         Assert.assertEquals("action has one female socket", 1, action.getChildCount());
         Assert.assertEquals("action female socket name is A1", "A1", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleStringActionSocket",
                 action.getChild(0).getClass().getName());
     }
     
@@ -122,7 +122,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
             Assert.assertEquals("action female socket name is "+entry.getKey(),
                     entry.getKey(), action.getChild(i).getName());
             Assert.assertEquals("action female socket is of correct class",
-                    "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleStringActionSocket",
                     action.getChild(i).getClass().getName());
             Assert.assertFalse("action female socket is not connected",
                     action.getChild(i).isConnected());
@@ -180,7 +180,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
             Assert.assertEquals("action female socket name is "+entry.getKey(),
                     entry.getKey(), action.getChild(i).getName());
             Assert.assertEquals("action female socket is of correct class",
-                    "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringActionSocket",
+                    "jmri.jmrit.logixng.implementation.DefaultFemaleStringActionSocket",
                     action.getChild(i).getClass().getName());
             Assert.assertFalse("action female socket is not connected",
                     action.getChild(i).isConnected());

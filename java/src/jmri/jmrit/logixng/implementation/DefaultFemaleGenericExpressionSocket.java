@@ -11,9 +11,6 @@ import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket;
-import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket;
 import jmri.util.TypeConversionUtil;
 
 /**

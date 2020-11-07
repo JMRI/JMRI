@@ -4,7 +4,6 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket;
 
 /**
  * Default implementation of the Female Digital Action socket

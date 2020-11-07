@@ -115,14 +115,14 @@ public class DefaultConditionalNGManagerXmlTest {
         // Test loading the same class twice, in order to check field "xmlClasses"
         e = new Element("conditionalngs");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.actions.configurexml.AnalogActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA1"));
         b.loadConditionalNGs(e);
         
         e = new Element("conditionalngs");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.actions.configurexml.AnalogActionMemoryXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA2"));
         b.loadConditionalNGs(e);
@@ -130,7 +130,7 @@ public class DefaultConditionalNGManagerXmlTest {
         // Test trying to load a class with private constructor
         e = new Element("conditionalngs");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogActionManagerXmlTest$PrivateConstructorXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$PrivateConstructorXml");
         e.addContent(e2);
         b.loadConditionalNGs(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
@@ -138,7 +138,7 @@ public class DefaultConditionalNGManagerXmlTest {
         // Test trying to load a class which throws an exception
         e = new Element("conditionalngs");
         e2 = new Element("existing_class");
-        e2.setAttribute("class", "jmri.jmrit.logixng.analog.implementation.configurexml.DefaultAnalogActionManagerXmlTest$ThrowExceptionXml");
+        e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$ThrowExceptionXml");
         e.addContent(e2);
         b.loadConditionalNGs(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");

@@ -173,7 +173,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         femaleSocket.connect(digitalMaleSocket);
         
         Assert.assertEquals("_currentActiveSocket is has correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 femaleSocket.getCurrentActiveSocket().getClass().getName());
         
         femaleSocket.disconnect();
@@ -197,7 +197,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         femaleSocket.connect(digitalMaleSocket);
         
         Assert.assertEquals("_currentActiveSocket is has correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 femaleSocket.getCurrentActiveSocket().getClass().getName());
         
         femaleSocket.disconnect();
@@ -373,7 +373,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         _femaleGenericSocket.setSocketType(SocketType.ANALOG);
         _femaleGenericSocket.setSocketType(SocketType.ANALOG);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.ANALOG, _femaleGenericSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         _femaleGenericSocket.connect(analogMaleSocket);
@@ -392,7 +392,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         _femaleGenericSocket.setSocketType(SocketType.DIGITAL);
         _femaleGenericSocket.setSocketType(SocketType.DIGITAL);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.DIGITAL, _femaleGenericSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         _femaleGenericSocket.connect(digitalMaleSocket);
@@ -430,7 +430,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         _femaleGenericSocket.setSocketType(SocketType.STRING);
         _femaleGenericSocket.setSocketType(SocketType.STRING);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.STRING, _femaleGenericSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", _femaleGenericSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         _femaleGenericSocket.connect(stringMaleSocket);
@@ -468,7 +468,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         internalSocket.setSocketType(SocketType.ANALOG);
         internalSocket.setSocketType(SocketType.ANALOG);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.ANALOG, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         internalSocket.connect(analogMaleSocket);
@@ -487,7 +487,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         internalSocket.setSocketType(SocketType.DIGITAL);
         internalSocket.setSocketType(SocketType.DIGITAL);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.DIGITAL, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         internalSocket.connect(digitalMaleSocket);
@@ -525,7 +525,7 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         internalSocket.setSocketType(SocketType.STRING);
         internalSocket.setSocketType(SocketType.STRING);   // Test calling setSocketType() twice
         Assert.assertEquals("Socket type is correct", SocketType.STRING, internalSocket.getSocketType());
-        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.string.implementation.DefaultFemaleStringExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
+        Assert.assertEquals("Active socket is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", internalSocket.getCurrentActiveSocket().getClass().getName());
         
         // We can't change socket type if it's connected
         internalSocket.connect(stringMaleSocket);

@@ -87,7 +87,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
                 action.getChild(0).getClass().getName());
         Assert.assertFalse("action female socket is not connected",
                 action.getChild(0).isConnected());
@@ -100,7 +100,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
                 action.getChild(0).getClass().getName());
         Assert.assertFalse("action female socket is not connected",
                 action.getChild(0).isConnected());
@@ -119,7 +119,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
                 action.getChild(0).getClass().getName());
         Assert.assertFalse("action female socket is not connected",
                 action.getChild(0).isConnected());
@@ -130,7 +130,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
                 action.getChild(0).getClass().getName());
         Assert.assertFalse("action female socket is not connected",
                 action.getChild(0).isConnected());
@@ -153,7 +153,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("action female socket name is ZH12",
                 "ZH12", action.getChild(0).getName());
         Assert.assertEquals("action female socket is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket",
                 action.getChild(0).getClass().getName());
         Assert.assertFalse("action female socket is not connected",
                 action.getChild(0).isConnected());

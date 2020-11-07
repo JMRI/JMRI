@@ -6,7 +6,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
-import jmri.jmrit.logixng.analog.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
+import jmri.jmrit.logixng.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
 import org.junit.Assert;
 import org.junit.Test;
 

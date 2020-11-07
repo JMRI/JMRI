@@ -7,7 +7,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
-import jmri.jmrit.logixng.string.implementation.DefaultMaleStringExpressionSocket.StringExpressionDebugConfig;
+import jmri.jmrit.logixng.implementation.DefaultMaleStringExpressionSocket.StringExpressionDebugConfig;
 
 import org.junit.Assert;
 import org.junit.Test;

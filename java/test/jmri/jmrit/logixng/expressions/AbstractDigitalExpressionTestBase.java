@@ -8,7 +8,7 @@ import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
+import jmri.jmrit.logixng.implementation.DefaultMaleDigitalExpressionSocket.DigitalExpressionDebugConfig;
 
 /**
  * Base class for classes that tests DigitalAction

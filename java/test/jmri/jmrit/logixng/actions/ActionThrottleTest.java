@@ -141,7 +141,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -150,7 +150,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -159,7 +159,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "Bj23", expression.getChild(2).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(2).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
@@ -175,7 +175,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -184,7 +184,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -193,7 +193,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "Bj23", expression.getChild(2).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(2).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
@@ -217,7 +217,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -226,7 +226,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -235,7 +235,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "Bj23", expression.getChild(2).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(2).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
@@ -247,7 +247,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -256,7 +256,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -265,7 +265,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "Bj23", expression.getChild(2).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(2).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());
@@ -296,7 +296,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "XYZ123", expression.getChild(0).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(0).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(0).isConnected());
@@ -305,7 +305,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "ZH12", expression.getChild(1).getName());
         Assert.assertEquals("expression female socket is of correct class",
 //                "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$AnalogSocket",
-                "jmri.jmrit.logixng.analog.implementation.DefaultFemaleAnalogExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleAnalogExpressionSocket",
                 expression.getChild(1).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(1).isConnected());
@@ -314,7 +314,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "Bj23", expression.getChild(2).getName());
         Assert.assertEquals("expression female socket is of correct class",
  //               "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket",
-                "jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket",
+                "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket",
                 expression.getChild(2).getClass().getName());
         Assert.assertFalse("expression female socket is not connected",
                 expression.getChild(2).isConnected());

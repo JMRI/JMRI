@@ -2,8 +2,9 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket;
+import jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
