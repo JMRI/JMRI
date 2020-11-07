@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.util.parser;
 
-import jmri.jmrit.logixng.util.parser.Token;
-
 /**
  * A parsed expression
  */

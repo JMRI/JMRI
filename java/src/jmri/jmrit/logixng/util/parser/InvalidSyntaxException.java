@@ -1,4 +1,3 @@
-
 package jmri.jmrit.logixng.util.parser;
 
 /**

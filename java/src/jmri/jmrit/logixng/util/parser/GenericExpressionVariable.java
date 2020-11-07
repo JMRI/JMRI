@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.util.parser;
 
 import jmri.JmriException;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.util.parser.Variable;
 
 /**
  * A variable that evaluates a generic expression

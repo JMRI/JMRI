@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
 import jmri.JmriException;
-import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.jmrit.logixng.util.parser.TokenType;
 
 /**
  * A parsed expression

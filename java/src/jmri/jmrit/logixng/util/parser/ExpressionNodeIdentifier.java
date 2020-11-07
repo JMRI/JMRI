@@ -3,9 +3,6 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.Map;
 
 import jmri.JmriException;
-import jmri.jmrit.logixng.util.parser.IdentifierNotExistsException;
-import jmri.jmrit.logixng.util.parser.Token;
-import jmri.jmrit.logixng.util.parser.Variable;
 
 /**
  * A parsed expression
