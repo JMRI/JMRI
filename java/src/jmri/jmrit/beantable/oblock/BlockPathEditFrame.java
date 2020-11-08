@@ -1,25 +1,19 @@
 package jmri.jmrit.beantable.oblock;
 
-import jmri.BeanSetting;
 import jmri.InstanceManager;
-import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logix.*;
-import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckForNull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Vector;
 
 /**
- * Defines a GUI for editing OBlock - OPath objects in the tabbed Table interface.
+ * Defines a GUI for editing OBlock - OPath objects in the _tabbed OBlock Table interface.
  * Based on {@link jmri.jmrit.audio.swing.AudioSourceFrame} and
  * {@link jmri.jmrit.beantable.routetable.AbstractRouteAddEditFrame}
  *
@@ -28,24 +22,17 @@ import java.util.Vector;
  */
 public class BlockPathEditFrame extends JmriJFrame {
 
-//    JPanel main = new JPanel();
-//    private final JScrollPane scroll
-//            = new JScrollPane(main,
-//            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-//            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
     // UI components for Add/Edit Path
     JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
     JLabel blockName = new JLabel();
     JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")));
-    JTextField userName = new JTextField(15);
-    JLabel userNameLabel = new JLabel();
+    JTextField userName = new JTextField(20);
     JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromPortal")));
     JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToPortal")));
     String[] p0 = {""};
     private final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
     private final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
-    JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+    JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")), JLabel.LEADING);
 
     private final BlockPathEditFrame frame = this;
     private boolean _newPath = false;
@@ -62,22 +49,19 @@ public class BlockPathEditFrame extends JmriJFrame {
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
 
-    static int ROW_HEIGHT;
-
-    final JTextField _userName = new JTextField(22);
     final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
-    //JTextArea comment  = new JTextArea();
-    final JLabel status1 = new JLabel();
-    final JLabel status2 = new JLabel();
+    // the following 3 items copied from beanedit, place in separate static method?
+    JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
+    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     OBlock _block;
     OPath _path;
-    PathTurnoutTableModel _tomodel;
     PortalManager pm;
     TableFrames _core;
     TableFrames.PathTurnoutJPanel _turnoutTablePane;
-    boolean editMode = false;
+    PathTurnoutTableModel _tomodel;
 
     protected UserPreferencesManager pref;
     protected boolean isDirty = false;  // true to fire reminder to save work
@@ -96,13 +80,15 @@ public class BlockPathEditFrame extends JmriJFrame {
             _tomodel = table.getModel();
             log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
         }
+        // fill Portals combo
         pm = InstanceManager.getDefault(PortalManager.class);
-        layoutFrame();
         for (Portal pi : pm.getPortalSet()) {
             fromPortalComboBox.addItem(pi.getName());
             toPortalComboBox.addItem(pi.getName());
         }
-        if (path != null) {
+        layoutFrame();
+        blockName.setText(_block.getDisplayName());
+        if (!_newPath) {
             populateFrame(path);
         }
     }
@@ -110,19 +96,20 @@ public class BlockPathEditFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        frame.setSize(350, 400);
+        frame.setSize(370, 500);
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
+        p1.add(blockLabel);
         p1.add(blockName);
-        if (_newPath) {
-            p1.add(pathLabel);
-        } else {
-            p1.add(_userName);
-        }
+        p.add(p1);
+
+        p1 = new JPanel();
+        p1.add(pathLabel);
+        p1.add(userName);
         p.add(p1);
 
         p1 = new JPanel();
@@ -135,30 +122,57 @@ public class BlockPathEditFrame extends JmriJFrame {
         p1.add(toPortalComboBox);
         p.add(p1);
 
+        JPanel p3 = new JPanel();
+        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+        p3.add(Box.createHorizontalGlue());
+        // copied from beanedit, also in BlockPathEditFrame
+        lengthSpinner.setModel(
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
+        lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
+        lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
+        lengthSpinner.setValue(0f); // reset from possible previous use
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(inch);
+        bg.add(cm);
+
+        p1 = new JPanel();
+        p1.add(inch);
+        p1.add(cm);
+        p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
+        inch.setSelected(true);
+        inch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cm.setSelected(!inch.isSelected());
+                updateLength();
+            }
+        });
+        cm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inch.setSelected(!cm.isSelected());
+                updateLength();
+            }
+        });
+        p3.add(p1);
+
+        JPanel p2 = new JPanel();
+        p2.add(lengthSpinner);
+        lengthSpinner.setToolTipText(Bundle.getMessage("LengthToolTip", Bundle.getMessage("Path")));
+        p3.add(p2);
+        p3.add(Box.createHorizontalGlue());
+        p.add(p3);
+
         JPanel ptbl = new JPanel();
         ptbl.setLayout(new BorderLayout(10, 10));
         ptbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         ptbl.add(_turnoutTablePane, BorderLayout.CENTER);
-
-        JPanel tblButtons = new JPanel();
-        tblButtons.setLayout(new BorderLayout(10, 10));
-        tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
-        tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
-
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAddTurnout"));
-        ActionListener addPathAction = e -> {
-            _core.addTurnoutPane(_path);
-        };
-        addButton.addActionListener(addPathAction);
-        addButton.setToolTipText(Bundle.getMessage("AddTurnoutTabbedPrompt"));
-        tblButtons.add(addButton);
-        // TODO add more, like a button Add... to frame?
-        ptbl.add(tblButtons, BorderLayout.SOUTH);
         p.add(ptbl);
 
         p.add(Box.createVerticalGlue());
 
-        JPanel p2 = new JPanel();
+        p2 = new JPanel();
         p2.add(statusBar);
         p.add(p2);
 
@@ -169,29 +183,31 @@ public class BlockPathEditFrame extends JmriJFrame {
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
-        JButton apply;
-        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
-        apply.addActionListener(this::createPressed);
+//        if (_newPath = false) { // expected refresh of Turnout Table difficult to achieve, only show OK button, closing pane
+//            JButton apply;
+//            p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+//            apply.addActionListener(this::createPressed);
+//        }
         JButton ok;
         p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
             createPressed(e);
-            frame.dispose();
+            closeFrame();
         });
         p.add(p2, BorderLayout.SOUTH);
 
         frame.getContentPane().add(p);
-        //main.add(scroll);
     }
 
     /**
      * Populate the Edit OBlock frame with default values.
      */
     public void resetFrame() {
-        _userName.setText(null);
-        // reset statusBar text
-        statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
+        userName.setText(null);
+        // reset statusBar text?
+        statusBar.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
         statusBar.setForeground(Color.gray);
+        lengthSpinner.setValue(0f);
         _newPath = true;
     }
 
@@ -202,44 +218,52 @@ public class BlockPathEditFrame extends JmriJFrame {
         if (p == null) {
             throw new IllegalArgumentException("Null OPath object");
         }
-        _userName.setText(p.getName());
-        userNameLabel.setText(p.getName());
+        userName.setText(p.getName());
         fromPortalComboBox.setSelectedItem(p.getFromPortal());
         toPortalComboBox.setSelectedItem(p.getToPortal());
+        statusBar.setText(Bundle.getMessage("AddXStatusInitial3", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")));
+        lengthSpinner.setValue(_block.getLengthIn());
         _newPath = false;
     }
 
     private void createPressed(ActionEvent e) {
-        String user = _userName.getText().trim();
+        String user = userName.getText().trim();
         if (user.equals("")) {
             // warn/help bar red
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
-            _userName.setBackground(Color.red);
+            userName.setBackground(Color.red);
             return;
         } else {
-            _userName.setBackground(Color.white);
+            userName.setBackground(Color.white);
         }
 
-        OPath path = new OPath(_block, user);
-//        if (path != null) {
-            try {
-                Portal fromPortal = pm.providePortal((String) fromPortalComboBox.getSelectedItem());
-                if (fromPortal != null) {
-                    path.setFromPortal(fromPortal);
-                }
-                fromPortal = pm.providePortal((String) toPortalComboBox.getSelectedItem());
-                if (fromPortal != null) {
-                    path.setToPortal(fromPortal);
-                }
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            }
-//        }
-        // Notify changes
-        if (_tomodel != null) {
-            _tomodel.fireTableDataChanged();
+        if (_newPath) {
+            _path = new OPath(_block, user);
+        } else {
+            _path.setName(user);
         }
+        try {
+            Portal fromPortal = pm.providePortal((String) fromPortalComboBox.getSelectedItem());
+            log.debug("looking for Portal {}", fromPortalComboBox.getSelectedItem());
+            if (fromPortal != null) {
+                _path.setFromPortal(fromPortal);
+            }
+            fromPortal = pm.providePortal((String) toPortalComboBox.getSelectedItem());
+            if (fromPortal != null) {
+                _path.setToPortal(fromPortal);
+            }
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
+        }
+        // Notify changes
+        //sendChange? TODO EBR
+//        if (_pathTableModel != null) {
+//            _pathTableModel.fireTableDataChanged(); // change BlockEdit > Path BlockPathTableModel, not this one
+//        }
+//        if (_tomodel != null) {
+//            _tomodel.fireTableDataChanged(); // change BlockEdit > Path table. mot this one
+//        }
     }
 
     protected JPanel getButtonPanel() {
@@ -270,21 +294,12 @@ public class BlockPathEditFrame extends JmriJFrame {
      * @param e the action event
      */
     private void cancelAddPressed(ActionEvent e) {
-        cancelAdd();
-    }
-
-    /**
-     * Cancel Add mode.
-     */
-    private void cancelAdd() {
         if (isDirty) {
             showReminderMessage();
         }
-        finishUpdate();
-        status1.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
-        //status2.setText(Bundle.getMessage("AddXStatusInitial2", Bundle.getMessage("Path"), Bundle.getMessage("ButtonEdit")));
+        statusBar.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
         isDirty = false;
-        // hide addFrame
+        // hide addPathFrame
         setVisible(false);
         if (_tomodel != null) {
             _tomodel.dispose();
@@ -301,11 +316,10 @@ public class BlockPathEditFrame extends JmriJFrame {
         // hide addFrame
         setVisible(false);
 
-        // if in Edit, cancel edit mode
-        if (editMode) {
-            cancelEdit();
+
+        if (_tomodel != null) {
+            _tomodel.dispose();
         }
-        _tomodel.dispose();
         this.dispose();
     }
 
@@ -313,38 +327,7 @@ public class BlockPathEditFrame extends JmriJFrame {
      * Cancels edit mode
      */
     protected void cancelEdit() {
-        if (editMode) {
-            status1.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
-            //status2.setText(Bundle.getMessage("AddXStatusInitial2", Bundle.getMessage("Path"), Bundle.getMessage("ButtonEdit")));
-            finishUpdate();
-            // get out of edit mode
-            editMode = false;
-        }
         closeFrame();
-    }
-
-    protected void finishUpdate() {
-        // move to show all Turnouts if not there
-//        cancelIncludedOnly();
-        // Provide feedback to user
-        // switch GUI back to selection mode
-        //status2.setText(Bundle.getMessage("PathAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
-        status2.setVisible(true);
-        setTitle(Bundle.getMessage("TitleAddPath"));
-        clearPage();
-        // reactivate the Path
-        isDirty = true;
-        // get out of edit mode
-        editMode = false;
-    }
-
-    private void clearPage() {
-        _userName.setText("");
-        fromPortalComboBox.setSelectedItem(0);
-        toPortalComboBox.setSelectedItem(0);
-        //        for (int i = _turnoutList.size() - 1; i >= 0; i--) {
-        //            _turnoutList.get(i).setIncluded(false);
-        //        }
     }
 
     protected void showReminderMessage() {
@@ -352,6 +335,16 @@ public class BlockPathEditFrame extends JmriJFrame {
                 showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemOBlockTable")),  // NOI18N
                         "BlockPathEditFrame", "remindSaveOBlock"); // NOI18N
+    }
+
+    // copied from beanedit, also in BlockPathEditFrame
+    private void updateLength() {
+        float len = (float) lengthSpinner.getValue();
+        if (inch.isSelected()) {
+            lengthSpinner.setValue(len/2.54f);
+        } else {
+            lengthSpinner.setValue(len*2.54f);
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(BlockPathEditFrame.class);

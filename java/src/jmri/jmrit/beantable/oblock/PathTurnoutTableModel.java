@@ -43,7 +43,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     public static final int STATE_COL = 1;
     public static final int DELETE_COL = 2;
     public static final int NUMCOLS = 3;
-
+    // also
     private static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     private static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
 

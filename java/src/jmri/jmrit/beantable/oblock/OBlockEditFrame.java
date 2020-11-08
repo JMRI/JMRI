@@ -19,6 +19,7 @@ import static jmri.Block.NONE;
 /**
  * GUI to edit OBlock objects in tabbed table interface.
  * Adapted from AbstractAudioFrame + -ListenerFrame.
+ * Not used, we use {@link jmri.jmrit.beantable.beanedit} instead to align with the way Blocks are edited by user
  *
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse copyright (c) 2020
@@ -27,17 +28,9 @@ public class OBlockEditFrame extends JmriJFrame {
 
     OBlockEditFrame frame = this;
     OBlockManager obm;
-
-    //JPanel main = new JPanel();
-//    private final JScrollPane scroll
-//            = new JScrollPane(main,
-//                    ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-//                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
     OBlockTableModel _model;
     String _oblock;
     TableFrames _core;
-    JTable _pathTable;
 
     // Common UI components for Add/Edit OBlock
     JLabel sysNameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
@@ -149,14 +142,14 @@ public class OBlockEditFrame extends JmriJFrame {
         tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
         tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
 
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
+        JButton addPathButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
-            //_core.openBlockPathPane(_oblock); // should open Path Edit EBR
+            // should open Add/Edit Path
             _core.openPathEditor(_oblock, null);
         };
-        addButton.addActionListener(addPathAction);
-        addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
-        tblButtons.add(addButton);
+        addPathButton.addActionListener(addPathAction);
+        addPathButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
+        tblButtons.add(addPathButton);
         // TODO add more, like a button Add... to frame?
         ptbl.add(tblButtons, BorderLayout.SOUTH);
         p.add(ptbl);
@@ -181,8 +174,6 @@ public class OBlockEditFrame extends JmriJFrame {
         p.add(buttons);
 
         frame.getContentPane().add(p);
-
-        //frame.add(scroll);
         pack();
     }
 
@@ -192,7 +183,6 @@ public class OBlockEditFrame extends JmriJFrame {
     public void resetFrame() {
         sysName.setText(null);
         userName.setText(null);
-
         //this.newOBlock = true;
     }
 

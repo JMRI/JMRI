@@ -34,6 +34,7 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         menuBar.add(fileMenu);
 
         menuBar.add(panel.getOptionMenu());
+        menuBar.add(panel.getTablesMenu());
         setJMenuBar(menuBar); // TODO configure to show up on oblock.TableFrames
 
         addHelpMenu(helpTarget, true);

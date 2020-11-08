@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
 import jmri.*;
@@ -23,6 +24,7 @@ import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.WarrantTableAction;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.com.sun.TransferActionListener;
@@ -41,7 +43,8 @@ import org.slf4j.LoggerFactory;
  * Core code can be used with two interfaces:
  * <ul>
  *     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
- *     <li>JMRI standard Tabbed tables (parent class JPanel, the TableFrames JmriJFrame is hidden in UI)
+ *     <li>JMRI standard Tabbed tables (parent class JPanel, the TableFrames JmriJFrame is hidden in UI
+ *     but TODO fix the root pane keeps popping up)
  * </ul>
  * The _tabbed field decides, it is set in prefs (restart required).
  * <hr>
@@ -60,7 +63,9 @@ import org.slf4j.LoggerFactory;
  */
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    private static int ROW_HEIGHT = 10;
+    private static int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10; //10;
+    protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
+    protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
     public static final int STRUT_SIZE = 10;
     private static String oblockPrefix;
     private final static String portalPrefix = "IP";
@@ -93,9 +98,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     private JMenuItem openSignal;
 
     private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
-//    private final HashMap<String, BlockPathJPanel> _blockPathJMap = new HashMap<>(); // same, for _tabbed
-    private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>();
-//    private final HashMap<String, PathTurnoutPanel> _pathTurnoutJMap = new HashMap<>(); // same, for _tabbed
+    private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>(); // _tabbed edit panes not stored
 
     public TableFrames() {
         this("Hidden");
@@ -162,14 +165,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-//    /**
-//     * For test setup
-//     * @param tabbed true for tabbed interface, false for original _desktop
-//     */
-//    public void setTabbed(boolean tabbed) {
-//        _tabbed = tabbed;
-//    }
-
     public JMenuBar addMenus(JMenuBar mBar) {
         if (mBar == null) {
             mBar = new JMenuBar();
@@ -223,11 +218,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
 
         mBar.add(getOptionMenu());
-
-        // Tables menu
-        tablesMenu = new JMenu(Bundle.getMessage("OpenMenu"));
-        updateOBlockTablesMenu(); // replaces the last 2 menu items with appropriate submenus
-        mBar.add(tablesMenu);
+        mBar.add(getTablesMenu());
         return mBar; //new JMenu[]{fileMenu, optionMenu, tablesMenu};
     }
 
@@ -294,7 +285,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     // for desktop style interface, ignored for _tabbed
     private void createDesktop() {
         _desktop = new JDesktopPane();
-        //_desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // too slow
+        _desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
         _desktop.setPreferredSize(new Dimension(1100, 600));
         _desktop.setBackground(new Color(180,180,180));
         setContentPane(_desktop);
@@ -333,6 +324,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             importBlocksItem.setEnabled(false);
         }
         return optionMenu;
+    }
+
+    public JMenu getTablesMenu() {
+        // Tables menu
+        tablesMenu = new JMenu(Bundle.getMessage("OpenMenu"));
+        updateOBlockTablesMenu(); // replaces the last 2 menu items with appropriate submenus
+        return tablesMenu;
     }
 
     private String oblockPrefix() {
@@ -498,36 +496,37 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     protected void updateOBlockTablesMenu() {
-        // fill Table menu
+        // fill Open/Hide Tables menu
         if (tablesMenu == null) {
-            return; // TODO add menu to _tabbed interface, now only used in _desktop EBR
+            return;
         }
         tablesMenu.removeAll();
-        // use string Bundle.getMessage("HideTable") to correct action in menu for all table open at start
+        if (!_tabbed) { // full menu in _desktop, open/show not available in _tabbed interface
+            // use string Bundle.getMessage("HideTable") to correct action in menu for all table open at start
+            openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu", Bundle.getMessage("HideTable")));
+            tablesMenu.add(openBlock);
+            openBlock.addActionListener(event -> showHideFrame(_blockTableFrame, openBlock, "OpenBlockMenu"));
 
-        openBlock = new JMenuItem(Bundle.getMessage("OpenBlockMenu", Bundle.getMessage("HideTable")));
-        tablesMenu.add(openBlock);
-        openBlock.addActionListener(event -> showHideFrame(_blockTableFrame, openBlock, "OpenBlockMenu"));
+            openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu", Bundle.getMessage("HideTable")));
+            tablesMenu.add(openPortal);
+            openPortal.addActionListener(event -> showHideFrame(_portalTableFrame, openPortal, "OpenPortalMenu"));
 
-        openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu", Bundle.getMessage("HideTable")));
-        tablesMenu.add(openPortal);
-        openPortal.addActionListener(event -> showHideFrame(_portalTableFrame, openPortal, "OpenPortalMenu"));
+            openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu", Bundle.getMessage("ShowTable")));
+            tablesMenu.add(openXRef);
+            openXRef.addActionListener(event -> showHideFrame(_blockPortalXRefFrame, openXRef, "OpenXRefMenu"));
 
-        openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu", Bundle.getMessage("ShowTable")));
-        tablesMenu.add(openXRef);
-        openXRef.addActionListener(event -> showHideFrame(_blockPortalXRefFrame, openXRef, "OpenXRefMenu"));
-
-        openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu", Bundle.getMessage("ShowTable")));
-        tablesMenu.add(openSignal);
-        openSignal.addActionListener(event -> showHideFrame(_signalTableFrame, openSignal, "OpenSignalMenu"));
+            openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu", Bundle.getMessage("ShowTable")));
+            tablesMenu.add(openSignal);
+            openSignal.addActionListener(event -> showHideFrame(_signalTableFrame, openSignal, "OpenSignalMenu"));
+        }
 
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
 
         // Block-Path submenus
         JMenu openBlockPath = new JMenu(Bundle.getMessage("OpenBlockPathMenu"));
-        ActionListener openFrameAction = e -> { //  works for both interfaces
-            String sysName = e.getActionCommand();
-            openBlockPathPane(sysName);
+        ActionListener openFrameAction = e -> {
+            String blockSystemName = e.getActionCommand();
+            openBlockPathPane(blockSystemName); // handles both interfaces
         };
 
         if (manager.getNamedBeanSet().size() == 0) {
@@ -556,11 +555,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 openTurnoutPath.add(openTurnoutMenu);
                 openFrameAction = e -> {
                     String pathTurnoutName = e.getActionCommand();
-                    if (_tabbed) {
-                        // openPathTurnoutPanel(pathTurnoutName);
-                    } else {
-                        openPathTurnoutEditPane(pathTurnoutName);
-                    }
+                    openPathTurnoutEditPane(pathTurnoutName); // handles both interfaces
                 };
                 for (Path p : block.getPaths()) {
                     if (p instanceof OPath) {
@@ -577,58 +572,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     public void openPathTurnoutEditPane(String pathTurnoutName) {
-        // only used for desktop
-//        if (_tabbed) { // just to be sure
-//            log.debug("openPathTurnoutEditPane for {}", pathTurnoutName);
-//            // not stored separately as bean
-//            PathTurnoutPanel panel = _pathTurnoutEditJMap.get(pathTurnoutName);
-//            if (panel == null) { // create a new pane TODO embed in PathEditPanel, then this is not used
-//                int index = pathTurnoutName.indexOf('&');
-//                String pathName = pathTurnoutName.substring(1, index);
-//                String sysName = pathTurnoutName.substring(index + 1);
-//                OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
-//                if (block == null) {
-//                    log.error("null OBlock {}", pathTurnoutName);
-//                } else {
-//                    String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
-//                    if (log.isDebugEnabled()) {
-//                        log.debug("makePathTurnoutEditPane for Block {} and Path {}", block.getDisplayName(), pathName);
-//                    }
-//
-//                    frame = new JmriJFrame(title); // L1157
-//                        PathTurnoutPanel pathturnoutpanel = new PathTurnoutPanel(title);
-//                    frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
-//                    OPath path = block.getPathByName(pathName);
-//                    if (path == null) {
-//                        log.error("Null path Turnout");
-//                    }
-//                    // create the pane for _tabbed interface
-//                    frame.addHelpMenu("package.jmri.jmrit.beantable.oblock.OBlockTable", true);
-//                    panel.setLayout(new BoxLayout(panel.getContentPane(), BoxLayout.Y_AXIS));
-//                    panel.setPreferredSize(new Dimension(200, 100));
-//                    // create table in JPanel
-
-//                    PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, panel);
-//                    panel.setModel(pathTurnoutModel);
-//                    JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
-//
-//                    JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
-//
-//                    JPanel p = new JPanel();
-//                    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-//                    p.add(tablePane);
-//                    panel.add(p);
-//                    panel.setVisible(true);
-//
-//                    //_pathTurnoutEditJMap.put(pathTurnoutName, panel);
-//
-//                    // TODO add listeners, action, see PathTurnoutFrame()
-//                    // plus Add New entry pane
-//                }
-//            }
-//        } else { // stand alone frame only used for _desktop, created from/stored in Portal
+        if (_tabbed) {
+            log.debug("openPathTurnoutEditPane for {}", pathTurnoutName);
+            openPathTurnoutEditor(pathTurnoutName);
+        } else { // stand alone frame only used for _desktop, created from/stored in Portal
             openPathTurnoutFrame(pathTurnoutName);
-//        }
+        }
     }
 
     /**
@@ -670,7 +619,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JInternalFrame iframe = new JInternalFrame(title, true, false, false, true);
 
         // specifics for table
-        JTable table = new JTable(); // just to make sure it is there
+        JTable table = new JTable();
         if (tableModel instanceof OBlockTableModel) {
             table = makeOBlockTable((OBlockTableModel) tableModel);
         } else if (tableModel instanceof PortalTableModel) {
@@ -752,9 +701,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _oBlockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _oBlockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-        setRowHeight((new JButton().getPreferredSize().height)*9/10);
-
         _oBlockTable.setRowHeight(ROW_HEIGHT);
         _oBlockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(maxWidth,
                 Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
@@ -784,80 +730,73 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     // Opens the Edit OBlock panel for _tabbed
-    protected boolean openOBlockEditor(String sysName) {
+    protected boolean openOBlockEditor(String blockSystemName) {
         int result = 0;
-        if (sysName != null) {
+        if (blockSystemName != null) {
             // this is for Edit, new OBlocks created from [Add OBlock...] button in table
-            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
             if (block != null){
                 BlockPathJPanel panel = makeBlockPathEditPanel(block);
-                // Option 1: our own panel EBR
-    //            OBlockEditFrame obef = new OBlockEditFrame(Bundle.getMessage("TitleBlockEditor", sysName), sysName,
-    //                    _oBlockModel, panel, this);
-    //            obef.setVisible(true);
-                // Option 2: use BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
-                class WindowMaker implements Runnable {
-                    final OBlock ob;
-                    final BlockPathJPanel panel;
-                    WindowMaker(OBlock ob, BlockPathJPanel panel) {
-                        this.ob = ob;
-                        this.panel = panel;
-                    }
-                    @Override
-                    public void run() {
+                // BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
+//                class WindowMaker implements Runnable {
+//                    final OBlock ob;
+//                    final BlockPathJPanel panel;
+//                    WindowMaker(OBlock block, BlockPathJPanel panel) {
+//                        this.block = block;
+//                        this.panel = panel;
+//                    }
+//                    @Override
+//                    public void run() {
                         jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
-                        beanEdit.setBean(ob);
+                        beanEdit.setBean(block);
                         beanEdit.setTablePanel(panel);
                         beanEdit.actionPerformed(null);
-                    }
-                }
-                WindowMaker t = new WindowMaker(block, panel);
-                javax.swing.SwingUtilities.invokeLater(t);
-                log.debug("path table created for block {}", block);
+//                    }
+//                }
+//                WindowMaker t = new WindowMaker(block, panel);
+//                javax.swing.SwingUtilities.invokeLater(t);
+                log.debug("path table created for block {}", blockSystemName);
                 result = 1;
             }
         }
         return (result == 1);
     }
 
-    // Opens the Edit Path panel for _tabbed, compare with openOBlockEditor()
-    protected boolean openPathEditor(String blockSysName, @CheckForNull String pathName) {
+    // Opens the Edit Path panel for _tabbed, compare with
+    // openOBlockEditor(block) and OBlockTableAction
+    protected boolean openPathEditor(@Nonnull String blockSystemName, @CheckForNull String pathName) {
         int result = 0;
-        if (blockSysName != null) {
-            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSysName);
-            if (block == null) {
-                log.error("OBlock {} not found", blockSysName);
-                return false;
-            }
-            BlockPathEditFrame bpef = null;
-            PathTurnoutJPanel table = makePathTurnoutPanel(block, pathName); // shows the turnouts on path, includes Add button
-            if (pathName == null) { // new Path
-                // new Path is created from [Add Path...] button in Path table on OBlock Editor pane.
-                bpef = new BlockPathEditFrame(("Create New Path on OBlock " + blockSysName), block, null, table, this);
-            } else {
-                OPath path = block.getPathByName(pathName);
-                //PathTurnoutJPanel table = makePathTurnoutPanel(block, pathName); // shows the turnouts on path, includes Add button
-                bpef = new BlockPathEditFrame(("Edit Path " + pathName + " on OBlock " + blockSysName), block, path, table, this);
-//                class WindowMaker implements Runnable {
-//                    final OBlock ob;
-//                    final BlockPathJPanel panel;
-//                    WindowMaker(OBlock ob, BlockPathJPanel panel) {
-//                        this.ob = ob;
-//                        this.panel = panel;
-//                    }
-//                    @Override
-//                    public void run() {
-//                        jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
-//                    }
-//                }
-//                WindowMaker t = new WindowMaker(block, panel);
-//                javax.swing.SwingUtilities.invokeLater(t);
-            }
-            bpef.setVisible(true);
-            log.debug("Path editor created for path {} on block {}", pathName, blockSysName);
-            result = 1;
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
+        if (block == null) {
+            log.error("OBlock {} not found", blockSystemName);
+            return false;
         }
-        return (result == 1);
+        BlockPathEditFrame bpef;
+        PathTurnoutJPanel turnouttable = makePathTurnoutPanel(block, pathName); // shows the turnouts on path, includes Add Turnout button, checks for null path
+        if (pathName == null) { // new Path, empty TurnoutTable
+            // a new Path is created from [Add Path...] button in Path table on OBlock Editor pane.
+            bpef = new BlockPathEditFrame(Bundle.getMessage("AddPathTitle", blockSystemName), block, null, turnouttable, this);
+        } else {
+            OPath path = block.getPathByName(pathName);
+            bpef = new BlockPathEditFrame(Bundle.getMessage("EditPathTitle", pathName, blockSystemName), block, path, turnouttable, this);
+//            class WindowMaker implements Runnable {
+//                final OBlock ob;
+//                final BlockPathJPanel panel;
+//                WindowMaker(OBlock ob, BlockPathJPanel panel) {
+//                    this.ob = ob;
+//                    this.panel = panel;
+//                }
+//                @Override
+//                public void run() {
+//                    jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
+//                }
+//            }
+//            WindowMaker t = new WindowMaker(block, panel);
+//            javax.swing.SwingUtilities.invokeLater(t);
+        }
+        bpef.setVisible(true);
+        log.debug("Path editor created for path {} on block {}", pathName, blockSystemName);
+        return true;
     }
 
     /*
@@ -939,23 +878,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ***************** end of permanent Tables + InternalFrame definitions *****************
      */
 
-    //    /**
-    //     * Create and configure a new table using the given model and row sorter.
-    //     * Adapted from BeanTableDataModel for special OBlockxyz tables. 10/2020
-    //     *
-    //     * @param name   the name of the table
-    //     * @param model  the data model for the table
-    //     * @param sorter the row sorter for the table; if null, the table will not
-    //     *               be sortable
-    //     * @return the table
-    //     * @throws NullPointerException if name or model is null
-    //     */
-    //    public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
-    //        Objects.requireNonNull(name, "the table name must be nonnull");
-    //        Objects.requireNonNull(model, "the table model must be nonnull");
-    //        return this.configureJTable(name, new JTable(model), sorter);
-    //    }
-
     /*
      * ***************** On Demand Tables + InternalFrame definitions *****************
      */
@@ -964,31 +886,31 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* Block-Path Frame *****************************
      */
 
-    // called from menu
-    public void openBlockPathPane(String blockSysName) {
+    // called from Tables menu
+    public void openBlockPathPane(String blockSystemName) {
         if (_tabbed) {
-            openOBlockEditor(blockSysName); // pass on to Per OBlock Edit panel, includes BlockPath table
+            openOBlockEditor(blockSystemName); // pass on to Per OBlock Edit panel, includes a BlockPath table
         } else {
-            openBlockPathFrame(blockSysName); // an editable table of all paths on this block
+            openBlockPathFrame(blockSystemName); // an editable table of all paths on this block
         }
     }
 
     // ***************** Block-Path Frame for _desktop **************************
     /**
-     * Open a block-specific Block-Path table in _desktop interface. (see openBlockPathEditFrame)
+     * Open a block-specific Block-Path table in _desktop interface.
      *
-     * @param sysName of the OBlock
+     * @param blockSystemName of the OBlock
      */
-    protected void openBlockPathFrame(String sysName) {
-        BlockPathFrame frame = _blockPathMap.get(sysName);
+    protected void openBlockPathFrame(String blockSystemName) {
+        BlockPathFrame frame = _blockPathMap.get(blockSystemName);
         if (frame == null) {
-            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
             if (block == null) {
                 return;
             }
             frame = makeBlockPathFrame(block);
             // store frame in Map
-            _blockPathMap.put(sysName, frame);
+            _blockPathMap.put(blockSystemName, frame);
             frame.setVisible(true);
             _desktop.add(frame);
         } else {
@@ -996,31 +918,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             try {
                 frame.setIcon(false);
             } catch (PropertyVetoException pve) {
-                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", sysName, pve);
+                log.warn("BlockPath Table Frame for \"{}\" vetoed setIcon {}", blockSystemName, pve);
             }
         }
         frame.moveToFront();
     }
-
-//    /**
-//     * Open a block-specific Block-Path table pane in _tabbed interface (see openBlockPathFrame).
-//     * no longer needed after table is embedded on EditOBlock pane. EBR
-//     *
-//     * @param blockSysName of the OBlock
-//     */
-//    protected void openBlockPathEditFrame(String blockSysName) {
-//        JmriJFrame frame = new JmriJFrame("DEMO"); //= _blockPathJMap.get(blockSysName); // TODO regenerate each use? trash _blockPathJMap
-//            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSysName);
-//            if (block == null) {
-//                return;
-//            }
-//            BlockPathJPanel panel = makeBlockPathEditPanel(block);
-//            panel.setSize(350, 200);
-//
-//            frame.add(panel);
-//            frame.setVisible(true);
-////        }
-//    }
 
     // common dispose
     protected void disposeBlockPathFrame(OBlock block) {
@@ -1057,14 +959,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     // *************** Block-Path Edit Panel for _tabbed ***********************
 
-    protected BlockPathJPanel makeBlockPathEditPanel(OBlock block) { // still in use? EBR
+    protected BlockPathJPanel makeBlockPathEditPanel(OBlock block) {
+        // Path Table placed on Beanedit OBlock - Paths tab
         String title = Bundle.getMessage("TitleBlockPathEditor", block.getDisplayName());
         // create table
         BlockPathTableModel model = new BlockPathTableModel(block, this);
         JPanel bpTable = makeBlockPathTablePanel(model);
-        // style table
-        setRowHeight((new JButton().getPreferredSize().height)*9/10);
-        // units, etc renderer TODO EBR
 
         BlockPathJPanel panel = new BlockPathJPanel(title);
         panel.setModel(model, block.getSystemName());
@@ -1077,15 +977,14 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
         tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
 
-        JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
+        JButton addPathButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
-            //addPathPane(block); //
+            // New Path uses same pane as Edit Path
             openPathEditor(block.getDisplayName(), null);
         };
-        addButton.addActionListener(addPathAction);
-        addButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
-        tblButtons.add(addButton);
-        // add [Add Path...] button to frame
+        addPathButton.addActionListener(addPathAction);
+        addPathButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
+        tblButtons.add(addPathButton);
         panel.add(tblButtons);
 
         //panel.pack();
@@ -1138,7 +1037,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* Block-Path Table Panel for _tabbed *****************************
      */
     protected JPanel makeBlockPathTablePanel(BlockPathTableModel _model) {
-        JTable blockPathTable = makeBlockPathTable(_model);
+        JTable blockPathTable = makeBlockPathTable(_model); // styled
 
         // get table
         JScrollPane tablePane = new JScrollPane(blockPathTable);
@@ -1146,22 +1045,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         contentPane.setLayout(new BorderLayout(5, 5));
         if (_tabbed) {
             blockPathTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
-            //JLabel prompt = new JLabel(Bundle.getMessage("AddPathTabbedPrompt"));
-
-//            JPanel buttonPane = new JPanel();
-//            buttonPane.setLayout(new BorderLayout(10, 10));
-//            buttonPane.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
-//            buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
-            //buttonPane.add(prompt);
-//            contentPane.add(buttonPane, BorderLayout.SOUTH);
-//            JButton addButton = new JButton(Bundle.getMessage("ButtonAddPath"));
-//            ActionListener addPathAction = e -> {
-//                //String sysName = e.getActionCommand();
-//                addPathPane(_model.getBlock());
-//            };
-//            addButton.addActionListener(addPathAction);
-//            buttonPane.add(addButton);
-            // TODO add more, like a button Add... to frame?
         } else {
             JLabel prompt = new JLabel(Bundle.getMessage("AddPathPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
@@ -1170,24 +1053,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         return contentPane;
     }
-
-//    // not used, _tabbed New Path uses same pane as Edit Path
-//    protected void addPathPane(OBlock block) {
-//        JmriJFrame frame = new JmriJFrame("Add New Path for " + block.getDisplayName());
-//        JPanel p = new JPanel();
-//        // TODO add something useful here:
-//        // Name
-//        // FromBlock
-//        JButton cancel;
-//        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-//        cancel.addActionListener((ActionEvent e) -> {
-//            frame.dispose();
-//        });
-//        frame.add(p);
-//        frame.setSize(200, 150);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
 
     protected JTable makeBlockPathTable(BlockPathTableModel _model) {
         JTable blockPathTable = new JTable(_model);
@@ -1201,6 +1066,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+        // units, etc renderer
 
         for (int i = 0; i < _model.getColumnCount(); i++) {
             int width = _model.getPreferredWidth(i);
@@ -1250,9 +1116,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
          */
         PathTurnoutTableModel pathTurnoutModel;
 
-        PathTurnoutJPanel(String name) {
+        PathTurnoutJPanel(String pathname) {
             super();
-            setName(name);
+            setName(pathname);
         }
 
         PathTurnoutTableModel getModel() {
@@ -1271,17 +1137,15 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         String title = Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName);
         PathTurnoutFrame frame = new PathTurnoutFrame(title, true, true, false, true);
         if (log.isDebugEnabled()) {
-            log.debug("makePathTurnoutFrame for Block {} and Path {}", block.getDisplayName(), pathName);
+            log.debug("makePathTurnoutFrame for Block {} and Path {} on _desktop", block.getDisplayName(), pathName);
         }
         frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
         OPath path = block.getPathByName(pathName);
         if (path == null) {
             return null;
         }
-        //frame.init(path);
         PathTurnoutTableModel pathTurnoutModel = new PathTurnoutTableModel(path, frame);
         frame.setModel(pathTurnoutModel);
-        //PathTurnoutTableModel PathTurnoutModel = frame.getModel();
 
         JTable pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
 
@@ -1309,26 +1173,46 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         PathTurnoutJPanel panel = new PathTurnoutJPanel(title);
         PathTurnoutTableModel pathTurnoutModel;
         JTable pathTurnoutTable;
+        JButton addTurnoutButton = new JButton(Bundle.getMessage("ButtonAddTurnout"));
+        addTurnoutButton.setToolTipText(Bundle.getMessage("AddTurnoutTabbedPrompt"));
+        JLabel prompt;
+
         if (pathName == null) {
             panel.setName(makePathTurnoutName(block.getSystemName(), "<new Path>"));
-            pathTurnoutTable = new JTable(1, 1); // dummy table
+            String[] columnHeaders = {Bundle.getMessage("Turnouts")};
+            String[][] emptyTable = new String[][] {{Bundle.getMessage("None")}};
+            pathTurnoutTable = new JTable(emptyTable, columnHeaders); // dummy table
+            addTurnoutButton.setEnabled(false);
+            prompt = new JLabel(Bundle.getMessage("TurnoutTablePromptNew"));
         } else {
             panel.setName(makePathTurnoutName(block.getSystemName(), pathName));
-            OPath path = block.getPathByName(pathName);
+            final OPath path = block.getPathByName(pathName); // final for actionhandler
             if (path == null) {
                 return null; // unexpected
             }
             pathTurnoutModel = new PathTurnoutTableModel(path);
-            panel.setModel(pathTurnoutModel);
             pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
+            panel.setModel(pathTurnoutModel);
+            ActionListener addTurnoutAction= e -> {
+                addTurnoutPane(path, pathTurnoutModel);
+            };
+            addTurnoutButton.addActionListener(addTurnoutAction);
+            prompt = new JLabel(Bundle.getMessage("TurnoutTablePrompt"));
         }
         JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
 
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(5, 5));
-        JLabel prompt = new JLabel(Bundle.getMessage("AddTurnoutPrompt"));
-        contentPane.add(prompt, BorderLayout.NORTH);
-        contentPane.add(tablePane, BorderLayout.CENTER);
+        JPanel tblButtons = new JPanel();
+        tblButtons.setLayout(new BorderLayout(10, 10));
+        tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
+        tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
+        tblButtons.add(addTurnoutButton);
+        // TODO add more to frame?
+
+        panel.setLayout(new BorderLayout(5, 5));
+
+        panel.add(prompt, BorderLayout.NORTH);
+        panel.add(tablePane, BorderLayout.CENTER);
+        panel.add(tblButtons, BorderLayout.SOUTH);
 
         return panel;
     }
@@ -1359,6 +1243,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return PathTurnoutTable;
     }
 
+    /**
+     * Create a coded id for a path turnout.
+     *
+     * @param blockSysName oblock system name
+     * @param pathName the path through the oblock for which to display turnouts set
+     * @return name of the pathTurnout, example "%path 1-3&block-1"
+     */
     protected String makePathTurnoutName(String blockSysName, String pathName) {
         return "%" + pathName + "&" + blockSysName;
     }
@@ -1374,8 +1265,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (frame == null) {
             int index = pathTurnoutName.indexOf('&');
             String pathName = pathTurnoutName.substring(1, index);
-            String sysName = pathTurnoutName.substring(index + 1);
-            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(sysName);
+            String blockName = pathTurnoutName.substring(index + 1);
+            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockName);
             if (block == null) {
                 return;
             }
@@ -1398,31 +1289,121 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    protected void addTurnoutPane(OPath path) {
-        JmriJFrame frame = new JmriJFrame("Add New Turnout for " + path.getName());
-        JPanel p = new JPanel();
+    // *********** Open stand alone Path-Turnout Edit Panel for _tabbed *********************
+    /**
+     * Open a block-specific PathTurnouts edit pane as a JmriJFrame for _tabbed from menu.
+     * TODO fix menu access to pathturnouts on _tabbed EBR
+     *
+     * @param pathTurnoutName name of turnout configured on Path
+     */
+    protected void openPathTurnoutEditor(String pathTurnoutName) {
+        int index = pathTurnoutName.indexOf('&');
+        String pathName = pathTurnoutName.substring(1, index);
+        String blockName = pathTurnoutName.substring(index + 1);
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockName);
+        if (block == null) {
+            return;
+        }
+        OPath path = block.getPathByName(pathName);
+        if (path == null) {
+            return;
+        }
+        PathTurnoutJPanel turnouttable = makePathTurnoutPanel(block, pathName);
+        // shows the turnouts on path, includes Add Turnout button
+        JmriJFrame frame = new JmriJFrame(Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.setSize(370, 250);
 
-        // TODO add something useful here:
-        // Name (from Combo)
-        // State
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.add(turnouttable);
         JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        p.add(cancel = new JButton(Bundle.getMessage("ButtonOK"))); // no need to save things, handled by TurnoutTable
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
+        frame.add(p);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    /**
+     * Add new Turnout pane, called from makePathTurnoutPanel on _tabbed interface.
+     *
+     * @param path to link this turnout setting to
+     * @param pathTurnoutModel displayed table of turnouts currently set on this path
+     */
+    protected void addTurnoutPane(OPath path, PathTurnoutTableModel pathTurnoutModel) {
+        JmriJFrame frame = new JmriJFrame("Add New Turnout for " + path.getName()); // TODO I18N
+        JPanel p = new JPanel();
+        final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+        JComboBox<String> stateCombo = new JComboBox<>();
+        JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+        stateCombo.addItem(SET_THROWN);
+        stateCombo.addItem(SET_CLOSED);
+        turnoutBox.setToolTipText(Bundle.getMessage("TurnoutEditToolTip"));
+
+        JPanel p1 = new JPanel();
+        p1.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
+        p1.add(turnoutBox);
+        p.add(p1);
+
+        p1 = new JPanel();
+        p1.add(new JLabel(Bundle.getMessage("ColumnLabelSetState")));
+        p1.add(stateCombo);
+        p.add(p1);
+
+        p.add(Box.createVerticalGlue());
+
+        JPanel p2 = new JPanel();
+        p2.add(statusBar);
+        p.add(p2);
+
+        p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
+        JButton cancel;
+        p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
+        JButton ok;
+        p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        ok.addActionListener((ActionEvent e) -> {
+            if (turnoutBox.getSelectedItem() == null) {
+                statusBar.setText(Bundle.getMessage("WarningSelectionEmpty"));
+                statusBar.setForeground(Color.red);
+            } else {
+                //createTurnoutPressed(e);
+                String user = turnoutBox.getSelectedItemDisplayName();
+                Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(user);
+                int s;
+                if (stateCombo.getSelectedItem() != null && stateCombo.getSelectedItem().equals(SET_CLOSED)) {
+                    s = Turnout.CLOSED;
+                } else {
+                    s = Turnout.THROWN;
+                }
+                BeanSetting bs = new BeanSetting(t, user, s);
+                path.addSetting(bs);
+                pathTurnoutModel.fireTableDataChanged();
+                frame.dispose();
+            }
+        });
+        p.add(p2, BorderLayout.SOUTH);
+
+        frame.getContentPane().add(p);
+
         frame.add(p);
         frame.setSize(200, 150);
         frame.pack();
         frame.setVisible(true);
     }
 
-
     /*
      * ********************* End of tables and frames methods *****************************
      */
 
 //    public static class BooleanAsStringsRenderer extends javax.swing.table.DefaultTableCellRenderer {
-//
+//    disabled, suggest using JToggleButton column class/ToggleButtonEditor/Renderer
 //        String _trueValue;
 //        String _falseValue;
 //

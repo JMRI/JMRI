@@ -27,16 +27,11 @@ import java.util.Objects;
 public class SignalEditFrame extends JmriJFrame {
 
     JPanel main = new JPanel();
-//    private final JScrollPane scroll
-//            = new JScrollPane(main,
-//            ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-//            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     SignalTableModel model;
     NamedBean signal;
     PortalManager pm;
     //SignalHeadManager shm;
-
     //private final Object lock = new Object();
 
     // UI components for Add/Edit Signal (head or mast)
@@ -46,16 +41,22 @@ public class SignalEditFrame extends JmriJFrame {
     JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
     String[] p0 = {""};
     private final JComboBox<String> portalComboBox = new JComboBox<>(p0);
-    private final NamedBeanComboBox<SignalMast> sigMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<SignalHead> sigHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalMast> sigMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class),
+            null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalHead> sigHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class),
+            null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
+            null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
+            null, NamedBean.DisplayOptions.DISPLAYNAME);
     JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")));
     // the following 3 items copied from beanedit, place in separate static method?
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
     JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+    JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
+            (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
+            Bundle.getMessage("ButtonOK")));
 
     private final SignalEditFrame frame = this;
     private Portal _portal;
@@ -100,10 +101,25 @@ public class SignalEditFrame extends JmriJFrame {
         p1.add(sigHeadComboBox);
         sigHeadComboBox.setAllowNull(true);
         p.add(p1);
+
+        portalComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (portalComboBox.getSelectedIndex() > 0) {
+                    fromBlockComboBox.setSelectedItem(pm.getPortal((String) portalComboBox.getSelectedItem()).getFromBlockName());
+                    toBlockComboBox.setSelectedItem(pm.getPortal((String) portalComboBox.getSelectedItem()).getToBlockName());
+                }
+            }
+        });
+        p1 = new JPanel();
+        p1.add(portalLabel);
+        p1.add(portalComboBox); // has a black first item
+        p.add(p1);
+
         sigMastComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (sigMastComboBox.getSelectedIndex() > 0) {
+                if ((sigMastComboBox.getSelectedIndex() > 0) && (sigHeadComboBox.getItemCount() > 0)) {
                     sigHeadComboBox.setSelectedIndex(0); // either one
                     model.checkDuplicateSignal(sigMastComboBox.getSelectedItem());
                 }
@@ -112,13 +128,12 @@ public class SignalEditFrame extends JmriJFrame {
         sigHeadComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (sigHeadComboBox.getSelectedIndex() > 0) {
+                if ((sigHeadComboBox.getSelectedIndex() > 0) && (sigMastComboBox.getItemCount() > 0)) {
                     sigMastComboBox.setSelectedIndex(0); // either one
-                    model.checkDuplicateSignal(sigMastComboBox.getSelectedItem());
+                    model.checkDuplicateSignal(sigHeadComboBox.getSelectedItem());
                 }
             }
         });
-
         p1 = new JPanel();
         p1.add(fromBlockLabel);
         p1.add(fromBlockComboBox);
@@ -128,26 +143,28 @@ public class SignalEditFrame extends JmriJFrame {
         toBlockComboBox.setAllowNull(true);
         p.add(p1);
 
-        p1 = new JPanel();
-        p1.add(portalLabel);
-        p1.add(portalComboBox); // has a black first item
-        p.add(p1);
+        // copied from beanedit, also in BlockPathEditFrame
+        JPanel p3 = new JPanel();
+        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+        p3.add(Box.createHorizontalGlue());
 
-        // copied from beanedit
+        p1 = new JPanel();
+        p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Offset"))));
+        //p1.add(new JLabel(Bundle.getMessage("Length")));
+        //p1.add(new JLabel(Bundle.getMessage("lengthUnitLabel")));
+        p1.add(lengthSpinner);
         lengthSpinner.setModel(
                 new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
         lengthSpinner.setValue(0f); // reset from possible previous use
-        p1 = new JPanel();
-        p1.add(new JLabel(Bundle.getMessage("Offset")));
-        p1.add(lengthSpinner);
         lengthSpinner.setToolTipText(Bundle.getMessage("OffsetToolTip"));
+        p1.add(lengthSpinner);
+        p3.add(p1);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(inch);
         bg.add(cm);
-        p.add(p1);
 
         p1 = new JPanel();
         p1.add(inch);
@@ -168,8 +185,9 @@ public class SignalEditFrame extends JmriJFrame {
                 updateLength();
             }
         });
-        p1.add(new JLabel("Unit")); //Bundle.getMessage("LengthUnits")));
-        p.add(p1);
+        p3.add(p1);
+        p3.add(Box.createHorizontalGlue());
+        p.add(p3);
 
         JPanel p2 = new JPanel();
         p2.add(statusBar);
@@ -182,9 +200,9 @@ public class SignalEditFrame extends JmriJFrame {
         cancel.addActionListener((ActionEvent e) -> {
             frame.dispose();
         });
-        JButton apply;
-        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
-        apply.addActionListener(this::applyPressed);
+//        JButton apply;
+//        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
+//        apply.addActionListener(this::applyPressed);
         JButton ok;
         p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
@@ -195,7 +213,6 @@ public class SignalEditFrame extends JmriJFrame {
 
         //main.add(p);
         frame.getContentPane().add(p);
-
         //frame.add(scroll);
     }
 
@@ -209,10 +226,20 @@ public class SignalEditFrame extends JmriJFrame {
         if (sigHeadComboBox.getItemCount() > 0) {
             sigHeadComboBox.setSelectedIndex(0);
         }
+        if (portalComboBox.getItemCount() > 0) {
+            portalComboBox.setSelectedIndex(0);
+        }
         lengthSpinner.setValue(0f);
         // reset statusBar text
-        statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
-        statusBar.setForeground(Color.gray);
+        if ((sigMastComboBox.getItemCount() == 0) && (sigHeadComboBox.getItemCount() == 0)) {
+            statusBar.setText(Bundle.getMessage("NoSignalWarning"));
+            statusBar.setForeground(Color.red);
+        } else {
+            statusBar.setText(Bundle.getMessage("AddXStatusInitial1",
+                    (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
+                    Bundle.getMessage("ButtonOK"))); // I18N to include original button name in help string
+            statusBar.setForeground(Color.gray);
+        }
         _newSignal = true;
     }
 
@@ -270,7 +297,7 @@ public class SignalEditFrame extends JmriJFrame {
         model.fireTableDataChanged();
     }
 
-    // copied from beanedit
+    // copied from beanedit, also in BlockPathEditFrame
     private void updateLength() {
         float len = (float) lengthSpinner.getValue();
         if (inch.isSelected()) {

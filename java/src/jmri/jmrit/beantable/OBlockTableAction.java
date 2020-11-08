@@ -56,10 +56,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     //OBlockEditFrame oblockFrame; // instead uses NewBean util + Edit
     PortalEditFrame portalFrame;
     SignalEditFrame signalFrame;
-
     // on demand frames
-//    PathTurnoutFrame ptFrame;
-//    BlockpathFrame bpFrame;
+    //    PathTurnoutFrame ptFrame;
+    //    BlockpathFrame bpFrame;
 
     /**
      * Create an action with a specific title.
@@ -213,7 +212,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             initTableFrames();
         }
         if (_tabbed) {
-            //final JmriJFrame finalF = f;   // needed for anonymous ActionListener class on dialogs, see TurnoutTableAction
+            //final JmriJFrame finalF = f;   // needed for anonymous ActionListener class on dialogs, see TurnoutTableAction ?
             JMenuBar menuBar = f.getJMenuBar();
             MenuElement[] subElements;
             JMenu fileMenu = null;
@@ -246,7 +245,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 //                menuBar = new JMenuBar();
 //            }
             //setTitle();
-            f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = korter
+            f.setTitle(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks")); //TitleBlockTable = shorter
             f.setJMenuBar(tf.addMenus(menuBar));  // setJMenuBar(addMenus(this.getJMenuBar()));
 
             // check for menu (copied from TurnoutTableAction)
@@ -271,7 +270,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                     }
                 }
                 JMenu opsMenu = new JMenu(Bundle.getMessage("MenuOptions") + " Test");
-                // or add separate items, actionhandlers?
+                // add separate items, actionhandlers?
 
         //            JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
         //            opsMenu.add(item);
@@ -281,7 +280,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //                    new TurnoutOperationFrame(finalF);
         //                }
         //            });
-                menuBar.add(opsMenu, pos + offset);
+                menuBar.add(opsMenu, pos + offset); // test
         //
         //            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
         //            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
@@ -293,9 +292,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //                }
         //            });
         //            menuBar.add(speedMenu, pos + offset + 1); // add this menu to the right of the previous
-        //            menuBar = f.getJMenuBar();
-        //            menuBar.add(tf.getMenuBar());
-
             }
             f.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         }

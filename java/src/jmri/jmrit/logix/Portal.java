@@ -236,7 +236,7 @@ public class Portal {
             return false;
         }
         log.debug("setFromBlock: oldBlock= \"{}\" newBlock \"{}\".", getFromBlockName(),
-             (block!=null ? block.getDisplayName() : null));
+             (block != null ? block.getDisplayName() : null));
         OBlock oldBlock = _fromBlock;
         if (_fromBlock != null) {
             _fromBlock.removePortal(this);
@@ -624,7 +624,7 @@ public class Portal {
      * block is a potential _toBlock and paths are the current _toPaths
      * or
      * block is a potential _fromBlock and paths are the current _fromPaths
-     * Verify that each path has this potential block as its owning block
+     * Verify that each path has this potential block as its owning block.
      */
     private static boolean verify(List<OPath> paths, OBlock block) {
         if (block == null) {

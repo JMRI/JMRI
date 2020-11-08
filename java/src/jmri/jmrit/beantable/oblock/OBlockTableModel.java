@@ -290,7 +290,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 if (log.isDebugEnabled()) {
                     log.debug("getValueAt: row= {}, col= {}, isMetric= {}", row, col, tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
                 }
-                return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
+                return tempRow[UNITSCOL].equals(Bundle.getMessage("cm"));
             case CURVECOL:
                 if (b != null) {
                     String c = "";
@@ -634,11 +634,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 fireTableRowsUpdated(row, row);
                 return;
             case EDIT_COL:
-                if (_tabbed) {
-                    _parent.openBlockPathPane(block.getSystemName());
-                } else {
-                    _parent.openBlockPathFrame(block.getSystemName());
-                }
+                _parent.openBlockPathPane(block.getSystemName()); // interface is checked in TableFrames
                 return;
             case DELETE_COL:
                 deleteBean(block);

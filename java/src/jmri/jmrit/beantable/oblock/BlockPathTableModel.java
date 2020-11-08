@@ -384,8 +384,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 _units.set(row, (Boolean)value);
                 fireTableRowsUpdated(row, row);
                 return;
-            case EDIT_COL: // called [Edit] (_tabbed) or [Edit Turnouts] (_desktop)
-                if (_tabbed) { // everything done in BlockPathEdit panel
+            case EDIT_COL: // button is called [Edit] (_tabbed) or [Edit Turnouts] (_desktop)
+                if (_tabbed) { // everything is handled in BlockPathEdit panel
                     _parent.openPathEditor(_block.getSystemName(), path.getName());
                 } else {
                     _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(_block.getSystemName(), path.getName()));

@@ -245,6 +245,12 @@ public class OBlockTablePanel extends JPanel {
         log.debug("OBLOCK TABBED getOptionMenu() called");
         return _tf.getOptionMenu();
     }
+
+    public JMenu getTablesMenu() {
+        log.debug("OBLOCK TABBED getTablesMenu() called");
+        return _tf.getTablesMenu();
+    }
+
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts
      * etc
@@ -345,7 +351,8 @@ public class OBlockTablePanel extends JPanel {
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         table.setDefaultRenderer(JButton.class, new ButtonRenderer());
         table.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-        table.setDefaultRenderer(JToggleButton.class, new ToggleButtonRenderer("cm", "in"));
+        table.setDefaultRenderer(JToggleButton.class, new ToggleButtonRenderer("cm", "in")); // overrides
+        table.setDefaultEditor(JToggleButton.class, new ToggleButtonEditor(new JToggleButton(), "cm", "in")); // overrides some set above
 //        table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
 //        table.setDefaultEditor(Boolean.class, new ButtonEditor(new JButton()));
 
@@ -355,8 +362,8 @@ public class OBlockTablePanel extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight((new JButton().getPreferredSize().height)*9/10);
         // resize columns per table
-        table.doLayout();
-        // resize columns as requested
+        //table.doLayout();
+        // resize columns as requested, throws java.lang.IllegalArgumentException: Identifier not found
 //        for (int i = 0; i < table.getColumnCount(); i++) {
 //            int width = table.getColumn(i).getPreferredWidth();
 //            table.getColumnModel().getColumn(i).setPreferredWidth(width);
