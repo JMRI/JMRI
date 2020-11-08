@@ -72,11 +72,13 @@ public abstract class Category implements Comparable<Category> {
     
     private final String _name;
     private final String _description;
+    private final int _order;
     
     
-    protected Category(String name, String bundleKey) {
+    protected Category(String name, String description, int order) {
         _name = name;
-        _description = bundleKey;
+        _description = description;
+        _order = order;
     }
     
     public String name() {
@@ -86,6 +88,10 @@ public abstract class Category implements Comparable<Category> {
     @Override
     public final String toString() {
         return _description;
+    }
+    
+    public int order() {
+        return _order;
     }
     
     @Override
@@ -104,17 +110,16 @@ public abstract class Category implements Comparable<Category> {
     
     @Override
     public int compareTo(Category c) {
-        int result = _description.compareTo(c._description);
-        if (result != 0) return result;
-        
-        return _name.compareTo(c._name);
+        if (_order < c.order()) return -1;
+        if (_order > c.order()) return 1;
+        return 0;
     }
     
     
     public static final class Item extends Category {
 
         public Item() {
-            super("ITEM", Bundle.getMessage("CategoryItem"));
+            super("ITEM", Bundle.getMessage("CategoryItem"), 100);
         }
     }
     
@@ -122,7 +127,7 @@ public abstract class Category implements Comparable<Category> {
     public static final class Common extends Category {
 
         public Common() {
-            super("COMMON", Bundle.getMessage("CategoryCommon"));
+            super("COMMON", Bundle.getMessage("CategoryCommon"), 200);
         }
     }
     
@@ -130,7 +135,7 @@ public abstract class Category implements Comparable<Category> {
     public static final class Other extends Category {
 
         public Other() {
-            super("OTHER", Bundle.getMessage("CategoryOther"));
+            super("OTHER", Bundle.getMessage("CategoryOther"), 300);
         }
     }
     
@@ -138,7 +143,7 @@ public abstract class Category implements Comparable<Category> {
     public static final class Extravaganza extends Category {
 
         public Extravaganza() {
-            super("EXRAVAGANZA", Bundle.getMessage("CategoryExtravaganza"));
+            super("EXRAVAGANZA", Bundle.getMessage("CategoryExtravaganza"), 900);
         }
     }
     
