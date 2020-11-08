@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.swing;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -131,7 +130,9 @@ public interface SwingConfiguratorInterface {
                 } else if ((character >= '0') || (character <= '9')) {
                     sb.appendCodePoint(character);
                 } else {
-                    throw new IllegalArgumentException("left curly bracket must be followed by a digit but is followed by "+Character.toString(character));
+                    throw new IllegalArgumentException(
+                            "left curly bracket must be followed by a digit but is followed by "
+                                    + Arrays.toString(Character.toChars(character)));
                 }
             } else {
                 if (character == '{') {
