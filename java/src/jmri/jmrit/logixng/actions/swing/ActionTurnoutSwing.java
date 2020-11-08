@@ -4,9 +4,7 @@ import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -19,6 +17,7 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.jmrit.logixng.actions.ActionTurnout.TurnoutState;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
@@ -35,12 +34,31 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         ActionTurnout action = (ActionTurnout)object;
         
         panel = new JPanel();
-        turnoutBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
         
         stateComboBox = new JComboBox<>();
         for (TurnoutState e : TurnoutState.values()) {
             stateComboBox.addItem(e);
         }
+        
+        JTabbedPane tabbedPane = new JTabbedPane();
+        JPanel panelTurnout = new javax.swing.JPanel();
+        JPanel panelReference = new javax.swing.JPanel();
+        JPanel panelFormula = new javax.swing.JPanel();
+        
+        tabbedPane.addTab("Turnout", panelTurnout); // NOI1aa8N
+        tabbedPane.addTab("Reference", panelReference); // NOIaa18N
+        tabbedPane.addTab("Formula", panelFormula); // NOI1aa8N
+        
+        turnoutBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
+        panelTurnout.add(turnoutBeanPanel);
+        
+        JTextField referenceTextField = new JTextField();
+        referenceTextField.setColumns(30);
+        panelReference.add(referenceTextField);
+        
+        JTextField formulaTextField = new JTextField();
+        formulaTextField.setColumns(30);
+        panelFormula.add(formulaTextField);
         
         if (action != null) {
             if (action.getTurnout() != null) {
@@ -49,9 +67,13 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             stateComboBox.setSelectedItem(action.getTurnoutState());
         }
         
-        panel.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
-        panel.add(turnoutBeanPanel);
-        panel.add(stateComboBox);
+        JComponent[] components = new JComponent[]{
+            tabbedPane,
+            stateComboBox};
+        
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetTurnout"), components);
+        
+        for (JComponent c : componentList) panel.add(c);
     }
     
     /** {@inheritDoc} */

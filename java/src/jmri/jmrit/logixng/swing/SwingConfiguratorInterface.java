@@ -1,9 +1,12 @@
 package jmri.jmrit.logixng.swing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.Manager;
@@ -102,5 +105,48 @@ public interface SwingConfiguratorInterface {
      * registered.
      */
     public void dispose();
+    
+    
+    /**
+     * Parses the message and creates a list of components there the given
+     * components are separated by JLabel components from the message.
+     * @param message the message to be parsed
+     * @param components the components
+     * @return the components separated with JLabel components
+     */
+    public static List<JComponent> parseMessage(String message, JComponent[] components) {
+        List<JComponent> componentsToReturn = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        boolean parseNumber = false;
+        
+        for (int index=0; index < message.length(); index++) {
+            int character = message.codePointAt(index);
+            
+            if (parseNumber) {
+                if (character == '}') {
+                    int number = Integer.parseInt(sb.toString());
+                    componentsToReturn.add(components[number]);
+                    sb = new StringBuilder();
+                    parseNumber = false;
+                } else if ((character >= '0') || (character <= '9')) {
+                    sb.appendCodePoint(character);
+                } else {
+                    throw new IllegalArgumentException("left curly bracket must be followed by a digit but is followed by "+Character.toString(character));
+                }
+            } else {
+                if (character == '{') {
+                    parseNumber = true;
+                    componentsToReturn.add(new JLabel(sb.toString()));
+                    sb = new StringBuilder();
+                } else {
+                    sb.appendCodePoint(character);
+                }
+            }
+        }
+        
+        if (sb.length() > 0) componentsToReturn.add(new JLabel(sb.toString()));
+        
+        return componentsToReturn;
+    }
     
 }

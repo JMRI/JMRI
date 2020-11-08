@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.swing;
 
-// import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsEnvironment;
+
+import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.actions.ActionTurnout;
 import jmri.util.JUnitUtil;
 
@@ -9,8 +11,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrit.logixng.DigitalActionBean;
 
 /**
  * Test SwingToolsTest
@@ -21,7 +21,7 @@ public class SwingToolsTest {
 
     @Test
     public void testSwingTools() {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         DigitalActionBean action = new ActionTurnout("IQDA1", null);
         Class actionClass = ActionTurnout.class;
