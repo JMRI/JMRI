@@ -11,15 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static jmri.Block.NONE;
 
 /**
+ * Not used, we use {@link jmri.jmrit.beantable.beanedit} instead to align with the way Blocks are edited by user
  * GUI to edit OBlock objects in tabbed table interface.
  * Adapted from AbstractAudioFrame + -ListenerFrame.
- * Not used, we use {@link jmri.jmrit.beantable.beanedit} instead to align with the way Blocks are edited by user
  *
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse copyright (c) 2020
@@ -60,7 +57,7 @@ public class OBlockEditFrame extends JmriJFrame {
      * Standard constructor
      *
      * @param title Title of this OBlockEditFrame
-     * @param oblock name of OBlock being edited, to find its Paths
+     * @param oblock systemname of OBlock being edited, to find its Paths
      * @param model OBlockTableModel holding OBlock data
      * @param table table of Paths on this OBlock to display on panel
      */
@@ -145,7 +142,7 @@ public class OBlockEditFrame extends JmriJFrame {
         JButton addPathButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
             // should open Add/Edit Path
-            _core.openPathEditor(_oblock, null);
+            _core.openPathEditor(_oblock, null, null);
         };
         addPathButton.addActionListener(addPathAction);
         addPathButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));

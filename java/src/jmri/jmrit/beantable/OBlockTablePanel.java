@@ -75,9 +75,9 @@ public class OBlockTablePanel extends JPanel {
         // use NamedBean's built-in Comparator interface for sorting the system name column
         RowSorterUtil.setSortOrder(sorter, OBlockTableModel.SYSNAMECOL, SortOrder.ASCENDING);
         oblockTable = makeJTable(OBlockTableAction.class.getName(), oblockDataModel, sorter); // use our own
-        // style table
-        oblockTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-        oblockTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        // style table, check overlap with configureWarrantTable done next
+//        oblockTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
+//        oblockTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         oblockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellEditor(
@@ -135,10 +135,10 @@ public class OBlockTablePanel extends JPanel {
         // style table
         signalTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         signalTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
-        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
-                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
-                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
+//        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
+//                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+//        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
+//                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
         signalDataScroll = new JScrollPane(signalTable);
         signalTable.setColumnModel(new XTableColumnModel());
         signalTable.createDefaultColumnsFromModel();
@@ -347,8 +347,8 @@ public class OBlockTablePanel extends JPanel {
      */
     public void configureWarrantTable(JTable table) {
         // ignore Property columns
-        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+//        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+//        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         table.setDefaultRenderer(JButton.class, new ButtonRenderer());
         table.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         table.setDefaultRenderer(JToggleButton.class, new ToggleButtonRenderer("cm", "in")); // overrides
@@ -362,7 +362,7 @@ public class OBlockTablePanel extends JPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight((new JButton().getPreferredSize().height)*9/10);
         // resize columns per table
-        //table.doLayout();
+        table.doLayout();
         // resize columns as requested, throws java.lang.IllegalArgumentException: Identifier not found
 //        for (int i = 0; i < table.getColumnCount(); i++) {
 //            int width = table.getColumn(i).getPreferredWidth();

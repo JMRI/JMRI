@@ -762,23 +762,30 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return (result == 1);
     }
 
-    // Opens the Edit Path panel for _tabbed, compare with
-    // openOBlockEditor(block) and OBlockTableAction
-    protected boolean openPathEditor(@Nonnull String blockSystemName, @CheckForNull String pathName) {
+    /**
+     * Open the Edit Path panel for _tabbed.
+     * Compare with openOBlockEditor(block) and OBlockTableAction.
+     *
+     * @param blockName system or user name of the owning oblock
+     * @param pathName name of the path under edit, or none to create a new path
+     * @param model blockpathtablemodel that should be informed about changes
+     * @return true if successful
+     */
+    protected boolean openPathEditor(@Nonnull String blockName, @CheckForNull String pathName, BlockPathTableModel model) {
         int result = 0;
-        OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
         if (block == null) {
-            log.error("OBlock {} not found", blockSystemName);
+            log.error("OBlock {} not found", blockName);
             return false;
         }
         BlockPathEditFrame bpef;
         PathTurnoutJPanel turnouttable = makePathTurnoutPanel(block, pathName); // shows the turnouts on path, includes Add Turnout button, checks for null path
         if (pathName == null) { // new Path, empty TurnoutTable
             // a new Path is created from [Add Path...] button in Path table on OBlock Editor pane.
-            bpef = new BlockPathEditFrame(Bundle.getMessage("AddPathTitle", blockSystemName), block, null, turnouttable, this);
+            bpef = new BlockPathEditFrame(Bundle.getMessage("AddPathTitle", blockName), block, null, turnouttable, model, this);
         } else {
             OPath path = block.getPathByName(pathName);
-            bpef = new BlockPathEditFrame(Bundle.getMessage("EditPathTitle", pathName, blockSystemName), block, path, turnouttable, this);
+            bpef = new BlockPathEditFrame(Bundle.getMessage("EditPathTitle", pathName, blockName), block, path, turnouttable, model, this);
 //            class WindowMaker implements Runnable {
 //                final OBlock ob;
 //                final BlockPathJPanel panel;
@@ -795,7 +802,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //            javax.swing.SwingUtilities.invokeLater(t);
         }
         bpef.setVisible(true);
-        log.debug("Path editor created for path {} on block {}", pathName, blockSystemName);
+        log.debug("Path editor created for path {} on block {}", pathName, blockName);
         return true;
     }
 
@@ -980,7 +987,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JButton addPathButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
             // New Path uses same pane as Edit Path
-            openPathEditor(block.getDisplayName(), null);
+            openPathEditor(block.getDisplayName(), null, model);
         };
         addPathButton.addActionListener(addPathAction);
         addPathButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));

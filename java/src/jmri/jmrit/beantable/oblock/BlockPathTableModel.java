@@ -386,7 +386,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 return;
             case EDIT_COL: // button is called [Edit] (_tabbed) or [Edit Turnouts] (_desktop)
                 if (_tabbed) { // everything is handled in BlockPathEdit panel
-                    _parent.openPathEditor(_block.getSystemName(), path.getName());
+                    _parent.openPathEditor(_block.getSystemName(), path.getName(), this);
                 } else {
                     _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(_block.getSystemName(), path.getName()));
                 }

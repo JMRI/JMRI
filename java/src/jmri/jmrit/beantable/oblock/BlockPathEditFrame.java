@@ -60,6 +60,7 @@ public class BlockPathEditFrame extends JmriJFrame {
     OPath _path;
     PortalManager pm;
     TableFrames _core;
+    BlockPathTableModel _pathmodel;
     TableFrames.PathTurnoutJPanel _turnoutTablePane;
     PathTurnoutTableModel _tomodel;
 
@@ -68,16 +69,17 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public BlockPathEditFrame(String title, OBlock block, OPath path,
-                              TableFrames.PathTurnoutJPanel table, TableFrames parent) {
+                              TableFrames.PathTurnoutJPanel turnouttable, BlockPathTableModel pathmodel, TableFrames parent) {
         super(title, true, true);
         _block = block;
-        _turnoutTablePane = table;
+        _turnoutTablePane = turnouttable;
+        _pathmodel = pathmodel;
         _core = parent;
         if (path == null) {
             _newPath = true;
         } else {
             _path = path;
-            _tomodel = table.getModel();
+            _tomodel = turnouttable.getModel();
             log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
         }
         // fill Portals combo
@@ -219,8 +221,16 @@ public class BlockPathEditFrame extends JmriJFrame {
             throw new IllegalArgumentException("Null OPath object");
         }
         userName.setText(p.getName());
-        fromPortalComboBox.setSelectedItem(p.getFromPortal());
-        toPortalComboBox.setSelectedItem(p.getToPortal());
+        // TODO select the Portals EBR
+        if (p.getFromPortal() != null) {
+            log.debug("BPEF FROMPORTAL name = {}", p.getFromPortal().getName());
+            //fromBlockComboBox.setSelectedItemByName(p.getFromBlockName());
+            fromPortalComboBox.setSelectedItem(p.getFromPortal().getName());
+        }
+        if (p.getToPortal() != null) {
+            log.debug("BPEF TOPORTAL name = {}", p.getToPortal().getName());
+            toPortalComboBox.setSelectedItem(p.getToPortal().getName());
+        }
         statusBar.setText(Bundle.getMessage("AddXStatusInitial3", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")));
         lengthSpinner.setValue(_block.getLengthIn());
         _newPath = false;
@@ -244,26 +254,33 @@ public class BlockPathEditFrame extends JmriJFrame {
             _path.setName(user);
         }
         try {
-            Portal fromPortal = pm.providePortal((String) fromPortalComboBox.getSelectedItem());
-            log.debug("looking for Portal {}", fromPortalComboBox.getSelectedItem());
-            if (fromPortal != null) {
-                _path.setFromPortal(fromPortal);
+            Portal fromPortal;
+            if (fromPortalComboBox.getSelectedIndex() <= 0) { // 0 = empty choice
+                fromPortal = null;
+            } else {
+                fromPortal = pm.getPortal((String) fromPortalComboBox.getSelectedItem());
+                log.debug("looking for Portal {}", fromPortalComboBox.getSelectedItem());
             }
-            fromPortal = pm.providePortal((String) toPortalComboBox.getSelectedItem());
-            if (fromPortal != null) {
+            //if (fromPortal != null) {
+                _path.setFromPortal(fromPortal); // portal can be removed by setting to null
+            //}
+            if (toPortalComboBox.getSelectedIndex() <= 0) { // 0 = empty choice
+                fromPortal = null;
+            } else {
+                fromPortal = pm.getPortal((String) toPortalComboBox.getSelectedItem());
+                log.debug("looking for Portal {}", toPortalComboBox.getSelectedItem());
+            }
+            //if (fromPortal != null) {
                 _path.setToPortal(fromPortal);
-            }
+            //}
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PathCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
         // Notify changes
-        //sendChange? TODO EBR
-//        if (_pathTableModel != null) {
-//            _pathTableModel.fireTableDataChanged(); // change BlockEdit > Path BlockPathTableModel, not this one
-//        }
-//        if (_tomodel != null) {
-//            _tomodel.fireTableDataChanged(); // change BlockEdit > Path table. mot this one
-//        }
+        //sendChange?
+        if (_pathmodel != null) {
+            _pathmodel.fireTableDataChanged(); // change BlockEdit > Path BlockPathTableModel, not this one
+        }
     }
 
     protected JPanel getButtonPanel() {
@@ -316,18 +333,10 @@ public class BlockPathEditFrame extends JmriJFrame {
         // hide addFrame
         setVisible(false);
 
-
         if (_tomodel != null) {
             _tomodel.dispose();
         }
         this.dispose();
-    }
-
-    /**
-     * Cancels edit mode
-     */
-    protected void cancelEdit() {
-        closeFrame();
     }
 
     protected void showReminderMessage() {
