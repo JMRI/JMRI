@@ -28,6 +28,10 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
 
     
     public DefaultStringExpressionManager() {
+        for (StringExpressionFactory expressionFactory : ServiceLoader.load(StringExpressionFactory.class)) {
+            expressionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }

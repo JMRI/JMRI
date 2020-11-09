@@ -11,6 +11,11 @@ import java.util.Set;
 public interface DigitalBooleanActionFactory {
 
     /**
+     * Init the factory, for example create categories.
+     */
+    public default void init() {};
+    
+    /**
      * Get a set of classes that implements the DigitalBooleanAction interface.
      * 
      * @return a set of entries with category and class

@@ -25,6 +25,10 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
 
     
     public DefaultStringActionManager() {
+        for (StringActionFactory actionFactory : ServiceLoader.load(StringActionFactory.class)) {
+            actionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }

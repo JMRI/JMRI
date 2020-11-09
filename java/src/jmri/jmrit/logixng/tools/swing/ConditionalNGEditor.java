@@ -451,7 +451,9 @@ public class ConditionalNGEditor extends TreeViewer {
             });
             create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
-            makeAddEditFrame(true, "AddMessage", femaleSocket, addSwingConfiguratorInterface, create);  // NOI18N
+            if (addSwingConfiguratorInterface != null) {
+                makeAddEditFrame(true, "AddMessage", femaleSocket, addSwingConfiguratorInterface, create);  // NOI18N
+            }
         }
     }
 

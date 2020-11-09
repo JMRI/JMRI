@@ -25,6 +25,10 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
 
     
     public DefaultDigitalBooleanActionManager() {
+        for (DigitalBooleanActionFactory actionFactory : ServiceLoader.load(DigitalBooleanActionFactory.class)) {
+            actionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }

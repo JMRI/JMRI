@@ -44,11 +44,11 @@ public abstract class Category implements Comparable<Category> {
      * @return a list of categories
      */
     public static List<Category> values() {
-        if (categories == null) {
+        if (_categories == null) {
             synchronized(Category.class) {
-                if (categories == null) {
+                if (_categories == null) {
                     // It's not often any item is added to this list so we use CopyOnWriteArrayList
-                    categories = new CopyOnWriteArrayList<>();
+                    _categories = new CopyOnWriteArrayList<>();
                     registerCategory(ITEM);
                     registerCategory(COMMON);
                     registerCategory(OTHER);
@@ -56,7 +56,7 @@ public abstract class Category implements Comparable<Category> {
                 }
             }
         }
-        return Collections.unmodifiableList(categories);
+        return Collections.unmodifiableList(_categories);
     }
     
     /**
@@ -64,11 +64,14 @@ public abstract class Category implements Comparable<Category> {
      * @param category the category
      */
     public static void registerCategory(Category category) {
-        categories.add(category);
+        // Ensure that the _categories variable is initialized
+        values();
+        
+        _categories.add(category);
     }
     
     
-    private static volatile List<Category> categories;
+    private static volatile List<Category> _categories;
     
     private final String _name;
     private final String _description;

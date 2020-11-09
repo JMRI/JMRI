@@ -27,6 +27,10 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
 
     
     public DefaultAnalogExpressionManager() {
+        for (AnalogExpressionFactory expressionFactory : ServiceLoader.load(AnalogExpressionFactory.class)) {
+            expressionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }

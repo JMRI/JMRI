@@ -25,6 +25,10 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
 
     
     public DefaultAnalogActionManager() {
+        for (AnalogActionFactory actionFactory : ServiceLoader.load(AnalogActionFactory.class)) {
+            actionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }

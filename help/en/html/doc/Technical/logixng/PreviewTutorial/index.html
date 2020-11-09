@@ -63,6 +63,27 @@ Each ConditionalNGs in the example profile has a memo that describes that Condit
 
 
 
+<h2>Adding a new action/expression</h2>
+
+See the package jmri.jmrix.loconet.logixng for the classes mentioned in this part.
+<p>
+How do we add a new action or expression type to LogixNG? Lets assume we want to have an expression that looks at the
+LocoNet slot manager and returns true if more that 75% of the slots are not free, false otherwise.
+<p>
+The first thing to notice is that is expression is LocoNet specific. Which means that it should be in a sub package to
+jmri.jmrix.loconet and that the expression should not be available if there is no LocoNet connection. This is easy to
+do. LogixNG uses @ServiceProvider to get a list of the available actions and expressions. For example, the class
+jmri.jmrit.logixng.expressions.DigitalFactory provides a list of digital expressions. We can add our own factory class
+for our LocoNet expression and we can make the method <i>getExpressionClasses()</i> conditional so that it only returns
+our class if there is a LocoNet connection active.
+<p>
+Second, it may be helpful for the user if the LocoNet actions/expressions have their own category. So lets create that.
+LogixNG has an "enum" Category, but since Java enums cannot be extended, the LogixNG Category class simulates an enum
+without being a true enum class. We add the LocoNet category to the Factory class and let a static initializer in the
+Factory class register the LocoNet category.
+<p>
+
+
 
 
 

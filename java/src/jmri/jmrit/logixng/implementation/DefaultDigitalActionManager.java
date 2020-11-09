@@ -26,6 +26,10 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
 
     
     public DefaultDigitalActionManager() {
+        for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
+            actionFactory.init();
+        }
+        
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
