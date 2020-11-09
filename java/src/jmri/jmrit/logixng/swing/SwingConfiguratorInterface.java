@@ -127,7 +127,7 @@ public interface SwingConfiguratorInterface {
                     componentsToReturn.add(components[number]);
                     sb = new StringBuilder();
                     parseNumber = false;
-                } else if ((character >= '0') || (character <= '9')) {
+                } else if ((character >= '0') && (character <= '9')) {
                     sb.appendCodePoint(character);
                 } else {
                     throw new IllegalArgumentException(
