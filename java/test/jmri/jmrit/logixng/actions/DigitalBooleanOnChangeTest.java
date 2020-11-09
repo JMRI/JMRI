@@ -61,7 +61,7 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Logix%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active%n" +
@@ -303,8 +303,6 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

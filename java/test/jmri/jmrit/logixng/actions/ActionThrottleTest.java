@@ -70,7 +70,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Throttle%n" +
                 "            ?~ E1%n" +
                 "               Socket not connected%n" +
@@ -694,8 +694,6 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;

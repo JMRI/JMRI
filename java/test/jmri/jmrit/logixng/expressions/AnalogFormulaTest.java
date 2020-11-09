@@ -24,9 +24,6 @@ import org.junit.Test;
  */
 public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
 
-//    private static final boolean EXPECT_SUCCESS = true;
-//    private static final boolean EXPECT_FAILURE = false;
-
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private AnalogFormula expressionFormula;
@@ -69,7 +66,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Formula: E1%n" +
@@ -714,8 +711,6 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

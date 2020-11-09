@@ -57,7 +57,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
                 "               Get constant value \"Something\"%n" +
@@ -234,8 +234,6 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         expressionConstant = new StringExpressionConstant("IQSE321", "StringIO_Constant");
         expressionConstant.setValue("Something");

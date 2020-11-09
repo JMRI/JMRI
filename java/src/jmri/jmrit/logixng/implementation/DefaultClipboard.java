@@ -19,7 +19,7 @@ public class DefaultClipboard implements Clipboard {
 
     private final Many _clipboardItems = new Many("", null);
     
-    private final FemaleAnySocket _femaleRootSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
+    private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
         @Override
         public void connected(FemaleSocket socket) {
             // Do nothing
@@ -29,12 +29,12 @@ public class DefaultClipboard implements Clipboard {
         public void disconnected(FemaleSocket socket) {
             // Do nothing
         }
-    }, "");
+    }, "A");
     
     
     public DefaultClipboard() {
         try {
-            _femaleRootSocket.connect(new MaleRootSocket(null));
+            _femaleSocket.connect(new MaleRootSocket(null));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
             throw new RuntimeException("Program error", ex);
@@ -76,7 +76,7 @@ public class DefaultClipboard implements Clipboard {
 
     @Override
     public FemaleSocket getRoot() {
-        return _femaleRootSocket;
+        return _femaleSocket;
     }
 
     @Override

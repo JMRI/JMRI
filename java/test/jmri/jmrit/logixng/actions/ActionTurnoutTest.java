@@ -57,7 +57,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Set turnout IT1 to Thrown%n");
     }
     
@@ -311,8 +311,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;

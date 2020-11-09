@@ -662,8 +662,6 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
-        
         flag = new AtomicBoolean();
         errorFlag = new AtomicBoolean();
         _expression = new MyExpressionTurnout("IQDE321");

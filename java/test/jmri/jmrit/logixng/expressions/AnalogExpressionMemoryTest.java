@@ -62,7 +62,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Get memory IM1%n" +
@@ -350,8 +350,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);

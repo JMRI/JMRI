@@ -56,7 +56,7 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
@@ -325,8 +325,6 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

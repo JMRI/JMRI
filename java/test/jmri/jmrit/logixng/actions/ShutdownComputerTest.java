@@ -48,7 +48,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Shutdown computer%n");
     }
     
@@ -125,8 +125,6 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         mockShutDownManager = new MockShutDownManager();
         InstanceManager.setDefault(ShutDownManager.class, mockShutDownManager);

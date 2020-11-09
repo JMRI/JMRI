@@ -45,7 +45,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Listen on beans%n");
     }
     
@@ -112,8 +112,6 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;

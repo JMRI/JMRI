@@ -130,10 +130,10 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
     /** {@inheritDoc} */
     @Override
     public final boolean validateName(String name) {
+        if (name.isEmpty()) return false;
+        if (!Character.isLetter(name.charAt(0))) return false;
         for (int i=0; i < name.length(); i++) {
-            if ((i == 0) && !Character.isLetter(name.charAt(i))) {
-                return false;
-            } else if (!Character.isLetterOrDigit(name.charAt(i))) {
+            if (!Character.isLetterOrDigit(name.charAt(i)) || (name.charAt(i) == '_')) {
                 return false;
             }
         }

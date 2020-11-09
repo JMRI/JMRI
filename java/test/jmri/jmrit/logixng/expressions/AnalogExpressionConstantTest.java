@@ -57,7 +57,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Get constant value 10.2%n" +
@@ -220,8 +220,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
         expressionConstant.setValue(10.2);

@@ -105,13 +105,5 @@ public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
      * false otherwise.
      */
     public void setRunOnGUIDelayed(boolean value);
-    
-    /**
-     * Get a set of classes that implements the DigitalActionBean interface
-     * and can be used as the root in the ConditionalNG tree.
-     * 
-     * @return a set of entries with category and class
-     */
-    public Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> getRootClasses();
 
 }

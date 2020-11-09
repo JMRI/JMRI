@@ -157,7 +157,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
                 "               Evaluate script%n" +

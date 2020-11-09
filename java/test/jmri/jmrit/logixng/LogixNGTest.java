@@ -386,7 +386,7 @@ public class LogixNGTest {
         expectedResult
                 .append("LogixNG: A new logix for test").append(newLine)
                 .append("...ConditionalNG: A conditionalNG").append(newLine)
-                .append("......! ").append(newLine)
+                .append("......! A").append(newLine)
                 .append(".........Many").append(newLine)
                 .append("............! A1").append(newLine)
                 .append("...............If E then A1 else A2").append(newLine)
@@ -548,8 +548,6 @@ public class LogixNGTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
     }
 
     @After

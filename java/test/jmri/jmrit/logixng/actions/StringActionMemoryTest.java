@@ -57,7 +57,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
@@ -251,8 +251,6 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

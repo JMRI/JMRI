@@ -71,7 +71,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
                 "               Antecedent: R1%n" +

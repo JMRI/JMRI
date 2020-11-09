@@ -56,7 +56,7 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Logix%n" +
                 "            ? E%n" +
                 "               Sensor '' is Active%n" +
@@ -292,8 +292,6 @@ public class LogixTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

@@ -145,21 +145,13 @@ public class AbstractScriptDigitalActionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initLogixNGManager();
         
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
-        
-//        JUnitUtil.initInternalSensorManager();
-//        JUnitUtil.initInternalTurnoutManager();
-        
-////////        _category = Category.EXRAVAGANZA;
-////////        _isExternal = true;
-        
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
-/**/        
+        
         actionAbstractScriptDigitalAction = new AbstractScriptDigitalAction(null) {
             @Override
             public void execute() throws JmriException {
@@ -170,13 +162,8 @@ public class AbstractScriptDigitalActionTest {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAbstractScriptDigitalAction);
         
         conditionalNG.getChild(0).connect(maleSocket);
-//        _base = actionAbstractScriptDigitalAction;
-//        _baseMaleSocket = maleSocket;
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-//////        logixNG.activateLogixNG();
-        
-//        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
     }
     
     @After

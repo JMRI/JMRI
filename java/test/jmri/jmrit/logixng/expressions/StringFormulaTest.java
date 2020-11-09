@@ -69,7 +69,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
                 "               Formula: E1%n" +
@@ -714,8 +714,6 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

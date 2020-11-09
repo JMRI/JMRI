@@ -23,7 +23,7 @@ public class DefaultConditionalNG extends AbstractBase
     private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
     private Base _parent = null;
     private String _socketSystemName = null;
-    private final FemaleRootSocket _femaleRootSocket;
+    private final FemaleDigitalActionSocket _femaleSocket;
     private boolean _enabled = true;
     private Base.Lock _lock = Base.Lock.NONE;
     private final ExecuteLock executeLock = new ExecuteLock();
@@ -38,7 +38,7 @@ public class DefaultConditionalNG extends AbstractBase
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
-        _femaleRootSocket = new DefaultFemaleRootSocket(this, this, "");
+        _femaleSocket = new DefaultFemaleDigitalActionSocket(this, this, "A");
     }
     
     @Override
@@ -55,7 +55,7 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     public FemaleSocket getFemaleSocket() {
-        return _femaleRootSocket;
+        return _femaleSocket;
     }
 
     /** {@inheritDoc} */
@@ -90,7 +90,7 @@ public class DefaultConditionalNG extends AbstractBase
                         try {
                             InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
                             
-                            _femaleRootSocket.execute();
+                            _femaleSocket.execute();
                         } catch (JmriException | RuntimeException e) {
                             switch (_errorHandlingType) {
                                 case LOG_ERROR_ONCE:
@@ -193,7 +193,7 @@ public class DefaultConditionalNG extends AbstractBase
                     String.format("index has invalid value: %d", index));
         }
         
-        return _femaleRootSocket;
+        return _femaleSocket;
     }
 
     @Override
@@ -232,7 +232,7 @@ public class DefaultConditionalNG extends AbstractBase
 
     public void setSocketSystemName(String systemName) {
         if ((systemName == null) || (!systemName.equals(_socketSystemName))) {
-            _femaleRootSocket.disconnect();
+            _femaleSocket.disconnect();
         }
         _socketSystemName = systemName;
     }
@@ -244,11 +244,11 @@ public class DefaultConditionalNG extends AbstractBase
     /** {@inheritDoc} */
     @Override
     final public void setup() {
-        if (!_femaleRootSocket.isConnected()
-                || !_femaleRootSocket.getConnectedSocket().getSystemName()
+        if (!_femaleSocket.isConnected()
+                || !_femaleSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
             
-            _femaleRootSocket.disconnect();
+            _femaleSocket.disconnect();
             
             if (_socketSystemName != null) {
                 try {
@@ -256,7 +256,7 @@ public class DefaultConditionalNG extends AbstractBase
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(_socketSystemName);
                     if (maleSocket != null) {
-                        _femaleRootSocket.connect(maleSocket);
+                        _femaleSocket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("digital action is not found: " + _socketSystemName);
@@ -267,14 +267,14 @@ public class DefaultConditionalNG extends AbstractBase
                 }
             }
         } else {
-            _femaleRootSocket.setup();
+            _femaleSocket.setup();
         }
     }
 
     /** {@inheritDoc} */
     @Override
     final public void disposeMe() {
-        _femaleRootSocket.dispose();
+        _femaleSocket.dispose();
     }
     
     /** {@inheritDoc} */

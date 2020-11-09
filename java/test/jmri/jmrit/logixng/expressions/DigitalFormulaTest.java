@@ -25,9 +25,6 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  */
 public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
 
-//    private static final boolean EXPECT_SUCCESS = true;
-//    private static final boolean EXPECT_FAILURE = false;
-
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private DigitalFormula expressionFormula;
@@ -70,7 +67,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
                 "               Formula: E1%n" +

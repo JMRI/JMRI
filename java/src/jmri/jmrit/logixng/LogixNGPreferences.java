@@ -25,8 +25,4 @@ public interface LogixNGPreferences {
 
     public boolean getAllowDebugMode();
 
-    public void setLimitRootActions(boolean value);
-
-    public boolean getLimitRootActions();
-
 }

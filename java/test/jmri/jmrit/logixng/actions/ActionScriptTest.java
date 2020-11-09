@@ -153,7 +153,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         If E then A1 else A2%n" +
 "            ? E%n" +
 "               Sensor IS1 is Active%n" +

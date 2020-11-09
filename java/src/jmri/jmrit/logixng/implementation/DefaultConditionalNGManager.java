@@ -18,46 +18,12 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         implements ConditionalNG_Manager {
 
     
-    Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> _rootClasses;
-    
     public DefaultConditionalNGManager() {
         // LogixNGPreferences class may load plugins so we must ensure
         // it's loaded here.
         InstanceManager.getDefault(LogixNGPreferences.class);
-        setupRootClasses();
     }
     
-    private void setupRootClasses() {
-        _rootClasses = new HashMap<>();
-        
-        for (Map.Entry<Category, List<Class<? extends Base>>> map
-                : InstanceManager.getDefault(DigitalActionManager.class).getActionClasses().entrySet()) {
-            
-            List<Map.Entry<Class<? extends Base>, Boolean>> list = new ArrayList<>();
-            
-            for (Class<? extends Base> clazz : map.getValue()) {
-                boolean allowed;
-                
-//                log.error("Class: {}", clazz.getName());
-                
-                switch (clazz.getName()) {
-                    case "jmri.jmrit.logixng.actions.Many":
-                    case "jmri.jmrit.logixng.actions.IfThenElse":
-                    case "jmri.jmrit.logixng.actions.Logix":
-                        allowed = true;
-                        break;
-                        
-                    default:
-                        allowed = false;
-                }
-                
-                list.add(new HashMap.SimpleEntry<>(clazz, allowed));
-            }
-            
-            _rootClasses.put(map.getKey(), list);
-        }
-    }
-
     @Override
     public int getXMLOrder() {
         return LOGIXNG_CONDITIONALNGS;
@@ -78,11 +44,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     public NameValidity validSystemNameFormat(String systemName) {
         return LogixNG_Manager.validSystemNameFormat(
                 getSubSystemNamePrefix(), systemName);
-//        if (systemName.matches(getSubSystemNamePrefix()+"(:AUTO:)?\\d+")) {
-//            return NameValidity.VALID;
-//        } else {
-//            return NameValidity.INVALID;
-//        }
     }
 
     /**
@@ -213,11 +174,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     @Override
     public Class<ConditionalNG> getNamedBeanClass() {
         return ConditionalNG.class;
-    }
-    
-    @Override
-    public Map<Category, List<Map.Entry<Class<? extends Base>, Boolean>>> getRootClasses() {
-        return _rootClasses;
     }
     
 

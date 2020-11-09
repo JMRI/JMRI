@@ -56,7 +56,7 @@ public class StringManyTest extends AbstractStringActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
                 "               Socket not connected%n" +
@@ -322,8 +322,6 @@ public class StringManyTest extends AbstractStringActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.COMMON;
         _isExternal = false;

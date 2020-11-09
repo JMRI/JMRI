@@ -56,7 +56,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
@@ -277,8 +277,6 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.OTHER;
         _isExternal = false;

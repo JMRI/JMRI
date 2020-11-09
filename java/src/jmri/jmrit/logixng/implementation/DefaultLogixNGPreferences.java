@@ -18,10 +18,9 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
     public static final String ALLOW_DEBUG_MODE = "allowDebugMode";
     
-    private boolean _startLogixNGOnLoad = false;
+    private boolean _startLogixNGOnLoad = true;
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
-    private boolean _limitRootActions = true;
     
     public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -152,17 +151,6 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getAllowDebugMode() {
         return _allowDebugMode;
-    }
-
-    @Override
-    public void setLimitRootActions(boolean value) {
-        _limitRootActions = value;
-        setIsDirty(true);
-    }
-
-    @Override
-    public boolean getLimitRootActions() {
-        return _limitRootActions;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

@@ -52,7 +52,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
                 "               Socket not connected%n" +
@@ -246,8 +246,6 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
 //        JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .createLogixNG("A new logix for test");  // NOI18N

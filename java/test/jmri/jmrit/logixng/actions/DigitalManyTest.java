@@ -56,7 +56,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         Many%n" +
                 "            ! A1%n" +
                 "               Socket not connected%n");

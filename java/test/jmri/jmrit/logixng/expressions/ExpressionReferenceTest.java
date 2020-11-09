@@ -68,7 +68,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         return String.format(
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
-                "      ! %n" +
+                "      ! A%n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
                 "               Reference '' is Nothing%n" +
@@ -348,22 +348,13 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-//        JUnitUtil.initRouteManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initReporterManager();
-//        JUnitUtil.initOBlockManager();
-//        JUnitUtil.initWarrantManager();
         JUnitUtil.initSignalMastLogicManager();
-//        JUnitUtil.initLayoutBlockManager();
         JUnitUtil.initSectionManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
-//        JUnitUtil.initIdTagManager();
-//        JUnitUtil.initLogixManager();
-//        JUnitUtil.initConditionalManager();
         JUnitUtil.initLogixNGManager();
-        
-        InstanceManager.getDefault(LogixNGPreferences.class).setLimitRootActions(false);
         
         _category = Category.ITEM;
         _isExternal = true;
