@@ -604,19 +604,16 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      */
     void makeEditConditionalNGWindow() {
         // deactivate this Logix
-        _curLogixNG.deActivateLogixNG();
         _conditionalUserName.setText(_curConditionalNG.getUserName());
         
         // Create a new LogixNG edit view, add the listener.
-//        if (_editMode == LogixNGTableAction.EditMode.TREEEDIT) {
-            _treeEdit = new ConditionalNGEditor(_curConditionalNG);
-            _treeEdit.initComponents();
-            _treeEdit.setVisible(true);
-            _inEditMode = true;
-            
-            final LogixNGEditor logixNGEditor = this;
-            _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
-//        }
+        _treeEdit = new ConditionalNGEditor(_curConditionalNG);
+        _treeEdit.initComponents();
+        _treeEdit.setVisible(true);
+        _inEditMode = true;
+
+        final LogixNGEditor logixNGEditor = this;
+        _treeEdit.addLogixNGEventListener(new LogixNGEventListenerImpl(logixNGEditor));
     }
     
     // ------------ Methods for Edit ConditionalNG Pane ------------
@@ -1014,9 +1011,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                 if (key.equals("Finish")) {                  // NOI18N
                     _treeEdit = null;
                     _inEditMode = false;
-                    _curLogixNG.setEnabled(true);
                     _logixNGEditor.bringToFront();
-                    if (_curLogixNG.isEnabled()) _curLogixNG.activateLogixNG();
                 } else if (key.equals("Delete")) {           // NOI18N
                     deletePressed();
                 } else if (key.equals("chgUname")) {         // NOI18N

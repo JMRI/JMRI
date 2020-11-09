@@ -390,6 +390,8 @@ public class ConditionalNGEditor extends TreeViewer {
             // Create ConditionalNG
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             create.addActionListener((ActionEvent e) -> {
+                _conditionalNG.unregisterListeners();
+                
                 List<String> errorMessages = new ArrayList<>();
                 
                 boolean isValid = true;
@@ -445,6 +447,7 @@ public class ConditionalNGEditor extends TreeViewer {
                             Bundle.getMessage("ValidateErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
                 }
+                _conditionalNG.registerListeners();
             });
             create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
@@ -470,6 +473,8 @@ public class ConditionalNGEditor extends TreeViewer {
             // Edit ConditionalNG
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             edit.addActionListener((ActionEvent e) -> {
+                _conditionalNG.unregisterListeners();
+                
                 List<String> errorMessages = new ArrayList<>();
                 
                 boolean isValid = true;
@@ -508,6 +513,7 @@ public class ConditionalNGEditor extends TreeViewer {
                             Bundle.getMessage("ValidateErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
                 }
+                _conditionalNG.registerListeners();
             });
             edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
@@ -529,6 +535,7 @@ public class ConditionalNGEditor extends TreeViewer {
             FemaleSocket femaleSocket,
             SwingConfiguratorInterface swingConfiguratorInterface,
             JButton button) {
+        
         JDialog frame  = new JDialog(
                 this,
                 Bundle.getMessage(
@@ -1032,6 +1039,8 @@ public class ConditionalNGEditor extends TreeViewer {
          */
         @Override
         public Void doInBackground() {
+            _conditionalNG.unregisterListeners();
+            
             List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
             
             findAllChilds(_currentFemaleSocket, sockets);
@@ -1144,6 +1153,7 @@ public class ConditionalNGEditor extends TreeViewer {
                 dialog.setModal(true);
                 dialog.setVisible(true);
             }
+            _conditionalNG.registerListeners();
             return null;
         }
         
