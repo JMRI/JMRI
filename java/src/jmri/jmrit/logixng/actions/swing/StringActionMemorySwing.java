@@ -135,7 +135,7 @@ public class StringActionMemorySwing extends AbstractStringActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Memory_Short");
+        return Bundle.getMessage("StringActionMemory_Short");
     }
     
     @Override

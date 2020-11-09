@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.logixng.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.logixng.expressions.DigitalExpressionBundle";
+    private static final String name = "jmri.jmrit.logixng.expressions.ExpressionBundle";
 
     //
     // below here is boilerplate to be copied exactly

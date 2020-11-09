@@ -34,7 +34,7 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.actions.ActionMemory;
 import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.CallModule;
+import jmri.jmrit.logixng.actions.DigitalCallModule;
 import jmri.jmrit.logixng.actions.ActionSensor;
 import jmri.jmrit.logixng.actions.DoAnalogAction;
 import jmri.jmrit.logixng.actions.ActionLight;
@@ -282,11 +282,11 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
-        CallModule callModule = new CallModule(digitalActionManager.getAutoSystemName(), null);
+        DigitalCallModule callModule = new DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(callModule);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-        callModule = new CallModule(digitalActionManager.getAutoSystemName(), null);
+        callModule = new DigitalCallModule(digitalActionManager.getAutoSystemName(), null);
         callModule.setComment("A comment");
         callModule.setModule("IQM1");
         maleSocket = digitalActionManager.registerAction(callModule);

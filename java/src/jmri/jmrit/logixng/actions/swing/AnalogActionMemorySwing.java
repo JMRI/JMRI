@@ -135,7 +135,7 @@ public class AnalogActionMemorySwing extends AbstractAnalogActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Memory_Short");
+        return Bundle.getMessage("AnalogActionMemory_Short");
     }
     
     @Override

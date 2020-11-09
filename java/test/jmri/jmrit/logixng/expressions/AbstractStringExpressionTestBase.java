@@ -37,14 +37,6 @@ public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestB
     }
     
     @Test
-    public void testBundle() {
-        Assert.assertEquals("strings are equal", "Get memory", Bundle.getMessage("StringExpressionMemory0"));
-        Assert.assertEquals("strings are equal", "Get memory IM1", Bundle.getMessage("StringExpressionMemory1", "IM1"));
-        Assert.assertEquals("strings are equal", "Get memory", Bundle.getMessage(Locale.CANADA, "StringExpressionMemory0"));
-        Assert.assertEquals("strings are equal", "Get memory IM1", Bundle.getMessage(Locale.CANADA, "StringExpressionMemory1", "IM1"));
-    }
-    
-    @Test
     public void testGetBeanType() {
         Assert.assertTrue("String matches", "String expression".equals(((StringExpressionBean)_base).getBeanType()));
     }

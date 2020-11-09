@@ -118,17 +118,17 @@ public class StringActionMemory extends AbstractStringAction
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "StringActionMemory1", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "StringActionMemory1", "none");
-        }
+        return Bundle.getMessage(locale, "StringActionMemory_Short");
     }
 
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        if (_memoryHandle != null) {
+            return Bundle.getMessage(locale, "StringActionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        } else {
+            return Bundle.getMessage(locale, "StringActionMemory_Long", "none");
+        }
     }
 
     /** {@inheritDoc} */

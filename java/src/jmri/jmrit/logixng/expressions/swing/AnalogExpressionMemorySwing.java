@@ -135,7 +135,7 @@ public class AnalogExpressionMemorySwing extends AbstractAnalogExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Memory_Short");
+        return Bundle.getMessage("AnalogExpression_Short");
     }
     
     @Override

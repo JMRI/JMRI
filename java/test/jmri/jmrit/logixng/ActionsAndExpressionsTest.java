@@ -111,6 +111,8 @@ public class ActionsAndExpressionsTest {
                 configureSwing.getConfigPanel(new JPanel());
                 MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
                 Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", socket.getObject().getClass().getName(), packageName+"."+file);
+                System.out.format("Swing: %s, Class: %s, class: %s%n", configureSwing.toString(), socket.getShortDescription(), socket.getObject().getClass().getName());
+                Assert.assertEquals("Swing class has correct name", socket.getShortDescription(), configureSwing.toString());
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
 //            if (configureSwing == null) {

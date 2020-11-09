@@ -47,7 +47,7 @@ public class DigitalBooleanOnChangeSwing extends AbstractBooleanActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("OnChange_Short");
+        return Bundle.getMessage("DigitalBooleanOnChange_Short");
     }
     
     @Override

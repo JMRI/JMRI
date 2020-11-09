@@ -127,16 +127,16 @@ public class StringExpressionMemory extends AbstractStringExpression
 
     @Override
     public String getShortDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "StringExpressionMemory1", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "StringExpressionMemory1", "none");
-        }
+        return Bundle.getMessage(locale, "StringExpressionMemory_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        if (_memoryHandle != null) {
+            return Bundle.getMessage(locale, "StringExpressionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        } else {
+            return Bundle.getMessage(locale, "StringExpressionMemory_Long", "none");
+        }
     }
 
     /** {@inheritDoc} */

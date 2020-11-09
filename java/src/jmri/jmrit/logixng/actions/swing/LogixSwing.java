@@ -44,7 +44,7 @@ public class LogixSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Many_Short");
+        return Bundle.getMessage("Logix_Short");
     }
     
     @Override

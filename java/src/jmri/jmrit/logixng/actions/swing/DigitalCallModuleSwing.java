@@ -10,12 +10,12 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.actions.CallModule;
+import jmri.jmrit.logixng.actions.DigitalCallModule;
 
 /**
  * Configures an ModuleDigitalAction object with a Swing JPanel.
  */
-public class CallModuleSwing extends AbstractDigitalActionSwing {
+public class DigitalCallModuleSwing extends AbstractDigitalActionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -31,7 +31,7 @@ public class CallModuleSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        CallModule action = new CallModule(systemName, userName);
+        DigitalCallModule action = new DigitalCallModule(systemName, userName);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     
@@ -44,7 +44,7 @@ public class CallModuleSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ModuleDigitalAction_Short");
+        return Bundle.getMessage("DigitalCallModule_Short");
     }
     
     @Override

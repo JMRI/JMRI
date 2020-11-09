@@ -19,12 +19,12 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class CallModule extends AbstractDigitalAction implements VetoableChangeListener {
+public class DigitalCallModule extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
     private final Map<String, SymbolTable.ParameterData> _parameterData = new HashMap<>();
     
-    public CallModule(String sys, String user)
+    public DigitalCallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -136,7 +136,7 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "CallModule_Short");
+        return Bundle.getMessage(locale, "DigitalCallModule_Short");
     }
 
     @Override
@@ -148,7 +148,7 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
         
-        return Bundle.getMessage(locale, "CallModule_Long", memoryName);
+        return Bundle.getMessage(locale, "DigitalCallModule_Long", memoryName);
     }
     
     /** {@inheritDoc} */
@@ -196,6 +196,6 @@ public class CallModule extends AbstractDigitalAction implements VetoableChangeL
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CallModule.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalCallModule.class);
     
 }

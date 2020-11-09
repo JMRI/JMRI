@@ -352,7 +352,7 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Memory_Short");
+        return Bundle.getMessage(locale, "Variable_Short");
     }
 
     @Override

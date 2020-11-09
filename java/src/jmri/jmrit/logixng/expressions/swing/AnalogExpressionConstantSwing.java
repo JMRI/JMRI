@@ -44,7 +44,7 @@ public class AnalogExpressionConstantSwing extends AbstractAnalogExpressionSwing
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Constant_Short");
+        return Bundle.getMessage("AnalogExpressionConstant_Short");
     }
     
     @Override

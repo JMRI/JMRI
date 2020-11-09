@@ -130,17 +130,17 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory1", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory1", "none");
-        }
+        return Bundle.getMessage(locale, "AnalogExpression_Short");
     }
 
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        if (_memoryHandle != null) {
+            return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        } else {
+            return Bundle.getMessage(locale, "AnalogExpressionMemory_Long", "none");
+        }
     }
 
     /** {@inheritDoc} */

@@ -44,7 +44,7 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Many_Short");
+        return Bundle.getMessage("Throttle_Short");
     }
     
     @Override

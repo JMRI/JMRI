@@ -135,16 +135,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
 
     @Override
     public String getShortDescription(Locale locale) {
-        switch (_type) {
-            case SystemClock:
-                return Bundle.getMessage(locale, "Clock_Short_SystemClock");
-                
-            case FastClock:
-                return Bundle.getMessage(locale, "Clock_Short_FastClock");
-                
-            default:
-                throw new RuntimeException("Unknown value of _timerType: "+_type.name());
-        }
+        return Bundle.getMessage(locale, "Clock_Short");
     }
     
     @Override

@@ -202,7 +202,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get constant value \"Something\"", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value", _base.getShortDescription(Locale.ENGLISH));
     }
     
     @Test

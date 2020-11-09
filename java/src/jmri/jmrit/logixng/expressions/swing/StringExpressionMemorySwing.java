@@ -48,7 +48,7 @@ public class StringExpressionMemorySwing extends AbstractStringExpressionSwing {
             stateComboBox.setSelectedItem(action.getMemoryOperation());
         }
 */        
-        panel.add(new JLabel(Bundle.getMessage("BeanNameMemory")));
+        panel.add(new JLabel(Bundle.getMessage("StringExpressionMemory_Short")));
         panel.add(memoryBeanPanel);
 //        panel.add(stateComboBox);
     }
@@ -135,7 +135,7 @@ public class StringExpressionMemorySwing extends AbstractStringExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Memory_Short");
+        return Bundle.getMessage("StringExpressionMemory_Short");
     }
     
     @Override

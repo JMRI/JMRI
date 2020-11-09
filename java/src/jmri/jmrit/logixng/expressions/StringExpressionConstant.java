@@ -67,16 +67,16 @@ public class StringExpressionConstant extends AbstractStringExpression {
 
     @Override
     public String getShortDescription(Locale locale) {
-        if (_value == null) {
-            return Bundle.getMessage(locale, "StringExpressionConstantNull");
-        } else {
-            return Bundle.getMessage(locale, "StringExpressionConstant1", _value);
-        }
+        return Bundle.getMessage(locale, "StringExpressionConstant_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        if (_value == null) {
+            return Bundle.getMessage(locale, "StringExpressionConstant_LongNull");
+        } else {
+            return Bundle.getMessage(locale, "StringExpressionConstant_LongValue", _value);
+        }
     }
 
     /** {@inheritDoc} */

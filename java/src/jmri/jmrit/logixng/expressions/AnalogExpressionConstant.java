@@ -68,13 +68,13 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
 
     @Override
     public String getShortDescription(Locale locale) {
-        NumberFormat numberFormat = NumberFormat.getInstance(locale);
-        return Bundle.getMessage(locale, "AnalogExpressionConstant1", numberFormat.format(_value));
+        return Bundle.getMessage(locale, "AnalogExpressionConstant_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        NumberFormat numberFormat = NumberFormat.getInstance(locale);
+        return Bundle.getMessage(locale, "AnalogExpressionConstant_Long", numberFormat.format(_value));
     }
 
     /** {@inheritDoc} */

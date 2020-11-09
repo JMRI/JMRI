@@ -5,7 +5,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.actions.CallModule;
+import jmri.jmrit.logixng.actions.DigitalCallModule;
 
 import org.jdom2.Element;
 
@@ -15,9 +15,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class CallModuleXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DigitalCallModuleXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public CallModuleXml() {
+    public DigitalCallModuleXml() {
     }
     
     /**
@@ -28,7 +28,7 @@ public class CallModuleXml extends jmri.managers.configurexml.AbstractNamedBeanM
      */
     @Override
     public Element store(Object o) {
-        CallModule p = (CallModule) o;
+        DigitalCallModule p = (DigitalCallModule) o;
 
         Element element = new Element("call-module");
         element.setAttribute("class", this.getClass().getName());
@@ -50,7 +50,7 @@ public class CallModuleXml extends jmri.managers.configurexml.AbstractNamedBeanM
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        CallModule h = new CallModule(sys, uname);
+        DigitalCallModule h = new DigitalCallModule(sys, uname);
 
         loadCommon(h, shared);
 

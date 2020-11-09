@@ -318,7 +318,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getShortDescription()));
+        Assert.assertTrue("String matches", "Get memory".equals(_base.getShortDescription()));
     }
     
     @Test

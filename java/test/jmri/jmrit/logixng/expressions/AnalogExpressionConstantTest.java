@@ -188,7 +188,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get constant value 10.2", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value", _base.getShortDescription(Locale.ENGLISH));
     }
     
     @Test

@@ -105,7 +105,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
         classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
-        classes.add(jmri.jmrit.logixng.actions.CallModule.class);
+        classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
         map.put(Category.OTHER, classes);
         

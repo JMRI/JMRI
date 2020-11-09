@@ -44,7 +44,7 @@ public class ExpressionLocalVariableSwing extends AbstractExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Clock_Short");
+        return Bundle.getMessage("Variable_Short");
     }
     
     @Override

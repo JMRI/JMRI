@@ -115,17 +115,17 @@ public class AnalogActionMemory extends AbstractAnalogAction
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogActionMemory1", _memoryHandle.getBean().getDisplayName());
-        } else {
-            return Bundle.getMessage(locale, "AnalogActionMemory1", "none");
-        }
+        return Bundle.getMessage(locale, "AnalogActionMemory_Short");
     }
 
     /** {@inheritDoc} */
     @Override
     public String getLongDescription(Locale locale) {
-        return getShortDescription(locale);
+        if (_memoryHandle != null) {
+            return Bundle.getMessage(locale, "AnalogActionMemory_Long", _memoryHandle.getBean().getDisplayName());
+        } else {
+            return Bundle.getMessage(locale, "AnalogActionMemory_Long", "none");
+        }
     }
 
     /** {@inheritDoc} */

@@ -44,7 +44,7 @@ public class StringExpressionConstantSwing extends AbstractStringExpressionSwing
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Constant_Short");
+        return Bundle.getMessage("StringExpressionConstant_Short");
     }
     
     @Override
