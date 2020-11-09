@@ -93,7 +93,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.BlockTableAction", Bundle.getMessage("MenuItemBlockTable"), true);
             if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) { // select _tabbed in prefs
                 addTable("jmri.jmrit.beantable.OBlockTableAction", Bundle.getMessage("MenuItemOBlockTable"), false);
-            } // requires restart after setting
+            } // requires restart after changing the interface setting (on Display tab)
             addTable("jmri.jmrit.beantable.SectionTableAction", Bundle.getMessage("MenuItemSectionTable"), true);
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);

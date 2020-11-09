@@ -106,6 +106,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     public TableFrames(String actionName) {
         //super(actionName);
+        //this.getFrame("Hidden").setVisible(false); // for _tabbed
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
         this.setVisible(!_tabbed); // also hide some stray separate _desktop panel, not "this"
         super.setVisible(!_tabbed);
@@ -144,7 +145,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
 
             // build tables
-            _blockTableFrame = buildFrame(_oBlockModel, Bundle.getMessage("TitleBlockTable"), Bundle.getMessage("AddPortalPrompt"));
+            _blockTableFrame = buildFrame(_oBlockModel, Bundle.getMessage("TitleBlockTable"), Bundle.getMessage("AddBlockPrompt"));
             _blockTableFrame.setVisible(true);
 
             _portalTableFrame = buildFrame(_portalModel, Bundle.getMessage("TitlePortalTable"), Bundle.getMessage("AddPortalPrompt"));
@@ -170,12 +171,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             mBar = new JMenuBar();
         }
         // create and add the menus
-        if (!_tabbed) { // _tabbed Print is handled via getPrintItem()
+        if (!_tabbed) { // _tabbed Print is handled via getPrintItem() in OBlockTablePanel
             // File menu
             JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
             fileMenu.add(new jmri.configurexml.StoreMenu());
-
-            mBar.add(addPrintMenuItems(fileMenu)); // first adds the print items
+            fileMenu.add(getPrintMenuItems(_oBlockTable, _portalTable, _signalTable, _blockPortalTable)); // add the print items
+            mBar.add(fileMenu);
 
             // Edit menu
             JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
@@ -222,64 +223,65 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return mBar; //new JMenu[]{fileMenu, optionMenu, tablesMenu};
     }
 
-    private JMenu addPrintMenuItems(JMenu fileMenu) {
+    public JMenu getPrintMenuItems(JTable oBlockTable, JTable portalTable, JTable signalTable, JTable blockPortalTable) {
+        JMenu print = new JMenu(Bundle.getMessage("PrintTable"));
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
-        fileMenu.add(printItem);
+        print.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
                     log.warn("error printing: {}", e1, e1);
                 }
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintPortalTable"));
-        fileMenu.add(printItem);
+        print.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
                     log.warn("error printing: {}", e1, e1);
                 }
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintSignalTable"));
-        fileMenu.add(printItem);
+        print.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
                     log.warn("error printing: {}", e1, e1);
                 }
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintXRef"));
-        fileMenu.add(printItem);
+        print.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    _blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
+                    blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
                     log.warn("error printing: {}", e1, e1);
                 }
             }
         });
-        return fileMenu;
+        return print;
     }
 
     // for desktop style interface, ignored for _tabbed
@@ -671,15 +673,18 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
-        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
-        box.addItem("");
-        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
+        model.configSpeedColumn(_oBlockTable); // use real combo
+        //        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
+        //        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
+        model.configCurveColumn(_oBlockTable); // use real combo
+        //        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+//        box.addItem("");
+//        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellRenderer(new DefaultCellRenderer(new _oBlockModel.SpeedComboBoxPanel()));
+//        _oBlockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellEditor(

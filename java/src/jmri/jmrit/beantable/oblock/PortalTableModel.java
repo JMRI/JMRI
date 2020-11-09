@@ -164,7 +164,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 }
             }
             if (msg == null && tempRow[NAME_COLUMN] != null) {
-                if (fromBlock != null && toBlock!=null ) {
+                if (fromBlock != null && toBlock != null ) {
                     if (fromBlock.equals(toBlock)) { 
                         msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
                     } else {

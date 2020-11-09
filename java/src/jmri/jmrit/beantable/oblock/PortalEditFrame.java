@@ -34,11 +34,10 @@ public class PortalEditFrame extends JmriJFrame {
     //private final Object lock = new Object();
 
     // UI components for Add/Edit Portal
-    JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")));
-    JTextField userName = new JTextField(15);
-    JLabel portalName = new JLabel();
-    JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
-    JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
+    JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")), JLabel.TRAILING);
+    JTextField portalUserName = new JTextField(15);
+    JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")), JLabel.TRAILING);
+    JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")), JLabel.TRAILING);
     private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddPortalStatusEnter"), JLabel.LEADING);
@@ -54,8 +53,9 @@ public class PortalEditFrame extends JmriJFrame {
         pm = InstanceManager.getDefault(PortalManager.class);
         layoutFrame();
         if (portal == null) {
-            _newPortal = true;
+            resetFrame();
             setTitle(Bundle.getMessage("TitleAddPortal"));
+            _newPortal = true;
         } else {
             _portal = portal;
             populateFrame(portal);
@@ -74,7 +74,7 @@ public class PortalEditFrame extends JmriJFrame {
 
         JPanel p1 = new JPanel();
         p1.add(portalLabel);
-        p1.add(userName);
+        p1.add(portalUserName);
         p.add(p1);
 
         p1 = new JPanel();
@@ -123,8 +123,10 @@ public class PortalEditFrame extends JmriJFrame {
      * Populate the Edit OBlock frame with default values.
      */
     public void resetFrame() {
-        userName.setText(null);
-        userName.setBackground(Color.white);
+        portalUserName.setText(null);
+        portalUserName.setBackground(Color.white);
+        fromBlockComboBox.setSelectedIndex(0);
+        toBlockComboBox.setSelectedIndex(0);
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("AddPortalStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -138,7 +140,7 @@ public class PortalEditFrame extends JmriJFrame {
         if (p == null) {
             throw new IllegalArgumentException("Null OBlock object");
         }
-        userName.setText(p.getName());
+        portalUserName.setText(p.getName());
         if (p.getFromBlockName() != null) {
             fromBlockComboBox.setSelectedItemByName(p.getFromBlockName());
         }
@@ -149,15 +151,15 @@ public class PortalEditFrame extends JmriJFrame {
     }
 
     private void applyPressed(ActionEvent e) {
-        String user = userName.getText().trim();
+        String user = portalUserName.getText().trim();
         if (user.equals("")) {
             // warn/help bar red
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
-            userName.setBackground(Color.red);
+            portalUserName.setBackground(Color.red);
             return;
         } else {
-            userName.setBackground(Color.white);
+            portalUserName.setBackground(Color.white);
         }
         if (_newPortal) {
             _portal = pm.createNewPortal(user);
@@ -165,10 +167,10 @@ public class PortalEditFrame extends JmriJFrame {
                 // warn/help bar red
                 statusBar.setText(Bundle.getMessage("WarningSysNameInUse"));
                 statusBar.setForeground(Color.red);
-                userName.setBackground(Color.red);
+                portalUserName.setBackground(Color.red);
                 return;
             } else {
-                userName.setBackground(Color.white);
+                portalUserName.setBackground(Color.white);
             }
         } else {
             String msg = _portal.setName(user); // will check for duplicates

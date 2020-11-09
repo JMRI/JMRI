@@ -35,6 +35,8 @@ public class SignalEditFrame extends JmriJFrame {
     //private final Object lock = new Object();
 
     // UI components for Add/Edit Signal (head or mast)
+    JLabel portalLabel = new JLabel(Bundle.getMessage("AtPortalLabel"), JLabel.TRAILING);
+
     JLabel signalMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalMast")));
     JLabel signalHeadLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
     JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
@@ -49,7 +51,6 @@ public class SignalEditFrame extends JmriJFrame {
             null, NamedBean.DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
             null, NamedBean.DisplayOptions.DISPLAYNAME);
-    JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")));
     // the following 3 items copied from beanedit, place in separate static method?
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
@@ -71,15 +72,16 @@ public class SignalEditFrame extends JmriJFrame {
         if (signal == null) {
             _newSignal = true;
         }
-        _sr = sr;
+        log.debug("SR is null = {}", sr==null);
         pm = InstanceManager.getDefault(PortalManager.class);
         for (Portal pi : pm.getPortalSet()) {
             portalComboBox.addItem(pi.getName());
         }
         layoutFrame();
-        if (_sr != null) {
+        if (sr != null) {
+            _sr = sr;
             _portal = sr.getPortal();
-            populateFrame(_sr);
+            populateFrame(sr);
         } else {
             resetFrame();
         }
@@ -90,17 +92,25 @@ public class SignalEditFrame extends JmriJFrame {
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
 
+        JPanel configGrid = new JPanel();
+        GridLayout layout = new GridLayout(4, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
+        configGrid.setLayout(layout);
+
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
+        // row 1
         JPanel p1 = new JPanel();
         p1.add(signalMastLabel);
         p1.add(sigMastComboBox);
         sigMastComboBox.setAllowNull(true);
+        configGrid.add(p1);
+
+        p1 = new JPanel();
         p1.add(signalHeadLabel);
         p1.add(sigHeadComboBox);
         sigHeadComboBox.setAllowNull(true);
-        p.add(p1);
+        configGrid.add(p1);
 
         portalComboBox.addActionListener(new ActionListener() {
             @Override
@@ -111,10 +121,9 @@ public class SignalEditFrame extends JmriJFrame {
                 }
             }
         });
-        p1 = new JPanel();
-        p1.add(portalLabel);
-        p1.add(portalComboBox); // has a black first item
-        p.add(p1);
+        // row 2
+        configGrid.add(portalLabel);
+        configGrid.add(portalComboBox); // has a blank first item
 
         sigMastComboBox.addActionListener(new ActionListener() {
             @Override
@@ -134,25 +143,23 @@ public class SignalEditFrame extends JmriJFrame {
                 }
             }
         });
+        // row 3
         p1 = new JPanel();
         p1.add(fromBlockLabel);
         p1.add(fromBlockComboBox);
         fromBlockComboBox.setAllowNull(true);
+        configGrid.add(p1);
+
+        p1 = new JPanel();
         p1.add(toBlockLabel);
         p1.add(toBlockComboBox);
         toBlockComboBox.setAllowNull(true);
-        p.add(p1);
+        configGrid.add(p1);
 
+        // row 4
         // copied from beanedit, also in BlockPathEditFrame
-        JPanel p3 = new JPanel();
-        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-        p3.add(Box.createHorizontalGlue());
-
         p1 = new JPanel();
         p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Offset"))));
-        //p1.add(new JLabel(Bundle.getMessage("Length")));
-        //p1.add(new JLabel(Bundle.getMessage("lengthUnitLabel")));
-        p1.add(lengthSpinner);
         lengthSpinner.setModel(
                 new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
@@ -160,7 +167,7 @@ public class SignalEditFrame extends JmriJFrame {
         lengthSpinner.setValue(0f); // reset from possible previous use
         lengthSpinner.setToolTipText(Bundle.getMessage("OffsetToolTip"));
         p1.add(lengthSpinner);
-        p3.add(p1);
+        configGrid.add(p1);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(inch);
@@ -185,9 +192,10 @@ public class SignalEditFrame extends JmriJFrame {
                 updateLength();
             }
         });
-        p3.add(p1);
-        p3.add(Box.createHorizontalGlue());
-        p.add(p3);
+        configGrid.add(p1);
+        p.add(configGrid);
+
+        p.add(Box.createHorizontalGlue());
 
         JPanel p2 = new JPanel();
         p2.add(statusBar);
@@ -250,14 +258,16 @@ public class SignalEditFrame extends JmriJFrame {
         if (sr == null) {
             throw new IllegalArgumentException("Null Signal object");
         }
+        log.debug("SIGNALEDIT FROMBLOCK={}", sr.getFromBlock().getDisplayName());
         fromBlockComboBox.setSelectedItemByName(sr.getFromBlock().getDisplayName());
+        log.debug("SIGNALEDIT TOBLOCK={}", sr.getFromBlock().getDisplayName());
         toBlockComboBox.setSelectedItemByName(sr.getToBlock().getDisplayName());
         if (signal instanceof SignalMast) {
             sigMastComboBox.setSelectedItemByName(sr.getSignal().getDisplayName());
         } else if (signal instanceof SignalHead) {
             sigHeadComboBox.setSelectedItemByName(sr.getSignal().getDisplayName());
         }
-        portalComboBox.setSelectedItem(_portal);
+        portalComboBox.setSelectedItem(_portal.getName());
         lengthSpinner.setValue(sr.getLength());
         _newSignal = false;
     }

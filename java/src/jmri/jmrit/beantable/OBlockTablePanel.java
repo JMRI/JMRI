@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.oblock.*;
+import jmri.jmrit.logix.OBlock;
 import jmri.swing.RowSorterUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -17,10 +18,6 @@ import javax.swing.*;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
-import java.text.MessageFormat;
 import java.util.Objects;
 
 /**
@@ -55,7 +52,6 @@ public class OBlockTablePanel extends JPanel {
     int bottomBoxIndex;             // index to insert extra stuff
 
     private static final int bottomStrutWidth = 20;
-    //private static final int ROW_HEIGHT = 10;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public OBlockTablePanel(OBlockTableModel oblocks,
@@ -76,21 +72,23 @@ public class OBlockTablePanel extends JPanel {
         RowSorterUtil.setSortOrder(sorter, OBlockTableModel.SYSNAMECOL, SortOrder.ASCENDING);
         oblockTable = makeJTable(OBlockTableAction.class.getName(), oblockDataModel, sorter); // use our own
         // style table, check overlap with configureWarrantTable done next
-//        oblockTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-//        oblockTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        oblockTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
+        oblockTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
         oblockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
-        oblockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
+//        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
+//        oblockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
+        oblocks.configCurveColumn(oblockTable); // use real combo
         oblockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
-        box.addItem("");
-        oblockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
+//        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+//        box.addItem("");
+//        oblockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
+        oblocks.configSpeedColumn(oblockTable); // use real combo
         oblockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellEditor(
@@ -107,8 +105,6 @@ public class OBlockTablePanel extends JPanel {
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
         oblockDataScroll = new JScrollPane(oblockTable);
-
-        //oblockTable.createDefaultColumnsFromModel();
 
         // Portal Table
         portalDataModel = portals;
@@ -135,10 +131,10 @@ public class OBlockTablePanel extends JPanel {
         // style table
         signalTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         signalTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
-//        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
-//                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
-//        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
-//                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
+                new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
+                new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
         signalDataScroll = new JScrollPane(signalTable);
         signalTable.setColumnModel(new XTableColumnModel());
         signalTable.createDefaultColumnsFromModel();
@@ -164,21 +160,21 @@ public class OBlockTablePanel extends JPanel {
             int width = oblockDataModel.getPreferredWidth(i);
             oblockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        oblockDataModel.persistTable(oblockTable); // contains this method
+        oblockDataModel.persistTable(oblockTable); // oblockDataModel contains this method
 
         configureWarrantTable(signalTable);
         // pathDataModel.configEditColumn(pathTable);
-        oblockDataModel.persistTable(signalTable);
+        //oblockDataModel.persistTable(signalTable);
 
         configureWarrantTable(portalTable);
         // portalDataModel.configEditColumn(portalTable);
-        oblockDataModel.persistTable(portalTable);
+        //oblockDataModel.persistTable(portalTable);
 
         configureWarrantTable(blockportalTable);
         // portalDataModel.configEditColumn(blockportalTable);
-        oblockDataModel.persistTable(blockportalTable);
+        //oblockDataModel.persistTable(blockportalTable);
 
-        // TODO add changeListeners for table (example load, created) to update tables EBR
+        // TODO add more changeListeners for table (example load, created) to update tables?
 
         // general GUI config
         this.setLayout(new BorderLayout());
@@ -223,22 +219,7 @@ public class OBlockTablePanel extends JPanel {
 
     public JMenuItem getPrintItem() { // copied from AudioTablePanel
         log.debug("OBLOCK TABBED getPrintItem() called");
-        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable")); // TODO add a submenu per table
-
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    MessageFormat footerFormat = new MessageFormat("Page {0,number}");
-                    oblockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                    portalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Portal Table"), footerFormat);
-                    signalTable.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Signal Table"), footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
-                }
-            }
-        });
-        return printItem;
+        return _tf.getPrintMenuItems(oblockTable, portalTable, signalTable, blockportalTable);
     }
 
     public JMenu getOptionMenu() {
@@ -334,7 +315,6 @@ public class OBlockTablePanel extends JPanel {
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
         table.createDefaultColumnsFromModel();
-        // TODO must put in tableModelClass to attach listener?
         return table;
     }
 
@@ -347,30 +327,30 @@ public class OBlockTablePanel extends JPanel {
      */
     public void configureWarrantTable(JTable table) {
         // ignore Property columns
-//        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-//        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         table.setDefaultRenderer(JButton.class, new ButtonRenderer());
         table.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
-        table.setDefaultRenderer(JToggleButton.class, new ToggleButtonRenderer("cm", "in")); // overrides
-        table.setDefaultEditor(JToggleButton.class, new ToggleButtonEditor(new JToggleButton(), "cm", "in")); // overrides some set above
-//        table.setDefaultRenderer(Boolean.class, new ButtonRenderer());
-//        table.setDefaultEditor(Boolean.class, new ButtonEditor(new JButton()));
-
+        table.setDefaultRenderer(JToggleButton.class, new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in"))); // overrides
+        table.setDefaultEditor(JToggleButton.class, new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
+        table.setDefaultRenderer(JRadioButton.class, new ToggleButtonRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last"))); // overrides
+        table.setDefaultEditor(JRadioButton.class, new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Current"), Bundle.getMessage("Last")));
+        table.setDefaultRenderer(JCheckBox.class, new ToggleButtonRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
+        table.setDefaultEditor(JCheckBox.class, new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
+        table.setDefaultEditor(OBlockTableModel.SpeedComboBoxPanel.class, new OBlockTableModel.SpeedComboBoxPanel());
+        table.setDefaultRenderer(OBlockTableModel.SpeedComboBoxPanel.class, new OBlockTableModel.SpeedComboBoxPanel());
+        table.setDefaultEditor(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel());
+        table.setDefaultRenderer(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel());
         // allow reordering of the columns
         table.getTableHeader().setReorderingAllowed(true);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight((new JButton().getPreferredSize().height)*9/10);
         // resize columns per table
-        table.doLayout();
-        // resize columns as requested, throws java.lang.IllegalArgumentException: Identifier not found
+//        table.doLayout();
+        // resize columns as requested (for OBlocks tabbed: throws java.lang.IllegalArgumentException: "Identifier not found")
 //        for (int i = 0; i < table.getColumnCount(); i++) {
 //            int width = table.getColumn(i).getPreferredWidth();
 //            table.getColumnModel().getColumn(i).setPreferredWidth(width);
 //        }
-//        configValueColumn(table);
-//        configDeleteColumn(table);
-//        oblockTable.persistTable(dataTable);
     }
 
     private static final Logger log = LoggerFactory.getLogger(OBlockTablePanel.class);

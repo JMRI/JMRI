@@ -55,7 +55,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         for (OBlock oBlock : list) {
             count += oBlock.getPortals().size();
         }
-        return count; // check if -1 for _tabbed EBR
+        return count; // no temprow for edit, so no need for -1 for _tabbed
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         List<OBlock> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
-            int idx = 0;  //accumulated row count
+            int idx = 0; // accumulated row count
             OBlock block = null;
             OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);

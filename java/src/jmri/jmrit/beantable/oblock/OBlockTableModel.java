@@ -9,11 +9,9 @@ import java.util.TreeSet;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.Reporter;
-import jmri.Sensor;
+import jmri.*;
+import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.logix.*;
 import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
@@ -554,6 +552,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 return;
             case CURVECOL:
                 String cName = (String) value;
+                if (cName == null) {
+                    return;
+                }
                 if (cName.equals(noneText)) {
                     block.setCurvature(Block.NONE);
                 } else if (cName.equals(gradualText)) {
@@ -714,20 +715,21 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     public Class<?> getColumnClass(int col) {
         switch (col) {
             case CURVECOL:
+                return CurveComboBoxPanel.class;
             case SPEEDCOL:
-                return JComboBox.class;
+                return SpeedComboBoxPanel.class; // apply real combo renderer
             case DELETE_COL:
             case EDIT_COL:
                 return JButton.class;
             case UNITSCOL:
+                return JToggleButton.class;
             case REPORT_CURRENTCOL:
+                return JRadioButton.class;
             case PERMISSIONCOL:
-                return JToggleButton.class; //return Boolean.class;
+                return JCheckBox.class; // return Boolean.class;
             default:
-                // fall through
-                break;
+                return String.class;
         }
-        return String.class;
     }
 
     @Override
@@ -771,6 +773,137 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             return true; // the new entry/bottom row is editable in all cells
         }
         return (col != SYSNAMECOL && col != STATECOL);
+    }
+
+    /*********************** combo box cell editors *********************************/
+    /**
+     * Provide a table cell renderer looking like a JComboBox as an
+     * editor/renderer for the OBlock table SPEED column.
+     * <p>
+     * This is a lightweight version of the
+     * {@link jmri.jmrit.beantable.RowComboBoxPanel} RowComboBox cell editor
+     * class, some of the hashtables not needed here since we only need
+     * identical options for all rows in a column.
+     *
+     * see jmri.jmrit.signalling.SignallingPanel.SignalMastModel.AspectComboBoxPanel for a full application with
+     * row specific comboBox choices.
+     */
+    public static class SpeedComboBoxPanel extends RowComboBoxPanel {
+
+        @Override
+        protected final void eventEditorMousePressed() {
+            this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
+            this.editor.revalidate();
+            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+            log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
+        }
+
+        /**
+         * Call the method in the surrounding method for the
+         * OBlockTable.
+         *
+         * @param row the user clicked on in the table
+         * @return an appropriate combobox for this signal head
+         */
+        @Override
+        protected JComboBox<String> getEditorBox(int row) {
+            return getSpeedEditorBox(row);
+        }
+
+    }
+    // end of methods to display SPEED_COLUMN ComboBox
+
+    /**
+     * Provide a static JComboBox element to display inside the JPanel
+     * CellEditor. When not yet present, create, store and return a new one.
+     *
+     * @param row Index number (in TableDataModel)
+     * @return A combobox containing the valid aspect names for this mast
+     */
+    static JComboBox<String> getCurveEditorBox(int row) {
+        // create dummy comboBox, override in extended classes for each bean
+        JComboBox<String> editCombo = new JComboBox<>(curveOptions);
+        editCombo.putClientProperty("JComponent.sizeVariant", "small");
+        editCombo.putClientProperty("JComboBox.buttonType", "square");
+        return editCombo;
+    }
+
+    /**
+     * Customize the Turnout column to show an appropriate ComboBox of
+     * available options.
+     *
+     * @param table a JTable of beans
+     */
+    public void configCurveColumn(JTable table) {
+        // have the state column hold a JPanel with a JComboBox for Curvature
+        table.setDefaultEditor(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel());
+        table.setDefaultRenderer(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel()); // use same class as renderer
+        // Set more things?
+    }
+
+    /**
+     * Provide a table cell renderer looking like a JComboBox as an
+     * editor/renderer for the OBlock table CURVE column.
+     * <p>
+     * This is a lightweight version of the
+     * {@link jmri.jmrit.beantable.RowComboBoxPanel} RowComboBox cell editor
+     * class, some of the hashtables not needed here since we only need
+     * identical options for all rows in a column.
+     *
+     * see jmri.jmrit.signalling.SignallingPanel.SignalMastModel.AspectComboBoxPanel for a full application with
+     * row specific comboBox choices.
+     */
+    public static class CurveComboBoxPanel extends RowComboBoxPanel {
+
+        @Override
+        protected final void eventEditorMousePressed() {
+            this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
+            this.editor.revalidate();
+            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
+            log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
+        }
+
+        /**
+         * Call the method in the surrounding method for the
+         * OBlockTable.
+         *
+         * @param row the user clicked on in the table
+         * @return an appropriate combobox for this signal head
+         */
+        @Override
+        protected JComboBox<String> getEditorBox(int row) {
+            return getCurveEditorBox(row);
+        }
+
+    }
+    // end of methods to display CURVE_COLUMN ComboBox
+
+    /**
+     * Provide a static JComboBox element to display inside the JPanel
+     * CellEditor. When not yet present, create, store and return a new one.
+     *
+     * @param row Index number (in TableDataModel)
+     * @return A combobox containing the valid aspect names for this mast
+     */
+    static JComboBox<String> getSpeedEditorBox(int row) {
+        // create dummy comboBox, override in extended classes for each bean
+        JComboBox<String> editCombo = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
+        editCombo.putClientProperty("JComponent.sizeVariant", "small");
+        editCombo.putClientProperty("JComboBox.buttonType", "square");
+        return editCombo;
+    }
+
+    /**
+     * Customize the Turnout column to show an appropriate ComboBox of
+     * available options.
+     *
+     * @param table a JTable of beans
+     */
+    public void configSpeedColumn(JTable table) {
+        // have the state column hold a JPanel with a JComboBox for Speeds
+        table.setDefaultEditor(OBlockTableModel.SpeedComboBoxPanel.class, new OBlockTableModel.SpeedComboBoxPanel());
+        table.setDefaultRenderer(OBlockTableModel.SpeedComboBoxPanel.class, new OBlockTableModel.SpeedComboBoxPanel()); // use same class as renderer
+        // Set more things?
     }
 
     @Override

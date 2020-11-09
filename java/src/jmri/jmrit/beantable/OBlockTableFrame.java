@@ -1,12 +1,11 @@
 package jmri.jmrit.beantable;
 
-import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logix.OBlock;
 
 import javax.swing.*;
 
 /**
- * Override to place OBlock panes in tabbed interface.
+ * Override to place the four OBlock tables in tabbed interface.
  * @see jmri.jmrit.beantable.oblock.TableFrames
  *
  * @author Bob Jacobsen Copyright (C) 2003
@@ -29,13 +28,13 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         // add save menu item
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+        menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.StoreMenu());
         fileMenu.add(panel.getPrintItem());
-        menuBar.add(fileMenu);
 
         menuBar.add(panel.getOptionMenu());
         menuBar.add(panel.getTablesMenu());
-        setJMenuBar(menuBar); // TODO configure to show up on oblock.TableFrames
+        setJMenuBar(menuBar); // TODO configure to show up on oblock.TableFrames when called from Tools menu
 
         addHelpMenu(helpTarget, true);
 

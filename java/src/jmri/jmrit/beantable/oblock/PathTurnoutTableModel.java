@@ -271,7 +271,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
 
     /**
      * Provide a table cell renderer looking like a JComboBox as an
-     * editor/renderer for the manual tables on all except the Masts tab.
+     * editor/renderer for the turnout tables.
      * <p>
      * This is a lightweight version of the
      * {@link jmri.jmrit.beantable.RowComboBoxPanel} RowComboBox cell editor

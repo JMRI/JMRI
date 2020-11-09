@@ -741,7 +741,7 @@ public class SignalTableModel extends AbstractTableModel {
                 return false;
             } else {
                 // open SignalEditFrame
-                SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, null, this);
+                SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, sr, this);
                 // TODO run on new thread?
                 sef.setVisible(true);
                 return true;

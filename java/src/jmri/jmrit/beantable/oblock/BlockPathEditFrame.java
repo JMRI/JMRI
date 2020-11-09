@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Defines a GUI for editing OBlock - OPath objects in the _tabbed OBlock Table interface.
@@ -23,22 +22,16 @@ import java.awt.event.ActionListener;
 public class BlockPathEditFrame extends JmriJFrame {
 
     // UI components for Add/Edit Path
-    JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")));
+    JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock")), JLabel.TRAILING);
     JLabel blockName = new JLabel();
-    JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")));
-    JTextField userName = new JTextField(20);
-    JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromPortal")));
-    JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToPortal")));
+    JLabel pathLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("PathName")), JLabel.TRAILING);
+    JTextField pathUserName = new JTextField(15);
+    JLabel fromPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromPortal")), JLabel.TRAILING);
+    JLabel toPortalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToPortal")), JLabel.TRAILING);
     String[] p0 = {""};
     private final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
     private final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")), JLabel.LEADING);
-
-    private final BlockPathEditFrame frame = this;
-    private boolean _newPath = false;
-
-    protected final OBlockManager oblockManager = InstanceManager.getDefault(OBlockManager.class);
-    protected PortalManager portalManager;
     static final String[] COLUMN_NAMES = {
             Bundle.getMessage("ColumnSystemName"),
             Bundle.getMessage("ColumnUserName"),
@@ -48,17 +41,17 @@ public class BlockPathEditFrame extends JmriJFrame {
             + Bundle.getMessage("TurnoutStateClosed");
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
-
-    final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
-    final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     // the following 3 items copied from beanedit, place in separate static method?
-    JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
-    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
-    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
+    private final JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
+    private final JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
+    private final JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
-    OBlock _block;
-    OPath _path;
+    private final BlockPathEditFrame frame = this;
+    private boolean _newPath = false;
+    protected final OBlockManager oblockManager = InstanceManager.getDefault(OBlockManager.class);
     PortalManager pm;
+    private final OBlock _block;
+    private OPath _path;
     TableFrames _core;
     BlockPathTableModel _pathmodel;
     TableFrames.PathTurnoutJPanel _turnoutTablePane;
@@ -103,30 +96,32 @@ public class BlockPathEditFrame extends JmriJFrame {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
+        JPanel configGrid = new JPanel();
+        GridLayout layout = new GridLayout(5, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
+        configGrid.setLayout(layout);
+
+        // row 1
+        configGrid.add(blockLabel);
+        configGrid.add(blockName);
+
+        // row 2
+        configGrid.add(pathLabel);
         JPanel p1 = new JPanel();
-        p1.setLayout(new FlowLayout());
-        p1.add(blockLabel);
-        p1.add(blockName);
-        p.add(p1);
+        p1.add(pathUserName);
+        configGrid.add(p1);
 
-        p1 = new JPanel();
-        p1.add(pathLabel);
-        p1.add(userName);
-        p.add(p1);
+        // row 3
+        configGrid.add(fromPortalLabel);
+        configGrid.add(fromPortalComboBox);
 
-        p1 = new JPanel();
-        p1.add(fromPortalLabel);
-        p1.add(fromPortalComboBox);
-        p.add(p1);
+        // row 4
+        configGrid.add(toPortalLabel);
+        configGrid.add(toPortalComboBox);
 
-        p1 = new JPanel();
-        p1.add(toPortalLabel);
-        p1.add(toPortalComboBox);
-        p.add(p1);
-
-        JPanel p3 = new JPanel();
-        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
-        p3.add(Box.createHorizontalGlue());
+        // row 5
+//        JPanel p3 = new JPanel();
+//        p3.setLayout(new BoxLayout(p3, BoxLayout.LINE_AXIS));
+//        p3.add(Box.createHorizontalGlue());
         // copied from beanedit, also in BlockPathEditFrame
         lengthSpinner.setModel(
                 new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
@@ -143,48 +138,40 @@ public class BlockPathEditFrame extends JmriJFrame {
         p1.add(cm);
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
         inch.setSelected(true);
-        inch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cm.setSelected(!inch.isSelected());
-                updateLength();
-            }
+        inch.addActionListener(e -> {
+            cm.setSelected(!inch.isSelected());
+            updateLength();
         });
-        cm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inch.setSelected(!cm.isSelected());
-                updateLength();
-            }
+        cm.addActionListener(e -> {
+            inch.setSelected(!cm.isSelected());
+            updateLength();
         });
-        p3.add(p1);
+        configGrid.add(p1);
 
         JPanel p2 = new JPanel();
         p2.add(lengthSpinner);
         lengthSpinner.setToolTipText(Bundle.getMessage("LengthToolTip", Bundle.getMessage("Path")));
-        p3.add(p2);
-        p3.add(Box.createHorizontalGlue());
-        p.add(p3);
+        configGrid.add(p2);
 
-        JPanel ptbl = new JPanel();
-        ptbl.setLayout(new BorderLayout(10, 10));
-        ptbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        ptbl.add(_turnoutTablePane, BorderLayout.CENTER);
-        p.add(ptbl);
+        p.add(configGrid);
 
-        p.add(Box.createVerticalGlue());
+        JPanel totbl = new JPanel();
+        totbl.setLayout(new BorderLayout(10, 10));
+        totbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        totbl.add(_turnoutTablePane, BorderLayout.CENTER);
+        p.add(totbl);
 
         p2 = new JPanel();
         p2.add(statusBar);
         p.add(p2);
 
+        p.add(Box.createVerticalGlue());
+
         p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+        cancel.addActionListener((ActionEvent e) -> frame.dispose());
 //        if (_newPath = false) { // expected refresh of Turnout Table difficult to achieve, only show OK button, closing pane
 //            JButton apply;
 //            p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
@@ -205,7 +192,7 @@ public class BlockPathEditFrame extends JmriJFrame {
      * Populate the Edit OBlock frame with default values.
      */
     public void resetFrame() {
-        userName.setText(null);
+        pathUserName.setText(null);
         // reset statusBar text?
         statusBar.setText(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonCreate"))); // I18N to include original button name in help string
         statusBar.setForeground(Color.gray);
@@ -220,7 +207,7 @@ public class BlockPathEditFrame extends JmriJFrame {
         if (p == null) {
             throw new IllegalArgumentException("Null OPath object");
         }
-        userName.setText(p.getName());
+        pathUserName.setText(p.getName());
         // TODO select the Portals EBR
         if (p.getFromPortal() != null) {
             log.debug("BPEF FROMPORTAL name = {}", p.getFromPortal().getName());
@@ -237,15 +224,15 @@ public class BlockPathEditFrame extends JmriJFrame {
     }
 
     private void createPressed(ActionEvent e) {
-        String user = userName.getText().trim();
+        String user = pathUserName.getText().trim();
         if (user.equals("")) {
             // warn/help bar red
             statusBar.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBar.setForeground(Color.red);
-            userName.setBackground(Color.red);
+            pathUserName.setBackground(Color.red);
             return;
         } else {
-            userName.setBackground(Color.white);
+            pathUserName.setBackground(Color.white);
         }
 
         if (_newPath) {
