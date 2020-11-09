@@ -130,7 +130,11 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     
     @Override
     protected LogixNG createBean(String systemName, String userName) {
-        return InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG(systemName, userName);
+        LogixNG logixNG =
+                InstanceManager.getDefault(LogixNG_Manager.class)
+                        .createLogixNG(systemName, userName);
+        logixNG.activateLogixNG();
+        return logixNG;
     }
     
     @Override
