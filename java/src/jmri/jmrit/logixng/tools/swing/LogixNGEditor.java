@@ -999,7 +999,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGEditor.class);
 
-    private class LogixNGEventListenerImpl implements ConditionalNGEditor.LogixNGEventListener {
+    private class LogixNGEventListenerImpl implements ConditionalNGEditor.ConditionalNGEventListener {
 
         private final LogixNGEditor _logixNGEditor;
         
@@ -1008,7 +1008,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         }
         
         @Override
-        public void logixNGEventOccurred() {
+        public void conditionalNGEventOccurred() {
             String lgxName = _curLogixNG.getSystemName();
             _treeEdit.logixNGData.forEach((key, value) -> {
                 if (key.equals("Finish")) {                  // NOI18N

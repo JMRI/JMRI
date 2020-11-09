@@ -75,7 +75,7 @@ public class ConditionalNGEditor extends TreeViewer {
     /**
      * Maintain a list of listeners -- normally only one.
      */
-    private final List<LogixNGEventListener> listenerList = new ArrayList<>();
+    private final List<ConditionalNGEventListener> listenerList = new ArrayList<>();
     
     /**
      * This contains a list of commands to be processed by the listener
@@ -173,7 +173,7 @@ public class ConditionalNGEditor extends TreeViewer {
         }
     }
 
-    public void addLogixNGEventListener(LogixNGEventListener listener) {
+    public void addLogixNGEventListener(ConditionalNGEventListener listener) {
         listenerList.add(listener);
     }
     
@@ -181,15 +181,15 @@ public class ConditionalNGEditor extends TreeViewer {
      * Notify the listeners to check for new data.
      */
     void fireLogixNGEvent() {
-        for (LogixNGEventListener l : listenerList) {
-            l.logixNGEventOccurred();
+        for (ConditionalNGEventListener l : listenerList) {
+            l.conditionalNGEventOccurred();
         }
     }
     
     
-    public interface LogixNGEventListener extends EventListener {
+    public interface ConditionalNGEventListener extends EventListener {
         
-        public void logixNGEventOccurred();
+        public void conditionalNGEventOccurred();
     }
     
     
