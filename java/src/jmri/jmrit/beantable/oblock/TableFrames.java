@@ -1379,7 +1379,7 @@ public class TableFrames implements InternalFrameListener {
      * @param pathTurnoutModel displayed table of turnouts currently set on this path
      */
     protected void addTurnoutPane(OPath path, PathTurnoutTableModel pathTurnoutModel) {
-        JmriJFrame frame = new JmriJFrame("Add New Turnout for " + path.getName()); // TODO I18N
+        JmriJFrame frame = new JmriJFrame(Bundle.getMessage("NewTurnoutTitle", path.getName()));
         JPanel p = new JPanel();
         final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
         JComboBox<String> stateCombo = new JComboBox<>();
