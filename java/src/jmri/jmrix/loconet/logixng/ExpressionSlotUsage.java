@@ -223,10 +223,8 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
             
             if (_memo != null) {
                 SlotManager slotManager = _memo.getSlotManager();
-                System.out.format("slotManager: %s%n", slotManager);
                 slotManager.addSlotListener(this);
             }
-//            InstanceManager.getDefault(SlotManager.class).addSlotListener(this);
         }
     }
     
@@ -237,7 +235,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
             SlotManager slotManager = _memo.getSlotManager();
             slotManager.removeSlotListener(this);
         }
-//        InstanceManager.getDefault(SlotManager.class).removeSlotListener(this);
         _listenersAreRegistered = false;
     }
     
