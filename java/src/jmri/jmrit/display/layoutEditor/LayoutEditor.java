@@ -218,6 +218,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Nonnull
+    public List<PositionableLabel> getLabelImageList()  {
+        return labelImage;
+    }
+
+    @Nonnull
     public List<BlockContentsIcon> getBlockContentsLabelList() {
         return blockContentsLabelList;
     }
