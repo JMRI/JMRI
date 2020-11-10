@@ -28,11 +28,14 @@ On the "Meny" column, select "Edit" for the "Tutorial LogixNG". This brings up a
 owned by this LogixNG. Each ConditionalNG in this tutorial has a user name starting with a number and a short
 description. These user names are used as headers in this tutorial and demonstrates different things in LogixNG.
 
+<hr>
 
 <h2>1. Basics</h2>
 
 
-<h2>99. Local variables and scripts</h2>
+<hr>
+
+<h2>90. Local variables and scripts</h2>
 
 A script can use local variables. But local variables only exists during the execution of the action/expression
 that defines the local variable. This ConditionalNG uses the same script in three different cases, there the local
@@ -61,11 +64,11 @@ Each ConditionalNGs in the example profile has a memo that describes that Condit
 <p>
 
 
+<hr>
 
+<h2>99. Adding a new action/expression</h2>
 
-<h2>Adding a new action/expression</h2>
-
-See the package jmri.jmrix.loconet.logixng for the classes mentioned in this part.
+See the package <i>jmri.jmrix.loconet.logixng</i> for the classes mentioned in this part.
 <p>
 How do we add a new action or expression type to LogixNG? Lets assume we want to have an expression that looks at the
 LocoNet slot manager and returns true if more that 75% of the slots are not free, false otherwise.
@@ -82,7 +85,34 @@ LogixNG has an "enum" Category, but since Java enums cannot be extended, the Log
 without being a true enum class. We add the LocoNet category to the Factory class and let a static initializer in the
 Factory class register the LocoNet category.
 <p>
-
+Now it's time to create the expression itself. For that, we need three classes. ExpressionSlotUsage that has the
+expression itself, ExpressionSlotUsageXml that stores the expression to the panel xml file and ExpressionSlotUsageSwing
+that has the swing editor for this expression.
+<p>
+For the expression itself, ExpressionSlotUsage, there is two important things to do. First, the expression needs to do
+something useful, in this case check the slots in the slot manager. The interface jmri.jmrit.logixng.DigitalExpression
+defines a digital expression and what it needs to do. It has a method <i>evaluate()</i> that returns a boolean. We need
+to implement this method and it's here that we check the slots in the slot manager.
+<p>
+The second important thing we need to do in ExpressionSlotUsage is to register and unregister any listeners. In this
+case, we want to listen for changed slots so we use the methods <i>registerListenersForThisClass()</i> and
+<i>unregisterListenersForThisClass()</i> to register/unregister the listeners. Please check that listeners are not
+registered twice. We do that by the varable <i>_listenersAreRegistered</i> to check if listeners has already been
+registered.
+<p>
+The swing editor ExpressionSlotUsageSwing implements the <i>SwingConfiguratorInterface</i> that is used by the
+ConditionalNG editor to create and edit actions and expressions. It does that by calling the method getConfigPanel()
+in the SwingConfiguratorInterface that creates a JPanel with the components that are needed to configure the
+action/expression. After the user has clicked "OK" to create a new expression or to save the changes, the method
+validate() is called. If it returns true, a new object is created by a call to createNewObject() or the changes are
+saved to the expresion by a call to updateObject().
+<p>
+In the case of ExpressionSlotUsageSwing, we have a sentense like "The number of slots which 'has not' state 'COMMON or
+IDLE' is 'less than' '32', there the parts within '' are JComponents that let the user select different things. But
+this sentence needs to be translated to different languages and the order of words may be different in another language.
+The SwingConfiguratorInterface has a method parseMessage() that takes the message that we get from the bundle, together
+with the array of JComponents, and then returns a new list of JComponents there the message has been replaced by JLabel
+components and there the JComponents has been ordered according to the language.
 
 
 

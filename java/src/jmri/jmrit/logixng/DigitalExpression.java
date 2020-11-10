@@ -9,13 +9,7 @@ import jmri.JmriException;
  * @author Daniel Bergqvist Copyright 2018
  */
 public interface DigitalExpression extends Base {
-/*    
-    public enum TriggerCondition {
-        TRUE,
-        FALSE,
-        CHANGE
-    }
-*/    
+
     /**
      * Evaluate this expression.
      * 

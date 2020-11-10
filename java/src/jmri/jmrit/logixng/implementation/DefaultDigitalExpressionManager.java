@@ -38,9 +38,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
 //        System.out.format("Read expressions%n");
         for (DigitalExpressionFactory expressionFactory : ServiceLoader.load(DigitalExpressionFactory.class)) {
             expressionFactory.getExpressionClasses().forEach((entry) -> {
-                System.out.format("Add expression: %s%n", entry);
-                System.out.format("Add expression: %s, %s%n", entry.getKey(), entry.getValue());
-                System.out.format("Add expression: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
+//                System.out.format("Add expression: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }

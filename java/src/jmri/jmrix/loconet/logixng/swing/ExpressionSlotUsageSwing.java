@@ -9,8 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
@@ -18,7 +16,6 @@ import jmri.jmrit.logixng.expressions.swing.AbstractExpressionSwing;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 // import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.TurnoutState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.util.swing.BeanSelectCreatePanel;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
@@ -133,6 +130,6 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsageSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsageSwing.class);
     
 }

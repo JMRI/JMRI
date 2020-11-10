@@ -234,14 +234,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    private enum TimerStatus {
-        NOT_STARTED,
-        STARTED,
-        FINISHED,
-        WAIT_FOR_RESET,
-    }
-    
-    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsage.class);
     
 }

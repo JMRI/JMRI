@@ -24,6 +24,9 @@ public interface SwingConfiguratorInterface {
 
     /**
      * Get the manager that handles the beans for the new object.
+     * This is used for validation of the system name for the bean that this
+     * class creates.
+     * 
      * @return the manager
      */
     public Manager<? extends NamedBean> getManager();
