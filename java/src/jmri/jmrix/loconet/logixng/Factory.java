@@ -38,7 +38,6 @@ public class Factory implements DigitalExpressionFactory {
     
     @Override
     public void init() {
-        System.out.format("Has LocoNet in initializer: %b%n", hasLocoNet());
         // We don't want to add these classes if we don't have a LocoNet connection
         if (hasLocoNet()) {
             Category.registerCategory(LOCONET);
