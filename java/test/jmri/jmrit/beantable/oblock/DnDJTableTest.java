@@ -26,7 +26,7 @@ public class DnDJTableTest {
         OBlockTableModel obtm = new OBlockTableModel(tf);
         DnDJTable ddt = new DnDJTable(obtm, new int[0]);
         Assert.assertNotNull("exists", ddt);
-        JUnitUtil.dispose(tf);
+        JUnitUtil.dispose(tf.getDesktopFrame());
     }
 
     @BeforeEach

@@ -345,6 +345,15 @@ public class TableFrames implements InternalFrameListener {
     }
 
     /**
+     * Get the JFrame containig all UI windows.
+     *
+     * @return the contentframe
+     */
+    protected JmriJFrame getDesktopFrame() {
+        return desktopframe;
+    }
+
+    /**
      * Convert a copy of your current JMRI Blocks to OBlocks and connect them with Portals and Paths.
      * Accessed from the Options menu.
      *
@@ -961,10 +970,10 @@ public class TableFrames implements InternalFrameListener {
     // common dispose
     protected void disposeBlockPathFrame(OBlock block) {
         if (_tabbed) {
-            BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
-            frame.getModel().removeListener();
-            _blockPathMap.remove(block.getSystemName());
-            frame.dispose();
+            //BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
+            // TODO frame.getModel().removeListener();
+            //_blockPathMap.remove(block.getSystemName()); // block not stored in map, required to remove listener?
+            // frame.dispose(); not required (closeable window)
         } else {
             BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
             frame.getModel().removeListener();
