@@ -14,7 +14,7 @@ public class ExpressionSlotUsageTest {
     
     @Test
     public void testCtor() {
-        ExpressionSlotUsage e = new ExpressionSlotUsage("IQDE1", null);
+        ExpressionSlotUsage e = new ExpressionSlotUsage("IQDE1", null, null);
         Assert.assertNotNull(e);
     }
     

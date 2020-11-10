@@ -16,12 +16,14 @@ import jmri.jmrit.logixng.expressions.swing.AbstractExpressionSwing;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 // import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.TurnoutState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
 public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
 
+    List<LocoNetSystemConnectionMemo> systemConnections = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
 //    private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
 //    private JComboBox<TurnoutState> stateComboBox;
@@ -74,7 +76,9 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        ExpressionSlotUsage expression = new ExpressionSlotUsage(systemName, userName);
+        LocoNetSystemConnectionMemo memo = systemConnections.get(0);
+        
+        ExpressionSlotUsage expression = new ExpressionSlotUsage(systemName, userName, memo);
 /*        
         try {
             if (!turnoutBeanPanel.isEmpty()) {

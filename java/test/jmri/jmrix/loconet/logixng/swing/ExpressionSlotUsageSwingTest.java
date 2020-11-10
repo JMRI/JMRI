@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.logixng.swing;
 
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -16,6 +17,14 @@ public class ExpressionSlotUsageSwingTest {
     public void testCtor() {
         ExpressionSlotUsageSwing e = new ExpressionSlotUsageSwing();
         Assert.assertNotNull(e);
+    }
+    
+    @Test
+    public void testName() {
+        // Test that swing class has same name as parent class
+        ExpressionSlotUsage e = new ExpressionSlotUsage("IQDE1", null, null);
+        ExpressionSlotUsageSwing es = new ExpressionSlotUsageSwing();
+        Assert.assertEquals(e.getShortDescription(), es.toString());
     }
     
     // The minimal setup for log4J

@@ -1,15 +1,13 @@
 package jmri.jmrix.loconet.logixng;
 
-import java.util.Locale;
+import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.expressions.*;
-import jmri.jmrix.loconet.LocoNetSlot;
-import jmri.jmrix.loconet.SlotListener;
-import jmri.jmrix.loconet.SlotManager;
+import jmri.jmrix.loconet.*;
 
 /**
  * This expression compares the number of slots that are currently in use with
@@ -20,13 +18,18 @@ import jmri.jmrix.loconet.SlotManager;
 public class ExpressionSlotUsage extends AbstractDigitalExpression
         implements SlotListener {
 
+    private LocoNetSystemConnectionMemo _memo;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
-//    private TurnoutState _turnoutState = TurnoutState.Thrown;
-    private int _threshold = 0;
+    private HasHasNotType _hasHasNot = HasHasNotType.Has;
+    private Set<StateType> _states = new HashSet<>();
+    private CompareType _compare = CompareType.LessThan;
+    private PercentPiecesType _percentPieces = PercentPiecesType.Pieces;
+    private int _number = 0;
     
     
-    public ExpressionSlotUsage(String sys, String user) {
+    public ExpressionSlotUsage(String sys, String user, LocoNetSystemConnectionMemo memo) {
         super(sys, user);
+        _memo = memo;
     }
 
     /** {@inheritDoc} */
@@ -40,16 +43,53 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     public boolean isExternal() {
         return false;
     }
-/*    
-    public void setTimerType(TimerType timerType) {
+    
+    public void setMemo(LocoNetSystemConnectionMemo memo) {
         assertListenersAreNotRegistered(log, "setTimerType");
-        _timerType = timerType;
+        _memo = memo;
     }
     
-    public TimerType getTimerType() {
-        return _timerType;
+    public LocoNetSystemConnectionMemo getMemo() {
+        return _memo;
     }
-*/    
+    
+    public void setHasHasNot(HasHasNotType hasHasNot) {
+        assertListenersAreNotRegistered(log, "setHasHasNot");
+        _hasHasNot = hasHasNot;
+    }
+    
+    public HasHasNotType getHasHasNot() {
+        return _hasHasNot;
+    }
+    
+    public void setSlotStates(Set<StateType> states) {
+        assertListenersAreNotRegistered(log, "setTimerType");
+        _states.clear();
+        _states.addAll(states);
+    }
+    
+    public Set<StateType> getSlotStates() {
+        return Collections.unmodifiableSet(_states);
+    }
+    
+    public void setCompare(CompareType compare ){
+        assertListenersAreNotRegistered(log, "setTimerType");
+        _compare = compare;
+    }
+    
+    public CompareType getCompare() {
+        return _compare;
+    }
+    
+    public void setPercentPieces(PercentPiecesType percentPieces) {
+        assertListenersAreNotRegistered(log, "setPercentPieces");
+        _percentPieces = percentPieces;
+    }
+    
+    public PercentPiecesType getPercentPieces() {
+        return _percentPieces;
+    }
+    
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
         _is_IsNot = is_IsNot;
     }
@@ -58,13 +98,13 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         return _is_IsNot;
     }
     
-    public void setThreshold(int threshold) {
+    public void setNumber(int number) {
         assertListenersAreNotRegistered(log, "setThreshold");
-        _threshold = threshold;
+        _number = number;
     }
     
-    public long getThreshold() {
-        return _threshold;
+    public int getNumber() {
+        return _number;
     }
     
     /** {@inheritDoc} */
@@ -140,6 +180,14 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     
     @Override
     public String getLongDescription(Locale locale) {
+        StringBuilder states = new StringBuilder();
+        return Bundle.getMessage(locale, "ExpressionSlotUsage_Long",
+                _hasHasNot.toString(),
+                states.length() > 0 ? states.toString() : Bundle.getMessage("NoState"),
+                _compare.toString(),
+                _number,
+                _percentPieces.toString()
+                );
 /*        
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
@@ -158,7 +206,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
                 throw new RuntimeException("Unknown value of _timerType: "+_timerType.name());
         }
 */        
-        return Bundle.getMessage(locale, "ExpressionSlotUsage_Long");
+//        return Bundle.getMessage(locale, "ExpressionSlotUsage_Long");
     }
 
     /** {@inheritDoc} */
@@ -173,9 +221,9 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
             
-            // The LocoNet simulator doesn't have a slot manager
-            SlotManager slotManager = InstanceManager.getNullableDefault(SlotManager.class);
-            if (slotManager != null) {
+            if (_memo != null) {
+                SlotManager slotManager = _memo.getSlotManager();
+                System.out.format("slotManager: %s%n", slotManager);
                 slotManager.addSlotListener(this);
             }
 //            InstanceManager.getDefault(SlotManager.class).addSlotListener(this);
@@ -185,9 +233,8 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        // The LocoNet simulator doesn't have a slot manager
-        SlotManager slotManager = InstanceManager.getNullableDefault(SlotManager.class);
-        if (slotManager != null) {
+        if (_memo != null) {
+            SlotManager slotManager = _memo.getSlotManager();
             slotManager.removeSlotListener(this);
         }
 //        InstanceManager.getDefault(SlotManager.class).removeSlotListener(this);
@@ -208,18 +255,14 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     
     
     
-    public enum TimerType {
-        WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce"), Bundle.getMessage("TimerType_Explanation_WaitOnceTrigOnce")),
-        WAIT_ONCE_TRIG_UNTIL_RESET(Bundle.getMessage("TimerType_WaitOnceTrigUntilReset"), Bundle.getMessage("TimerType_Explanation_WaitOnceTrigUntilReset")),
-        REPEAT_SINGLE_DELAY(Bundle.getMessage("TimerType_RepeatSingleDelay"), Bundle.getMessage("TimerType_Explanation_RepeatSingleDelay")),
-        REPEAT_DOUBLE_DELAY(Bundle.getMessage("TimerType_RepeatDoubleDelay"), Bundle.getMessage("TimerType_Explanation_RepeatDoubleDelay"));
+    public enum HasHasNotType {
+        Has(Bundle.getMessage("HasHasNotType_Has")),
+        HasNot(Bundle.getMessage("HasHasNotType_HasNot"));
         
         private final String _text;
-        private final String _explanation;
         
-        private TimerType(String text, String explanation) {
+        private HasHasNotType(String text) {
             this._text = text;
-            this._explanation = explanation;
         }
         
         @Override
@@ -227,8 +270,69 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
             return _text;
         }
         
-        public String getExplanation() {
-            return _explanation;
+    }
+    
+    
+    public enum StateType {
+        InUse(LnConstants.LOCO_IN_USE, Bundle.getMessage("StateType_InUse")),
+        Idle(LnConstants.LOCO_IDLE, Bundle.getMessage("StateType_Idle")),
+        Common(LnConstants.LOCO_COMMON, Bundle.getMessage("StateType_Common")),
+        Free(LnConstants.LOCO_FREE, Bundle.getMessage("StateType_Free"));
+        
+        private final int _state;
+        private final String _text;
+        
+        private StateType(int state, String text) {
+            this._state = state;
+            this._text = text;
+        }
+        
+        public int getState() {
+            return _state;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
+    }
+    
+    
+    public enum CompareType {
+        LessThan(Bundle.getMessage("CompareType_LessThan")),
+        LessThanOrEqual(Bundle.getMessage("CompareType_LessThanOrEqual")),
+        Equal(Bundle.getMessage("CompareType_Equal")),
+        GreaterThanOrEqual(Bundle.getMessage("CompareType_GreaterThanOrEqual")),
+        GreaterThan(Bundle.getMessage("CompareType_GreaterThan"));
+        
+        private final String _text;
+        
+        private CompareType(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
+    }
+    
+    
+    public enum PercentPiecesType {
+        Percent(Bundle.getMessage("PercentPiecesType_Percent")),
+        Pieces(Bundle.getMessage("PercentPiecesType_Pieces"));
+        
+        private final String _text;
+        
+        private PercentPiecesType(String text) {
+            this._text = text;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
         }
         
     }
