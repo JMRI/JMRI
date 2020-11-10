@@ -180,15 +180,12 @@ public class PortalEditFrame extends JmriJFrame {
         }
         if (_portal != null) {
             try {
-                OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
                 OBlock block = fromBlockComboBox.getItemAt(fromBlockComboBox.getSelectedIndex());
-                //OBlock block = obm.getOBlock(fromBlockComboBox.getSelectedItem().getDisplayName());
 
                 if (block != null) {
                     _portal.setFromBlock(block, true);
                 }
                 block = toBlockComboBox.getItemAt(toBlockComboBox.getSelectedIndex());
-                //block = obm.getOBlock(toBlockComboBox.getSelectedItem().getDisplayName());
                 if (block != null) {
                     _portal.setToBlock(block, true);
                 }

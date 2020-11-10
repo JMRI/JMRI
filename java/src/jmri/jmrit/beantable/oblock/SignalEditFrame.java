@@ -62,16 +62,16 @@ public class SignalEditFrame extends JmriJFrame {
     private final SignalEditFrame frame = this;
     private Portal _portal;
     SignalTableModel.SignalRow _sr;
-    private boolean _newSignal;
+    //private boolean _newSignal;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public SignalEditFrame(String title, NamedBean signal, SignalTableModel.SignalRow sr, SignalTableModel model) {
         super(title);
         this.model = model;
         this.signal = signal;
-        if (signal == null) {
-            _newSignal = true;
-        }
+//        if (signal == null) {
+//            _newSignal = true;
+//        }
         log.debug("SR is null = {}", sr==null);
         pm = InstanceManager.getDefault(PortalManager.class);
         for (Portal pi : pm.getPortalSet()) {
@@ -248,7 +248,7 @@ public class SignalEditFrame extends JmriJFrame {
                     Bundle.getMessage("ButtonOK"))); // I18N to include original button name in help string
             statusBar.setForeground(Color.gray);
         }
-        _newSignal = true;
+        //_newSignal = true;
     }
 
     /**
@@ -269,7 +269,7 @@ public class SignalEditFrame extends JmriJFrame {
         }
         portalComboBox.setSelectedItem(_portal.getName());
         lengthSpinner.setValue(sr.getLength());
-        _newSignal = false;
+        //_newSignal = false;
     }
 
     private void applyPressed(ActionEvent e) {

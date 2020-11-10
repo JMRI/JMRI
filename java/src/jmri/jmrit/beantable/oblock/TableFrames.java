@@ -13,11 +13,9 @@ import javax.swing.*;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
 import jmri.*;
-import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
@@ -42,11 +40,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Core code can be used with two interfaces:
  * <ul>
- *     <li>original "desktop" InternalFrames (parent class TableFrames, an extended JmriJFrame)
- *     <li>JMRI standard Tabbed tables (parent class JPanel, the TableFrames JmriJFrame is hidden in UI
- *     but TODO fix the root pane keeps popping up)
+ *     <li>original "desktop" InternalFrames (displays as InternalJFrames inside a JmriJFrame)
+ *     <li>JMRI standard Tabbed tables (displays as Js inside a ListedTableFrame)
  * </ul>
- * The _tabbed field decides, it is set in prefs (restart required).
+ * The _tabbed field decides, it is set in prefs (restart required). TableFrames itself has no UI.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -61,14 +58,15 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman (C) 2010
  * @author Egbert Broerse (C) 2020
  */
-public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
+public class TableFrames implements InternalFrameListener {
 
-    private static int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10; //10;
+    private static int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
     protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
     public static final int STRUT_SIZE = 10;
     private static String oblockPrefix;
     private final static String portalPrefix = "IP";
+    private static String _title;
 
     private JTable _oBlockTable;
     private final OBlockTableModel _oBlockModel;
@@ -81,6 +79,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     private final boolean _tabbed; // updated from prefs (restart required)
 
+    private JmriJFrame desktopframe;
     private JDesktopPane _desktop;
     private final int maxHeight = 600;
     private final int maxWidth = 1100;
@@ -98,19 +97,19 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     private JMenuItem openSignal;
 
     private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
-    private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>(); // _tabbed edit panes not stored
+    private final HashMap<String, PathTurnoutFrame> _pathTurnoutMap = new HashMap<>();
+    // _tabbed edit panes are not stored in a map
 
     public TableFrames() {
-        this("Hidden");
-    } // NOI18N, title will be updated when !_tabbed, or is hidden
+        this("OBlock Tables");
+    } // NOI18N, title will be updated during init
 
     public TableFrames(String actionName) {
-        //super(actionName);
-        //this.getFrame("Hidden").setVisible(false); // for _tabbed
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-        this.setVisible(!_tabbed); // also hide some stray separate _desktop panel, not "this"
-        super.setVisible(!_tabbed);
-
+        _title = actionName;
+        if (!_tabbed) {
+            desktopframe = new JmriJFrame(actionName);
+        }
         // create the tables
         _oBlockModel = new OBlockTableModel(this);
         _portalModel = new PortalTableModel(this);
@@ -135,14 +134,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         return _signalModel;
     }
 
-    @Override
     public void initComponents() {
         // build and display the classic floating "OBlock and its..." desktop interface
         if (!_tabbed) { // just to be sure
-            // ???? runs twice, might explain the extra pane
             setTitle(Bundle.getMessage("TitleOBlocks"));
-            setJMenuBar(addMenus(this.getJMenuBar()));
-            addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
 
             // build tables
             _blockTableFrame = buildFrame(_oBlockModel, Bundle.getMessage("TitleBlockTable"), Bundle.getMessage("AddBlockPrompt"));
@@ -157,11 +152,18 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             _blockPortalXRefFrame = buildFrame(_blockPortalXRefModel, Bundle.getMessage("TitleBlockPortalXRef"), Bundle.getMessage("XRefPrompt"));
             _blockPortalXRefFrame.setVisible(false); // start with frame hidden
 
-            createDesktop(); // adds tables as windows on _desktop
-            setLocation(10, 30);
-            setVisible(true);
-            pack();
+            // build the print menu after the tables have been created
+            desktopframe.setTitle(getTitle());
+            desktopframe.setJMenuBar(addMenus(desktopframe.getJMenuBar()));
+            desktopframe.addHelpMenu("package.jmri.jmrit.logix.OBlockTable", true);
 
+            createDesktop(); // adds tables as windows on desktopframe._desktop
+            desktopframe.setLocation(10, 30);
+            desktopframe.setVisible(true);
+            desktopframe.pack();
+            addCloseListener(desktopframe);
+
+            // finally check table contents for errors
             WarrantTableAction.getDefault().errorCheck();
         }
     }
@@ -220,7 +222,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
         mBar.add(getOptionMenu());
         mBar.add(getTablesMenu());
-        return mBar; //new JMenu[]{fileMenu, optionMenu, tablesMenu};
+        return mBar;
     }
 
     public JMenu getPrintMenuItems(JTable oBlockTable, JTable portalTable, JTable signalTable, JTable blockPortalTable) {
@@ -290,7 +292,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
         _desktop.setPreferredSize(new Dimension(1100, 600));
         _desktop.setBackground(new Color(180,180,180));
-        setContentPane(_desktop);
+        desktopframe.setContentPane(_desktop);
 
         // placed at 0,0
         _desktop.add(_blockTableFrame);
@@ -343,7 +345,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     /**
-     * Convert a copy of JMRI Blocks to OBlocks and connect them with Portals and Paths.
+     * Convert a copy of your current JMRI Blocks to OBlocks and connect them with Portals and Paths.
+     * Accessed from the Options menu.
      *
      * @author Egbert Broerse 2019
      */
@@ -355,7 +358,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         // don't return an element if there are no Blocks to include
         if (blkList.isEmpty()) {
             log.warn("no Blocks to convert"); // NOI18N
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ImportNoBlocks"),
+            JOptionPane.showMessageDialog(desktopframe, Bundle.getMessage("ImportNoBlocks"),
                     Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
             return;
         } else {
@@ -490,11 +493,26 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         log.debug("setShowWarnings: _showWarnings= {}", _showWarnings);
     }
 
-    @Override
-    public void windowClosing(java.awt.event.WindowEvent e) {
-        WarrantTableAction.getDefault().errorCheck();
-        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE); // closing instead of hiding removes name from Windows menu.handle menu to read Show...
-        log.debug("windowClosing: {}", toString());
+    // listen for _desktopframe closing
+    void addCloseListener(JmriJFrame desktop) {
+        desktop.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                WarrantTableAction.getDefault().errorCheck();
+                desktop.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+                // closing instead of hiding removes name from Windows menu.handle menu to read Show...
+                log.debug("windowClosing: {}", toString());
+                desktop.dispose();
+                //this.dispose();
+            }
+        });
+    }
+    private String getTitle() {
+        return _title;
+    }
+
+    private void setTitle(String title) {
+        _title = title;
     }
 
     protected void updateOBlockTablesMenu() {
@@ -605,9 +623,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
                 (frame.isVisible() ? Bundle.getMessage("HideTable") : Bundle.getMessage("ShowTable"))));
     }
 
-    private synchronized static void setRowHeight(int newVal) {
-        ROW_HEIGHT = Math.max(newVal, 10); // for safety
-    }
+//    private synchronized static void setRowHeight(int newVal) {
+//        ROW_HEIGHT = Math.max(newVal, 10); // for safety
+//    }
 
     /**
      * Wrapper for shared code around each Table in a JInternal window on _desktop interface.
@@ -630,7 +648,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             table = makeBlockPortalTable((BlockPortalTableModel) tableModel);
         } else if (tableModel instanceof SignalTableModel) {
             table = makeSignalTable((SignalTableModel) tableModel);
-        } // no case for BlockPathTableModel, is handled directly from OBlockTable
+        } // no case here for BlockPathTableModel, it is handled directly from OBlockTable
 
         JScrollPane scroll = new JScrollPane(table);
         JPanel contentPane = new JPanel();
@@ -736,12 +754,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
     // Opens the Edit OBlock panel for _tabbed
     protected boolean openOBlockEditor(String blockSystemName) {
-        int result = 0;
+        boolean result = false;
         if (blockSystemName != null) {
             // this is for Edit, new OBlocks created from [Add OBlock...] button in table
             OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
             if (block != null){
                 BlockPathJPanel panel = makeBlockPathEditPanel(block);
+                // TODO run on separate thread
                 // BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
 //                class WindowMaker implements Runnable {
 //                    final OBlock ob;
@@ -761,10 +780,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 //                WindowMaker t = new WindowMaker(block, panel);
 //                javax.swing.SwingUtilities.invokeLater(t);
                 log.debug("path table created for block {}", blockSystemName);
-                result = 1;
+                result = true;
             }
         }
-        return (result == 1);
+        return result;
     }
 
     /**
@@ -791,6 +810,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         } else {
             OPath path = block.getPathByName(pathName);
             bpef = new BlockPathEditFrame(Bundle.getMessage("EditPathTitle", pathName, blockName), block, path, turnouttable, model, this);
+            // TODO run on separate thread
 //            class WindowMaker implements Runnable {
 //                final OBlock ob;
 //                final BlockPathJPanel panel;
@@ -901,7 +921,9 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     // called from Tables menu
     public void openBlockPathPane(String blockSystemName) {
         if (_tabbed) {
-            openOBlockEditor(blockSystemName); // pass on to Per OBlock Edit panel, includes a BlockPath table
+            if (!openOBlockEditor(blockSystemName)) { // pass on to Per OBlock Edit panel, includes a BlockPath table
+                log.error("Failed to open OBlock Path table for {}", blockSystemName);
+            }
         } else {
             openBlockPathFrame(blockSystemName); // an editable table of all paths on this block
         }
@@ -924,7 +946,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             // store frame in Map
             _blockPathMap.put(blockSystemName, frame);
             frame.setVisible(true);
-            _desktop.add(frame);
+            desktopframe.getContentPane().add(frame);
         } else {
             frame.setVisible(true);
             try {
@@ -1288,7 +1310,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             }
             _pathTurnoutMap.put(pathTurnoutName, frame);
             frame.setVisible(true);
-            _desktop.add(frame);
+            desktopframe.getContentPane().add(frame);
             frame.moveToFront();
         } else {
             frame.setVisible(true);
@@ -1414,37 +1436,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
      * ********************* End of tables and frames methods *****************************
      */
 
-//    public static class BooleanAsStringsRenderer extends javax.swing.table.DefaultTableCellRenderer {
-//    disabled, suggest using JToggleButton column class/ToggleButtonEditor/Renderer
-//        String _trueValue;
-//        String _falseValue;
-//
-//        public BooleanAsStringsRenderer(String trueValue, String falseValue) {
-//            _trueValue = trueValue;
-//            _falseValue = falseValue;
-//        }
-//
-//        @Override
-//        public java.awt.Component getTableCellRendererComponent(JTable table,
-//                Object value, boolean isSelected,
-//                boolean hasFocus, int row, int column) {
-//
-//            log.debug("BooStriRender for value: {}", value.toString());
-//            JLabel val;
-//            if (value instanceof Boolean) {
-//                if (((Boolean) value)) {
-//                    val = new JLabel(_trueValue);
-//                } else {
-//                    val = new JLabel(_falseValue);
-//                }
-//            } else {
-//                val = new JLabel("");
-//            }
-//            val.setFont(table.getFont().deriveFont(java.awt.Font.PLAIN));
-//            return val;
-//        }
-//    } // end of class
-
     protected int verifyWarning(String message) {
         int val = 0;
         if (_showWarnings) {
@@ -1491,7 +1482,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             if (frame instanceof BlockPathFrame) {
                 String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
                 if (!msg.isEmpty()) {
-                    JOptionPane.showMessageDialog(this, msg,
+                    JOptionPane.showMessageDialog(desktopframe, msg,
                             Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
                 }
                 ((BlockPathFrame) frame).getModel().removeListener();
@@ -1526,7 +1517,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         if (name != null && name.startsWith(oblockPrefix())) {
             if (frame instanceof BlockPathFrame) {
                 String msg = WarrantTableAction.getDefault().checkPathPortals(((BlockPathFrame) frame).getModel().getBlock());
-                JOptionPane.showMessageDialog(this, msg,
+                JOptionPane.showMessageDialog(desktopframe, msg,
                     Bundle.getMessage("InfoTitle"), JOptionPane.INFORMATION_MESSAGE);
             }
         }

@@ -144,8 +144,8 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             setTitle();
 
             //tf.setParentFrame(otf); // needed?
-            tf.makePrivateWindow(); // prevents tf "OBlock Tables..." to show up in the Windows menu
-            tf.setVisible(false); // hide the TableFrames container when _tabbed
+            //tf.makePrivateWindow(); // prevents tf "OBlock Tables..." to show up in the Windows menu
+            //tf.setVisible(false); // hide the TableFrames container when _tabbed
 
             otf.pack();
             otf.setVisible(true);
@@ -153,7 +153,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             tf.initComponents();
             // original simulated desktop interface is created in tf.initComponents() and takes care of itself if !_tabbed
             // only required for _desktop, creates InternalFrames
-            tf.setVisible(true);
+            //tf.setVisible(true);
         }
     }
 
