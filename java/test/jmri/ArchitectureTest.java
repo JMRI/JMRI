@@ -240,6 +240,4 @@ public class ArchitectureTest {
             .that().haveSimpleNameEndingWith("Bundle")
             .should().beAssignableTo(jmri.Bundle.class);
 
-
-
 }
