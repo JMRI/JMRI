@@ -61,10 +61,11 @@ public class OBlockTablePanel extends JPanel {
                             TableFrames tf,
                             String helpTarget) {
 
-        super(); // EBR required? nothing set
+        super(); // required? nothing set
         _tf = tf;
 
         log.debug("Building tables");
+
         // OBlock Table
         oblockDataModel = oblocks;
         TableRowSorter<OBlockTableModel> sorter = new TableRowSorter<>(oblockDataModel);
@@ -98,12 +99,13 @@ public class OBlockTablePanel extends JPanel {
         oblockTable.setColumnModel(tcm);
         oblockTable.getTableHeader().setReorderingAllowed(true);
         oblockTable.createDefaultColumnsFromModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false); // doesn't hide them
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
+        oblockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 300)); // a wide table
         oblockDataScroll = new JScrollPane(oblockTable);
 
         // Portal Table

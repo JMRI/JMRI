@@ -198,7 +198,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     @Override
     protected void setTitle() {
         if (_tabbed && otf != null) {
-            otf.setTitle(Bundle.getMessage("TitleOBlockTable"));
+            otf.setTitle(Bundle.getMessage("TitleOBlocksTabbedFrame"));
         }
     }
 

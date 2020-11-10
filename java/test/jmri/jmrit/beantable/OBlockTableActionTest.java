@@ -48,6 +48,28 @@ public class OBlockTableActionTest {
         });
     }
 
+    @Test
+    public void testInvokeTabbed() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use _tabbed interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
+
+        // ask for the window to open
+        OBlockTableAction a = new OBlockTableAction();
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
+
+        // Find new table window by name
+        JmriJFrame doc = JmriJFrame.getFrame(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocksTabbedFrame"));
+        Assert.assertNotNull("Occupancy window", doc);
+        new QueueTool().waitEmpty();
+
+        // Ask to close add window
+        ThreadingUtil.runOnGUI(() -> {
+            doc.setVisible(false);
+            JUnitUtil.dispose(doc);
+        });
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();

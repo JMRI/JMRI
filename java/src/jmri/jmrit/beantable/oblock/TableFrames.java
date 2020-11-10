@@ -524,8 +524,10 @@ public class TableFrames implements InternalFrameListener {
         _title = title;
     }
 
+    /**
+     * Fill in the Open/Hide Tables menu on tablesMenu.
+     */
     protected void updateOBlockTablesMenu() {
-        // fill Open/Hide Tables menu
         if (tablesMenu == null) {
             return;
         }

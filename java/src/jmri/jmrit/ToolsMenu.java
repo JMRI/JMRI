@@ -60,7 +60,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
-        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) { // EBR turn on or off in prefs
+        if (InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed()) { // turn on or off in prefs
             tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemOBlockTable"), "jmri.jmrit.beantable.OBlockTableAction"));
         } else {
             tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));

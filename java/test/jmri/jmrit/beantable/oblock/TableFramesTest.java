@@ -23,9 +23,18 @@ public class TableFramesTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames t = new TableFrames();
-        Assert.assertNotNull("exists", t);
-        t.initComponents();
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
+        TableFrames tf = new TableFrames();
+        Assert.assertNotNull("exists", tf);
+        tf.initComponents();
+    }
+
+    @Test
+    public void testCTorTabbed() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
+        TableFrames tf = new TableFrames();
+        Assert.assertNotNull("exists", tf);
     }
 
     @Test
