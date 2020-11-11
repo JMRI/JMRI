@@ -5,7 +5,7 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-10-->
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2020-11-11-->
   <title>Comprehensive Programmer - Advanced Features Pane</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -18,11 +18,12 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<body>
-  <!--#include virtual="/Header" -->
+  <body>
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
+
 
     <div id="mainContent">
       <a name="Top"></a>
