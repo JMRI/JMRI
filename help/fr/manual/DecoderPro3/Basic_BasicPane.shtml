@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-10 -->
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2020-11-11 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -18,10 +18,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <a name="Top" id="Top"></a>
@@ -48,8 +48,8 @@
        Seules les variables que votre d&#233;codeur peut impl&#233;menter seront affich&#233;es..</p>
 
       <p>Vous trouverez ci-dessous un &#233;cran pour le d&#233;codeur OEM utilis&#233; dans la locomotive
-		<strong> Athearn FP-45 </strong>.Montrant les param&#232;tres d'usine, 
-		qui correspondent normalement &#224; l'adresse 3 <br> <br>
+      <strong> Athearn FP-45 </strong>.Montrant les param&#232;tres d'usine, 
+      qui correspondent normalement &#224; l'adresse 3 <br> <br>
       .<img src="images/Basic_Program.png" alt="basic pane" height=
       "557" width="642"></p>
 
@@ -102,7 +102,7 @@
       le CV sp&#233;cifique en cours de lecture. </P>
 
        <p> Encore une fois, <input name = "button2" id = "button2" value = 
-              "Lire la fiche compl&#232;te" type = "button"> et <strong> <input name = 
+        "Lire la fiche compl&#232;te" type = "button"> et <strong> <input name = 
        "button3" id = "button3" value = " Lire toutes les feuilles "type =" button ">
         </strong> les fonctions d&#233;pendent de votre centrale de commande. 
        Si votre syst&#232;me n'a pas la capacit&#233; de lire les CV, ces boutons 
@@ -200,7 +200,7 @@
         <p><a href="Basic_Start.shtml">Pr&#233;c&#233;dent|</a></p>
 
         <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
