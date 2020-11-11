@@ -1,10 +1,11 @@
 package jmri.jmrix.loconet.logixng.configurexml;
 
-import java.util.List;
+import java.util.*;
 
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 
@@ -42,22 +43,21 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
                     .addContent(p.getMemo().getSystemPrefix()));
         }
         
-        StringBuilder slotStates = new StringBuilder();
-        for (ExpressionSlotUsage.AdvancedStateType state : p.getAdvancedStates()) {
-            if (slotStates.length() > 0) slotStates.append(",");
-            slotStates.append(state.name());
-        }
+        element.addContent(new Element("advanced").addContent(p.getAdvanced() ? "yes" : "no"));
+        element.addContent(new Element("has_hasNot").addContent(p.get_Has_HasNot().name()));
+        element.addContent(new Element("simpleState").addContent(p.getSimpleState().name()));
         
-        element.addContent(new Element("has_HasNot").addContent(p.getHasHasNot().name()));
-        Element statesElement = new Element("states");
-        for (ExpressionSlotUsage.AdvancedStateType state : p.getAdvancedStates()) {
-            element.addContent(new Element("state").addContent(state.name()));
+        Element advancedStatesElement = new Element("advancedStates");
+        for (ExpressionSlotUsage.AdvancedState state : p.getAdvancedStates()) {
+            advancedStatesElement.addContent(new Element("state").addContent(state.name()));
         }
-        element.addContent(statesElement);
+        element.addContent(advancedStatesElement);
+        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
         element.addContent(new Element("compare").addContent(p.getCompare().name()));
-        element.addContent(new Element("percentPieces").addContent(p.getPercentPieces().name()));
         
         element.addContent(new Element("number").addContent(Integer.toString(p.getNumber())));
+        
+        element.addContent(new Element("percentPieces").addContent(p.getPercentPieces().name()));
 
         return element;
     }
@@ -83,43 +83,51 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
                 }
             }
         }
-/*
-        Element memoryName = shared.getChild("memory");
-        if (memoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-            if (m != null) h.setMemory(m);
-            else h.removeMemory();
-        }
 
-        Element otherMemoryName = shared.getChild("otherMemory");
-        if (otherMemoryName != null) {
-            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(otherMemoryName.getTextTrim());
-            if (m != null) h.setOtherMemory(m);
-            else h.removeOtherMemory();
-        }
-
-        Element constant = shared.getChild("constant");
-        if (constant != null) {
-            h.setConstantValue(constant.getText());
-        }
-
-        Element memoryOperation = shared.getChild("memoryOperation");
-        if (memoryOperation != null) {
-            h.setMemoryOperation(ExpressionSlotUsage.MemoryOperation.valueOf(memoryOperation.getTextTrim()));
-        }
-
-        Element compareTo = shared.getChild("compareTo");
-        if (compareTo != null) {
-            h.setCompareTo(ExpressionSlotUsage.CompareTo.valueOf(compareTo.getTextTrim()));
-        }
-
-        Element caseInsensitive = shared.getChild("caseInsensitive");
-        if (caseInsensitive != null) {
-            h.setCaseInsensitive("yes".equals(caseInsensitive.getTextTrim()));
+        Element advanced = shared.getChild("advanced");
+        if (advanced != null) {
+            h.setAdvanced("yes".equals(advanced.getTextTrim()));
         } else {
-            h.setCaseInsensitive(false);
+            h.setAdvanced(false);
         }
-*/
+
+        Element has_hasNot = shared.getChild("has_hasNot");
+        if (has_hasNot != null) {
+            h.set_Has_HasNot(ExpressionSlotUsage.Has_HasNot.valueOf(has_hasNot.getTextTrim()));
+        }
+
+        Element simpleState = shared.getChild("simpleState");
+        if (simpleState != null) {
+            h.setSimpleState(ExpressionSlotUsage.SimpleState.valueOf(simpleState.getTextTrim()));
+        }
+
+        Set<ExpressionSlotUsage.AdvancedState> stateSet = new HashSet<>();
+        Element advancedStates = shared.getChild("advancedStates");
+        for (Element state : advancedStates.getChildren()) {
+            stateSet.add(ExpressionSlotUsage.AdvancedState.valueOf(state.getTextTrim()));
+        }
+        h.setAdvancedStates(stateSet);
+
+        Element is_isNot = shared.getChild("is_isNot");
+        if (is_isNot != null) {
+            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_isNot.getTextTrim()));
+        }
+
+        Element compare = shared.getChild("compare");
+        if (compare != null) {
+            h.setCompare(ExpressionSlotUsage.Compare.valueOf(compare.getTextTrim()));
+        }
+
+        Element number = shared.getChild("number");
+        if (number != null) {
+            h.setNumber(Integer.parseInt(number.getText()));
+        }
+
+        Element percentPieces = shared.getChild("percentPieces");
+        if (percentPieces != null) {
+            h.setPercentPieces(ExpressionSlotUsage.PercentPieces.valueOf(percentPieces.getTextTrim()));
+        }
+
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);
         return true;
     }

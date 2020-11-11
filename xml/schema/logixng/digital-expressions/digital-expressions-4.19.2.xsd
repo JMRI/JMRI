@@ -32,6 +32,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-entryexit-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-light-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-local-variable-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-loconet-slot-usage-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-memory-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-oblock-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-expressions/expression-reference-4.19.2.xsd"/>
@@ -71,6 +72,7 @@
             <xs:element name="expression-entryexit"    type="LogixNG_DigitalExpression_ExpressionEntryExit" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-light"   type="LogixNG_DigitalExpression_ExpressionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-local-variable"  type="LogixNG_DigitalExpression_ExpressionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="expression-loconet-slot-usage" type="LogixNG_DigitalExpression_ExpressionLocoNetSlotUsageType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-memory"  type="LogixNG_DigitalExpression_ExpressionMemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-oblock"  type="LogixNG_DigitalExpression_ExpressionOBlockType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="expression-reference"  type="LogixNG_DigitalExpression_ExpressionReferenceType" minOccurs="0" maxOccurs="unbounded" />

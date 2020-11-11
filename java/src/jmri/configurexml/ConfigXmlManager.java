@@ -242,7 +242,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      */
     void locateClassFailed(Throwable ex, String adapterName, Object o) {
         log.error("{} could not load adapter class {}", ex, adapterName);
-        log.error("Stack trace is", ex);
         log.debug("Stack trace is", ex);
     }
 

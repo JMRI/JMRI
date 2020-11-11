@@ -21,11 +21,11 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     private LocoNetSystemConnectionMemo _memo;
     private boolean _advanced = false;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
-    private HasHasNotType _hasHasNot = HasHasNotType.Has;
-    private SimpleStateType _simpleState = SimpleStateType.InUse;
-    private Set<AdvancedStateType> _advancedStates = new HashSet<>();
-    private CompareType _compare = CompareType.LessThan;
-    private PercentPiecesType _percentPieces = PercentPiecesType.Pieces;
+    private Has_HasNot _hasHasNot = Has_HasNot.Has;
+    private SimpleState _simpleState = SimpleState.InUse;
+    private final Set<AdvancedState> _advancedStates = new HashSet<>();
+    private Compare _compare = Compare.LessThan;
+    private PercentPieces _percentPieces = PercentPieces.Pieces;
     private int _number = 0;
     
     
@@ -64,50 +64,41 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         return _advanced;
     }
     
-    public void setHasHasNot(HasHasNotType hasHasNot) {
+    public void set_Has_HasNot(Has_HasNot hasHasNot) {
         assertListenersAreNotRegistered(log, "setHasHasNot");
         _hasHasNot = hasHasNot;
     }
     
-    public HasHasNotType getHasHasNot() {
+    public Has_HasNot get_Has_HasNot() {
         return _hasHasNot;
     }
     
-    public void setSimpleState(SimpleStateType simpleState){
+    public void setSimpleState(SimpleState simpleState){
         assertListenersAreNotRegistered(log, "setSimpleState");
         _simpleState = simpleState;
     }
     
-    public SimpleStateType getSimpleState() {
+    public SimpleState getSimpleState() {
         return _simpleState;
     }
     
-    public void setAdvancedStates(Set<AdvancedStateType> states) {
+    public void setAdvancedStates(Set<AdvancedState> states) {
         assertListenersAreNotRegistered(log, "setTimerType");
         _advancedStates.clear();
         _advancedStates.addAll(states);
     }
     
-    public Set<AdvancedStateType> getAdvancedStates() {
+    public Set<AdvancedState> getAdvancedStates() {
         return Collections.unmodifiableSet(_advancedStates);
     }
     
-    public void setCompare(CompareType compare){
+    public void setCompare(Compare compare){
         assertListenersAreNotRegistered(log, "setTimerType");
         _compare = compare;
     }
     
-    public CompareType getCompare() {
+    public Compare getCompare() {
         return _compare;
-    }
-    
-    public void setPercentPieces(PercentPiecesType percentPieces) {
-        assertListenersAreNotRegistered(log, "setPercentPieces");
-        _percentPieces = percentPieces;
-    }
-    
-    public PercentPiecesType getPercentPieces() {
-        return _percentPieces;
     }
     
     public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
@@ -125,6 +116,15 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     
     public int getNumber() {
         return _number;
+    }
+    
+    public void setPercentPieces(PercentPieces percentPieces) {
+        assertListenersAreNotRegistered(log, "setPercentPieces");
+        _percentPieces = percentPieces;
+    }
+    
+    public PercentPieces getPercentPieces() {
+        return _percentPieces;
     }
     
     /** {@inheritDoc} */
@@ -203,7 +203,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         String stateStr;
         if (_advanced) {
             StringBuilder states = new StringBuilder();
-            for (AdvancedStateType state : _advancedStates) {
+            for (AdvancedState state : _advancedStates) {
                 if (states.length() > 0) states.append(",");
                 states.append(state._text);
             }
@@ -256,7 +256,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
                 SlotManager slotManager = _memo.getSlotManager();
                 slotManager.addSlotListener(this);
                 
-                slotManager.getInUseCount();
+//                slotManager.getInUseCount();
             }
         }
     }
@@ -285,13 +285,13 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     
     
     
-    public enum HasHasNotType {
+    public enum Has_HasNot {
         Has(Bundle.getMessage("HasHasNotType_Has")),
         HasNot(Bundle.getMessage("HasHasNotType_HasNot"));
         
         private final String _text;
         
-        private HasHasNotType(String text) {
+        private Has_HasNot(String text) {
             this._text = text;
         }
         
@@ -303,14 +303,14 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    public enum SimpleStateType {
+    public enum SimpleState {
         InUse(Bundle.getMessage("SimpleStateType_InUse"), new int[]{LnConstants.LOCO_IN_USE}),
         Free(Bundle.getMessage("SimpleStateType_Free"), new int[]{LnConstants.LOCO_FREE});
         
         private final String _text;
         private final int[] _states;
         
-        private SimpleStateType(String text, int[] states) {
+        private SimpleState(String text, int[] states) {
             this._text = text;
             this._states = states;
         }
@@ -327,7 +327,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    public enum AdvancedStateType {
+    public enum AdvancedState {
         InUse(LnConstants.LOCO_IN_USE, Bundle.getMessage("AdvancedStateType_InUse")),
         Idle(LnConstants.LOCO_IDLE, Bundle.getMessage("AdvancedStateType_Idle")),
         Common(LnConstants.LOCO_COMMON, Bundle.getMessage("AdvancedStateType_Common")),
@@ -336,7 +336,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         private final int _state;
         private final String _text;
         
-        private AdvancedStateType(int state, String text) {
+        private AdvancedState(int state, String text) {
             this._state = state;
             this._text = text;
         }
@@ -353,7 +353,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    public enum CompareType {
+    public enum Compare {
         LessThan(Bundle.getMessage("CompareType_LessThan"), (int a, int b) -> a < b),
         LessThanOrEqual(Bundle.getMessage("CompareType_LessThanOrEqual"), (int a, int b) -> a <= b),
         Equal(Bundle.getMessage("CompareType_Equal"), (int a, int b) -> a == b),
@@ -361,9 +361,9 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         GreaterThan(Bundle.getMessage("CompareType_GreaterThan"), (int a, int b) -> a > b);
         
         private final String _text;
-        private final Compare _compare;
+        private final CompareIntegers _compare;
         
-        private CompareType(String text, Compare compare) {
+        private Compare(String text, CompareIntegers compare) {
             this._text = text;
             this._compare = compare;
         }
@@ -380,13 +380,13 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    public enum PercentPiecesType {
+    public enum PercentPieces {
         Percent(Bundle.getMessage("PercentPiecesType_Percent")),
         Pieces(Bundle.getMessage("PercentPiecesType_Pieces"));
         
         private final String _text;
         
-        private PercentPiecesType(String text) {
+        private PercentPieces(String text) {
             this._text = text;
         }
         
@@ -398,7 +398,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     
-    private interface Compare {
+    private interface CompareIntegers {
         public boolean compare(int a, int b);
     }
     
