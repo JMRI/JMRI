@@ -67,11 +67,11 @@
 
   <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
-  <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
-
   <indexitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.eventrequestmonitor.CbusEventRequestTablePane"/>
 
   <indexitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
+
+  <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
   <indexitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
 
@@ -80,8 +80,6 @@
   <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
   <indexitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
-
-  <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
   <indexitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
 
@@ -671,13 +669,13 @@
  <indexitem text="SpotBugs (Developers) " target="html.doc.Technical.SpotBugs"/>
 
  <indexitem text="SPROG " target="html.hardware.sprog.SPROG">
-  <indexitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+  <indexitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
 
   <indexitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
 
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
 
-  <indexitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
+  <indexitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
 
   <indexitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
 

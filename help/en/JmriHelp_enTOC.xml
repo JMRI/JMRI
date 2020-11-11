@@ -685,21 +685,21 @@
   </tocitem>
   <tocitem text="MERG " target="html.hardware.merg.index">
    <tocitem text="CBUS Tools ">
-    <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
+    <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
 
-    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+    <tocitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
     <tocitem text="Event Capture Tool " target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame"/>
 
     <tocitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
 
+    <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
     <tocitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
-    <tocitem text="Command Station Monitor " target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane"/>
+    <tocitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
 
     <tocitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
-
-    <tocitem text="Firmware Update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
 
     <tocitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
 
@@ -770,13 +770,13 @@
 
   </tocitem>
   <tocitem text="SPROG " target="html.hardware.sprog.SPROG_tools">
-   <tocitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+   <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
 
    <tocitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
 
    <tocitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
 
-   <tocitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
+   <tocitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
 
    <tocitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
 
