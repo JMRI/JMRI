@@ -394,7 +394,7 @@
     <h2><a name="hex" id="hex">Sending hex strings</a></h2>
      <div>
       
-      <p>Hexadcimal numbering is based on the power of 16, using 0-9, then A-F.</p>
+      <p>Hexadecimal numbering is based on the power of 16, using 0-9, then A-F.</p>
       
       <p>CBUS modules
       communicate by messages with a fixed format: One byte of
