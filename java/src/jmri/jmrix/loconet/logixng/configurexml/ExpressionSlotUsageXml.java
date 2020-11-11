@@ -43,14 +43,14 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
         }
         
         StringBuilder slotStates = new StringBuilder();
-        for (ExpressionSlotUsage.StateType state : p.getSlotStates()) {
+        for (ExpressionSlotUsage.AdvancedStateType state : p.getAdvancedStates()) {
             if (slotStates.length() > 0) slotStates.append(",");
             slotStates.append(state.name());
         }
         
         element.addContent(new Element("has_HasNot").addContent(p.getHasHasNot().name()));
         Element statesElement = new Element("states");
-        for (ExpressionSlotUsage.StateType state : p.getSlotStates()) {
+        for (ExpressionSlotUsage.AdvancedStateType state : p.getAdvancedStates()) {
             element.addContent(new Element("state").addContent(state.name()));
         }
         element.addContent(statesElement);

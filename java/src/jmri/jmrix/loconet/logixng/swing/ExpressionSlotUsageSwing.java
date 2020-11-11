@@ -1,12 +1,11 @@
 package jmri.jmrix.loconet.logixng.swing;
 
+import java.awt.Color;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -14,8 +13,13 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.swing.AbstractExpressionSwing;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
-// import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.TurnoutState;
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.HasHasNotType;
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.AdvancedStateType;
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.SimpleStateType;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.CompareType;
+import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.PercentPiecesType;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -23,25 +27,105 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  */
 public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
 
-    List<LocoNetSystemConnectionMemo> systemConnections = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
-//    private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
-    private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
-//    private JComboBox<TurnoutState> stateComboBox;
-    
+    private final List<LocoNetSystemConnectionMemo> _systemConnections = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
+    private JButton _findNumSlotsButton;
+    private JComboBox<HasHasNotType> _has_HasNot_ComboBox = new JComboBox<>();
+    private JComboBox<SimpleStateType> _simpleStateComboBox = new JComboBox<>();
+    private JComboBox<Is_IsNot_Enum> _is_IsNot_ComboBox = new JComboBox<>();
+    private JComboBox<CompareType> _compareComboBox = new JComboBox<>();
+    private JTextField _textField = new JTextField("99");
+    private JComboBox<PercentPiecesType> _percentPiecesComboBox = new JComboBox<>();
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ExpressionSlotUsage)) {
             throw new IllegalArgumentException("object must be an ExpressionSlotUsage but is a: "+object.getClass().getName());
         }
-//        ExpressionSlotUsage expression = (ExpressionSlotUsage)object;
+        
+        ExpressionSlotUsage expression = (ExpressionSlotUsage)object;
         
         panel = new JPanel();
+        
+        
+        
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        
+        JPanel queryPanel = new JPanel();
+        queryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+//        queryPanel.setLayout(new BoxLayout(queryPanel, BoxLayout.X_AXIS));
+        
 //        turnoutBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
         
-        is_IsNot_ComboBox = new JComboBox<>();
+        
+        
+        
+        
+        _has_HasNot_ComboBox = new JComboBox<>();
+        for (HasHasNotType e : HasHasNotType.values()) {
+            _has_HasNot_ComboBox.addItem(e);
+        }
+        
+        _simpleStateComboBox = new JComboBox<>();
+        for (SimpleStateType e : SimpleStateType.values()) {
+            _simpleStateComboBox.addItem(e);
+        }
+        
+        JTabbedPane tabbedPane = new JTabbedPane();
+        JPanel simplePanel = new javax.swing.JPanel();
+        JPanel advancedPanel = new javax.swing.JPanel();
+        advancedPanel.setLayout(new BoxLayout(advancedPanel, BoxLayout.Y_AXIS));
+        
+        tabbedPane.addTab(Bundle.getMessage("TabbedPaneSimple"), simplePanel); // NOI1aa8N
+        tabbedPane.addTab(Bundle.getMessage("TabbedPaneAdvanced"), advancedPanel); // NOIaa18N
+        
+        _simpleStateComboBox = new JComboBox<>();
+        for (SimpleStateType e : SimpleStateType.values()) {
+            _simpleStateComboBox.addItem(e);
+        }
+        simplePanel.add(_simpleStateComboBox);
+        
+        
+        JCheckBox inUseCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_InUse"));
+        JCheckBox idleCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Idle"));
+        JCheckBox commonCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Common"));
+        JCheckBox freeCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Free"));
+        advancedPanel.add(inUseCheckBox);
+        advancedPanel.add(idleCheckBox);
+        advancedPanel.add(commonCheckBox);
+        advancedPanel.add(freeCheckBox);
+        
+        if (expression != null) {
+            if (expression.getAdvancedStates().contains(AdvancedStateType.InUse)) {
+                inUseCheckBox.setSelected(true);
+            }
+            if (expression.getAdvancedStates().contains(AdvancedStateType.Idle)) {
+                idleCheckBox.setSelected(true);
+            }
+            if (expression.getAdvancedStates().contains(AdvancedStateType.Common)) {
+                commonCheckBox.setSelected(true);
+            }
+            if (expression.getAdvancedStates().contains(AdvancedStateType.Free)) {
+                freeCheckBox.setSelected(true);
+            }
+        }
+        
+        
+        _is_IsNot_ComboBox = new JComboBox<>();
         for (Is_IsNot_Enum e : Is_IsNot_Enum.values()) {
-            is_IsNot_ComboBox.addItem(e);
+            _is_IsNot_ComboBox.addItem(e);
+        }
+        
+        _compareComboBox = new JComboBox<>();
+        for (CompareType e : CompareType.values()) {
+            _compareComboBox.addItem(e);
+        }
+        
+        _textField = new JTextField("99");
+        
+        _percentPiecesComboBox = new JComboBox<>();
+        for (PercentPiecesType e : PercentPiecesType.values()) {
+            _percentPiecesComboBox.addItem(e);
         }
 /*        
         stateComboBox = new JComboBox<>();
@@ -59,8 +143,29 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
 */        
 //        panel.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
 //        panel.add(turnoutBeanPanel);
-        panel.add(is_IsNot_ComboBox);
+        
+//        queryPanel.add(is_IsNot_ComboBox);
+        
+        JComponent[] components = new JComponent[]{
+            _has_HasNot_ComboBox,
+            tabbedPane,
+//            advancedCheckBox.isSelected() ? advancedStateComboBox : simpleStateComboBox,
+            _is_IsNot_ComboBox,
+            _compareComboBox,
+            _textField,
+            _percentPiecesComboBox,
+            };
+        
+        List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("ExpressionSlotUsage_Long"), components);
+        
+        for (JComponent c : componentList) queryPanel.add(c);
+        
 //        panel.add(stateComboBox);
+        
+        panel.add(queryPanel);
+        
+        _findNumSlotsButton = new JButton(Bundle.getMessage("GetNumSlots"));
+        panel.add(_findNumSlotsButton);
     }
     
     /** {@inheritDoc} */
@@ -76,7 +181,7 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        LocoNetSystemConnectionMemo memo = systemConnections.get(0);
+        LocoNetSystemConnectionMemo memo = _systemConnections.get(0);
         
         ExpressionSlotUsage expression = new ExpressionSlotUsage(systemName, userName, memo);
 /*        
