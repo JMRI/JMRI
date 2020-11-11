@@ -80,7 +80,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         if (list.size() > 0) {
             int count = 0;
             int idx = 0; // accumulated row count
-            OBlock block = null;
+            OBlock block;
             OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);
             Arrays.sort(array, new NamedBeanUserNameComparator<>());

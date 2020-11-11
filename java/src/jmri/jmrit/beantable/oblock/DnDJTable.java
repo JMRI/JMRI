@@ -55,7 +55,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             "application/x-jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection");
 
     private Point _dropPoint;
-    private int[] _skipCols = new int[0];
+    private int[] _skipCols;
 
     DnDJTable(TableModel model, int[] skipCols) {
         super(model);
@@ -145,7 +145,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
     public void drop(DropTargetDropEvent evt) {
         try {
             Point pt = evt.getLocation();
-            String data = null;
+            String data;
             Transferable tr = evt.getTransferable();
             if (tr.isDataFlavorSupported(TABLECELL_FLAVOR)
                     || tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {

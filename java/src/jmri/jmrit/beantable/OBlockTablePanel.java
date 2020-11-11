@@ -1,8 +1,6 @@
 package jmri.jmrit.beantable;
 
-import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.beantable.oblock.*;
-import jmri.jmrit.logix.OBlock;
 import jmri.swing.RowSorterUtil;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -79,16 +77,11 @@ public class OBlockTablePanel extends JPanel {
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-//        JComboBox<String> box = new JComboBox<>(OBlockTableModel.curveOptions);
-//        oblockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
         oblocks.configCurveColumn(oblockTable); // use real combo
         oblockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Current"), Bundle.getMessage("Last")));
         oblockTable.getColumnModel().getColumn(OBlockTableModel.REPORT_CURRENTCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("Current"), Bundle.getMessage("Last")));
-//        box = new JComboBox<>(jmri.InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames());
-//        box.addItem("");
-//        oblockTable.getColumnModel().getColumn(OBlockTableModel.SPEEDCOL).setCellEditor(new DefaultCellEditor(box));
         oblocks.configSpeedColumn(oblockTable); // use real combo
         oblockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
                 new ToggleButtonRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
@@ -97,7 +90,7 @@ public class OBlockTablePanel extends JPanel {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         oblockTable.setColumnModel(tcm);
-        oblockTable.getTableHeader().setReorderingAllowed(true);
+        oblockTable.getTableHeader().setReorderingAllowed(true); // already assigned in makeJTable
         oblockTable.createDefaultColumnsFromModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false); // doesn't hide them
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
@@ -106,6 +99,7 @@ public class OBlockTablePanel extends JPanel {
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
         oblockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 300)); // a wide table
+        oblockDataModel.addHeaderListener(oblockTable);
         oblockDataScroll = new JScrollPane(oblockTable);
 
         // Portal Table
@@ -120,10 +114,9 @@ public class OBlockTablePanel extends JPanel {
             int width = portalDataModel.getPreferredWidth(i);
             portalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-
-        portalDataScroll = new JScrollPane(portalTable);
         portalTable.setColumnModel(new XTableColumnModel());
         portalTable.createDefaultColumnsFromModel();
+        portalDataScroll = new JScrollPane(portalTable);
 
         // Signal Table
         signalDataModel = signals;
@@ -137,9 +130,9 @@ public class OBlockTablePanel extends JPanel {
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        signalDataScroll = new JScrollPane(signalTable);
         signalTable.setColumnModel(new XTableColumnModel());
         signalTable.createDefaultColumnsFromModel();
+        signalDataScroll = new JScrollPane(signalTable);
 
         // Block-Portal Xreference table
         blockportalDataModel = blockportals; // cross-reference (not editable)
@@ -148,11 +141,10 @@ public class OBlockTablePanel extends JPanel {
         blockportalTable = makeJTable("Block-Portal X-ref", blockportalDataModel, sorter); // cannot directly access
         // style table
         blockportalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        blockportalTable.doLayout();
-
-        blockportalDataScroll = new JScrollPane(blockportalTable);
+        //blockportalTable.doLayout();
         blockportalTable.setColumnModel(new XTableColumnModel());
         blockportalTable.createDefaultColumnsFromModel();
+        blockportalDataScroll = new JScrollPane(blockportalTable);
 
         // configure items for GUI
         configureWarrantTable(oblockTable); // only class to extend BeanTableDataModel
@@ -162,7 +154,7 @@ public class OBlockTablePanel extends JPanel {
             int width = oblockDataModel.getPreferredWidth(i);
             oblockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        oblockDataModel.persistTable(oblockTable); // oblockDataModel contains this method
+        oblockDataModel.persistTable(oblockTable); // only oblockDataModel contains this method
 
         configureWarrantTable(signalTable);
         // pathDataModel.configEditColumn(pathTable);
@@ -176,7 +168,7 @@ public class OBlockTablePanel extends JPanel {
         // portalDataModel.configEditColumn(blockportalTable);
         //oblockDataModel.persistTable(blockportalTable);
 
-        // TODO add more changeListeners for table (example load, created) to update tables?
+        // add more changeListeners for table (example load, created) to update tables?
 
         // general GUI config
         this.setLayout(new BorderLayout());
@@ -256,26 +248,26 @@ public class OBlockTablePanel extends JPanel {
         oblockTable = null;
         oblockDataScroll = null;
 
-        if (portalDataModel != null) {
-//            portalDataModel.stopPersistingTable(portalTable);
-//            portalDataModel.dispose();
-        }
+        //if (portalDataModel != null) {
+            // portalDataModel.stopPersistingTable(portalTable);
+            // portalDataModel.dispose();
+        //}
         portalDataModel = null;
         portalTable = null;
         portalDataScroll = null;
 
-        if (signalDataModel != null) {
-//            signalDataModel.stopPersistingTable(signalTable);
-//            signalDataModel.dispose();
-        }
+        //if (signalDataModel != null) {
+            // signalDataModel.stopPersistingTable(signalTable);
+            // signalDataModel.dispose();
+        //}
         signalDataModel = null;
         signalTable = null;
         signalDataScroll = null;
 
-        if (blockportalDataModel != null) {
-//            blockportalDataModel.stopPersistingTable(blockportalTable);
-//            blockportalDataModel.dispose();
-        }
+        //if (blockportalDataModel != null) {
+            // blockportalDataModel.stopPersistingTable(blockportalTable);
+            // blockportalDataModel.dispose();
+        //}
         blockportalDataModel = null;
         blockportalTable = null;
         blockportalDataScroll = null;
@@ -314,9 +306,9 @@ public class OBlockTablePanel extends JPanel {
         Objects.requireNonNull(name, "the table name must be nonnull");
         table.setRowSorter(sorter);
         table.setName(name);
-        table.getTableHeader().setReorderingAllowed(true);
-        table.setColumnModel(new XTableColumnModel());
-        table.createDefaultColumnsFromModel();
+        //table.getTableHeader().setReorderingAllowed(true); // already assigned per table above
+        //table.setColumnModel(new XTableColumnModel());
+        //table.createDefaultColumnsFromModel();
         return table;
     }
 
@@ -342,7 +334,7 @@ public class OBlockTablePanel extends JPanel {
         table.setDefaultEditor(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel());
         table.setDefaultRenderer(OBlockTableModel.CurveComboBoxPanel.class, new OBlockTableModel.CurveComboBoxPanel());
         // allow reordering of the columns
-        table.getTableHeader().setReorderingAllowed(true);
+        //table.getTableHeader().setReorderingAllowed(true);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight((new JButton().getPreferredSize().height)*9/10);

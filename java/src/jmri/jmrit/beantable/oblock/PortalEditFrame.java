@@ -34,7 +34,7 @@ public class PortalEditFrame extends JmriJFrame {
     //private final Object lock = new Object();
 
     // UI components for Add/Edit Portal
-    JLabel portalLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNamePortal")), JLabel.TRAILING);
+    JLabel portalLabel = new JLabel(Bundle.getMessage("PortalNameLabel"), JLabel.TRAILING);
     JTextField portalUserName = new JTextField(15);
     JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")), JLabel.TRAILING);
     JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")), JLabel.TRAILING);
@@ -67,30 +67,44 @@ public class PortalEditFrame extends JmriJFrame {
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.setSize(300, 300);
 
-        JPanel p;
-
-        p = new JPanel();
+        JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 
+        JPanel configGrid = new JPanel();
+        GridLayout layout = new GridLayout(3, 2, 10, 0); // (int rows, int cols, int hgap, int vgap)
+        configGrid.setLayout(layout);
+
+        // row 1
+        configGrid.add(portalLabel);
         JPanel p1 = new JPanel();
-        p1.add(portalLabel);
-        p1.add(portalUserName);
-        p.add(p1);
-
-        p1 = new JPanel();
-        p1.add(fromBlockLabel);
-        p1.add(fromBlockComboBox);
+        p1.add(portalUserName, JPanel.CENTER_ALIGNMENT);
+        configGrid.add(p1);
+        // row 2
+        fromBlockComboBox.addActionListener(e -> {
+            if ((toBlockComboBox.getItemCount() > 0) && (fromBlockComboBox.getSelectedItem() != null) &&
+                    (toBlockComboBox.getSelectedItem() != null) &&
+                    (toBlockComboBox.getSelectedItem().equals(fromBlockComboBox.getSelectedItem()))) {
+                log.debug("resetting ToBlock");
+                toBlockComboBox.setSelectedIndex(0); // clear the other one
+            }
+        });
+        configGrid.add(fromBlockLabel);
+        configGrid.add(fromBlockComboBox);
         fromBlockComboBox.setAllowNull(true);
-        p.add(Box.createHorizontalGlue());
-        p.add(p1);
-
-        p1 = new JPanel();
-        p1.add(toBlockLabel);
-        p1.add(toBlockComboBox);
+        // row 3
+        toBlockComboBox.addActionListener(e -> {
+            if ((toBlockComboBox.getItemCount() > 0) && (fromBlockComboBox.getSelectedItem() != null) &&
+                    (toBlockComboBox.getSelectedItem() != null) &&
+                    (toBlockComboBox.getSelectedItem().equals(fromBlockComboBox.getSelectedItem()))) {
+                log.debug("resetting FromBlock");
+                fromBlockComboBox.setSelectedIndex(0); // clear the other one
+            }
+        });
+        configGrid.add(toBlockLabel);
+        configGrid.add(toBlockComboBox);
         toBlockComboBox.setAllowNull(true);
-        p.add(Box.createHorizontalGlue());
-        p.add(p1);
 
+        p.add(configGrid);
         p.add(Box.createVerticalGlue());
 
         p1 = new JPanel();
@@ -101,9 +115,7 @@ public class PortalEditFrame extends JmriJFrame {
         JPanel p2 = new JPanel();
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+        cancel.addActionListener((ActionEvent e) -> frame.dispose());
         JButton apply;
         p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
         apply.addActionListener(this::applyPressed);
@@ -125,8 +137,10 @@ public class PortalEditFrame extends JmriJFrame {
     public void resetFrame() {
         portalUserName.setText(null);
         portalUserName.setBackground(Color.white);
-        fromBlockComboBox.setSelectedIndex(0);
-        toBlockComboBox.setSelectedIndex(0);
+        if (fromBlockComboBox.getItemCount() > 0) {
+            fromBlockComboBox.setSelectedIndex(0);
+            toBlockComboBox.setSelectedIndex(0); // uses same list so same check is OK
+        }
         // reset statusBar text
         statusBar.setText(Bundle.getMessage("AddPortalStatusEnter"));
         statusBar.setForeground(Color.gray);
@@ -198,6 +212,6 @@ public class PortalEditFrame extends JmriJFrame {
         }
     }
 
-    //private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalEditFrame.class);
 
 }

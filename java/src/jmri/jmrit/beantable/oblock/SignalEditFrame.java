@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable.oblock;
 
 import jmri.*;
-import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -14,12 +13,11 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Objects;
 
 /**
  * Defines a GUI for editing OBlock - Signal objects in the tabbed Table interface.
- * Based on AudioSourceFrame.
+ * Adapted from AudioSourceFrame.
  *
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse (C) 2020
@@ -51,6 +49,7 @@ public class SignalEditFrame extends JmriJFrame {
             null, NamedBean.DisplayOptions.DISPLAYNAME);
     private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
             null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final JButton flipButton = new JButton(Bundle.getMessage("ButtonFlipBlocks"));
     // the following 3 items copied from beanedit, place in separate static method?
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
@@ -72,7 +71,7 @@ public class SignalEditFrame extends JmriJFrame {
 //        if (signal == null) {
 //            _newSignal = true;
 //        }
-        log.debug("SR is null = {}", sr==null);
+        log.debug("SR == {}", (sr == null ? "null" : "not null"));
         pm = InstanceManager.getDefault(PortalManager.class);
         for (Portal pi : pm.getPortalSet()) {
             portalComboBox.addItem(pi.getName());
@@ -112,38 +111,39 @@ public class SignalEditFrame extends JmriJFrame {
         sigHeadComboBox.setAllowNull(true);
         configGrid.add(p1);
 
-        portalComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (portalComboBox.getSelectedIndex() > 0) {
-                    fromBlockComboBox.setSelectedItem(pm.getPortal((String) portalComboBox.getSelectedItem()).getFromBlockName());
-                    toBlockComboBox.setSelectedItem(pm.getPortal((String) portalComboBox.getSelectedItem()).getToBlockName());
-                }
-            }
-        });
         // row 2
-        configGrid.add(portalLabel);
-        configGrid.add(portalComboBox); // has a blank first item
+        portalComboBox.addActionListener(e -> {
+            if (portalComboBox.getSelectedIndex() > 0) {
+                fromBlockComboBox.setSelectedItemByName(pm.getPortal((String) portalComboBox.getSelectedItem()).getFromBlockName());
+                toBlockComboBox.setSelectedItemByName(pm.getPortal((String) portalComboBox.getSelectedItem()).getToBlockName());
+            }
+        });
 
-        sigMastComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ((sigMastComboBox.getSelectedIndex() > 0) && (sigHeadComboBox.getItemCount() > 0)) {
-                    sigHeadComboBox.setSelectedIndex(0); // either one
-                    model.checkDuplicateSignal(sigMastComboBox.getSelectedItem());
-                }
-            }
+        p1 = new JPanel();
+        p1.add(portalLabel);
+        p1.add(portalComboBox); // has a blank first item
+        configGrid.add(p1);
+        flipButton.addActionListener(e -> {
+            int left = fromBlockComboBox.getSelectedIndex();
+            fromBlockComboBox.setSelectedIndex(toBlockComboBox.getSelectedIndex());
+            toBlockComboBox.setSelectedIndex(left);
         });
-        sigHeadComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ((sigHeadComboBox.getSelectedIndex() > 0) && (sigMastComboBox.getItemCount() > 0)) {
-                    sigMastComboBox.setSelectedIndex(0); // either one
-                    model.checkDuplicateSignal(sigHeadComboBox.getSelectedItem());
-                }
-            }
-        });
+        p1 = new JPanel();
+        p1.add(flipButton);
+        configGrid.add(p1);
         // row 3
+        sigMastComboBox.addActionListener(e -> {
+            if ((sigMastComboBox.getSelectedIndex() > 0) && (sigHeadComboBox.getItemCount() > 0)) {
+                sigHeadComboBox.setSelectedIndex(0); // either one
+                model.checkDuplicateSignal(sigMastComboBox.getSelectedItem());
+            }
+        });
+        sigHeadComboBox.addActionListener(e -> {
+            if ((sigHeadComboBox.getSelectedIndex() > 0) && (sigMastComboBox.getItemCount() > 0)) {
+                sigMastComboBox.setSelectedIndex(0); // either one
+                model.checkDuplicateSignal(sigHeadComboBox.getSelectedItem());
+            }
+        });
         p1 = new JPanel();
         p1.add(fromBlockLabel);
         p1.add(fromBlockComboBox);
@@ -178,19 +178,13 @@ public class SignalEditFrame extends JmriJFrame {
         p1.add(cm);
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
         inch.setSelected(true);
-        inch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cm.setSelected(!inch.isSelected());
-                updateLength();
-            }
+        inch.addActionListener(e -> {
+            cm.setSelected(!inch.isSelected());
+            updateLength();
         });
-        cm.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inch.setSelected(!cm.isSelected());
-                updateLength();
-            }
+        cm.addActionListener(e -> {
+            inch.setSelected(!cm.isSelected());
+            updateLength();
         });
         configGrid.add(p1);
         p.add(configGrid);
@@ -205,9 +199,7 @@ public class SignalEditFrame extends JmriJFrame {
         p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+        cancel.addActionListener((ActionEvent e) -> frame.dispose());
 //        JButton apply;
 //        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
 //        apply.addActionListener(this::applyPressed);
@@ -258,9 +250,9 @@ public class SignalEditFrame extends JmriJFrame {
         if (sr == null) {
             throw new IllegalArgumentException("Null Signal object");
         }
-        log.debug("SIGNALEDIT FROMBLOCK={}", sr.getFromBlock().getDisplayName());
+        //log.debug("SIGNALEDIT FROMBLOCK={}", sr.getFromBlock().getDisplayName());
         fromBlockComboBox.setSelectedItemByName(sr.getFromBlock().getDisplayName());
-        log.debug("SIGNALEDIT TOBLOCK={}", sr.getFromBlock().getDisplayName());
+        //log.debug("SIGNALEDIT TOBLOCK={}", sr.getFromBlock().getDisplayName());
         toBlockComboBox.setSelectedItemByName(sr.getToBlock().getDisplayName());
         if (signal instanceof SignalMast) {
             sigMastComboBox.setSelectedItemByName(sr.getSignal().getDisplayName());

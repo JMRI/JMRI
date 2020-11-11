@@ -50,7 +50,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     private OPath _path;
     private final String[] tempRow = new String[NUMCOLS];
     private TableFrames.PathTurnoutFrame _parent;
-    private BlockPathEditFrame _tabbedParent;
     private final boolean _tabbed; // updated from prefs (restart required)
 
     public PathTurnoutTableModel() {
@@ -204,8 +203,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         }
 
         BeanSetting bs = _path.getSettings().get(row);
-        Turnout t = null;
-
+        Turnout t;
         switch (col) {
             case TURNOUT_NAME_COL:
                 t = InstanceManager.turnoutManagerInstance().getTurnout((String) value);

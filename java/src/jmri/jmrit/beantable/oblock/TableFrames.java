@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableFrames implements InternalFrameListener {
 
-    private static int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
+    private static final int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
     protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
     public static final int STRUT_SIZE = 10;
@@ -229,58 +229,46 @@ public class TableFrames implements InternalFrameListener {
         JMenu print = new JMenu(Bundle.getMessage("PrintTable"));
         JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintOBlockTable"));
         print.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    oBlockTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
-                }
+        printItem.addActionListener(e -> {
+            try {
+                MessageFormat headerFormat = new MessageFormat(Bundle.getMessage("TitleOBlockTable"));
+                MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                oBlockTable.print(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+            } catch (java.awt.print.PrinterException e1) {
+                log.warn("error printing: {}", e1, e1);
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintPortalTable"));
         print.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    portalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
-                }
+        printItem.addActionListener(e -> {
+            try {
+                MessageFormat headerFormat = new MessageFormat(Bundle.getMessage("TitlePortalTable"));
+                MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                portalTable.print(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+            } catch (java.awt.print.PrinterException e1) {
+                log.warn("error printing: {}", e1, e1);
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintSignalTable"));
         print.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    signalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
-                }
+        printItem.addActionListener(e -> {
+            try {
+                MessageFormat headerFormat = new MessageFormat(Bundle.getMessage("TitleSignalTable"));
+                MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                signalTable.print(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+            } catch (java.awt.print.PrinterException e1) {
+                log.warn("error printing: {}", e1, e1);
             }
         });
         printItem = new JMenuItem(Bundle.getMessage("PrintXRef"));
         print.add(printItem);
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
-                    MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
-                    blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
-                } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: {}", e1, e1);
-                }
+        printItem.addActionListener(e -> {
+            try {
+                MessageFormat headerFormat = new MessageFormat(Bundle.getMessage("OpenXRefMenu", ""));
+                MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
+                blockPortalTable.print(JTable.PrintMode.FIT_WIDTH, headerFormat, footerFormat);
+            } catch (java.awt.print.PrinterException e1) {
+                log.warn("error printing: {}", e1, e1);
             }
         });
         return print;
@@ -308,20 +296,15 @@ public class TableFrames implements InternalFrameListener {
         // Options menu
         JMenu optionMenu = new JMenu(Bundle.getMessage("MenuOptions"));
         _showWarnItem = new JMenuItem(Bundle.getMessage("SuppressWarning"));
-        _showWarnItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                String cmd = event.getActionCommand();
-                setShowWarnings(cmd);
-            }
+        _showWarnItem.addActionListener(event -> {
+            String cmd = event.getActionCommand();
+            setShowWarnings(cmd);
         });
         optionMenu.add(_showWarnItem);
         setShowWarnings("ShowWarning");
 
         JMenuItem importBlocksItem = new JMenuItem(Bundle.getMessage("ImportBlocksMenu"));
-        importBlocksItem.addActionListener((ActionEvent event) -> {
-            importBlocks();
-        });
+        importBlocksItem.addActionListener((ActionEvent event) -> importBlocks());
         optionMenu.add(importBlocksItem);
         // disable ourself if there is no primary Block manager available
         if (jmri.InstanceManager.getNullableDefault(jmri.BlockManager.class) == null) { // means Block list is empty
@@ -807,7 +790,6 @@ public class TableFrames implements InternalFrameListener {
      * @return true if successful
      */
     protected boolean openPathEditor(@Nonnull String blockName, @CheckForNull String pathName, BlockPathTableModel model) {
-        int result = 0;
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
         if (block == null) {
             log.error("OBlock {} not found", blockName);
@@ -971,12 +953,12 @@ public class TableFrames implements InternalFrameListener {
 
     // common dispose
     protected void disposeBlockPathFrame(OBlock block) {
-        if (_tabbed) {
+        if (!_tabbed) {
             //BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
             // TODO frame.getModel().removeListener();
             //_blockPathMap.remove(block.getSystemName()); // block not stored in map, required to remove listener?
             // frame.dispose(); not required (closeable window)
-        } else {
+            //} else {
             BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
             frame.getModel().removeListener();
             _blockPathMap.remove(block.getSystemName());
@@ -1238,9 +1220,7 @@ public class TableFrames implements InternalFrameListener {
             pathTurnoutModel = new PathTurnoutTableModel(path);
             pathTurnoutTable = makePathTurnoutTable(pathTurnoutModel);
             panel.setModel(pathTurnoutModel);
-            ActionListener addTurnoutAction= e -> {
-                addTurnoutPane(path, pathTurnoutModel);
-            };
+            ActionListener addTurnoutAction= e -> addTurnoutPane(path, pathTurnoutModel);
             addTurnoutButton.addActionListener(addTurnoutAction);
             prompt = new JLabel(Bundle.getMessage("TurnoutTablePrompt"));
         }
@@ -1322,7 +1302,6 @@ public class TableFrames implements InternalFrameListener {
             _pathTurnoutMap.put(pathTurnoutName, frame);
             frame.setVisible(true);
             desktopframe.getContentPane().add(frame);
-            frame.moveToFront();
         } else {
             frame.setVisible(true);
             try {
@@ -1330,8 +1309,8 @@ public class TableFrames implements InternalFrameListener {
             } catch (PropertyVetoException pve) {
                 log.warn("PathTurnout Table Frame for \"{}\" vetoed setIcon {}", pathTurnoutName, pve);
             }
-            frame.moveToFront();
         }
+        frame.moveToFront();
     }
 
     // *********** Open stand alone Path-Turnout Edit Panel for _tabbed *********************
@@ -1364,9 +1343,7 @@ public class TableFrames implements InternalFrameListener {
         p.add(turnouttable);
         JButton cancel;
         p.add(cancel = new JButton(Bundle.getMessage("ButtonOK"))); // no need to save things, handled by TurnoutTable
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+        cancel.addActionListener((ActionEvent e) -> frame.dispose());
         frame.add(p);
         frame.pack();
         frame.setVisible(true);
@@ -1408,9 +1385,7 @@ public class TableFrames implements InternalFrameListener {
         p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> {
-            frame.dispose();
-        });
+        cancel.addActionListener((ActionEvent e) -> frame.dispose());
         JButton ok;
         p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {

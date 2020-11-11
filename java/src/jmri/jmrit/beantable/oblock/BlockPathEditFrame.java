@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Defines a GUI for editing OBlock - OPath objects in the _tabbed OBlock Table interface.
@@ -32,11 +33,6 @@ public class BlockPathEditFrame extends JmriJFrame {
     private final JComboBox<String> fromPortalComboBox = new JComboBox<>(p0);
     private final JComboBox<String> toPortalComboBox = new JComboBox<>(p0);
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("Path"), Bundle.getMessage("ButtonOK")), JLabel.LEADING);
-    static final String[] COLUMN_NAMES = {
-            Bundle.getMessage("ColumnSystemName"),
-            Bundle.getMessage("ColumnUserName"),
-            Bundle.getMessage("Include"),
-            Bundle.getMessage("ColumnLabelSetState")};
     static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
@@ -91,7 +87,7 @@ public class BlockPathEditFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        frame.setSize(370, 500);
+        frame.setSize(400, 500);
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
@@ -112,10 +108,26 @@ public class BlockPathEditFrame extends JmriJFrame {
 
         // row 3
         configGrid.add(fromPortalLabel);
+        fromPortalComboBox.addActionListener(e -> {
+            if ((fromPortalComboBox.getItemCount() > 0) && (fromPortalComboBox.getSelectedItem() != null) &&
+                    (toPortalComboBox.getSelectedItem() != null)
+                    && (fromPortalComboBox.getSelectedItem().equals(toPortalComboBox.getSelectedItem()))) {
+                log.debug("resetting ToPortal");
+                toPortalComboBox.setSelectedIndex(0); // clear the other one
+            }
+        });
         configGrid.add(fromPortalComboBox);
 
         // row 4
         configGrid.add(toPortalLabel);
+        toPortalComboBox.addActionListener(e -> {
+            if ((fromPortalComboBox.getItemCount() > 0) && (fromPortalComboBox.getSelectedItem() != null) &&
+                    (toPortalComboBox.getSelectedItem() != null)
+                    && (fromPortalComboBox.getSelectedItem().equals(toPortalComboBox.getSelectedItem()))) {
+                log.debug("resetting ToPortal");
+                fromPortalComboBox.setSelectedIndex(0); // clear the other one
+            }
+        });
         configGrid.add(toPortalComboBox);
 
         // row 5

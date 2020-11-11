@@ -204,12 +204,12 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
     @Override
     public void setMenuBar(BeanTableFrame<OBlock> f) {
-        //        if (tf == null) {
-        //            initTableFrames();
-        //        }
         if (_tabbed) {
             //final JmriJFrame finalF = f;   // needed for anonymous ActionListener class on dialogs, see TurnoutTableAction ?
             JMenuBar menuBar = f.getJMenuBar();
+            if (menuBar == null) {
+                log.debug("NULL MenuBar");
+            }
             MenuElement[] subElements;
             JMenu fileMenu = null;
             for (int i = 0; i < menuBar.getMenuCount(); i++) {
@@ -237,30 +237,31 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             }
             fileMenu.add(otp.getPrintItem());
 
-            //f.setJMenuBar(tf.addMenus(menuBar));  // setJMenuBar(addMenus(this.getJMenuBar())); doesn't work
+            menuBar.add(otp.getOptionMenu());
+            menuBar.add(otp.getTablesMenu());
+            log.debug("setMenuBar for OBLOCKS");
 
             // check for menu (copied from TurnoutTableAction)
-            boolean menuAbsent = true;
-            for (int m = 0; m < menuBar.getMenuCount(); ++m) {
-                String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
-                if (name.equals(Bundle.getMessage("MenuOptions"))) {
-                    // using first menu for check, should be identical to next JMenu Bundle
-                    menuAbsent = false;
-                    break;
-                }
-            }
-            if (menuAbsent) { // create it
-                int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
-                int offset = 1;
-                log.debug("setMenuBar number of menu items = {}", pos);
-                for (int i = 0; i <= pos; i++) {
-                    if (menuBar.getComponent(i) instanceof JMenu) {
-                        if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
-                            offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
-                        }
-                    }
-                }
-                JMenu opsMenu = new JMenu(Bundle.getMessage("MenuOptions") + " Test");
+//            boolean menuAbsent = true;
+//            for (int m = 0; m < menuBar.getMenuCount(); ++m) {
+//                String name = menuBar.getMenu(m).getAccessibleContext().getAccessibleName();
+//                if (name.equals(Bundle.getMessage("MenuOptions"))) {
+//                    // using first menu for check, should be identical to next JMenu Bundle
+//                    menuAbsent = false;
+//                    break;
+//                }
+//            }
+//            if (menuAbsent) { // create it
+//                int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
+//                int offset = 1;
+//                log.debug("setMenuBar number of menu items = {}", pos);
+//                for (int i = 0; i <= pos; i++) {
+//                    if (menuBar.getComponent(i) instanceof JMenu) {
+//                        if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
+//                            offset = -1; // correct for use as part of ListedTableAction where the Help Menu is not yet present
+//                        }
+//                    }
+//                }
                 // add separate items, actionhandlers? next 2 menuItem examples copied from TurnoutTableAction
 
         //            JMenuItem item = new JMenuItem(Bundle.getMessage("TurnoutAutomationMenuItemEdit"));
@@ -271,7 +272,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //                    new TurnoutOperationFrame(finalF);
         //                }
         //            });
-                menuBar.add(opsMenu, pos + offset); // test
+        //            menuBar.add(opsMenu, pos + offset); // test
         //
         //            JMenu speedMenu = new JMenu(Bundle.getMessage("SpeedsMenu"));
         //            item = new JMenuItem(Bundle.getMessage("SpeedsMenuItemDefaults"));
@@ -283,7 +284,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         //                }
         //            });
         //            menuBar.add(speedMenu, pos + offset + 1); // add this menu to the right of the previous
-            }
+        //    }
             f.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         }
     }
@@ -293,7 +294,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    JButton addButton;
+    //JButton addButton;
     JCheckBox autoSystemNameBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;
@@ -367,13 +368,13 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         }
         String sName = "OB" + startAddress.getText();
         // initial check for empty entry
-        if ((sName.isEmpty()) && (!autoSystemNameBox.isSelected())) {
+        if (autoSystemNameBox.isSelected()) {
+            startAddress.setBackground(Color.white);
+        } else {
             statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
             statusBarLabel.setForeground(Color.red);
             startAddress.setBackground(Color.red);
             return;
-        } else {
-            startAddress.setBackground(Color.white);
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the OBlockManager

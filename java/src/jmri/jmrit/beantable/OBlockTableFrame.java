@@ -32,9 +32,10 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
         fileMenu.add(new jmri.configurexml.StoreMenu());
         fileMenu.add(panel.getPrintItem());
 
-        menuBar.add(panel.getOptionMenu());
+        menuBar.add(panel.getOptionMenu()); // configure to show up on oblock.TableFrames when called from Tools menu
         menuBar.add(panel.getTablesMenu());
-        setJMenuBar(menuBar); // TODO configure to show up on oblock.TableFrames when called from Tools menu
+
+        setJMenuBar(menuBar); // this menubar shows when table opened as unlisted/startup action
 
         addHelpMenu(helpTarget, true);
 
@@ -48,7 +49,6 @@ public class OBlockTableFrame extends BeanTableFrame<OBlock> {
 
         // add extras, if desired by subclass
         extras();
-
     }
 
     @Override

@@ -27,8 +27,7 @@ public class AudioTableFrame extends BeanTableFrame<Audio> {
 
     AudioTablePanel audioPanel;
 
-    public AudioTableFrame(AudioTablePanel panel,
-            String helpTarget) {
+    public AudioTableFrame(AudioTablePanel panel, String helpTarget) {
 
         super();
 

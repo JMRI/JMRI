@@ -86,7 +86,13 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         }
     }
 
-    void addHeaderListener(JTable table) {
+    /**
+     * Respond to mouse events to show/hide columns.
+     * public access to allow setting from OBlockTablePanel.
+     *
+     * @param table the tbale based on this model
+     */
+    public void addHeaderListener(JTable table) {
         addMouseListenerToHeader(table);
     }
 
@@ -128,9 +134,12 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
     public void clickOn(OBlock t) {
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getMasterClassName() {
-        return OBlockTableModel.class.getName();
+        return getClassName();
     }
 
     protected List<OBlock> getBeanList() {
@@ -669,9 +678,11 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
             case LENGTHCOL:
                 return Bundle.getMessage("BlockLengthColName");
             case UNITSCOL:
-            case DELETE_COL:
+                return " "; // make each unique yet without a label
             case EDIT_COL:
                 return "  ";
+            case DELETE_COL:
+                return "   ";
             case ERR_SENSORCOL:
                 return Bundle.getMessage("ErrorSensorCol");
             case REPORTERCOL:
@@ -775,7 +786,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         return (col != SYSNAMECOL && col != STATECOL);
     }
 
-    /*********************** combo box cell editors *********************************/
+    //*********************** combo box cell editors *********************************/
+
     /**
      * Provide a table cell renderer looking like a JComboBox as an
      * editor/renderer for the OBlock table SPEED column.
@@ -918,6 +930,10 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         if (property.equals("length") || property.equals("UserName")) {
             _parent.updateOBlockTablesMenu();
         }
+    }
+
+    protected String getClassName() {
+        return jmri.jmrit.beantable.OBlockTableAction.class.getName();
     }
 
     private final static Logger log = LoggerFactory.getLogger(OBlockTableModel.class);

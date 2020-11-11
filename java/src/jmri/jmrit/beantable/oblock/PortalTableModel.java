@@ -44,7 +44,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     static public final int DELETE_COL = 3;
     static public final int EDIT_COL = 4;
     public static final int NUMCOLS = 4;
-    // TODO add EDIT column if _tabbed
+    // reports + 1 for EDIT column if _tabbed
 
     PortalManager _manager;
     private final String[] tempRow = new String[NUMCOLS];
@@ -297,7 +297,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             case FROM_BLOCK_COLUMN:
             case NAME_COLUMN:
             case TO_BLOCK_COLUMN:
-                return new JTextField(20).getPreferredSize().width;
+                return new JTextField(30).getPreferredSize().width;
             case DELETE_COL:
             case EDIT_COL:
                 return new JButton("DELETE").getPreferredSize().width;
