@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-12 --
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2020-11-11 --
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -18,10 +18,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>Le Programmeur Basique</h1>
@@ -160,7 +160,7 @@
         "Basic_BasicPane.shtml">Next</a></p>
 
         <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
