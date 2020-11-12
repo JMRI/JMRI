@@ -100,12 +100,23 @@ public class SprogCbusSimpleModeSwitcherFrame extends SprogCbusModeSwitcherFrame
             panel.add(modePane, BorderLayout.CENTER);
         }
         
+        // add help menu to window
+        setHelp();
+
         this.add(panel);
         pack();
         setVisible(true);
     }
 
 
+    /**
+     * Define help menu for this window.
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame", true); // NOI18N
+    }
+
+    
     /**
      * disconnect from the CBUS
      */
