@@ -100,11 +100,10 @@
       indicating the type of the object, followed by a system- and
       type-specific "suffix string" identifying a specific object.
       <ul>
-        <li>The system prefix is a single uppercase or lowercase letter,
-            optionally followed by one or more digits. Special characters
-            are not allowed.
-            This simple form allows us to always find the system prefix
-            and type letter even if we don't know the full list of 
+        <li>The system prefix is a single uppercase or lowercase letter, optionally followed by one
+	    or more digits. Therefore, "S," "s", "S2," and "s2" are all examples of valid -- and
+	    different -- system names.  Special characters are not allowed. This simple form allows
+	    us to always find the system prefix and type letter even if we don't know the full list of 
             hardware systems involved.
         <li>The type letter defines the type of model-railroad object, 
             such as (T)urnout or (S)ensor, see <a href="#types">below</a>.
@@ -118,7 +117,7 @@
       <p>Examples:</p>
 
       Note: These assume the default values of system prefix letters,
-      but they certainly could have been defined differently.
+      but they certainly could have been defined differently, including using lower case and numbers.
       
       <ul>
         <li>LT23 - <u>L</u>ocoNet <u>T</u>urnout <u>23</u>.</li>
@@ -129,9 +128,9 @@
             on the node with address 2.</li>
       </ul>
       
-      Note that there is no assumption of pattern to the
-      names; they don't have to be assigned monotonically, nor are
-      they restricted to a single system. 
+      Note in these examples that there is a pattern to the name for certain hardware.  However, there is no  
+      assumption that names are assigned in numeric order, that is you could have CS1001, CS1021, CS3044, as 
+      well as LS1001, cS1001, etc. as your only defined sensors. 
       
       <a name="hardware" id="hardware"></a>
       <h3>System Prefix</h3>
