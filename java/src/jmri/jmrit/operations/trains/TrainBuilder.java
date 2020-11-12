@@ -3544,14 +3544,16 @@ public class TrainBuilder extends TrainCommon {
                 locationsNotServiced.add(track.getLocation());
                 continue;
             }
-            ScheduleItem si = getScheduleItem(car, track);
-            if (si == null) {
-                continue; // no match
-            } // only use tracks serviced by this train?
+            // only use tracks serviced by this train?
             if (car.getTrack().isAddCustomLoadsEnabled() &&
                     _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null) {
                 continue;
             }
+            // only the first match in a schedule is used for a spur
+            ScheduleItem si = getScheduleItem(car, track);
+            if (si == null) {
+                continue; // no match
+            } 
             // need to set car load so testDestination will work properly
             String oldCarLoad = car.getLoadName(); // should be the default empty
             car.setLoadName(si.getReceiveLoadName());
@@ -3576,9 +3578,9 @@ public class TrainBuilder extends TrainCommon {
                 car.setLoadName(oldCarLoad);
                 continue;
             }
+            // try routing car
             car.setFinalDestination(track.getLocation());
             car.setFinalDestinationTrack(track);
-            // try routing car
             if (router.setDestination(car, _train, _buildReport) && car.getDestination() != null) {
                 // return car with this custom load and destination
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCreateNewLoadForCar"),
