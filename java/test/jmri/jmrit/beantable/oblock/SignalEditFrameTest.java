@@ -2,9 +2,12 @@ package jmri.jmrit.beantable.oblock;
 
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.awt.*;
 
 /**
  *
@@ -15,6 +18,7 @@ public class SignalEditFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SignalEditFrame sef = new SignalEditFrame(
                 "Edit Signal-1",
                 null,

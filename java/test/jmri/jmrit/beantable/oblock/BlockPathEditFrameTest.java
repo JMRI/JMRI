@@ -3,12 +3,14 @@ package jmri.jmrit.beantable.oblock;
 import jmri.jmrit.logix.OBlock;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import java.awt.*;
 
 /**
  *
@@ -19,6 +21,7 @@ public class BlockPathEditFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         OBlock ob = new OBlock("OB1");
         BlockPathEditFrame bpef = new BlockPathEditFrame(
                 "Test BPEF",

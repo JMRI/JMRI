@@ -3,9 +3,12 @@ package jmri.jmrit.beantable.oblock;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.awt.*;
 
 /**
  *
@@ -16,6 +19,7 @@ public class PortalEditFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Portal p = new Portal("portal-1");
         PortalEditFrame pef = new PortalEditFrame(
                 "Edit Portal-1",
