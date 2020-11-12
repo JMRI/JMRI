@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.logixng.configurexml;
 
-import jmri.jmrix.loconet.logixng.configurexml.ExpressionSlotUsageXml;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
