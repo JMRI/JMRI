@@ -19,7 +19,7 @@ public class GetNumSlotsDialogTest {
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        GetNumSlotsDialog e = new GetNumSlotsDialog(null);
+        GetNumSlotsDialog e = new GetNumSlotsDialog(null, null);
         Assert.assertNotNull(e);
     }
     
