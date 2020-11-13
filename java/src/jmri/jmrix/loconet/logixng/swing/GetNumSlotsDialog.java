@@ -1,9 +1,9 @@
 package jmri.jmrix.loconet.logixng.swing;
 
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.*;
@@ -22,20 +22,32 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
     private static final int NUM_LOCO_TO_REQUEST = 119;
     
     private final LocoNetSystemConnectionMemo _memo;
-    private final List<DccThrottle> _throttles = new ArrayList<>();
     private JTextField _numEnginesField;
     private JTextField _requestLocoField;
     private JLabel _status;
     private int _maxNumLocos = 0;
     private boolean _freeSlots = false;
+    private final JTextField _textField;
+    private volatile boolean _abort = false;
     
     
-    public GetNumSlotsDialog(LocoNetSystemConnectionMemo memo) {
+    public GetNumSlotsDialog(LocoNetSystemConnectionMemo memo, JTextField textField) {
         super((Frame)null, true);
         _memo = memo;
+        _textField = textField;
     }
     
     public void initComponents() {
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+                _abort = true;
+                releaseThrottles();
+            }
+        });
+        
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         JPanel numEnginesPanel = new JPanel();
@@ -64,6 +76,11 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
         getContentPane().add(_status);
         
         JButton buttonOK = new JButton(Bundle.getMessage("ButtonOK"));
+        buttonOK.addActionListener((ActionEvent e) -> {
+            _abort = true;
+            releaseThrottles();
+            dispose();
+        });
         getContentPane().add(buttonOK);
         
         pack();
@@ -75,17 +92,17 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
             _memo.getSlotManager().update();
         });
         
-        // Wait 30 seconds before starting to try request throttles
+        // Wait 10 seconds before starting to try request throttles
         ThreadingUtil.runOnGUIDelayed(() -> {
             _freeSlots = false;
             requestThrottle(1);
-        },30000);
+        },10000);
         
         setVisible(true);
     }
     
     private void requestThrottle(int address) {
-        System.out.format("Request throttle: %d%n", address);
+//        System.out.format("Request throttle: %d%n", address);
         ThreadingUtil.runOnGUI(() -> {
             _requestLocoField.setText(Integer.toString(address));
         });
@@ -95,56 +112,46 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
     }
     
     private void updateNumLocos() {
-        System.out.format("Update num locos%n");
+//        System.out.format("Update num locos%n");
         // _maxNumLocos
         int numLocos = 0;
         SlotManager slotManager = _memo.getSlotManager();
         for (int i=0; i < 120; i++) {
             LocoNetSlot slot = slotManager.slot(i);
-            String status = "None";
-            switch (slot.slotStatus()) {
-                case LnConstants.LOCO_FREE: status = "Free"; break;
-                case LnConstants.LOCO_COMMON: status = "Common"; break;
-                case LnConstants.LOCO_IN_USE: status = "InUse"; break;
-                case LnConstants.LOCO_IDLE: status = "Idle"; break;
-                default: throw new RuntimeException("slot.slotStatus() has invalid value: "+Integer.toString(slot.slotStatus()));
-            }
             if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
                 numLocos++;
             }
-            System.out.format("Slot %d: %s. Num locos: %d, Max locos: %d%n", i, status, numLocos, _maxNumLocos);
         }
         
         if (numLocos > _maxNumLocos) {
             _maxNumLocos = numLocos;
             ThreadingUtil.runOnGUI(() -> {
                 _numEnginesField.setText(Integer.toString(_maxNumLocos));
+                _textField.setText(Integer.toString(_maxNumLocos));
             });
         }
     }
-/*    
-    private void requestThrottles() {
+    
+    private void releaseThrottles() {
         for (int i=1; i < 120; i++) {
-            requestThrottle(i);
-        }
-        for (DccThrottle throttle : _throttles) {
-//            InstanceManager.getDefault(ThrottleManager.class)
-            _memo.getThrottleManager().releaseThrottle(throttle, this);
+            LocoNetSlot slot = _memo.getSlotManager().slot(i);
+            if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
+                _memo.getLnTrafficController().sendLocoNetMessage(slot.releaseSlot());
+            }
         }
     }
-*/    
+    
     @Override
     public void notifyThrottleFound(DccThrottle t) {
-        System.out.format("Throttle found: %d%n", t.getLocoAddress().getNumber());
-        _throttles.add(t);
+//        System.out.format("Throttle found: %d%n", t.getLocoAddress().getNumber());
         updateNumLocos();
         ThreadingUtil.runOnGUI(() -> {
             _status.setText("Throttle was added");
         });
-        if (t.getLocoAddress().getNumber() < NUM_LOCO_TO_REQUEST) {
+        if (!_abort && (t.getLocoAddress().getNumber() < NUM_LOCO_TO_REQUEST)) {
             ThreadingUtil.runOnGUIDelayed(() -> {
                 requestThrottle(t.getLocoAddress().getNumber()+1);
-            }, 500);
+            }, 200);
 //            ThreadingUtil.runOnGUIEventually(() -> {
 //                requestThrottle(t.getLocoAddress().getNumber()+1);
 //            });
@@ -153,14 +160,14 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
 
     @Override
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-        System.out.format("Throttle failed%n");
+//        System.out.format("Throttle failed%n");
         ThreadingUtil.runOnGUI(() -> {
             _status.setText(reason);
         });
-        if (address.getNumber() < NUM_LOCO_TO_REQUEST) {
+        if (!_abort && (address.getNumber() < NUM_LOCO_TO_REQUEST)) {
             ThreadingUtil.runOnGUIDelayed(() -> {
                 requestThrottle(address.getNumber()+1);
-            }, 500);
+            }, 200);
 //            ThreadingUtil.runOnGUIEventually(() -> {
 //                requestThrottle(address.getNumber()+1);
 //            });
@@ -169,20 +176,20 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
 
     @Override
     public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-        System.out.format("Decision required%n");
+//        System.out.format("Decision required%n");
 //        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
-        System.out.format("notifyChangedSlot: %d%n", s.getSlot());
+//        System.out.format("notifyChangedSlot: %d%n", s.getSlot());
         
         // Try to free slot
         if (_freeSlots
                 && (s.getSlot() != 0)
                 && (s.slotStatus() != LnConstants.LOCO_FREE)
                 && (s.slotStatus() != LnConstants.LOCO_COMMON)) {
-            System.out.format("Send message: %s%n", s.releaseSlot().toMonitorString());
+//            System.out.format("Send message: %s%n", s.releaseSlot().toMonitorString());
             _memo.getLnTrafficController().sendLocoNetMessage(s.releaseSlot());
         }
     }

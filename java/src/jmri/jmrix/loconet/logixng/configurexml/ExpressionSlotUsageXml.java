@@ -5,7 +5,6 @@ import java.util.*;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 
@@ -57,6 +56,8 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
         element.addContent(new Element("number").addContent(Integer.toString(p.getNumber())));
         
         element.addContent(new Element("percentPieces").addContent(p.getPercentPieces().name()));
+        
+        element.addContent(new Element("totalSlots").addContent(Integer.toString(p.getTotalSlots())));
 
         return element;
     }
@@ -120,6 +121,11 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
         Element percentPieces = shared.getChild("percentPieces");
         if (percentPieces != null) {
             h.setPercentPieces(ExpressionSlotUsage.PercentPieces.valueOf(percentPieces.getTextTrim()));
+        }
+
+        Element totalNumber = shared.getChild("totalSlots");
+        if (totalNumber != null) {
+            h.setTotalSlots(Integer.parseInt(totalNumber.getText()));
         }
 
         InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(h);

@@ -46,6 +46,7 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
     private JComboBox<Compare> _compareComboBox;
     private JTextField _numberField;
     private JComboBox<PercentPieces> _percentPiecesComboBox;
+    private JTextField _totalSlotsField;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -163,7 +164,7 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
             _tabbedPane,
             _compareComboBox,
             _numberField,
-            _percentPiecesComboBox,
+            _percentPiecesComboBox
             };
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("ExpressionSlotUsage_Long"), components);
@@ -172,14 +173,31 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         
         panel.add(queryPanel);
         
+        JPanel numSlotsPanel = new JPanel();
+        numSlotsPanel.add(new JLabel(Bundle.getMessage("TotalNumSlots")));
+        format = NumberFormat.getInstance();
+        formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setMaximum(120);
+        formatter.setAllowsInvalid(false);
+        // If you want the value to be committed on each keystroke instead of focus lost
+        formatter.setCommitsOnValidEdit(true);
+        _totalSlotsField = new JFormattedTextField();
+        _totalSlotsField.setColumns(3);
+        numSlotsPanel.add(_totalSlotsField);
         _findNumSlotsButton = new JButton(Bundle.getMessage("GetNumSlots"));
         _findNumSlotsButton.addActionListener((ActionEvent e) -> {
             LocoNetSystemConnectionMemo memo =
                     _locoNetConnection.getItemAt(_locoNetConnection.getSelectedIndex())._memo;
-            new GetNumSlotsDialog(memo).initComponents();
+            new GetNumSlotsDialog(memo, _totalSlotsField).initComponents();
         });
+        numSlotsPanel.add(_findNumSlotsButton);
+        if (expression != null) {
+            _totalSlotsField.setText(Integer.toString(expression.getTotalSlots()));
+        }
         
-        panel.add(_findNumSlotsButton);
+        panel.add(numSlotsPanel);
     }
     
     /** {@inheritDoc} */
@@ -231,6 +249,7 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         expression.setCompare(_compareComboBox.getItemAt(_compareComboBox.getSelectedIndex()));
         expression.setNumber(Integer.parseInt(_numberField.getText()));
         expression.setPercentPieces(_percentPiecesComboBox.getItemAt(_percentPiecesComboBox.getSelectedIndex()));
+        expression.setTotalSlots(Integer.parseInt(_totalSlotsField.getText()));
     }
     
     /** {@inheritDoc} */

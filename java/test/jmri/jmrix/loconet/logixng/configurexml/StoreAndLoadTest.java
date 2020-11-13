@@ -79,6 +79,7 @@ public class StoreAndLoadTest {
         expressionSlotUsage.setCompare(ExpressionSlotUsage.Compare.Equal);
         expressionSlotUsage.setNumber(20);
         expressionSlotUsage.setPercentPieces(ExpressionSlotUsage.PercentPieces.Percent);
+        expressionSlotUsage.setTotalSlots(30);
         maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
         and.getChild(1).connect(maleSocket);
         
@@ -96,6 +97,7 @@ public class StoreAndLoadTest {
         expressionSlotUsage.setCompare(ExpressionSlotUsage.Compare.GreaterThan);
         expressionSlotUsage.setNumber(11);
         expressionSlotUsage.setPercentPieces(ExpressionSlotUsage.PercentPieces.Pieces);
+        expressionSlotUsage.setTotalSlots(0);
         maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
         and.getChild(2).connect(maleSocket);
         

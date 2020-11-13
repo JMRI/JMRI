@@ -22,8 +22,9 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     private SimpleState _simpleState = SimpleState.InUse;
     private final Set<AdvancedState> _advancedStates = new HashSet<>();
     private Compare _compare = Compare.LessThan;
-    private PercentPieces _percentPieces = PercentPieces.Pieces;
     private int _number = 0;
+    private PercentPieces _percentPieces = PercentPieces.Pieces;
+    private int _totalSlots = 0;
     
     
     public ExpressionSlotUsage(String sys, String user, LocoNetSystemConnectionMemo memo) {
@@ -44,7 +45,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void setMemo(LocoNetSystemConnectionMemo memo) {
-        assertListenersAreNotRegistered(log, "setTimerType");
+        assertListenersAreNotRegistered(log, "setMemo");
         _memo = memo;
     }
     
@@ -53,7 +54,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void setAdvanced(boolean advanced) {
-        assertListenersAreNotRegistered(log, "setHasHasNot");
+        assertListenersAreNotRegistered(log, "setAdvanced");
         _advanced = advanced;
     }
     
@@ -62,7 +63,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void set_Has_HasNot(Has_HasNot hasHasNot) {
-        assertListenersAreNotRegistered(log, "setHasHasNot");
+        assertListenersAreNotRegistered(log, "set_Has_HasNot");
         _hasHasNot = hasHasNot;
     }
     
@@ -80,7 +81,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void setAdvancedStates(Set<AdvancedState> states) {
-        assertListenersAreNotRegistered(log, "setTimerType");
+        assertListenersAreNotRegistered(log, "setAdvancedStates");
         _advancedStates.clear();
         _advancedStates.addAll(states);
     }
@@ -90,7 +91,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void setCompare(Compare compare){
-        assertListenersAreNotRegistered(log, "setTimerType");
+        assertListenersAreNotRegistered(log, "setCompare");
         _compare = compare;
     }
     
@@ -99,12 +100,21 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     }
     
     public void setNumber(int number) {
-        assertListenersAreNotRegistered(log, "setThreshold");
+        assertListenersAreNotRegistered(log, "setNumber");
         _number = number;
     }
     
     public int getNumber() {
         return _number;
+    }
+    
+    public void setTotalSlots(int totalNumber) {
+        assertListenersAreNotRegistered(log, "setTotalNumber");
+        _totalSlots = totalNumber;
+    }
+    
+    public int getTotalSlots() {
+        return _totalSlots;
     }
     
     public void setPercentPieces(PercentPieces percentPieces) {
@@ -116,55 +126,37 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         return _percentPieces;
     }
     
+    private int getNumWithStatus() {
+        if (_memo == null) return 0;
+        int count = 0;
+        for (int i=1; i < 120; i++) {
+            boolean match = false;
+            LocoNetSlot slot = _memo.getSlotManager().slot(i);
+            if (_advanced) {
+                for (AdvancedState s : _advancedStates) {
+                    if (s._state == slot.slotStatus()) match = true;
+                }
+            } else {
+                if (_simpleState.matches(slot.slotStatus())) match = true;
+            }
+            if (_hasHasNot == Has_HasNot.Has) {
+                if (match) count++;
+            } else {
+                if (!match) count++;
+            }
+        }
+        return count;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-        boolean result = false;
-/*        
-        switch (_timerType) {
-            case WAIT_ONCE_TRIG_ONCE:
-                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    startTimer();
-                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
-                    _timerStatusRef.set(TimerStatus.WAIT_FOR_RESET);
-                    result = true;
-                }
-                break;
-                
-            case WAIT_ONCE_TRIG_UNTIL_RESET:
-                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    startTimer();
-                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
-                    // Don't set _timerStatus to WAIT_FOR_RESET since we want
-                    // to keep returning true until reset()
-                    result = true;
-                }
-                break;
-                
-            case REPEAT_SINGLE_DELAY:
-                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    startTimer();
-                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
-                    startTimer();
-                    result = true;
-                }
-                break;
-                
-            case REPEAT_DOUBLE_DELAY:
-                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    startTimer();
-                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
-                    _onOrOff = ! _onOrOff;
-                    startTimer();
-                }
-                result = _onOrOff;
-                break;
-                
-            default:
-                throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
-        }
-*/        
-        return result;
+        int count = getNumWithStatus();
+        
+        int compareToNum = _percentPieces == PercentPieces.Percent
+                ? Math.round(((float)_number) / _totalSlots * 100) : _number;
+        
+        return _compare.compare(count, compareToNum);
     }
 
     /** {@inheritDoc} */
@@ -201,7 +193,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
             stateStr = _simpleState._text;
         }
         
-        return Bundle.getMessage(locale, "ExpressionSlotUsage_Long",
+        return Bundle.getMessage(locale, "ExpressionSlotUsage_LongConnection",
                 _hasHasNot.toString(),
                 stateStr,
                 _compare.toString(),
@@ -209,25 +201,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
                 _percentPieces.toString(),
                 _memo != null ? _memo.getSystemPrefix() : Bundle.getMessage("MemoNotSet")
                 );
-/*        
-        switch (_timerType) {
-            case WAIT_ONCE_TRIG_ONCE:
-                return Bundle.getMessage(locale, "Timer_Long_WaitOnceTrigOnce", _threshold);
-                
-            case WAIT_ONCE_TRIG_UNTIL_RESET:
-                return Bundle.getMessage(locale, "Timer_Long_WaitOnceTrigUntilReset", _threshold);
-                
-            case REPEAT_SINGLE_DELAY:
-                return Bundle.getMessage(locale, "Timer_Long_RepeatSingleDelay", _threshold);
-                
-            case REPEAT_DOUBLE_DELAY:
-                return Bundle.getMessage(locale, "Timer_Long_RepeatDoubleDelay", _threshold, _delayOn);
-                
-            default:
-                throw new RuntimeException("Unknown value of _timerType: "+_timerType.name());
-        }
-*/        
-//        return Bundle.getMessage(locale, "ExpressionSlotUsage_Long");
     }
 
     /** {@inheritDoc} */
@@ -312,6 +285,13 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         
         public int[] getStates() {
             return _states;
+        }
+        
+        public boolean matches(int state) {
+            for (int s : _states) {
+                if (s == state) return true;
+            }
+            return false;
         }
         
     }

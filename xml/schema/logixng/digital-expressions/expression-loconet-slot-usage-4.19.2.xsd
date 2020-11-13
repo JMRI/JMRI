@@ -102,6 +102,8 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="totalSlots" type="xs:int" minOccurs="1" maxOccurs="1"/>
+
             </xs:sequence>
 
             <xs:attribute name="class" type="classType" use="required"/>
