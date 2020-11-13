@@ -1402,9 +1402,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setLayoutTrackDrawingOptions(LayoutTrackDrawingOptions ltdo) {
         layoutTrackDrawingOptions = ltdo;
 
-        // integrate LayoutEditor drawing options with previous drawing options
-        gContext.setMainlineTrackWidth(layoutTrackDrawingOptions.getMainBlockLineWidth());
-        gContext.setSidelineTrackWidth(layoutTrackDrawingOptions.getSideBlockLineWidth());
+        // copy main/side line block widths
+        gContext.setMainlineBlockWidth(layoutTrackDrawingOptions.getMainBlockLineWidth());
+        gContext.setSidelineBlockWidth(layoutTrackDrawingOptions.getSideBlockLineWidth());
+
+        // copy main/side line track (rail) widths
+        gContext.setMainlineTrackWidth(layoutTrackDrawingOptions.getMainRailWidth());
+        gContext.setSidelineTrackWidth(layoutTrackDrawingOptions.getSideRailWidth());
+
         mainlineTrackColor = layoutTrackDrawingOptions.getMainRailColor();
         sidelineTrackColor = layoutTrackDrawingOptions.getSideRailColor();
         redrawPanel();

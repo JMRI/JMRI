@@ -57,6 +57,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         panel.setAttribute("yscale", Float.toString((float) editor.gContext.getYScale()));
         panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.gContext.getMainlineTrackWidth()));
         panel.setAttribute("sidetrackwidth", Integer.toString(editor.gContext.getSidelineTrackWidth()));
+        panel.setAttribute("mainlineblockwidth", Integer.toString(editor.gContext.getMainlineBlockWidth()));
+        panel.setAttribute("sidetrackblockwidth", Integer.toString(editor.gContext.getSidelineBlockWidth()));
         panel.setAttribute("turnoutcircles", (editor.getTurnoutCircles()) ? "yes" : "no");
         panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
         panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");
@@ -137,10 +139,10 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         }
         log.debug("Number of layoutblock elements: {}", num);
 
-        // include LayoutTracks
-        List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
-        log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
-        for (Object sub : layoutTracks) {
+        // include LayoutTrackViews
+        List<LayoutTrackView> layoutTrackViews = editor.getLayoutTrackViews();
+        log.debug("Number of LayoutTrack elements: {}", layoutTrackViews.size());
+        for (Object sub : layoutTrackViews) {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
                 if (e != null) {

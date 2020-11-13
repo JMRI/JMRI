@@ -366,7 +366,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getSideBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
@@ -396,7 +396,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getMainBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
