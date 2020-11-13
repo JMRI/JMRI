@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory;
 /**
  * Configures an ExpressionMemory object with a Swing JPanel.
  */
-public class ExpressionMemorySwing extends AbstractExpressionSwing {
+public class ExpressionMemorySwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

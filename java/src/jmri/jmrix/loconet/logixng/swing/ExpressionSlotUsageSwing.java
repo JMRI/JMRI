@@ -15,7 +15,7 @@ import jmri.*;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.expressions.swing.AbstractExpressionSwing;
+import jmri.jmrit.logixng.expressions.swing.AbstractDigitalExpressionSwing;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.Has_HasNot;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage.AdvancedState;
@@ -30,7 +30,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
+public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
 
     private JButton _findNumSlotsButton;
     private JComboBox<LocoNetConnection> _locoNetConnection;
@@ -68,7 +68,11 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
         List<LocoNetSystemConnectionMemo> systemConnections =
                 jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
         for (LocoNetSystemConnectionMemo connection : systemConnections) {
-            _locoNetConnection.addItem(new LocoNetConnection(connection));
+            LocoNetConnection c = new LocoNetConnection(connection);
+            _locoNetConnection.addItem(c);
+            if ((expression != null) && (expression.getMemo() == connection)) {
+                _locoNetConnection.setSelectedItem(c);
+            }
         }
         locoNetPanel.add(_locoNetConnection);
         
@@ -128,8 +132,6 @@ public class ExpressionSlotUsageSwing extends AbstractExpressionSwing {
         }
         
         if (expression != null) {
-            _locoNetConnection.setSelectedItem(expression.getMemo());
-            
             if (expression.getAdvanced()) {
                 _tabbedPane.setSelectedComponent(_advancedPanel);
             }

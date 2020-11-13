@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionTimer;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class ExpressionTimerSwing extends AbstractExpressionSwing {
+public class ExpressionTimerSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

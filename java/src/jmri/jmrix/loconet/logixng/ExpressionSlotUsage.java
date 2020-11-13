@@ -2,10 +2,8 @@ package jmri.jmrix.loconet.logixng;
 
 import java.util.*;
 
-import jmri.InstanceManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrix.loconet.*;
 
@@ -36,13 +34,13 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return CategoryLocoNet.LOCONET;
     }
 
     /** {@inheritDoc} */
     @Override
     public boolean isExternal() {
-        return false;
+        return true;
     }
     
     public void setMemo(LocoNetSystemConnectionMemo memo) {
@@ -208,7 +206,8 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
                 stateStr,
                 _compare.toString(),
                 _number,
-                _percentPieces.toString()
+                _percentPieces.toString(),
+                _memo != null ? _memo.getSystemPrefix() : Bundle.getMessage("MemoNotSet")
                 );
 /*        
         switch (_timerType) {

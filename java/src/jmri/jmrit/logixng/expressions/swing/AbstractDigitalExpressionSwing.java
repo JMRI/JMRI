@@ -12,7 +12,7 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 /**
  * Abstract class for SwingConfiguratorInterface
  */
-public abstract class AbstractExpressionSwing implements SwingConfiguratorInterface {
+public abstract class AbstractDigitalExpressionSwing implements SwingConfiguratorInterface {
 
     protected JPanel panel;
     

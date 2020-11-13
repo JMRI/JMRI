@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
 /**
  * Configures an ExpressionSignalHead object with a Swing JPanel.
  */
-public class ExpressionSignalHeadSwing extends AbstractExpressionSwing {
+public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

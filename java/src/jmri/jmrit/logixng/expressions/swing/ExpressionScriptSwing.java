@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionScript;
 /**
  * Configures an ExpressionScript object with a Swing JPanel.
  */
-public class ExpressionScriptSwing extends AbstractExpressionSwing {
+public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

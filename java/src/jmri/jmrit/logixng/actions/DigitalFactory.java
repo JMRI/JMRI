@@ -4,9 +4,9 @@ import java.util.AbstractMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionFactory;
+
+import jmri.jmrit.logixng.*;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -16,8 +16,8 @@ import org.openide.util.lookup.ServiceProvider;
 public class DigitalFactory implements DigitalActionFactory {
 
     @Override
-    public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
-        Set<Map.Entry<Category, Class<? extends Base>>> digitalActionClasses = new HashSet<>();
+    public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses() {
+        Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> digitalActionClasses = new HashSet<>();
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLight.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ActionListenOnBeans.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionLocalVariable.class));

@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.And;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.logixng.ActionUpdateSlots;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.util.*;
 
@@ -97,6 +98,15 @@ public class StoreAndLoadTest {
         expressionSlotUsage.setPercentPieces(ExpressionSlotUsage.PercentPieces.Pieces);
         maleSocket = digitalExpressionManager.registerExpression(expressionSlotUsage);
         and.getChild(2).connect(maleSocket);
+        
+        ActionUpdateSlots actionUpdateSlots = new ActionUpdateSlots(digitalActionManager.getAutoSystemName(), null, null);
+        maleSocket = digitalActionManager.registerAction(actionUpdateSlots);
+        ifThenElse.getChild(1).connect(maleSocket);
+        
+        actionUpdateSlots = new ActionUpdateSlots(digitalActionManager.getAutoSystemName(), null, memo2);
+        actionUpdateSlots.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionUpdateSlots);
+        ifThenElse.getChild(2).connect(maleSocket);
         
 /*        
         if (1==1) {

@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.DigitalFormula;
 /**
  * Configures an Formula object with a Swing JPanel.
  */
-public class DigitalFormulaSwing extends AbstractExpressionSwing {
+public class DigitalFormulaSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

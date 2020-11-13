@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionClock;
 /**
  * Configures an ExpressionClock object with a Swing JPanel.
  */
-public class ExpressionClockSwing extends AbstractExpressionSwing {
+public class ExpressionClockSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

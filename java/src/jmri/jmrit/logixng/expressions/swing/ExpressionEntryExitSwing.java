@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
 /**
  * Configures an ExpressionEntryExit object with a Swing JPanel.
  */
-public class ExpressionEntryExitSwing extends AbstractExpressionSwing {
+public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionWarrant;
 /**
  * Configures an ExpressionWarrant object with a Swing JPanel.
  */
-public class ExpressionWarrantSwing extends AbstractExpressionSwing {
+public class ExpressionWarrantSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

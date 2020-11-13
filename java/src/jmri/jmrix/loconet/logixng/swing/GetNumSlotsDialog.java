@@ -107,6 +107,7 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
                 case LnConstants.LOCO_COMMON: status = "Common"; break;
                 case LnConstants.LOCO_IN_USE: status = "InUse"; break;
                 case LnConstants.LOCO_IDLE: status = "Idle"; break;
+                default: throw new RuntimeException("slot.slotStatus() has invalid value: "+Integer.toString(slot.slotStatus()));
             }
             if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
                 numLocos++;
@@ -121,7 +122,7 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
             });
         }
     }
-    
+/*    
     private void requestThrottles() {
         for (int i=1; i < 120; i++) {
             requestThrottle(i);
@@ -131,7 +132,7 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
             _memo.getThrottleManager().releaseThrottle(throttle, this);
         }
     }
-    
+*/    
     @Override
     public void notifyThrottleFound(DccThrottle t) {
         System.out.format("Throttle found: %d%n", t.getLocoAddress().getNumber());

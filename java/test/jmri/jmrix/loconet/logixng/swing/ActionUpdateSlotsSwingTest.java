@@ -1,11 +1,9 @@
 package jmri.jmrix.loconet.logixng.swing;
 
-import java.awt.GraphicsEnvironment;
-
+import jmri.jmrix.loconet.logixng.ActionUpdateSlots;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,14 +11,20 @@ import org.junit.jupiter.api.*;
  *
  * @author Daniel Bergqvist Copyright 2020
  */
-public class GetNumSlotsDialogTest {
+public class ActionUpdateSlotsSwingTest {
     
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
-        GetNumSlotsDialog e = new GetNumSlotsDialog(null);
+        ActionUpdateSlotsSwing e = new ActionUpdateSlotsSwing();
         Assert.assertNotNull(e);
+    }
+    
+    @Test
+    public void testName() {
+        // Test that swing class has same name as parent class
+        ActionUpdateSlots e = new ActionUpdateSlots("IQDA1", null, null);
+        ActionUpdateSlotsSwing es = new ActionUpdateSlotsSwing();
+        Assert.assertEquals(e.getShortDescription(), es.toString());
     }
     
     // The minimal setup for log4J

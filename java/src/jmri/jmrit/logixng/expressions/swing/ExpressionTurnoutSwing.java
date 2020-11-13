@@ -25,7 +25,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class ExpressionTurnoutSwing extends AbstractExpressionSwing {
+public class ExpressionTurnoutSwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;

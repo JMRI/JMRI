@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 /**
  * Configures an ExpressionLocalVariable object with a Swing JPanel.
  */
-public class ExpressionLocalVariableSwing extends AbstractExpressionSwing {
+public class ExpressionLocalVariableSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

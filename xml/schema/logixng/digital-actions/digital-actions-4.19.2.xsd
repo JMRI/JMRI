@@ -28,6 +28,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-light-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-listen-on-beans-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-local-variable-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-loconet-update-slots-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-memory-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-script-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/action-sensor-4.19.2.xsd"/>
@@ -59,6 +60,7 @@
             <xs:element name="action-light"      type="LogixNG_DigitalAction_ActionLightType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-listen-on-beans"  type="LogixNG_DigitalAction_ActionListenOnBeansType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-local-variable"  type="LogixNG_DigitalAction_ActionLocalVariableType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="action-loconet-update-slots"  type="LogixNG_DigitalAction_ActionLocoNetUpdateSlotsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-memory"     type="LogixNG_DigitalAction_ActionMemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-script"     type="LogixNG_DigitalAction_ActionScriptType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="action-sensor"     type="LogixNG_DigitalAction_ActionSensorType" minOccurs="0" maxOccurs="unbounded" />

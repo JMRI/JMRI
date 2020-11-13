@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.False;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class FalseSwing extends AbstractExpressionSwing {
+public class FalseSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

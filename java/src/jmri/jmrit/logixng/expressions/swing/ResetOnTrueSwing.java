@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.expressions.ResetOnTrue;
 /**
  * Configures an ResetOnTrue object with a Swing JPanel.
  */
-public class ResetOnTrueSwing extends AbstractExpressionSwing {
+public class ResetOnTrueSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

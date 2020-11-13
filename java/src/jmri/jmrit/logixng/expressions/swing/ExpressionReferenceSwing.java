@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionReference;
 /**
  * Configures an ExpressionReference object with a Swing JPanel.
  */
-public class ExpressionReferenceSwing extends AbstractExpressionSwing {
+public class ExpressionReferenceSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

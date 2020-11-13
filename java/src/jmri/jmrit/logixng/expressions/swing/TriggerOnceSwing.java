@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.TriggerOnce;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class TriggerOnceSwing extends AbstractExpressionSwing {
+public class TriggerOnceSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

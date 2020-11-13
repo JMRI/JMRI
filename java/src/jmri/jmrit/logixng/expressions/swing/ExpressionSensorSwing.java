@@ -25,7 +25,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 /**
  * Configures an ExpressionSensor object with a Swing JPanel.
  */
-public class ExpressionSensorSwing extends AbstractExpressionSwing {
+public class ExpressionSensorSwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;

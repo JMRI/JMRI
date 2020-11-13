@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
 /**
  * Configures an ExpressionSignalMast object with a Swing JPanel.
  */
-public class ExpressionSignalMastSwing extends AbstractExpressionSwing {
+public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

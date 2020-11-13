@@ -20,6 +20,6 @@ public interface DigitalActionFactory {
      * 
      * @return a set of entries with category and class
      */
-    public Set<Map.Entry<Category, Class<? extends Base>>> getClasses();
+    public Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> getActionClasses();
     
 }

@@ -2,14 +2,12 @@ package jmri.jmrix.loconet.logixng;
 
 import java.util.AbstractMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpressionFactory;
 import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 import org.openide.util.lookup.ServiceProvider;
 
@@ -17,31 +15,11 @@ import org.openide.util.lookup.ServiceProvider;
  * The factory for LogixNG LocoNet classes.
  */
 @ServiceProvider(service = DigitalExpressionFactory.class)
-public class Factory implements DigitalExpressionFactory {
+public class ExpressionFactory implements DigitalExpressionFactory {
 
-    /**
-     * A item on the layout, for example turnout, sensor and signal mast.
-     */
-    public static final LocoNet LOCONET = new LocoNet();
-    
-    
-    /**
-     * Do we have a LocoNet connection?
-     * @return true if we have LocoNet, false otherwise
-     */
-    private static boolean hasLocoNet() {
-        List<LocoNetSystemConnectionMemo> list = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
-        
-        // We have at least one LocoNet connection if the list is not empty
-        return !list.isEmpty();
-    }
-    
     @Override
     public void init() {
-        // We don't want to add these classes if we don't have a LocoNet connection
-        if (hasLocoNet()) {
-            Category.registerCategory(LOCONET);
-        }
+        CategoryLocoNet.registerCategory();
     }
     
     @Override
@@ -49,8 +27,8 @@ public class Factory implements DigitalExpressionFactory {
         Set<Map.Entry<Category, Class<? extends DigitalExpressionBean>>> expressionClasses = new HashSet<>();
         
         // We don't want to add these classes if we don't have a LocoNet connection
-        if (hasLocoNet()) {
-            expressionClasses.add(new AbstractMap.SimpleEntry<>(LOCONET, ExpressionSlotUsage.class));
+        if (CategoryLocoNet.hasLocoNet()) {
+            expressionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ExpressionSlotUsage.class));
         }
         
         return expressionClasses;

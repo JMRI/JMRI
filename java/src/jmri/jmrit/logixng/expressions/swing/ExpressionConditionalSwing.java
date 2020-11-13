@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.ExpressionConditional;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class ExpressionConditionalSwing extends AbstractExpressionSwing {
+public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

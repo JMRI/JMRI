@@ -35,7 +35,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         }
         
         for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
-            actionFactory.getClasses().forEach((entry) -> {
+            actionFactory.getActionClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });

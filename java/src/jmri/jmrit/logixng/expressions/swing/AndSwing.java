@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.And;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class AndSwing extends AbstractExpressionSwing {
+public class AndSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

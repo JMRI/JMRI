@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.expressions.Antecedent;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class AntecedentSwing extends AbstractExpressionSwing {
+public class AntecedentSwing extends AbstractDigitalExpressionSwing {
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {

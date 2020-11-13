@@ -25,7 +25,7 @@ import jmri.util.swing.BeanSelectCreatePanel;
 /**
  * Configures an ExpressionLight object with a Swing JPanel.
  */
-public class ExpressionLightSwing extends AbstractExpressionSwing {
+public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
 
     private BeanSelectCreatePanel<Light> lightBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
