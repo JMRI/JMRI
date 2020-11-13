@@ -144,8 +144,8 @@ public final class ImportLogixFrame extends JmriJFrame {
             ((JComponent)c).setAlignmentX(LEFT_ALIGNMENT);
         }
         
-        setLocationRelativeTo(null);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
         
 //        initMinimumSize(new Dimension(panelWidth700, panelHeight500));

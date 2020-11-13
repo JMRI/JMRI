@@ -567,8 +567,8 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
             autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        dialog.setLocationRelativeTo(null);
         dialog.pack();
+        dialog.setLocationRelativeTo(null);
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {

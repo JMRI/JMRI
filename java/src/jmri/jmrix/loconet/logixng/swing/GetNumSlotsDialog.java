@@ -84,6 +84,7 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
         getContentPane().add(buttonOK);
         
         pack();
+        setLocationRelativeTo(null);
         
         _memo.getSlotManager().addSlotListener(this);
         

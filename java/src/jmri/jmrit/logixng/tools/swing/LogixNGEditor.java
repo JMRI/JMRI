@@ -566,8 +566,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        dialog.setLocationRelativeTo(null);
         dialog.pack();
+        dialog.setLocationRelativeTo(null);
         
         _autoSystemName.setSelected(true);
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {

@@ -7,12 +7,14 @@ import javax.swing.JPanel;
 import jmri.*;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
  * Abstract class for SwingConfiguratorInterface
+ * 
+ * @author Daniel Bergqvist Copyright 2018
  */
-public abstract class AbstractDigitalExpressionSwing implements SwingConfiguratorInterface {
+public abstract class AbstractDigitalExpressionSwing extends AbstractSwingConfigurator {
 
     protected JPanel panel;
     

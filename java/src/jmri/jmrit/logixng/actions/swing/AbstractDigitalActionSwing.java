@@ -6,12 +6,13 @@ import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Abstract class for SwingConfiguratorInterface
  */
-public abstract class AbstractDigitalActionSwing implements SwingConfiguratorInterface {
+public abstract class AbstractDigitalActionSwing extends AbstractSwingConfigurator {
 
     protected JPanel panel;
     

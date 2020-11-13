@@ -9,6 +9,8 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
 
 import jmri.*;
@@ -47,6 +49,7 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
     private JTextField _numberField;
     private JComboBox<PercentPieces> _percentPiecesComboBox;
     private JTextField _totalSlotsField;
+    private JPanel _slotsPanel;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -55,6 +58,8 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         }
         
         ExpressionSlotUsage expression = (ExpressionSlotUsage)object;
+        
+        _slotsPanel = new JPanel();
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -131,7 +136,14 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         for (PercentPieces e : PercentPieces.values()) {
             _percentPiecesComboBox.addItem(e);
         }
-        
+/*        
+        _percentPiecesComboBox.addActionListener((ActionEvent e) -> {
+            PercentPieces pp = _percentPiecesComboBox.getItemAt(_percentPiecesComboBox.getSelectedIndex());
+            if (pp == PercentPieces.Percent) _slotsPanel.setVisible(true);
+            else _slotsPanel.setVisible(false);
+            ExpressionSlotUsageSwing.this.getFrame().pack();
+        });
+*/        
         if (expression != null) {
             if (expression.getAdvanced()) {
                 _tabbedPane.setSelectedComponent(_advancedPanel);
@@ -173,6 +185,11 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         
         panel.add(queryPanel);
         
+        _slotsPanel.setLayout(new BoxLayout(_slotsPanel, BoxLayout.Y_AXIS));
+        _slotsPanel.add(new JLabel(Bundle.getMessage("InfoTotalSlots1")));
+        _slotsPanel.add(new JLabel(Bundle.getMessage("InfoTotalSlots2")));
+        _slotsPanel.add(new JLabel(Bundle.getMessage("InfoTotalSlots3")));
+        
         JPanel numSlotsPanel = new JPanel();
         numSlotsPanel.add(new JLabel(Bundle.getMessage("TotalNumSlots")));
         format = NumberFormat.getInstance();
@@ -196,8 +213,9 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         if (expression != null) {
             _totalSlotsField.setText(Integer.toString(expression.getTotalSlots()));
         }
+        _slotsPanel.add(numSlotsPanel);
         
-        panel.add(numSlotsPanel);
+        panel.add(_slotsPanel);
     }
     
     /** {@inheritDoc} */

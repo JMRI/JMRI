@@ -5,6 +5,7 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +23,18 @@ import jmri.jmrit.logixng.MaleSocket;
  */
 public interface SwingConfiguratorInterface {
 
+    /**
+     * Set the parent frame for this class
+     * @param frame the parent frame
+     */
+    public void setFrame(JFrame frame);
+    
+    /**
+     * Get the parent frame for this class
+     * @returns the parent frame
+     */
+    public JFrame getFrame();
+    
     /**
      * Get the manager that handles the beans for the new object.
      * This is used for validation of the system name for the bean that this

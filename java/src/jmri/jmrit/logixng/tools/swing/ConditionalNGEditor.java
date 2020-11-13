@@ -273,6 +273,7 @@ public class ConditionalNGEditor extends TreeViewer {
                 for (Class<? extends Base> clazz : classes) {
                     SwingConfiguratorInterface sci = SwingTools.getSwingConfiguratorForClass(clazz);
                     if (sci != null) {
+                        sci.setFrame(this);
                         _swingConfiguratorComboBox.addItem(sci);
                     } else {
                         log.error("Class {} has no swing configurator interface", clazz.getName());
@@ -472,6 +473,7 @@ public class ConditionalNGEditor extends TreeViewer {
         // make an Edit Frame
         if (editConditionalNGDialog == null) {
             editSwingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getObject().getClass());
+            editSwingConfiguratorInterface.setFrame(this);
             // Edit ConditionalNG
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             edit.addActionListener((ActionEvent e) -> {
@@ -662,8 +664,8 @@ public class ConditionalNGEditor extends TreeViewer {
             autoSystemName();
         });
 //        addLogixNGFrame.setLocationRelativeTo(component);
-        frame.setLocationRelativeTo(null);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         
         if (addOrEdit) {
             addItemDialog = frame;
