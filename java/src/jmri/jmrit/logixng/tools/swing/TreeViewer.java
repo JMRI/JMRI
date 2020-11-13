@@ -49,9 +49,8 @@ public class TreeViewer extends JmriJFrame {
         _femaleRootSocket = femaleRootSocket;
         // Note!! This must be made dynamic, so that new socket types are recognized automaticly and added to the list
         // and the list must be saved between runs.
-        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleRootSocket", Color.RED);
-        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalActionSocket", Color.RED);
-        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalExpressionSocket", Color.BLUE);
+        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket", Color.RED);
+        FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", Color.BLUE);
     }
     
     @Override
