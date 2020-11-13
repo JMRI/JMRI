@@ -81,10 +81,6 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
     private static boolean autoFinalDestTrackCheckBoxSelected = false;
     private static boolean autoTrainCheckBoxSelected = false;
 
-    public RollingStockSetFrame() {
-        super();
-    }
-
     public RollingStockSetFrame(String title) {
         super(title);
     }
