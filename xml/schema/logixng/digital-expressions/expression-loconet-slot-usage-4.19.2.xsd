@@ -79,8 +79,6 @@
                 </xs:complexType>
               </xs:element>
 
-              <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="1" maxOccurs="1"/>
-
               <xs:element name="compare" minOccurs="1" maxOccurs="1">
                 <xs:simpleType>
                   <xs:restriction base="xs:token">

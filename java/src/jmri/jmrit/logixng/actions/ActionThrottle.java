@@ -49,7 +49,6 @@ public class ActionThrottle extends AbstractDigitalAction
     private final FemaleDigitalExpressionSocket _locoDirectionSocket;
     boolean _isActive = false;
     
-    private boolean _listenersAreRegistered = false;
     
     public ActionThrottle(String sys, String user) {
         super(sys, user);

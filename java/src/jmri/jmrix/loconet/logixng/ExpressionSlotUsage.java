@@ -20,7 +20,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
 
     private LocoNetSystemConnectionMemo _memo;
     private boolean _advanced = false;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private Has_HasNot _hasHasNot = Has_HasNot.Has;
     private SimpleState _simpleState = SimpleState.InUse;
     private final Set<AdvancedState> _advancedStates = new HashSet<>();
@@ -99,14 +98,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     
     public Compare getCompare() {
         return _compare;
-    }
-    
-    public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
-        _is_IsNot = is_IsNot;
-    }
-    
-    public Is_IsNot_Enum get_Is_IsNot() {
-        return _is_IsNot;
     }
     
     public void setNumber(int number) {
@@ -357,6 +348,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         LessThan(Bundle.getMessage("CompareType_LessThan"), (int a, int b) -> a < b),
         LessThanOrEqual(Bundle.getMessage("CompareType_LessThanOrEqual"), (int a, int b) -> a <= b),
         Equal(Bundle.getMessage("CompareType_Equal"), (int a, int b) -> a == b),
+        NotEqual(Bundle.getMessage("CompareType_NotEqual"), (int a, int b) -> a != b),
         GreaterThanOrEqual(Bundle.getMessage("CompareType_GreaterThanOrEqual"), (int a, int b) -> a >= b),
         GreaterThan(Bundle.getMessage("CompareType_GreaterThan"), (int a, int b) -> a > b);
         

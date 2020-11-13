@@ -24,6 +24,8 @@ import org.junit.*;
  * <P>
  * It uses the Base.printTree(PrintWriter writer, String indent) method to
  * compare the LogixNGs before and after store and load.
+ * 
+ * @author Daniel Bergqvist Copyright 2020
  */
 public class StoreAndLoadTest {
     
@@ -73,7 +75,6 @@ public class StoreAndLoadTest {
         expressionSlotUsage.setSimpleState(ExpressionSlotUsage.SimpleState.InUse);
         states.clear();
         expressionSlotUsage.setAdvancedStates(states);
-        expressionSlotUsage.set_Is_IsNot(Is_IsNot_Enum.IsNot);
         expressionSlotUsage.setCompare(ExpressionSlotUsage.Compare.Equal);
         expressionSlotUsage.setNumber(20);
         expressionSlotUsage.setPercentPieces(ExpressionSlotUsage.PercentPieces.Percent);
@@ -91,7 +92,6 @@ public class StoreAndLoadTest {
         states.add(ExpressionSlotUsage.AdvancedState.Idle);
         states.add(ExpressionSlotUsage.AdvancedState.InUse);
         expressionSlotUsage.setAdvancedStates(states);
-        expressionSlotUsage.set_Is_IsNot(Is_IsNot_Enum.Is);
         expressionSlotUsage.setCompare(ExpressionSlotUsage.Compare.GreaterThan);
         expressionSlotUsage.setNumber(11);
         expressionSlotUsage.setPercentPieces(ExpressionSlotUsage.PercentPieces.Pieces);

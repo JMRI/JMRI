@@ -52,7 +52,6 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
             advancedStatesElement.addContent(new Element("state").addContent(state.name()));
         }
         element.addContent(advancedStatesElement);
-        element.addContent(new Element("is_isNot").addContent(p.get_Is_IsNot().name()));
         element.addContent(new Element("compare").addContent(p.getCompare().name()));
         
         element.addContent(new Element("number").addContent(Integer.toString(p.getNumber())));
@@ -107,11 +106,6 @@ public class ExpressionSlotUsageXml extends jmri.managers.configurexml.AbstractN
             stateSet.add(ExpressionSlotUsage.AdvancedState.valueOf(state.getTextTrim()));
         }
         h.setAdvancedStates(stateSet);
-
-        Element is_isNot = shared.getChild("is_isNot");
-        if (is_isNot != null) {
-            h.set_Is_IsNot(Is_IsNot_Enum.valueOf(is_isNot.getTextTrim()));
-        }
 
         Element compare = shared.getChild("compare");
         if (compare != null) {
