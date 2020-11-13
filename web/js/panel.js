@@ -124,7 +124,7 @@ function $logProperties(obj) {
     if (jmri_logging) {
         var $propList = "";
         for (var $propName in obj) {
-            if (typeof obj[$propName] !== "undefined") {
+            if (isDefined(obj[$propName])) {
                 $propList += ($propName + "='" + obj[$propName] + "', ");
             }
         }
@@ -190,7 +190,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         var canvas = document.getElementById("panelCanvas");
         $gCtx = canvas.getContext("2d");
         $gCtx.strokeStyle = $gPanel.defaulttrackcolor;
-        $gCtx.lineWidth = $gPanel.sidetrackwidth;
+        $gCtx.lineWidth = $gPanel.sidelinetrackwidth;
         //set background color from panel attribute (single hex value)
         $("#panel-area").css({'background-color': $gPanel.backgroundcolor});
     }
@@ -259,14 +259,13 @@ function processPanelXML($returnedData, $success, $xhr) {
             $widget['state'] = UNKNOWN; //initial state is unknown
             $widget.jsonType = ""; //default to no JSON type (avoid undefined)
 
-            if ((typeof $widget["systemName"] === "undefined") &&
-                  (typeof $widget["id"] !== "undefined")) {
+            if (isUndefined($widget["systemName"]) && isDefined($widget["id"]) {
                 $widget.systemName = $widget["id"]; //set systemName from id if missing
             }
             $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
             $widget['widgetFamily'] = $getWidgetFamily($widget, this);
             var $jc = "";
-            if (typeof $widget["class"] !== "undefined") {
+            if (isDefined($widget["class"])) {
                 var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
                 $jc = $ta[$ta.length - 1];
             }
@@ -431,7 +430,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getSensor($widget["systemName"]);
                             break;
@@ -448,7 +447,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getLight($widget["systemName"]);
                             break;
@@ -458,7 +457,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
                             $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
                             $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
-                            if (typeof $widget['icon' + RED] === "undefined") { //look for held if no red
+                            if (isUndefined($widget['icon' + RED])) { //look for held if no red
                                 $widget['icon' + RED] = $(this).find('icons').find('held').attr('url');
                             }
                             $widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
@@ -488,7 +487,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if ($widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            if (typeof $widget["iconUnlit"] !== "undefined") {
+                            if (isDefined($widget["iconUnlit"])) {
                                 $widget['state'] = "Unlit"; //set the initial aspect to Unlit if defined
                             } else {
                                 $widget['state'] = "Unknown"; //else set to Unknown
@@ -552,7 +551,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 //store icon url in "iconXX" where XX is the state to match
                                 $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
                             });
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
@@ -579,10 +578,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['css2'] = $getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
                             $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
                             $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
-                            if (typeof $widget.name !== "undefined" && $widget.forcecontroloff != "true") {
+                            if (isDefined($widget.name) && $widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"])
                                 $widget["systemName"] = $widget.name;
                             jmri.getSensor($widget["systemName"]);
                             break;
@@ -604,12 +603,12 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
                             $widget.styles['height'] = "166px";
                             $widget['scale'] = $(this).attr('scale');
-                            if (typeof $widget.level === "undefined") {
+                            if (isUndefined($widget.level)) {
                                 $widget['level'] = 10;  //if not included in xml
                             }
                             $widget['text'] = "00:00 AM";
                             $widget['state'] = "00:00 AM";
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
@@ -618,7 +617,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.jsonType = "memory"; // JSON object type
                             $widget['text'] = $widget.memory; //use name for initial text
                             $widget['state'] = $widget.memory; //use name for initial state as well
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
@@ -626,7 +625,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['name'] = $widget.reporter; //normalize name
                             $widget.jsonType = "reporter"; // JSON object type
                             $widget['text'] = $widget.reporter; //use name for initial text
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getReporter($widget["systemName"]);
                             break;
@@ -644,7 +643,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['text'] = $widget.memory; //use name for initial text
                             $widget['state'] = $widget.memory; //use name for initial state as well
                             $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
-                            if (typeof $widget["systemName"] === "undefined")
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getMemory($widget["systemName"]);
                             break;
@@ -699,23 +698,23 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget.jsonType = "turnout"; // JSON object type
                             $widget['x'] = $widget.xcen; //normalize x,y
                             $widget['y'] = $widget.ycen;
-                            if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) {
+                            if (isDefined($widget.name) && ($widget.disabled !== "yes")) {
                                 $widget.classes += " " + $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
                             }
                             //set widget occupancy sensor from block to speed affected changes later
-                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockname])) {
                                 $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
                                 $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
                             }
-                            if (typeof $gBlks[$widget.blockbname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockbname])) {
                                 $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
                                 $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
                             }
-                            if (typeof $gBlks[$widget.blockcname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockcname])) {
                                 $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
                                 $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
                             }
-                            if (typeof $gBlks[$widget.blockdname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockdname])) {
                                 $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
                                 $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
                             }
@@ -739,7 +738,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     height: $cd + 'px'
                                 });
                             }
-                            if (typeof $widget["systemName"] === "undefined") {
+                            if (isUndefined($widget["systemName"])) {
                                 $widget["systemName"] = $widget.name;
                             }
                             jmri.getTurnout($widget["systemName"]);
@@ -788,19 +787,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                             }
 
                             //set widget occupancy sensor from block to speed affected changes later
-                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockname])) {
                                 $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
                                 $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
                             }
-                            if (typeof $gBlks[$widget.blockbname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockbname])) {
                                 $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
                                 $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
                             }
-                            if (typeof $gBlks[$widget.blockcname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockcname])) {
                                 $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
                                 $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
                             }
-                            if (typeof $gBlks[$widget.blockdname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockdname])) {
                                 $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
                                 $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
                             }
@@ -886,7 +885,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         case "tracksegment" :
                             //log.log("#### Track Segment ####");
                             //set widget occupancy sensor from block to speed affected changes later
-                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blockname])) {
                                 $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
                                 $widget['occupancystate'] = $gBlks[$widget.blockname].state;
                             }
@@ -905,7 +904,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
                             var $arrow = $decorations.find('arrow');
                             var $arrowstyle = $arrow.attr('style');
-                            if (typeof $arrowstyle !== "undefined") {
+                            if (isDefined($arrowstyle)) {
                                 if (Number($arrowstyle) > 0) {
                                     $widget['arrow'] = new ArrowDecoration($widget, $arrow);
                                 }
@@ -915,7 +914,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
                             var $bridge = $decorations.find('bridge');
                             var $bridgeside = $bridge.attr('side');
-                            if (typeof $bridgeside !== "undefined") {
+                            if (isDefined($bridgeside)) {
                                 $widget['bridge'] = new BridgeDecoration($widget, $bridge);
                             }
 
@@ -923,7 +922,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //<bumper end="stop" color="#000000" linewidth="2" length="16" />
                             var $bumper = $decorations.find('bumper');
                             var $bumperend = $bumper.attr('end');
-                            if (typeof $bumperend !== "undefined") {
+                            if (isDefined($bumperend)) {
                                 $widget['bumper'] = new BumperDecoration($widget, $bumper);
                             }
 
@@ -931,7 +930,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
                             var $tunnel = $decorations.find('tunnel');
                             var $tunnelside = $tunnel.attr('side');
-                            if (typeof $tunnelside !== "undefined") {
+                            if (isDefined($tunnelside)) {
                                 $widget['tunnel'] = new TunnelDecoration($widget, $tunnel);
                             }
 
@@ -946,11 +945,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['y'] = $widget.ycen;
                             //set widget occupancy sensor from block to speed affected changes later
                             //TODO: handle BD block
-                            if (typeof $gBlks[$widget.blocknameac] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blocknameac])) {
                                 $widget['occupancysensorAC'] = $gBlks[$widget.blocknameac].occupancysensor;
                                 $widget['occupancystateAC'] = $gBlks[$widget.blocknameac].state;
                             }
-                            if (typeof $gBlks[$widget.blocknamebd] !== "undefined") {
+                            if (isDefined($gBlks[$widget.blocknamebd])) {
                                 $widget['occupancysensorBD'] = $gBlks[$widget.blocknamebd].occupancysensor;
                                 $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                             }
@@ -1363,7 +1362,7 @@ function $handleLinkingLabelClick(e) {
     if ($url.toLowerCase().indexOf("frame:") == 0) {
         $frameName = $url.substring(6); //if "frame" found, remove it
         $frameUrl = $gPanelList[$frameName];  //find panel in panel list
-        if (typeof $frameUrl === "undefined") {
+        if (isUndefined($frameUrl)) {
             $url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver
         } else {
             $url = "/panel/" + $frameUrl; //format for panel server
@@ -1400,10 +1399,10 @@ function $handleClickAllOff(e) { // click button on Switchboards
 //draw an icon-type widget (pass in widget)
 function $drawIcon($widget) {
     var $hoverText = "";
-    if (typeof $widget.hoverText !== "undefined") {
+    if (isDefined($widget.hoverText)) {
         $hoverText = " title='" + $widget.hoverText + "' alt='" + $widget.hoverText + "'";
     }
-    if ($hoverText == "" && typeof $widget.name !== "undefined") { // if name available, use it as hover text if still blank
+    if ($hoverText == "" && isDefined($widget.name)) { // if name available, use it as hover text if still blank
         $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
     }
 
@@ -1420,7 +1419,7 @@ function $drawIcon($widget) {
         $state = $widget.state;
     }
     // add the image to the panel area, with appropriate css classes and id (skip any unsupported)
-    if (typeof $widget['icon' + $indicator + $state] !== "undefined") {
+    if (isDefined($widget['icon' + $indicator + $state])) {
         $imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
                 "' src='" + $widget["icon" + $indicator + $state] + "' " + $hoverText + "/>"
 
@@ -1429,7 +1428,7 @@ function $drawIcon($widget) {
         $("#panel-area>#" + $widget.id).css($widget.styles); // apply style array to widget
 
         // add overlay text if specified, one layer above, and copy attributes (except background-color)
-        if (typeof $widget.text !== "undefined") {
+        if (isDefined($widget.text)) {
             $("#panel-area").append("<div id=" + $widget.id + "-overlay class='overlay'>" + $widget.text + "</div>");
             ovlCSS = {position:'absolute', left: $widget.x + 'px', top: $widget.y + 'px', zIndex: $widget.level*1 + 1, pointerEvents: 'none'};
             $.extend(ovlCSS, $widget.styles); // append the styles from the widget
@@ -1471,46 +1470,46 @@ var $getTextCSSFromObj = function($widget) {
     var $retCSS = {};
     $retCSS['color'] = '';  //only clear attributes
     $retCSS['background-color'] = '';
-    if (typeof $widget.red !== "undefined") {
+    if (isDefined($widget.red)) {
         $retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
     }
     //check for new hasBackground element, ignore background colors unless set to yes
-    if (typeof $widget.hasBackground !== "undefined" && $widget.hasBackground == "yes") {
+    if (isDefined($widget.hasBackground) && $widget.hasBackground == "yes") {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
     }
-    if (typeof $widget.hasBackground === "undefined" && $widget.redBack !== "undefined") {
+    if (isUndefined($widget.hasBackground) && isDefined($widget.redBack)) {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
     }
-    if (typeof $widget.size !== "undefined") {
+    if (isDefined($widget.size)) {
         $retCSS['font-size'] = $widget.size + "px ";
     }
-    if (typeof $widget.fontname !== "undefined") {
+    if (isDefined($widget.fontname)) {
         $retCSS['font-family'] = $widget.fontname;
     }
-    if (typeof $widget.margin !== "undefined") {
+    if (isDefined($widget.margin)) {
         $retCSS['padding'] = $widget.margin + "px ";
     }
-    if (typeof $widget.borderSize !== "undefined") {
+    if (isDefined($widget.borderSize)) {
         $retCSS['border-width'] = $widget.borderSize + "px ";
     }
-    if (typeof $widget.redBorder !== "undefined") {
+    if (isDefined($widget.redBorder)) {
         $retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";
         $retCSS['border-style'] = 'solid';
     }
-    if (typeof $widget.fixedWidth !== "undefined") {
+    if (isDefined($widget.fixedWidth)) {
         $retCSS['width'] = $widget.fixedWidth + "px ";
     }
-    if (typeof $widget.fixedHeight !== "undefined") {
+    if (isDefined($widget.fixedHeight)) {
         $retCSS['height'] = $widget.fixedHeight + "px ";
     }
-    if (typeof $widget.justification !== "undefined") {
+    if (isDefined($widget.justification)) {
         if ($widget.justification == "centre") {
             $retCSS['text-align'] = "center";
         } else {
             $retCSS['text-align'] = $widget.justification;
         }
     }
-    if (typeof $widget.style !== "undefined") {
+    if (isDefined($widget.style)) {
         switch ($widget.style) { //set font based on style attrib from xml
             case "1":
                 $retCSS['font-weight'] = 'bold';
@@ -1548,12 +1547,12 @@ var $setWidgetPosition = function(e) {
         var $height = 0;
         var $width  = 0;
         // use html5 original sizes if available
-        if (typeof e[0].naturalHeight !== "undefined") {
+        if (isDefined(e[0].naturalHeight)) {
             $height = e[0].naturalHeight * $widget.scale;
         } else {
             $height = e.height() * $widget.scale;
         }
-        if (typeof e[0].naturalWidth !== "undefined") {
+        if (isDefined(e[0].naturalWidth)) {
             $width = e[0].naturalWidth * $widget.scale;
         } else {
             $width = e.width() * $widget.scale;
@@ -1628,7 +1627,7 @@ var $reDrawIcon = function($widget) {
         $indicator = ((($widget.occupancystate & 0x2) == 0x2)  ? "Occupied" : ""); // look only at bit 2, compare to $drawIcon()
         Ostate = ($widget.occupancystate & 0xF0); // binary + 11110000, discards (in)active occupancy info in bits 1-4
         $state = (Ostate | $widget.state); // adds Turnout state back in to insert TO state = position icon
-        if (typeof $widget.name !== "undefined") { // intended for indicatorturnouts to show they are not clickable
+        if (isDefined($widget.name)) { // intended for indicatorturnouts to show they are not clickable
             $('img#' + $widget.id).attr('title', $widget.name + ((Ostate & 0x40) == OUT_OF_SERVICE ? " (off)" : ""));
         // explain why not clickable TODO I18N tooltip for OOS + ERROR
         }
@@ -1789,10 +1788,10 @@ var $setWidgetState = function($id, $newState, data) {
                         }
                     }
                 } else {
-                    if (typeof $widget['text' + $newState] !== "undefined") {
+                    if (isDefined($widget['text' + $newState])) {
                         $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
                     }
-                    if (typeof $widget['css' + $newState] !== "undefined") {
+                    if (isDefined($widget['css' + $newState])) {
                         $('div#' + $id).css($widget['css' + $newState]); // set css to new state's css
                     }
                 }
@@ -1805,7 +1804,7 @@ var $setWidgetState = function($id, $newState, data) {
                 }
                 break;
             case "switch" : // Switchboard
-                if ($widget.widgetType == "beanswitch" && typeof $widget['shape'] !== "undefined") {
+                if ($widget.widgetType == "beanswitch" && isDefined($widget['shape'])) {
                     if ($widget.shape == "button") { // update div css
                         $('div#' + $id).text($widget['text' + $newState]); // set text to new state's text
                         $('div#' + $id).css({"border-color": $widget['swColor' + $newState]});
@@ -1822,7 +1821,7 @@ var $setWidgetState = function($id, $newState, data) {
 
 //return a unique ID # when called
 var $gUnique = function() {
-    if (typeof $gUnique.id === 'undefined') {
+    if (isUndefined($gUnique.id)) {
         $gUnique.id = 0;
     }
     $gUnique.id++;
@@ -1831,7 +1830,7 @@ var $gUnique = function() {
 
 //clean up a name, for example to use as an id
 var $safeName = function($name) {
-    if (typeof $name === "undefined") {
+    if (isUndefined($name)) {
         return "unique-" + $gUnique();
     } else {
         return $name.replace(/:/g, "_").replace(/ /g, "_").replace(/%20/g, "_");
@@ -1909,17 +1908,17 @@ var $getNextState = function($widget) {
                 for (k in $widget) {
                     var s = k.substr(4) * 1; //extract the state from current icon var, insure it is treated as numeric
                     //get valid value, name starts with 'icon', but not the HELD or DARK ones
-                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && k != 'icon' + HELD && k != 'icon' + DARK) {
-                        if (typeof $firstState === "undefined")
+                    if (k.indexOf('icon') == 0 && isDefined($widget[k]) && k != 'icon' + HELD && k != 'icon' + DARK) {
+                        if (isUndefined($firstState))
                             $firstState = s;  //remember the first state (for last one)
-                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
+                        if (isDefined($currentState) && isUndefined($nextState))
                             $nextState = s; //last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
                         // log.log('key: '+k+" first="+$firstState+" current="+$currentState+" next="+$nextState);
                     }
                 }
-                if (typeof $nextState === "undefined")
+                if (isUndefined($nextState))
                     $nextState = $firstState;  // if still not set, start over
         } //end of signalheadicon clickmode switch
 
@@ -1932,17 +1931,17 @@ var $getNextState = function($widget) {
                 for (k in $widget) {
                     var s = k.substr(4); //extract the state from current icon var
                     //look for next icon value, skipping Held, Dark and Unknown
-                    if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && s != 'Held' && s != 'Dark'
+                    if (k.indexOf('icon') == 0 && isDefined($widget[k]) && s != 'Held' && s != 'Dark'
                     && s !='Unlit' && s !=  'Unknown') {
-                        if (typeof $firstState === "undefined")
+                        if (isUndefined($firstState))
                             $firstState = s;  // remember the first state (for last one)
-                        if (typeof $currentState !== "undefined" && typeof $nextState === "undefined")
+                        if (isDefined($currentState) && isUndefined($nextState))
                             $nextState = s; // last one was the current, so this one must be next
                         if (s == $widget.state)
                             $currentState = s;
                     }
                 };
-                if (typeof $nextState === "undefined")
+                if (isUndefined($nextState))
                     $nextState = $firstState;  // if still not set, start over
                 break;
 
@@ -1960,7 +1959,7 @@ var $getNextState = function($widget) {
         $nextState = ($widget.state == ACTIVE ? INACTIVE : ACTIVE);
     }
 
-    if (typeof $nextState === "undefined")
+    if (isUndefined($nextState))
         $nextState = $widget.state;  //default to no change
     return $nextState;
 };
@@ -1968,7 +1967,7 @@ var $getNextState = function($widget) {
 // preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
     for (k in $widget) {
-        if (k.indexOf('icon') == 0 && typeof $widget[k] !== "undefined" && $widget[k] !== "yes") {
+        if (k.indexOf('icon') == 0 && isDefined($widget[k]) && $widget[k] !== "yes") {
         //if attribute names starts with 'icon', it's an image, so preload it
             $("<img src='" + $widget[k] + "'/>");
         }
@@ -1980,7 +1979,7 @@ var $preloadWidgetImages = function($widget) {
 var $getWidgetFamily = function($widget, $element) {
 
     if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel")
-            && typeof $widget.text !== "undefined") {
+            && isDefined($widget.text)) {
         return "text";  //special case to distinguish text vs. icon labels
     }
     if ($widget.widgetType == "sensoricon" && $widget.icon == "no") {
@@ -2253,7 +2252,7 @@ function autoRows(screenwidth, screenheight) {
 }
 
 function getSwitchButtonLabel(label, subLabel) {
-    if (($showUserName == "no") || (subLabel == "") || (typeof subLabel === "undefined")) {
+    if (($showUserName == "no") || (subLabel == "") || isUndefined(subLabel)) {
         return label;
     } else {
         subLabel = subLabel.substring(0, (Math.min(subLabel.length, 25)));
@@ -2448,11 +2447,11 @@ function $drawTrackSegment($widget) {
     //get the endpoints by name
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
-    if (typeof $ep1 === "undefined") {
+    if (isUndefined($ep1)) {
             log.warn("can't draw tracksegment " + $widget.ident + ": connect1: " + $widget.connect1name + "." + $widget.type1 + " undefined.");
         return;
     }
-    if (typeof $ep2 === "undefined") {
+    if (isUndefined($ep2)) {
             log.warn("can't draw tracksegment " + $widget.ident + ": connect2: " + $widget.connect2name + "." + $widget.type2 + " undefined.");
         return;
     }
@@ -2460,7 +2459,7 @@ function $drawTrackSegment($widget) {
     $gCtx.save();   // save current line width and color
 
     //get width (assume no block assigned)
-    var $width = $gPanel.sidetrackwidth;
+    var $width = $gPanel.sidelinetrackwidth;
     if ($widget.mainline == "yes") {
         $width = $gPanel.mainlinetrackwidth;
     }
@@ -2468,7 +2467,7 @@ function $drawTrackSegment($widget) {
     //set trackcolor based on blockcolor
     var $color = $gPanel.defaulttrackcolor;
     var $blk = $gBlks[$widget.blockname];
-    if (typeof $blk !== "undefined") {
+    if (isDefined($blk)) {
         $color = $blk.blockcolor;
 
         //block assigned; use block width
@@ -2479,10 +2478,10 @@ function $drawTrackSegment($widget) {
     }
 
     // set color and width
-    if (typeof $color !== "undefined") {
+    if (isDefined($color)) {
         $gCtx.strokeStyle = $color;
     }
-    if (typeof $width !== "undefined") {
+    if (isDefined($width)) {
         $gCtx.lineWidth = $width;
     }
 
@@ -2530,7 +2529,7 @@ function $drawTrackSegmentCircle($widget) {
     //get the endpoints by name
     var $ep1, $ep2;
     [$ep1, $ep2] = $getEndPoints$($widget);
-    if ((typeof $widget.angle === "undefined") || ($widget.angle == 0)) {
+    if (isUndefined($widget.angle) || ($widget.angle == 0)) {
         $widget['angle'] = "90";
     }
     //draw curved line
@@ -2600,16 +2599,16 @@ function $getEndPoints($widget) {
 //draw decorations
 //
 function $drawDecorations($widget) {
-    if (typeof $widget.arrow !== "undefined") {
+    if (isDefined($widget.arrow)) {
         $widget.arrow.draw();
     }
-    if (typeof $widget.bridge !== "undefined") {
+    if (isDefined($widget.bridge)) {
         $widget.bridge.draw();
     }
-    if (typeof $widget.bumper !== "undefined") {
+    if (isDefined($widget.bumper)) {
         $widget.bumper.draw();
     }
-    if (typeof $widget.tunnel !== "undefined") {
+    if (isDefined($widget.tunnel)) {
         $widget.tunnel.draw();
     }
 }   // $drawDecorations
@@ -2641,7 +2640,7 @@ function $drawTurntable($widget) {
         var $t1 = [];
         $t1['x'] = $t.x - (($t.x - $txcen) * f);
         $t1['y'] = $t.y - (($t.y - $tycen) * f);
-        $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+        $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
 
         if (isDefined(item.attributes.turnout) && ($gPanel.controlling == "yes")) {
             // var turnout = item.attributes.turnout.value;
@@ -2669,15 +2668,15 @@ function $drawTurntable($widget) {
             $t2['x'] = $txcen - ($tr * Math.sin($angle));
             $t2['y'] = $tycen + ($tr * Math.cos($angle));
             if (drawFlag) {
-                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
             } else {
-                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidetrackwidth);
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidelinetrackwidth);
             }
         }
     });
 
     $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $gPanel.mainlinetrackwidth);
-    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidelinetrackwidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -2687,25 +2686,25 @@ function $drawLevelXing($widget) {
         return;
     }
     //get track widths
-    var $widthAC = $gPanel.sidetrackwidth;
-    if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
+    var $widthAC = $gPanel.sidelinetrackwidth;
+    if (isDefined($gWidgets[$widget.connectaname])) {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $widthAC = $gPanel.mainlinetrackwidth;
         }
     }
-    if (typeof $gWidgets[$widget.connectcname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectcname])) {
         if ($gWidgets[$widget.connectcname].mainline == "yes") {
             $widthAC = $gPanel.mainlinetrackwidth;
         }
     }
 
-    var $widthBD = $gPanel.sidetrackwidth;
-    if (typeof $gWidgets[$widget.connectbname] !== "undefined") {
+    var $widthBD = $gPanel.sidelinetrackwidth;
+    if (isDefined($gWidgets[$widget.connectbname])) {
         if ($gWidgets[$widget.connectbname].mainline == "yes") {
             $widthBD = $gPanel.mainlinetrackwidth;
         }
     }
-    if (typeof $gWidgets[$widget.connectdname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectdname])) {
         if ($gWidgets[$widget.connectdname].mainline == "yes") {
             $widthBD = $gPanel.mainlinetrackwidth;
         }
@@ -2714,12 +2713,12 @@ function $drawLevelXing($widget) {
     //  set trackcolor based on block color
     var $colorAC = $gPanel.defaulttrackcolor;
     var $blkAC = $gBlks[$widget.blocknameac];
-    if (typeof $blkAC !== "undefined") {
+    if (isDefined($blkAC)) {
         $colorAC = $blkAC.blockcolor;
     }
     var $colorBD = $gPanel.defaulttrackcolor;
     var $blkBD = $gBlks[$widget.blocknamebd];
-    if (typeof $blkBD !== "undefined") {
+    if (isDefined($blkBD)) {
         $colorBD = $blkBD.blockcolor;
     }
 
@@ -2746,28 +2745,28 @@ function $drawTurnout($widget) {
     }
 
     //get widths
-    var $sideWidth = $gPanel.sidetrackwidth;
+    var $sideWidth = $gPanel.sidelinetrackwidth;
     var $mainWidth = $gPanel.mainlinetrackwidth;
     var $widthA = $sideWidth;
-    if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectaname])) {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $widthA = $mainWidth;
         }
     }
     var $widthB = $sideWidth;
-    if (typeof $gWidgets[$widget.connectbname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectbname])) {
         if ($gWidgets[$widget.connectbname].mainline == "yes") {
             $widthB = $mainWidth;
         }
     }
     var $widthC = $sideWidth;
-    if (typeof $gWidgets[$widget.connectcname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectcname])) {
         if ($gWidgets[$widget.connectcname].mainline == "yes") {
             $widthC = $mainWidth;
         }
     }
     var $widthD = $sideWidth;
-    if (typeof $gWidgets[$widget.connectdname] !== "undefined") {
+    if (isDefined($gWidgets[$widget.connectdname])) {
         if ($gWidgets[$widget.connectdname].mainline == "yes") {
             $widthD = $mainWidth;
         }
@@ -2780,22 +2779,22 @@ function $drawTurnout($widget) {
     //set track colors based on block colors
     var $colorA = $trackColor;
     var $blkA = $gBlks[$widget.blockname];
-    if (typeof $blkA !== "undefined") {
+    if (isDefined($blkA)) {
         $colorA = $blkA.blockcolor;
     }
     var $colorB = $colorA;
     var $blkB = $gBlks[$widget.blockbname];
-    if (typeof $blkB !== "undefined") {
+    if (isDefined($blkB)) {
         $colorB = $blkB.blockcolor;
     }
     var $colorC = $colorA;
     var $blkC = $gBlks[$widget.blockcname];
-    if (typeof $blkC !== "undefined") {
+    if (isDefined($blkC)) {
         $colorC = $blkC.blockcolor;
     }
     var $colorD = $colorA;
     var $blkD = $gBlks[$widget.blockdname];
-    if (typeof $blkD !== "undefined") {
+    if (isDefined($blkD)) {
         $colorD = $blkD.blockcolor;
     }
 
@@ -2967,7 +2966,7 @@ function $drawSlip($widget) {
     }
 
     var $mainWidth = $gPanel.mainlinetrackwidth;
-    var $sideWidth = $gPanel.sidetrackwidth;
+    var $sideWidth = $gPanel.sidelinetrackwidth;
 
     var $widthA = $sideWidth;
     if (isDefined($gWidgets[$widget.connectaname])) {
@@ -3148,13 +3147,13 @@ function $drawLayoutShape($widget) {
     if (len > 0) {
         $gCtx.save();   // save current line width and color
 
-        if (typeof $widget.lineColor !== "undefined") {
+        if (isDefined($widget.lineColor)) {
             $gCtx.strokeStyle = $widget.lineColor;
         }
-        if (typeof $widget.fillColor !== "undefined") {
+        if (isDefined($widget.fillColor)) {
             $gCtx.fillStyle = $widget.fillColor;
         }
-        if (typeof $widget.linewidth !== "undefined") {
+        if (isDefined($widget.linewidth)) {
             $gCtx.lineWidth = $widget.linewidth;
         }
 
@@ -3368,16 +3367,16 @@ function $storeLevelXingPoints($widget) {
 function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
     $gCtx.save();   // save current line width and color
 
-    if (typeof $color !== "undefined") {
+    if (isDefined($color)) {
         $gCtx.strokeStyle = $color;
     }
-    if (typeof $width !== "undefined") {
+    if (isDefined($width)) {
         $gCtx.lineWidth = $width;
     }
 
     $gCtx.beginPath();
 
-    if (typeof dashArray !== "undefined") {
+    if (isDefined(dashArray)) {
         $gCtx.setLineDash(dashArray);
     }
 
@@ -3386,7 +3385,7 @@ function $drawLine($p1x, $p1y, $p2x, $p2y, $color, $width, dashArray) {
 
     $gCtx.stroke();
 
-    if (typeof dashArray !== "undefined") {
+    if (isDefined(dashArray)) {
         $gCtx.setLineDash([]);
     }
 
@@ -3415,10 +3414,10 @@ function $drawCircle($px, $py, $radius, $color, $width) {
     $gCtx.save();   // save current line width and color
 
     // set color and width
-    if (typeof $color !== "undefined") {
+    if (isDefined($color)) {
         $gCtx.strokeStyle = $color;
     }
-    if (typeof $width !== "undefined") {
+    if (isDefined($width)) {
         $gCtx.lineWidth = $width;
     }
 
@@ -3437,10 +3436,10 @@ function $fillCircle($px, $py, $radius, $color, $width) {
     $gCtx.save();   // save current line width and color
 
     // set color and width
-    if (typeof $color !== "undefined") {
+    if (isDefined($color)) {
         $gCtx.fillStyle = $color;
     }
-    if (typeof $width !== "undefined") {
+    if (isDefined($width)) {
         $gCtx.lineWidth = $width;
     }
 
@@ -3461,10 +3460,10 @@ function $drawArc(pt1x, pt1y, pt2x, pt2y, degrees, $color, $width) {
         $gCtx.save();   // save current line width and color
 
         // set color and width
-        if (typeof $color !== "undefined") {
+        if (isDefined($color)) {
             $gCtx.strokeStyle = $color;
         }
-        if (typeof $width !== "undefined") {
+        if (isDefined($width)) {
             $gCtx.lineWidth = $width;
         }
 
@@ -3754,7 +3753,7 @@ var $drawAllSwitchIcons = function() {
     jQuery.each($gWidgets, function($id, $widget) {
         switch ($widget.widgetFamily) {
             case 'switch' :
-                if ((typeof $widget['shape'] !== "undefined") && ($widget.shape != "button")) {
+                if (isDefined($widget['shape']) && ($widget.shape != "button")) {
                     $drawWidgetSymbol($id, UNKNOWN); // draw first time UNKNOWN = 0
                 }
                 break;
@@ -3771,7 +3770,7 @@ function updateWidgets(name, state, data) {
         });
     }
     //update all widgets based on the element that changed, using username
-    if (typeof data.userName != "undefined" && whereUsed[data.userName]) {
+    if (isDefined(data.userName) && whereUsed[data.userName]) {
         //if (jmri_logging) log.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
             $setWidgetState(widgetId, state, data);
@@ -3928,7 +3927,7 @@ function slipStateToString(state) {
 
 function getTurnoutStatesForSlipState(slipWidget, slipState) {
     var results = [UNKNOWN, UNKNOWN];
-    if (typeof slipWidget !== "undefined") {
+    if (isDefined(slipWidget)) {
         if (slipWidget.widgetType == 'layoutSlip') {
             switch (slipState) {
                 case STATE_AC:

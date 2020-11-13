@@ -56,9 +56,9 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         panel.setAttribute("xscale", Float.toString((float) editor.gContext.getXScale()));
         panel.setAttribute("yscale", Float.toString((float) editor.gContext.getYScale()));
         panel.setAttribute("mainlinetrackwidth", Integer.toString(editor.gContext.getMainlineTrackWidth()));
-        panel.setAttribute("sidetrackwidth", Integer.toString(editor.gContext.getSidelineTrackWidth()));
+        panel.setAttribute("sidelinetrackwidth", Integer.toString(editor.gContext.getSidelineTrackWidth()));
         panel.setAttribute("mainlineblockwidth", Integer.toString(editor.gContext.getMainlineBlockWidth()));
-        panel.setAttribute("sidetrackblockwidth", Integer.toString(editor.gContext.getSidelineBlockWidth()));
+        panel.setAttribute("sidelineblockwidth", Integer.toString(editor.gContext.getSidelineBlockWidth()));
         panel.setAttribute("turnoutcircles", (editor.getTurnoutCircles()) ? "yes" : "no");
         panel.setAttribute("turnoutcirclesize", Integer.toString(editor.getTurnoutCircleSize()));
         panel.setAttribute("turnoutdrawunselectedleg", (editor.isTurnoutDrawUnselectedLeg()) ? "yes" : "no");
