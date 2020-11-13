@@ -142,21 +142,28 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         // include LayoutTrackViews
         List<LayoutTrackView> layoutTrackViews = editor.getLayoutTrackViews();
         log.debug("Number of LayoutTrack elements: {}", layoutTrackViews.size());
-        for (Object sub : layoutTrackViews) {
-            try {
-                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                if (e != null) {
-                    replaceUserNames(e);
-                    if (sub instanceof LayoutTurntable) {
-                        List<Element> raytracks = e.getChildren("raytrack");
-                        for (Element raytrack : raytracks) {
-                            replaceUserNameAttribute(raytrack, "turnout", "turnout");
+
+        // 1st pass send everything but track segment views; 2nd send track segment views
+        for (int pass = 0; pass < 2; pass++) {
+            for (Object sub : layoutTrackViews) {
+                boolean isTSV = sub instanceof TrackSegmentView;
+                if (pass == (isTSV ? 1 : 0)) {
+                    try {
+                        Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
+                        if (e != null) {
+                            replaceUserNames(e);
+                            if (sub instanceof LayoutTurntable) {
+                                List<Element> raytracks = e.getChildren("raytrack");
+                                for (Element raytrack : raytracks) {
+                                    replaceUserNameAttribute(raytrack, "turnout", "turnout");
+                                }
+                            }
+                            panel.addContent(e);
                         }
+                    } catch (Exception e) {
+                        log.error("Error storing panel LayoutTrack element: {}", e);
                     }
-                    panel.addContent(e);
                 }
-            } catch (Exception e) {
-                log.error("Error storing panel LayoutTrack element: {}", e);
             }
         }
 
