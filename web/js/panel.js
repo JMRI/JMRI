@@ -259,7 +259,7 @@ function processPanelXML($returnedData, $success, $xhr) {
             $widget['state'] = UNKNOWN; //initial state is unknown
             $widget.jsonType = ""; //default to no JSON type (avoid undefined)
 
-            if (isUndefined($widget["systemName"]) && isDefined($widget["id"]) {
+            if (isUndefined($widget["systemName"]) && isDefined($widget["id"])) {
                 $widget.systemName = $widget["id"]; //set systemName from id if missing
             }
             $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
@@ -581,7 +581,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             if (isDefined($widget.name) && $widget.forcecontroloff != "true") {
                                 $widget.classes += " " + $widget.jsonType + " clickable ";
                             }
-                            if (isUndefined($widget["systemName"])
+                            if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
                             jmri.getSensor($widget["systemName"]);
                             break;
