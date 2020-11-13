@@ -209,6 +209,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             JMenuBar menuBar = f.getJMenuBar();
             if (menuBar == null) {
                 log.debug("NULL MenuBar");
+                return;
             }
             MenuElement[] subElements;
             JMenu fileMenu = null;
@@ -220,6 +221,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 }
             }
             if (fileMenu == null) {
+                log.debug("NULL FileMenu");
                 return;
             }
             subElements = fileMenu.getSubElements();
