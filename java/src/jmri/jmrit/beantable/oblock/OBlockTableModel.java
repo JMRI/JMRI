@@ -642,7 +642,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 fireTableRowsUpdated(row, row);
                 return;
             case EDIT_COL:
-                _parent.openBlockPathPane(block.getSystemName()); // interface is checked in TableFrames
+                _parent.openBlockPathPane(block.getSystemName(), null); // interface is checked in TableFrames
                 return;
             case DELETE_COL:
                 deleteBean(block);

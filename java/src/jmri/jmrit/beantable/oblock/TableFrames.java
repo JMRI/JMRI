@@ -542,7 +542,7 @@ public class TableFrames implements InternalFrameListener {
         JMenu openBlockPath = new JMenu(Bundle.getMessage("OpenBlockPathMenu"));
         ActionListener openFrameAction = e -> {
             String blockSystemName = e.getActionCommand();
-            openBlockPathPane(blockSystemName); // handles both interfaces
+            openBlockPathPane(blockSystemName, Bundle.getMessage("TitlePaths")); // handles both interfaces
         };
 
         if (manager.getNamedBeanSet().size() == 0) {
@@ -749,7 +749,7 @@ public class TableFrames implements InternalFrameListener {
     }
 
     // Opens the Edit OBlock panel for _tabbed
-    protected boolean openOBlockEditor(String blockSystemName) {
+    protected boolean openOBlockEditor(String blockSystemName, String tabname) {
         boolean result = false;
         if (blockSystemName != null) {
             // this is for Edit, new OBlocks created from [Add OBlock...] button in table
@@ -757,7 +757,7 @@ public class TableFrames implements InternalFrameListener {
             if (oblock != null){
                 BlockPathJPanel panel = makeBlockPathEditPanel(oblock);
                 // BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
-                jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
+                jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, tabname));
                 beanEdit.setBean(oblock);
                 beanEdit.setTablePanel(panel);
                 beanEdit.actionPerformed(null);
@@ -788,7 +788,7 @@ public class TableFrames implements InternalFrameListener {
 
     /**
      * Open the Edit Path panel for _tabbed.
-     * Compare with openOBlockEditor(block) and OBlockTableAction.
+     * Compare with openOBlockEditor(block, selectedtabname) and OBlockTableAction.
      *
      * @param blockName system or user name of the owning oblock
      * @param pathName name of the path under edit, or none to create a new path
@@ -921,6 +921,7 @@ public class TableFrames implements InternalFrameListener {
      * ***************** end of permanent Tables + InternalFrame definitions *****************
      */
 
+
     /*
      * ***************** On Demand Tables + InternalFrame definitions *****************
      */
@@ -929,10 +930,11 @@ public class TableFrames implements InternalFrameListener {
      * ********************* Block-Path Frame *****************************
      */
 
-    // called from Tables menu
-    public void openBlockPathPane(String blockSystemName) {
+    // called from Tables menu and the OBlockTable EDIT buttons
+    public void openBlockPathPane(String blockSystemName, String editorTabName) {
         if (_tabbed) {
-            if (!openOBlockEditor(blockSystemName)) { // pass on to Per OBlock Edit panel, includes a BlockPath table
+            if (!openOBlockEditor(blockSystemName, editorTabName)) {
+                // pass on to Per OBlock Edit panel, includes a BlockPath table
                 log.error("Failed to open OBlock Path table for {}", blockSystemName);
             }
         } else {

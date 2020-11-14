@@ -192,7 +192,6 @@ public class PortalEditFrame extends JmriJFrame {
             status(Bundle.getMessage("PortalNeedsBlock", user), true);
             return;
         }
-
         try {
             OBlock block = fromBlockComboBox.getSelectedItem();
             if (block != null) { // could have been deleted in JMRI by now?
@@ -223,7 +222,6 @@ public class PortalEditFrame extends JmriJFrame {
                 }
                 _portal.setToBlock(block, true);
             }
-
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), Bundle.getMessage("PortalCreateErrorTitle"), JOptionPane.ERROR_MESSAGE);
             status(Bundle.getMessage("AddPortalFailed", user), true);

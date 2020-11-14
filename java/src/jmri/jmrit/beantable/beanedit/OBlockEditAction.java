@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Provides an edit panel for a OBlock object.
+ * Provides a tabbed  beanedit panel for a OBlock object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2020
@@ -26,6 +26,22 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     private static final String severeText = Bundle.getMessage("BlockSevere");
     public String[] curveOptions = {noneText, gradualText, tightText, severeText};
     static final java.util.Vector<String> speedList = new java.util.Vector<String>();
+    private String tabName = Bundle.getMessage("BeanNameOBlock");
+    JTextField userNameField = new JTextField(20);
+    NamedBeanComboBox<Reporter> reporterComboBox;
+    JCheckBox useCurrent = new JCheckBox();
+    JTextArea commentField = new JTextArea(3, 30);
+    JScrollPane commentFieldScroller = new JScrollPane(commentField);
+    TableFrames.BlockPathJPanel blockPathPanel;
+    NamedBeanComboBox<Sensor> sensorComboBox;
+    NamedBeanComboBox<Sensor> errorSensorComboBox;
+
+    public OBlockEditAction(ActionEvent ae) {
+        super();
+        if (ae != null) {
+            tabName = ae.getActionCommand();
+        }
+    }
 
     @Override
     public String helpTarget() {
@@ -55,18 +71,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         return InstanceManager.getDefault(OBlockManager.class).getByUserName(name);
     }
 
-    JTextField userNameField = new JTextField(20);
-    NamedBeanComboBox<Reporter> reporterComboBox;
-    JCheckBox useCurrent = new JCheckBox();
-    JTextArea commentField = new JTextArea(3, 30);
-    JScrollPane commentFieldScroller = new JScrollPane(commentField);
-    TableFrames.BlockPathJPanel blockPathPanel;
-
-    NamedBeanComboBox<Sensor> sensorComboBox;
-    NamedBeanComboBox<Sensor> errorSensorComboBox;
-
     BeanItemPanel sensor() {
-
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BeanNameSensors"));
 
@@ -120,7 +125,8 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
 
     BeanItemPanel paths() {
         BeanItemPanel paths = new BeanItemPanel();
-        paths.setName(Bundle.getMessage("TitlePaths"));
+        String name = Bundle.getMessage("TitlePaths");
+        paths.setName(name);
 
         paths.addItem(new BeanEditItem(blockPathPanel, Bundle.getMessage("PathTableLabel", bean.getDisplayName()), null));
         // includes Add Path button
@@ -135,6 +141,9 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         bei.add(paths);
         if (InstanceManager.getNullableDefault(OBlockManager.class) == null) {
             setEnabled(false);
+        }
+        if (name.equals(tabName)) {
+            setSelectedComponent(paths);
         }
         return paths;
     }
@@ -198,7 +207,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     String defaultBlockSpeedText;
 
     BeanItemPanel physicalDetails() {
-
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal", "Global") + " " + InstanceManager.getDefault(BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
         java.util.Vector<String> _speedMap = InstanceManager.getDefault(SignalSpeedMap.class).getValidSpeedNames();

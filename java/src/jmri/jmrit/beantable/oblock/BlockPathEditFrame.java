@@ -242,15 +242,27 @@ public class BlockPathEditFrame extends JmriJFrame {
             return;
         }
         if (_newPath) {
-            _path = new OPath(_block, user);
+            Portal fromPortal = _block.getPortalByName((String) fromPortalComboBox.getSelectedItem());
+            Portal toPortal = _block.getPortalByName((String) toPortalComboBox.getSelectedItem());
+            if (fromPortal != null || toPortal != null) {
+                _path = new OPath(user, _block, fromPortal, toPortal, null);
+                if (!_block.addPath(_path)) {
+                    status(Bundle.getMessage("AddPathFailed", user), true);
+                } else {
+                    _pathmodel.initTempRow();
+                    _core.updateOBlockTablesMenu();
+                    _pathmodel.fireTableDataChanged();
+                    closeFrame(); // success
+                }
+            }
         } else if (!_path.getName().equals(user)) {
-            _path.setName(user);
+            _path.setName(user); // name change on existing path
         }
         try { // adapted from BlockPathTableModel setValue
             if (fromPortalComboBox.getSelectedIndex() <= 0) {
                 // 0 = empty choice, need at least 1 Portal
                 if (toPortalComboBox.getSelectedIndex() > 0) {
-                    _path.setFromPortal(null); // portal can be removed from path by setting to null
+                    _path.setFromPortal(null); // portal can be removed from path by setting to null but we want at least 1
                 } else {
                     status(Bundle.getMessage("WarnPortalOnPath"), true);
                     return;

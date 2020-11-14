@@ -67,14 +67,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         _block = block;
         _parent = parent;
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
-        // refresh the Unit column values list
-        _units = new ArrayList<>();
-        for (int i = 0; i <= _block.getPaths().size(); i++) {
-            _units.add(_block.isMetric());
-        }
-        if (!_tabbed) {
-            initTempRow();
-        }
+        initTempRow();
         _block.addPropertyChangeListener(this);
     }
 
@@ -94,16 +87,23 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     }
 
     void initTempRow() {
-        for (int i = 0; i < NUMCOLS; i++) {
-            tempRow[i] = null;
+        if (!_tabbed) {
+            for (int i = 0; i < NUMCOLS; i++) {
+                tempRow[i] = null;
+            }
+            tempRow[LENGTHCOL] = twoDigit.format(0.0);
+            if (_block.isMetric()) {
+                tempRow[UNITSCOL] = Bundle.getMessage("cm");
+            } else {
+                tempRow[UNITSCOL] = Bundle.getMessage("in");
+            }
+            tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
         }
-        tempRow[LENGTHCOL] = twoDigit.format(0.0);
-        if (_block.isMetric()) {
-            tempRow[UNITSCOL] =  Bundle.getMessage("cm");
-        } else {
-            tempRow[UNITSCOL] =  Bundle.getMessage("in");            
+        // refresh the Unit column values list
+        _units = new ArrayList<>();
+        for (int i = 0; i <= _block.getPaths().size(); i++) {
+            _units.add(_block.isMetric());
         }
-        tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
     @Override

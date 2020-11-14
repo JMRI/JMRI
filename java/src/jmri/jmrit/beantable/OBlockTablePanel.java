@@ -192,7 +192,7 @@ public class OBlockTablePanel extends JPanel {
         oblockTabs.addTab(Bundle.getMessage("BeanNameOBlocks"), oblockDataScroll);
         oblockTabs.addTab(Bundle.getMessage("BeanNamePortals"), portalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Signals"), signalDataScroll);
-        oblockTabs.addTab(Bundle.getMessage("Paths"), blockportalDataScroll);
+        oblockTabs.addTab(Bundle.getMessage("TitleBlockPortalXRef"), blockportalDataScroll);
         // turnouts not on a tab: via Edit button in Path Edit pane (or a Tables submenu)
 
         add(oblockTabs, BorderLayout.CENTER);
