@@ -7,7 +7,6 @@ import java.util.Locale;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.logixng.Bundle;
 
 /**
  * Sets all engine slots to status common
