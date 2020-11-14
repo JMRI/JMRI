@@ -46,7 +46,7 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        _memo.getSlotManager().update();
+        if (_memo != null) _memo.getSlotManager().update();
     }
 
     @Override

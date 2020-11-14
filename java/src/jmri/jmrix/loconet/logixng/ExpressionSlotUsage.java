@@ -156,7 +156,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         int compareToNum = _percentPieces == PercentPieces.Percent
                 ? Math.round(((float)_number) / 100 * _totalSlots) : _number;
         
-        System.out.format("Num slots: %d, Number: %d, Total slots: %d, Percent: %1.2f%n", count, _number, _totalSlots, ((float)_number) / 100 * _totalSlots);
         return _compare.compare(count, compareToNum);
     }
 
