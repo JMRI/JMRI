@@ -137,7 +137,8 @@ public class GetNumSlotsDialog extends JDialog implements ThrottleListener, Slot
         for (int i=1; i < 120; i++) {
             LocoNetSlot slot = _memo.getSlotManager().slot(i);
             if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
-                _memo.getLnTrafficController().sendLocoNetMessage(slot.releaseSlot());
+                _memo.getLnTrafficController().sendLocoNetMessage(slot.writeStatus(LnConstants.LOCO_FREE));
+//                _memo.getLnTrafficController().sendLocoNetMessage(slot.releaseSlot());
             }
         }
     }

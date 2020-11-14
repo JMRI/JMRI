@@ -6,18 +6,21 @@ import java.util.Locale;
 
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.*;
+import jmri.jmrix.loconet.logixng.Bundle;
 
 /**
- * Request an update of the LocoNet slots
+ * Sets all engine slots to status common
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class ActionUpdateSlots extends AbstractDigitalAction {
+public class ActionClearSlots extends AbstractDigitalAction {
 
+    private static final int NUM_LOCO_SLOTS_TO_CLEAR = 119;
+    
     private LocoNetSystemConnectionMemo _memo;
     
-    public ActionUpdateSlots(String sys, String user, LocoNetSystemConnectionMemo memo) {
+    public ActionClearSlots(String sys, String user, LocoNetSystemConnectionMemo memo) {
         super(sys, user);
         _memo = memo;
     }
@@ -46,7 +49,13 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        _memo.getSlotManager().update();
+        for (int i=0; i < NUM_LOCO_SLOTS_TO_CLEAR; i++) {
+            LocoNetSlot slot = _memo.getSlotManager().slot(i);
+            if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
+//                _memo.getLnTrafficController().sendLocoNetMessage(slot.writeStatus(LnConstants.LOCO_FREE));
+                _memo.getLnTrafficController().sendLocoNetMessage(slot.releaseSlot());
+            }
+        }
     }
 
     @Override
@@ -61,12 +70,12 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionUpdateSlots_Short");
+        return Bundle.getMessage(locale, "ActionClearSlots_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionUpdateSlots_Long",
+        return Bundle.getMessage(locale, "ActionClearSlots_Long",
                 _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet"));
     }
 
@@ -96,6 +105,6 @@ public class ActionUpdateSlots extends AbstractDigitalAction {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionUpdateSlots.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClearSlots.class);
 
 }

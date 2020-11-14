@@ -28,6 +28,7 @@ public class ActionFactory implements DigitalActionFactory {
         
         // We don't want to add these classes if we don't have a LocoNet connection
         if (CategoryLocoNet.hasLocoNet()) {
+            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionClearSlots.class));
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionUpdateSlots.class));
         }
         

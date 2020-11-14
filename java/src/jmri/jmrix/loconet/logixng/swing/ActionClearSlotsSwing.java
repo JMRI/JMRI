@@ -12,7 +12,7 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.swing.AbstractDigitalActionSwing;
-import jmri.jmrix.loconet.logixng.ActionUpdateSlots;
+import jmri.jmrix.loconet.logixng.ActionClearSlots;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -20,20 +20,26 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public class ActionUpdateSlotsSwing extends AbstractDigitalActionSwing {
+public class ActionClearSlotsSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<LocoNetConnection> _locoNetConnection;
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        if ((object != null) && !(object instanceof ActionUpdateSlots)) {
-            throw new IllegalArgumentException("object must be an ActionUpdateSlots but is a: "+object.getClass().getName());
+        if ((object != null) && !(object instanceof ActionClearSlots)) {
+            throw new IllegalArgumentException("object must be an ActionClearSlots but is a: "+object.getClass().getName());
         }
         
-        ActionUpdateSlots action = (ActionUpdateSlots)object;
+        ActionClearSlots action = (ActionClearSlots)object;
         
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        
+        panel.add(new JLabel(Bundle.getMessage("ActionClearSlotsInfo1")));
+        panel.add(new JLabel(Bundle.getMessage("ActionClearSlotsInfo2")));
+        panel.add(new JLabel(Bundle.getMessage("ActionClearSlotsInfo3")));
+        panel.add(new JLabel(Bundle.getMessage("ActionClearSlotsInfo4")));
+        panel.add(new JLabel(Bundle.getMessage("ActionClearSlotsInfo5")));
         
         JPanel queryPanel = new JPanel();
         queryPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -68,7 +74,7 @@ public class ActionUpdateSlotsSwing extends AbstractDigitalActionSwing {
         LocoNetSystemConnectionMemo memo =
                 _locoNetConnection.getItemAt(_locoNetConnection.getSelectedIndex())._memo;
         
-        ActionUpdateSlots action = new ActionUpdateSlots(systemName, userName, memo);
+        ActionClearSlots action = new ActionClearSlots(systemName, userName, memo);
         updateObject(action);
         
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
@@ -77,11 +83,11 @@ public class ActionUpdateSlotsSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof ActionUpdateSlots)) {
+        if (! (object instanceof ActionClearSlots)) {
             throw new IllegalArgumentException("object must be an ExpressionTurnout but is a: "+object.getClass().getName());
         }
         
-        ActionUpdateSlots action = (ActionUpdateSlots)object;
+        ActionClearSlots action = (ActionClearSlots)object;
         
         action.setMemo(_locoNetConnection.getItemAt(_locoNetConnection.getSelectedIndex())._memo);
     }
@@ -89,7 +95,7 @@ public class ActionUpdateSlotsSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ActionUpdateSlots_Short");
+        return Bundle.getMessage("ActionClearSlots_Short");
     }
     
     @Override
@@ -112,6 +118,6 @@ public class ActionUpdateSlotsSwing extends AbstractDigitalActionSwing {
         }
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSlotUsageSwing.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClearSlotsSwing.class);
 
 }

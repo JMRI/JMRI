@@ -31,7 +31,7 @@ public interface SwingConfiguratorInterface {
     
     /**
      * Get the parent frame for this class
-     * @returns the parent frame
+     * @return the parent frame
      */
     public JFrame getFrame();
     

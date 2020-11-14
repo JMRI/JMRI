@@ -154,8 +154,9 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         int count = getNumWithStatus();
         
         int compareToNum = _percentPieces == PercentPieces.Percent
-                ? Math.round(((float)_number) / _totalSlots * 100) : _number;
+                ? Math.round(((float)_number) / 100 * _totalSlots) : _number;
         
+        System.out.format("Num slots: %d, Number: %d, Total slots: %d, Percent: %1.2f%n", count, _number, _totalSlots, ((float)_number) / 100 * _totalSlots);
         return _compare.compare(count, compareToNum);
     }
 
@@ -199,7 +200,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
                 _compare.toString(),
                 _number,
                 _percentPieces.toString(),
-                _memo != null ? _memo.getSystemPrefix() : Bundle.getMessage("MemoNotSet")
+                _memo != null ? _memo.getUserName() : Bundle.getMessage("MemoNotSet")
                 );
     }
 

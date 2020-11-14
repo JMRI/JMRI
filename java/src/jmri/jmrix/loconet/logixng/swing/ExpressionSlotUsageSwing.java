@@ -292,7 +292,7 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         
         @Override
         public String toString() {
-            return _memo.getSystemPrefix();
+            return _memo.getUserName();
         }
     }
     
