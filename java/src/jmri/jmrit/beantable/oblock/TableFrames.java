@@ -78,7 +78,7 @@ public class TableFrames implements InternalFrameListener {
     private final SignalTableModel _signalModel;
 
     private final boolean _tabbed; // updated from prefs (restart required)
-    private static boolean pathEdit = false;
+    private boolean pathEdit = false;
 
     private JmriJFrame desktopframe;
     private JDesktopPane _desktop;

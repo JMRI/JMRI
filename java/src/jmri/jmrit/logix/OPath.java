@@ -45,7 +45,6 @@ public class OPath extends jmri.Path {
     public OPath(Block owner, String name) {
         super(owner, 0, 0);
         _name = name;
-        log.debug("OPath Ctor: name= {}, block= {}", name, owner.getDisplayName());
     }
 
     /**
