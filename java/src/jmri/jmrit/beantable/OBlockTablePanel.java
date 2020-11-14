@@ -92,14 +92,18 @@ public class OBlockTablePanel extends JPanel {
         oblockTable.setColumnModel(tcm);
         oblockTable.getTableHeader().setReorderingAllowed(true); // already assigned in makeJTable
         oblockTable.createDefaultColumnsFromModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false); // doesn't hide them
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false); // doesn't hide them?
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.WARRANTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            int width = oblockDataModel.getPreferredWidth(i);
+            tcm.getColumn(i).setPreferredWidth(width);
+        }
+        oblockDataModel.addHeaderListener(oblockTable); // HeaderListeners not set up for the other 3 small tables
         oblockTable.setPreferredScrollableViewportSize(new java.awt.Dimension(550, 300)); // a wide table
-        oblockDataModel.addHeaderListener(oblockTable);
         oblockDataScroll = new JScrollPane(oblockTable);
 
         // Portal Table
@@ -110,12 +114,13 @@ public class OBlockTablePanel extends JPanel {
         // style table
         portalTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         portalTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        portalTable.doLayout();
+        //portalTable.setColumnModel(new XTableColumnModel());
+        portalTable.createDefaultColumnsFromModel();
         for (int i = 0; i < portalDataModel.getColumnCount(); i++) {
             int width = portalDataModel.getPreferredWidth(i);
             portalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        portalTable.setColumnModel(new XTableColumnModel());
-        portalTable.createDefaultColumnsFromModel();
         portalDataScroll = new JScrollPane(portalTable);
 
         // Signal Table
@@ -130,8 +135,13 @@ public class OBlockTablePanel extends JPanel {
                 new ToggleButtonRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellEditor(
                 new ToggleButtonEditor(new JToggleButton(), Bundle.getMessage("cm"), Bundle.getMessage("in")));
-        signalTable.setColumnModel(new XTableColumnModel());
+        signalTable.doLayout();
+        //signalTable.setColumnModel(new XTableColumnModel());
         signalTable.createDefaultColumnsFromModel();
+        for (int i = 0; i < signalDataModel.getColumnCount(); i++) {
+            int width = SignalTableModel.getPreferredWidth(i);
+            signalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
         signalDataScroll = new JScrollPane(signalTable);
 
         // Block-Portal Xreference table
@@ -141,9 +151,13 @@ public class OBlockTablePanel extends JPanel {
         blockportalTable = makeJTable("Block-Portal X-ref", blockportalDataModel, sorter); // cannot directly access
         // style table
         blockportalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        //blockportalTable.doLayout();
-        blockportalTable.setColumnModel(new XTableColumnModel());
+        blockportalTable.doLayout();
+        //blockportalTable.setColumnModel(new XTableColumnModel());
         blockportalTable.createDefaultColumnsFromModel();
+        for (int i = 0; i < blockportalDataModel.getColumnCount(); i++) {
+            int width = blockportalDataModel.getPreferredWidth(i);
+            blockportalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+        }
         blockportalDataScroll = new JScrollPane(blockportalTable);
 
         // configure items for GUI
@@ -179,7 +193,7 @@ public class OBlockTablePanel extends JPanel {
         oblockTabs.addTab(Bundle.getMessage("BeanNamePortals"), portalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Signals"), signalDataScroll);
         oblockTabs.addTab(Bundle.getMessage("Paths"), blockportalDataScroll);
-        // turnouts not on a tab: via button
+        // turnouts not on a tab: via Edit button in Path Edit pane (or a Tables submenu)
 
         add(oblockTabs, BorderLayout.CENTER);
         log.debug("tabs complete");

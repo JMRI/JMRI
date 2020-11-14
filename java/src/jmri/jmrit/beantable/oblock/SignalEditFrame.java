@@ -57,7 +57,6 @@ public class SignalEditFrame extends JmriJFrame {
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
             (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
             Bundle.getMessage("ButtonOK")));
-
     private final SignalEditFrame frame = this;
     private Portal _portal;
     SignalTableModel.SignalRow _sr;
@@ -192,6 +191,8 @@ public class SignalEditFrame extends JmriJFrame {
         p.add(Box.createHorizontalGlue());
 
         JPanel p2 = new JPanel();
+        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * signalMastLabel.getFont().getSize())); // a bit smaller
+        statusBar.setForeground(Color.gray);
         p2.add(statusBar);
         p.add(p2);
 
@@ -232,13 +233,11 @@ public class SignalEditFrame extends JmriJFrame {
         lengthSpinner.setValue(0f);
         // reset statusBar text
         if ((sigMastComboBox.getItemCount() == 0) && (sigHeadComboBox.getItemCount() == 0)) {
-            statusBar.setText(Bundle.getMessage("NoSignalWarning"));
-            statusBar.setForeground(Color.red);
+            status(Bundle.getMessage("NoSignalWarning"), true);
         } else {
-            statusBar.setText(Bundle.getMessage("AddXStatusInitial1",
+            status(Bundle.getMessage("AddXStatusInitial1",
                     (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
-                    Bundle.getMessage("ButtonOK"))); // I18N to include original button name in help string
-            statusBar.setForeground(Color.gray);
+                    Bundle.getMessage("ButtonOK")), false); // I18N to include original button name in help string
         }
         //_newSignal = true;
     }
@@ -274,17 +273,13 @@ public class SignalEditFrame extends JmriJFrame {
         }
         _portal = pm.getPortal((String) portalComboBox.getSelectedItem());
         if (_portal == null) {
-            statusBar.setText(Bundle.getMessage("AddBeanStatusEnter"));
-            statusBar.setForeground(Color.red);
+            status(Bundle.getMessage("AddBeanStatusEnter"), true);
             return;
-        } else {
-            statusBar.setForeground(Color.gray);
         }
         if (_portal.setProtectSignal(signal, (float) lengthSpinner.getValue(), toBlockComboBox.getSelectedItem())) {
             if ((fromBlockComboBox.getSelectedIndex() == 0) && (toBlockComboBox.getSelectedIndex() > 0)) {
                 _portal.setFromBlock(_portal.getOpposingBlock(Objects.requireNonNull(toBlockComboBox.getSelectedItem())), true);
             }
-
         }
         //            sr = new SignalTableModel.SignalRow(signal, fromBlockComboBox.getSelectedItem(),
         //            _portal, toBlockComboBox.getSelectedItem(), (float) lengthSpinner.getValue(),
@@ -307,6 +302,11 @@ public class SignalEditFrame extends JmriJFrame {
         } else {
             lengthSpinner.setValue(len*2.54f);
         }
+    }
+
+    void status(String message, boolean warn){
+        statusBar.setText(message);
+        statusBar.setForeground(warn ? Color.red : Color.gray);
     }
 
     private static final Logger log = LoggerFactory.getLogger(SignalEditFrame.class);

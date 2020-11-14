@@ -50,11 +50,10 @@ public class SignalTableModel extends AbstractTableModel {
     public static final int LENGTHCOL = 4;
     public static final int UNITSCOL = 5;
     public static final int DELETE_COL = 6;
-    static public final int EDIT_COL = 7;
-    public static final int NUMCOLS = 7;
+    static public final int EDIT_COL = 7; // only used on _tabbed UI
+    public static final int NUMCOLS = 7;  // returns 7+1 for _tabbed
     int _lastIdx; // for debug
 
-    //private final CopyOnWriteArrayList<SignalRow> _signalList = new CopyOnWriteArrayList<>();
     PortalManager _portalMgr;
     TableFrames _parent;
     private SignalArray _signalList = new SignalArray();
@@ -160,20 +159,20 @@ public class SignalTableModel extends AbstractTableModel {
             OBlock fromBlock = portal.getFromBlock();
             OBlock toBlock = portal.getToBlock();
             if (fromBlock != null && toBlock != null) {
-                NamedBean signal = portal.getFromSignal();
                 SignalRow sr;
+                NamedBean signal = portal.getFromSignal();
                 if (signal != null) {
                     sr = new SignalRow(signal, fromBlock, portal, toBlock, portal.getFromSignalOffset(), toBlock.isMetric());
                     //_signalList.add(sr);
                     addToList(tempList, sr);
-                    log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
+                    //log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
                 }
                 signal = portal.getToSignal();
                 if (signal != null) {
                     sr = new SignalRow(signal, toBlock, portal, fromBlock, portal.getToSignalOffset(), fromBlock.isMetric());
                     //_signalList.add(sr);
                     addToList(tempList, sr);
-                    log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
+                    //log.debug("1 SR added to tempList, new size = {}", tempList.numberOfSignals());
                 }
             } else {
                 // Can't get jmri.util.JUnitAppender.assertErrorMessage recognized in TableFramesTest! OK just warn then
@@ -183,9 +182,9 @@ public class SignalTableModel extends AbstractTableModel {
         //_signalList = tempList;
         _signalList = (SignalArray) tempList.clone();
         _lastIdx = tempList.numberOfSignals();
-        log.debug("TempList copied, size = {}", tempList.numberOfSignals());
+        //log.debug("TempList copied, size = {}", tempList.numberOfSignals());
         _signalList.sort(new NameSorter());
-        log.debug("makeList exit: _signalList size {} items.", _signalList.numberOfSignals());
+        //log.debug("makeList exit: _signalList size {} items.", _signalList.numberOfSignals());
     }
 
     private static void addToList(SignalArray array, SignalRow sr) {
@@ -195,13 +194,13 @@ public class SignalTableModel extends AbstractTableModel {
             if (sr.getSignal().getDisplayName().compareTo(array.get(j).getSignal().getDisplayName()) < 0) {
                 array.add(j, sr); // added first time
                 add = false;
-                log.debug("comparing list item {} name {}", j, sr.getSignal().getDisplayName());
+                //log.debug("comparing list item {} name {}", j, sr.getSignal().getDisplayName());
                 break;
             }
         }
         if (add) {
             array.add(sr);
-            log.debug("comparing list item at last pos {} name {}", array.numberOfSignals() , sr.getSignal().getDisplayName());
+            //log.debug("comparing list item at last pos {} name {}", array.numberOfSignals() , sr.getSignal().getDisplayName());
         }
     }
 
@@ -262,7 +261,7 @@ public class SignalTableModel extends AbstractTableModel {
         return msg;
     }
 
-    // From the PortalSet get the single portal using the given To and From block.
+    // From the PortalSet get the single portal using the given To and From OBlock.
     private Portal getPortalWithBlocks(OBlock fromBlock, OBlock toBlock) {
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
@@ -277,7 +276,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     protected String checkDuplicateSignal(NamedBean signal) {
-        log.debug("checkDuplSig checking for duplicate Signal in list by the same name");
+        //log.debug("checkDuplSig checking for duplicate Signal in list by the same name");
         if (signal == null) {
             return null;
         }
@@ -292,7 +291,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     private String checkDuplicateSignal(SignalRow row) {
-        log.debug("checkDuplSig checking for duplicate Signal in list using new entry row");
+        //log.debug("checkDuplSig checking for duplicate Signal in list using new entry row");
         NamedBean signal = row.getSignal();
         if (signal == null) {
             return null;
@@ -333,7 +332,7 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        log.debug("_signalList.numberOfSignals = {}", _signalList.numberOfSignals()); // EBR debug
+        //log.debug("_signalList.numberOfSignals = {}", _signalList.numberOfSignals()); // EBR debug
         return _signalList.numberOfSignals() + (_tabbed ? 0 : 1); // + 1 row in _desktop to create entry row
         // +1 adds the extra empty row at the bottom of the table display, causes IOB when called externally when _tabbed
     }
@@ -363,13 +362,9 @@ public class SignalTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (rowIndex > _lastIdx) {
-            log.debug("getValueAt rowIndex = {}, _signalList.numberOfSignals = {}", rowIndex, _signalList.numberOfSignals());
-        }
-
-        if (!_tabbed && rowIndex == _signalList.numberOfSignals()) { // this must be tempRow, a new entry, read values from tempRow
+        if (!_tabbed && (rowIndex == _signalList.numberOfSignals())) { // this must be tempRow, a new entry, read values from tempRow
             if (columnIndex == LENGTHCOL) {
-                log.debug("GetValue SignalTable length entered {} =============== in row {}", _tempLen, rowIndex);
+                //log.debug("GetValue SignalTable length entered {} =============== in row {}", _tempLen, rowIndex);
                 if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                     return (twoDigit.format(_tempLen/10));
                 }
@@ -381,8 +376,8 @@ public class SignalTableModel extends AbstractTableModel {
             return tempRow[columnIndex];
         }
         if (rowIndex >= _signalList.numberOfSignals() || rowIndex >= _lastIdx) {
-            log.error("SignalTable requested ROW {}, SIZE is {}, expected {}", rowIndex, _signalList.numberOfSignals(), _lastIdx);
-            log.debug("items in list: {}", _signalList.numberOfSignals()); // EBR debug
+            //log.error("SignalTable requested ROW {}, SIZE is {}, expected {}", rowIndex, _signalList.numberOfSignals(), _lastIdx);
+            //log.debug("items in list: {}", _signalList.numberOfSignals()); // debug
             return columnIndex + "" + rowIndex + "?";
         }
 
@@ -443,9 +438,10 @@ public class SignalTableModel extends AbstractTableModel {
                 fireTableRowsUpdated(row, row);
                 return;               
             } else if (col == LENGTHCOL) {
-                log.debug("SetValue SignalTable length set {} in row {}", value.toString(), row);
+                //log.debug("SetValue SignalTable length set {} in row {}", value.toString(), row);
                 try {
                     _tempLen = IntlUtilities.floatValue(value.toString());
+                    //log.debug("setValue _tempLen = {} {}", _tempLen, tempRow[UNITSCOL]);
                     if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                         _tempLen *= 10f;
                     } else {
@@ -539,14 +535,15 @@ public class SignalTableModel extends AbstractTableModel {
                         // all checks passed, create new SignalRow to add to _signalList
                         SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, length, isMetric);
                         msg = setSignal(signalRow, false);
-                        if (msg == null) {
+                        //if (msg == null) {
                             //if (signalRow.getLength() == 0) {
-                                log.error("#544 empty tempRow added to SignalList (now {})", _signalList.numberOfSignals());
+                                //log.error("#544 empty tempRow added to SignalList (now {})", _signalList.numberOfSignals());
                             //}
-                            _signalList.add(signalRow);                            
-                        }
+                            //_signalList.add(signalRow); // BUG no need to do this, as the table will be updated from the OBlock settings
+                            // it caused the ghost row, which is squasehed out when the list is rebuilt
+                        //}
                         initTempRow();
-                        fireTableDataChanged();                        
+                        fireTableDataChanged();
                     }
                 }
             }
@@ -554,9 +551,10 @@ public class SignalTableModel extends AbstractTableModel {
             SignalRow signalRow;
             try {
                 signalRow = _signalList.get(row);
+                //log.debug("SetValue fetched SignalRow {}", row);
             } catch (IndexOutOfBoundsException e) {
-                // ignore, happens for unknown reason, shows duplicate row during new entry TODO fix
-                //log.debug("setValue out of range");
+                // ignore, happened in 4.21.2 for some reason, showed as a duplicate row after new entry, now fixed
+                log.warn("setValue out of range");
                 return;
             }
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -565,7 +563,7 @@ public class SignalTableModel extends AbstractTableModel {
                     NamedBean signal = Portal.getSignal((String) value);
                     if (signal == null) {
                         msg = Bundle.getMessage("NoSuchSignal", value);
-//                        signalRow.setSignal(null);                              
+                        // signalRow.setSignal(null);
                         break;
                     }
                     Portal portal = signalRow.getPortal();
@@ -579,7 +577,6 @@ public class SignalTableModel extends AbstractTableModel {
                             fireTableRowsUpdated(row, row);
                         } else {
                             signalRow.setSignal(oldSignal);
-
                         }
                     }
                     break;
@@ -622,7 +619,7 @@ public class SignalTableModel extends AbstractTableModel {
                         msg = Bundle.getMessage("NoSuchPortalName", value);
                         break;
                     }
-                    deleteSignal(signalRow);    // delete old
+                    deleteSignal(signalRow);    // delete old in Portal
                     signalRow.setPortal(portal);
                     block = signalRow.getToBlock();
                     if (checkPortalBlock(portal, block)) {
@@ -655,7 +652,7 @@ public class SignalTableModel extends AbstractTableModel {
                     if (block.equals(signalRow.getToBlock())) {
                         break;      // no change
                     }
-                    deleteSignal(signalRow);    // delete old
+                    deleteSignal(signalRow);    // delete old in Portal
                     signalRow.setToBlock(block);
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
@@ -679,24 +676,28 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     fireTableRowsUpdated(row, row);
                     break;
-                case LENGTHCOL:
+                case LENGTHCOL: // named "Offset" in table header, will be stored on ToBlock
+                    //log.debug("SetValue SignalTable length set {} in row {}", value.toString(), row);
                     try {
                         float len = IntlUtilities.floatValue(value.toString());
+                        //log.debug("SetValue Offset copied to: {} in row {}", len, row);
                         if (signalRow.isMetric()) {
                             signalRow.setLength(len * 10.0f);
                         } else {
                             signalRow.setLength(len * 25.4f);
                         }
-                        fireTableRowsUpdated(row, row);                    
+                        //log.debug("Length stored in SR as {}", signalRow.getLength());
+                        //fireTableRowsUpdated(row, row); // reads (GetValue) from portal signal as configured? ignores the new entry
                     } catch (ParseException e) {
-                        msg = Bundle.getMessage("BadNumber", value);                    
+                        msg = Bundle.getMessage("BadNumber", value);
+                        //log.error("SetValue BadNumber {}", value);
                     }
                     if (msg == null && signalRow.getPortal() != null) {
-                        msg = setSignal(signalRow, false);
+                        msg = setSignal(signalRow, false); // configures Portal & OBlock
                     } else {
                         signalRow.setPortal(null);
                     }
-                    fireTableRowsUpdated(row, row);
+                    //fireTableRowsUpdated(row, row); // not needed, change will be picked up from the OBlockTable PropertyChange
                     break;
                 case UNITSCOL:
                     signalRow.setMetric((Boolean)value);
@@ -705,7 +706,6 @@ public class SignalTableModel extends AbstractTableModel {
                 case DELETE_COL:
                     deleteSignal(signalRow);
                     _signalList.remove(signalRow);
-                    log.debug("ROW {} DELETED, tablerows = {}, list size = {}", row, getRowCount(), _signalList.numberOfSignals());
                     fireTableDataChanged();
                     break;
                 case EDIT_COL:
@@ -735,19 +735,13 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private boolean editSignal(NamedBean signal, SignalRow sr) {
-        if (_tabbed) {
-            if (signal == null) {
-                return false;
-            } else {
-                // open SignalEditFrame
-                SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, sr, this);
-                // TODO run on new thread?
-                sef.setVisible(true);
-                return true;
-            }
+    private void editSignal(NamedBean signal, SignalRow sr) {
+        if (_tabbed && signal != null) {
+            // open SignalEditFrame
+            SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, sr, this);
+            // TODO run on separate thread?
+            sef.setVisible(true);
         }
-        return false;
     }
 
     static private String setSignal(SignalRow signalRow, boolean deletePortal) {
@@ -795,23 +789,21 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
-    static public int getPreferredWidth(int col) {
+    public static int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
             case FROM_BLOCK_COLUMN:
             case PORTAL_COLUMN:
             case TO_BLOCK_COLUMN:
-                return new JTextField(18).getPreferredSize().width;
+                return new JTextField(11).getPreferredSize().width;
             case LENGTHCOL:
                 return new JTextField(5).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(3).getPreferredSize().width;
+                return new JTextField(4).getPreferredSize().width;
             case DELETE_COL:
-                return new JButton("DELETE ").getPreferredSize().width; // NOI18N
+                return new JButton("DELETE").getPreferredSize().width; // NOI18N
             case EDIT_COL:
-                return new JButton("EDIT ").getPreferredSize().width; // NOI18N
+                return new JButton("EDIT").getPreferredSize().width; // NOI18N
             default:
                 // fall through
                 break;

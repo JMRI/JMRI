@@ -88,9 +88,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     /**
      * Respond to mouse events to show/hide columns.
-     * public access to allow setting from OBlockTablePanel.
+     * Has public access to allow setting from OBlockTableAction OBlock Panel.
      *
-     * @param table the tbale based on this model
+     * @param table the table based on this model
      */
     public void addHeaderListener(JTable table) {
         addMouseListenerToHeader(table);
@@ -380,14 +380,12 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
 
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (log.isDebugEnabled()) {
-            log.debug("setValueAt: row= {}, col= {}, value= {}", row, col, value);
-        }
+        log.debug("setValueAt: row= {}, col= {}, value= {}", row, col, value);
         if (!_tabbed && (super.getRowCount() == row)) { // editing tempRow
             switch (col) {
                 case SYSNAMECOL:
                     OBlock block = _manager.createNewOBlock((String) value, tempRow[USERNAMECOL]);
-                    if (block == null) {
+                    if (block == null) { // an OBlock with the same systemName or userName already exists
                         block = _manager.getOBlock(tempRow[USERNAMECOL]);
                         String name = value + " / " + tempRow[USERNAMECOL];
                         if (block != null) {
@@ -619,7 +617,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                 }
                 return;
             case PERMISSIONCOL:
-                block.setPermissiveWorking((Boolean) value); // TODO cast? test and compare to REPORT_CURRENTCOL
+                block.setPermissiveWorking((Boolean) value); // compare to REPORT_CURRENTCOL
                 fireTableRowsUpdated(row, row);
                 return;
             case WARRANTCOL:
@@ -748,27 +746,26 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         switch (col) {
             case SYSNAMECOL:
             case USERNAMECOL:
-                return new JTextField(18).getPreferredSize().width;
-            case COMMENTCOL:
-                return new JTextField(10).getPreferredSize().width;
+                return new JTextField(15).getPreferredSize().width;
             case STATECOL:
                 return new JTextField(ZEROS).getPreferredSize().width;
+            case COMMENTCOL:
             case SENSORCOL:
             case ERR_SENSORCOL:
             case REPORTERCOL:
             case WARRANTCOL:
-                return new JTextField(15).getPreferredSize().width;
+                return new JTextField(10).getPreferredSize().width;
             case CURVECOL:
             case REPORT_CURRENTCOL:
             case PERMISSIONCOL:
-                return new JTextField(6).getPreferredSize().width;
+            case SPEEDCOL:
+                return new JTextField(8).getPreferredSize().width;
             case LENGTHCOL:
                 return new JTextField(5).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(3).getPreferredSize().width;
-            case SPEEDCOL:
-                return new JTextField(8).getPreferredSize().width;
+                return new JTextField(4).getPreferredSize().width;
             case EDIT_COL:
+                return new JButton("EDIT").getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
             default:

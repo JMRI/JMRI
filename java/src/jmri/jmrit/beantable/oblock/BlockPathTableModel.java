@@ -52,7 +52,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
     private OBlock _block;
     private TableFrames _parent;
     private final boolean _tabbed;     // read from prefs (restart required)
-    private ArrayList<Boolean> _units; // gimmick to toggle units of length col for each path
+    private ArrayList<Boolean> _units; // list to toggle units of length col for each path
     private float _tempLen;
     
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
@@ -69,14 +69,10 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
         // refresh the Unit column values list
         _units = new ArrayList<>();
-        if (_tabbed) {
-            for (int i = 0; i < _block.getPaths().size(); i++) {
-                _units.add(_block.isMetric());
-            }
-        } else {
-            for (int i = 0; i <= _block.getPaths().size(); i++) {
-                _units.add(_block.isMetric());
-            }
+        for (int i = 0; i <= _block.getPaths().size(); i++) {
+            _units.add(_block.isMetric());
+        }
+        if (!_tabbed) {
             initTempRow();
         }
         _block.addPropertyChangeListener(this);
@@ -88,7 +84,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
         }
         try {
             _block.removePropertyChangeListener(this);
-        } catch (NullPointerException npe) { // OK when block is removed
+        } catch (NullPointerException npe) {
+            // OK when block is removed
         }
     }
 
@@ -174,7 +171,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     return tempRow[columnIndex];
                 }
             case LENGTHCOL:
-                if (path !=null) {                   
+                if (path != null) {
                     if (_units.get(rowIndex)) {
                         return (twoDigit.format(path.getLengthCm()));
                     } else {
@@ -222,12 +219,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     if (_block.getPathByName(strValue) != null) {
                         msg = Bundle.getMessage("DuplPathName", strValue);
                         tempRow[col] = strValue;
-                        
                     } else {
                         Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
                         Portal toPortal = _block.getPortalByName(tempRow[TO_PORTAL_COLUMN]);
-                        if (fromPortal !=null || toPortal!= null) {
-                            OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);                            
+                        if (fromPortal != null || toPortal != null) {
+                            OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);
                             float len = 0.0f;
                             try {
                                 len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
@@ -266,7 +262,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     }
                     break;
                 case UNITSCOL:
-                    _units.set(row, (Boolean)value);
+                    _units.set(row, (Boolean)value); // true = metric
                     fireTableRowsUpdated(row, row);
                     return;
                 case DELETE_COL:
@@ -285,14 +281,14 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             return;
         }
 
-        OPath path = (OPath) _block.getPaths().get(row);
         // edit existing BlockPath row
+        OPath path = (OPath) _block.getPaths().get(row);
         switch (col) {
             case FROM_PORTAL_COLUMN:
                 String strValue = (String)value;
                 if (strValue != null) {
-                    Portal portal = _block.getPortalByName(strValue);
                     PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
+                    Portal portal = _block.getPortalByName(strValue);
                     if (portal == null || portalMgr.getPortal(strValue) == null) {
                         int val = _parent.verifyWarning(Bundle.getMessage("BlockPortalConflict", value, _block.getDisplayName()));
                         if (val == 2) {
@@ -385,7 +381,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 fireTableRowsUpdated(row, row);
                 return;
             case EDIT_COL: // button is called [Edit] (_tabbed) or [Edit Turnouts] (_desktop)
-                if (_tabbed) { // everything is handled in BlockPathEdit panel
+                if (_tabbed && !_parent.isPathEdit()) { // everything is handled in BlockPathEdit panel
                     _parent.openPathEditor(_block.getSystemName(), path.getName(), this);
                 } else {
                     _parent.openPathTurnoutFrame(_parent.makePathTurnoutName(_block.getSystemName(), path.getName()));
@@ -438,11 +434,11 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             case FROM_PORTAL_COLUMN:
             case NAME_COLUMN:
             case TO_PORTAL_COLUMN:
-                return new JTextField(18).getPreferredSize().width;
+                return new JTextField(25).getPreferredSize().width;
             case LENGTHCOL:
-                return new JTextField(5).getPreferredSize().width;
+                return new JTextField(10).getPreferredSize().width;
             case UNITSCOL:
-                return new JTextField(3).getPreferredSize().width;
+                return new JTextField(6).getPreferredSize().width;
             case EDIT_COL:
                 return new JButton("TURNOUT").getPreferredSize().width;
             case DELETE_COL:

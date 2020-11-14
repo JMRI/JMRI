@@ -1,13 +1,13 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
+import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logix.*;
 import jmri.util.gui.GuiLafPreferencesManager;
 import org.slf4j.Logger;
@@ -134,7 +134,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     public void setValueAt(Object value, int row, int col) {
 //        log.debug("setValueAt value= {}, row= {} col= {}", row, col);
         String msg = null;
-        if (row == _manager.getPortalCount()) { // set tempRow, only present using _desktop
+        if (row == _manager.getPortalCount()) { // set tempRow, only used on _desktop
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
@@ -266,14 +266,12 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         return false;
     }
 
-    private boolean editPortal(Portal portal) {
+    private void editPortal(Portal portal) {
         if (_tabbed) {
             // open PortalEditFrame
             PortalEditFrame portalFrame = new PortalEditFrame(Bundle.getMessage("TitleEditPortal", portal.getName()), portal, this);
             portalFrame.setVisible(true);
-            return true;
         }
-        return false;
     }
 
     @Override
@@ -297,7 +295,7 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
             case FROM_BLOCK_COLUMN:
             case NAME_COLUMN:
             case TO_BLOCK_COLUMN:
-                return new JTextField(30).getPreferredSize().width;
+                return new JTextField(15).getPreferredSize().width;
             case DELETE_COL:
             case EDIT_COL:
                 return new JButton("DELETE").getPreferredSize().width;
@@ -334,6 +332,10 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                 break;
             default:
         }
+    }
+
+    protected int verifyWarning(String message) {
+        return (_parent.verifyWarning(message));
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalTableModel.class);

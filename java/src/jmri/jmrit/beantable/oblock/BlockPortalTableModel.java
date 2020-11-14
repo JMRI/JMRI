@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
@@ -124,7 +124,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     }
 
     public int getPreferredWidth(int col) {
-        return new JTextField(15).getPreferredSize().width;
+        return new JTextField(20).getPreferredSize().width;
     }
 
     @Override

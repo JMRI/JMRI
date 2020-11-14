@@ -66,7 +66,7 @@ public class TableFrames implements InternalFrameListener {
     public static final int STRUT_SIZE = 10;
     private static String oblockPrefix;
     private final static String portalPrefix = "IP";
-    private static String _title;
+    private String _title;
 
     private JTable _oBlockTable;
     private final OBlockTableModel _oBlockModel;
@@ -78,6 +78,7 @@ public class TableFrames implements InternalFrameListener {
     private final SignalTableModel _signalModel;
 
     private final boolean _tabbed; // updated from prefs (restart required)
+    private static boolean pathEdit = false;
 
     private JmriJFrame desktopframe;
     private JDesktopPane _desktop;
@@ -499,6 +500,7 @@ public class TableFrames implements InternalFrameListener {
             }
         });
     }
+
     private String getTitle() {
         return _title;
     }
@@ -751,28 +753,32 @@ public class TableFrames implements InternalFrameListener {
         boolean result = false;
         if (blockSystemName != null) {
             // this is for Edit, new OBlocks created from [Add OBlock...] button in table
-            OBlock block = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
-            if (block != null){
-                BlockPathJPanel panel = makeBlockPathEditPanel(block);
-                // TODO run on separate thread
+            OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
+            if (oblock != null){
+                BlockPathJPanel panel = makeBlockPathEditPanel(oblock);
                 // BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
-//                class WindowMaker implements Runnable {
-//                    final OBlock ob;
-//                    final BlockPathJPanel panel;
-//                    WindowMaker(OBlock block, BlockPathJPanel panel) {
-//                        this.block = block;
-//                        this.panel = panel;
-//                    }
-//                    @Override
-//                    public void run() {
-                        jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
-                        beanEdit.setBean(block);
-                        beanEdit.setTablePanel(panel);
-                        beanEdit.actionPerformed(null);
-//                    }
-//                }
-//                WindowMaker t = new WindowMaker(block, panel);
-//                javax.swing.SwingUtilities.invokeLater(t);
+                jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
+                beanEdit.setBean(oblock);
+                beanEdit.setTablePanel(panel);
+                beanEdit.actionPerformed(null);
+                // run on separate thread? does not update new Paths in table!
+                //                class WindowMaker implements Runnable {
+                //                    final OBlock ob;
+                //                    final BlockPathJPanel panel;
+                //                    WindowMaker(OBlock oblock, BlockPathJPanel panel) {
+                //                        ob = oblock;
+                //                        this.panel = panel;
+                //                    }
+                //                    @Override
+                //                    public void run() {
+                //                        jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
+                //                        beanEdit.setBean(oblock);
+                //                        beanEdit.setTablePanel(panel);
+                //                        beanEdit.actionPerformed(null);
+                //                    }
+                //                }
+                //                WindowMaker t = new WindowMaker(oblock, panel);
+                //                javax.swing.SwingUtilities.invokeLater(t);
                 log.debug("path table created for block {}", blockSystemName);
                 result = true;
             }
@@ -786,40 +792,53 @@ public class TableFrames implements InternalFrameListener {
      *
      * @param blockName system or user name of the owning oblock
      * @param pathName name of the path under edit, or none to create a new path
-     * @param model blockpathtablemodel that should be informed about changes
+     * @param bpmodel blockpathtablemodel that should be informed about changes
      * @return true if successful
      */
-    protected boolean openPathEditor(@Nonnull String blockName, @CheckForNull String pathName, BlockPathTableModel model) {
+    protected boolean openPathEditor(@Nonnull String blockName, @CheckForNull String pathName, BlockPathTableModel bpmodel) {
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(blockName);
         if (block == null) {
             log.error("OBlock {} not found", blockName);
             return false;
         }
-        BlockPathEditFrame bpef;
+        OPath path;
+        String title;
         PathTurnoutJPanel turnouttable = makePathTurnoutPanel(block, pathName); // shows the turnouts on path, includes Add Turnout button, checks for null path
         if (pathName == null) { // new Path, empty TurnoutTable
             // a new Path is created from [Add Path...] button in Path table on OBlock Editor pane.
-            bpef = new BlockPathEditFrame(Bundle.getMessage("AddPathTitle", blockName), block, null, turnouttable, model, this);
+            path = null;
+            title = Bundle.getMessage("AddPathTitle", blockName);
         } else {
-            OPath path = block.getPathByName(pathName);
-            bpef = new BlockPathEditFrame(Bundle.getMessage("EditPathTitle", pathName, blockName), block, path, turnouttable, model, this);
-            // TODO run on separate thread
-//            class WindowMaker implements Runnable {
-//                final OBlock ob;
-//                final BlockPathJPanel panel;
-//                WindowMaker(OBlock ob, BlockPathJPanel panel) {
-//                    this.ob = ob;
-//                    this.panel = panel;
-//                }
-//                @Override
-//                public void run() {
-//                    jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction();
-//                }
-//            }
-//            WindowMaker t = new WindowMaker(block, panel);
-//            javax.swing.SwingUtilities.invokeLater(t);
+            path = block.getPathByName(pathName);
+            title = Bundle.getMessage("EditPathTitle", pathName, blockName);
         }
+        BlockPathEditFrame bpef = new BlockPathEditFrame(title, block, path, turnouttable, bpmodel, this);
         bpef.setVisible(true);
+        // run on separate thread? combos are final, difficult to store Partals in Path/see them show up in the table
+        //        class WindowMaker implements Runnable {
+        //            final String title;
+        //            final OBlock ob;
+        //            final OPath path;
+        //            final PathTurnoutTableModel tomodel;
+        //            final BlockPathTableModel bpmodel;
+        //            final TableFrames parent;
+        //            WindowMaker(String title, OBlock ob, OPath path, PathTurnoutTableModel turnoutmodel, BlockPathTableModel blockpathmodel, TableFrames tf) {
+        //                this.title = title;
+        //                this.ob = ob;
+        //                this.path = path;
+        //                this.tomodel = turnoutmodel;
+        //                this.bpmodel = blockpathmodel;
+        //                parent = tf;
+        //            }
+        //            @Override
+        //            public void run() {
+        //                BlockPathEditFrame bpef = new BlockPathEditFrame(title, block, path, turnouttable, bpmodel, parent);
+        //                bpef.setVisible(true);
+        //            }
+        //        }
+        //        WindowMaker t = new WindowMaker(title, block, path, turnouttable.getModel(), bpmodel, this);
+        //        javax.swing.SwingUtilities.invokeLater(t);
+
         log.debug("Path editor created for path {} on block {}", pathName, blockName);
         return true;
     }
@@ -895,7 +914,6 @@ public class TableFrames implements InternalFrameListener {
         _signalTable.setRowHeight(ROW_HEIGHT);
         _signalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth*2/3,
                 Math.min(TableFrames.ROW_HEIGHT * 8, maxHeight)));
-
         return _signalTable;
     }
 
@@ -987,16 +1005,15 @@ public class TableFrames implements InternalFrameListener {
     // *************** Block-Path Edit Panel for _tabbed ***********************
 
     protected BlockPathJPanel makeBlockPathEditPanel(OBlock block) {
-        // Path Table placed on Beanedit OBlock - Paths tab
+        // Path Table placed on jmri.jmrit.beanedit OBlockEditAction - Paths tab
         String title = Bundle.getMessage("TitleBlockPathEditor", block.getDisplayName());
         // create table
         BlockPathTableModel model = new BlockPathTableModel(block, this);
-        JPanel bpTable = makeBlockPathTablePanel(model);
-
+        JPanel bpTablePane = makeBlockPathTablePanel(model);
         BlockPathJPanel panel = new BlockPathJPanel(title);
         panel.setModel(model, block.getSystemName());
-
-        panel.add(bpTable);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(bpTablePane);
 
         // Add Path Button
         JPanel tblButtons = new JPanel();
@@ -1006,8 +1023,14 @@ public class TableFrames implements InternalFrameListener {
 
         JButton addPathButton = new JButton(Bundle.getMessage("ButtonAddPath"));
         ActionListener addPathAction = e -> {
-            // New Path uses same pane as Edit Path
-            openPathEditor(block.getDisplayName(), null, model);
+            // New Path uses the same editor pane as Edit Path
+            if (!isPathEdit()) {
+                setPathEdit(true);
+                log.debug("makeBlockPathEditPanel pathEdit=True");
+                openPathEditor(block.getDisplayName(), null, model);
+            } else {
+                log.warn("Close BlockPath Editor to reopen");
+            }
         };
         addPathButton.addActionListener(addPathAction);
         addPathButton.setToolTipText(Bundle.getMessage("AddPathTabbedPrompt"));
@@ -1017,6 +1040,16 @@ public class TableFrames implements InternalFrameListener {
         //panel.pack();
         return panel;
     }
+
+    // prevent more than 1 edit pane being opened at the same time
+    protected void setPathEdit(boolean edit) {
+        pathEdit = edit;
+    }
+
+    protected boolean isPathEdit() {
+        return pathEdit;
+    }
+
 
     // ***************** Block-Path Frame class for _desktop **************************
     protected static class BlockPathFrame extends JInternalFrame {
@@ -1046,8 +1079,6 @@ public class TableFrames implements InternalFrameListener {
         BlockPathJPanel(String title) {
             super();
             super.setName(title);
-
-            // Todo add more panes, Add button?
         }
 
         BlockPathTableModel getModel() {
@@ -1061,7 +1092,7 @@ public class TableFrames implements InternalFrameListener {
     }
 
     /*
-     * ********************* Block-Path Table Panel for _tabbed *****************************
+     * ********************* Block-Path Table Panel for _desktop and _tabbed ***********************
      */
     protected JPanel makeBlockPathTablePanel(BlockPathTableModel _model) {
         JTable blockPathTable = makeBlockPathTable(_model); // styled
@@ -1071,7 +1102,8 @@ public class TableFrames implements InternalFrameListener {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout(5, 5));
         if (_tabbed) {
-            blockPathTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
+            // a bit more styling
+            blockPathTable.setPreferredScrollableViewportSize(new Dimension(600, 100));
         } else {
             JLabel prompt = new JLabel(Bundle.getMessage("AddPathPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
@@ -1202,7 +1234,9 @@ public class TableFrames implements InternalFrameListener {
         JTable pathTurnoutTable;
         JButton addTurnoutButton = new JButton(Bundle.getMessage("ButtonAddTurnout"));
         addTurnoutButton.setToolTipText(Bundle.getMessage("AddTurnoutTabbedPrompt"));
-        JLabel prompt;
+        JLabel prompt = new JLabel();
+        prompt.setFont(prompt.getFont().deriveFont(0.9f * new JLabel().getFont().getSize())); // a bit smaller
+        prompt.setForeground(Color.gray);
 
         if (pathName == null) {
             panel.setName(makePathTurnoutName(block.getSystemName(), "<new Path>"));
@@ -1210,7 +1244,7 @@ public class TableFrames implements InternalFrameListener {
             String[][] emptyTable = new String[][] {{Bundle.getMessage("None")}};
             pathTurnoutTable = new JTable(emptyTable, columnHeaders); // dummy table
             addTurnoutButton.setEnabled(false);
-            prompt = new JLabel(Bundle.getMessage("TurnoutTablePromptNew"));
+            prompt.setText(Bundle.getMessage("TurnoutTablePromptNew"));
         } else {
             panel.setName(makePathTurnoutName(block.getSystemName(), pathName));
             final OPath path = block.getPathByName(pathName); // final for actionhandler
@@ -1222,7 +1256,7 @@ public class TableFrames implements InternalFrameListener {
             panel.setModel(pathTurnoutModel);
             ActionListener addTurnoutAction= e -> addTurnoutPane(path, pathTurnoutModel);
             addTurnoutButton.addActionListener(addTurnoutAction);
-            prompt = new JLabel(Bundle.getMessage("TurnoutTablePrompt"));
+            prompt.setText(Bundle.getMessage("TurnoutTablePrompt"));
         }
         JScrollPane tablePane = new JScrollPane(pathTurnoutTable);
 
@@ -1246,26 +1280,26 @@ public class TableFrames implements InternalFrameListener {
      * ********************* Path-Turnout Table *****************************
      */
     protected JTable makePathTurnoutTable(PathTurnoutTableModel model) {
-        JTable PathTurnoutTable = new JTable(model);
-        PathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
+        JTable pathTurnoutTable = new JTable(model);
+        pathTurnoutTable.setTransferHandler(new jmri.util.DnDTableImportExportHandler(
                 new int[]{PathTurnoutTableModel.STATE_COL, PathTurnoutTableModel.DELETE_COL}));
-        PathTurnoutTable.setDragEnabled(true);
+        pathTurnoutTable.setDragEnabled(true);
 
-        model.configTurnoutStateColumn(PathTurnoutTable); // use real combo
-        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
-        PathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
-        //PathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        model.configTurnoutStateColumn(pathTurnoutTable); // use real combo
+        pathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
+        pathTurnoutTable.getColumnModel().getColumn(PathTurnoutTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+        //pathTurnoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         for (int i = 0; i < model.getColumnCount(); i++) {
             int width = model.getPreferredWidth(i);
-            PathTurnoutTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+            pathTurnoutTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        PathTurnoutTable.doLayout();
-        int tableWidth = PathTurnoutTable.getPreferredSize().width;
-        PathTurnoutTable.setRowHeight(ROW_HEIGHT);
-        PathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
+        pathTurnoutTable.doLayout();
+        int tableWidth = pathTurnoutTable.getPreferredSize().width;
+        pathTurnoutTable.setRowHeight(ROW_HEIGHT);
+        pathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
             Math.min(TableFrames.ROW_HEIGHT * 5, maxHeight)));
 
-        return PathTurnoutTable;
+        return pathTurnoutTable;
     }
 
     /**
@@ -1358,9 +1392,10 @@ public class TableFrames implements InternalFrameListener {
     protected void addTurnoutPane(OPath path, PathTurnoutTableModel pathTurnoutModel) {
         JmriJFrame frame = new JmriJFrame(Bundle.getMessage("NewTurnoutTitle", path.getName()));
         JPanel p = new JPanel();
+
         final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
         JComboBox<String> stateCombo = new JComboBox<>();
-        JLabel statusBar = new JLabel(Bundle.getMessage("AddBeanStatusEnter"), JLabel.LEADING);
+        JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1", Bundle.getMessage("BeanNameTurnout"), Bundle.getMessage("ButtonOK")), JLabel.LEADING);
         stateCombo.addItem(SET_THROWN);
         stateCombo.addItem(SET_CLOSED);
         turnoutBox.setToolTipText(Bundle.getMessage("TurnoutEditToolTip"));
@@ -1378,6 +1413,13 @@ public class TableFrames implements InternalFrameListener {
         p.add(Box.createVerticalGlue());
 
         JPanel p2 = new JPanel();
+        statusBar.setFont(statusBar.getFont().deriveFont(0.9f * (new JLabel()).getFont().getSize())); // a bit smaller
+        if (turnoutBox.getItemCount() < 1) {
+            statusBar.setText(Bundle.getMessage("NotEnoughTurnouts"));
+            statusBar.setForeground(Color.red);
+        } else {
+            statusBar.setForeground(Color.gray);
+        }
         p2.add(statusBar);
         p.add(p2);
 
@@ -1393,18 +1435,23 @@ public class TableFrames implements InternalFrameListener {
                 statusBar.setText(Bundle.getMessage("WarningSelectionEmpty"));
                 statusBar.setForeground(Color.red);
             } else {
-                //createTurnoutPressed(e);
                 String user = turnoutBox.getSelectedItemDisplayName();
                 Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(user);
-                int s;
-                if (stateCombo.getSelectedItem() != null && stateCombo.getSelectedItem().equals(SET_CLOSED)) {
-                    s = Turnout.CLOSED;
+                if (t != null) {
+                    int s;
+                    if (stateCombo.getSelectedItem() != null && stateCombo.getSelectedItem().equals(SET_CLOSED)) {
+                        s = Turnout.CLOSED;
+                    } else {
+                        s = Turnout.THROWN;
+                    }
+                    BeanSetting bs = new BeanSetting(t, user, s);
+                    path.addSetting(bs);
+                    if (pathTurnoutModel != null) {
+                        pathTurnoutModel.fireTableDataChanged();
+                    }
                 } else {
-                    s = Turnout.THROWN;
+                    log.error("PathTurnout {} not found", user);
                 }
-                BeanSetting bs = new BeanSetting(t, user, s);
-                path.addSetting(bs);
-                pathTurnoutModel.fireTableDataChanged();
                 frame.dispose();
             }
         });
@@ -1422,6 +1469,7 @@ public class TableFrames implements InternalFrameListener {
      * ********************* End of tables and frames methods *****************************
      */
 
+    // Shared warning dialog method. Store user pref to suppress further mentions.
     protected int verifyWarning(String message) {
         int val = 0;
         if (_showWarnings) {
