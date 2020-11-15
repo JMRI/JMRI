@@ -183,22 +183,6 @@ public class DigitalMany extends AbstractDigitalAction
         return Bundle.getMessage(locale, "Many_Long");
     }
     
-    
-    private static class ActionEntry {
-        private String _socketSystemName;
-        private final FemaleDigitalActionSocket _socket;
-        
-        private ActionEntry(FemaleDigitalActionSocket socket, String socketSystemName) {
-            _socketSystemName = socketSystemName;
-            _socket = socket;
-        }
-        
-        private ActionEntry(FemaleDigitalActionSocket socket) {
-            this._socket = socket;
-        }
-        
-    }
-
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -217,6 +201,21 @@ public class DigitalMany extends AbstractDigitalAction
     }
     
     
+    private static class ActionEntry {
+        private String _socketSystemName;
+        private final FemaleDigitalActionSocket _socket;
+        
+        private ActionEntry(FemaleDigitalActionSocket socket, String socketSystemName) {
+            _socketSystemName = socketSystemName;
+            _socket = socket;
+        }
+        
+        private ActionEntry(FemaleDigitalActionSocket socket) {
+            this._socket = socket;
+        }
+        
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalMany.class);
 
 }
