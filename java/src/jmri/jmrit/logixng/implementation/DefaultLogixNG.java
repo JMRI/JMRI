@@ -328,8 +328,8 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public void activateLogixNG() {
-        // if the Logix is already busy, simply return
-        if (_isActivated) {
+        // if the Logix is already active or is not enabled, simply return
+        if (_isActivated || !_enabled) {
             return;
         }
         
@@ -337,29 +337,6 @@ public class DefaultLogixNG extends AbstractNamedBean
         
         registerListeners();
         execute();
-/*        
-        if (_enabled) {
-            for (ConditionalNG conditionalNG : _conditionalNGMap.values()) {
-                if (conditionalNG.isEnabled()) {
-                    conditionalNG.registerListeners();
-                }
-            }
-            
-            for (ConditionalNG conditionalNG : _conditionalNGMap.values()) {
-                if (conditionalNG.isEnabled()) {
-                    if (conditionalNG.supportsEnableExecution()) {
-                        if (conditionalNG.isEnabled() && conditionalNG.isExecutionEnabled()) {
-                            conditionalNG.execute();
-                        }
-                    } else {
-                        // The conditionalNG doesn't support enableExecution
-                        // so we don't test if execution is enabled.
-                        conditionalNG.execute();
-                    }
-                }
-            }
-        }
-*/        
     }
 
     /** {@inheritDoc} */

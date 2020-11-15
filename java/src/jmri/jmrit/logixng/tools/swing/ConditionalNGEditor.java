@@ -448,7 +448,7 @@ public class ConditionalNGEditor extends TreeViewer {
                             Bundle.getMessage("ValidateErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
                 }
-                _conditionalNG.registerListeners();
+                if (_conditionalNG.isActive()) _conditionalNG.registerListeners();
             });
             create.setToolTipText(Bundle.getMessage("CreateButtonHint"));  // NOI18N
             
@@ -517,7 +517,7 @@ public class ConditionalNGEditor extends TreeViewer {
                             Bundle.getMessage("ValidateErrorTitle"),
                             JOptionPane.ERROR_MESSAGE);
                 }
-                _conditionalNG.registerListeners();
+                if (_conditionalNG.isActive()) _conditionalNG.registerListeners();
             });
             edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
             
@@ -1157,7 +1157,7 @@ public class ConditionalNGEditor extends TreeViewer {
                 dialog.setModal(true);
                 dialog.setVisible(true);
             }
-            _conditionalNG.registerListeners();
+            if (_conditionalNG.isActive()) _conditionalNG.registerListeners();
             return null;
         }
         

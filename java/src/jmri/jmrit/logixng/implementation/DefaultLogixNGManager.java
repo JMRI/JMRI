@@ -139,6 +139,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     public void setupAllLogixNGs() {
         for (LogixNG logixNG : _tsys.values()) {
             logixNG.setup();
+            logixNG.setParentForAllChildren();
         }
     }
 
