@@ -227,10 +227,10 @@
       that control its operation.</p> -->
 
       <dl>
-        <dt>Add...</dt>
+        <dt>Add OBlock...</dt>
 
         <dd>Push this button to <a href="BlockAddEdit.shtml">create
-          a new Block</a>.</dd>
+          a new OBlock</a>.</dd>
 
         <dt>Block Length Units</dt>
 

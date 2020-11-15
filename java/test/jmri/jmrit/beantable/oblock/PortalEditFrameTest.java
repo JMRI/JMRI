@@ -31,7 +31,7 @@ public class PortalEditFrameTest {
     public void testPortalCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Portal p = new Portal("portal-1");
-        TableFrames tf = new TableFrames();
+        //TableFrames tf = new TableFrames();
         //PortalTableModel model = new PortalTableModel(tf);
         PortalEditFrame pef = new PortalEditFrame(
                 "Edit Portal-1",
