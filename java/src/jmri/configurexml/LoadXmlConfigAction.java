@@ -59,7 +59,6 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
                         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
                         logixNG_Manager.setupAllLogixNGs();
-                        logixNG_Manager.activateAllLogixNGs();
                     }
                 }
             } catch (JmriException e) {

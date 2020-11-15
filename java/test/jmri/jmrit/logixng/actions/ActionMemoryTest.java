@@ -329,7 +329,6 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

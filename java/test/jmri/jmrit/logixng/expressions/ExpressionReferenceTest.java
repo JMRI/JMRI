@@ -385,7 +385,6 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

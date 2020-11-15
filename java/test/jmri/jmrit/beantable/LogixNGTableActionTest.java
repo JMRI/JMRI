@@ -334,7 +334,12 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         int columnMenu = tableOperator.findColumn("Menu");
         int row = tableOperator.findCellRow("IQ105", columnSystemName, 0);
         
-        Assert.assertFalse("LogixNG is disabled on creation", logixNG.isEnabled());
+        Assert.assertTrue("LogixNG is enabled on creation", logixNG.isEnabled());
+        
+        // Disable the LogixNG
+        tableOperator.setValueAt(false, row, columnEnabled);
+        
+        Assert.assertFalse("LogixNG has been disabled", logixNG.isEnabled());
         
         // Enable the LogixNG
         tableOperator.setValueAt(true, row, columnEnabled);

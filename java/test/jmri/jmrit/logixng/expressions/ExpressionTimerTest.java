@@ -483,7 +483,6 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);
-        _logixNG.activateLogixNG();
     }
 
     @After

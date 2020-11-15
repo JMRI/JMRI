@@ -437,7 +437,6 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

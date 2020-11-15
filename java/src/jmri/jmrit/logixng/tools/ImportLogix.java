@@ -49,8 +49,6 @@ public class ImportLogix {
             }
             
             ic.getConditionalNG().setEnabled(true);
-            _logixNG.setEnabled(true);
-//            _logix.activateLogix();
         }
     }
     

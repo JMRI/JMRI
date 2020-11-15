@@ -351,7 +351,6 @@ public class AnalogManyTest extends AbstractAnalogActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

@@ -118,7 +118,7 @@ public abstract class ImportExpressionTestBase {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
@@ -166,7 +166,7 @@ public abstract class ImportExpressionTestBase {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);

@@ -388,7 +388,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

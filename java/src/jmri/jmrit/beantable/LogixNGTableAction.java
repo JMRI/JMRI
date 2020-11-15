@@ -133,7 +133,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
         LogixNG logixNG =
                 InstanceManager.getDefault(LogixNG_Manager.class)
                         .createLogixNG(systemName, userName);
-        logixNG.activateLogixNG();
+        logixNG.setEnabled(true);
         return logixNG;
     }
     

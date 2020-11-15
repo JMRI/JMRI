@@ -196,7 +196,6 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

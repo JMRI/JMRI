@@ -296,7 +296,6 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

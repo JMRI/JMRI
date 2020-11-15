@@ -472,7 +472,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.activateLogixNG();
+        logixNG.setEnabled(false);
         logixNG.addConditionalNG(conditionalNG);
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =

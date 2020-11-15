@@ -504,7 +504,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

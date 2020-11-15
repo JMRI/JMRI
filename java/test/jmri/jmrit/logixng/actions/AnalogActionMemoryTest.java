@@ -273,7 +273,6 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

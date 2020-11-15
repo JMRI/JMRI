@@ -255,7 +255,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

@@ -134,7 +134,7 @@ public class Import_TriggerOnChange_Test {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
@@ -239,7 +239,7 @@ public class Import_TriggerOnChange_Test {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);

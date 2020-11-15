@@ -273,7 +273,6 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

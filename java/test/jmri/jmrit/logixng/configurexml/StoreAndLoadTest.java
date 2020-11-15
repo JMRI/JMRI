@@ -156,7 +156,7 @@ public class StoreAndLoadTest {
         conditionalNG =
                 conditionalNGManager.createConditionalNG("Yet another conditionalNG");
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.setEnabled(true);
+        logixNG.setEnabled(false);
         conditionalNG.setEnabled(true);
         
         FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();

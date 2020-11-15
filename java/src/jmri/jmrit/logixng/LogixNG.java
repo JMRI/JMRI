@@ -12,7 +12,8 @@ public interface LogixNG extends Base, NamedBean {
     /**
      * Set whenether this LogixNG is enabled or disabled.
      * <P>
-     * This method must call registerListeners() / unregisterListeners().
+     * This method must call registerListeners() / unregisterListeners() and
+     * also call execute() if enable is true.
      * 
      * @param enable true if this LogixNG should be enabled, false otherwise
      */
@@ -109,23 +110,6 @@ public interface LogixNG extends Base, NamedBean {
      */
     public void execute();
 
-    /**
-     * Activate the LogixNG, starts LogixNG processing by connecting all inputs that
-     * are included the ConditionalNGs in this LogixNG.
-     * <p>
-     * A LogixNG must be activated before it will calculate any of its
-     * ConditionalNGs.
-     */
-    public void activateLogixNG();
-
-    /**
-     * Deactivate the LogixNG. This method disconnects the LogixNG from all input
-     * objects and stops it from being triggered to calculate.
-     * <p>
-     * A LogixNG must be deactivated before it's ConditionalNGs are changed.
-     */
-    public void deActivateLogixNG();
-    
     /**
      * Register listeners for the ConditionalNG tree.
      * <P>

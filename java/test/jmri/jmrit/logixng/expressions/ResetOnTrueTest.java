@@ -419,7 +419,6 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

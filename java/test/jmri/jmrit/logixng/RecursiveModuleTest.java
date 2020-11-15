@@ -273,7 +273,6 @@ public class RecursiveModuleTest {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
     
     @AfterEach

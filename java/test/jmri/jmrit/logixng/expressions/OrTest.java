@@ -412,7 +412,6 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

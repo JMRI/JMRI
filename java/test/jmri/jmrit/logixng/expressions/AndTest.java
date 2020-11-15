@@ -409,7 +409,6 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

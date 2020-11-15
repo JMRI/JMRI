@@ -751,7 +751,6 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

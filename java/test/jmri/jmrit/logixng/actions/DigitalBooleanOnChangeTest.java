@@ -341,7 +341,6 @@ public class DigitalBooleanOnChangeTest extends AbstractDigitalBooleanActionTest
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

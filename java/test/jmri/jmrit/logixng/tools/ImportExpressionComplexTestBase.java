@@ -178,7 +178,7 @@ public abstract class ImportExpressionComplexTestBase {
         
         check.runTest("LogixNG is activated. Enum: "+e.name(), true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed. Enum: "+e.name(), false);

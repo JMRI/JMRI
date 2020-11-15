@@ -36,11 +36,6 @@ public class DefaultLogixNG extends AbstractNamedBean
      */
     HashMap<String, ConditionalNG> _conditionalNGMap = new HashMap<>();
     
-    /**
-     * Operational instance variables (not saved between runs)
-     */
-    private boolean _isActivated = false;
-    
     
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
@@ -272,7 +267,7 @@ public class DefaultLogixNG extends AbstractNamedBean
             ConditionalNG_Entry entry = new ConditionalNG_Entry(conditionalNG);
             _conditionalNG_Entries.add(entry);
             conditionalNG.setParent(this);
-            return (true);
+            return true;
         }
         log.error("ConditionalNG '{}' has already been added to LogixNG '{}'", conditionalNG.getSystemName(), getSystemName());  // NOI18N
         return (false);
@@ -322,38 +317,9 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _isActivated && _enabled;
+        return _enabled;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void activateLogixNG() {
-        // if the Logix is already active or is not enabled, simply return
-        if (_isActivated || !_enabled) {
-            return;
-        }
-        
-        _isActivated = true;
-        
-        registerListeners();
-        execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void deActivateLogixNG() {
-        if (_isActivated) {
-            // Logix is active, deactivate it and all listeners
-            _isActivated = false;
-            unregisterListeners();
-            
-            // remove listeners if there are any
-//            for (ConditionalNG conditionalNG : _conditionalNGMap.values()) {
-//                conditionalNG.unregisterListeners();
-//            }
-        }
-    }
-
     /** {@inheritDoc} */
     @Override
     public void execute() {

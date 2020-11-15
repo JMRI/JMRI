@@ -50,6 +50,9 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void setParent(Base parent) {
         _parent = parent;
+        
+        if (isActive()) registerListeners();
+        else unregisterListeners();
     }
     
     /** {@inheritDoc} */

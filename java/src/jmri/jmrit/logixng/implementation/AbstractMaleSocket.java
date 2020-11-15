@@ -195,11 +195,11 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
 //                break;
                 
             case LOG_ERROR:
-                log.error("item {} thrown an exception: {}", item.toString(), e);
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e.getMessage(), e);
                 break;
                 
             case LOG_ERROR_ONCE:
-                LoggingUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e.getMessage(), e);
                 break;
                 
             case THROW:
@@ -218,11 +218,11 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
 //                break;
                 
             case LOG_ERROR:
-                log.error("item {} thrown an exception: {}", item.toString(), e);
+                log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e.getMessage(), e);
                 break;
                 
             case LOG_ERROR_ONCE:
-                LoggingUtil.warnOnce(log, "item {} thrown an exception: {}", item.toString(), e);
+                LoggingUtil.warnOnce(log, "item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e.getMessage(), e);
                 break;
                 
             case THROW:

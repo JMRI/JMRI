@@ -368,7 +368,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         logixNG_Manager.setupAllLogixNGs();
-        logixNG_Manager.activateAllLogixNGs();
 
         log.debug("End constructor");
     }

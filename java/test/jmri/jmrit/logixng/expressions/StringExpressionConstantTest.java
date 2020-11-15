@@ -269,7 +269,6 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

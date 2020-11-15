@@ -264,7 +264,6 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);
-        _logixNG.activateLogixNG();
     }
 
     @After

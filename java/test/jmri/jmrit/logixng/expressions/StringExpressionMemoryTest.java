@@ -386,7 +386,6 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

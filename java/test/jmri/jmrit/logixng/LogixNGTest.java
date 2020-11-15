@@ -329,27 +329,22 @@ public class LogixNGTest {
         
         logixNG.setEnabled(true);
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
-        Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
-        Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
-        
-        logixNG.activateLogixNG();
-        Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertTrue("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
         
         // Activate LogixNG multiple times should not be a problem
-        logixNG.activateLogixNG();
+        logixNG.setEnabled(true);
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertTrue("listeners for conditionalNG_2 are registered", conditionalNG_2.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
         
-        logixNG.deActivateLogixNG();
+        logixNG.setEnabled(false);
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);
         
         // DeActivate LogixNG multiple times should not be a problem
-        logixNG.deActivateLogixNG();
+        logixNG.setEnabled(false);
         Assert.assertFalse("listeners for conditionalNG_1 are not registered", conditionalNG_1.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_2 are not registered", conditionalNG_2.listenersAreRegistered);
         Assert.assertFalse("listeners for conditionalNG_3 are not registered", conditionalNG_3.listenersAreRegistered);

@@ -109,7 +109,7 @@ public abstract class ImportActionTestBase {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
@@ -146,11 +146,11 @@ public abstract class ImportActionTestBase {
         // We want the conditionalNGs run immediately during this test
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
-        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        importLogix.getLogixNG().setEnabled(true);
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);
@@ -212,7 +212,7 @@ public abstract class ImportActionTestBase {
         
         check.runTest("LogixNG is activated", true);
         
-        importLogix.getLogixNG().deActivateLogixNG();
+        importLogix.getLogixNG().setEnabled(false);
         InstanceManager.getDefault(LogixNG_Manager.class).deleteLogixNG(importLogix.getLogixNG());
         
         check.runTest("LogixNG is removed", false);

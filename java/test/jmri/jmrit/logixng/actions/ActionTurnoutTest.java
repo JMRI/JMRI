@@ -334,7 +334,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After

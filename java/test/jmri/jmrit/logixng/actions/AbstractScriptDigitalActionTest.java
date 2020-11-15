@@ -148,7 +148,7 @@ public class AbstractScriptDigitalActionTest {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setEnabled(true);
+        conditionalNG.setEnabled(false);
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         
@@ -168,8 +168,6 @@ public class AbstractScriptDigitalActionTest {
     
     @After
     public void tearDown() throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
-        // Clear security mananger
-        System.setSecurityManager(null);
         JUnitUtil.tearDown();
     }
     

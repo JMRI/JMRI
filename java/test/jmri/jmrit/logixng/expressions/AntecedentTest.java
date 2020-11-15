@@ -731,7 +731,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
-        logixNG.activateLogixNG();
     }
 
     @After
