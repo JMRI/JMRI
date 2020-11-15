@@ -1,5 +1,29 @@
 package jmri.jmrit.logixng.configurexml;
 
+import java.awt.GraphicsEnvironment;
+import java.beans.PropertyVetoException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+
+import jmri.*;
+import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionScript;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.actions.ActionMemory;
+import jmri.jmrit.logixng.actions.DigitalCallModule;
+import jmri.jmrit.logixng.actions.ActionLight;
+import jmri.jmrit.logixng.actions.ActionSensor;
+import jmri.jmrit.logixng.actions.ActionThrottle;
+import jmri.jmrit.logixng.actions.ActionTimer;
+import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.actions.DoAnalogAction;
+import jmri.jmrit.logixng.actions.DoStringAction;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionReference;
 import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
@@ -23,32 +47,6 @@ import jmri.jmrit.logixng.expressions.ExpressionMemory;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.jmrit.logixng.expressions.False;
 import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
-
-import java.awt.GraphicsEnvironment;
-
-import jmri.jmrit.logixng.actions.ActionThrottle;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.actions.ActionScript;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.actions.ActionLocalVariable;
-import jmri.jmrit.logixng.actions.ShutdownComputer;
-import jmri.jmrit.logixng.actions.ActionMemory;
-import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.DigitalCallModule;
-import jmri.jmrit.logixng.actions.ActionSensor;
-import jmri.jmrit.logixng.actions.DoAnalogAction;
-import jmri.jmrit.logixng.actions.ActionLight;
-import jmri.jmrit.logixng.actions.DoStringAction;
-
-import java.beans.PropertyVetoException;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
-import jmri.*;
-import jmri.implementation.VirtualSignalHead;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
 import org.junit.*;
@@ -258,17 +256,30 @@ public class StoreAndLoadTest {
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-/*        
+        
         ActionTimer actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
         actionTimer.setComment("A comment");
-        actionTimer.setDelay(100);
+        actionTimer.setDelay(0, 100);
+        actionTimer.setStartImmediately(false);
+        actionTimer.setRunContinuously(true);
         maleSocket = digitalActionManager.registerAction(actionTimer);
         actionManySocket.getChild(index++).connect(maleSocket);
-*/        
+        
+        actionTimer = new ActionTimer(digitalActionManager.getAutoSystemName(), null);
+        actionTimer.setComment("A comment");
+        actionTimer.setNumActions(3);
+        actionTimer.setDelay(0, 2400);
+        actionTimer.setDelay(1, 10);
+        actionTimer.setDelay(2, 500);
+        actionTimer.setStartImmediately(true);
+        actionTimer.setRunContinuously(false);
+        maleSocket = digitalActionManager.registerAction(actionTimer);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
         
         ActionTurnout actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionTurnout);

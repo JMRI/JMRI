@@ -15,7 +15,6 @@ import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.util.ProtectedTimerTask;
-import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
 
 /**
@@ -50,6 +49,43 @@ public class ActionTimer extends AbstractDigitalAction
                         .createFemaleSocket(this, this, getNewSocketName())));
     }
     
+    public ActionTimer(String sys, String user,
+            List<Map.Entry<String, String>> expressionSystemNames,
+            List<ActionData> actionDataList)
+            throws BadUserNameException, BadSystemNameException {
+        super(sys, user);
+        setExpressionSystemNames(expressionSystemNames);
+        setActionData(actionDataList);
+    }
+    
+    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
+        if (!_expressionEntries.isEmpty()) {
+            throw new RuntimeException("expression system names cannot be set more than once");
+        }
+        
+        for (Map.Entry<String, String> entry : systemNames) {
+            FemaleDigitalExpressionSocket socket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, entry.getKey());
+            
+            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
+        }
+    }
+    
+    private void setActionData(List<ActionData> actionDataList) {
+        if (!_actionEntries.isEmpty()) {
+            throw new RuntimeException("action system names cannot be set more than once");
+        }
+        
+        for (ActionData data : actionDataList) {
+            FemaleDigitalActionSocket socket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .createFemaleSocket(this, this, data._socketName);
+            
+            _actionEntries.add(new ActionEntry(data._delay, socket, data._socketSystemName));
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -78,12 +114,7 @@ public class ActionTimer extends AbstractDigitalAction
             }
         };
     }
-/*    
-    private void timerCompleted() {
-        _timerState = TimerState.Completed;
-        getConditionalNG().execute();
-    }
-*/    
+    
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -92,7 +123,6 @@ public class ActionTimer extends AbstractDigitalAction
             synchronized(this) {
                 _timerTask.stopTimer();
             }
-//            _timerTask.cancel();
             _timerState = TimerState.Off;
             return;
         }
@@ -102,7 +132,6 @@ public class ActionTimer extends AbstractDigitalAction
             synchronized(this) {
                 if (_timerState == TimerState.Running) _timerTask.stopTimer();
             }
-//            if (_timerState == TimerState.Running) _timerTask.cancel();
             _currentTimer = -1;
             _timerState = TimerState.WaitToRun;
         }
@@ -127,16 +156,6 @@ public class ActionTimer extends AbstractDigitalAction
                     _timerTask = getNewTimerTask();
                     TimerUtil.schedule(_timerTask, ae._delay);
                 }
-/*                
-                _timerTask = new TimerTask(){
-                    @Override
-                    public void run() {
-                        ThreadingUtil.runOnGUI(ActionTimer.this::timerCompleted);
-                    }
-                };
-                
-                TimerUtil.schedule(_timerTask, ae._delay);
-*/                
                 return;
             }
             
@@ -153,7 +172,7 @@ public class ActionTimer extends AbstractDigitalAction
      * @param actionSocket the socket
      * @return the delay
      */
-    public long getDelay(int actionSocket) {
+    public int getDelay(int actionSocket) {
         return _actionEntries.get(actionSocket)._delay;
     }
     
@@ -257,7 +276,7 @@ public class ActionTimer extends AbstractDigitalAction
     }
 
     public int getNumExpressions() {
-        return _actionEntries.size();
+        return _expressionEntries.size();
     }
     
     public FemaleDigitalExpressionSocket getExpressionSocket(int socket) {
@@ -383,7 +402,6 @@ public class ActionTimer extends AbstractDigitalAction
             // stopTimer() will not return until the timer task
             // is cancelled and stopped.
             if (_timerTask != null) _timerTask.stopTimer();
-//            if (_timerTask != null) _timerTask.cancel();
             _timerTask = null;
         }
         _listenersAreRegistered = false;
@@ -394,7 +412,6 @@ public class ActionTimer extends AbstractDigitalAction
     public void disposeMe() {
         synchronized(this) {
             if (_timerTask != null) _timerTask.stopTimer();
-//            if (_timerTask != null) _timerTask.cancel();
             _timerTask = null;
         }
     }
@@ -420,7 +437,8 @@ public class ActionTimer extends AbstractDigitalAction
         private String _socketSystemName;
         private final FemaleDigitalActionSocket _socket;
         
-        private ActionEntry(FemaleDigitalActionSocket socket, String socketSystemName) {
+        private ActionEntry(int delay, FemaleDigitalActionSocket socket, String socketSystemName) {
+            _delay = delay;
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
@@ -430,6 +448,19 @@ public class ActionTimer extends AbstractDigitalAction
         }
         
     }
+    
+    public static class ActionData {
+        private int _delay;
+        private String _socketName;
+        private String _socketSystemName;
+        
+        public ActionData(int delay, String socketName, String socketSystemName) {
+            _delay = delay;
+            _socketName = socketName;
+            _socketSystemName = socketSystemName;
+        }
+    }
+    
     
     private enum TimerState {
         Off,
