@@ -150,6 +150,8 @@ public class PortalEditFrame extends JmriJFrame {
 
     /**
      * Populate the Edit Portal frame with current values.
+     *
+     * @param p existing Portal to copy the attributes from
      */
     public void populateFrame(Portal p) {
         if (p == null) {

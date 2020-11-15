@@ -158,8 +158,8 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     /**
-     * Create the JTable DataModel, along with the changes for the specific NamedBean type.
-     * Directly called bypassing actionPerformed(a) to prepare the Tables > OBlock Table entry in the left sidebar list
+     * Create the JTable DataModel, along with the extra stuff for this specific NamedBean type.
+     * Is directly called to prepare the Tables &gt; OBlock Table entry in the left sidebar list, bypassing actionPerformed(a)
      */
     @Override
     protected void createModel() { // Tabbed
@@ -296,7 +296,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
-    //JButton addButton;
     JCheckBox autoSystemNameBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;

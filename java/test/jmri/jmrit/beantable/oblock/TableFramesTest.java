@@ -80,6 +80,8 @@ public class TableFramesTest {
         // check import result
 
         Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
+        //2 x WARN  - Portal IP0001-0002 needs an OBlock on each side [main] jmrit.beantable.oblock.SignalTableModel.makeList()
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
         jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 

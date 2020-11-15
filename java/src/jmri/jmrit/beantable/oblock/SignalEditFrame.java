@@ -18,6 +18,7 @@ import java.util.Objects;
 /**
  * Defines a GUI for editing OBlock - Signal objects in the tabbed Table interface.
  * Adapted from AudioSourceFrame.
+ * Compare to CPE CircuitBuilder Signal Config frame {@link jmri.jmrit.display.controlPanelEditor.EditSignalFrame}
  *
  * @author Matthew Harris copyright (c) 2009
  * @author Egbert Broerse (C) 2020
@@ -29,7 +30,9 @@ public class SignalEditFrame extends JmriJFrame {
     SignalTableModel model;
     NamedBean signal;
     PortalManager pm;
-    //SignalHeadManager shm;
+    private final SignalEditFrame frame = this;
+    private Portal _portal;
+    SignalTableModel.SignalRow _sr;
     //private final Object lock = new Object();
 
     // UI components for Add/Edit Signal (head or mast)
@@ -57,9 +60,7 @@ public class SignalEditFrame extends JmriJFrame {
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
             (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
             Bundle.getMessage("ButtonOK")));
-    private final SignalEditFrame frame = this;
-    private Portal _portal;
-    SignalTableModel.SignalRow _sr;
+
     //private boolean _newSignal;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
@@ -79,7 +80,7 @@ public class SignalEditFrame extends JmriJFrame {
         if (sr != null) {
             _sr = sr;
             _portal = sr.getPortal();
-            populateFrame(sr);
+            populateFrame(_sr);
         } else {
             resetFrame();
         }
@@ -120,7 +121,7 @@ public class SignalEditFrame extends JmriJFrame {
 
         p1 = new JPanel();
         p1.add(portalLabel);
-        p1.add(portalComboBox); // has a blank first item
+        p1.add(portalComboBox); // combo has a blank first item
         configGrid.add(p1);
         flipButton.addActionListener(e -> {
             int left = fromBlockComboBox.getSelectedIndex();
@@ -160,7 +161,7 @@ public class SignalEditFrame extends JmriJFrame {
         p1 = new JPanel();
         p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Offset"))));
         lengthSpinner.setModel(
-                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-2000f), Float.valueOf(2000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
         lengthSpinner.setValue(0f); // reset from possible previous use
@@ -206,19 +207,17 @@ public class SignalEditFrame extends JmriJFrame {
 //        apply.addActionListener(this::applyPressed);
         JButton ok;
         p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
-        ok.addActionListener((ActionEvent e) -> {
-            applyPressed(e);
-            frame.dispose();
-        });
+        ok.addActionListener(this::applyPressed);
         p.add(p2);
 
         //main.add(p);
         frame.getContentPane().add(p);
         //frame.add(scroll);
+        frame.pack();
     }
 
     /**
-     * Populate the Edit Signal frame with default values.
+     * Reset the Edit Signal frame with default values.
      */
     public void resetFrame() {
         if (sigMastComboBox.getItemCount() > 0) {
@@ -243,7 +242,9 @@ public class SignalEditFrame extends JmriJFrame {
     }
 
     /**
-     * Populate the Edit Signal frame with current values.
+     * Populate the Edit Signal frame with current values from a SignalRow in the SignalTable.
+     *
+     * @param sr existing SignalRow to copy the attributes from
      */
     public void populateFrame(SignalTableModel.SignalRow sr) {
         if (sr == null) {
@@ -259,7 +260,13 @@ public class SignalEditFrame extends JmriJFrame {
             sigHeadComboBox.setSelectedItemByName(sr.getSignal().getDisplayName());
         }
         portalComboBox.setSelectedItem(_portal.getName());
-        lengthSpinner.setValue(sr.getLength());
+        cm.setSelected(sr._isMetric); // before filling in value in spinner prevent recalc
+        if (sr.isMetric()) {
+            lengthSpinner.setValue(sr.getLength()/10);
+        } else {
+            lengthSpinner.setValue(sr.getLength()/25.4f);
+        }
+        frame.pack();
         //_newSignal = false;
     }
 
@@ -276,22 +283,23 @@ public class SignalEditFrame extends JmriJFrame {
             status(Bundle.getMessage("AddBeanStatusEnter"), true);
             return;
         }
-        if (_portal.setProtectSignal(signal, (float) lengthSpinner.getValue(), toBlockComboBox.getSelectedItem())) {
+        // fetch physical details
+        if (cm.isSelected()) {
+            _sr.setLength((float) lengthSpinner.getValue()*10);
+        } else {
+            _sr.setLength((float) lengthSpinner.getValue()*25.4f);
+        }
+        if (_portal.setProtectSignal(signal, _sr.getLength(), toBlockComboBox.getSelectedItem())) {
             if ((fromBlockComboBox.getSelectedIndex() == 0) && (toBlockComboBox.getSelectedIndex() > 0)) {
                 _portal.setFromBlock(_portal.getOpposingBlock(Objects.requireNonNull(toBlockComboBox.getSelectedItem())), true);
             }
         }
-        //            sr = new SignalTableModel.SignalRow(signal, fromBlockComboBox.getSelectedItem(),
-        //            _portal, toBlockComboBox.getSelectedItem(), (float) lengthSpinner.getValue(),
-        //            cm.isSelected());
-//            if (portal.setProtectSignal(sr.getSignal(), length, sr.getToBlock())) {
-//                if (sr.getFromBlock() == null) {
-//                    sr.setFromBlock(portal.getOpposingBlock(sr.getToBlock()));
-//                }
-//            }
-
+        // update Metric choice in block
+        Objects.requireNonNull(toBlockComboBox.getSelectedItem()).setMetricUnits(cm.isSelected());
         // Notify changes
         model.fireTableDataChanged();
+
+        dispose();
     }
 
     // copied from beanedit, also in BlockPathEditFrame

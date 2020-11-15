@@ -68,7 +68,7 @@ public class SignalTableModel extends AbstractTableModel {
         OBlock _fromBlock;
         Portal _portal;
         OBlock _toBlock;
-        float _length;  // adjustment to speed change point
+        float _length;  // offset from signal to speed change point, stored in mm
         boolean _isMetric;
 
         SignalRow(NamedBean signal, OBlock fromBlock, Portal portal, OBlock toBlock, float length, boolean isMetric) {
@@ -738,7 +738,8 @@ public class SignalTableModel extends AbstractTableModel {
     private void editSignal(NamedBean signal, SignalRow sr) {
         if (_tabbed && signal != null) {
             // open SignalEditFrame
-            SignalEditFrame sef = new SignalEditFrame("Edit Signal", signal, sr, this);
+            SignalEditFrame sef = new SignalEditFrame(Bundle.getMessage("TitleSignalEditor", sr.getSignal().getDisplayName()),
+                    signal, sr, this);
             // TODO run on separate thread?
             sef.setVisible(true);
         }

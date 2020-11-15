@@ -7,7 +7,7 @@ import java.awt.event.*;
 import java.util.EventObject;
 
 /**
- * Make a JToggleButton in a table cell function.
+ * Make a JToggleButton in a table cell function. Used eg. in OBlock tables for units
  * <p>
  * Works with {@link ToggleButtonRenderer}.
  * <p>
@@ -28,15 +28,15 @@ public class ToggleButtonEditor extends BasicCellEditor
         offText = off;
         button.addActionListener(this);
         button.addMouseListener(this);
-        button.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent ev) {
-                if (ev.getStateChange() == ItemEvent.SELECTED) {
-                    System.out.println("button is selected");
-                } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
-                    System.out.println("button is not selected");
-                }
-            }
-        });
+        //button.addItemListener(new ItemListener() {
+        //            public void itemStateChanged(ItemEvent ev) {
+        //                if (ev.getStateChange() == ItemEvent.SELECTED) {
+        //                    System.out.println("button is selected");
+        //                } else if (ev.getStateChange() == ItemEvent.DESELECTED) {
+        //                    System.out.println("button is not selected");
+        //                }
+        //            }
+        //});
         button.putClientProperty("JComponent.sizeVariant", "small");
         button.putClientProperty("JToggleButton.buttonType", "square");
     }

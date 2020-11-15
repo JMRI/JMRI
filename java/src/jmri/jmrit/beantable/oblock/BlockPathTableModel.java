@@ -21,7 +21,6 @@ import org.slf4j.LoggerFactory;
  * GUI to define the OPaths within an OBlock. An OPath is the setting of turnouts
  * from one Portal to another Portal within an OBlock.  It may also be assigned
  * a length.
- * <p>
  * <hr>
  * This file is part of JMRI.
  * <p>

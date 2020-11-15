@@ -1309,7 +1309,7 @@ public class TableFrames implements InternalFrameListener {
      *
      * @param blockSysName oblock system name
      * @param pathName the path through the oblock for which to display turnouts set
-     * @return name of the pathTurnout, example "%path 1-3&block-1"
+     * @return name of the pathTurnout, example "%path 1-3&amp;block-1"
      */
     protected String makePathTurnoutName(String blockSysName, String pathName) {
         return "%" + pathName + "&" + blockSysName;

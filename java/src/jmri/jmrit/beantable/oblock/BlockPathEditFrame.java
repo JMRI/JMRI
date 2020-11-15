@@ -209,6 +209,8 @@ public class BlockPathEditFrame extends JmriJFrame {
 
     /**
      * Populate the Edit Path frame with current values.
+     *
+     * @param p existing OPath to copy the attributes from
      */
     public void populateFrame(OPath p) {
         if (p == null) {

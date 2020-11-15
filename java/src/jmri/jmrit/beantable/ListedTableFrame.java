@@ -317,8 +317,9 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
     }
 
     /**
+     * One tabbed item on the ListedTable containing the table(s) for a NamedBean class.
      *
-     * @param <E>
+     * @param <E> main class of the table(s)
      */
     static class TabbedTableItem<E extends NamedBean> {
 
