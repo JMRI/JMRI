@@ -721,11 +721,12 @@ public class SignalTableModel extends AbstractTableModel {
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            // TODO fix doesn't close by clicking OK after DnD as focus lost, only Esc on 4.21.2 on macOS
+            // doesn't close by clicking OK after DnD as focus lost, only Esc in JMRI 4.21.2 on macOS
         }
     }
 
-    private void deleteSignal(SignalRow signalRow) {
+    // also used in _tabbed EditSignalPane
+    protected void deleteSignal(SignalRow signalRow) {
         Portal portal = signalRow.getPortal();
         if (portal == null) {
             portal = getPortalWithBlocks(signalRow.getFromBlock(), signalRow.getToBlock());

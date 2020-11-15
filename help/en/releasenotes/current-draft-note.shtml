@@ -465,6 +465,8 @@
             <ul>
                 <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
                   panels. See OBlocks and JSON.</li>
+                <li>OBlock and associated tables can be edited like the 'standard' tables (see
+                  <a href="#TLae">OBlocks</a>).</li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -501,6 +503,9 @@
         <ul>
           <li>Increased address validation for multiple hardware types.</li>
           <li>Access to OBlocks in Web Server via JSON messages was added.</li>
+          <li>Occupancy Blocks, Portals and Paths used in Warrants can be edited in an optional table style
+            like that used in the 'standard' tables (Turnouts, Lights etc). The information is stored in the exact
+            same way, so you may change the UI as desired (see Preferences &gt; Display. Restart required)</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -608,19 +613,17 @@
             <li></li>
         </ul>
 
-    <h3>Web Server</h3>
-    <ul>
-      <ul>
-        <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
-        <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
-          Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
-        <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
-          items control layout is selected in the Editor Options menu).</li>
-        <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
-          panels.</li>
-        <li>OBlocks access was added as a JSON Servlet to allow this.</li>
-      </ul>
-    </ul>
+   <h3>Web Server</h3>
+        <ul>
+            <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
+            <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
+              Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
+            <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
+              items control layout is selected in the Editor Options menu).</li>
+            <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
+              panels.</li>
+            <li>OBlocks access was added as a JSON Servlet to allow this.</li>
+        </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
