@@ -23,19 +23,6 @@ import jmri.jmrit.logixng.DigitalActionBean;
  */
 public class DigitalManyXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public DigitalManyXml() {
-//        jmri.managers.configurexml.DefaultConditionalManagerXml a;
-    }
-/*
-    @SuppressWarnings("unchecked")  // Reflection does not support generics
-    private List<ActionMany.ActionEntry> getActionEntry(Many actionMany)
-            throws IllegalAccessException, IllegalArgumentException, NoSuchFieldException {
-        
-        Field f = actionMany.getClass().getDeclaredField("actionEntries");
-        f.setAccessible(true);
-        return (List<ActionMany.ActionEntry>) f.get(actionMany);
-    }
-*/
     /**
      * Default implementation for storing the contents of a Many
      *
@@ -101,42 +88,8 @@ public class DigitalManyXml extends jmri.managers.configurexml.AbstractNamedBean
 //        log.warn("Register action: " + h.getSystemName() + ", " + h.getLongDescription());
         return true;
     }
-/*
-    /.**
-     * Process stored signal head output (turnout).
-     * <p>
-     * Needs to handle two types of element: turnoutname is new form; turnout is
-     * old form.
-     *
-     * @param o xml object defining a turnout on an SE8C signal head
-     * @return named bean for the turnout
-     *./
-    NamedBeanHandle<Turnout> loadTurnout(Object o) {
-        Element e = (Element) o;
-
-        if (e.getName().equals("turnout")) {
-            String name = e.getAttribute("systemName").getValue();
-            Turnout t;
-            if (e.getAttribute("userName") != null
-                    && !e.getAttribute("userName").getValue().equals("")) {
-                name = e.getAttribute("userName").getValue();
-                t = InstanceManager.turnoutManagerInstance().getTurnout(name);
-            } else {
-                t = InstanceManager.turnoutManagerInstance().getBySystemName(name);
-            }
-            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
-        } else {
-            String name = e.getText();
-            try {
-                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
-                return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
-            } catch (IllegalArgumentException ex) {
-                log.warn("Failed to provide Turnout \"{}\" in loadTurnout", name);
-                return null;
-            }
-        }
-    }
-*/
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManyXml.class);
+    
+    
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalManyXml.class);
 
 }
