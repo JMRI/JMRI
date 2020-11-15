@@ -59,12 +59,14 @@ public class BlockPathEditFrame extends JmriJFrame {
         _turnoutTablePane = turnouttable;
         _pathmodel = pathmodel;
         _core = parent;
-        if (path == null) {
+        if (path == null || turnouttable == null) {
             _newPath = true;
         } else {
             _path = path;
             _tomodel = turnouttable.getModel();
-            log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
+            if (_tomodel != null) { // test uses a plain JTable without getRowCount()
+                log.debug("TurnoutModel.size = {}", _tomodel.getRowCount());
+            }
         }
         // fill Portals combo
         pm = InstanceManager.getDefault(PortalManager.class);

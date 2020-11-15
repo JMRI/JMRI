@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.oblock;
 
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OPath;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -27,9 +28,26 @@ public class BlockPathEditFrameTest {
                 "Test BPEF",
                 ob,
                 null,
-                new TableFrames.PathTurnoutJPanel("OB1"),
+                new TableFrames.PathTurnoutJPanel(null),
                 null,
                 null);
+        Assert.assertNotNull("exists", bpef);
+    }
+
+    @Test
+    public void testPathCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OBlock ob = new OBlock("OB1");
+        OPath path = new OPath(ob, "path");
+        TableFrames tf = new TableFrames();
+        BlockPathTableModel bptm = new BlockPathTableModel(ob, tf);
+        BlockPathEditFrame bpef = new BlockPathEditFrame(
+                "Test BPEF",
+                ob,
+                path,
+                new TableFrames.PathTurnoutJPanel(null),
+                bptm,
+                tf);
         Assert.assertNotNull("exists", bpef);
     }
 

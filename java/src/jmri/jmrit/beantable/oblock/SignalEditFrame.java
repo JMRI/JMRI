@@ -10,6 +10,8 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -58,14 +60,17 @@ public class SignalEditFrame extends JmriJFrame {
     JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
     JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
     JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
-            (Bundle.getMessage("BeanNameSignalMast")+"/"+Bundle.getMessage("BeanNameSignalHead")),
+            (Bundle.getMessage("BeanNameSignalMast") + "/" + Bundle.getMessage("BeanNameSignalHead")),
             Bundle.getMessage("ButtonOK")));
 
     //private boolean _newSignal;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public SignalEditFrame(String title, NamedBean signal, SignalTableModel.SignalRow sr, SignalTableModel model) {
-        super(title);
+    public SignalEditFrame(@Nonnull String title,
+                           @CheckForNull NamedBean signal,
+                           @CheckForNull SignalTableModel.SignalRow sr,
+                           @CheckForNull SignalTableModel model) {
+        super(title, true, true);
         this.model = model;
         this.signal = signal;
 //        if (signal == null) {
@@ -84,11 +89,13 @@ public class SignalEditFrame extends JmriJFrame {
         } else {
             resetFrame();
         }
+        addCloseListener(this);
     }
 
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+        frame.setSize(250, 150);
         main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
 
         JPanel configGrid = new JPanel();
@@ -201,7 +208,7 @@ public class SignalEditFrame extends JmriJFrame {
         p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
         JButton cancel;
         p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> frame.dispose());
+        cancel.addActionListener((ActionEvent e) -> closeFrame());
 //        JButton apply;
 //        p2.add(apply = new JButton(Bundle.getMessage("ButtonApply")));
 //        apply.addActionListener(this::applyPressed);
@@ -250,9 +257,9 @@ public class SignalEditFrame extends JmriJFrame {
         if (sr == null) {
             throw new IllegalArgumentException("Null Signal object");
         }
-        //log.debug("SIGNALEDIT FROMBLOCK={}", sr.getFromBlock().getDisplayName());
+        status(Bundle.getMessage("AddXStatusInitial3", sr.getSignal().getDisplayName(),
+                Bundle.getMessage("ButtonOK")), false);
         fromBlockComboBox.setSelectedItemByName(sr.getFromBlock().getDisplayName());
-        //log.debug("SIGNALEDIT TOBLOCK={}", sr.getFromBlock().getDisplayName());
         toBlockComboBox.setSelectedItemByName(sr.getToBlock().getDisplayName());
         if (signal instanceof SignalMast) {
             sigMastComboBox.setSelectedItemByName(sr.getSignal().getDisplayName());
@@ -284,22 +291,39 @@ public class SignalEditFrame extends JmriJFrame {
             return;
         }
         // fetch physical details
+        float length;
         if (cm.isSelected()) {
-            _sr.setLength((float) lengthSpinner.getValue()*10);
+            length = (float) lengthSpinner.getValue()*10.0f;
         } else {
-            _sr.setLength((float) lengthSpinner.getValue()*25.4f);
+            length = (float) lengthSpinner.getValue()*25.4f;
         }
-        if (_portal.setProtectSignal(signal, _sr.getLength(), toBlockComboBox.getSelectedItem())) {
+        model.checkDuplicateSignal(signal);
+
+        if (_portal.setProtectSignal(signal, length, toBlockComboBox.getSelectedItem())) {
             if ((fromBlockComboBox.getSelectedIndex() == 0) && (toBlockComboBox.getSelectedIndex() > 0)) {
                 _portal.setFromBlock(_portal.getOpposingBlock(Objects.requireNonNull(toBlockComboBox.getSelectedItem())), true);
             }
         }
-        // update Metric choice in block
+        // update Metric choice in ProtectedBlock
         Objects.requireNonNull(toBlockComboBox.getSelectedItem()).setMetricUnits(cm.isSelected());
         // Notify changes
         model.fireTableDataChanged();
 
-        dispose();
+        closeFrame();
+    }
+
+    protected void closeFrame(){
+        // remind to save, if Turnout was created or edited
+        //        if (isDirty) {
+        //            showReminderMessage();
+        //            isDirty = false;
+        //        }
+        // hide frame
+        setVisible(false);
+
+        model.setEditMode(false);
+        log.debug("SignalEditFrame.closeFrame signalEdit=False");
+        frame.dispose();
     }
 
     // copied from beanedit, also in BlockPathEditFrame
@@ -315,6 +339,18 @@ public class SignalEditFrame extends JmriJFrame {
     void status(String message, boolean warn){
         statusBar.setText(message);
         statusBar.setForeground(warn ? Color.red : Color.gray);
+    }
+
+    // listen for frame closing
+    void addCloseListener(JmriJFrame frame) {
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                model.setEditMode(false);
+                log.debug("SignalEditFrame.closeFrame signalEdit=False");
+                frame.dispose();
+            }
+        });
     }
 
     private static final Logger log = LoggerFactory.getLogger(SignalEditFrame.class);

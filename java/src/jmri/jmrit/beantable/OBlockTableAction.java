@@ -469,13 +469,16 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     }
 
     void addSignalPressed(ActionEvent e) {
-        if (signalFrame == null) {
-            signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), null, null, signals);
+        if (!signals.editMode()) {
+            signals.setEditMode(true);
+            if (signalFrame == null) {
+                signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), null, null, signals);
+            }
+            //signalFrame.updateSignalList();
+            signalFrame.resetFrame();
+            signalFrame.pack();
+            signalFrame.setVisible(true);
         }
-        //signalFrame.updateSignalList();
-        signalFrame.resetFrame();
-        signalFrame.pack();
-        signalFrame.setVisible(true);
     }
 
     void handleCreateException(String sysName) {

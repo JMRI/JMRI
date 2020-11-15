@@ -60,6 +60,7 @@ public class SignalTableModel extends AbstractTableModel {
     private final boolean _tabbed; // updated from prefs (restart required)
     private float _tempLen = 0.0f; // mm for length col of tempRow
     private String[] tempRow;
+    boolean inEditMode = false;
     java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
     protected static class SignalRow {
@@ -736,7 +737,8 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     private void editSignal(NamedBean signal, SignalRow sr) {
-        if (_tabbed && signal != null) {
+        if (_tabbed && signal != null && !inEditMode) {
+            inEditMode = true;
             // open SignalEditFrame
             SignalEditFrame sef = new SignalEditFrame(Bundle.getMessage("TitleSignalEditor", sr.getSignal().getDisplayName()),
                     signal, sr, this);
@@ -810,6 +812,14 @@ public class SignalTableModel extends AbstractTableModel {
                 break;
         }
         return 5;
+    }
+
+    public boolean editMode() {
+        return inEditMode;
+    }
+
+    public void setEditMode(boolean editing) {
+        inEditMode = editing;
     }
 
     public void propertyChange(PropertyChangeEvent e) {

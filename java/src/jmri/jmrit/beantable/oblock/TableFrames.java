@@ -1267,7 +1267,7 @@ public class TableFrames implements InternalFrameListener {
         tblButtons.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
         tblButtons.setLayout(new BoxLayout(tblButtons, BoxLayout.Y_AXIS));
         tblButtons.add(addTurnoutButton);
-        // TODO add more to frame?
+        // add more to frame?
 
         panel.setLayout(new BorderLayout(5, 5));
 
