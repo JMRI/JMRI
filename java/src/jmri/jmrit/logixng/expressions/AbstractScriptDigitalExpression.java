@@ -24,7 +24,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private boolean _listenersAreRegistered = false;
     private final DigitalExpression _parentDigitalExpression;
 
 

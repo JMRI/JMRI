@@ -1,14 +1,10 @@
 package jmri.jmrit.logixng.actions;
 
 import java.beans.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.Light;
@@ -23,12 +19,9 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.util.DuplicateKeyMap;
-import jmri.util.ThreadingUtil;
 
 /**
  * This action listens on some beans and runs the ConditionalNG on property change.
@@ -39,7 +32,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private final Map<String, NamedBeanReference> _namedBeanReferences = new DuplicateKeyMap<>();
-//    private boolean _listenersAreRegistered = false;
     
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {

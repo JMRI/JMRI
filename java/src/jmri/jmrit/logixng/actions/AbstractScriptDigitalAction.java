@@ -4,11 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
+
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalAction;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 
 /**
@@ -26,7 +23,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private boolean _listenersAreRegistered = false;
     private final ActionScript _parentDigitalAction;
     
     

@@ -14,7 +14,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.util.ProtectedTimerTask;
 
 /**
- * Executes an action when the after some time.
+ * Executes an action after some time.
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
@@ -24,7 +24,6 @@ public class ActionTimer extends AbstractDigitalAction
     private String _actionSocketSystemName;
     private final FemaleDigitalActionSocket _actionSocket;
     private ProtectedTimerTask _timerTask;
-    private boolean _listenersAreRegistered = false;
     private long _delay = 0;
     
     public ActionTimer(String sys, String user) {
