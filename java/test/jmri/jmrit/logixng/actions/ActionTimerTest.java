@@ -274,6 +274,20 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
     }
     
+    @Test
+    @Override
+    public void testIsActive() {
+        _logixNG.setEnabled(true);
+        super.testIsActive();
+    }
+    
+    @Test
+    @Override
+    public void testMaleSocketIsActive() {
+        _logixNG.setEnabled(true);
+        super.testMaleSocketIsActive();
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -305,7 +319,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         InstanceManager.getDefault(LogixNG_Manager.class).setSymbolTable(newSymbolTable);
         
         _logixNG.setParentForAllChildren();
-        _logixNG.setEnabled(true);
+        _logixNG.setEnabled(false);
     }
 
     @After
