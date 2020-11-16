@@ -81,14 +81,6 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         return result;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        for (ExpressionEntry e : _expressionEntries) {
-            e._socket.reset();
-        }
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         return _expressionEntries.get(index)._socket;

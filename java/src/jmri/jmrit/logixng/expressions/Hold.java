@@ -64,13 +64,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
         return _isActive;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        _holdExpressionSocket.reset();
-        _triggerExpressionSocket.reset();
-    }
-
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {

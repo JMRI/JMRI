@@ -281,28 +281,6 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        _baseMaleSocket.setEnabled(false);
-        
-        And a = (And)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        DigitalExpressionBean expr = new True("IQDE999", null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).connect(
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-    }
-    
-    @Test
     public void testGetChild() throws SocketAlreadyConnectedException {
         And expression2 = new And("IQDE321", null);
         

@@ -110,12 +110,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
     
     /** {@inheritDoc} */
     @Override
-    public void reset() {
-        // Do nothing
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");

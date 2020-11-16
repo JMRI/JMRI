@@ -66,13 +66,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        _childLastState = false;
-        _childExpression.reset();
-    }
-
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (index == 0) {

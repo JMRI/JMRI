@@ -37,14 +37,6 @@ public class DefaultFemaleAnalogExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public void reset() {
-        if (isConnected()) {
-            ((MaleAnalogExpressionSocket)getConnectedSocket()).reset();
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean getTriggerOnChange() {
         throw new UnsupportedOperationException("Not supported");
     }

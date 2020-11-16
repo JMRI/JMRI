@@ -199,11 +199,6 @@ public class AnalogExpressionManagerTest {
         }
 
         @Override
-        public void reset() {
-            throw new UnsupportedOperationException("Not supported");
-        }
-
-        @Override
         public void setTriggerOnChange(boolean triggerOnChange) {
             throw new UnsupportedOperationException("Not supported");
         }

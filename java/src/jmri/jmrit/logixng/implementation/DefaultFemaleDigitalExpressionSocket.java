@@ -43,14 +43,6 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
 
     /** {@inheritDoc} */
     @Override
-    public void reset() {
-        if (isConnected()) {
-            ((MaleDigitalExpressionSocket)getConnectedSocket()).reset();
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public boolean getTriggerOnChange() {
         throw new UnsupportedOperationException("Not supported");
     }

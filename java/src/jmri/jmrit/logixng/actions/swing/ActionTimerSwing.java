@@ -9,7 +9,6 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTimer;
-import jmri.jmrit.logixng.actions.swing.Bundle;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.

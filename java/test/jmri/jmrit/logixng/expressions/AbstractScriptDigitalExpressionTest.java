@@ -34,9 +34,6 @@ public class AbstractScriptDigitalExpressionTest {
         expression.unregisterListenersForThisClass();
         
         // This method does nothing but we do it for coverage.
-        expression.reset();
-        
-        // This method does nothing but we do it for coverage.
         expression.setup();
         
         // This method does nothing but we do it for coverage.

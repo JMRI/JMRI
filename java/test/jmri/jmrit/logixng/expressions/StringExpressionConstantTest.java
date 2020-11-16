@@ -163,7 +163,6 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
         expression.setValue("");
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
-        expression.reset();
     }
     
     @Test

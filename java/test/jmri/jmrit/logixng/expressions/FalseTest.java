@@ -153,9 +153,6 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
     public void testExpression() throws Exception {
         DigitalExpressionBean t = new False("IQDE321", null);
         Assert.assertFalse("Expression is false",t.evaluate());
-        
-        // This method doesn't do anything, but we do it for coverage
-        t.reset();
     }
     
     @Test

@@ -358,27 +358,6 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        DigitalFormula a = (DigitalFormula)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        DigitalExpressionBean expr = new True("IQDE999", null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).disconnect();
-        a.getChild(0).connect(
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-    }
-    
-    @Test
     public void testGetChild() throws Exception {
         DigitalFormula expression2 = new DigitalFormula("IQDE321", null);
 //        expression2.setFormula("R1");

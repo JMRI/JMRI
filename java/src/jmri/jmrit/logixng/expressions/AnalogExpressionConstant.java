@@ -49,12 +49,6 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
         return _value;
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        // Do nothing
-    }
-    
     @Override
     public FemaleSocket getChild(int index)
             throws IllegalArgumentException, UnsupportedOperationException {

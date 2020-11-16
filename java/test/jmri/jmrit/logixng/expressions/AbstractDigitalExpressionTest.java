@@ -132,11 +132,6 @@ public class AbstractDigitalExpressionTest {
         }
 
         @Override
-        public void reset() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public void connected(FemaleSocket socket) {
             throw new UnsupportedOperationException("Not supported.");
         }

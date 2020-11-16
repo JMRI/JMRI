@@ -242,10 +242,6 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         light.setCommandedState(Light.OFF);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        
-        // Test reset(). The method ExpressionLight.reset() doesn't do
-        // anything so we only call it for coverage.
-        expressionLight.reset();
     }
     
     @Test

@@ -137,7 +137,6 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         Assert.assertEquals("Evaluate matches", "Other", expression.evaluate());
         expression.removeMemory();
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
-        expression.reset();
     }
     
     @Test

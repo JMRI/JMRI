@@ -111,12 +111,6 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         return lastEvaluationResult;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        _expression.reset();
-    }
-
     @Override
     public int getState() {
         return _expression.getState();

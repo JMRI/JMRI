@@ -106,12 +106,6 @@ public class ExpressionScript extends AbstractDigitalExpression {
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        if (_scriptClass != null) _scriptClass.reset();
-    }
-
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (_scriptClass != null) {

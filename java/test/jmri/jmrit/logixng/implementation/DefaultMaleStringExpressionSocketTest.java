@@ -250,11 +250,6 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
         }
         
         @Override
-        public void reset() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
             if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
         }

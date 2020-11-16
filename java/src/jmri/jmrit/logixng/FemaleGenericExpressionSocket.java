@@ -107,15 +107,4 @@ public interface FemaleGenericExpressionSocket
     @CheckForNull
     public Object evaluateGeneric() throws JmriException;
     
-    /**
-     * Reset the evaluation.
-     * This method is called when the closest ancestor Action is activated. An
-     * example is a timer who is used to delay the execution of an action's
-     * child action.
-     * 
-     * A parent expression must to call reset() on its child when the parent
-     * is reset().
-     */
-    public void reset();
-    
 }

@@ -247,10 +247,6 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         turnout.setCommandedState(Turnout.CLOSED);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        
-        // Test reset(). The method ExpressionTurnout.reset() doesn't do
-        // anything so we only call it for coverage.
-        expressionTurnout.reset();
     }
     
     @Test

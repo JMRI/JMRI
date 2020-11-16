@@ -159,11 +159,6 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
         return _compare.compare(count, compareToNum);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");

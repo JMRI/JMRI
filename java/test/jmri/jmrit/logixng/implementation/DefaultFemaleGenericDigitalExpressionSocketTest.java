@@ -85,18 +85,6 @@ public class DefaultFemaleGenericDigitalExpressionSocketTest extends FemaleSocke
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        // Test reset() when not connected
-        ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).reset();
-        // Test reset() when connected
-        _femaleSocket.connect(maleSocket);
-        ((DefaultFemaleDigitalExpressionSocket)_femaleSocket).reset();
-    }
-    
-    @Test
     public void testParent() {
         Base base = Mockito.mock(Base.class);
         _femaleSocket.setParent(base);

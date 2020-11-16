@@ -62,16 +62,6 @@ public class DigitalExpressionsTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new ResetOnTrueXml();
-        Assert.assertNotNull("exists", b);
-        b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
-        
-        b = new ExpressionTimerXml();
-        Assert.assertNotNull("exists", b);
-        b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
-        
         b = new TriggerOnceXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);

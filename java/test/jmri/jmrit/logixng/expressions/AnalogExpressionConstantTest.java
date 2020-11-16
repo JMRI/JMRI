@@ -148,7 +148,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
         expression.setValue(10.0d);
         Assert.assertTrue("Evaluate matches", 10.0d == expression.evaluate());
-        expression.reset();
     }
     
     @Test

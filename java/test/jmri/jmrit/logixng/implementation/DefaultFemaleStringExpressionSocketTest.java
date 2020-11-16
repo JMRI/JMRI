@@ -82,18 +82,6 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
-        // Test reset() when not connected
-        ((DefaultFemaleStringExpressionSocket)_femaleSocket).reset();
-        // Test reset() when connected
-        _femaleSocket.connect(maleSocket);
-        ((DefaultFemaleStringExpressionSocket)_femaleSocket).reset();
-    }
-    
-    @Test
     public void testGetConnectableClasses() {
         Map<Category, List<Class<? extends Base>>> map = new HashMap<>();
         

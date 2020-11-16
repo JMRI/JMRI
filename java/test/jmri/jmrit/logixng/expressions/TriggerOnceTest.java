@@ -228,44 +228,6 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     private static int beanID = 901;
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException, JmriException {
-        _baseMaleSocket.setEnabled(false);
-        
-        TriggerOnce a = (TriggerOnce)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        DigitalExpressionBean expr = new True("IQDE"+Integer.toString(beanID++), null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).disconnect();
-        a.getChild(0).connect(
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-        
-        // Test that reset will run the expression again
-        // For this test to work, make sure the child always return true
-        Assert.assertTrue("Expression returns True", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        a.reset();
-        Assert.assertTrue("Expression returns True", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-        Assert.assertFalse("Expression returns False", a.evaluate());
-    }
-    
-    @Test
     public void testGetChild() {
         Assert.assertTrue("getChildCount() returns 1", 1 == expressionTriggerOnce.getChildCount());
         

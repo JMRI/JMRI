@@ -278,29 +278,6 @@ public class DefaultFemaleGenericExpressionSocket
 
     /** {@inheritDoc} */
     @Override
-    public void reset() {
-        if (isConnected()) {
-            switch (_currentSocketType) {
-                case DIGITAL:
-                    ((MaleDigitalExpressionSocket)getConnectedSocket()).reset();
-                    break;
-                    
-                case ANALOG:
-                    ((MaleAnalogExpressionSocket)getConnectedSocket()).reset();
-                    break;
-                    
-                case STRING:
-                    ((MaleStringExpressionSocket)getConnectedSocket()).reset();
-                    break;
-                    
-                default:
-                    throw new RuntimeException("_currentSocketType has invalid value: "+_currentSocketType.name());
-            }
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "DefaultFemaleGenericExpressionSocket_Short");
     }
@@ -458,12 +435,6 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.evaluateDouble();
         }
 
-        /** {@inheritDoc} */
-        @Override
-        public void reset() {
-            DefaultFemaleGenericExpressionSocket.this.reset();
-        }
-        
         @Override
         public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();
@@ -588,12 +559,6 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.evaluateBoolean();
         }
 
-        /** {@inheritDoc} */
-        @Override
-        public void reset() {
-            DefaultFemaleGenericExpressionSocket.this.reset();
-        }
-        
         @Override
         public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();
@@ -718,12 +683,6 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.evaluateString();
         }
 
-        /** {@inheritDoc} */
-        @Override
-        public void reset() {
-            DefaultFemaleGenericExpressionSocket.this.reset();
-        }
-        
         @Override
         public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();
@@ -887,12 +846,6 @@ public class DefaultFemaleGenericExpressionSocket
             return DefaultFemaleGenericExpressionSocket.this.evaluateGeneric();
         }
 
-        /** {@inheritDoc} */
-        @Override
-        public void reset() {
-            DefaultFemaleGenericExpressionSocket.this.reset();
-        }
-        
         @Override
         public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
             return DefaultFemaleGenericExpressionSocket.this.getConnectableClasses();

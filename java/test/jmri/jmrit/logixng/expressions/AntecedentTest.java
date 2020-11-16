@@ -344,29 +344,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        _baseMaleSocket.setEnabled(false);
-        
-        Antecedent a = (Antecedent)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        DigitalExpressionBean expr = new True("IQDE999", null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).disconnect();
-        a.getChild(0).connect(
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-    }
-    
-    @Test
     public void testGetChild() throws Exception {
         Antecedent expression2 = new Antecedent("IQDE321", null);
         expression2.setAntecedent("R1");

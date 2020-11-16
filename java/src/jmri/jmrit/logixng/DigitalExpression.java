@@ -19,14 +19,6 @@ public interface DigitalExpression extends Base {
     public boolean evaluate() throws JmriException;
     
     /**
-     * Reset the evaluation.
-     * 
-     * A parent expression must to call reset() on its child when the parent
-     * is reset().
-     */
-    public void reset();
-    
-    /**
      * Set whenether this expression should trigger the ConditionalNG if the
      * named beans it listens to changes state.
      * @param triggerOnChange true if trigger on change, false otherwise

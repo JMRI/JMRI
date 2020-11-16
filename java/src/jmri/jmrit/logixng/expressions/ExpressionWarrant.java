@@ -140,12 +140,6 @@ public class ExpressionWarrant extends AbstractDigitalExpression
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        // Do nothing.
-    }
-
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");

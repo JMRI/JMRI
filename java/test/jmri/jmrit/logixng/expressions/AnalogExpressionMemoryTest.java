@@ -140,7 +140,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertTrue("Evaluate matches", 10.0d == expression.evaluate());
         expression.removeMemory();
         Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
-        expression.reset();
     }
     
     @Test

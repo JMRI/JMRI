@@ -151,9 +151,6 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     public void testExpression() throws Exception {
         DigitalExpressionBean t = new True("IQDE321", null);
         Assert.assertTrue("Expression is true",t.evaluate());
-        
-        // This method doesn't do anything, but we do it for coverage
-        t.reset();
     }
     
     // The minimal setup for log4J

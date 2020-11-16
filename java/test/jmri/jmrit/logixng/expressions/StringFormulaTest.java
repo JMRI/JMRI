@@ -358,27 +358,6 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        StringFormula a = (StringFormula)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        StringExpressionBean expr = new StringExpressionConstant("IQSE999", null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).disconnect();
-        a.getChild(0).connect(
-                InstanceManager.getDefault(StringExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-    }
-    
-    @Test
     public void testGetChild() throws Exception {
         StringFormula expression2 = new StringFormula("IQSE321", null);
 //        expression2.setFormula("R1");

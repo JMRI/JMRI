@@ -87,11 +87,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "      raise java.lang.NullPointerException()\n"
             + "    return self.l.commandedState == ON\n"
             + ""
-            + "  def reset(self):\n"
-            + "    if self.l is None:\n"
-            + "      raise java.lang.NullPointerException()\n"
-            + "    self.l.commandedState = ON\n"  // Do this to test that reset() is called
-            + ""
             // setup() method is used to lookup system names for child sockets,
             // turnouts, sensors, and so on. But we only want to check that it's
             // executed. So we set a memory to some value.
@@ -298,25 +293,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // do it for coverage.
         expressionScript.setScript(null);
         expressionScript.evaluate();
-    }
-    
-    @Test
-    public void testReset() {
-        // Test reset() with script
-        expressionScript.setScript(_scriptText);
-        // Turn the light on. This should not execute the conditional.
-        light.setCommandedState(Light.OFF);
-        // Do reset()
-        expressionScript.reset();
-        Assert.assertEquals("light is ON", Light.ON, light.getState());
-        
-        // Test reset() without script
-        expressionScript.setScript(null);
-        // Turn the light on. This should not execute the conditional.
-        light.setCommandedState(Light.OFF);
-        // Do reset()
-        expressionScript.reset();
-        Assert.assertEquals("light is OFF", Light.OFF, light.getState());
     }
     
     @Test

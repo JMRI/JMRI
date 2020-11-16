@@ -355,27 +355,6 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     }
     
     @Test
-    public void testReset() throws SocketAlreadyConnectedException {
-        AnalogFormula a = (AnalogFormula)_base;
-        AtomicBoolean ab = new AtomicBoolean(false);
-        
-        AnalogExpressionBean expr = new AnalogExpressionConstant("IQAE999", null) {
-            @Override
-            public void reset() {
-                ab.set(true);
-            }
-        };
-        
-        a.getChild(0).disconnect();
-        a.getChild(0).connect(
-                InstanceManager.getDefault(AnalogExpressionManager.class)
-                        .registerExpression(expr));
-        
-        a.reset();
-        Assert.assertTrue("Child is reset", ab.get());
-    }
-    
-    @Test
     public void testGetChild() throws Exception {
         AnalogFormula expression2 = new AnalogFormula("IQAE321", null);
 //        expression2.setFormula("R1");

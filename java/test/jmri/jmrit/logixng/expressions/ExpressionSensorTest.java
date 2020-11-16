@@ -247,10 +247,6 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         sensor.setCommandedState(Sensor.INACTIVE);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
-        
-        // Test reset(). The method ExpressionSensor.reset() doesn't do
-        // anything so we only call it for coverage.
-        expressionSensor.reset();
     }
     
     @Test

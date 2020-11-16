@@ -108,12 +108,6 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
         }
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        _expression.reset();
-    }
-
     @Override
     public int getState() {
         return _expression.getState();

@@ -27,7 +27,6 @@ import jmri.jmrit.logixng.actions.ShutdownComputer;
 import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
 import jmri.jmrit.logixng.expressions.ExpressionReference;
 import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
-import jmri.jmrit.logixng.expressions.ResetOnTrue;
 import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
 import jmri.jmrit.logixng.expressions.Or;
 import jmri.jmrit.logixng.expressions.ExpressionClock;
@@ -675,19 +674,6 @@ public class StoreAndLoadTest {
         maleSocket = digitalExpressionManager.registerExpression(expressionSignalMast);
         and.getChild(index++).connect(maleSocket);
         
-/*        
-        ExpressionTimer expressionTimer = new ExpressionTimer(digitalExpressionManager.getAutoSystemName(), null);
-        expressionTimer.setTimerType(ExpressionTimer.TimerType.REPEAT_DOUBLE_DELAY);
-        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
-        and.getChild(index++).connect(maleSocket);
-        
-        expressionTimer = new ExpressionTimer(digitalExpressionManager.getAutoSystemName(), null);
-        expressionTimer.setComment("A comment");
-        expressionTimer.setTimerDelay(3, 4);
-        expressionTimer.setTimerType(ExpressionTimer.TimerType.WAIT_ONCE_TRIG_ONCE);
-        maleSocket = digitalExpressionManager.registerExpression(expressionTimer);
-        and.getChild(index++).connect(maleSocket);
-*/        
         
         ExpressionTurnout expressionTurnout = new ExpressionTurnout(digitalExpressionManager.getAutoSystemName(), null);
         expressionTurnout.setTriggerOnChange(false);
@@ -760,16 +746,6 @@ public class StoreAndLoadTest {
         or = new Or(digitalExpressionManager.getAutoSystemName(), null);
         or.setComment("A comment");
         maleSocket = digitalExpressionManager.registerExpression(or);
-        and.getChild(index++).connect(maleSocket);
-        
-        
-        ResetOnTrue resetOnTrue = new ResetOnTrue(digitalExpressionManager.getAutoSystemName(), null);
-        maleSocket = digitalExpressionManager.registerExpression(resetOnTrue);
-        and.getChild(index++).connect(maleSocket);
-        
-        resetOnTrue = new ResetOnTrue(digitalExpressionManager.getAutoSystemName(), null);
-        resetOnTrue.setComment("A comment");
-        maleSocket = digitalExpressionManager.registerExpression(resetOnTrue);
         and.getChild(index++).connect(maleSocket);
         
         
