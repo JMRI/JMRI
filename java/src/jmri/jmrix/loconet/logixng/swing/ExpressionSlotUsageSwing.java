@@ -41,10 +41,10 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
     private JPanel _advancedPanel;
     private JComboBox<Has_HasNot> _has_HasNot_ComboBox;
     private JComboBox<SimpleState> _simpleStateComboBox;
-    private JCheckBox inUseCheckBox;
-    private JCheckBox idleCheckBox;
-    private JCheckBox commonCheckBox;
-    private JCheckBox freeCheckBox;
+    private JCheckBox _inUseCheckBox;
+    private JCheckBox _idleCheckBox;
+    private JCheckBox _commonCheckBox;
+    private JCheckBox _freeCheckBox;
     private JComboBox<Compare> _compareComboBox;
     private JTextField _numberField;
     private JComboBox<PercentPieces> _percentPiecesComboBox;
@@ -106,14 +106,14 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         }
         _simplePanel.add(_simpleStateComboBox);
         
-        inUseCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_InUse"));
-        idleCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Idle"));
-        commonCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Common"));
-        freeCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Free"));
-        _advancedPanel.add(inUseCheckBox);
-        _advancedPanel.add(idleCheckBox);
-        _advancedPanel.add(commonCheckBox);
-        _advancedPanel.add(freeCheckBox);
+        _inUseCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_InUse"));
+        _idleCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Idle"));
+        _commonCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Common"));
+        _freeCheckBox = new JCheckBox(Bundle.getMessage("AdvancedStateType_Free"));
+        _advancedPanel.add(_inUseCheckBox);
+        _advancedPanel.add(_idleCheckBox);
+        _advancedPanel.add(_commonCheckBox);
+        _advancedPanel.add(_freeCheckBox);
         
         _compareComboBox = new JComboBox<>();
         for (Compare e : Compare.values()) {
@@ -150,16 +150,16 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
             }
             
             if (expression.getAdvancedStates().contains(AdvancedState.InUse)) {
-                inUseCheckBox.setSelected(true);
+                _inUseCheckBox.setSelected(true);
             }
             if (expression.getAdvancedStates().contains(AdvancedState.Idle)) {
-                idleCheckBox.setSelected(true);
+                _idleCheckBox.setSelected(true);
             }
             if (expression.getAdvancedStates().contains(AdvancedState.Common)) {
-                commonCheckBox.setSelected(true);
+                _commonCheckBox.setSelected(true);
             }
             if (expression.getAdvancedStates().contains(AdvancedState.Free)) {
-                freeCheckBox.setSelected(true);
+                _freeCheckBox.setSelected(true);
             }
             
             _has_HasNot_ComboBox.setSelectedItem(expression.get_Has_HasNot());
@@ -256,10 +256,10 @@ public class ExpressionSlotUsageSwing extends AbstractDigitalExpressionSwing {
         expression.setAdvanced(_tabbedPane.getSelectedComponent() == _advancedPanel);
         
         Set<AdvancedState> advancedStates = new HashSet<>();
-        if (inUseCheckBox.isSelected()) advancedStates.add(AdvancedState.InUse);
-        if (idleCheckBox.isSelected()) advancedStates.add(AdvancedState.Idle);
-        if (commonCheckBox.isSelected()) advancedStates.add(AdvancedState.Common);
-        if (freeCheckBox.isSelected()) advancedStates.add(AdvancedState.Free);
+        if (_inUseCheckBox.isSelected()) advancedStates.add(AdvancedState.InUse);
+        if (_idleCheckBox.isSelected()) advancedStates.add(AdvancedState.Idle);
+        if (_commonCheckBox.isSelected()) advancedStates.add(AdvancedState.Common);
+        if (_freeCheckBox.isSelected()) advancedStates.add(AdvancedState.Free);
         expression.setAdvancedStates(advancedStates);
         
         expression.set_Has_HasNot(_has_HasNot_ComboBox.getItemAt(_has_HasNot_ComboBox.getSelectedIndex()));

@@ -44,7 +44,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Execute after delay%n" +
+                "Timer%n" +
                 "   ? Start%n" +
                 "      Socket not connected%n" +
                 "   ? Stop%n" +
@@ -59,7 +59,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Execute after delay%n" +
+                "         Timer%n" +
                 "            ? Start%n" +
                 "               Socket not connected%n" +
                 "            ? Stop%n" +
@@ -215,9 +215,9 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Test
     public void testDescription() {
         ActionTimer a1 = new ActionTimer("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Execute after delay", a1.getShortDescription());
+        Assert.assertEquals("strings are equal", "Timer", a1.getShortDescription());
         ActionTimer a2 = new ActionTimer("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Execute after delay", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Timer", a2.getLongDescription());
     }
     
     @Ignore
