@@ -209,6 +209,39 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
         Assert.assertFalse("classes is not empty", classes.isEmpty());
     }
     
+    @Test
+    public void testConnectableClasses() throws SocketAlreadyConnectedException {
+        MyExpressionTurnout digitalExpression = new MyExpressionTurnout("IQDE351");
+        MaleSocket digitalMaleSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(digitalExpression);
+        
+        DefaultFemaleGenericExpressionSocket socket;
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        FemaleAnalogExpressionSocket analogSocket = socket.getAnalogSocket();
+        checkConnectableClasses(analogSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        FemaleDigitalExpressionSocket digitalSocket = socket.getDigitalSocket();
+        checkConnectableClasses(digitalSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        FemaleGenericExpressionSocket genericSocket = socket.getGenericSocket();
+        checkConnectableClasses(genericSocket);
+        socket.disconnect();
+        
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.DIGITAL, null, null, "E");
+        socket.connect(digitalMaleSocket);
+        FemaleStringExpressionSocket stringSocket = socket.getStringSocket();
+        checkConnectableClasses(stringSocket);
+        socket.disconnect();
+    }
+    
     private void testLockUnlock(FemaleSocket socket1, FemaleSocket socket2) {
         socket1.setLock(Base.Lock.NONE);
         Assert.assertEquals("Lock is correct", Base.Lock.NONE, socket2.getLock());
