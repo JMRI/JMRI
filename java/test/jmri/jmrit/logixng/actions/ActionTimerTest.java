@@ -324,7 +324,14 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        _logixNG.setEnabled(false);
         JUnitUtil.tearDown();
+        _category = null;
+        _logixNG = null;
+        _conditionalNG = null;
+        _actionTimer = null;
+        _base = null;
+        _baseMaleSocket = null;
     }
     
     
