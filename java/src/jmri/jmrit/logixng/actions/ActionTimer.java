@@ -121,7 +121,8 @@ public class ActionTimer extends AbstractDigitalAction
         if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
             synchronized(this) {
-                _timerTask.stopTimer();
+                if (_timerTask != null) _timerTask.stopTimer();
+                _timerTask = null;
             }
             _timerState = TimerState.Off;
             return;
@@ -130,7 +131,10 @@ public class ActionTimer extends AbstractDigitalAction
         if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
             synchronized(this) {
-                if (_timerState == TimerState.Running) _timerTask.stopTimer();
+                if (_timerTask != null) {
+                    _timerTask.stopTimer();
+                    _timerTask = null;
+                }
             }
             _currentTimer = -1;
             _timerState = TimerState.WaitToRun;
