@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ReferenceUtil
+ * Test ProtectedTimerTask
  * 
- * @author Daniel Bergqvist 2019
+ * @author Daniel Bergqvist 2020
  */
 public class ProtectedTimerTaskTest {
 
