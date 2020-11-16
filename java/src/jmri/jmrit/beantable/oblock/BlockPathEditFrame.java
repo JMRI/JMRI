@@ -384,7 +384,6 @@ public class BlockPathEditFrame extends JmriJFrame {
         statusBar.setForeground(warn ? Color.red : Color.gray);
     }
 
-
     // listen for frame closing
     void addCloseListener(JmriJFrame frame) {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {

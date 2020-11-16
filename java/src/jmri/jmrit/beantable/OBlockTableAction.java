@@ -69,7 +69,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
      */
     public OBlockTableAction(String actionName) {
         super(actionName);
-        //includeAddButton = false; // not required as we override the actionPerformed method
+        includeAddButton = false; // not required per se as we override the actionPerformed method
     }
 
     /**
@@ -297,13 +297,13 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JCheckBox autoSystemNameBox = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
-    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager pref;
     JmriJFrame addOBlockFrame = null;
     // for prefs persistence
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
-    // Four Addx buttons on tabbed bottom box handlers
+    // Three [Addx...] buttons on tabbed bottom box handlers
     
     @Override
     protected void addPressed(ActionEvent e) {
@@ -321,13 +321,12 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             ActionListener okListener = this::createObPressed;
             ActionListener cancelListener = this::cancelObPressed;
 
-            addOBlockFrame.add(new AddNewBeanPanel(startAddress, userName, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBarLabel));
+            addOBlockFrame.add(new AddNewBeanPanel(startAddress, userName, numberToAddSpinner, rangeBox, autoSystemNameBox, "ButtonCreate", okListener, cancelListener, statusBar));
             startAddress.setToolTipText(Bundle.getMessage("SysNameToolTip", "OB")); // override tooltip with bean specific letter
         }
         startAddress.setBackground(Color.white);
         // reset status bar text
-        statusBarLabel.setText(Bundle.getMessage("AddBeanStatusEnter"));
-        statusBarLabel.setForeground(Color.gray);
+        status(Bundle.getMessage("AddBeanStatusEnter"), false);
         if (pref.getSimplePreferenceState(systemNameAuto)) {
             autoSystemNameBox.setSelected(true);
         }
@@ -364,20 +363,20 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         }
 
         String uName = NamedBean.normalizeUserName(userName.getText());
-        if (uName == null || uName.isEmpty()) {
+        if (uName != null && uName.isEmpty()) {
             uName = null;
         }
-        String sName = "OB" + startAddress.getText();
-        // initial check for empty entry
+        String sName = startAddress.getText().trim();
+        // initial check for empty entries
         if (autoSystemNameBox.isSelected()) {
             startAddress.setBackground(Color.white);
-        } else {
-            statusBarLabel.setText(Bundle.getMessage("WarningSysNameEmpty"));
-            statusBarLabel.setForeground(Color.red);
+        } else if (sName.equals("")) {
+            status(Bundle.getMessage("WarningSysNameEmpty"), true);
             startAddress.setBackground(Color.red);
             return;
+        } else if (!sName.startsWith("OB")) {
+            sName = "OB" + sName;
         }
-
         // Add some entry pattern checking, before assembling sName and handing it to the OBlockManager
         StringBuilder statusMessage = new StringBuilder(Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameOBlock")));
         String errorMessage = null;
@@ -387,8 +386,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", uName), getClassName(), "duplicateUserName", false, true);
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateUserName", uName);
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                status(errorMessage, true);
                 uName = null; // new OBlock objects always receive a valid system name using the next free index, but uName names must not be in use so use none in that case
             }
             if (!sName.isEmpty() && oblockManager.getBySystemName(sName) != null && !pref.getPreferenceState(getClassName(), "duplicateSystemName")) {
@@ -396,8 +394,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateSystemName", sName), getClassName(), "duplicateSystemName", false, true);
                 // show in status bar
                 errorMessage = Bundle.getMessage("ErrorDuplicateSystemName", sName);
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                status(errorMessage, true);
                 return; // new OBlock objects are always valid, but system names must not be in use so skip in that case
             }
             OBlock oblk;
@@ -421,8 +418,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 // uName input no good
                 handleCreateException(xName);
                 errorMessage = Bundle.getMessage("ErrorAddFailedCheck");
-                statusBarLabel.setText(errorMessage);
-                statusBarLabel.setForeground(Color.red);
+                status(errorMessage, true);
                 return; // without creating
             }
 
@@ -446,11 +442,8 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
         // provide feedback to uName
         if (errorMessage == null) {
-            statusBarLabel.setText(statusMessage.toString());
-            statusBarLabel.setForeground(Color.gray);
-        } else {
-            statusBarLabel.setText(errorMessage);
-            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            status(statusMessage.toString(), false);
+            // statusBar.setForeground(Color.red); handled when errorMassage is set to differentiate urgency
         }
 
         pref.setSimplePreferenceState(systemNameAuto, autoSystemNameBox.isSelected());
@@ -537,6 +530,11 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
                 //isFastClockUsed.setSelected(portalManager.isFastClockUsed());
                 break;
         }
+    }
+
+    void status(String message, boolean warn){
+        statusBar.setText(message);
+        statusBar.setForeground(warn ? Color.red : Color.gray);
     }
 
     @Override

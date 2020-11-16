@@ -90,7 +90,7 @@ public class OBlockTablePanel extends JPanel {
         // Use XTableColumnModel so we can control which columns are visible
         XTableColumnModel tcm = new XTableColumnModel();
         oblockTable.setColumnModel(tcm);
-        oblockTable.getTableHeader().setReorderingAllowed(true); // already assigned in makeJTable
+        oblockTable.getTableHeader().setReorderingAllowed(true); // makeJTable not used for oblockTable
         oblockTable.createDefaultColumnsFromModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORTERCOL), false); // doesn't hide them?
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);

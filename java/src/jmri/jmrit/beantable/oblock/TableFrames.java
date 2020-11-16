@@ -752,9 +752,9 @@ public class TableFrames implements InternalFrameListener {
     protected boolean openOBlockEditor(String blockSystemName, String tabname) {
         boolean result = false;
         if (blockSystemName != null) {
-            // this is for Edit, new OBlocks created from [Add OBlock...] button in table
+            // this is for Edit (new OBlocks are created from [Add OBlock...] button in table)
             OBlock oblock = InstanceManager.getDefault(OBlockManager.class).getBySystemName(blockSystemName);
-            if (oblock != null){
+            if (oblock != null) {
                 BlockPathJPanel panel = makeBlockPathEditPanel(oblock);
                 // BeanEdit UI, adapted from jmri.jmrit.beantable.BlockTableAction
                 jmri.jmrit.beantable.beanedit.OBlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.OBlockEditAction(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, tabname));
@@ -779,7 +779,7 @@ public class TableFrames implements InternalFrameListener {
                 //                }
                 //                WindowMaker t = new WindowMaker(oblock, panel);
                 //                javax.swing.SwingUtilities.invokeLater(t);
-                log.debug("path table created for block {}", blockSystemName);
+                log.debug("path table created for oblock {}", blockSystemName);
                 result = true;
             }
         }
@@ -791,7 +791,7 @@ public class TableFrames implements InternalFrameListener {
      * Compare with openOBlockEditor(block, selectedtabname) and OBlockTableAction.
      *
      * @param blockName system or user name of the owning oblock
-     * @param pathName name of the path under edit, or none to create a new path
+     * @param pathName name of the path under edit, or null to create a new path
      * @param bpmodel blockpathtablemodel that should be informed about changes
      * @return true if successful
      */
@@ -1393,6 +1393,7 @@ public class TableFrames implements InternalFrameListener {
      */
     protected void addTurnoutPane(OPath path, PathTurnoutTableModel pathTurnoutModel) {
         JmriJFrame frame = new JmriJFrame(Bundle.getMessage("NewTurnoutTitle", path.getName()));
+        frame.setSize(200, 150);
         JPanel p = new JPanel();
 
         final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
@@ -1462,7 +1463,6 @@ public class TableFrames implements InternalFrameListener {
         frame.getContentPane().add(p);
 
         frame.add(p);
-        frame.setSize(200, 150);
         frame.pack();
         frame.setVisible(true);
     }

@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Provides a tabbed  beanedit panel for a OBlock object.
+ * Provides a tabbed beanedit panel for an OBlock object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  * @author Egbert Broerse Copyright (C) 2020
@@ -31,7 +31,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
     NamedBeanComboBox<Reporter> reporterComboBox;
     JCheckBox useCurrent = new JCheckBox();
     JTextArea commentField = new JTextArea(3, 30);
-    JScrollPane commentFieldScroller = new JScrollPane(commentField);
+    //JScrollPane commentFieldScroller = new JScrollPane(commentField);
     TableFrames.BlockPathJPanel blockPathPanel;
     NamedBeanComboBox<Sensor> sensorComboBox;
     NamedBeanComboBox<Sensor> errorSensorComboBox;
