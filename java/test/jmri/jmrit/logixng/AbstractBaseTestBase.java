@@ -423,7 +423,6 @@ public abstract class AbstractBaseTestBase {
         AtomicBoolean ab = new AtomicBoolean(false);
         
         _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            System.out.format("AAAA Property change: %s, %s: %s%n", _base.getClass().getName(), _base.toString(), evt.getPropertyName());
             ab.set(true);
         });
         
@@ -466,7 +465,7 @@ public abstract class AbstractBaseTestBase {
             }
         }
     }
-    
+/*    
     private void connect(FemaleSocket femaleSocket, MaleSocket maleSocket) throws SocketAlreadyConnectedException {
         if (femaleSocket.isConnected()) femaleSocket.disconnect();
         femaleSocket.connect(maleSocket);
