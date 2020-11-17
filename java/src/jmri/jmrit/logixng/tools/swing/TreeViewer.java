@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TreeModelEvent;
@@ -47,7 +48,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
      *
      * @param femaleRootSocket the root of the tree
      */
-    public TreeViewer(FemaleSocket femaleRootSocket) {
+    public TreeViewer(@CheckForNull FemaleSocket femaleRootSocket) {
         _femaleRootSocket = femaleRootSocket;
         // Note!! This must be made dynamic, so that new socket types are recognized automaticly and added to the list
         // and the list must be saved between runs.
@@ -275,11 +276,11 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
 //            }
 //        }
 
-        private class SearchTreeData {
+        private static class SearchTreeData {
             int row = 0;
         }
         
-        private class FoundException extends RuntimeException {}
+        private static class FoundException extends RuntimeException {}
         
     }
     
