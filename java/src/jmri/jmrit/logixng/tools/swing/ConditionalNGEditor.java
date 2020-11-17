@@ -127,7 +127,7 @@ public class ConditionalNGEditor extends TreeViewer {
         menuBar.add(toolsMenu);
         
         
-        PopupMenu popup = new PopupMenu(tree, femaleSocketTreeModel);
+        PopupMenu popup = new PopupMenu();
         popup.init();
         
         // The JTree can get big, so allow it to scroll
@@ -808,6 +808,7 @@ public class ConditionalNGEditor extends TreeViewer {
         private static final String ACTION_COMMAND_PASTE = "paste";
         private static final String ACTION_COMMAND_LOCK = "lock";
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
+        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
         
         private final JTree _tree;
 //        private final FemaleSocketTreeModel _model;
@@ -822,48 +823,55 @@ public class ConditionalNGEditor extends TreeViewer {
         private JMenuItem menuItemPaste;
         private JMenuItem menuItemLock;
         private JMenuItem menuItemUnlock;
+//        private JMenuItem menuItemExpandTree;
         
-        PopupMenu(JTree tree, FemaleSocketTreeModel model) {
-            _tree = tree;
-//            _model = model;
+        PopupMenu() {
+            _tree = ConditionalNGEditor.this.tree;
         }
         
         private void init() {
-            menuItemAdd = new JMenuItem("Add");
+            menuItemAdd = new JMenuItem(Bundle.getMessage("PopupMenuAdd"));
             menuItemAdd.addActionListener(this);
             menuItemAdd.setActionCommand(ACTION_COMMAND_ADD);
             add(menuItemAdd);
             addSeparator();
-            menuItemEdit = new JMenuItem("Edit");
+            menuItemEdit = new JMenuItem(Bundle.getMessage("PopupMenuEdit"));
             menuItemEdit.addActionListener(this);
             menuItemEdit.setActionCommand(ACTION_COMMAND_EDIT);
             add(menuItemEdit);
-            menuItemRemove = new JMenuItem("Remove");
+            menuItemRemove = new JMenuItem(Bundle.getMessage("PopupMenuRemove"));
             menuItemRemove.addActionListener(this);
             menuItemRemove.setActionCommand(ACTION_COMMAND_REMOVE);
             add(menuItemRemove);
             addSeparator();
-            menuItemCut = new JMenuItem("Cut");
+            menuItemCut = new JMenuItem(Bundle.getMessage("PopupMenuCut"));
             menuItemCut.addActionListener(this);
             menuItemCut.setActionCommand(ACTION_COMMAND_CUT);
             add(menuItemCut);
-            menuItemCopy = new JMenuItem("Copy");
+            menuItemCopy = new JMenuItem(Bundle.getMessage("PopupMenuCopy"));
             menuItemCopy.addActionListener(this);
             menuItemCopy.setActionCommand(ACTION_COMMAND_COPY);
             add(menuItemCopy);
-            menuItemPaste = new JMenuItem("Paste");
+            menuItemPaste = new JMenuItem(Bundle.getMessage("PopupMenuPaste"));
             menuItemPaste.addActionListener(this);
             menuItemPaste.setActionCommand(ACTION_COMMAND_PASTE);
             add(menuItemPaste);
             addSeparator();
-            menuItemLock = new JMenuItem("Lock");
+            menuItemLock = new JMenuItem(Bundle.getMessage("PopupMenuLock"));
             menuItemLock.addActionListener(this);
             menuItemLock.setActionCommand(ACTION_COMMAND_LOCK);
             add(menuItemLock);
-            menuItemUnlock = new JMenuItem("Unlock");
+            menuItemUnlock = new JMenuItem(Bundle.getMessage("PopupMenuUnlock"));
             menuItemUnlock.addActionListener(this);
             menuItemUnlock.setActionCommand(ACTION_COMMAND_UNLOCK);
             add(menuItemUnlock);
+/*            
+            addSeparator();
+            menuItemExpandTree = new JMenuItem(Bundle.getMessage("PopupMenuExpandTree"));
+            menuItemExpandTree.addActionListener(this);
+            menuItemExpandTree.setActionCommand(ACTION_COMMAND_EXPAND_TREE);
+            add(menuItemExpandTree);
+*/            
             setOpaque(true);
             setLightWeightPopupEnabled(true);
             
@@ -921,7 +929,8 @@ public class ConditionalNGEditor extends TreeViewer {
             menuItemRemove.setEnabled(isConnected);
             menuItemEdit.setEnabled(isConnected);
             menuItemCut.setEnabled(isConnected);
-            menuItemCopy.setEnabled(isConnected);
+            menuItemCopy.setEnabled(false);     // Not implemented yet
+//            menuItemCopy.setEnabled(isConnected);
             menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
             
             if (femaleSocket.isConnected()) {
@@ -932,6 +941,8 @@ public class ConditionalNGEditor extends TreeViewer {
                 menuItemLock.setEnabled(false);
                 menuItemUnlock.setEnabled(false);
             }
+            menuItemLock.setEnabled(false);     // Not implemented yet
+            menuItemUnlock.setEnabled(false);   // Not implemented yet
             show(_tree, x, y);
         }
 
@@ -953,11 +964,13 @@ public class ConditionalNGEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_CUT:
                     if (_currentFemaleSocket.isConnected()) {
+                        ConditionalNGEditor.this._conditionalNG.unregisterListeners();
                         Clipboard clipboard =
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         clipboard.add(_currentFemaleSocket.getConnectedSocket());
                         _currentFemaleSocket.disconnect();
                         updateTree(_currentFemaleSocket, _currentPath);
+                        ConditionalNGEditor.this._conditionalNG.registerListeners();
                     } else {
                         log.error("_currentFemaleSocket is not connected");
                     }
@@ -968,6 +981,7 @@ public class ConditionalNGEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_PASTE:
                     if (! _currentFemaleSocket.isConnected()) {
+                        ConditionalNGEditor.this._conditionalNG.unregisterListeners();
                         Clipboard clipboard =
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         try {
@@ -976,6 +990,7 @@ public class ConditionalNGEditor extends TreeViewer {
                         } catch (SocketAlreadyConnectedException ex) {
                             log.error("item cannot be connected", ex);
                         }
+                        ConditionalNGEditor.this._conditionalNG.registerListeners();
                     } else {
                         log.error("_currentFemaleSocket is connected");
                     }
@@ -986,7 +1001,12 @@ public class ConditionalNGEditor extends TreeViewer {
                     
                 case ACTION_COMMAND_UNLOCK:
                     break;
-                    
+/*                    
+                case ACTION_COMMAND_EXPAND_TREE:
+                    tree.expandPath(_currentPath);
+                    tree.updateUI();
+                    break;
+*/                    
                 default:
                     log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
             }

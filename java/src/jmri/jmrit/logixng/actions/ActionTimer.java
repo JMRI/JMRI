@@ -153,7 +153,13 @@ public class ActionTimer extends AbstractDigitalAction
             
             // Start new timer
             _currentTimer++;
-            if (_currentTimer >= _actionEntries.size()) _currentTimer = 0;
+            if (_currentTimer >= _actionEntries.size()) {
+                _currentTimer = 0;
+                if (!_runContinuously) {
+                    _timerState = TimerState.Off;
+                    return;
+                }
+            }
             
             ActionEntry ae = _actionEntries.get(_currentTimer);
             if (ae._delay > 0) {
@@ -414,7 +420,7 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            if (_startImmediately) {
+            if (_startImmediately && (_timerState == TimerState.Off)) {
                 _timerState = TimerState.WaitToRun;
                 getConditionalNG().execute();
             }
