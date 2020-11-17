@@ -1003,6 +1003,14 @@ public class ConditionalNGEditor extends TreeViewer {
                     break;
 /*                    
                 case ACTION_COMMAND_EXPAND_TREE:
+                    // jtree expand sub tree
+                    // https://stackoverflow.com/questions/15210979/how-do-i-auto-expand-a-jtree-when-setting-a-new-treemodel
+                    // https://www.tutorialspoint.com/how-to-expand-jtree-row-to-display-all-the-nodes-and-child-nodes-in-java
+                    // To expand all rows, do this:
+                    for (int i = 0; i < tree.getRowCount(); i++) {
+                        tree.expandRow(i);
+                    }
+                    
                     tree.expandPath(_currentPath);
                     tree.updateUI();
                     break;

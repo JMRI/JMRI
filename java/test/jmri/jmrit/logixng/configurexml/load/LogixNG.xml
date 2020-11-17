@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="2:05 AM">
+    <memory value="9:05 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 16 02:04:58 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 17 09:05:04 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -957,6 +957,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <startImmediately>no</startImmediately>
       <runContinuously>no</runContinuously>
+      <unit>MilliSeconds</unit>
     </action-timer>
     <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
       <systemName>IQDA:AUTO:0018</systemName>
@@ -977,6 +978,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <startImmediately>no</startImmediately>
       <runContinuously>yes</runContinuously>
+      <unit>MilliSeconds</unit>
     </action-timer>
     <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
       <systemName>IQDA:AUTO:0019</systemName>
@@ -1005,6 +1007,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </actions>
       <startImmediately>yes</startImmediately>
       <runContinuously>no</runContinuously>
+      <unit>MilliSeconds</unit>
     </action-timer>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0020</systemName>
@@ -1139,9 +1142,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Mon Nov 16 02:05:17 CET 2020</date>
+      <date>Tue Nov 17 09:05:18 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-16T01:03:30Z+RUNKNOWN on Mon Nov 16 02:05:17 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-17T08:04:46Z+RUNKNOWN on Tue Nov 17 09:05:18 CET 2020-->
 </layout-config>
