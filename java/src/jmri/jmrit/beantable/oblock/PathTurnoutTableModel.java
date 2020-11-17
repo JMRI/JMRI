@@ -322,7 +322,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
     }
 
     /**
-     * Customize the Turnout column to show an appropriate ComboBox of
+     * Customize the Turnout State column to show an appropriate ComboBox of
      * available options.
      *
      * @param table a JTable of beans
@@ -358,8 +358,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                 if (_path.equals(e.getOldValue())) { // path was deleted
                     removeListener();
                     if (!_tabbed) {
-//                        _tabbedParent.dispose();
-//                    } else {
                         _parent.dispose();
                     }
                 }
@@ -369,8 +367,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                     title = Bundle.getMessage("TitlePathTurnoutTable", _path.getBlock().getDisplayName(), e.getNewValue());
                 }
                 if (!_tabbed) {
-//                    _tabbedParent.setTitle(title);
-//                } else {
                     _parent.setTitle(title);
                 }
             }

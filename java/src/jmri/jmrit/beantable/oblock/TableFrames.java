@@ -60,10 +60,10 @@ import org.slf4j.LoggerFactory;
  */
 public class TableFrames implements InternalFrameListener {
 
-    private static final int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
+    public static final int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
+    public static final int STRUT_SIZE = 10;
     protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
-    public static final int STRUT_SIZE = 10;
     private static String oblockPrefix;
     private final static String portalPrefix = "IP";
     private String _title;
@@ -496,7 +496,6 @@ public class TableFrames implements InternalFrameListener {
                 // closing instead of hiding removes name from Windows menu.handle menu to read Show...
                 log.debug("windowClosing: {}", toString());
                 desktop.dispose();
-                //this.dispose();
             }
         });
     }
@@ -618,10 +617,6 @@ public class TableFrames implements InternalFrameListener {
         menu.setText(Bundle.getMessage(menuName,
                 (frame.isVisible() ? Bundle.getMessage("HideTable") : Bundle.getMessage("ShowTable"))));
     }
-
-//    private synchronized static void setRowHeight(int newVal) {
-//        ROW_HEIGHT = Math.max(newVal, 10); // for safety
-//    }
 
     /**
      * Wrapper for shared code around each Table in a JInternal window on _desktop interface.
@@ -1352,7 +1347,7 @@ public class TableFrames implements InternalFrameListener {
     // *********** Open stand alone Path-Turnout Edit Panel for _tabbed *********************
     /**
      * Open a block-specific PathTurnouts edit pane as a JmriJFrame for _tabbed from menu.
-     * TODO fix menu access to pathturnouts on _tabbed EBR
+     * TODO fix menu access to pathturnouts on _tabbed in ListedTableView, single table menus OK
      *
      * @param pathTurnoutName name of turnout configured on Path
      */
@@ -1369,18 +1364,18 @@ public class TableFrames implements InternalFrameListener {
             return;
         }
         PathTurnoutJPanel turnouttable = makePathTurnoutPanel(block, pathName);
-        // shows the turnouts on path, includes Add Turnout button
+        // shows the turnouts on this path, already includes [Add Turnout...] button
         JmriJFrame frame = new JmriJFrame(Bundle.getMessage("TitlePathTurnoutTable", block.getDisplayName(), pathName));
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.setSize(370, 250);
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         p.add(turnouttable);
-        JButton cancel;
-        p.add(cancel = new JButton(Bundle.getMessage("ButtonOK"))); // no need to save things, handled by TurnoutTable
-        cancel.addActionListener((ActionEvent e) -> frame.dispose());
-        frame.add(p);
+        JButton ok;
+        p.add(ok = new JButton(Bundle.getMessage("ButtonOK"))); // no need to save things, handled by TurnoutTable
+        ok.addActionListener((ActionEvent e) -> frame.dispose());
+        frame.getContentPane().add(p);
         frame.pack();
         frame.setVisible(true);
     }
@@ -1393,7 +1388,9 @@ public class TableFrames implements InternalFrameListener {
      */
     protected void addTurnoutPane(OPath path, PathTurnoutTableModel pathTurnoutModel) {
         JmriJFrame frame = new JmriJFrame(Bundle.getMessage("NewTurnoutTitle", path.getName()));
+        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.setSize(200, 150);
+
         JPanel p = new JPanel();
 
         final NamedBeanComboBox<Turnout> turnoutBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
@@ -1404,12 +1401,13 @@ public class TableFrames implements InternalFrameListener {
         turnoutBox.setToolTipText(Bundle.getMessage("TurnoutEditToolTip"));
 
         JPanel p1 = new JPanel();
-        p1.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
+        p1.setLayout(new BoxLayout(p1, BoxLayout.LINE_AXIS));
+        p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))));
         p1.add(turnoutBox);
         p.add(p1);
 
         p1 = new JPanel();
-        p1.add(new JLabel(Bundle.getMessage("ColumnLabelSetState")));
+        p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnLabelSetState"))));
         p1.add(stateCombo);
         p.add(p1);
 
@@ -1426,15 +1424,15 @@ public class TableFrames implements InternalFrameListener {
         p2.add(statusBar);
         p.add(p2);
 
-        p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
+        JPanel btns = new JPanel();
+        btns.setLayout(new BoxLayout(btns, BoxLayout.LINE_AXIS));
         JButton cancel;
-        p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        btns.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
         cancel.addActionListener((ActionEvent e) -> frame.dispose());
         JButton ok;
-        p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        btns.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
         ok.addActionListener((ActionEvent e) -> {
-            if (turnoutBox.getSelectedItem() == null) {
+            if (turnoutBox.getSelectedItem() == null || turnoutBox.getSelectedIndex() == 0) {
                 statusBar.setText(Bundle.getMessage("WarningSelectionEmpty"));
                 statusBar.setForeground(Color.red);
             } else {
@@ -1458,11 +1456,9 @@ public class TableFrames implements InternalFrameListener {
                 frame.dispose();
             }
         });
-        p.add(p2, BorderLayout.SOUTH);
+        p.add(btns, BorderLayout.SOUTH);
 
         frame.getContentPane().add(p);
-
-        frame.add(p);
         frame.pack();
         frame.setVisible(true);
     }

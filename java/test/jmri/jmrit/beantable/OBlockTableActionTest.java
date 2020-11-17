@@ -4,9 +4,11 @@ import java.awt.*;
 
 import jmri.Block;
 import jmri.InstanceManager;
-import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.OPath;
+import jmri.SignalMastManager;
+import jmri.implementation.VirtualSignalMast;
+import jmri.jmrit.logix.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.managers.DefaultSignalMastManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -51,7 +53,7 @@ public class OBlockTableActionTest {
     }
 
     @Test
-    public void testInvoke() throws Exception {
+    public void testInvoke() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // use original _desktop interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
@@ -78,7 +80,7 @@ public class OBlockTableActionTest {
     }
 
     @Test
-    public void testInvokeTabbed() throws Exception {
+    public void testInvokeTabbed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // use _tabbed interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
@@ -178,8 +180,51 @@ public class OBlockTableActionTest {
         // Confirm the portal toBlock user name change
         Assert.assertEquals("New OBlock Name", path.getBlock().getUserName());
 
-        //jmri.util.JUnitAppender.assertWarnMessage("Cannot remove user name for Oblock Block Name");  // NOI18N
         jfo.requestClose();
+    }
+
+    @Test
+    public void testAddSignal() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use _tabbed interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 2, "")); // show table
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
+        Assert.assertNotNull(f);
+
+        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+        OBlock ob1 = obm.createNewOBlock("OB1", "ob1");  // NOI18N
+        OBlock ob2 = obm.createNewOBlock("OB2", "ob2");  // NOI18N
+
+        PortalManager pm = InstanceManager.getDefault(PortalManager.class);
+        Portal port1 = pm.createNewPortal("IP1");  // NOI18N
+        port1.setFromBlock(ob1, false);
+        port1.setToBlock(ob2, false);
+
+        SignalMastManager l = InstanceManager.getDefault(SignalMastManager.class);
+        VirtualSignalMast sm1 = (VirtualSignalMast) l.provideSignalMast("IF$vsm:basic:one-searchlight($1)");
+
+        a.addSignalPressed(null);
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP1 needs an OBlock on each side");
+
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddSignal"));  // NOI18N
+        Assert.assertNotNull("Found Add Signal Frame", addFrame);  // NOI18N
+
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
+        Assert.assertNotNull("Add Signal Frame still open after empty entry", addFrame);  // NOI18N
+
+        new JComboBoxOperator(addFrame, 0).setSelectedItem(sm1);  // NOI18N select sm1
+        new JComboBoxOperator(addFrame, 2).setSelectedIndex(1);  // NOI18N select port1
+        new JButtonOperator(addFrame, "Flip OBlocks").push();  // NOI18N
+        new JTextFieldOperator(addFrame, 0).setText("19.05");  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
+
+//        Portal chk105 = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OBlock 105");  // NOI18N
+//        Assert.assertNotNull("Verify OB105 Added", chk105);  // NOI18N
+//        Assert.assertEquals("Verify system name prefix", "OB105", chk105.getSystemName());  // NOI18N
+
+        (new JFrameOperator(f)).requestClose();
+        JUnitUtil.dispose(f);
     }
 
         @BeforeEach

@@ -44,7 +44,7 @@ public class SignalEditFrame extends JmriJFrame {
     JLabel signalHeadLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
     JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
     JLabel fromBlock = new JLabel();
-    JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("OppBlockName")));
+    JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToBlockName")));
     JLabel toBlock = new JLabel();
     JLabel mastName = new JLabel();
     JLabel headName = new JLabel();
@@ -100,7 +100,7 @@ public class SignalEditFrame extends JmriJFrame {
     public void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
-        frame.setSize(300, 150);
+        frame.setSize(300, 200);
         main.setLayout(new BoxLayout(main, BoxLayout.PAGE_AXIS));
 
         JPanel configGrid = new JPanel();

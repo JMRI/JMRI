@@ -351,7 +351,7 @@ public class OBlockTablePanel extends JPanel {
         //table.getTableHeader().setReorderingAllowed(true);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.setRowHeight((new JButton().getPreferredSize().height)*9/10);
+        table.setRowHeight(_tf.ROW_HEIGHT);
         // resize columns per table
 //        table.doLayout();
         // resize columns as requested (for OBlocks tabbed: throws java.lang.IllegalArgumentException: "Identifier not found")
