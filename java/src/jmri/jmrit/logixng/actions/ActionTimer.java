@@ -300,16 +300,24 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     public void setNumActions(int num) {
+        int numActions = _actionEntries.size();
+        
         while (_actionEntries.size() > num) {
             ActionEntry ae = _actionEntries.get(num);
             if (ae._socket.isConnected()) {
                 throw new IllegalArgumentException("Cannot remove sockets that are connected");
             }
+            _actionEntries.remove(_actionEntries.size()-1);
         }
+        
         while (_actionEntries.size() < num) {
             _actionEntries
                     .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
                             .createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numActions != _actionEntries.size()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     

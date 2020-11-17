@@ -32,6 +32,18 @@ description. These user names are used as headers in this tutorial and demonstra
 
 <h2>1. Basics</h2>
 
+Create a LogixNG
+Create a ConditionalNG
+
+Create an action: ActionTurnout
+
+Remove the action and add the action IfThenElse.
+Add ExpressionSensor and ActionTurnout
+
+Lets add a new IfThenAction with a ExpressionSensor and a ActionTurnout. To do this, we need to add the action
+Many. We can do this by cutting the IfThenElse expression so it's moved to the clip board, then add the Many
+action and then paste the IfThenElse action back.
+
 
 
 
@@ -57,6 +69,88 @@ LogixNG, except that you can use timers to do this in LogixNG. The reason for th
 that I'm not sure how to implement this the best way. It's definitely possible to implement this the same way as
 in Logix, but since LogixNG works somewhat different, it may be better to implement it different in LogixNG than
 in Logix.
+
+
+
+
+
+<hr>
+
+<h2>11. Controlling an engine</h2>
+
+An exhibition has a model railroad that children can run. An adult presses a button and then a child can control
+the layout by using a potentiometer and a switch for controlling the speed and direction of the engine. After five
+minutes, the layout stops and the next child in queue will get to run the layout. The adult presses the button and
+the layout works for five more minutes.
+
+<p>
+<ul>
+<li>Sensor IS1 - The button the adult presses to run the layout.</li>
+<li>Memory IM1 - For this example, we use a memory, but in real world we would use an AnalogIO, for example a
+Meter.</li>
+<li>Sensor IS2 - Sensor for controlling the direction of the engine.</li>
+<li>Memory IM2 - The loco address.</li>
+<li>Memory IM3 - Flag if the layout is running or not.</li>
+</ul>
+
+We use an ActionTimer to let the child run the layout for five minutes.
+We use an ActionThrottle to control the engine.
+
+
+
+
+
+<hr>
+
+<h2>15. Using sequence ?????</h2>
+
+Controlling a crane and an engine.
+
+
+
+
+<hr>
+
+<h2>16. Using Formula</h2>
+
+a == b, a != b, a < b, a <= b, a > b, a >= b
+a + b, a - b, ....
+(a)
+
+
+<h3>Functions</h3>
+
+For now, there is only a few functions implemented in LogixNG. But it's easy to add more functions.
+
+The existing functions are:
+
+sin(x)
+sin(x,y,...)
+
+How to add a new function?
+
+Adding the function fibonnaci ???
+
+Adding the function loconetSlots
+
+
+
+
+<hr>
+
+<h2>20. Using references and tables</h2>
+
+
+
+
+
+
+<hr>
+
+<h2>30. Using modules</h2>
+
+
+Calculate the Fibonnaci ???? numbers.
 
 
 

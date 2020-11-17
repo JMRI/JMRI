@@ -102,7 +102,7 @@ public class AbstractDigitalActionTest {
 
         @Override
         public int getChildCount() {
-            return Integer.MAX_VALUE;
+            return 10001;   // One more that the max loop in AbstractDigitalAction.getNewSocketName
         }
 
         @Override
