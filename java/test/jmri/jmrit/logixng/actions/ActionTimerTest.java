@@ -245,7 +245,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is thrown", Turnout.THROWN == turnout.getState());
         _logixNG.setEnabled(false);
     }
-    
+/*    
     @Ignore
     @ToDo("The first socket is a digital expression socket, not a digital action socket")
     @Test
@@ -273,7 +273,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     @Override
     public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
     }
-    
+*/    
     @Test
     @Override
     public void testIsActive() {

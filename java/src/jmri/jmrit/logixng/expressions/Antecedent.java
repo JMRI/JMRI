@@ -220,8 +220,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -233,7 +231,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     /** {@inheritDoc} */

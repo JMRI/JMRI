@@ -251,7 +251,6 @@ public class ActionTimer extends AbstractDigitalAction
                         socket.getConnectedSocket().getSystemName();
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override
@@ -266,7 +265,6 @@ public class ActionTimer extends AbstractDigitalAction
                 entry._socketSystemName = null;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     @Override

@@ -157,8 +157,6 @@ public class DigitalMany extends AbstractDigitalAction
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -170,7 +168,6 @@ public class DigitalMany extends AbstractDigitalAction
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     @Override

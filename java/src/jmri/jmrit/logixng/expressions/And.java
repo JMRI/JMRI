@@ -131,8 +131,6 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -144,7 +142,6 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     /** {@inheritDoc} */

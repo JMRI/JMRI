@@ -158,8 +158,6 @@ public class AnalogMany extends AbstractAnalogAction
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -171,7 +169,6 @@ public class AnalogMany extends AbstractAnalogAction
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     @Override

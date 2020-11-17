@@ -88,7 +88,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
     
     @Override
@@ -98,7 +97,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     @Override

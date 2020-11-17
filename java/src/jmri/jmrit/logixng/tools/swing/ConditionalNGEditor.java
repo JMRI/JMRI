@@ -388,7 +388,7 @@ public class ConditionalNGEditor extends TreeViewer {
         // make an Add Item Frame
         if (addItemDialog == null) {
             addSwingConfiguratorInterface = swingConfiguratorInterface;
-            // Create ConditionalNG
+            // Create item
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             create.addActionListener((ActionEvent e) -> {
                 _conditionalNG.unregisterListeners();
@@ -506,6 +506,7 @@ public class ConditionalNGEditor extends TreeViewer {
                         );
                         l.treeNodesChanged(tme);
                     }
+                    tree.updateUI();
                 } else {
                     StringBuilder errorMsg = new StringBuilder();
                     for (String s : errorMessages) {

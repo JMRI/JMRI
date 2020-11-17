@@ -180,6 +180,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     }
     
     private void checkFreeSocket() {
+        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ExpressionEntry entry : _expressionEntries) {
@@ -188,6 +189,10 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         if (!hasFreeSocket) {
             _expressionEntries
                     .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
+        }
+        
+        if (numChilds != getChildCount()) {
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     
@@ -202,8 +207,6 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -215,7 +218,6 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */

@@ -207,8 +207,6 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -220,7 +218,6 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */

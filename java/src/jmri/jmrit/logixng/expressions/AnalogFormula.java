@@ -207,8 +207,6 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -220,7 +218,6 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */

@@ -3,12 +3,14 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
@@ -23,7 +25,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class TreeViewer extends JmriJFrame {
+public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
 
     private static final int panelWidth700 = 700;
     private static final int panelHeight500 = 500;
@@ -51,6 +53,10 @@ public class TreeViewer extends JmriJFrame {
         // and the list must be saved between runs.
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket", Color.RED);
         FEMALE_SOCKET_COLORS.put("jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", Color.BLUE);
+        
+        _femaleRootSocket.forEntireTree((Base b) -> {
+            b.addPropertyChangeListener(TreeViewer.this);
+        });
     }
     
     @Override
@@ -61,11 +67,8 @@ public class TreeViewer extends JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenuItem closeWindowItem = new JMenuItem(Bundle.getMessage("CloseWindow"));
-        closeWindowItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
+        closeWindowItem.addActionListener((ActionEvent e) -> {
+            dispose();
         });
         fileMenu.add(closeWindowItem);
         menuBar.add(fileMenu);
@@ -124,7 +127,55 @@ public class TreeViewer extends JmriJFrame {
         pack();
         setVisible(true);
     }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        
+        if (Base.PROPERTY_CHILD_COUNT.equals(evt.getPropertyName())) {
+            
+            Base b = (Base)evt.getSource();
+            FemaleSocket.FemaleSocketAndRow socketAndRow = new FemaleSocket.FemaleSocketAndRow();
+            _femaleRootSocket.getFemaleSocketAndRow(b, socketAndRow);
+            
+            FemaleSocket femaleSocket = socketAndRow._socket;
+            int row = socketAndRow._row;
+            
+            TreePath path = tree.getPathForRow(row);
+            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                TreeModelEvent tme = new TreeModelEvent(
+                        femaleSocket,
+                        path.getPath()
+                );
+                l.treeNodesChanged(tme);
+            }
+            tree.updateUI();
+        }
+        
+        
+        if (Base.PROPERTY_SOCKET_CONNECTED.equals(evt.getPropertyName())
+                || Base.PROPERTY_SOCKET_DISCONNECTED.equals(evt.getPropertyName())) {
+            
+            FemaleSocket femaleSocket = ((FemaleSocket)evt.getSource());
+            TreePath path = tree.getPathForRow(femaleSocketTreeModel.getRow(femaleSocket));
+            
+            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                TreeModelEvent tme = new TreeModelEvent(
+                        femaleSocket,
+                        path.getPath()
+                );
+                l.treeNodesChanged(tme);
+            }
+            tree.updateUI();
+        }
+    }
     
+    @Override
+    public void dispose() {
+        _femaleRootSocket.forEntireTree((Base b) -> {
+            b.addPropertyChangeListener(TreeViewer.this);
+        });
+        super.dispose();
+    }
     
     
     /**
@@ -205,12 +256,32 @@ public class TreeViewer extends JmriJFrame {
             listeners.remove(l);
         }
 
+        public int getRow(Base base) {
+            SearchTreeData data = new SearchTreeData();
+            try {
+                base.forEntireTree((Base b) -> {
+                    if (base == b) throw new FoundException();
+                    data.row++;
+                });
+            } catch (FoundException e) {
+                return data.row;
+            }
+            throw new IllegalArgumentException("Item "+base.toString()+" not found in tree");
+        }
+
 //        private void notifyListeners() {
 //            for (TreeModelListener l : listeners) {
 //                l.treeNodesChanged(e);
 //            }
 //        }
 
+        private class SearchTreeData {
+            boolean hasFound = false;
+            int row = 0;
+        }
+        
+        private class FoundException extends RuntimeException {};
+        
     }
     
     

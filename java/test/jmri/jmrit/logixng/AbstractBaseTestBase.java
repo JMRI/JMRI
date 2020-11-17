@@ -423,6 +423,7 @@ public abstract class AbstractBaseTestBase {
         AtomicBoolean ab = new AtomicBoolean(false);
         
         _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            System.out.format("AAAA Property change: %s, %s: %s%n", _base.getClass().getName(), _base.toString(), evt.getPropertyName());
             ab.set(true);
         });
         
@@ -543,6 +544,13 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("flag is set", flag.get());
         Assert.assertTrue("getPropertyChangeListeners("+propertyName+") has listener", flag.get());
     }
+    
+    
+    
+/*  
+    Note: PROPERTY_SOCKET_CONNECTED and PROPERTY_SOCKET_DISCONNECTED has been
+    moved to FemaleSocket.
+    
     
     // Test these methods:
     // * addPropertyChangeListener(PropertyChangeListener l)
@@ -871,7 +879,7 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals(listener2,
                 _baseMaleSocket.getPropertyChangeListenersByReference("BeanB")[0]);
     }
-    
+*/    
     
     private class MyBase extends AbstractBase {
 

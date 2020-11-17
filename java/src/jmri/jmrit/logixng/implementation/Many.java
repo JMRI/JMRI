@@ -152,8 +152,6 @@ public class Many extends AbstractBase
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -165,7 +163,6 @@ public class Many extends AbstractBase
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     @Override

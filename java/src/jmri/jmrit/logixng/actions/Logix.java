@@ -110,7 +110,6 @@ public class Logix extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */
@@ -123,7 +122,6 @@ public class Logix extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */

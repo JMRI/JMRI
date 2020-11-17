@@ -158,8 +158,6 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
 
@@ -171,7 +169,6 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     @Override

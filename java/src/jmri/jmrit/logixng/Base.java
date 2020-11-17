@@ -2,8 +2,7 @@ package jmri.jmrit.logixng;
 
 import java.beans.*;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.*;
 
@@ -451,10 +450,20 @@ public interface Base extends PropertyChangeProvider {
     @Nonnull
     public PropertyChangeListener[] getPropertyChangeListenersByReference(@Nonnull String name);
     
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     */
+    public default void forEntireTree(RunnableWithBase r) {
+        r.run(this);
+        for (int i=0; i < getChildCount(); i++) {
+            getChild(i).forEntireTree(r);
+        }
+    }
     
     
     public interface RunnableWithBase {
-        public void run(Base b);
+        public void run(@Nonnull Base b);
     }
     
 }

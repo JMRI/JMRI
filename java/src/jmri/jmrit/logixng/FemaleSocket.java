@@ -101,4 +101,38 @@ public interface FemaleSocket extends Base {
         }
     }
     
+    /**
+     * Find the female socket and the row of item base.
+     * Row 0 is the root. Row 1 is the first child, and so on.
+     * 
+     * @param base the item to look for
+     * @param socketAndRow the female socket that has the item and the row the item is on
+     */
+    public default void getFemaleSocketAndRow(Base base, FemaleSocketAndRow socketAndRow) {
+        
+        if (base == this) {
+            socketAndRow._socket = this;
+            return;
+        }
+        
+        socketAndRow._row++;
+        
+        if (! isConnected()) return;
+        
+        MaleSocket maleSocket = getConnectedSocket();
+        if ((base == maleSocket) || (base == maleSocket.getObject())) {
+            socketAndRow._socket = this;
+            return;
+        }
+        
+        for (int i=0; i < maleSocket.getChildCount(); i++) {
+            maleSocket.getChild(i).getFemaleSocketAndRow(base, socketAndRow);
+        }
+    }
+
+    public static class FemaleSocketAndRow {
+        public FemaleSocket _socket;
+        public int _row;
+    }
+
 }

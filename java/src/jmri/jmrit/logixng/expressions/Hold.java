@@ -93,7 +93,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
     
     @Override
@@ -105,7 +104,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     @Override

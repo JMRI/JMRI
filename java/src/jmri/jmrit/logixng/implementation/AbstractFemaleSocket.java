@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
+import java.beans.*;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -97,11 +95,15 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         _socket = socket;
         _socket.setParent(this);
         _listener.connected(this);
+        pcs.firePropertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_DISCONNECTED, null, _socket));
+//        pcs.firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, _socket);
     }
 
     /** {@inheritDoc} */
     @Override
     public void disconnect() {
+        MaleSocket maleSocket = _socket;
+        
         if (_socket == null) {
             return;
         }
@@ -113,6 +115,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         _socket.setParent(null);
         _socket = null;
         _listener.disconnected(this);
+        pcs.firePropertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_DISCONNECTED, maleSocket, null));
+//        pcs.firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, _socket);
     }
 
     /** {@inheritDoc} */
@@ -327,34 +331,36 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         }
     }
 
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-        throw new UnsupportedOperationException("Not supported");
+        pcs.addPropertyChangeListener(listener);
     }
 
     @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        throw new UnsupportedOperationException("Not supported");
+        pcs.addPropertyChangeListener(propertyName, listener);
     }
 
     @Override
     public PropertyChangeListener[] getPropertyChangeListeners() {
-        throw new UnsupportedOperationException("Not supported");
+        return pcs.getPropertyChangeListeners();
     }
 
     @Override
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        throw new UnsupportedOperationException("Not supported");
+        return pcs.getPropertyChangeListeners(propertyName);
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-        throw new UnsupportedOperationException("Not supported");
+        pcs.removePropertyChangeListener(listener);
     }
 
     @Override
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        throw new UnsupportedOperationException("Not supported");
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     @Override
@@ -389,12 +395,22 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
 
     @Override
     public int getNumPropertyChangeListeners() {
-        throw new UnsupportedOperationException("Not supported");
+        return pcs.getPropertyChangeListeners().length;
     }
 
     @Override
     public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
         throw new UnsupportedOperationException("Not supported");
+    }
+
+    /**
+     * Do something on every item in the sub tree of this item.
+     * @param r the action to do on all items.
+     */
+    @Override
+    public void forEntireTree(RunnableWithBase r) {
+        r.run(this);
+        if (isConnected()) getConnectedSocket().forEntireTree(r);
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);

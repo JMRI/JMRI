@@ -154,14 +154,12 @@ public class ActionScript extends AbstractDigitalAction {
             _scriptClass.unregisterListeners();
             _listenersAreRegistered = false;
         }
-        firePropertyChange("Hej", null, null);
     }
     
     /** {@inheritDoc} */
     @Override
     public void firePropertyChange(String p, Object old, Object n) {
         super.firePropertyChange(p, old, n);
-//        _parentDigitalAction.getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */

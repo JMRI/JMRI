@@ -161,8 +161,6 @@ public class StringMany extends AbstractStringAction
             }
         }
         
-        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
-        
         checkFreeSocket();
     }
     
@@ -175,7 +173,6 @@ public class StringMany extends AbstractStringAction
                 break;
             }
         }
-        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     /** {@inheritDoc} */
