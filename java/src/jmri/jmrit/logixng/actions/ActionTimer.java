@@ -361,14 +361,14 @@ public class ActionTimer extends AbstractDigitalAction
                     ee._socket.disconnect();
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
-                                InstanceManager.getDefault(DigitalActionManager.class)
+                                InstanceManager.getDefault(DigitalExpressionManager.class)
                                         .getBySystemName(socketSystemName);
                         ee._socket.disconnect();
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
                         } else {
-                            log.error("cannot load digital action " + socketSystemName);
+                            log.error("cannot load digital expression " + socketSystemName);
                         }
                     }
                 } else {
