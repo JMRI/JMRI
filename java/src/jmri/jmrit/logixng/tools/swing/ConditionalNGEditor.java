@@ -808,7 +808,7 @@ public class ConditionalNGEditor extends TreeViewer {
         private static final String ACTION_COMMAND_PASTE = "paste";
         private static final String ACTION_COMMAND_LOCK = "lock";
         private static final String ACTION_COMMAND_UNLOCK = "unlock";
-        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
+//        private static final String ACTION_COMMAND_EXPAND_TREE = "expandTree";
         
         private final JTree _tree;
 //        private final FemaleSocketTreeModel _model;
