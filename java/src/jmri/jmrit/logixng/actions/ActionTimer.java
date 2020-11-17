@@ -35,6 +35,7 @@ public class ActionTimer extends AbstractDigitalAction
     private TimerState _timerState = TimerState.Off;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
+    private Unit _unit = Unit.MilliSeconds;
     
     public ActionTimer(String sys, String user) {
         super(sys, user);
@@ -158,7 +159,7 @@ public class ActionTimer extends AbstractDigitalAction
             if (ae._delay > 0) {
                 synchronized(this) {
                     _timerTask = getNewTimerTask();
-                    TimerUtil.schedule(_timerTask, ae._delay);
+                    TimerUtil.schedule(_timerTask, ae._delay * _unit._multiply);
                 }
                 return;
             }
@@ -221,6 +222,22 @@ public class ActionTimer extends AbstractDigitalAction
         _runContinuously = runContinuously;
     }
     
+    /**
+     * Get the unit
+     * @return the unit
+     */
+    public Unit getUnit() {
+        return _unit;
+    }
+    
+    /**
+     * Set the unit
+     * @param unit the unit
+     */
+    public void setUnit(Unit unit) {
+        _unit = unit;
+    }
+    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (index == EXPRESSION_START) return _expressionEntries.get(EXPRESSION_START)._socket;
@@ -269,12 +286,12 @@ public class ActionTimer extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Timer_Short");
+        return Bundle.getMessage(locale, "ActionTimer_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Timer_Long");
+        return Bundle.getMessage(locale, "ActionTimer_Long");
     }
 
     public int getNumExpressions() {
@@ -469,6 +486,32 @@ public class ActionTimer extends AbstractDigitalAction
             _socketName = socketName;
             _socketSystemName = socketSystemName;
         }
+    }
+    
+    
+    public enum Unit {
+        MilliSeconds(1, Bundle.getMessage("ActionTimer_UnitMilliSeconds")),
+        Seconds(1000, Bundle.getMessage("ActionTimer_UnitSeconds")),
+        Minutes(1000*60, Bundle.getMessage("ActionTimer_UnitMinutes")),
+        Hours(1000*60*60, Bundle.getMessage("ActionTimer_UnitHours"));
+        
+        private long _multiply;
+        private final String _text;
+        
+        private Unit(long multiply, String text) {
+            this._multiply = multiply;
+            this._text = text;
+        }
+        
+        public long getMultiply() {
+            return _multiply;
+        }
+        
+        @Override
+        public String toString() {
+            return _text;
+        }
+        
     }
     
     

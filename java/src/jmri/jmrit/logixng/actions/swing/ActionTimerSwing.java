@@ -21,6 +21,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     
     private JCheckBox _startImmediately;
     private JCheckBox _runContinuously;
+    private JComboBox<ActionTimer.Unit> _unit;
     private JTextField _numTimers;
     private JButton _addTimer;
     private JButton _removeTimer;
@@ -56,8 +57,14 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         _startImmediately = new JCheckBox(Bundle.getMessage("ActionTimerSwing_StartImmediately"));
         _runContinuously = new JCheckBox(Bundle.getMessage("ActionTimerSwing_RunContinuously"));
+        
+        _unit = new JComboBox<>();
+        for (ActionTimer.Unit u : ActionTimer.Unit.values()) _unit.addItem(u);
+        _unit.setSelectedItem(action.getUnit());
+        
         panel.add(_startImmediately);
         panel.add(_runContinuously);
+        panel.add(_unit);
         
         JPanel numActionsPanel = new JPanel();
         _numTimers = new JTextField(Integer.toString(numActions));
@@ -160,6 +167,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         action.setStartImmediately(_startImmediately.isSelected());
         action.setRunContinuously(_runContinuously.isSelected());
+        action.setUnit(_unit.getItemAt(_unit.getSelectedIndex()));
         action.setNumActions(numActions);
         
         for (int i=0; i < numActions; i++) {
@@ -171,7 +179,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Timer_Short");
+        return Bundle.getMessage("ActionTimer_Short");
     }
     
     @Override

@@ -276,11 +276,10 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
 //        }
 
         private class SearchTreeData {
-            boolean hasFound = false;
             int row = 0;
         }
         
-        private class FoundException extends RuntimeException {};
+        private class FoundException extends RuntimeException {}
         
     }
     

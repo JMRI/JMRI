@@ -78,6 +78,7 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
 
         element.addContent(new Element("startImmediately").addContent(p.getStartImmediately() ? "yes" : "no"));
         element.addContent(new Element("runContinuously").addContent(p.getRunContinuously() ? "yes" : "no"));
+        element.addContent(new Element("unit").addContent(p.getUnit().name()));
         
         return element;
     }
@@ -133,6 +134,11 @@ public class ActionTimerXml extends jmri.managers.configurexml.AbstractNamedBean
             h.setRunContinuously("yes".equals(runContinuously.getTextTrim()));
         } else {
             h.setRunContinuously(false);
+        }
+        
+        Element unit = shared.getChild("unit");
+        if (unit != null) {
+            h.setUnit(ActionTimer.Unit.valueOf(unit.getTextTrim()));
         }
         
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);

@@ -75,6 +75,17 @@
               <xs:element name="startImmediately" type="yesNoType" />
               <xs:element name="runContinuously" type="yesNoType" />
 
+              <xs:element name="unit" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="MilliSeconds"/>
+                    <xs:enumeration value="Seconds"/>
+                    <xs:enumeration value="Minutes"/>
+                    <xs:enumeration value="Hours"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+
             </xs:sequence>
             
 			<xs:attribute name="class" type="classType" use="required"/>
