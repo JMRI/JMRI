@@ -249,11 +249,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
 
-    public LayoutTrack connectA = null;      // throat of LH, RH, RH Xover, LH Xover, and WYE turnouts
-    public LayoutTrack connectB = null;      // straight leg of LH and RH turnouts
-    public LayoutTrack connectC = null;
-    public LayoutTrack connectD = null;      // double xover, RH Xover, LH Xover only
-
     public Point2D dispB = new Point2D.Double(20.0, 0.0);
     public Point2D dispA = new Point2D.Double(20.0, 10.0);
     public Point2D pointA = new Point2D.Double(0, 0);
@@ -1036,7 +1031,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (getSensorA() != null) {
                     return;
                 }
-                trkSeg = (TrackSegment) connectA;
+                trkSeg = (TrackSegment) getConnectA();
                 pointCoord = getCoordsA();
                 break;
             case TURNOUT_B:
@@ -1053,7 +1048,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (getSensorB() != null) {
                     return;
                 }
-                trkSeg = (TrackSegment) connectB;
+                trkSeg = (TrackSegment) getConnectB();
                 pointCoord = getCoordsB();
                 if (isTurnoutTypeXover()) {
                     currBlk = blockB != null ? blockB : blockA;
@@ -1073,7 +1068,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (getSensorC() != null) {
                     return;
                 }
-                trkSeg = (TrackSegment) connectC;
+                trkSeg = (TrackSegment) getConnectC();
                 pointCoord = getCoordsC();
                 if (isTurnoutTypeXover()) {
                     currBlk = blockC != null ? blockC : blockA;
@@ -1093,7 +1088,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (getSensorD() != null) {
                     return;
                 }
-                trkSeg = (TrackSegment) connectD;
+                trkSeg = (TrackSegment) getConnectD();
                 pointCoord = getCoordsD();
                 if (isTurnoutTypeXover()) {
                     currBlk = blockD != null ? blockD : blockA;
@@ -1607,15 +1602,15 @@ public class LayoutTurnoutView extends LayoutTrackView {
             }
 
             // if there are any track connections
-            if ((connectA != null) || (connectB != null)
-                    || (connectC != null) || (connectD != null)) {
+            if ((getConnectA() != null) || (getConnectB() != null)
+                    || (getConnectC() != null) || (getConnectD() != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
-                if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                if (getConnectA() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + getConnectA().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectA().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -1625,12 +1620,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
                         }
                     });
                 }
-                if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                if (getConnectB() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + getConnectB().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectB().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -1640,12 +1635,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
                         }
                     });
                 }
-                if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                if (getConnectC() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + getConnectC().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectC().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -1655,12 +1650,12 @@ public class LayoutTurnoutView extends LayoutTrackView {
                         }
                     });
                 }
-                if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                if (getConnectD() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + getConnectD().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectD().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -1702,9 +1697,9 @@ public class LayoutTurnoutView extends LayoutTrackView {
             });
 
             // Rotate if there are no track connections
-            if ((connectA == null) && (connectB == null)
-                    && (connectC == null)
-                    && (connectD == null)) {
+            if ((getConnectA() == null) && (getConnectB() == null)
+                    && (getConnectC() == null)
+                    && (getConnectD() == null)) {
                 JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener((ActionEvent event) -> {
