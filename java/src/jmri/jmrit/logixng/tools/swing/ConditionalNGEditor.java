@@ -90,7 +90,17 @@ public class ConditionalNGEditor extends TreeViewer {
      * instance of this class.
      */
     public ConditionalNGEditor() {
-        super(null);
+        super(InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(null, new FemaleSocketListener(){
+            @Override
+            public void connected(FemaleSocket socket) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        }, "A"));
         this._conditionalNG = null;
     }
     
