@@ -31,26 +31,7 @@ public class OBlockEditActionTest {
         Assert.assertNotNull("exists", obea);
     }
 
-    @Test
-    public void testOBlockEditorTabbed() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
-        obm.createNewOBlock("OB1");
-        TableFrames tf = new TableFrames();
-        tf.openBlockPathPane("OB1", null);
-        // TODO Failed to open?
-
-        // Find new table window by name
-        JmriJFrame doc = JmriJFrame.getFrame(Bundle.getMessage("EditBean", "OBlock" , "OB1")); //"Edit Occupancy Block OB1");
-        Assert.assertNotNull("Edit OBlock OB1 window", doc);
-        new QueueTool().waitEmpty();
-
-        // Ask to close add window
-        ThreadingUtil.runOnGUI(() -> {
-            doc.setVisible(false);
-            JUnitUtil.dispose(doc);
-        });
-    }
+    // test OBlockEditor via OBlockTableActionTest
 
     @BeforeEach
     public void setUp() {
