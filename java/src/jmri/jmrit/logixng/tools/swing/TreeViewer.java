@@ -27,8 +27,8 @@ import jmri.util.JmriJFrame;
  */
 public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
 
-    private static final int panelWidth700 = 700;
-    private static final int panelHeight500 = 500;
+    private static final int panelWidth = 700;
+    private static final int panelHeight = 500;
     
     private static final Map<String, Color> FEMALE_SOCKET_COLORS = new HashMap<>();
     
@@ -38,8 +38,6 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
     protected FemaleSocketTreeModel femaleSocketTreeModel;
     
     boolean _showReminder = false;
-    
-//    private Map<Category, List<Class<? extends Base>>> connectableClasses;
     
     
     /**
@@ -119,7 +117,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         getContentPane().add(pPanel);
         
-        initMinimumSize(new Dimension(panelWidth700, panelHeight500));
+        initMinimumSize(new Dimension(panelWidth, panelHeight));
     }
 
     public void initMinimumSize(Dimension dimension) {
