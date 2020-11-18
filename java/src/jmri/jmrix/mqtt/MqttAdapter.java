@@ -29,6 +29,9 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     private final static String PROTOCOL = "tcp://";
     private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
     
+    public boolean retained = true;  // public for script access
+    public int      qosflag = 2;     // public for script access
+    
     /**
      * Otherwise known as "Channel", this is prepended to the 
      * topic for all JMRI inward and outward communications.
