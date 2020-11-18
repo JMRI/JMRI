@@ -36,6 +36,8 @@ public class ActionTimer extends AbstractDigitalAction
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
     private Unit _unit = Unit.MilliSeconds;
+    private long _currentTimerDelay = 0;
+    private long _currentTimerStart = 0;
     
     public ActionTimer(String sys, String user) {
         super(sys, user);
@@ -107,13 +109,24 @@ public class ActionTimer extends AbstractDigitalAction
             @Override
             public void execute() {
                 try {
-                    _timerState = TimerState.Completed;
-                    getConditionalNG().execute();
+                    long currentTimerTime = System.currentTimeMillis() - _currentTimerStart;
+                    if (currentTimerTime < _currentTimerDelay) {
+                        scheduleTimer(_currentTimerDelay - currentTimerTime);
+                    } else {
+                        _timerState = TimerState.Completed;
+                        getConditionalNG().execute();
+                    }
                 } catch (Exception e) {
                     log.error("Exception thrown", e);
                 }
             }
         };
+    }
+    
+    private void scheduleTimer(long delay) {
+        if (_timerTask != null) _timerTask.stopTimer();
+        _timerTask = getNewTimerTask();
+        TimerUtil.schedule(_timerTask, delay);
     }
     
     /** {@inheritDoc} */
@@ -164,8 +177,9 @@ public class ActionTimer extends AbstractDigitalAction
             ActionEntry ae = _actionEntries.get(_currentTimer);
             if (ae._delay > 0) {
                 synchronized(this) {
-                    _timerTask = getNewTimerTask();
-                    TimerUtil.schedule(_timerTask, ae._delay * _unit._multiply);
+                    _currentTimerDelay = ae._delay * _unit._multiply;
+                    _currentTimerStart = System.currentTimeMillis();
+                    scheduleTimer(ae._delay * _unit._multiply);
                 }
                 return;
             }
@@ -420,8 +434,9 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            if (_startImmediately && (_timerState == TimerState.Off)) {
-                _timerState = TimerState.WaitToRun;
+            // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
+            if ((_startImmediately) || (_timerState != TimerState.Off)) {
+                if (_timerState == TimerState.Off) _timerState = TimerState.WaitToRun;
                 getConditionalNG().execute();
             }
             _listenersAreRegistered = true;

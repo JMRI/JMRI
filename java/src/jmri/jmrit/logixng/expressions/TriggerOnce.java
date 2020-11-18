@@ -20,11 +20,6 @@ import jmri.jmrit.logixng.MaleSocket;
  * The first time the child expression returns True, this expression returns
  * True. After that, this expression returns False until the child expression
  * returns False and again returns True.
- * <P>
- * If the expression is reset, the expression will treat that as if the
- * child expression had been false. So if the child expression is continously
- * True, and the expression is reset, the expression will return True once after
- * the expression is reset.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */

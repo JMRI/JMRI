@@ -72,6 +72,12 @@ in Logix.
 
 
 
+<p>
+When the IS_10_1 sensor is active, the timer is started/reset. But as long as this sensor is active, the timer is
+hold in the start condition. What if we want the sensor to only trigger a start, instead of holding it in the start
+condition? We can do that by using the "Trigger Once" expression. It returns true the first time its child
+expression returns true, but when returns false until its child expression has returned false.
+
 
 
 <hr>

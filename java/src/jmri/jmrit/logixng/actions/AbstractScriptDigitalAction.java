@@ -13,7 +13,7 @@ import jmri.jmrit.logixng.FemaleSocket;
  * <P>
  * A script that extends this class must implement the method evaluate().
  * It may also implement the methods setup(), registerScriptListeners(),
- * unregisterScriptListeners(), reset() and disposeMe().
+ * unregisterScriptListeners() and disposeMe().
  * <P>
  * If the script needs to run the ConditionalNG that this expression belongs to,
  * it does that by calling the method propertyChange().
