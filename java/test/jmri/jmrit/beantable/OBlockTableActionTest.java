@@ -219,9 +219,8 @@ public class OBlockTableActionTest {
         new JTextFieldOperator(addFrame, 0).setText("19.05");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
 
-//        Portal chk105 = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock("OBlock 105");  // NOI18N
-//        Assert.assertNotNull("Verify OB105 Added", chk105);  // NOI18N
-//        Assert.assertEquals("Verify system name prefix", "OB105", chk105.getSystemName());  // NOI18N
+        //Assert.assertNotNull("Verify PathSignal Added", chk105);  // NOI18N
+        //Assert.assertEquals("Verify system name prefix", "OB1", ob1.getSystemName());  // NOI18N
 
         (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
