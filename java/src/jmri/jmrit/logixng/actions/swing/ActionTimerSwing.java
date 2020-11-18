@@ -28,6 +28,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     private JTextField[] _timerSocketNames;
     private JFormattedTextField[] _timerDelays;
     private int numActions = 1;
+    private ActionTimer _tempAction;    // We need an action in validate() to check female socket names.
     
     private String getNewSocketName(ActionTimer action) {
         int numExpr = action.getNumExpressions();
@@ -50,6 +51,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         
         // Create a temporary action in case we don't have one.
         ActionTimer action = object != null ? (ActionTimer)object : new ActionTimer("IQDA1", null);
+        _tempAction = action;
         
         numActions = action.getNumActions();
         
@@ -145,7 +147,14 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
-        return true;
+        boolean hasErrors = false;
+        for (int i=0; i < numActions; i++) {
+            if (! _tempAction.getActionSocket(0).validateName(_timerSocketNames[i].getText())) {
+                errorMessages.add(Bundle.getMessage("InvalidSocketName", _timerSocketNames[i].getText()));
+                hasErrors = true;
+            }
+        }
+        return !hasErrors;
     }
     
     /** {@inheritDoc} */
