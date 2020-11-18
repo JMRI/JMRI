@@ -163,8 +163,8 @@ public class TrainBuilder extends TrainCommon {
         determineEngineRequirements(); // determine how many engines need to be assigned to train
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
         showTrainServices(); // show which roads, owners, built dates, engine types that the train will service
-        determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         getAndRemoveEnginesFromList(); // get a list of available engines
+        determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train 
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
         addEngines(); // 2nd and 3rd engine swaps in a train's route
         showTrainCarTypes(); // show car types that this train will service
@@ -820,12 +820,14 @@ public class TrainBuilder extends TrainCommon {
         }
 
         // load engines for this train
-        if (_train.getLeadEngine() == null &&
-                !getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(), _train
-                        .getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
-                    new Object[]{_reqNumEngines, _train.getTrainDepartsName(),
-                            engineTerminatesFirstLeg.getName()}));
+        if (_train.getLeadEngine() == null) {
+            addLine(_buildReport, THREE, BLANK_LINE);
+            if (!getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(),
+                    _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
+                throw new BuildFailedException(
+                        MessageFormat.format(Bundle.getMessage("buildErrorEngines"), new Object[] { _reqNumEngines,
+                                _train.getTrainDepartsName(), engineTerminatesFirstLeg.getName() }));
+            }
         }
 
         // First engine change in route?
@@ -4564,12 +4566,19 @@ public class TrainBuilder extends TrainCommon {
                             car.getFinalDestination() == null &&
                             testTrack.getScheduleId().equals(Track.NONE) &&
                             car.getTrack() != testTrack.getAlternateTrack() &&
-                            checkTrainCanDrop(car, testTrack.getAlternateTrack()) &&
-                            car.testDestination(testDestination, testTrack.getAlternateTrack()).equals(Track.OKAY)) {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("buildTrackFullHasAlternate"),
-                                new Object[]{testDestination.getName(),
-                                        testTrack.getName(), testTrack.getAlternateTrack().getName()}));
+                            checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
+                        addLine(_buildReport, SEVEN,
+                                MessageFormat.format(Bundle.getMessage("buildTrackFullHasAlternate"),
+                                        new Object[] { testDestination.getName(), testTrack.getName(),
+                                                testTrack.getAlternateTrack().getName() }));
+                        status = car.testDestination(testDestination, testTrack.getAlternateTrack());
+                        if (!status.equals(Track.OKAY)) {
+                            addLine(_buildReport, SEVEN,
+                                    MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
+                                            new Object[] { car.toString(), testTrack.getAlternateTrack().getName(),
+                                                    status, testTrack.getAlternateTrack().getTrackTypeName() }));
+                            continue;
+                        }
                         finalDestinationTrackTemp = testTrack;
                         trackTemp = testTrack.getAlternateTrack(); // send car to alternate track
                         break;
