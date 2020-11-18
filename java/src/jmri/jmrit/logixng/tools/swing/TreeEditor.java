@@ -671,17 +671,6 @@ public class TreeEditor extends TreeViewer {
         }
     }
     
-    private void updateTree(FemaleSocket currentFemaleSocket, TreePath currentPath) {
-        for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-            TreeModelEvent tme = new TreeModelEvent(
-                    currentFemaleSocket,
-                    currentPath.getPath()
-            );
-            l.treeNodesChanged(tme);
-        }
-        tree.updateUI();
-    }
-    
     
     protected class PopupMenu extends JPopupMenu implements ActionListener {
         

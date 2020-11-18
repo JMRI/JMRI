@@ -138,15 +138,11 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             FemaleSocket femaleSocket = socketAndRow._socket;
             int row = socketAndRow._row;
             
+            System.out.format("%s: %s - %d - %s%n", getClass().getName(), evt.getPropertyName(), socketAndRow._row, socketAndRow._socket.getClass().getName());
+            
             TreePath path = tree.getPathForRow(row);
-            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                TreeModelEvent tme = new TreeModelEvent(
-                        femaleSocket,
-                        path.getPath()
-                );
-                l.treeNodesChanged(tme);
-            }
-            tree.updateUI();
+            
+            updateTree(femaleSocket, path);
         }
         
         
@@ -156,15 +152,21 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             FemaleSocket femaleSocket = ((FemaleSocket)evt.getSource());
             TreePath path = tree.getPathForRow(femaleSocketTreeModel.getRow(femaleSocket));
             
-            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                TreeModelEvent tme = new TreeModelEvent(
-                        femaleSocket,
-                        path.getPath()
-                );
-                l.treeNodesChanged(tme);
-            }
-            tree.updateUI();
+            System.out.format("%s: %s - %d - %s%n", getClass().getName(), evt.getPropertyName(), femaleSocketTreeModel.getRow(femaleSocket), femaleSocket.getClass().getName());
+            
+            updateTree(femaleSocket, path);
         }
+    }
+    
+    protected void updateTree(FemaleSocket currentFemaleSocket, TreePath currentPath) {
+        for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+            TreeModelEvent tme = new TreeModelEvent(
+                    currentFemaleSocket,
+                    currentPath.getPath()
+            );
+            l.treeNodesChanged(tme);
+        }
+        tree.updateUI();
     }
     
     @Override

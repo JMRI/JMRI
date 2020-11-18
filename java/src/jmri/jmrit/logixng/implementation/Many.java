@@ -138,6 +138,7 @@ public class Many extends AbstractBase
     public void ensureFreeSocketAtTop() {
         if (_itemEntries.get(0)._socket.isConnected()) {
             _itemEntries.add(0, new ItemEntry(new DefaultFemaleAnySocket(this, this, getNewSocketName())));
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
         }
     }
     

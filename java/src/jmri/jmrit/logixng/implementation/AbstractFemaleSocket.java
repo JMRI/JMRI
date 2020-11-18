@@ -108,7 +108,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         _socket = socket;
         _socket.setParent(this);
         _listener.connected(this);
-        pcs.firePropertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_DISCONNECTED, null, _socket));
+        pcs.firePropertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_CONNECTED, null, _socket));
 //        pcs.firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, _socket);
     }
 
