@@ -233,7 +233,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void registerListenersForThisClass() {
-        ((InternalBase)_expression).registerListeners();
+        _expression.registerListeners();
     }
     
     /**
@@ -241,7 +241,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((InternalBase)_expression).unregisterListeners();
+        _expression.unregisterListeners();
     }
     
     @Override

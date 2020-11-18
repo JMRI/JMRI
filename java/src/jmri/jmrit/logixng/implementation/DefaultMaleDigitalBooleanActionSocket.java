@@ -213,7 +213,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
      */
     @Override
     public void registerListenersForThisClass() {
-        ((InternalBase)_action).registerListeners();
+        _action.registerListeners();
     }
     
     /**
@@ -221,7 +221,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((InternalBase)_action).unregisterListeners();
+        _action.unregisterListeners();
     }
     
     @Override

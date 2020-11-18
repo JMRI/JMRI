@@ -226,7 +226,7 @@ public class DefaultMaleDigitalActionSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        ((InternalBase)_action).registerListeners();
+        _action.registerListeners();
     }
     
     /**
@@ -234,7 +234,7 @@ public class DefaultMaleDigitalActionSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((InternalBase)_action).unregisterListeners();
+        _action.unregisterListeners();
     }
     
     @Override

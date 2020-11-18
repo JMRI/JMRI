@@ -17,7 +17,7 @@ import org.slf4j.Logger;
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
  */
-public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
+public abstract class AbstractMaleSocket implements MaleSocket {
 
     protected final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
     private final BaseManager<? extends NamedBean> _manager;
@@ -98,7 +98,7 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
     public final void registerListeners() {
         registerListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            ((InternalBase)getChild(i)).registerListeners();
+            getChild(i).registerListeners();
         }
     }
     
@@ -107,7 +107,7 @@ public abstract class AbstractMaleSocket implements MaleSocket, InternalBase {
     public final void unregisterListeners() {
         unregisterListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            ((InternalBase)getChild(i)).unregisterListeners();
+            getChild(i).unregisterListeners();
         }
     }
     

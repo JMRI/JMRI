@@ -759,6 +759,16 @@ public abstract class FemaleSocketTestBase {
         public Collection<SymbolTable.ParameterData> getLocalVariables() {
             throw new UnsupportedOperationException("Not supported.");
         }
+
+        @Override
+        public void registerListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void unregisterListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
         
     }
     

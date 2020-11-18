@@ -22,7 +22,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractBase
         extends AbstractNamedBean
-        implements Base, InternalBase {
+        implements Base {
 
     protected boolean _listenersAreRegistered = false;
     
@@ -101,7 +101,7 @@ public abstract class AbstractBase
         if (isActive()) {
             registerListenersForThisClass();
             for (int i=0; i < getChildCount(); i++) {
-                ((InternalBase)getChild(i)).registerListeners();
+                getChild(i).registerListeners();
             }
         }
     }
@@ -111,7 +111,7 @@ public abstract class AbstractBase
     public final void unregisterListeners() {
         unregisterListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            ((InternalBase)getChild(i)).unregisterListeners();
+            getChild(i).unregisterListeners();
         }
     }
     

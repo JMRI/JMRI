@@ -441,6 +441,16 @@ public class AbstractFemaleSocketTest {
         public PropertyChangeListener[] getPropertyChangeListenersByReference(String name) {
             throw new UnsupportedOperationException("Not supported");
         }
+
+        @Override
+        public void registerListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public void unregisterListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
     
     }
     

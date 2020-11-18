@@ -218,7 +218,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        ((InternalBase)_action).registerListeners();
+        _action.registerListeners();
     }
     
     /**
@@ -226,7 +226,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((InternalBase)_action).unregisterListeners();
+        _action.unregisterListeners();
     }
     
     @Override

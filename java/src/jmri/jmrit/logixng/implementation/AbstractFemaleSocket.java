@@ -13,7 +13,7 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist 2019
  */
-public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase {
+public abstract class AbstractFemaleSocket implements FemaleSocket {
     
     private Base _parent;
     protected final FemaleSocketListener _listener;
@@ -204,7 +204,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         _listenersAreRegistered = true;
         registerListenersForThisClass();
         if (isConnected()) {
-            ((InternalBase)getConnectedSocket()).registerListeners();
+            getConnectedSocket().registerListeners();
         }
     }
     
@@ -215,7 +215,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
     public void unregisterListeners() {
         unregisterListenersForThisClass();
         if (isConnected()) {
-            ((InternalBase)getConnectedSocket()).unregisterListeners();
+            getConnectedSocket().unregisterListeners();
         }
         _listenersAreRegistered = false;
     }

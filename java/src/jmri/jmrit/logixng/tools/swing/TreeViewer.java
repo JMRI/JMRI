@@ -34,7 +34,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
     
     JTree tree;
     
-    private final FemaleSocket _femaleRootSocket;
+    protected final FemaleSocket _femaleRootSocket;
     protected FemaleSocketTreeModel femaleSocketTreeModel;
     
     boolean _showReminder = false;
