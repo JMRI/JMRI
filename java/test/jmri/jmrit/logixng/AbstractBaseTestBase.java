@@ -7,6 +7,7 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import javax.annotation.CheckForNull;
@@ -421,9 +422,11 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testAddAndRemoveSocket() throws SocketAlreadyConnectedException {
         AtomicBoolean ab = new AtomicBoolean(false);
+        AtomicReference<PropertyChangeEvent> ar = new AtomicReference<>();
         
         _base.addPropertyChangeListener((PropertyChangeEvent evt) -> {
             ab.set(true);
+            ar.set(evt);
         });
         
         ab.set(false);
@@ -435,6 +438,13 @@ public abstract class AbstractBaseTestBase {
         if (!addNewSocket()) return;
         
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
+        Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
+        System.out.format("%s: New value: %s%n", _base.getClass().getName(), ar.get().getNewValue());
+        Assert.assertTrue(ar.get().getNewValue() instanceof List);
+        List<? extends Object> list = ((List<? extends Object>)ar.get().getNewValue());
+        for (Object o : list) {
+            Assert.assertTrue(o instanceof FemaleSocket);
+        }
     }
     
     @Test

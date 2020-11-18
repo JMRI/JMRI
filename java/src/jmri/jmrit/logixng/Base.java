@@ -69,24 +69,30 @@ public interface Base extends PropertyChangeProvider {
      * To get the number of children, use the method getChildCount().
      * This constant is used in calls to firePropertyChange().
      * The class fires a property change then a child is added or removed.
+     * <p>
+     * If children are removed, the field oldValue of the PropertyChange event
+     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
+     * removed from the list so that the listener can unregister itself as a
+     * listener of this female socket.
+     * <p>
+     * If children are added, the field newValue of the PropertyChange event
+     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
+     * added to the list so that the listener can register itself as a
+     * listener of this female socket.
      */
     public static final String PROPERTY_CHILD_COUNT = "ChildCount";
 
     /**
      * The socket has been connected.
      * This constant is used in calls to firePropertyChange().
-     * The socket fires a property change to its _parent_ when it is connected
-     * or disconnected. Note that the parent does not need to register a
-     * listener for this.
+     * The socket fires a property change when it is connected or disconnected.
      */
     public static final String PROPERTY_SOCKET_CONNECTED = "SocketConnected";
 
     /**
      * The socket has been disconnected.
      * This constant is used in calls to firePropertyChange().
-     * The socket fires a property change to its _parent_ when it is connected
-     * or disconnected. Note that the parent does not need to register a
-     * listener for this.
+     * The socket fires a property change when it is connected or disconnected.
      */
     public static final String PROPERTY_SOCKET_DISCONNECTED = "SocketDisconnected";
 

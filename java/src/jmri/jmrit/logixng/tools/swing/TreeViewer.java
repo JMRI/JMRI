@@ -131,7 +131,23 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         
         if (Base.PROPERTY_CHILD_COUNT.equals(evt.getPropertyName())) {
             
+            // Remove myself as listener from sockets that has been removed
+            if (evt.getOldValue() != null) {
+                for (FemaleSocket socket : (List<FemaleSocket>)evt.getOldValue()) {
+                    socket.removePropertyChangeListener(this);
+                }
+            }
+            
+            if (evt.getNewValue() != null) {
+                // Add myself as listener to sockets that has been added
+                for (FemaleSocket socket : (List<FemaleSocket>)evt.getNewValue()) {
+                    socket.addPropertyChangeListener(this);
+                }
+            }
+            
+            // Update the tree
             Base b = (Base)evt.getSource();
+            System.out.format("propertyChange: %s - %s%n", b.toString(), evt.getPropertyName());
             FemaleSocket.FemaleSocketAndRow socketAndRow = new FemaleSocket.FemaleSocketAndRow();
             _femaleRootSocket.getFemaleSocketAndRow(b, socketAndRow);
             
@@ -156,6 +172,11 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             
             updateTree(femaleSocket, path);
         }
+        
+//        _femaleRootSocket.forEntireTree((Base b) -> {
+//            b.addPropertyChangeListener(TreeViewer.this);
+//        });
+        
     }
     
     protected void updateTree(FemaleSocket currentFemaleSocket, TreePath currentPath) {

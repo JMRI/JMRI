@@ -119,26 +119,31 @@ public class Many extends AbstractBase
     }
     
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ItemEntry entry : _itemEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
-            _itemEntries.add(new ItemEntry(
-                    new DefaultFemaleAnySocket(this, this, getNewSocketName())));
-        }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            DefaultFemaleAnySocket socket =
+                    new DefaultFemaleAnySocket(this, this, getNewSocketName());
+            _itemEntries.add(new ItemEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     
     public void ensureFreeSocketAtTop() {
         if (_itemEntries.get(0)._socket.isConnected()) {
-            _itemEntries.add(0, new ItemEntry(new DefaultFemaleAnySocket(this, this, getNewSocketName())));
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            DefaultFemaleAnySocket socket =
+                    new DefaultFemaleAnySocket(this, this, getNewSocketName());
+            _itemEntries.add(0, new ItemEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     

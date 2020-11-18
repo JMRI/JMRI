@@ -131,21 +131,20 @@ public class StringMany extends AbstractStringAction
     }
     
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ActionEntry entry : _actionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
-            _actionEntries.add(
-                    new ActionEntry(
-                            InstanceManager.getDefault(StringActionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
-        }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            FemaleStringActionSocket socket =
+                    InstanceManager.getDefault(StringActionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _actionEntries.add(new ActionEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     

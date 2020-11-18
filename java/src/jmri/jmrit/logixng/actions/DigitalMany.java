@@ -128,21 +128,20 @@ public class DigitalMany extends AbstractDigitalAction
     }
     
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ActionEntry entry : _actionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
-            _actionEntries.add(
-                    new ActionEntry(
-                            InstanceManager.getDefault(DigitalActionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
-        }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            FemaleDigitalActionSocket socket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _actionEntries.add(new ActionEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     

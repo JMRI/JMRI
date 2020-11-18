@@ -102,21 +102,20 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     }
 
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
-            _expressionEntries.add(
-                    new ExpressionEntry(
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
-        }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            FemaleDigitalExpressionSocket socket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     

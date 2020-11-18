@@ -19,15 +19,6 @@ import org.slf4j.LoggerFactory;
 public final class TypeConversionUtil {
     
     /**
-     * Is this object a Boolean?
-     * @param object the object to check
-     * @return true if the object is a Boolean, false otherwise
-     */
-    public static boolean isBoolean(Object object) {
-        return object instanceof Boolean;
-    }
-    
-    /**
      * Is this object an integer number?
      * <P>
      * The method returns true if the object is any of these classes:
@@ -54,7 +45,7 @@ public final class TypeConversionUtil {
     }
     
     /**
-     * Is this object an integer number?
+     * Is this object an integer or floating point number?
      * <P>
      * The method returns true if the object is any of these classes:
      * <ul>

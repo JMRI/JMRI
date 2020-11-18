@@ -125,7 +125,8 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     }
     
     public void setChildCount(int count) {
-        int numChilds = getChildCount();
+        List<FemaleSocket> addList = new ArrayList<>();
+        List<FemaleSocket> removeList = new ArrayList<>();
         
         // Is there too many children?
         while (_expressionEntries.size() > count) {
@@ -134,18 +135,18 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             if (socket.isConnected()) {
                 socket.disconnect();
             }
+            removeList.add(_expressionEntries.get(childNo)._socket);
             _expressionEntries.remove(childNo);
         }
         
         // Is there not enough children?
         while (_expressionEntries.size() < count) {
-            _expressionEntries
-                    .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
+            FemaleGenericExpressionSocket socket =
+                    createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            addList.add(socket);
         }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
-        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
     
     @Override
@@ -180,19 +181,19 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     }
     
     private void checkFreeSocket() {
-        int numChilds = getChildCount();
         boolean hasFreeSocket = false;
         
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket |= !entry._socket.isConnected();
         }
         if (!hasFreeSocket) {
-            _expressionEntries
-                    .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
-        }
-        
-        if (numChilds != getChildCount()) {
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, this);
+            FemaleGenericExpressionSocket socket =
+                    createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(socket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
     
