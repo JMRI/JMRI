@@ -10,7 +10,7 @@ import jmri
 import java
 
 # Find the MqttAdapter
-mqqtAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
+mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
 
 # listener class
 class myMqttListener(jmri.jmrix.mqtt.MqttEventListener) :
@@ -20,5 +20,5 @@ class myMqttListener(jmri.jmrix.mqtt.MqttEventListener) :
     
 # register a topic
 topic = "jmri/test/topic"  # note this will be prefixed by configured channel, i.e. "/trains/"
-mqqtAdapter.subscribe(topic, myMqttListener())
+mqttAdapter.subscribe(topic, myMqttListener())
 
