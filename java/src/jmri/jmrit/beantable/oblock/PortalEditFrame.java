@@ -175,6 +175,12 @@ public class PortalEditFrame extends JmriJFrame {
             portalUserName.setBackground(Color.red);
             return;
         }
+        portalUserName.setBackground(Color.white);
+        status(Bundle.getMessage("AddPortalStatusEnter"), false);
+        if (fromBlockComboBox.getSelectedIndex() == -1 || toBlockComboBox.getSelectedIndex() == -1) {
+            status(Bundle.getMessage("PortalNeedsBlock", user), true);
+            return;
+        }
         if (_newPortal) {
             _portal = pm.createNewPortal(user);
             if (_portal == null) { // pm found an existing portal by the same name
@@ -185,14 +191,10 @@ public class PortalEditFrame extends JmriJFrame {
             }
         } else {
             String msg = _portal.setName(user); // will check for duplicates
-            if (msg != null ) {
+            if (msg != null) {
                 status(msg, true);
                 return;
             }
-        }
-        if (fromBlockComboBox.getSelectedIndex() == -1 || toBlockComboBox.getSelectedIndex() == -1) {
-            status(Bundle.getMessage("PortalNeedsBlock", user), true);
-            return;
         }
         try {
             OBlock block = fromBlockComboBox.getSelectedItem();

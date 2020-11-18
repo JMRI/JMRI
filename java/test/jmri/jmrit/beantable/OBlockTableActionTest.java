@@ -7,8 +7,6 @@ import jmri.InstanceManager;
 import jmri.SignalMastManager;
 import jmri.implementation.VirtualSignalMast;
 import jmri.jmrit.logix.*;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.managers.DefaultSignalMastManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -24,9 +22,11 @@ import org.netbeans.jemmy.operators.*;
 import javax.swing.*;
 
 /**
- * Swing tests for the OBlock table.
+ * Swing tests for the OBlock etc tables.
+ * Includes many of the jmri.jmrit.beantable.ablock classes via Jemmy UI tests.
  *
  * @author Pete Cressman Copyright 2016
+ * @author Egbert Broerse Copyright 2020
  */
 public class OBlockTableActionTest {
 
@@ -184,6 +184,40 @@ public class OBlockTableActionTest {
     }
 
     @Test
+    public void testAddPortal() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // use _tabbed interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 2, "")); // show table
+        JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
+        Assert.assertNotNull(f);
+
+        a.addPortalPressed(null);
+
+        JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddPortal"));  // NOI18N
+        Assert.assertNotNull("Found Add Portal Frame", addFrame);  // NOI18N
+
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
+        Assert.assertNotNull("Add Portal Frame still open after empty entry", addFrame);  // NOI18N
+
+        PortalManager pm = InstanceManager.getDefault(PortalManager.class);
+        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+        obm.createNewOBlock("OB1", "ob1");  // NOI18N
+        obm.createNewOBlock("OB2", "ob2");  // NOI18N
+
+        new JTextFieldOperator(addFrame, 0).setText("portal1");  // NOI18N
+        new JComboBoxOperator(addFrame, 0).setSelectedIndex(1);  // NOI18N
+        new JComboBoxOperator(addFrame, 1).setSelectedIndex(2);  // NOI18N
+        new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
+
+        Assert.assertEquals("Verify Portal Added", 1, pm.getPortalCount());
+
+        // TODO add Edit Portal test
+        (new JFrameOperator(f)).requestClose();
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
     public void testAddSignal() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // use _tabbed interface
@@ -219,9 +253,9 @@ public class OBlockTableActionTest {
         new JTextFieldOperator(addFrame, 0).setText("19.05");  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
 
-        //Assert.assertNotNull("Verify PathSignal Added", chk105);  // NOI18N
-        //Assert.assertEquals("Verify system name prefix", "OB1", ob1.getSystemName());  // NOI18N
-
+        Assert.assertNotNull("Verify Signal Added", port1.getToSignal());  // NOI18N
+        Assert.assertEquals("Check signal name", "IF$vsm:basic:one-searchlight($1)", port1.getToSignal().getSystemName());  // NOI18N
+        // TODO add Edit Signal test
         (new JFrameOperator(f)).requestClose();
         JUnitUtil.dispose(f);
     }
