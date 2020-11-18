@@ -235,10 +235,14 @@
        <p>There are separate pages for:</p>
       <ul>
       <li><a href="../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet clocks</a></li>
-      <li><a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">MERG CBUS clocks</a></li>
+      <li><a href="../../../../html/hardware/can/cbus/CbusFastClock.shtml">CBUS&trade; clocks</a></li>
       <li><a href="../../../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">NCE clocks</a></li>
       </ul>
       
+        <h2></h2>
+        <p>CBUS&trade; is a registered trade mark of Dr Michael Bolton</p>
+        <p></p>
+
 
       <!--#include virtual="/Footer.shtml" -->
     </div>

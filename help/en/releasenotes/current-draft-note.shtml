@@ -19,6 +19,16 @@
                 <li></li>
             </ul>
 
+        <h4>CBUS</h4>
+            <ul>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
+                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
+                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
+                <li>Refer to MERG section of this not for changes in JMRI support for MERG hardware.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+            </ul>
+
         <h4>C/MRI</h4>
             <ul>
                 <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
@@ -96,11 +106,11 @@
                 <li></li>
             </ul>
 
-        <h4>MERG CBUS</h4>
+        <h4>MERG </h4>
             <ul>
-                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
-                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
-                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>Refer to CBUS section of this not for changes in JMRI support for CBUS.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -146,11 +156,12 @@
                 <li></li>
             </ul>
 
-        <h4>SPROG</h4>
+        <h4>SPROG DCC </h4>
             <ul>
                 <li>EStop for 28 Step mode is now sent correctly</li>
 		<li>Updated programming mode switcher for Pi-SPROG 3</li>
 		<li>Added mode switcher for SPROG 3 Plus</li>
+		<li>Added help content for new generation 5 hardware</li>
             </ul>
 
         <h4>TAMS</h4>
