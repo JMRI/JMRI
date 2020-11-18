@@ -148,6 +148,9 @@ public class DefaultModule extends AbstractBase
         
         _rootSocketType = socketType;
         _femaleRootSocket = socketType.createSocket(this, this, mSystemName);
+        
+        // Listeners should never be enabled for a module
+        _femaleRootSocket.setEnableListeners(false);
     }
     
     @Override

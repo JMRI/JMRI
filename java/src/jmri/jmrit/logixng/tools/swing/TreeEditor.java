@@ -121,7 +121,7 @@ public class TreeEditor extends TreeViewer {
             _clipboardEditor.initComponents();
             _clipboardEditor.setVisible(true);
 
-            _clipboardEditor.addLogixNGEventListener(() -> {
+            _clipboardEditor.addClipboardEventListener(() -> {
                 _clipboardEditor.clipboardData.forEach((key, value) -> {
                     if (key.equals("Finish")) {                  // NOI18N
                         _clipboardEditor = null;

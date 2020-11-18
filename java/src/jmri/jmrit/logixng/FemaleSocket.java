@@ -73,6 +73,22 @@ public interface FemaleSocket extends Base {
     public String getName();
     
     /**
+     * Sets whenever listeners are enabled or not.
+     * ConditionalNG has always listeners enabled, but Clipboard and Module
+     * has never listeners enabled.
+     * @param enable true if listeners should be enabled, false otherwise
+     */
+    public void setEnableListeners(boolean enable);
+    
+    /**
+     * Gets whenever listeners are enabled or not.
+     * ConditionalNG has always listeners enabled, but Clipboard and Module
+     * has never listeners enabled.
+     * @return true if listeners should be enabled, false otherwise
+     */
+    public boolean getEnableListeners();
+    
+    /**
      * Am I an ancestor to this maleSocket?
      * 
      * @param maleSocket the maleSocket that could be a child

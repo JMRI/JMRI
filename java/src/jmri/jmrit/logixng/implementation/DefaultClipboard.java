@@ -33,6 +33,9 @@ public class DefaultClipboard implements Clipboard {
     
     
     public DefaultClipboard() {
+        // Listeners should never be enabled for the clipboard
+        _femaleSocket.setEnableListeners(false);
+        
         try {
             _femaleSocket.connect(new MaleRootSocket(null));
         } catch (SocketAlreadyConnectedException ex) {

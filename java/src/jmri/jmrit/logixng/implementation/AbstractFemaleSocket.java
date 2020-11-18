@@ -20,6 +20,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     private MaleSocket _socket = null;
     private String _name = null;
     private boolean _listenersAreRegistered = false;
+    boolean _enableListeners = true;
     
     
     public AbstractFemaleSocket(Base parent, FemaleSocketListener listener, String name) {
@@ -29,6 +30,18 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         _parent = parent;
         _listener = listener;
         _name = name;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void setEnableListeners(boolean enable) {
+        _enableListeners = enable;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean getEnableListeners() {
+        return _enableListeners;
     }
     
     /** {@inheritDoc} */
@@ -201,6 +214,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
      */
     @Override
     public void registerListeners() {
+        if (!_enableListeners) return;
+        
         _listenersAreRegistered = true;
         registerListenersForThisClass();
         if (isConnected()) {
@@ -213,6 +228,8 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
      */
     @Override
     public void unregisterListeners() {
+        if (!_enableListeners) return;
+        
         unregisterListenersForThisClass();
         if (isConnected()) {
             getConnectedSocket().unregisterListeners();
