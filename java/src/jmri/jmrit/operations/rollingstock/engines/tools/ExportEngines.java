@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Exports the Engine roster into a comma delimitated file (CSV). Order stored:
+ * Exports the Engine roster into a comma delimited file (CSV). Order stored:
  * Number, Road, Model, Length, Owner, Built, Location, -, Track, Consist,
  * Moves, Last, Value, HP, Weight, Type, Comment, Misc.
  *

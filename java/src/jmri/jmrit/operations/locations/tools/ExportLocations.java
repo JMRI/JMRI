@@ -25,7 +25,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * Exports the location roster into a comma delimitated file (CSV).
+ * Exports the location roster into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
  *

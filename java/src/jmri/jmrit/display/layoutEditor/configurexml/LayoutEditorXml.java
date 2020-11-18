@@ -76,10 +76,10 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("turnoutcircles", "" + (p.getTurnoutCircles() ? "yes" : "no"));
         panel.setAttribute("tooltipsnotedit", "" + (p.getTooltipsNotEdit() ? "yes" : "no"));
         panel.setAttribute("tooltipsinedit", "" + (p.getTooltipsInEdit() ? "yes" : "no"));
-        panel.setAttribute("mainlinetrackwidth", "" + p.gContext.getMainlineTrackWidth());
+        panel.setAttribute("mainlinetrackwidth", "" + p.gContext.getMainlineBlockWidth());  //saves wrong value for backwards compatability with pre-LayoutTrackDrawingOptions
         panel.setAttribute("xscale", Float.toString((float) p.gContext.getXScale()));
         panel.setAttribute("yscale", Float.toString((float) p.gContext.getYScale()));
-        panel.setAttribute("sidetrackwidth", "" + p.gContext.getSidelineTrackWidth());
+        panel.setAttribute("sidetrackwidth", "" + p.gContext.getSidelineBlockWidth());  //saves wrong value for backwards compatability with pre-LayoutTrackDrawingOptions
         panel.setAttribute("defaulttrackcolor", p.getDefaultTrackColor());
         panel.setAttribute("defaultoccupiedtrackcolor", p.getDefaultOccupiedTrackColor());
         panel.setAttribute("defaultalternativetrackcolor", p.getDefaultAlternativeTrackColor());
@@ -168,14 +168,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // write order specified for compatibility
         for (LayoutTrackView lv : p.getLayoutTurnoutViews()) {
             if (! (lv instanceof LayoutSlipView) )
-                storeOne(panel, lv); 
+                storeOne(panel, lv);
         }
         for (LayoutTrackView lv : p.getTrackSegmentViews())         {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getPositionablePointViews())    {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLevelXingViews())            {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutSlipViews())           {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutTurntableViews())      {storeOne(panel, lv); }
-        
+
         // include Layout Shapes
         for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
 
@@ -191,9 +191,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             }
         } catch (Exception ex) {
             log.error("Error storing layout item: {}", item, ex);
-        }    
+        }
     }
-    
+
     @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
