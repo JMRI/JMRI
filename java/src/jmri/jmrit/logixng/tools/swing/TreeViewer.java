@@ -136,6 +136,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         _rootVisible = rootVisible;
     }
     
+    @SuppressWarnings("unchecked")
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         
