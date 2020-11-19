@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 /**
  * MQTT implementation of the Light interface.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2008, 2020
  * @author Paul Bender Copyright (C) 2010
  * @author Fredrik Elestedt  Copyright (C) 2020
  */
@@ -78,7 +78,8 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
     // Handle a request to change state by sending a formatted packet
     // to the server.
     @Override
-    protected synchronized void doNewState(int oldState, int newState) {
+    protected void doNewState(int oldState, int newState) {
+        log.debug("doNewState with old state {} new state {}", oldState, newState);
         if (oldState == newState) {
             return; //no change, just quit.
         }  // sort out states
@@ -103,7 +104,9 @@ public class MqttLight extends AbstractLight implements MqttEventListener {
     }
 
     private void sendMessage(String c) {
-        mqttAdapter.publish(this.sendTopic, c.getBytes());
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+            mqttAdapter.publish(this.sendTopic, c.getBytes());
+        });
     }
 
     @Override

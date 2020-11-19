@@ -118,6 +118,12 @@
                 <li>Added support for creating ranges of Turnouts and Lights.<br>
                 Sensor, Turnout and Light Address ranges do not have to be fully numeric,
                 and will be incremented using the final number in an address.</li>
+                <li>Added support for changing the default quality of service and 
+                retention policy for transmissions.  See the 
+                <a href="http://jmri.org/jython/SetMqttOptions.py">jython/SetMqttOptions.py</a>
+                script for an example.</li>
+                <li>Fix a nasty threading bug in the MQTT Light support that can 
+                cause a JMRI lockup on the first access after adding a Light.</li>
             </ul>
 
         <h4>MRC</h4>
