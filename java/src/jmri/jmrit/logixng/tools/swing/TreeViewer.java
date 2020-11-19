@@ -99,6 +99,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         tree.setCellRenderer(new FemaleSocketTreeRenderer());
         
         tree.setRootVisible(_rootVisible);
+        tree.setShowsRootHandles(true);
         
         // Expand the entire tree
         for (int i = 0; i < tree.getRowCount(); i++) {

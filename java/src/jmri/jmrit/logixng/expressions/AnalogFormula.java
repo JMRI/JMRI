@@ -310,7 +310,6 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
         public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName, String manager) {
             _socket = socket;
             _socketSystemName = socketSystemName;
-            _socketSystemName = socketSystemName;
             _manager = manager;
         }
         
