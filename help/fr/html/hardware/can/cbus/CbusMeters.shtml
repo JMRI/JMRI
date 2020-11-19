@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
+    "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="fr">
+    <head>
+        <meta name="keywords" content="JMRI CBUS setup voltage current meter">
+        <title>JMRI Hardware Support - CBUS&trade; Voltage / Current Meters</title>
+        <meta name="author" content="Andrew Crosland">
+        <!--#include virtual="/Style.shtml" -->
+        <!-- UpDated  by Blorec Herv&#233; 2020-11-19-->
+    </head>
+
+    <body>
+        <!--#include virtual="/Header.shtml" -->
+        <div id="mBody">
+            <!--#include virtual="Sidebar.shtml" -->
+            <div id="mainContent">
+
+              <h1>Support mat&#233;riel : CBUS&#153; - Compteurs de tension/courant </h1>
+                <p>Les compteurs de tension et de courant CBUS peuvent 
+                &#234;tre utilis&#233;s pour afficher la tension et le courant de 
+                la voie sur  le r&#233;seau, si un mat&#233;riel appropri&#233; 
+                est utilis&#233;. La disponibilit&#233; des compteurs d&#233;pendra de la 
+                connexion mat&#233;rielle.</p>
+
+                <p>Le compteur Cbus &#233;coute un message fixe avec les 
+                opcodes ACON2 du n&#339;ud 65534.
+                    Un num&#233;ro d'&#233;v&#233;nement (EN) de 1 indique un relev&#233; 
+                    actuel tandis que EN de 2 indique un lecture de la 
+                    tension. Cela pourrait devenir configurable par 
+                    l'utilisateur &#224; l'avenir. </p>
+                
+                <p>Selon la connexion mat&#233;rielle, il peut &#234;tre n&#233;cessaire 
+                d'utiliser une variable de n&#339;ud (NV) ou une autre 
+                m&#233;canisme permettant de configurer le mat&#233;riel pour 
+                envoyer les relev&#233;s de courant et/ou de tension sur le 
+                 R&#233;seau CBUS. La fr&#233;quence (taux de mise &#224; jour) des 
+                 relev&#233;s d&#233;pend du mat&#233;riel et non  mandat&#233; par JMRI ou 
+                 la sp&#233;cificit&#233; CBUS.</p>
+                
+                <p>Dans PanelPro Les compteurs peuvent &#234;tre ajout&#233;s 
+                depuis le menu outils ou depuis le menu outils CBUS. 
+                Dans DecoderPro3, les compteurs ne sont actuellement 
+                disponibles qu'&#224; partir du menu Outils CBUS.
+                
+                <p></p>
+
+                <img src="images/meter.png" alt="CBUS Meter " >
+
+                <h2></h2>
+                <p>CBUS&#153; est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+                <p></p>
+
+
+
+
+
+                <!--#include virtual="/Footer.shtml" -->
+            </div><!-- closes #mainContent-->
+        </div><!-- closes #mBody-->
+    </body>
+</html>
