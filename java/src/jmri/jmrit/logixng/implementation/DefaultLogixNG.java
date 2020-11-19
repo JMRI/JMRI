@@ -3,10 +3,8 @@ package jmri.jmrit.logixng.implementation;
 import static jmri.NamedBean.UNKNOWN;
 
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -400,6 +398,11 @@ public class DefaultLogixNG extends AbstractNamedBean
             getConditionalNG(i).printTree(locale, writer, indent, currentIndent+indent);
 //            writer.println();
         }
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     

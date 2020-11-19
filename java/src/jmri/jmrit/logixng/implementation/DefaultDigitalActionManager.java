@@ -50,6 +50,12 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         action.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleDigitalActionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

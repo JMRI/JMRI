@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.beans.*;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -298,6 +297,11 @@ public class DefaultClipboard implements Clipboard {
         @Override
         public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
             _clipboardItems.removePropertyChangeListener(propertyName, listener);
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+            throw new UnsupportedOperationException("Not supported");
         }
         
     }

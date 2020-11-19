@@ -2,8 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import java.beans.*;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
@@ -428,6 +427,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public void forEntireTree(RunnableWithBase r) {
         r.run(this);
         if (isConnected()) getConnectedSocket().forEntireTree(r);
+    }
+
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported");
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractFemaleSocket.class);

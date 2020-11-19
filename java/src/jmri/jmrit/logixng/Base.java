@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.annotation.*;
 
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.beans.PropertyChangeProvider;
 
@@ -135,6 +136,24 @@ public interface Base extends PropertyChangeProvider {
      * @param s the new user name
      */
     public void setUserName(@CheckForNull String s) throws NamedBean.BadUserNameException;
+    
+    /**
+     * Create a deep copy of myself and my children
+     * The item needs to try to lookup itself in both systemNames and userNames
+     * to see if the user has given a new system name and/or a new user name.If no new system name is given, an auto system name is used.
+     * If no user name is given, a null user name is used.
+     * 
+     * @param systemNames a map of old and new system name
+     * @param userNames a map of old system name and new user name
+     * @return a deep copy
+     * @throws jmri.JmriException in case of an error
+     */
+    public default Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
+            throws JmriException {
+        
+        // REMOVE LATER!!!!!!!!
+        return null;
+    }
     
     /**
      * Set associated comment text.

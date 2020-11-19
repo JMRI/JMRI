@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -12,8 +13,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -29,6 +29,18 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     public ActionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionSensor copy = new ActionSensor(sysName, userName);
+        copy.setSensor(_sensorHandle);
+        copy.setSensorState(_sensorState);
+        return manager.registerAction(copy);
     }
     
     public void setSensor(@Nonnull String sensorName) {

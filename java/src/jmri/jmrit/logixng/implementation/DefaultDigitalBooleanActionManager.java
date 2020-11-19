@@ -49,6 +49,12 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
         action.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleDigitalBooleanActionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

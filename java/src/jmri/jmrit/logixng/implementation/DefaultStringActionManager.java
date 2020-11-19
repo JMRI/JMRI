@@ -49,6 +49,12 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         action.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleStringActionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

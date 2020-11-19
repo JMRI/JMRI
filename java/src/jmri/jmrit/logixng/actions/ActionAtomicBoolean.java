@@ -1,11 +1,12 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultMaleAnalogActionSocket;
 
 /**
  * This action sets the value of an AtomicBoolean. It is mostly used for tests.
@@ -35,6 +36,16 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         super(sys, user);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DigitalActionBean copy = new ActionAtomicBoolean(sysName, userName, new AtomicBoolean(), _newValue);
+        return manager.registerAction(copy);
     }
     
     public void setAtomicBoolean(AtomicBoolean atomicBoolean) {

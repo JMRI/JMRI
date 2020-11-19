@@ -51,6 +51,12 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         expression.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleAnalogExpressionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

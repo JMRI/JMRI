@@ -3,8 +3,10 @@ package jmri.jmrit.logixng.expressions;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import java.util.Map;
+
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 
 /**
  * Constant value.
@@ -20,6 +22,17 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        AnalogExpressionConstant copy = new AnalogExpressionConstant(sysName, userName);
+        copy.setValue(_value);
+        return manager.registerExpression(copy);
     }
     
     /** {@inheritDoc} */

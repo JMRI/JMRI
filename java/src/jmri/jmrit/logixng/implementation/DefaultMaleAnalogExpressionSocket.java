@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -332,6 +330,15 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     @Override
     public Base getObject() {
         return _expression;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
+            throws JmriException {
+        Base copy = getObject().getDeepCopy(systemNames, userNames);
+        if (copy == null) return null;      // REMOVE LATER!!!!!!!!
+        getManager().register(new DefaultMaleAnalogActionSocket(getManager(), (AnalogActionBean)copy));
+        return copy;
     }
     
     /** {@inheritDoc} */

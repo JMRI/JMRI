@@ -2,8 +2,10 @@ package jmri.jmrit.logixng.expressions;
 
 import java.util.Locale;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import java.util.Map;
+
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 
 /**
  * Constant value.
@@ -19,6 +21,17 @@ public class StringExpressionConstant extends AbstractStringExpression {
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        StringExpressionManager manager = InstanceManager.getDefault(StringExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        StringExpressionConstant copy = new StringExpressionConstant(sysName, userName);
+        copy.setValue(_value);
+        return manager.registerExpression(copy);
     }
     
     /** {@inheritDoc} */

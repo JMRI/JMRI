@@ -19,8 +19,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.DuplicateKeyMap;
 
 /**
@@ -36,7 +35,19 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public ActionListenOnBeans(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-//        jmri.NamedBeanMap a;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionListenOnBeans copy = new ActionListenOnBeans(sysName, userName);
+        for (NamedBeanReference reference : _namedBeanReferences.values()) {
+            copy.addReference(reference);
+        }
+        return manager.registerAction(copy);
     }
     
     /**

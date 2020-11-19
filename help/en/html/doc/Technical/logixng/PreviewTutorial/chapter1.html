@@ -55,6 +55,72 @@ Cut the IfThenElse action, add a Many action and paste the IfThenElse action.
 
 
 
+
+
+<h2>Using the clipboard</h2>
+
+While editing a ConditionalNG, it can be useful to cut out something and leave it, editing something else, and then
+paste it back. For this purpose, LogixNG has a clipboard. Each time you cut an action or expression, it is moved to the
+clipboard.
+<p>
+The clipboard editor works the same way as the ConditionalNG editor, with the exceptions that actions and expressions
+are never active while on the clipboard.
+<p>
+When an action or expression is cut, it will always be put on the first row in the clipboard. This is true even when
+you cut an item on the clipboard itself. If you cut an item on the clipboard, that item will be removed from its
+current place in the tree and moved to the first row in the tree.
+<p>
+Note that you can cut an item on any level in the clipboard tree. While editing a ConditionalNG, you may cut a big tree
+from the ConditionalNG and you then wants to take only a small sub tree and paste back to the ConditionalNG.
+<p>
+Example:
+* Many
+  * IfThenElse
+    * If sensor
+	* Throw turnout
+<p>
+You can cut the Many action from the ConditionalNG, then go to the clipboard and expand the Many action and then cut
+the IfThenElse action. The IfThenElse action will then be moved to the first row on the clipboard. Now you can go back
+to the ConditionalNG and paste the IfThenElse action to the ConditionalNG.
+<p>
+You can also use the clipbord to move items from one ConditionalNG to another.
+
+
+
+
+<h3>Copy</h3>
+
+If the popup menu is opened on an item that can be copied, the menu item Copy is enabled. If "Copy" is selected, the
+item and its sub tree are copied to the clipboard. For each item, an auto system name is given, and if an item has a
+user name, a new user name is given. The new user name is dependent on the current selected language, but for English
+the new user name is "Copy of NNN" or "Copy # of NNN", there NNN is the original user name and # is an integer number
+to get an unique user name.
+<p>
+If at least one of the items in the sub tree of the item has either a system name that's not an auto system name or has
+a user name that is not empty, the menu item "Copy manually" is also enabled. If "Copy manually" is selected, a dialog
+box will be shown with a table there the user may enter new system names and/or user names for the items to copy.
+
+
+
+
+
+<h3>------------------- Remove this ---------- Why is Copy disabled? It's not implemented yet.</h3>
+
+The ability to make a copy of actions and expressions is important. But it's also a more complicated operation than
+cut and paste. When an item is cut and pasted, it's only moved from place A to place B. But if an item (or a sub tree)
+is copied, it gets more complicated.
+<p>
+Each action and expression has a system name that must be unique. And the actions and expressions may have a user name
+that also needs to be unique. How should this be done? The best answer is probably to give the user some options, for
+example to let LogixNG create new automatic system names, or to give the user a table there he can enter new system
+names for each item to copy. This needs some careful thinking and then someone has to implement it. Until then, Copy
+is disabled.
+
+
+
+
+
+
 </td>
 </tr>
 </table>

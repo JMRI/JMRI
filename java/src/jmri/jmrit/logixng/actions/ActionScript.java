@@ -1,22 +1,16 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+
 import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalAction;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.*;
 import jmri.script.JmriScriptEngineManager;
 
 /**
@@ -32,6 +26,17 @@ public class ActionScript extends AbstractDigitalAction {
     public ActionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionScript copy = new ActionScript(sysName, userName);
+        copy.setScript(_scriptText);
+        return manager.registerAction(copy);
     }
     
     private void loadScript() {

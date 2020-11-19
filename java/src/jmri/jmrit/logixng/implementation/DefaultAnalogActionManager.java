@@ -49,6 +49,12 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         action.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleAnalogActionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

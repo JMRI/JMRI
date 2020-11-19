@@ -270,6 +270,11 @@ public class DefaultModule extends AbstractBase
         // Do nothing. A module never listen on anything.
     }
 
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
     

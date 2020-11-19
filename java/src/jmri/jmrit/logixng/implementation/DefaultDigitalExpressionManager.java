@@ -51,6 +51,12 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         expression.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleDigitalExpressionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

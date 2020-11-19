@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng;
 
 import java.beans.PropertyVetoException;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -16,6 +15,18 @@ import jmri.NamedBean;
  * @author Daniel Bergqvist 2020
  */
 public interface BaseManager<E extends NamedBean> extends Manager<E> {
+    
+    /**
+     * Remember a NamedBean Object created outside the manager.
+     * <p>
+     * The non-system-specific SignalHeadManagers use this method extensively.
+     *
+     * @param maleSocket the bean
+     * @throws NamedBean.DuplicateSystemNameException if a different bean with the same
+     *                                                system name is already registered in
+     *                                                the manager
+     */
+    public void register(@Nonnull MaleSocket maleSocket);
     
     /**
      * Method for a UI to delete a bean.

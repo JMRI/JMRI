@@ -4,15 +4,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -28,6 +30,18 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionTurnout copy = new ActionTurnout(sysName, userName);
+        copy.setTurnout(_turnoutHandle);
+        copy.setTurnoutState(_turnoutState);
+        return manager.registerAction(copy);
     }
     
     public void setTurnout(@Nonnull String turnoutName) {

@@ -3,9 +3,7 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -27,6 +25,26 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     public DigitalCallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DigitalCallModule copy = new DigitalCallModule(sysName, userName);
+        copy.setModule(_moduleHandle);
+        for (Map.Entry<String, SymbolTable.ParameterData> entry : _parameterData.entrySet()) {
+            SymbolTable.ParameterData data = entry.getValue();
+            copy.addParameter(
+                    entry.getKey(),
+                    data.getInitalValueType(),
+                    data.getInitialValueData(),
+                    data.getReturnValueType(),
+                    data.getReturnValueData());
+        }
+        return manager.registerAction(copy);
     }
     
     public void setModule(@Nonnull String memoryName) {
@@ -193,6 +211,10 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     
     public void removeParameter(String name) {
         _parameterData.remove(name);
+    }
+    
+    public Map<String, SymbolTable.ParameterData> getParameterData() {
+        return Collections.unmodifiableMap(_parameterData);
     }
     
     

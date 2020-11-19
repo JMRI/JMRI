@@ -1,11 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 
 /**
  * This action sets the state of a turnout.
@@ -17,6 +17,16 @@ public class ShutdownComputer extends AbstractDigitalAction {
     public ShutdownComputer(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ShutdownComputer copy = new ShutdownComputer(sysName, userName);
+        return manager.registerAction(copy);
     }
     
     /** {@inheritDoc} */

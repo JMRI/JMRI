@@ -38,6 +38,20 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         super(sys, user);
     }
     
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionLocalVariable copy = new ActionLocalVariable(sysName, userName);
+        copy.setVariable(_variableName);
+        copy.setMemory(_memoryHandle);
+        copy.setVariableOperation(_variableOperation);
+        copy.setData(_data);
+        return manager.registerAction(copy);
+    }
+    
     public void setVariable(String variableName) {
         assertListenersAreNotRegistered(log, "setMemory");
         _variableName = variableName;

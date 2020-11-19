@@ -52,6 +52,12 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
         expression.setParent(socket);
         return socket;
     }
+
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleSocket maleSocket) {
+        register((MaleStringExpressionSocket)maleSocket);
+    }
     
     /**
      * Remember a NamedBean Object created outside the manager.

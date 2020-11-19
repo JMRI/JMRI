@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.util.Locale;
+import java.util.Map;
 
 import static jmri.NamedBean.UNKNOWN;
 
@@ -311,6 +312,11 @@ public class DefaultConditionalNG extends AbstractBase
     @Override
     public void unregisterListenersForThisClass() {
         // Do nothing
+    }
+
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNG.class);

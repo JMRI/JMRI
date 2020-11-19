@@ -4,13 +4,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 
 /**
  * Sets a Memory.
@@ -24,6 +24,17 @@ public class AnalogActionMemory extends AbstractAnalogAction
     
     public AnalogActionMemory(String sys, String user) {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = systemNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        AnalogActionMemory copy = new AnalogActionMemory(sysName, userName);
+        copy.setMemory(_memoryHandle);
+        return manager.registerAction(copy);
     }
     
     public void setMemory(@Nonnull String memoryName) {
