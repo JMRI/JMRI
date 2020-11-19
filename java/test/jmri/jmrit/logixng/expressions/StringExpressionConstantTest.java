@@ -49,7 +49,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get constant value \"Something\"%n");
+        return String.format("Get string constant \"Something\"%n");
     }
     
     @Override
@@ -60,7 +60,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
                 "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
-                "               Get constant value \"Something\"%n" +
+                "               Get string constant \"Something\"%n" +
                 "            !s A%n" +
                 "               Set memory IM2%n");
     }
@@ -84,24 +84,24 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         expression2 = new StringExpressionConstant("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value null", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant null", expression2.getLongDescription(Locale.ENGLISH));
         
         expression2 = new StringExpressionConstant("IQSE11", "My constant value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant value", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value null", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant null", expression2.getLongDescription(Locale.ENGLISH));
         
         expression2 = new StringExpressionConstant("IQSE11", null);
         expression2.setValue("A value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value \"A value\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"A value\"", expression2.getLongDescription(Locale.ENGLISH));
         
         expression2 = new StringExpressionConstant("IQSE11", "My constant");
         expression2.setValue("Some other value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value \"Some other value\"", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"Some other value\"", expression2.getLongDescription(Locale.ENGLISH));
         
         // Call setup(). It doesn't do anything, but we call it for coverage
         expression2.setup();
@@ -201,12 +201,12 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get constant value", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant", _base.getShortDescription(Locale.ENGLISH));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Get constant value \"Something\"", _base.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get string constant \"Something\"", _base.getLongDescription(Locale.ENGLISH));
     }
     
     @Test

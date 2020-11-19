@@ -19,17 +19,17 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2020
  */
-public class DigitalActionManagerTest {
+public class DigitalActionManagerTest extends AbstractManagerTestBase {
 
-    private DigitalActionManager m;
+    private DigitalActionManager _m;
     
     @Test
     public void testRegisterAction() {
-        MyAction myAction = new MyAction(m.getSystemNamePrefix()+"BadSystemName");
+        MyAction myAction = new MyAction(_m.getSystemNamePrefix()+"BadSystemName");
         
         boolean hasThrown = false;
         try {
-            m.registerAction(myAction);
+            _m.registerAction(myAction);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
@@ -39,12 +39,12 @@ public class DigitalActionManagerTest {
         
         // We need a male socket to test with, so we register the action and then unregister the socket
         DigitalActionBean action = new ActionMemory("IQDA321", null);
-        MaleDigitalActionSocket maleSocket = m.registerAction(action);
-        m.deregister(maleSocket);
+        MaleDigitalActionSocket maleSocket = _m.registerAction(action);
+        _m.deregister(maleSocket);
         
         hasThrown = false;
         try {
-            m.registerAction(maleSocket);
+            _m.registerAction(maleSocket);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "registerAction() cannot register a MaleDigitalActionSocket. Use the method register() instead.", e.getMessage());
@@ -54,9 +54,9 @@ public class DigitalActionManagerTest {
     
     @Test
     public void testGetBeanTypeHandled() {
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital action", m.getBeanTypeHandled());
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital action", m.getBeanTypeHandled(false));
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital actions", m.getBeanTypeHandled(true));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital action", _m.getBeanTypeHandled());
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital action", _m.getBeanTypeHandled(false));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital actions", _m.getBeanTypeHandled(true));
     }
     
     @Test
@@ -76,12 +76,14 @@ public class DigitalActionManagerTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        m = InstanceManager.getDefault(DigitalActionManager.class);
+        _m = InstanceManager.getDefault(DigitalActionManager.class);
+        _manager = _m;
     }
 
     @After
     public void tearDown() {
-        m = null;
+        _m = null;
+        _manager = null;
         JUnitUtil.tearDown();
     }
     

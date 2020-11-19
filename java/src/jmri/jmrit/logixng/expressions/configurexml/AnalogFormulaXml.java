@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
+import java.util.*;
+
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.AnalogExpressionManager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.expressions.AnalogFormula;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -34,36 +38,75 @@ public class AnalogFormulaXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
-//        NamedBeanHandle memory = p.getMemory();
-//        if (memory != null) {
-//            element.addContent(new Element("memory").addContent(memory.getName()));
-//        }
+        Element e = new Element("expressions");
+        for (int i=0; i < p.getChildCount(); i++) {
+            Element e2 = new Element("socket");
+            e2.addContent(new Element("socketName").addContent(p.getChild(i).getName()));
+            MaleSocket socket = p.getChild(i).getConnectedSocket();
+            
+            String socketSystemName;
+            String socketManager;
+            if (socket != null) {
+                socketSystemName = socket.getSystemName();
+                socketManager = socket.getManager().getClass().getName();
+            } else {
+                socketSystemName = p.getExpressionSystemName(i);
+                socketManager = p.getExpressionManager(i);
+            }
+            if (socketSystemName != null) {
+                e2.addContent(new Element("systemName").addContent(socketSystemName));
+            }
+            if (socketManager != null) {
+                e2.addContent(new Element("manager").addContent(socketManager));
+            }
+            e.addContent(e2);
+        }
+        
+        element.addContent(e);
+        
+        element.addContent(new Element("formula").addContent(p.getFormula()));
         
         return element;
     }
     
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
+        List<AnalogFormula.SocketData> expressionSystemNames = new ArrayList<>();
+        
+        Element actionElement = shared.getChild("expressions");
+        for (Element socketElement : actionElement.getChildren()) {
+            String socketName = socketElement.getChild("socketName").getTextTrim();
+            Element systemNameElement = socketElement.getChild("systemName");
+            String systemName = null;
+            if (systemNameElement != null) {
+                systemName = systemNameElement.getTextTrim();
+            }
+            Element managerElement = socketElement.getChild("manager");
+            String manager = null;
+            if (managerElement != null) {
+                manager = managerElement.getTextTrim();
+            }
+            expressionSystemNames.add(new AnalogFormula.SocketData(socketName, systemName, manager));
+        }
+        
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        AnalogFormula h;
-        h = new AnalogFormula(sys, uname);
+        AnalogFormula h = new AnalogFormula(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
 
-//        Element memoryName = shared.getChild("memory");
-//        if (memoryName != null) {
-//            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-//            if (m != null) h.setMemory(m);
-//            else h.removeMemory();
-//        }
-
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
+        Element formula = shared.getChild("formula");
+        if (formula != null) {
+            try {
+                h.setFormula(formula.getTextTrim());
+            } catch (ParserException e) {
+                log.error("cannot set formula: " + formula.getTextTrim(), e);
+            }
+        }
 
         InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogFormulaXml.class);
 }

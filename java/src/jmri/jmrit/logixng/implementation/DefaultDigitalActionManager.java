@@ -8,6 +8,7 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
+import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.util.LoggingUtil;
@@ -26,6 +27,8 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
 
     
     public DefaultDigitalActionManager() {
+        InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
+        
         for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
             actionFactory.init();
         }

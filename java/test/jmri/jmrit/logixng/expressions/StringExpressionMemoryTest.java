@@ -50,7 +50,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1%n");
+        return String.format("Get memory IM1 as string value%n");
     }
     
     @Override
@@ -61,7 +61,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
-                "               Get memory IM1%n" +
+                "               Get memory IM1 as string value%n" +
                 "            !s A%n" +
                 "               Set memory IM2%n");
     }
@@ -87,24 +87,24 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         expression2 = new StringExpressionMemory("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory none as string value".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory none as string value".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionMemory("IQSE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory IM1 as string value".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionMemory("IQSE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory IM1 as string value".equals(expression2.getLongDescription()));
         
         boolean thrown = false;
         try {
@@ -318,12 +318,12 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Get memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("Get memory as string value", _base.getShortDescription());
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getLongDescription()));
+        Assert.assertEquals("Get memory IM1 as string value", _base.getLongDescription());
     }
     
     @Test

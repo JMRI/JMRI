@@ -19,17 +19,17 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2020
  */
-public class StringActionManagerTest {
+public class StringActionManagerTest extends AbstractManagerTestBase {
 
-    private StringActionManager m;
+    private StringActionManager _m;
     
     @Test
     public void testRegisterAction() {
-        MyAction myAction = new MyAction(m.getSystemNamePrefix()+"BadSystemName");
+        MyAction myAction = new MyAction(_m.getSystemNamePrefix()+"BadSystemName");
         
         boolean hasThrown = false;
         try {
-            m.registerAction(myAction);
+            _m.registerAction(myAction);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
@@ -39,12 +39,12 @@ public class StringActionManagerTest {
         
         // We need a male socket to test with, so we register the action and then unregister the socket
         StringActionBean action = new StringActionMemory("IQSA321", null);
-        MaleStringActionSocket maleSocket = m.registerAction(action);
-        m.deregister(maleSocket);
+        MaleStringActionSocket maleSocket = _m.registerAction(action);
+        _m.deregister(maleSocket);
         
         hasThrown = false;
         try {
-            m.registerAction(maleSocket);
+            _m.registerAction(maleSocket);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "registerAction() cannot register a MaleStringActionSocket. Use the method register() instead.", e.getMessage());
@@ -54,9 +54,9 @@ public class StringActionManagerTest {
     
     @Test
     public void testGetBeanTypeHandled() {
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", m.getBeanTypeHandled());
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", m.getBeanTypeHandled(false));
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String actions", m.getBeanTypeHandled(true));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", _m.getBeanTypeHandled());
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String action", _m.getBeanTypeHandled(false));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String actions", _m.getBeanTypeHandled(true));
     }
     
     @Test
@@ -76,12 +76,14 @@ public class StringActionManagerTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        m = InstanceManager.getDefault(StringActionManager.class);
+        _m = InstanceManager.getDefault(StringActionManager.class);
+        _manager = _m;
     }
 
     @After
     public void tearDown() {
-        m = null;
+        _m = null;
+        _manager = null;
         JUnitUtil.tearDown();
     }
     

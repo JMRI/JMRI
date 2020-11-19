@@ -27,6 +27,7 @@
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-constant-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/expression-memory-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/formula-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_AnalogExpressionManagerType">
       <xs:annotation>
@@ -44,6 +45,7 @@
 
             <xs:element name="analog-expression-constant"  type="LogixNG_AnalogExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="analog-expression-memory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="formula"                     type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
 
           </xs:choice>
       </xs:sequence>

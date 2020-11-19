@@ -1,11 +1,11 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
-import java.util.Locale;
+import java.util.*;
 
-import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Stack;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -20,6 +20,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {
 
     
+    private final Map<String, Manager<? extends MaleSocket>> _managers = new HashMap<>();
     private final Clipboard _clipboard = new DefaultClipboard();
     private final Stack _stack = new DefaultStack();
     private SymbolTable _symbolTable;
@@ -223,6 +224,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public void setSymbolTable(SymbolTable symbolTable) {
         _symbolTable = symbolTable;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void registerManager(Manager<? extends MaleSocket> manager) {
+        _managers.put(manager.getClass().getName(), manager);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public Manager<? extends MaleSocket> getManager(String className) {
+        return _managers.get(className);
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultLogixNGManager.class);

@@ -27,6 +27,8 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
 
     
     public DefaultAnalogExpressionManager() {
+        InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
+        
         for (AnalogExpressionFactory expressionFactory : ServiceLoader.load(AnalogExpressionFactory.class)) {
             expressionFactory.init();
         }

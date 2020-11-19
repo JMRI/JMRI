@@ -27,6 +27,8 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
 
     
     public DefaultDigitalExpressionManager() {
+        InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
+        
         for (DigitalExpressionFactory expressionFactory : ServiceLoader.load(DigitalExpressionFactory.class)) {
             expressionFactory.init();
         }

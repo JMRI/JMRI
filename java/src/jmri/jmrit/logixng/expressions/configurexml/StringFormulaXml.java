@@ -1,9 +1,13 @@
 package jmri.jmrit.logixng.expressions.configurexml;
 
+import java.util.*;
+
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.expressions.StringFormula;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -34,36 +38,64 @@ public class StringFormulaXml extends jmri.managers.configurexml.AbstractNamedBe
 
         storeCommon(p, element);
 
-//        NamedBeanHandle memory = p.getMemory();
-//        if (memory != null) {
-//            element.addContent(new Element("memory").addContent(memory.getName()));
-//        }
+        Element e = new Element("expressions");
+        for (int i=0; i < p.getChildCount(); i++) {
+            Element e2 = new Element("socket");
+            e2.addContent(new Element("socketName").addContent(p.getChild(i).getName()));
+            MaleSocket socket = p.getChild(i).getConnectedSocket();
+            
+            String socketSystemName;
+            if (socket != null) {
+                socketSystemName = socket.getSystemName();
+            } else {
+                socketSystemName = p.getExpressionSystemName(i);
+            }
+            if (socketSystemName != null) {
+                e2.addContent(new Element("systemName").addContent(socketSystemName));
+            }
+            e.addContent(e2);
+        }
+        
+        element.addContent(e);
+        
+        element.addContent(new Element("formula").addContent(p.getFormula()));
         
         return element;
     }
     
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
+        List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
+        
+        Element actionElement = shared.getChild("expressions");
+        for (Element socketElement : actionElement.getChildren()) {
+            String socketName = socketElement.getChild("socketName").getTextTrim();
+            Element systemNameElement = socketElement.getChild("systemName");
+            String systemName = null;
+            if (systemNameElement != null) {
+                systemName = systemNameElement.getTextTrim();
+            }
+            expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+        }
+        
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        StringFormula h;
-        h = new StringFormula(sys, uname);
+        StringFormula h = new StringFormula(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);
 
-//        Element memoryName = shared.getChild("memory");
-//        if (memoryName != null) {
-//            Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
-//           if (m != null) h.setMemory(m);
-//            else h.removeMemory();
-//        }
-
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
+        Element formula = shared.getChild("formula");
+        if (formula != null) {
+            try {
+                h.setFormula(formula.getTextTrim());
+            } catch (ParserException e) {
+                log.error("cannot set formula: " + formula.getTextTrim(), e);
+            }
+        }
 
         InstanceManager.getDefault(StringExpressionManager.class).registerExpression(h);
         return true;
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogExpressionMemoryXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringFormulaXml.class);
 }

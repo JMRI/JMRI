@@ -8,6 +8,7 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
+import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
@@ -25,6 +26,8 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
 
     
     public DefaultDigitalBooleanActionManager() {
+        InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
+        
         for (DigitalBooleanActionFactory actionFactory : ServiceLoader.load(DigitalBooleanActionFactory.class)) {
             actionFactory.init();
         }

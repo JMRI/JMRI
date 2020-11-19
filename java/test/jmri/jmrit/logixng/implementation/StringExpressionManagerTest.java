@@ -19,17 +19,17 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2020
  */
-public class StringExpressionManagerTest {
+public class StringExpressionManagerTest extends AbstractManagerTestBase {
 
-    private StringExpressionManager m;
+    private StringExpressionManager _m;
     
     @Test
     public void testRegisterExpression() {
-        MyExpression myExpression = new MyExpression(m.getSystemNamePrefix()+"BadSystemName");
+        MyExpression myExpression = new MyExpression(_m.getSystemNamePrefix()+"BadSystemName");
         
         boolean hasThrown = false;
         try {
-            m.registerExpression(myExpression);
+            _m.registerExpression(myExpression);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
@@ -39,12 +39,12 @@ public class StringExpressionManagerTest {
         
         // We need a male socket to test with, so we register the action and then unregister the socket
         StringExpressionBean action = new StringExpressionMemory("IQSE321", null);
-        MaleStringExpressionSocket maleSocket = m.registerExpression(action);
-        m.deregister(maleSocket);
+        MaleStringExpressionSocket maleSocket = _m.registerExpression(action);
+        _m.deregister(maleSocket);
         
         hasThrown = false;
         try {
-            m.registerExpression(maleSocket);
+            _m.registerExpression(maleSocket);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "registerExpression() cannot register a MaleStringExpressionSocket. Use the method register() instead.", e.getMessage());
@@ -60,19 +60,19 @@ public class StringExpressionManagerTest {
         LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
         preferences.setUseGenericFemaleSockets(false);
-        socket = m.createFemaleSocket(myExpression, listener, "E1");
+        socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleStringExpressionSocket", socket.getClass().getName());
         
         preferences.setUseGenericFemaleSockets(true);
-        socket = m.createFemaleSocket(myExpression, listener, "E2");
+        socket = _m.createFemaleSocket(myExpression, listener, "E2");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$StringSocket", socket.getClass().getName());
     }
     
     @Test
     public void testGetBeanTypeHandled() {
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", m.getBeanTypeHandled());
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", m.getBeanTypeHandled(false));
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expressions", m.getBeanTypeHandled(true));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled());
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expression", _m.getBeanTypeHandled(false));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "String expressions", _m.getBeanTypeHandled(true));
     }
     
     @Test
@@ -92,12 +92,14 @@ public class StringExpressionManagerTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        m = InstanceManager.getDefault(StringExpressionManager.class);
+        _m = InstanceManager.getDefault(StringExpressionManager.class);
+        _manager = _m;
     }
 
     @After
     public void tearDown() {
-        m = null;
+        _m = null;
+        _manager = null;
         JUnitUtil.tearDown();
     }
     

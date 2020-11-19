@@ -170,4 +170,17 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      */
     public void setSymbolTable(SymbolTable symbolTable);
     
+    /**
+     * Register a manager for later retrieval by getManager()
+     * @param manager the manager
+     */
+    public void registerManager(Manager<? extends MaleSocket> manager);
+    
+    /**
+     * Get manager by class name
+     * @param className the class name of the manager
+     * @return the manager
+     */
+    public Manager<? extends MaleSocket> getManager(String className);
+    
 }

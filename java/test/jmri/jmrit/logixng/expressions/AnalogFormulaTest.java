@@ -56,7 +56,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         return String.format(
                 "Formula: E1%n" +
                 "   ?* E1%n" +
-                "      Get constant value 1%n" +
+                "      Get analog constant 1%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -71,7 +71,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
                 "            ?~ E%n" +
                 "               Formula: E1%n" +
                 "                  ?* E1%n" +
-                "                     Get constant value 1%n" +
+                "                     Get analog constant 1%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !~ A%n" +
@@ -147,6 +147,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Test
     public void testCtorAndSetup1() {
         AnalogExpressionManager m = InstanceManager.getDefault(AnalogExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new AnalogExpressionMemory("IQAE52", null)));
@@ -155,22 +156,22 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerExpression(new AnalogExpressionMemory("IQAE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQAE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQAE554"));
+        List<AnalogFormula.SocketData> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new AnalogFormula.SocketData("XYZ123", "IQAE52", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("ZH12", null, managerName));   // This is null by purpose
+        actionSystemNames.add(new AnalogFormula.SocketData("Hello", "IQAE554", managerName));
         // IQAE61232 doesn't exist by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQAE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQAE3"));
+        actionSystemNames.add(new AnalogFormula.SocketData("SomethingElse", "IQAE61232", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("Yes123", "IQAE3", managerName));
         
         AnalogFormula expression = new AnalogFormula("IQAE321", null, actionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            AnalogFormula.SocketData socketData = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -184,9 +185,9 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         jmri.util.JUnitAppender.assertMessage("cannot load analog expression IQAE61232");
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            AnalogFormula.SocketData socketName = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketName._socketName,
+                    socketName._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -206,6 +207,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Test
     public void testCtorAndSetup2() {
         AnalogExpressionManager m = InstanceManager.getDefault(AnalogExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new AnalogExpressionMemory("IQAE52", null)));
@@ -214,21 +216,21 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         maleSockets.add(m.registerExpression(new AnalogExpressionMemory("IQAE61232", null)));
         maleSockets.add(m.registerExpression(new AnalogExpressionMemory("IQAE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQAE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", "IQAE99"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQAE554"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQAE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQAE3"));
+        List<AnalogFormula.SocketData> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new AnalogFormula.SocketData("XYZ123", "IQAE52", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("ZH12", "IQAE99", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("Hello", "IQAE554", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("SomethingElse", "IQAE61232", managerName));
+        actionSystemNames.add(new AnalogFormula.SocketData("Yes123", "IQAE3", managerName));
         
         AnalogFormula expression = new AnalogFormula("IQAE321", null, actionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            AnalogFormula.SocketData socketData = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -240,9 +242,9 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         expression.setup();
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            AnalogFormula.SocketData socketData = actionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -268,8 +270,8 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     // Test calling setActionSystemNames() twice
     @Test
     public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQAE52"));
+        List<AnalogFormula.SocketData> actionSystemNames = new ArrayList<>();
+        actionSystemNames.add(new AnalogFormula.SocketData("XYZ123", "IQAE52", ""));
         
         AnalogFormula expression = new AnalogFormula("IQAE321", null, actionSystemNames);
         

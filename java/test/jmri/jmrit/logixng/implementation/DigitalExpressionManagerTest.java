@@ -19,17 +19,17 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2020
  */
-public class DigitalExpressionManagerTest {
+public class DigitalExpressionManagerTest extends AbstractManagerTestBase {
 
-    private DigitalExpressionManager m;
+    private DigitalExpressionManager _m;
     
     @Test
     public void testRegisterExpression() {
-        MyExpression myExpression = new MyExpression(m.getSystemNamePrefix()+"BadSystemName");
+        MyExpression myExpression = new MyExpression(_m.getSystemNamePrefix()+"BadSystemName");
         
         boolean hasThrown = false;
         try {
-            m.registerExpression(myExpression);
+            _m.registerExpression(myExpression);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "System name is invalid: IQBadSystemName", e.getMessage());
@@ -39,12 +39,12 @@ public class DigitalExpressionManagerTest {
         
         // We need a male socket to test with, so we register the action and then unregister the socket
         DigitalExpressionBean action = new ExpressionMemory("IQDE321", null);
-        MaleDigitalExpressionSocket maleSocket = m.registerExpression(action);
-        m.deregister(maleSocket);
+        MaleDigitalExpressionSocket maleSocket = _m.registerExpression(action);
+        _m.deregister(maleSocket);
         
         hasThrown = false;
         try {
-            m.registerExpression(maleSocket);
+            _m.registerExpression(maleSocket);
         } catch (IllegalArgumentException e) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "registerExpression() cannot register a MaleDigitalExpressionSocket. Use the method register() instead.", e.getMessage());
@@ -60,19 +60,19 @@ public class DigitalExpressionManagerTest {
         LogixNGPreferences preferences = InstanceManager.getDefault(LogixNGPreferences.class);
         
         preferences.setUseGenericFemaleSockets(false);
-        socket = m.createFemaleSocket(myExpression, listener, "E1");
+        socket = _m.createFemaleSocket(myExpression, listener, "E1");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleDigitalExpressionSocket", socket.getClass().getName());
         
         preferences.setUseGenericFemaleSockets(true);
-        socket = m.createFemaleSocket(myExpression, listener, "E2");
+        socket = _m.createFemaleSocket(myExpression, listener, "E2");
         Assert.assertEquals("Class is correct", "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$DigitalSocket", socket.getClass().getName());
     }
     
     @Test
     public void testGetBeanTypeHandled() {
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expression", m.getBeanTypeHandled());
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expression", m.getBeanTypeHandled(false));
-        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expressions", m.getBeanTypeHandled(true));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expression", _m.getBeanTypeHandled());
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expression", _m.getBeanTypeHandled(false));
+        Assert.assertEquals("getBeanTypeHandled() returns correct value", "Digital expressions", _m.getBeanTypeHandled(true));
     }
     
     @Test
@@ -92,12 +92,14 @@ public class DigitalExpressionManagerTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
         
-        m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        _m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        _manager = _m;
     }
 
     @After
     public void tearDown() {
-        m = null;
+        _m = null;
+        _manager = null;
         JUnitUtil.tearDown();
     }
     

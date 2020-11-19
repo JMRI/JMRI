@@ -59,7 +59,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         return String.format(
                 "Formula: E1%n" +
                 "   ?* E1%n" +
-                "      Get constant value \"Something\"%n" +
+                "      Get string constant \"Something\"%n" +
                 "   ?* E2%n" +
                 "      Socket not connected%n");
     }
@@ -74,7 +74,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
                 "            ?s E%n" +
                 "               Formula: E1%n" +
                 "                  ?* E1%n" +
-                "                     Get constant value \"Something\"%n" +
+                "                     Get string constant \"Something\"%n" +
                 "                  ?* E2%n" +
                 "                     Socket not connected%n" +
                 "            !s A%n" +

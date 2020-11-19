@@ -11,12 +11,13 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.AnalogExpressionManager;
+import jmri.Manager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
+import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
@@ -37,7 +38,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
-    private boolean disableCheckForUnconnectedSocket = false;
+    private boolean _disableCheckForUnconnectedSocket = false;
     
     /**
      * Create a new instance of Formula with system name and user name.
@@ -58,29 +59,33 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
      * this formula uses
      */
     public AnalogFormula(@Nonnull String sys, @CheckForNull String user,
-            List<Map.Entry<String, String>> expressionSystemNames) {
+            List<SocketData> expressionSystemNames) {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
+    private void setExpressionSystemNames(List<SocketData> systemNames) {
         if (!_expressionEntries.isEmpty()) {
             throw new RuntimeException("expression system names cannot be set more than once");
         }
         
-        for (Map.Entry<String, String> entry : systemNames) {
+        for (SocketData socketData : systemNames) {
             FemaleGenericExpressionSocket socket =
-                    createFemaleSocket(this, this, entry.getKey());
+                    createFemaleSocket(this, this, socketData._socketName);
 //            FemaleGenericExpressionSocket socket =
 //                    InstanceManager.getDefault(AnalogExpressionManager.class)
 //                            .createFemaleSocket(this, this, entry.getKey());
             
-            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
+            _expressionEntries.add(new ExpressionEntry(socket, socketData._socketSystemName, socketData._manager));
         }
     }
     
     public String getExpressionSystemName(int index) {
         return _expressionEntries.get(index)._socketSystemName;
+    }
+    
+    public String getExpressionManager(int index) {
+        return _expressionEntries.get(index)._manager;
     }
     
     private FemaleGenericExpressionSocket createFemaleSocket(
@@ -199,12 +204,14 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     
     @Override
     public void connected(FemaleSocket socket) {
-        if (disableCheckForUnconnectedSocket) return;
+        if (_disableCheckForUnconnectedSocket) return;
         
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
                 entry._socketSystemName =
                         socket.getConnectedSocket().getSystemName();
+                entry._manager =
+                        socket.getConnectedSocket().getManager().getClass().getName();
             }
         }
         
@@ -216,6 +223,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
                 entry._socketSystemName = null;
+                entry._manager = null;
                 break;
             }
         }
@@ -225,7 +233,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     @Override
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
-        disableCheckForUnconnectedSocket = true;
+        _disableCheckForUnconnectedSocket = true;
         
         for (ExpressionEntry ee : _expressionEntries) {
             try {
@@ -234,11 +242,13 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
                                 .equals(ee._socketSystemName)) {
 
                     String socketSystemName = ee._socketSystemName;
+                    String manager = ee._manager;
                     ee._socket.disconnect();
                     if (socketSystemName != null) {
-                        MaleSocket maleSocket =
-                                InstanceManager.getDefault(AnalogExpressionManager.class)
-                                        .getBySystemName(socketSystemName);
+                        Manager<? extends MaleSocket> m =
+                                InstanceManager.getDefault(LogixNG_Manager.class)
+                                        .getManager(manager);
+                        MaleSocket maleSocket = m.getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
@@ -257,25 +267,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
         
         checkFreeSocket();
         
-        disableCheckForUnconnectedSocket = false;
-    }
-    
-    
-    
-    /* This class is public since ExpressionFormulaXml needs to access it. */
-    public static class ExpressionEntry {
-        private String _socketSystemName;
-        private final FemaleGenericExpressionSocket _socket;
-        
-        public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName) {
-            _socketSystemName = socketSystemName;
-            _socket = socket;
-        }
-        
-        private ExpressionEntry(FemaleGenericExpressionSocket socket) {
-            this._socket = socket;
-        }
-        
+        _disableCheckForUnconnectedSocket = false;
     }
     
     /** {@inheritDoc} */
@@ -294,6 +286,40 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
     @Override
     public void disposeMe() {
     }
+    
+    
+    public static class SocketData {
+        public final String _socketName;
+        public final String _socketSystemName;
+        public final String _manager;
+        
+        public SocketData(String socketName, String socketSystemName, String manager) {
+            _socketName = socketName;
+            _socketSystemName = socketSystemName;
+            _manager = manager;
+        }
+    }
+    
+    
+    /* This class is public since ExpressionFormulaXml needs to access it. */
+    public static class ExpressionEntry {
+        private final FemaleGenericExpressionSocket _socket;
+        private String _socketSystemName;
+        public String _manager;
+        
+        public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName, String manager) {
+            _socket = socket;
+            _socketSystemName = socketSystemName;
+            _socketSystemName = socketSystemName;
+            _manager = manager;
+        }
+        
+        private ExpressionEntry(FemaleGenericExpressionSocket socket) {
+            this._socket = socket;
+        }
+        
+    }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogFormula.class);
 }

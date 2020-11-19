@@ -28,6 +28,8 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
 
     
     public DefaultStringExpressionManager() {
+        InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
+        
         for (StringExpressionFactory expressionFactory : ServiceLoader.load(StringExpressionFactory.class)) {
             expressionFactory.init();
         }

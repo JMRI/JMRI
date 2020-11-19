@@ -54,7 +54,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1%n");
+        return String.format("Get memory IM1 as analog value%n");
     }
     
     @Override
@@ -65,7 +65,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
-                "               Get memory IM1%n" +
+                "               Get memory IM1 as analog value%n" +
                 "            !~ A%n" +
                 "               Set memory IM2%n");
     }
@@ -91,24 +91,24 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         expression2 = new AnalogExpressionMemory("IQAE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory none as analog value".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionMemory("IQAE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory none as analog value".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionMemory("IQAE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory IM1 as analog value".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionMemory("IQAE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "Get memory IM1 as analog value".equals(expression2.getLongDescription()));
         
         boolean thrown = false;
         try {
@@ -317,12 +317,12 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Get memory".equals(_base.getShortDescription()));
+        Assert.assertEquals("Get memory as analog value", _base.getShortDescription());
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getLongDescription()));
+        Assert.assertEquals("Get memory IM1 as analog value", _base.getLongDescription());
     }
     
     @Test
