@@ -84,7 +84,6 @@
         change. This type of warrant is better suited to smaller layouts.</li>
       </ul>
 
-
       <h2><a name="creating" id="creating">Creating a Warrant</a></h2>
       
       <p>A Warrant consists of two parts:</p>
@@ -136,10 +135,7 @@
       <li><a href="../../../../community/clinics/">Clinic presentation</a> by Dick Bronson: <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">
           NMRA 2014 Automatic Train Control Using Warrants</a> (in two parts)</li>
     </ul>
- 
 
-
- 
       <!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->

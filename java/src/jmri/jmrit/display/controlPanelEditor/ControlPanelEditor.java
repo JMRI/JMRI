@@ -32,21 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JViewport;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
@@ -189,7 +175,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-        JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
+
+        JMenuItem mi = new JMenuItem(Bundle.getMessage("CircuitBuilder"));
+        mi.addActionListener((ActionEvent event) -> _circuitBuilder.openCBWindow());
+        setMenuAcceleratorKey(mi, KeyEvent.VK_B);
+        _iconMenu.add(mi);
+
+        _iconMenu.add(new JSeparator()); // below are different types of tables
+
+        mi = new JMenuItem(Bundle.getMessage("MenuItemItemPalette"));
         mi.addActionListener(new ActionListener() {
             Editor editor;
 
@@ -207,15 +201,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _iconMenu.add(mi);
 
         _iconMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
-        mi = (JMenuItem) _iconMenu.getMenuComponent(1);
+        mi = (JMenuItem) _iconMenu.getMenuComponent(3);
         setMenuAcceleratorKey(mi, KeyEvent.VK_O);
-        mi = new JMenuItem(Bundle.getMessage("CircuitBuilder"));
-        mi.addActionListener((ActionEvent event) -> _circuitBuilder.openCBWindow());
-        setMenuAcceleratorKey(mi, KeyEvent.VK_B);
-        _iconMenu.add(mi);
 
         _iconMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTableList")));
-        mi = (JMenuItem) _iconMenu.getMenuComponent(3);
+        mi = (JMenuItem) _iconMenu.getMenuComponent(4);
         setMenuAcceleratorKey(mi, KeyEvent.VK_T);
     }
 

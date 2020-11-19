@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * Features:
  * <ul>
  * <li>Size limited to the maximum available on the screen, after removing any
- * menu bars (Mac) and taskbars (Windows)
+ * menu bars (macOS) and taskbars (Windows)
  * <li>Cleanup upon closing the frame: When the frame is closed (WindowClosing
  * event), the {@link #dispose()} method is invoked to do cleanup. This is inherited from
  * JFrame itself, so super.dispose() needs to be invoked in the over-loading
