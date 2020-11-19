@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -16,30 +15,26 @@
     <div id="mainContent">
 
       <h1>Hardware Support: MQTT</h1>
-      <img src="http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" align="right">
-      JMRI can
-      connect to 
-      <a href="https://en.wikipedia.org/wiki/Internet_of_things">IOT devices</a>
-      via the
-      <a href="https://en.wikipedia.org/wiki/MQTT">MQTT protocol</a>.
+      <img src="images/mqtt-logo.png" align="center">
       
-
-      <h3>Naming</h3>
-
-      <p>The default system letter is "M", so we'll use that in examples.</p>
-
-      <a name= "limitations" id="limitations"></a>
-      <h2>Limitations</h2>
+      <p>Devices both on and off the layout can use the <a href="https://en.wikipedia.org/wiki/MQTT" target="_blank">MQTT protocol</a>
+      to connect to JMRI. As of release 4.21.2, JMRI implements MQTT-connected turnouts, sensors, and lights with more objects expected
+      to implemented in the future. For other objects and devices off the layout, you can use a provided <a href="#scripting"> script </a>
+      or write your own using JMRI's MQTT Adapter object and methods.  This also allows communicating with 
+      <a href="https://en.wikipedia.org/wiki/Internet_of_things" target="_blank">IOT devices</a> as well as
+      <a href="../arduino/index.shtml">arduinos</a> and other microcontrollers.
+      </p>
       
-      Older code (i.e. JMRI 4.12 and later) only 
-      supports Turnouts. 
-      We hope to add Sensor, Light and Reporter support soon.
-      
+      <p><a href="https://mqtt.org" target="_blank">MQTT </a>is a "client-server publish-subscribe" protocol, meaning that JMRI connects
+      to a MQTT server and subscribes to receive messages on certain topics.  JMRI also publishes messages to the MQTT server
+      and any device subscribed to that topic will receive a copy.  This approach makes it relatively easy for the model railroader
+      to use MQTT communication to develop any number of layout control and automation scenarios.
+      </p>
+
       <a name="connecting" id="connecting"></a>
-
       <h2>Connecting</h2>
       
-      You tell JMRI about how to connect to your MQTT
+      You tell JMRI how to connect to your MQTT
       hardware via the Connections pane in the Preferences window.
       Select "MQTT" as the manufacturer name.
       
@@ -50,32 +45,44 @@
       may be improved at some later point if people find a 
       reason to need two MQTT connections.
       
+      <h2>Layout Objects</h2>
+
+         <a name= "limitations" id="limitations"></a>
+         <h3>Available Objects</h3>
+      
+         <p>
+         Older versions of JMRI (4.12 and earlier) only support Turnouts.  Sensors and Lights were added in 4.15.5.  Support for 
+         Reporters is expected to be added in 4.22.
+         </p>
+      
+        <h3>Naming</h3>
+
+        <p>
+        Layout objects such as turnouts, sensors, and lights must be identified to JMRI as being connected via MQTT. To identify such
+        devices, JMRI objects are created with a <a href="../../doc/Technical/Names.shtml"> system name </a> prefix of "M" (this default
+        prefix letter can be changed if desired on the connection preferences page).  The following character will be automatically assigned
+        as "T", "S", or "L" as appropriate.  The remainder of the name does not have to follow any particular model.  For example, 
+        JMRI MQTT Turnouts are specified with JMRI system names like "MTabcd".
+        </p>
+
         <h3>Topics</h3>
         
-        JMRI MQTT Turnouts are specified with JMRI system names like "MTabcd".
-        The "M" is the system connection letter, "T" specifies 
-        Turnout, and all after that is a suffix that is used to generate
-        the specific topic which JMRI publishes and subscribes to when
-        communicating with the layout.
         <p>
-        By default, the MQTT topic for a Turnout is constructed by prepending
-        "/trains/track/turnout/" to the suffix.  For example, a JMRI Turnout with
-        system name MTabcd will publish and subscribe to the "topic /trains/track/turnout/abcd".
-        There are two parts to that: A base topic common
-        to everything JMRI does on that connection, and 
-        a type-specific topic specific to each type.
-        <p>
-        By default the base topic is "/trains/";
-        the turnout-specific part is "track/turnout/",
-        leading to a complete prefix of "/trains/track/turnout/".
-        <p>
-        Sensors are similar, with system names like "MS123" 
-        and a topic type-specific part of "track/sensor/".
-        For example, by default MS123 will subscribe to the topic 
-        "/trains/track/sensor/123".
-        <p>
-        <a href="images/MQTT_Preferences.png"><img src="images/MQTT_Preferences.png" align="right" height="278" width="278"></a>
         <span class="since">Since JMRI 4.15.5</span>
+        JMRI publishes and receives messages on specific <a href="images/MQTT_Preferences rel4-21-2.png">
+        <img src="images/MQTT_Preferences rel4-21-2.png" align="right" height="278" width="278">
+        MQTT "topics".</a>  The topic is formed by concatenating the "MQTT channel," the general MQTT topic for the type
+        of object (and in some cases whether publishing/send or subscribing/receive), and the object's system name suffix.
+        </p>
+        
+        <p>
+        Using the defaults in the JMRI Connection preferences pane (shown in the picture to the right), the MQTT topic for a Turnout is constructed
+        by concatenating "/trains/" with "track/turnout/" and the system name suffix.  For example, a JMRI Turnout with system name "MTabcd" will 
+        publish and subscribe to the topic "/trains/track/turnout/abcd". There are two parts to that: A base topic common to everything JMRI does on
+        that connection, and a type-specific topic specific to each type.
+        </p>
+        
+        <p>
         You can change the base topic by 
         going to the JMRI Connection preferences,
         selecting your MQTT connection's preference
@@ -83,42 +90,31 @@
         and then entering the desired value in the "MQTT channel"
         selection box.<br>
         You then must 
-        save your changes and restart the program; the program
+        save your changes and restart JMRI; the program
         won't continue to operate normally after changing the base prefix
         until you restart it.
-        <p>Note that the default value of "/trains/" is the default for 
-        all JMRI instances.  If you use a common broker (like the
-        http://test.mosquitto.org test server mentioned below) keeping
-        that default prefix will show you traffic from every other JMRI 
-        instance connected to that broker.  You should probably
-        change that default to something like your own railroad name.
-        You might also want to omit the leading slash; it's present in the
-        default for historical reasons, but the MQTT authorities
-        recommend not having a slash there.
+        </p>
         
-        <p>You can change the type-specific
-        part of the prepended string using the other fields
-        in the preferences.  There are separate fields
-        for specifying what JMRI should send (the "transmit" field)
-        and what JMRI should recognize back from the layout (the "receive" field).
-        If you enter a string, the suffix of the Turnout's system name will be appended:
-        "track/turnout/" for MT123 will result in a topic of "/trains/track/turnout/123".
-        If you include "{0}" in the string, the suffix will be expanded there, which 
-        allows you to do things like enter  "track/turnout/{0}/state" and 
-        have that expand to "track/turnout/123/state".s
-        Save the preferences
-        and restart JMRI to put changes into effect.
         <p>
-        You can also change the type-specific part of the prepended string using
-        a script at startup time.  See the
-        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
-        sample script for an example.  
-        Note that any changes should be made at startup time
-        before creating any Turnout objects, i.e. 
-        the script must be run as the 
-        first startup action before any panel files are loaded.
-        Changing the prefix only affects Turnouts that are
-        created after the change.
+        Note that the default value of "/trains/" is the default for all JMRI instances.  If you use a common broker (like the http://test.mosquitto.org 
+        test server mentioned below) keeping that default prefix will show you traffic from every other JMRI instance anywhere in the world connected to 
+        that broker.  You should change that default, usually to something based on your own railroad name. Current guidance is to not have a leading slash;
+        it is present in the JMRI default for historical reasons.
+        </p>
+        
+        <p>You can change the type-specific part of the prepended string using the other fields in the preferences.  There are separate fields
+        for specifying what JMRI should publish (the "send" field) and what JMRI should subscribe to (recognize back from the layout, the "receive" field).
+        You can also use a "wild card" of "{0}" within the string which will put the object's system name suffix at that place.  This allows you to do 
+        do things like enter "track/turnout/{0}/state" as the object topic to get "track/turnout/abc/state" as the specific topic for MTabc.
+        </p>
+        
+        <p note>
+        Be sure to save the preferences (hit the "Save" button on the Preferences list pane) and restart JMRI to put changes into effect.
+        </p>
+        
+        <p>
+        You can also change the object-specific part of the prepended string using
+        <a href="#scripting">a script </a>at startup time. 
         
       <a id="payload" name="payload"></a>
       <h2>Message Content</h2>
@@ -158,7 +154,33 @@
             will not be changed.  This means you should 
             call a script to change this before loading any panel files
             if you want all MqttTurnouts to be modified.
+    
+
+    <a id="scripting" name="scripting"></a>
+    <h2>Scripting</h2>
+
+        <p>
+        SendMqttMessage.py
+        </p>
         
+        <p>
+        ReceiveMqttMessage.py
+        </p>
+        
+        <p>
+        The sample script <a href="/jython/SetMqttPrefix.py">SetMqttPrefix.py</a> shows how to set object-specific topic components
+        at JMRI startup. Note that any changes should be made at startup time before creating any Turnout objects, i.e. the script must be
+        run before any panel files are loaded. Changing the prefix only affects Turnouts that are created after the change.
+        </p>
+        
+        <p>
+        SetMqttParser.py
+        </p>
+        
+        <p>
+        SetMqttOptions.py
+        </p>
+    
     <h2>Debugging</h2>
 
       <a id="testserver" name="testserver"></a>
