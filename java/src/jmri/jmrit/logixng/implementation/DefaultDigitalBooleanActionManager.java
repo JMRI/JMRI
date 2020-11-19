@@ -53,6 +53,9 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleDigitalBooleanActionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleDigitalBooleanActionSocket");
+        }
         register((MaleDigitalBooleanActionSocket)maleSocket);
     }
     

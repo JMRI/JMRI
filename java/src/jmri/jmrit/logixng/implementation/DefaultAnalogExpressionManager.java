@@ -55,6 +55,9 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleAnalogExpressionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleAnalogExpressionSocket");
+        }
         register((MaleAnalogExpressionSocket)maleSocket);
     }
     

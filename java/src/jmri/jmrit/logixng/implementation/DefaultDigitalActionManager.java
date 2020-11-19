@@ -54,6 +54,9 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleDigitalActionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleDigitalActionSocket");
+        }
         register((MaleDigitalActionSocket)maleSocket);
     }
     

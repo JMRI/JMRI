@@ -56,6 +56,9 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleStringExpressionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleStringExpressionSocket");
+        }
         register((MaleStringExpressionSocket)maleSocket);
     }
     

@@ -53,6 +53,9 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleAnalogActionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleAnalogActionSocket");
+        }
         register((MaleAnalogActionSocket)maleSocket);
     }
     

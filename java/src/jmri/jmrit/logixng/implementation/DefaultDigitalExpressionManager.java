@@ -55,6 +55,9 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     /** {@inheritDoc} */
     @Override
     public void register(MaleSocket maleSocket) {
+        if (!(maleSocket instanceof MaleDigitalExpressionSocket)) {
+            throw new IllegalArgumentException("maleSocket is not a MaleDigitalExpressionSocket");
+        }
         register((MaleDigitalExpressionSocket)maleSocket);
     }
     
