@@ -210,6 +210,7 @@ public class OBlockTableActionTest {
         new JComboBoxOperator(addFrame, 1).setSelectedIndex(2);  // NOI18N
         new JButtonOperator(addFrame, Bundle.getMessage("ButtonOK")).push();  // NOI18N
 
+        jmri.util.JUnitAppender.assertWarnMessage("Portal portal1 needs an OBlock on each side"); // TODO prevent this from showing up when oblocks are defined
         Assert.assertEquals("Verify Portal Added", 1, pm.getPortalCount());
 
         // TODO add Edit Portal test
