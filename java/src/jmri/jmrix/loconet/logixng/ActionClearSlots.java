@@ -48,7 +48,7 @@ public class ActionClearSlots extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        for (int i=0; i < NUM_LOCO_SLOTS_TO_CLEAR; i++) {
+        for (int i=1; i <= NUM_LOCO_SLOTS_TO_CLEAR; i++) {
             LocoNetSlot slot = _memo.getSlotManager().slot(i);
             if ((slot.slotStatus() & LnConstants.LOCOSTAT_MASK) != LnConstants.LOCO_FREE) {
 //                _memo.getLnTrafficController().sendLocoNetMessage(slot.writeStatus(LnConstants.LOCO_FREE));

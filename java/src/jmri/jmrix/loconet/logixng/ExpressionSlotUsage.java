@@ -16,6 +16,8 @@ import jmri.jmrix.loconet.*;
 public class ExpressionSlotUsage extends AbstractDigitalExpression
         implements SlotListener {
 
+    private static final int MAX_NUM_LOCO_SLOTS = 119;
+    
     private LocoNetSystemConnectionMemo _memo;
     private boolean _advanced = false;
     private Has_HasNot _hasHasNot = Has_HasNot.Has;
@@ -129,7 +131,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     private int getNumWithStatus() {
         if (_memo == null) return 0;
         int count = 0;
-        for (int i=1; i < 120; i++) {
+        for (int i=1; i <= MAX_NUM_LOCO_SLOTS; i++) {
             boolean match = false;
             LocoNetSlot slot = _memo.getSlotManager().slot(i);
             if (_advanced) {
