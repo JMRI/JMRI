@@ -133,13 +133,15 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             
             // Remove myself as listener from sockets that has been removed
             if (evt.getOldValue() != null) {
+                if (! (evt.getOldValue() instanceof List)) throw new RuntimeException("Old value is not a list");
                 for (FemaleSocket socket : (List<FemaleSocket>)evt.getOldValue()) {
                     socket.removePropertyChangeListener(this);
                 }
             }
             
+            // Add myself as listener to sockets that has been added
             if (evt.getNewValue() != null) {
-                // Add myself as listener to sockets that has been added
+                if (! (evt.getNewValue() instanceof List)) throw new RuntimeException("New value is not a list");
                 for (FemaleSocket socket : (List<FemaleSocket>)evt.getNewValue()) {
                     socket.addPropertyChangeListener(this);
                 }
