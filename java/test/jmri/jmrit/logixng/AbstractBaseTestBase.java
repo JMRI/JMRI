@@ -441,7 +441,7 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
         System.out.format("%s: New value: %s%n", _base.getClass().getName(), ar.get().getNewValue());
         Assert.assertTrue(ar.get().getNewValue() instanceof List);
-        List<? extends Object> list = ((List<? extends Object>)ar.get().getNewValue());
+        List list = (List)ar.get().getNewValue();
         for (Object o : list) {
             Assert.assertTrue(o instanceof FemaleSocket);
         }
