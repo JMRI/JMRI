@@ -32,6 +32,8 @@ public class ClipboardEditor extends TreeEditor {
         super(InstanceManager.getDefault(LogixNG_Manager.class).getClipboard().getRoot(), false);
         
         setTitle(Bundle.getMessage("TitleClipboardEditor"));
+        
+        setRootVisible(false);
     }
     
     /** {@inheritDoc} */

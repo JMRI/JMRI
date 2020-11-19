@@ -30,6 +30,8 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
     private static final int panelWidth = 700;
     private static final int panelHeight = 500;
     
+    private boolean _rootVisible = true;
+    
     private static final Map<String, Color> FEMALE_SOCKET_COLORS = new HashMap<>();
     
     JTree tree;
@@ -96,7 +98,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         tree.setModel(femaleSocketTreeModel);
         tree.setCellRenderer(new FemaleSocketTreeRenderer());
         
-        tree.setShowsRootHandles(true);
+        tree.setRootVisible(_rootVisible);
         
         // Expand the entire tree
         for (int i = 0; i < tree.getRowCount(); i++) {
@@ -125,7 +127,15 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         pack();
         setVisible(true);
     }
-
+    
+    public boolean getRootVisible() {
+        return _rootVisible;
+    }
+    
+    public void setRootVisible(boolean rootVisible) {
+        _rootVisible = rootVisible;
+    }
+    
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         
@@ -154,6 +164,7 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             
             FemaleSocket femaleSocket = socketAndRow._socket;
             int row = socketAndRow._row;
+            if (!_rootVisible) row--;
             TreePath path = tree.getPathForRow(row);
             updateTree(femaleSocket, path);
         }
@@ -163,7 +174,8 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
                 || Base.PROPERTY_SOCKET_DISCONNECTED.equals(evt.getPropertyName())) {
             
             FemaleSocket femaleSocket = ((FemaleSocket)evt.getSource());
-            TreePath path = tree.getPathForRow(femaleSocketTreeModel.getRow(femaleSocket));
+            int row = femaleSocketTreeModel.getRow(femaleSocket);
+            TreePath path = tree.getPathForRow(row);
             updateTree(femaleSocket, path);
         }
     }
