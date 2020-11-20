@@ -362,48 +362,6 @@ public class LayoutEditorToolBarPanel extends JPanel {
         locationPanel.add(yLabel);
         locationPanel.add(new JLabel("}    "));
 
-        locationPopupMenu.add(new AbstractAction(Bundle.getMessage("Pixels")) {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                locationFormatString = "Pixels";
-                Dimension coordSize = new JLabel("10000").getPreferredSize();
-                xLabel.setPreferredSize(coordSize);
-                yLabel.setPreferredSize(coordSize);
-
-                layoutEditor.redrawPanel();
-            }
-        });
-        locationPopupMenu.add(new AbstractAction(Bundle.getMessage("MetricCM")) {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                locationFormatString = "MetricCM";
-
-                Dimension coordSize = new JLabel(getMetricCMText(10005)).getPreferredSize();
-                xLabel.setPreferredSize(coordSize);
-                yLabel.setPreferredSize(coordSize);
-
-                layoutEditor.gContext.setGridSize(10);
-                layoutEditor.gContext.setGridSize2nd(10);
-
-                layoutEditor.redrawPanel();
-            }
-        });
-        locationPopupMenu.add(new AbstractAction(Bundle.getMessage("EnglishFeetInches")) {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                locationFormatString = "EnglishFeetInches";
-
-                Dimension coordSize = new JLabel(getEnglishFeetInchesText(100008)).getPreferredSize();
-                xLabel.setPreferredSize(coordSize);
-                yLabel.setPreferredSize(coordSize);
-
-                layoutEditor.gContext.setGridSize(16);
-                layoutEditor.gContext.setGridSize2nd(12);
-
-                layoutEditor.redrawPanel();
-            }
-        });
-
         locationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
@@ -411,12 +369,14 @@ public class LayoutEditorToolBarPanel extends JPanel {
                     locationPopupMenu.show(locationPanel, me.getX(), me.getY());
                 }
             }
+
             @Override
             public void mouseReleased(MouseEvent me) {
                 if (me.isPopupTrigger()) {
                     locationPopupMenu.show(locationPanel, me.getX(), me.getY());
                 }
             }
+
             @Override
             public void mouseClicked(MouseEvent me) {
                 if (me.isPopupTrigger()) {
@@ -598,7 +558,62 @@ public class LayoutEditorToolBarPanel extends JPanel {
         iconFrame.pack();
     }
 
-    private String locationFormatString = "Pixels";
+    /*=========================*\
+    |* toolbar location format *|
+    \*=========================*/
+    public enum LocationFormat {
+        ePIXELS,
+        eMETRIC_CM,
+        eENGLISH_FEET_INCHES;
+
+        LocationFormat() {
+        }
+    }
+
+    private LocationFormat locationFormat = LocationFormat.ePIXELS;
+
+    public LocationFormat getLocationFormat() {
+        return locationFormat;
+    }
+
+    public void setLocationFormat(LocationFormat locationFormat) {
+        if (this.locationFormat != locationFormat) {
+            switch (locationFormat) {
+                case ePIXELS: {
+                    Dimension coordSize = new JLabel("10000").getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+                    break;
+                }
+                case eMETRIC_CM: {
+                    Dimension coordSize = new JLabel(getMetricCMText(10005)).getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+
+                    layoutEditor.gContext.setGridSize(10);
+                    layoutEditor.gContext.setGridSize2nd(10);
+                    break;
+                }
+                case eENGLISH_FEET_INCHES: {
+                    Dimension coordSize = new JLabel(getEnglishFeetInchesText(100008)).getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+
+                    layoutEditor.gContext.setGridSize(16);
+                    layoutEditor.gContext.setGridSize2nd(12);
+                    break;
+                }
+            }
+            this.locationFormat = locationFormat;
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = layoutEditor.getWindowFrameRef();
+                prefsMgr.setProperty(windowFrameRef, "LocationFormat", locationFormat.name());
+            });
+            setLocationText(lastLocation);
+        }
+    }
+
+    private Point2D lastLocation = MathUtil.zeroPoint2D();
 
     public void setLocationText(Point2D p) {
         int x = (int) p.getX();
@@ -608,15 +623,16 @@ public class LayoutEditorToolBarPanel extends JPanel {
         String xText = Integer.toString(x);
         String yText = Integer.toString(y);
 
-        if (locationFormatString.equals("EnglishFeetInches")) {
+        if (locationFormat.equals(LocationFormat.eENGLISH_FEET_INCHES)) {
             xText = getEnglishFeetInchesText(x);
             yText = getEnglishFeetInchesText(y);
-        } else if (locationFormatString.equals("MetricCM")) {
+        } else if (locationFormat.equals(LocationFormat.eMETRIC_CM)) {
             xText = getMetricCMText(x);
             yText = getMetricCMText(y);
         }
         xLabel.setText(xText);
         yLabel.setText(yText);
+        lastLocation = p;
     }
 
     private String getEnglishFeetInchesText(int v) {
