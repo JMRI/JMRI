@@ -130,7 +130,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal != null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
-            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset());
+            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset()); // actually a Distance/Offset
             elem.addContent(fromElem);
         }
         block = portal.getToBlock();
@@ -432,7 +432,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }
@@ -446,7 +446,7 @@ public class OBlockManagerXml // extends XmlFile
             String name = eSignal.getAttribute("signalName").getValue();
             float length = 0.0f;
             try {
-                Attribute attr = eSignal.getAttribute("signalDelay");
+                Attribute attr = eSignal.getAttribute("signalDelay"); // actually a Distance/Offset
                 if (attr != null) {
                     length = attr.getFloatValue();
                 }
