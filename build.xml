@@ -1848,7 +1848,7 @@
             <link href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
 
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
@@ -1948,7 +1948,7 @@
             <link href="https://download.java.net/media/java3d/javadoc/1.3.2/" />
 
             <link href="https://docs.oracle.com/javase/8/docs/api/"/>
-            <link href="http://www.jdom.org/docs/apidocs/"/>
+            <!-- <link href="http://www.jdom.org/docs/apidocs/"/> -->
             <link href="https://commons.apache.org/proper/commons-csv/apidocs/"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
