@@ -579,6 +579,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     public void setLocationFormat(LocationFormat locationFormat) {
         if (this.locationFormat != locationFormat) {
             switch (locationFormat) {
+                default:
                 case ePIXELS: {
                     Dimension coordSize = new JLabel("10000").getPreferredSize();
                     xLabel.setPreferredSize(coordSize);
