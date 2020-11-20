@@ -99,6 +99,7 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 

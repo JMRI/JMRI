@@ -30,6 +30,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     
     JCheckBox _startLogixNGOnLoadCheckBox;
     JCheckBox _allowDebugModeCheckBox;
+    JCheckBox _showSystemUserNamesCheckBox;
     
     public LogixNGPreferencesPanel() {
         LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
@@ -59,6 +60,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
 
     private void setGUI() {
         _startLogixNGOnLoadCheckBox.setSelected(preferences.getStartLogixNGOnStartup());
+        _showSystemUserNamesCheckBox.setSelected(preferences.getShowSystemUserNames());
     }
 
     /**
@@ -70,6 +72,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     private boolean setValues() {
         boolean didSet = true;
         preferences.setStartLogixNGOnStartup(_startLogixNGOnLoadCheckBox.isSelected());
+        preferences.setShowSystemUserNames(_showSystemUserNamesCheckBox.isSelected());
         return didSet;
     }
     
@@ -82,10 +85,14 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
         _allowDebugModeCheckBox = new JCheckBox(Bundle.getMessage("LabelAllowDebugMode"));
         _allowDebugModeCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabelAllowDebugMode"));
 
+        _showSystemUserNamesCheckBox = new JCheckBox(Bundle.getMessage("LabelShowSystemUserNames"));
+        _showSystemUserNamesCheckBox.setToolTipText(Bundle.getMessage("ToolTipLabeShowSystemUserNames"));
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
         
         gridPanel.add(_startLogixNGOnLoadCheckBox);
         gridPanel.add(_allowDebugModeCheckBox);
+        gridPanel.add(_showSystemUserNamesCheckBox);
         
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
         panel.add(gridPanel);

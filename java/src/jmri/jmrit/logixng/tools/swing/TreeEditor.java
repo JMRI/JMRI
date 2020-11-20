@@ -33,6 +33,8 @@ import jmri.jmrit.logixng.swing.SwingTools;
  */
 public class TreeEditor extends TreeViewer {
 
+    final LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
+    
     ClipboardEditor _clipboardEditor = null;
     
     private JDialog selectItemTypeDialog = null;
@@ -285,7 +287,8 @@ public class TreeEditor extends TreeViewer {
                 
                 boolean isValid = true;
                 
-                if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
+                if (!prefs.getShowSystemUserNames()
+                        || (_systemName.getText().isEmpty() && _autoSystemName.isSelected())) {
                     _systemName.setText(addSwingConfiguratorInterface.getAutoSystemName());
                 }
                 
@@ -444,49 +447,57 @@ public class TreeEditor extends TreeViewer {
         java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
         c.gridwidth = 1;
         c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(_sysNameLabel, c);
-        c.gridy = 1;
-        p.add(_userNameLabel, c);
-        c.gridy = 2;
-        p.add(_commentLabel, c);
-        c.gridx = 1;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.WEST;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        p.add(_systemName, c);
-        c.gridy = 1;
-        p.add(_addUserName, c);
-        c.gridy = 2;
-        p.add(_addComment, c);
-        if (!femaleSocket.isConnected()) {
-            c.gridx = 2;
+        if (prefs.getShowSystemUserNames()) {
+            c.gridx = 0;
+            c.gridy = 0;
+            c.anchor = java.awt.GridBagConstraints.EAST;
+            p.add(_sysNameLabel, c);
             c.gridy = 1;
+            p.add(_userNameLabel, c);
+            c.gridy = 2;
+            p.add(_commentLabel, c);
+            c.gridx = 1;
+            c.gridy = 0;
             c.anchor = java.awt.GridBagConstraints.WEST;
             c.weightx = 1.0;
             c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-            c.gridy = 0;
-            p.add(_autoSystemName, c);
-        }
-        
-        if (femaleSocket.isConnected()) {
-            _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
-            _systemName.setEnabled(false);
-            _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
-            _addComment.setText(femaleSocket.getConnectedSocket().getComment());
+            p.add(_systemName, c);
+            c.gridy = 1;
+            p.add(_addUserName, c);
+            c.gridy = 2;
+            p.add(_addComment, c);
+            if (!femaleSocket.isConnected()) {
+                c.gridx = 2;
+                c.gridy = 1;
+                c.anchor = java.awt.GridBagConstraints.WEST;
+                c.weightx = 1.0;
+                c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+                c.gridy = 0;
+                p.add(_autoSystemName, c);
+            }
+
+            if (femaleSocket.isConnected()) {
+                _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
+                _systemName.setEnabled(false);
+                _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
+                _addComment.setText(femaleSocket.getConnectedSocket().getComment());
+            } else {
+                _systemName.setText("");
+                _systemName.setEnabled(true);
+                _addUserName.setText("");
+                _addComment.setText("");
+            }
+
+            _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
+                    swingConfiguratorInterface.getExampleSystemName()));
+            _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
         } else {
-            _systemName.setText("");
-            _systemName.setEnabled(true);
-            _addUserName.setText("");
-            _addComment.setText("");
+            c.gridx = 0;
+            c.gridy = 0;
+            p.add(_commentLabel, c);
+            c.gridx = 1;
+            p.add(_addComment, c);
         }
-        
-        _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
-                swingConfiguratorInterface.getExampleSystemName()));
-        _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
         _addComment.setToolTipText(Bundle.getMessage("CommentHint"));
         contentPanel.add(p);
         // set up message

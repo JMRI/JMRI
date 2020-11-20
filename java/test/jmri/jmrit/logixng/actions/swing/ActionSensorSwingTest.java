@@ -100,6 +100,7 @@ public class ActionSensorSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSensorManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 

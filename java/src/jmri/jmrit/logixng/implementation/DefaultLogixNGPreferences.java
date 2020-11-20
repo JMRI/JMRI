@@ -17,10 +17,12 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     public static final String START_LOGIXNG_ON_LOAD = "startLogixNGOnStartup";
     public static final String USE_GENERIC_FEMALE_SOCKETS = "useGenericFemaleSockets";
     public static final String ALLOW_DEBUG_MODE = "allowDebugMode";
+    public static final String SHOW_SYSTEM_USER_NAMES = "showSystemUserNames";
     
     private boolean _startLogixNGOnLoad = true;
     private boolean _useGenericFemaleSockets = false;
     private boolean _allowDebugMode = false;
+    private boolean _showSystemUserNames = false;
     
     public DefaultLogixNGPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
@@ -34,6 +36,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         _startLogixNGOnLoad = sharedPreferences.getBoolean(START_LOGIXNG_ON_LOAD, _startLogixNGOnLoad);
         _useGenericFemaleSockets = sharedPreferences.getBoolean(USE_GENERIC_FEMALE_SOCKETS, _useGenericFemaleSockets);
         _allowDebugMode = sharedPreferences.getBoolean(ALLOW_DEBUG_MODE, _allowDebugMode);
+        _showSystemUserNames = sharedPreferences.getBoolean(SHOW_SYSTEM_USER_NAMES, _showSystemUserNames);
         
 /*        
         this.allowRemoteConfig = sharedPreferences.getBoolean(ALLOW_REMOTE_CONFIG, this.allowRemoteConfig);
@@ -74,6 +77,9 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         if (getAllowDebugMode() != prefs.getAllowDebugMode()) {
             return true;
         }
+        if (getShowSystemUserNames() != prefs.getShowSystemUserNames()) {
+            return true;
+        }
         return (getUseGenericFemaleSockets() != prefs.getUseGenericFemaleSockets());
     }
 
@@ -82,6 +88,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         setStartLogixNGOnStartup(prefs.getStartLogixNGOnStartup());
         setUseGenericFemaleSockets(prefs.getUseGenericFemaleSockets());
         setAllowDebugMode(prefs.getAllowDebugMode());
+        setShowSystemUserNames(prefs.getShowSystemUserNames());
     }
 
     @Override
@@ -90,6 +97,7 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
         sharedPreferences.putBoolean(START_LOGIXNG_ON_LOAD, this.getStartLogixNGOnStartup());
         sharedPreferences.putBoolean(USE_GENERIC_FEMALE_SOCKETS, this.getUseGenericFemaleSockets());
         sharedPreferences.putBoolean(ALLOW_DEBUG_MODE, this.getAllowDebugMode());
+        sharedPreferences.putBoolean(SHOW_SYSTEM_USER_NAMES, this.getShowSystemUserNames());
 /*        
         sharedPreferences.putInt(PORT, this.getPort());
         sharedPreferences.putBoolean(USE_ZERO_CONF, this.isUseZeroConf());
@@ -151,6 +159,17 @@ public final class DefaultLogixNGPreferences extends PreferencesBean implements 
     @Override
     public boolean getAllowDebugMode() {
         return _allowDebugMode;
+    }
+
+    @Override
+    public void setShowSystemUserNames(boolean value) {
+        _showSystemUserNames = value;
+        setIsDirty(true);
+    }
+
+    @Override
+    public boolean getShowSystemUserNames() {
+        return _showSystemUserNames;
     }
 
 //    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGPreferences.class);

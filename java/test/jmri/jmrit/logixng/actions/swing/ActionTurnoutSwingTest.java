@@ -102,6 +102,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 

@@ -120,6 +120,7 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 

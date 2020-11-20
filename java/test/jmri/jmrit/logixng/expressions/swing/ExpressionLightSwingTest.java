@@ -120,6 +120,7 @@ public class ExpressionLightSwingTest extends SwingConfiguratorInterfaceTestBase
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalLightManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 

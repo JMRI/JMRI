@@ -119,6 +119,7 @@ public class ExpressionSensorSwingTest extends SwingConfiguratorInterfaceTestBas
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalSensorManager();
+        InstanceManager.getDefault(LogixNGPreferences.class).setShowSystemUserNames(true);
         JUnitUtil.initLogixNGManager();
     }
 
