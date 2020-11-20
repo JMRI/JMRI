@@ -27,7 +27,7 @@ public class StringExpressionConstant extends AbstractStringExpression {
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         StringExpressionManager manager = InstanceManager.getDefault(StringExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringExpressionConstant copy = new StringExpressionConstant(sysName, userName);
         copy.setValue(_value);

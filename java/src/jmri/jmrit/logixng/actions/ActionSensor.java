@@ -35,7 +35,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionSensor copy = new ActionSensor(sysName, userName);
         copy.setSensor(_sensorHandle);

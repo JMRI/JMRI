@@ -53,7 +53,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
             left = left.toString();
         }
         if ((!(right instanceof Number)) && (!(right instanceof String))) {
-            right = left.toString();
+            right = right.toString();
         }
         
         // A number is always less than a String. If one operand is a number

@@ -28,7 +28,7 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogExpressionConstant copy = new AnalogExpressionConstant(sysName, userName);
         copy.setValue(_value);

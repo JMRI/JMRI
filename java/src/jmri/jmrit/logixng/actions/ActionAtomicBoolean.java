@@ -42,7 +42,7 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalActionBean copy = new ActionAtomicBoolean(sysName, userName, new AtomicBoolean(), _newValue);
         return manager.registerAction(copy);

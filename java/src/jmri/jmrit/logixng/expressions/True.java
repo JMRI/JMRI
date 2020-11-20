@@ -24,7 +24,7 @@ public class True extends AbstractDigitalExpression {
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalExpressionBean copy = new True(sysName, userName);
         return manager.registerExpression(copy);

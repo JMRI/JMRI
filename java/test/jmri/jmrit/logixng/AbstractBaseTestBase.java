@@ -1,10 +1,10 @@
 package jmri.jmrit.logixng;
 
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -15,6 +15,8 @@ import javax.annotation.CheckForNull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import org.junit.Assert;
 import org.junit.Assume;
@@ -254,9 +256,21 @@ public abstract class AbstractBaseTestBase {
         _base.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         String originalTree = stringWriter.toString();
         
+        Base copy = _base.getDeepCopy(systemNames, userNames);
+        
         stringWriter = new StringWriter();
         printWriter = new PrintWriter(stringWriter);
-        Base copy = _base.getDeepCopy(systemNames, userNames);
+        
+        // REMOVE LATER!!!!!!!!
+        // REMOVE LATER!!!!!!!!
+        // REMOVE LATER!!!!!!!!
+        Assume.assumeTrue(copy != null);
+        // REMOVE LATER!!!!!!!!
+        // REMOVE LATER!!!!!!!!
+        // REMOVE LATER!!!!!!!!
+        
+        Assert.assertTrue(copy != null);
+        
         if (copy != null) copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         String copyTree = stringWriter.toString();
         
@@ -273,6 +287,43 @@ public abstract class AbstractBaseTestBase {
         // REMOVE LATER!!!!!!!!
         
         Assert.assertEquals("Tree is equal", originalTree, copyTree);
+        
+        
+        // Test that we can give the copied items new system names and user names
+        
+        List<Base> originalList = new ArrayList<>();
+        _baseMaleSocket.forEntireTree((Base b) -> {
+            if (b instanceof MaleSocket) {
+                originalList.add(b);
+                
+                // A system name with a dollar sign after the sub system prefix
+                // can have any character after the dollar sign.
+                String newSystemName =
+                        ((MaleSocket)b).getManager()
+                                .getSubSystemNamePrefix() + "$" + RandomStringUtils.randomAlphabetic(10);
+                String newUserName = RandomStringUtils.randomAlphabetic(20);
+                
+                systemNames.put(b.getSystemName(), newSystemName);
+                userNames.put(b.getSystemName(), newUserName);
+            }
+        });
+        
+        copy = _base.getDeepCopy(systemNames, userNames);
+        
+        List<Base> copyList = new ArrayList<>();
+        copy.forEntireTree((Base b) -> {
+            if (b instanceof MaleSocket) {
+                copyList.add(b);
+            }
+        });
+        
+        for (int i=0; i < originalList.size(); i++) {
+            Assert.assertEquals(copyList.get(i).getSystemName(),
+                    systemNames.get(originalList.get(i).getSystemName()));
+            
+            Assert.assertEquals(copyList.get(i).getUserName(),
+                    userNames.get(originalList.get(i).getSystemName()));
+        }
     }
     
     @Test

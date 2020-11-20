@@ -36,7 +36,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionTurnout copy = new ActionTurnout(sysName, userName);
         copy.setTurnout(_turnoutHandle);

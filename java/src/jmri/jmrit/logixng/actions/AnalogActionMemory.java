@@ -30,7 +30,7 @@ public class AnalogActionMemory extends AbstractAnalogAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogActionMemory copy = new AnalogActionMemory(sysName, userName);
         copy.setMemory(_memoryHandle);

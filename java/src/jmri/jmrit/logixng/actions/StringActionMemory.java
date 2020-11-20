@@ -34,7 +34,7 @@ public class StringActionMemory extends AbstractStringAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         StringActionManager manager = InstanceManager.getDefault(StringActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringActionMemory copy = new StringActionMemory(sysName, userName);
         copy.setMemory(_memoryHandle);

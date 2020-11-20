@@ -41,7 +41,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
-        String userName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionListenOnBeans copy = new ActionListenOnBeans(sysName, userName);
         for (NamedBeanReference reference : _namedBeanReferences.values()) {

@@ -41,10 +41,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        StringMany action = new StringMany("IQSA999", null);
-        MaleSocket maleSocket =
-                InstanceManager.getDefault(StringActionManager.class).registerAction(action);
-        return maleSocket;
+        return null;
     }
     
     @Override

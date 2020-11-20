@@ -36,10 +36,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        AnalogMany action = new AnalogMany("IQAA999", null);
-        MaleSocket maleSocket =
-                InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
-        return maleSocket;
+        return null;
     }
     
     @Override
