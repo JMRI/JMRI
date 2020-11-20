@@ -895,7 +895,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
         Assert.assertNotNull("Options Menu Exists", jmo);
-        Assert.assertEquals("Menu Item Count", 17, jmo.getItemCount());
+        Assert.assertEquals("Menu Item Count", 18, jmo.getItemCount());
     }
 
     @Test
