@@ -124,6 +124,9 @@
                 script for an example.</li>
                 <li>Fix a nasty threading bug in the MQTT Light support that can 
                 cause a JMRI lockup on the first access after adding a Light.</li>
+                
+                <li>Update the Paho MQTT library from version 0.4.0 to 1.2.5 (current)</li>
+                <li>Better handling of wildcards in topic subscriptions</li>
             </ul>
 
         <h4>MRC</h4>
