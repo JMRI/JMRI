@@ -271,7 +271,7 @@ public abstract class AbstractBaseTestBase {
         
         Assert.assertTrue(copy != null);
         
-        if (copy != null) copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
+        copy.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         String copyTree = stringWriter.toString();
         
         if (! originalTree.equals(copyTree)) {

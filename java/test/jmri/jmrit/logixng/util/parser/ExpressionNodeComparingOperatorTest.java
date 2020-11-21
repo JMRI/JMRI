@@ -23,41 +23,33 @@ public class ExpressionNodeComparingOperatorTest {
         
         Token token = new Token(TokenType.NONE, "1", 0);
         ExpressionNodeFloatingNumber expressionNumber = new ExpressionNodeFloatingNumber(token);
-        ExpressionNodeArithmeticOperator t = new ExpressionNodeArithmeticOperator(TokenType.ADD, null, expressionNumber);
+        ExpressionNodeComparingOperator t = new ExpressionNodeComparingOperator(TokenType.EQUAL, expressionNumber, expressionNumber);
         Assert.assertNotNull("exists", t);
         
         AtomicBoolean hasThrown = new AtomicBoolean(false);
         
-        // Test right side is null
-        try {
-            new ExpressionNodeArithmeticOperator(TokenType.ADD, null, null);
-        } catch (IllegalArgumentException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
-        
         // Test invalid token
         hasThrown.set(false);
         try {
-            new ExpressionNodeArithmeticOperator(TokenType.BINARY_AND, null, null);
+            new ExpressionNodeComparingOperator(TokenType.BINARY_AND, null, null);
         } catch (IllegalArgumentException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
-        // MULTIPLY requires two operands
+        // Two operands are required
         hasThrown.set(false);
         try {
-            new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, null, exprTrue);
+            new ExpressionNodeComparingOperator(TokenType.EQUAL, null, exprTrue);
         } catch (IllegalArgumentException e) {
             hasThrown.set(true);
         }
         Assert.assertTrue("exception is thrown", hasThrown.get());
         
-        // DIVIDE requires two operands
+        // Two operands are required
         hasThrown.set(false);
         try {
-            new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, null, exprTrue);
+            new ExpressionNodeComparingOperator(TokenType.EQUAL, exprTrue, null);
         } catch (IllegalArgumentException e) {
             hasThrown.set(true);
         }
@@ -69,207 +61,187 @@ public class ExpressionNodeComparingOperatorTest {
         
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
-        ExpressionNode expr12 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "12", 0));
-        ExpressionNode expr235 = new ExpressionNodeIntegerNumber(new Token(TokenType.NONE, "235", 0));
+        ExpressionNode exprHello = new ExpressionNodeString(new Token(TokenType.NONE, "Hello", 0));
+        ExpressionNode exprWorld = new ExpressionNodeString(new Token(TokenType.NONE, "World", 0));
+        ExpressionNode exprNull = new ExpressionNodeString(new Token(TokenType.NONE, null, 0));
         
-        Assert.assertEquals("calculate() gives the correct value",
-                37.8,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12_34, expr25_46).calculate(),
-                0.00000001);
-        Assert.assertEquals("calculate() gives the correct value",
-                247,
-                (long)new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12, expr235).calculate());
-        Assert.assertEquals("calculate() gives the correct value",
-                24.34,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12, expr12_34).calculate(),
-                0.00000001);
         
-        Assert.assertEquals("calculate() gives the correct value",
-                -13.12,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12_34, expr25_46).calculate(),
-                0.00000001);
-        Assert.assertEquals("calculate() gives the correct value",
-                -223,
-                (long)new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12, expr235).calculate());
-        Assert.assertEquals("calculate() gives the correct value",
-                -0.34,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12, expr12_34).calculate(),
-                0.00000001);
         
-        Assert.assertEquals("calculate() gives the correct value",
-                314.1764,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12_34, expr25_46).calculate(),
-                0.00000001);
-        Assert.assertEquals("calculate() gives the correct value",
-                2820,
-                (long)new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12, expr235).calculate());
-        Assert.assertEquals("calculate() gives the correct value",
-                148.08,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12, expr12_34).calculate(),
-                0.00000001);
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, expr12_34, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, expr12_34, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, expr12_34, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, expr12_34, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, expr12_34, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, expr12_34, expr12_34).calculate());
         
-        Assert.assertEquals("calculate() gives the correct value",
-                0.4846818538884525,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12_34, expr25_46).calculate(),
-                0.00000001);
-        Assert.assertEquals("calculate() gives the correct value",
-                19,
-                (long)new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr235, expr12).calculate());
-        Assert.assertEquals("calculate() gives the correct value",
-                0.9724473257698542,
-                (double)new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12, expr12_34).calculate(),
-                0.00000001);
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprHello, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprHello, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprHello, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprHello, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprHello, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprHello, exprHello).calculate());
         
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprNull, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprNull, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprNull, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprNull, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprNull, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprNull, exprNull).calculate());
         
-        // MODULO requires two integer operands
-        hasThrown.set(false);
-        try {
-            new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12_34, expr25_46).calculate();
-        } catch (CalculateException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
         
-        Assert.assertEquals("calculate() gives the correct value",
-                7,
-                (long)new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr235, expr12).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, expr12_34, expr25_46).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, expr12_34, expr25_46).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, expr12_34, expr25_46).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, expr12_34, expr25_46).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, expr12_34, expr25_46).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, expr12_34, expr25_46).calculate());
         
-        // MODULO requires two integer operands
-        hasThrown.set(false);
-        try {
-            new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12, expr12_34).calculate();
-        } catch (CalculateException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, expr25_46, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, expr25_46, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, expr25_46, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, expr25_46, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, expr25_46, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, expr25_46, expr12_34).calculate());
         
-        // Test unsupported token type
-        hasThrown.set(false);
-        try {
-            ExpressionNode en = new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12, expr12_34);
-            jmri.util.ReflectionUtilScaffold.setField(en, "_tokenType", TokenType.COMMA);
-            en.calculate();
-        } catch (CalculateException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
-    }
-    
-    @Test
-    public void testGetDefinitionString() throws Exception {
         
-        ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
-        ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
-        ExpressionNode expr12 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12", 0));
-        ExpressionNode expr23 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "23", 0));
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, expr12_34, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, expr12_34, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, expr12_34, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, expr12_34, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, expr12_34, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, expr12_34, exprHello).calculate());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(null)+(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.ADD, null, expr12_34)
-                        .getDefinitionString());
-        Assert.assertEquals("calculate gives the correct value",
-                "(null)-(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, null, expr12)
-                        .getDefinitionString());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprHello, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprHello, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprHello, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprHello, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprHello, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprHello, expr12_34).calculate());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)+(FloatNumber:25.46)",
-                new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12_34, expr25_46)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)+(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12_34, expr12)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)+(FloatNumber:23)",
-                new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12, expr23)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)+(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.ADD, expr12, expr12_34)
-                        .getDefinitionString());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)-(FloatNumber:25.46)",
-                new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12_34, expr25_46)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)-(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12_34, expr12)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)-(FloatNumber:23)",
-                new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12, expr23)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)-(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.SUBTRACKT, expr12, expr12_34)
-                        .getDefinitionString());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprHello, exprWorld).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprHello, exprWorld).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprHello, exprWorld).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprHello, exprWorld).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprHello, exprWorld).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprHello, exprWorld).calculate());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)*(FloatNumber:25.46)",
-                new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12_34, expr25_46)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)*(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12_34, expr12)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)*(FloatNumber:23)",
-                new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12, expr23)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)*(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.MULTIPLY, expr12, expr12_34)
-                        .getDefinitionString());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprWorld, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprWorld, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprWorld, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprWorld, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprWorld, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprWorld, exprHello).calculate());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)/(FloatNumber:25.46)",
-                new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12_34, expr25_46)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)/(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12_34, expr12)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)/(FloatNumber:23)",
-                new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12, expr23)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)/(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12, expr12_34)
-                        .getDefinitionString());
         
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)%(FloatNumber:25.46)",
-                new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12_34, expr25_46)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12.34)%(FloatNumber:12)",
-                new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12_34, expr12)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)%(FloatNumber:23)",
-                new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12, expr23)
-                        .getDefinitionString());
-        Assert.assertEquals("getDefinitionString() gives the correct value",
-                "(FloatNumber:12)%(FloatNumber:12.34)",
-                new ExpressionNodeArithmeticOperator(TokenType.MODULO, expr12, expr12_34)
-                        .getDefinitionString());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, expr12_34, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, expr12_34, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, expr12_34, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, expr12_34, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, expr12_34, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, expr12_34, exprNull).calculate());
         
-        AtomicBoolean hasThrown = new AtomicBoolean(false);
         
-        // Test unsupported token type
-        hasThrown.set(false);
-        try {
-            ExpressionNode en = new ExpressionNodeArithmeticOperator(TokenType.DIVIDE, expr12, expr12_34);
-            jmri.util.ReflectionUtilScaffold.setField(en, "_tokenType", TokenType.COMMA);
-            en.calculate();
-        } catch (CalculateException e) {
-            hasThrown.set(true);
-        }
-        Assert.assertTrue("exception is thrown", hasThrown.get());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprHello, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprHello, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprHello, exprNull).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprHello, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprHello, exprNull).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprHello, exprNull).calculate());
+        
+        
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprNull, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprNull, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprNull, expr12_34).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprNull, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprNull, expr12_34).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprNull, expr12_34).calculate());
+        
+        
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.EQUAL, exprNull, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.NOT_EQUAL, exprNull, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_THAN, exprNull, exprHello).calculate());
+        Assert.assertTrue("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.LESS_OR_EQUAL, exprNull, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_THAN, exprNull, exprHello).calculate());
+        Assert.assertFalse("calculate() gives the correct value",
+                (boolean)new ExpressionNodeComparingOperator(TokenType.GREATER_OR_EQUAL, exprNull, exprHello).calculate());
     }
     
     // The minimal setup for log4J

@@ -16,6 +16,9 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         _leftSide = leftSide;
         _rightSide = rightSide;
         
+        if (_leftSide == null) {
+            throw new IllegalArgumentException("leftSide must not be null");
+        }
         if (_rightSide == null) {
             throw new IllegalArgumentException("rightSide must not be null");
         }
@@ -35,10 +38,36 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         }
     }
     
+    public Object calculateNull(Object left, Object right) throws JmriException {
+        if ((left != null) && (right != null)) {
+            throw new RuntimeException("This method is only valid if left and/or right is null");
+        }
+        
+        switch (_tokenType) {
+            case EQUAL:
+                return left == right;
+            case NOT_EQUAL:
+                return left != right;
+            case LESS_THAN:
+                return (left == null) && (right != null);
+            case LESS_OR_EQUAL:
+                return left == null;
+            case GREATER_THAN:
+                return (left != null) && (right == null);
+            case GREATER_OR_EQUAL:
+                return right == null;
+
+            default:
+                throw new RuntimeException("Unknown arithmetic operator: "+_tokenType.name());
+        }
+    }
+    
     @Override
     public Object calculate() throws JmriException {
         Object left = _leftSide.calculate();
         Object right = _rightSide.calculate();
+        
+        if ((left == null) || (right == null)) return calculateNull(left, right);
         
         // Convert a boolean value to an integer value. false = 0 and true = 1.
         if (left instanceof Boolean) {
