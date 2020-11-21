@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="9:05 AM">
+    <memory value="12:08 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 17 09:05:04 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Nov 22 00:07:35 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -130,6 +130,13 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         <conditionalNG_SystemName>IQC:AUTO:0002</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
+    <clipboard>
+      <many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
+        <socket>
+          <socketName>X1</socketName>
+        </socket>
+      </many>
+    </clipboard>
   </logixngs>
   <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
     <conditionalng enabled="no">
@@ -1142,9 +1149,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Tue Nov 17 09:05:18 CET 2020</date>
+      <date>Sun Nov 22 00:08:09 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-17T08:04:46Z+RUNKNOWN on Tue Nov 17 09:05:18 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-11-21T23:07:08Z+RUNKNOWN on Sun Nov 22 00:08:09 CET 2020-->
 </layout-config>
