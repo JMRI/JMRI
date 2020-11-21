@@ -7,7 +7,6 @@ import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.expressions.Bundle;
 
 /**
  * This expression is a clock.

@@ -13,7 +13,6 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.expressions.Bundle;
 
 /**
  * Evaluates the state of a Light.
