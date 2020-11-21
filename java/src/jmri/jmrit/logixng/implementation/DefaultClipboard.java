@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.*;
  */
 public class DefaultClipboard implements Clipboard {
 
-    private AnyMany _clipboardItems = new AnyMany("", null);
+    private ClipboardMany _clipboardItems = new ClipboardMany("", null);
     
     private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
         @Override
@@ -101,7 +101,7 @@ public class DefaultClipboard implements Clipboard {
         _clipboardItems.setup();
     }
     
-    public void replaceClipboardItems(AnyMany clipboardItems) {
+    public void replaceClipboardItems(ClipboardMany clipboardItems) {
         _clipboardItems = clipboardItems;
     }
     

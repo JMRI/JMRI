@@ -12,19 +12,19 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class AnyMany extends AbstractBase
+public class ClipboardMany extends AbstractBase
         implements FemaleSocketListener {
 
     private final List<ItemEntry> _itemEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
     
-    public AnyMany(String sys, String user)
+    public ClipboardMany(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _itemEntries.add(new ItemEntry(new DefaultFemaleAnySocket(this, this, getNewSocketName())));
     }
 
-    public AnyMany(String sys, String user, List<ItemData> itemSystemNames)
+    public ClipboardMany(String sys, String user, List<ItemData> itemSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setItemSystemNames(itemSystemNames);
@@ -294,6 +294,6 @@ public class AnyMany extends AbstractBase
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnyMany.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardMany.class);
 
 }

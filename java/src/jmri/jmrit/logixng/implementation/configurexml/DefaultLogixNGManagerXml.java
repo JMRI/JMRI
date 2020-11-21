@@ -13,7 +13,7 @@ import org.jdom2.Element;
 import jmri.jmrit.logixng.Clipboard;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.implementation.AnyMany;
+import jmri.jmrit.logixng.implementation.ClipboardMany;
 import jmri.jmrit.logixng.implementation.DefaultClipboard;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -209,13 +209,13 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 log.error("class is null");
                 return;
             }
-            if (! (o instanceof AnyManyXml)) {
+            if (! (o instanceof ClipboardManyXml)) {
                 log.error("class has wrong type: " + o.getClass().getName());
                 return;
             }
 
             LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-            AnyMany anyMany = ((AnyManyXml)o).loadItem(clipboardList.get(0));
+            ClipboardMany anyMany = ((ClipboardManyXml)o).loadItem(clipboardList.get(0));
             ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             log.error("cannot create object", ex);

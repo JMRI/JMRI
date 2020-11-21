@@ -1,16 +1,10 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.actions.DigitalMany;
-import jmri.jmrit.logixng.implementation.AnyMany;
+import jmri.jmrit.logixng.implementation.ClipboardMany;
 
 import org.jdom2.Element;
 
@@ -20,7 +14,7 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public class AnyManyXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class ClipboardManyXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
     /**
      * Default implementation for storing the contents of a Many
@@ -30,7 +24,7 @@ public class AnyManyXml extends jmri.managers.configurexml.AbstractNamedBeanMana
      */
     @Override
     public Element store(Object o) {
-        AnyMany p = (AnyMany) o;
+        ClipboardMany p = (ClipboardMany) o;
 
         Element element = new Element("many");
         element.setAttribute("class", this.getClass().getName());
@@ -59,9 +53,9 @@ public class AnyManyXml extends jmri.managers.configurexml.AbstractNamedBeanMana
         throw new UnsupportedOperationException("Not supported");
     }
     
-    public AnyMany loadItem(Element shared) {
+    public ClipboardMany loadItem(Element shared) {
         
-        List<AnyMany.ItemData> systemNamesAndClasses = new ArrayList<>();
+        List<ClipboardMany.ItemData> systemNamesAndClasses = new ArrayList<>();
         
         Element actionElement = shared.getChild("many");
         for (Element socketElement : actionElement.getChildren()) {
@@ -76,10 +70,10 @@ public class AnyManyXml extends jmri.managers.configurexml.AbstractNamedBeanMana
             if (managerElement != null) {
                 manager = managerElement.getTextTrim();
             }
-            systemNamesAndClasses.add(new AnyMany.ItemData(socketName, systemName, manager));
+            systemNamesAndClasses.add(new ClipboardMany.ItemData(socketName, systemName, manager));
         }
         
-        AnyMany h = new AnyMany("", null, systemNamesAndClasses);
+        ClipboardMany h = new ClipboardMany("", null, systemNamesAndClasses);
 
         loadCommon(h, shared);
 
