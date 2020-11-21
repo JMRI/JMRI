@@ -131,14 +131,18 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
     public boolean evaluate() {
         if (_signalMastHandle == null) return false;
         
-        boolean result;
+        boolean result = false;
         
         switch (_queryType) {
             case Aspect:
-                result = _signalMastHandle.getBean().getAspect().equals(_signalMastAspect);
+                if (_signalMastHandle.getBean().getAspect() != null) {
+                    result = _signalMastAspect.equals(_signalMastHandle.getBean().getAspect());
+                }
                 break;
             case NotAspect:
-                result = ! (_signalMastHandle.getBean().getAspect().equals(_signalMastAspect));
+                if (_signalMastHandle.getBean().getAspect() != null) {
+                    result = ! _signalMastAspect.equals(_signalMastHandle.getBean().getAspect());
+                }
                 break;
             case Lit:
                 result = _signalMastHandle.getBean().getLit();

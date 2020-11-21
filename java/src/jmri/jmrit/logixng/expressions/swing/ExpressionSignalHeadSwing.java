@@ -16,7 +16,6 @@ import jmri.util.swing.BeanSelectCreatePanel;
  */
 public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
 
-    private NamedBeanHandle<SignalHead> _signalHeadHandle;
     private BeanSelectCreatePanel<SignalHead> signalHeadBeanPanel;
     private JComboBox<ExpressionSignalHead.QueryType> queryTypeComboBox;
     private JComboBox<SignalHeadState> signalHeadStateComboBox;
@@ -74,6 +73,7 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionSignalHead expression = new ExpressionSignalHead(systemName, userName);
+        updateObject(expression);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     
