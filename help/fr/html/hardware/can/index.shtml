@@ -1,126 +1,341 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
 <head>
-<!-- UpDated  by Blorec Herv&#233; 2017-01-20-->
-<title>JMRI Hardware Support - CAN Network</title>
+<!-- UpDated  by Blorec Herv&#233; 2020-11-21-->
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <title>JMRI Hardware Support - CAN Network</title>
+  <meta name="author" content="Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
+  <!-- Style -->
+  
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<h1>Prise en charge Mat&#233;riel: R&#233;seau CAN</h1>
-<ul class="snav"><!-- TOC -->
-	<li><a href="#hardware">Mat&#233;riel</a></li>
-	<li><a href="#connect">Connexion</a></li>
-	<li><a href="#tools">Outils CAN JMRI</a></li>
-	<li><a href="#documentation">Documentation</a></li>
-</ul>
-Il y a une nouvelle tendance &#224; d&#233;velopper des syst&#232;mes de contr&#244;le de r&#233;seaux ferroviares
-qui sont bas&#233;s sur la technologie de r&#233;seau standard CAN.
-JMRI fournit le support au d&#233;veloppement et l'utilisation de ceux-ci. Deux premiers efforts sont d&#233;crits ci-dessous
+      
+      <h1>Support mat&#233;riel : CAN : R&#233;seaux de contr&#244;leurs de zone</h1>
 
-<h2>CAN Impl&#233;mentations</h2>
-<img src="http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align="right" alt="OpenLCB logo" height="43" width="104">
-<h3><a href="../openlcb/index.shtml">OpenLCB</a></h3>
-<p> OpenLCB est un groupe d'ammateurs et de fabricants qui se sont ressembl&#233;s pour produire un bus de contr&#244;le de r&#233;seau orient&#233; vers l'avenir, appel&#233; 
-aussi <a href="http://openlcb.org">OpenLCB</a>.<br>
-JMRI inclut <a href="../openlcb/index.shtml">un support basique pour OpenLCB</a> et OpenLCB en d&#233;veloppe plus lui-m&#234;me. </P>
+      <ul class="snav">
+        <!-- TOC -->
 
-<img src="http://www.nmra.org/common/nmra_logo.jpg" align="right" alt="NMRA logo" height="45" width="55">
-<p>Le <a href="http://www.nmra.org">NMRA</a> a
-<a href="http://www.nmra.org/news/proposed-standard-layout-command-control-lcc-published-comments#">d&#233;cid&#233;</a> 
-d'adopter OpenLCB et de le standardiser comme 
-<a href="http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171">Commande Contr&#244;le R&#233;seau (LCC, formerly NMRAnet)</a>.</p>
+        <li><a href="#hardware">Mat&#233;riel</a></li>
 
-<img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
-<h3><a href="cbus/index.shtml">CBUS MERG</a></h3>
-<p>
-Un groupe d'amateurs, sous l'&#233;gide du Groupe de mod&#232;le &#233;lectronique des chemins de fer
-(<a href="http://www.merg.org.uk/"> MERG</a>),
-a travaill&#233; &#224; l'&#233;laboration d'un bus de commande de r&#233;seau appel&#233; CBUS.
-Ils ont cr&#233;&#233; une
-<a href="http://www.merg.org.uk/resources/lcb.html"> vaste documentation</a>.<br>
-JMRI comprend un
-<a href="cbus/index.shtml"> support de base pour CBUS</a>,
-et et CBUS en d&#233;veloppe plus lui-m&#234;me
+        <li><a href="#connect">Connexion</a></li>
 
-<a name="hardware"></a><h2>Mat&#233;riel Pris en Charge</h2>
-<h3>Interfaces Informatiques</h3>
-<p>Des adaptateurs vari&#233;s CAN-USB sont disponibles:
-<dl>
-	<dt>TCH Technology
-	<dd><a href="http://www.tchtechnology.com/products/can_usb/">TCH Technology CAN/USB</a>
-	qui fournit une connexion grande vitesse pour un usage pour les r&#233;seaux ferroviaires
-	<dt>grid connect
-	<dd><a href="http://www.gridconnect.com/canboandto.html">GridConnect</a> CAN_RS,
-	qui est aussi le protocole utilis&#233; par les circuits MERG CAN_RS
-	<dt>lawicell
-	<dd><a href="http://canusb.com/">LAWICEL AB</a> 
-	Adaptateurs CANUSB et CAN232.
-</dl>
+        <li><a href="#tools">Outils JMRI CAN</a></li>
 
-<a name="connect"></a><h2>Connexion</h2>
-<p>JMRI fournit les fonctions Capteur et Aiguillage, une fois configur&#233; pour
- <a href="../openlcb/index.shtml">OpenLCB</a> ou
-<a href="cbus/index.shtml">CBUS</a> "Events".
-<p>JMRI peut connecter aus r&#233;seaux CAN de diff&#233;rentes fa&#231;ons:  
-<h3>Via USB</h3>
-<p>Pour utiliser l'un des Adaptateurs ci-dessus, s&#233;lectionnez le type de p&#233;riph&#233;rique/connexion appropri&#233; dans les
-Pr&#233;f&#233;rences JMRI. Si vous utilisez un dispositif de GridConnect ou Lawicel, assurez-vous de
-r&#233;gler la vitesse de transmission appropri&#233;e dans les pr&#233;f&#233;rences avanc&#233;es.<br> 
-L'adaptateur TCH Technology le fait automatiquement, donc aucun r&#233;glage n'est n&#233;cessaire.</p>
+        <li><a href="#documentation">Documentation</a></li>
+      </ul>
 
+      <p>Une nouvelle tendance se dessine pour le d&#233;veloppement du syst&#232;mes de contr&#244;le 
+      du mod&#233;lisme ferroviaire  bas&#233;s sur des normes 
+      <a href="https://en.wikipedia.org/wiki/CAN_bus">CAN</a> technologque.  
+      JMRI fournit un soutien pour le d&#233;veloppement et l'utilisation de ceux-ci. 
+      Deux syst&#232;mes sont d&#233;crits ci-dessous.</p>
 
-<h3>R&#233;seau TCP/IP</h3>
-<p>Il est &#233;galement possible de joindre via une connexion TCP/IP (Ethernet ou WiFi).
-Cela peut aller dans un autre s&#233;quence JMRI en cours d'ex&#233;cution ex: un hub OpenLCB,
-ou directement &#224; un adaptateur IP-CAN. Pour configurer l'un d'eux, ouvrir le tableau Connexion dans les 
-Pr&#233;f&#233;rences et s&#233;lectionnez:
-	<ul>
-	<li> S&#233;lectionnez le System Manufacturer, "OpenLCB"
-	<li> Pour System Connection, s&#233;lectionnez "CAN via GridConnect Network Interface"
-	<li> Sous Param&#232;tres, entrez l'adresse IP et le port TCP/UDP pour la destination.
-	<p> Les adaptateurs OpenLCB CAN annoncer sous mDNS/Bonjour, si vous pouvez l'utiliser
-	pour sp&#233;cifier l'adresse IP si JMRI est sur le m&#234;me segment de r&#233;seau
-	que votre adaptateur. Dans ce cas, mettre "openlcbcan.local." dans le champ d'adresse IP.
-	<p> Le num&#233;ro de port pour les adaptateurs OpenLCB est 23 par d&#233;faut.
-	<li> Configurer le protocole de connexion comme vous le souhaitez, par exemple "OpenLCB", et le
-	Pr&#233;fixe de connexion (habituellement "M") et le nom de connexion au besoin.
-	<l> Cliquez sur Enregistrer et red&#233;marrez.
-</ul>
+      <h2>Mise en &#339;uvre de CAN</h2>
 
-<a name="tools"></a><h2>Outils CAN JMRI</h2>
-<ul>
-<li>JMRI fournit un
-<a href="../../../package/jmri/jmrix/AbstractMonFrame.shtml">outil Moniteur</a> basique pour regarder le trafic sur un bus CAN.</li>
-<li>Il y a aussi un
-<a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Outil Envoi Trame</a> fpour envoyer manuellement des trames CAN et dans des 
-s&#233;quences.</li>
-<li> Pour le développement il y a aussi des
-<a href="scripting.shtml">Outils de Script CAN</a>
-pour l'envoi et la r&#233;ception de Trames CAN.
-Ils peuvent &#234;tre tr&#232;s utile lors de test de mat&#233;rie, etc.</li>
-</ul>
+      <h3><a href="../openlcb/index.shtml">OpenLCB</a></h3>
+      <img src=
+      "http://www.openlcb.org/trunk/web/logo-ajs-dph.png" align=
+      "right" alt="Logo OpenLCB" height="43" width="104">
+      <p>OpenLCB est un groupe d'amateurs et de fabricants qui ont se r&#233;unir pour 
+      produire un  bus de contr&#244;le de r&#233;seau orient&#233; vers l'avenir, &#233;galement appel&#233; <a href=
+      "http://openlcb.org">OpenLCB</a>.<br>
+      JMRI comprend <a href="../openlcb/index.shtml"> un Support de Base pour OpenLCB</a>, et 
+      d'autres sont en cours de d&#233;veloppement en m&#234;me temps qu'OpenLCB lui-m&#234;me.</p>
+      <img src= "http://www.nmra.org/common/nmra_logo.jpg" align="right" alt= "NMRA logo" height="45" width="55">
 
-<a name="documentation"></a><h2>Documentation</h2>
-<h3>Aide JMRI</h3>
-<p>Aide <a href="../openlcb/index.shtml">OpenLCB</a>
-<p>Aide <a href="cbus/index.shtml">CBUS</a> 
+      <p>Le <a href="http://www.nmra.org">NMRA</a> a <a href="http://www.nmra.org/news/proposed-standard-layout-command-control-lcc-published-comments#"> 
+      d&#233;cid&#233;</a> d'adopter OpenLCB et de le normaliser sous <a href="http://www.nmra.org/index-nmra-standards-and-recommended-practices#node-171"> Layout Command Control (LCC, anciennement NMRAnet)</a>.</p>
 
-<h3>Autre Source d'Info</h3>
-<p><a href="http://www.openlcb.org">OpenLCB.org</a>
+      <h3><a href="cbus/index.shtml">CBUS&trade;</a></h3>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+      <p>Nomm&#233; &#224; l'origine CBUS par son co-fondateur Gil Fuchs, CBUS est un 
+      protocole "ouvert" pour l'utilisation en mod&#233;lisme ferroviaire  
+     . Le protocole et d'autres informations utiles sont h&#233;berg&#233;s sur le site web public du MERG  
+      (voir les autres liens de soutien). CBUS n'est pas d&#233;tenue ou contr&#244;l&#233;e 
+      par le MERG mais les co-fondateurs Gil Fuchs et Mike Bolton sont des 
+      membres actifs. Les membres du MERG ont la possibilit&#233; d'acheter une gamme de kits CBUS.</p>
+      
+      <p>CBUS a adopt&#233; le sch&#233;ma Gridconnect mais avec une l&#233;g&#232;re modification. 
+      <br>L'en-t&#234;te est toujours compos&#233; d'octets HEX et correspond 
+      directement aux registres PIC CAN , justifi&#233;s &#224; gauche.</p>
+      
+      <p>
+      Le <a href="cbus/index.shtml">CBUS</a> Support JMRI est disponible pour relier JMRI &#224; CBUS, visant les utilisateurs.
+      <br>Les d&#233;veloppeurs ont acc&#232;s &#224; des informations d&#233;taill&#233;es sur le protocole CBUS,  voir le 
+      <a href="cbus/index.shtml#thirdparty">Wiki du CBUS</a> h&#233;berg&#233; sur  le site web public du MERG.
+      
+      <p>Il y a de nombreux kits de modules MERG disponibles pour aider &#224; la r&#233;alisation d'un r&#233;seau.
+      <br>
+      Les modules peuvent &#234;tre consid&#233;r&#233;s comme
+      </p>
+      
+      <ul>
+      <li>Consommateurs, par exemple un module sol&#233;noïde CANSOL &#224; l'&#233;coute sur le CANBUS pour  un &#233;v&#233;nement 
+      enseign&#233; pour d&#233;vier un Aiguillage</li>
+      <li>Producteurs, par exemple un module de d&#233;tection CANACE3 Control Panel Switch, envoyant un &#233;v&#233;nement 
+      lorsqu'un bouton physique du panneau de contr&#244;le est press&#233; ou un interrupteur &#224; bascule &#224; chang&#233; 
+      ( le multiplexage permet 128 interrupteurs sur 1 module)</li>
+      <li>Ou les deux, par exemple un module d'asservissement CANMIO qui &#233;coute les &#233;v&#233;nements enseign&#233;s pour 
+      changer la position des aiguillages, puis envoie ses propres &#233;v&#233;nements au d&#233;marrage du d&#233;placement de 
+      l'asservissement, au milieu de l'asservissement, envoyant &#233;galement un &#233;v&#233;nement &#224; la fin du d&#233;placement 
+      de l'asservissement vers sa position finale.</li>
+      </ul>      
+
+      <p>
+      Les 3 000 membres du MERG sont encourag&#233;s &#224; construire et &#224; concevoir leur modules et avec le MERG qui 
+      a plus de 50 ans,  Le CBUS est soumis &#224; un processus d'&#233;valuation par les pairs tr&#232;s rigoureux.
+      <br>
+      Les mises &#224; jour du micrologiciel des modules peuvent &#234;tre effectu&#233;es via le r&#233;seau CBUS 
+      </p>
+      
+      <p>JMRI comprend un soutien pour <a href="cbus/index.shtml#cbusevents">&#201;v&#233;nements de l'UCB</a>, 
+      aussi <a  href="cbus/index.shtml#dcc">DCC  sur CBUS</a> via un kit CANCMD   (une Centrale
+      compl&#232;te de la DCC, un mini booster et programmeur de voie). Il s'interface avec JMRI et/ou des Commandes portables MERG sur un r&#233;seau CBUS.
+      </p>
+      
+      <p>Les &#233;v&#233;nements CBUS sont envoy&#233;s de un &#224; plusieurs, ce qui permet &#224; plusieurs modules de surveiller et de 
+      changer de statut sur un seul &#233;v&#233;nement. ex:.</p>
+      <ul>
+        <li>Ev&#232;nement envoy&#233; par un module de surveillance de l'aiguillage d'un aiguillage ( C&#339;ur - pointe ), envoyant un 
+        "&#233;v&#232;nement off" lorsque la pointe est lanc&#233;, un "&#233;v&#232;nement on" lorsqu'il est direct.</li>
+        <li>Cet &#233;v&#233;nement est re&#231;u par un module de relais, qui change la polarit&#233; du C&#339;ur.</li>
+        <li>&#201;v&#233;nement &#233;galement re&#231;u par un module LED, changeant les LED sur un TCO repr&#233;sentant la position de l'Aiguillage.</li>
+        <li>&#201;v&#233;nement &#233;galement re&#231;u par le JMRI pour &#234;tre utilis&#233; dans Panneau de Commande et al.</li>
+      </ul>
+
+      <p>JMRI peut envoyer et recevoir des &#233;v&#233;nements pour tout n&#339;ud de module et tout &#233;v&#233;nement de module.</p>
+
+T
+      <h2><a name="hardware" id="hardware">Mat&#233;riel pris en charge</a></h2>
+      <h3>Interfaces informatiques</h3>
+
+      <h4>Plusieurs adaptateurs CAN-USB sont disponibles:</h4>
+
+      <dl>
+        <dt>TCH Technology</dt>
+
+        <dd>TCH Technology CAN/USB fournit une  connexion pour l'utilisation du chemin de fer miniature (site non accessible &#224; partir de 2019)</dd>
+
+        <dt>Grid Connect</dt>
+
+        <dd><a href=
+        "https://gridconnect.com/pcan/can-adapters.html">GridConnect</a> </dd>
+
+        <dt>Lawicell</dt>
+
+        <dd><a href="http://canusb.com/">LAWICEL AB</a> CANUSB et
+        Adaptateurs CAN232.</dd>
+        
+        <dt>MERG</dt>
+        
+        <dd><a href="https://www.merg.org.uk/kits.php">CANUSB4</a>
+        Une interface CBUS vers USB, disponible sous forme de kit pour les membres du MERG.
+        
+        <dt>SPROG DCC Ltd</dt>
+        
+        <dd><a href="https://www.sprog-dcc.co.uk">CANISB</a> Une interface CBUS vers USB isol&#233;e galvaniquement.
+        
+      </dl>
+      
+      <h4>Autres interfaces mat&#233;rielles CAN</h4>
+      
+            <dl>
+            <dt>Rocrail </dt>
+            <dd> Le <a href="https://wiki.rocrail.net/doku.php?id=can-gca1e-en"> Module Ethernet CAN-GC1e</a> peut se 
+            connecter &#224; JMRI via l'interface r&#233;seau du MERG</dd>
+            </dl>
+      
+            <dl>
+            <dt>MERG</dt>        
+            <dd>Le <a href="https://www.merg.org.uk/kits.php">CANPICAP</a> permet une connexion CBUS directe &#224; un Raspberry Pi via son  
+            Connecteur E/S 40 broches, disponible sous forme de kit pour les membres du MERG.</dd>
+
+            <dd>Le <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> est bas&#233;  sur la Rasberry Pi Zero W, et est 
+            une interface entre Engine Driver / WiThrottle et CBUS.</dd>
+            </dl>
+
+            <dl>
+            <dt>SPROG DCC Ltd</dt>
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC Pi-SPROG 3 Plus</a> Centrale CBUS DCC pour 
+            le rattachement direct &#224; un Raspberry-Pi via  son connecteur E/S 40 broches.</dd>
+
+            <dd><a href="https://www.sprog-dcc.co.uk">SPROG DCC SPROG 3 Plus</a> Centrale CBUS DCC avec interface USB int&#233;gr&#233;e.</dd>
+            </dl>
+        
+      <h2><a name="connect" id="connect">Connexion</a><</h2>
+
+      <p>JMRI peut fournir les fonctions habituelles deCapteur et d'Aiguillage, une fois configur&#233; pour <a href= "../openlcb/index.shtml">OpenLCB</a> ou <a href=
+      "cbus/index.shtml">CBUS</a> "&#201;v&#233;nements".</p>
+      
+      <p>Exemple de d&#233;nomination de syst&#232;me : </p>
+      
+      <table border="1">
+      <tr>
+      <th></th>
+      <th>Capteur</th>
+      <th>Aiguillage </th>
+      <th>Lumi&#232;re</th>
+      </tr>
+      <tr>
+      <td>OpenLCB</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      </tr>
+      <tr>
+      <td>CBUS</td>
+      <td><code>MS18</code>
+      <br>( Ev&#233;nement 18 Actif/Inactif )</td>
+      <td><code>MT+N2E18;-N2E18</code>
+      <br> ( N&#339;ud 2 &#201;v&#233;nement 18 d&#233;vi&#233; /direct )</td>
+      <td><code>ML18</code>
+      <br> ( Ev&#233;nement 18 On/Off )</td>
+      </tr>
+      </table>
+
+      <p>JMRI peut se connecter aux r&#233;seaux CAN de plusieurs fa&#231;ons:</p>
+
+      <h3>Via USB</h3>
+
+      <p>Pour utiliser l'un des adaptateurs ci-dessus, s&#233;lectionnez le dispositif/type de connexion appropri&#233; dans les pr&#233;f&#233;rences JMRI. 
+      
+      Si vous utilisez un appareil GridConnect ou Lawicel, assurez-vous de r&#233;gler le type de connexion appropri&#233; dans les pr&#233;f&#233;rences de l'JMRI.
+      pour la vitesse de transmission sous Pr&#233;f&#233;rences avanc&#233;es.<br>
+      L'adaptateur TCH Technology le fait automatiquement, aucun r&#233;glage n'est donc n&#233;cessaire.
+      </p>
+      
+      <p>
+      Pour <a href="cbus/Details.shtml#c1">connecter &#224; un CANUSB4</a>, s&#233;lectionner "MERG" comme fabricant du syst&#232;me,  
+      puis "CAN via MERG CAN-RS ou CAN-USB" comme connexion au syst&#232;me.
+      </p>
+
+      <h3>R&#233;seau TCP/IP</h3>
+
+      <p>Il est &#233;galement possible de se connecter via une connexion TCP/IP (EtherNet ou WiFi). Cela peut soit aller &#224; un
+      autre JMRI qui fonctionne par exemple sur un hub OpenLCB, directement vers une Un adaptateur IP-CAN ou un serveur CAN. 
+      Pour configurer l'un d'entre eux, ouvrez l'Onglet Connexions dans les pr&#233;f&#233;rences JMRI.</p>
+      
+     <h4>OpenLCB</h4>
+
+      <ul>
+        <li>S&#233;lectionner comme fabricant du syst&#232;me "OpenLCB"</li>
+
+        <li>Pour la connexion au syst&#232;me, s&#233;lectionnez "CAN via Interface r&#233;seau GridConnect "</li>
+
+        <li>Dans les param&#232;tres, entrez l'adresse IP et le port TCP/UDP pour la destination.
+          <p>Les adaptateurs CAN OpenLCB font de la publicit&#233; sous mDNS/Bonjour, donc vous pouvez l'utiliser pour sp&#233;cifier 
+          l'adresse IP si JMRI est activ&#233; sur le m&#234;me segment de r&#233;seau que votre adaptateur. Dans ce cas, mettre "openlcbcan.local". 
+          (notez la p&#233;riode de suivi !) dans l'IP champ d'adresse.</p>
+          <p>Le num&#233;ro de port pour les adaptateurs OpenLCB est 23 par default.</p>
+        </li>
+
+        <li>R&#233;glez le protocole de connexion comme vous le souhaitez, par exemple "OpenLCB", le pr&#233;fixe de connexion 
+        (g&#233;n&#233;ralement "M") et le nom de la connexion comme n&#233;cessaire.</li>
+        <li>Cliquez sur Sauvegarder, et red&#233;marrez.</li>
+      </ul>
+      
+     <h4>MERG via CBUS</h4> 
+      <ul>
+      <li>S&#233;lectionner comme fabricant du syst&#232;me MERG.</li>
+      <li>Pour la connexion au syst&#232;me, s&#233;lectionnez CAN via l'interface r&#233;seau du MERG</li>
+      <li>Dans les param&#232;tres, entrez l'adresse IP ou le nom d'h&#244;te de l'appareil avec la connexion physique &#224; votre r&#233;seau 
+      CBUS, par exemple "192.168.0.5" ou "localhost".
+      <br>Le CANPi a un IP par d&#233;faut de 192.168.45.1 .
+      </li>
+      <li>Le port TCP est le 5550 ( TCP 5550 est r&#233;serv&#233; &#224; l'utilisation du CBUS par l'IANA ).</li>
+      <li>Protocole de connexion - CBUS</li>
+      <li>Le pr&#233;fixe de connexion est normalement "M" pour CBUS.</li>
+      <li>Cliquez sur Sauvegarder, et red&#233;marrez.</li>
+      </ul>
+      
+      <p>
+        <a href="cbus/index.shtml#thirdparty">Serveur CBUS</a> est un 
+        <a href="https://nodejs.org/en/">Node.js</a> programme, sous licence du MIT  pour permettre de multiples connexions r&#233;seau &#224; un MERG CANUSB4.
+        </p>
+
+      <h2><a name="tools" id="tools">Outils JMRI CAN </a></h2>
+      <ul>
+        <li>JMRI fournit un <a href= "../../../package/jmri/jmrix/AbstractMonFrame.shtml">Outil Moniteur basique</a> pour surveiller 
+        le trafic sur un bus CAN.</li>
+        
+        <li>Pour le d&#233;veloppement, il y a <a href=  "scripting.shtml">Outil Script CAN </a> pour l'envoi et la  la r&#233;ception de 
+        trames CAN. Celles-ci peuvent &#234;tre tr&#232;s utiles pour tester le mat&#233;riel, etc.</li>
+
+        <li>OpenLCB
+        <a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml"> Outil "Envoyer une Trame"</a> L'outil 
+        "Envoyer une Trame OpenLCB" vous permet d'envoyer directement  CAN, et certains types de messages OpenLCB, par exemple "V&#233;rifier N&#339;ud" et  
+        "Envoyer la dDemande aux Consommateurs"
+        </li>
+        
+        
+        <li>Une connexion CBUS fournit un certain nombre d'outils, en fonction des caract&#233;ristiques du mat&#233;riel connect&#233;, par exemple
+        <ul>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">
+                    Console</a> - Outil de visualisation et d'envoi de trames CAN / events.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">
+                    Tableau des &#233;v&#233;nements</a> - Surveille les &#233;v&#233;nements et les pr&#233;sente dans un tableau plein de statistiques.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">
+                    Node Manager</a> - Table des n&#339;uds et outils de configuration des n&#339;uds</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+                    Command Station Monitor</a> - Surveillance des sessions de d'exploitation et outils de Centrale de Commande.</li>
+            <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">
+                    Envoyer des images</a> - Envoyer des images CAN ou des &#233;v&#233;nements CBUS</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
+                   >Event Capture Tool</a> - Capture des &#233;v&#233;nements CBUS</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml"
+                   >Event Request Monitor</a> - Outil de suivi de l'&#233;tat des demandes d'&#233;v&#233;nements</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+                   >Simulation d'&#233;l&#233;ments de r&#233;seau</a> - Simule les Centrales  Cbus et r&#233;pond aux demandes d'&#233;v&#233;nements</li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml"> 
+                    CBUS bootloader </a> - pour mettre &#224; jour le firmware du module CBUS</li>
+        </ul>
+        </li>
+        
+       </ul>
+      
+      <a name="documentation" id="documentation"></a>
+
+      <h2>Documentation</h2>
+
+      <h3> Aide JMRI</h3>
+
+      <p><a href="../openlcb/index.shtml">OpenLCB</a> Aide</p>
+
+      <p><a href="cbus/index.shtml">CBUS</a> Support</p>
+      
+      <p><a href="scripting.shtml">JMRI Scripting</a> Pour trames CAN.</p>
+      
+      
+      <h3>Information sur les tiers</h3>
+
+      <p><a href="http://www.openlcb.org">OpenLCB.org</a></p>
+      <p><a href="https://www.merg.org.uk">merg.org.uk</a></p>
+      <p><a href="https://www.sprog-dcc.co.uk">SPROG DCC Ltd</a></p>
+      <p><a href="https://en.wikipedia.org/wiki/CAN_bus">wikipedia.org/wiki/CAN_bus</a></p>
+      
+      <h2></h2>
+      <p>CBUS est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+      
+      <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
