@@ -414,7 +414,7 @@ public class ThrottleSetting {
         try {
             _command = getCommandFromString(cmdStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSett1ng {}", je.toString());
+            log.error("Cannot set command for ThrottleSetting {}", je.toString());
         }
     }
 
@@ -438,7 +438,7 @@ public class ThrottleSetting {
         try {
             _value = getValueFromString(_command, valueStr);
         } catch (JmriException je) {
-            log.error("Cannot set command for ThrottleSett1ng {}", je.toString());
+            log.error("Cannot set command for ThrottleSetting {}", je.toString());
         }
     }
 
