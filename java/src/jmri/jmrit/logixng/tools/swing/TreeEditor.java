@@ -566,18 +566,6 @@ public class TreeEditor extends TreeViewer {
                 p.add(_autoSystemName, c);
             }
 
-            if (femaleSocket.isConnected()) {
-                _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
-                _systemName.setEnabled(false);
-                _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
-                _addComment.setText(femaleSocket.getConnectedSocket().getComment());
-            } else {
-                _systemName.setText("");
-                _systemName.setEnabled(true);
-                _addUserName.setText("");
-                _addComment.setText("");
-            }
-
             _systemName.setToolTipText(Bundle.getMessage("SystemNameHint",
                     swingConfiguratorInterface.getExampleSystemName()));
             _addUserName.setToolTipText(Bundle.getMessage("UserNameHint"));
@@ -590,6 +578,19 @@ public class TreeEditor extends TreeViewer {
         }
         _addComment.setToolTipText(Bundle.getMessage("CommentHint"));
         contentPanel.add(p);
+        
+        if (femaleSocket.isConnected()) {
+            _systemName.setText(femaleSocket.getConnectedSocket().getSystemName());
+            _systemName.setEnabled(false);
+            _addUserName.setText(femaleSocket.getConnectedSocket().getUserName());
+            _addComment.setText(femaleSocket.getConnectedSocket().getComment());
+        } else {
+            _systemName.setText("");
+            _systemName.setEnabled(true);
+            _addUserName.setText("");
+            _addComment.setText("");
+        }
+        
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
