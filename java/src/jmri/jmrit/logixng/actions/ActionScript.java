@@ -35,6 +35,7 @@ public class ActionScript extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionScript copy = new ActionScript(sysName, userName);
+        copy.setComment(getComment());
         copy.setScript(_scriptText);
         return manager.registerAction(copy);
     }

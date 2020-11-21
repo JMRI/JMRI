@@ -5,8 +5,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import java.util.Map;
+
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 
 /**
  * Abstract class for scripts that implements a digital expression.
@@ -121,6 +123,16 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
     @Override
     public void firePropertyChange(String p, Object old, Object n) {
         if (_parentDigitalAction != null) _parentDigitalAction.firePropertyChange(p, old, n);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        throw new UnsupportedOperationException("Not supported");
     }
     
     /** {@inheritDoc} */

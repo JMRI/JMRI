@@ -7,9 +7,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.JPanel;
 
-import jmri.Manager;
+import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.NamedBean;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
 
@@ -767,6 +766,16 @@ public abstract class FemaleSocketTestBase {
 
         @Override
         public void unregisterListeners() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
         

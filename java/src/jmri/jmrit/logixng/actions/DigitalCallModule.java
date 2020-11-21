@@ -34,7 +34,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         String userName = systemNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalCallModule copy = new DigitalCallModule(sysName, userName);
-        copy.setModule(_moduleHandle);
+        if (_moduleHandle != null) copy.setModule(_moduleHandle);
         for (Map.Entry<String, SymbolTable.ParameterData> entry : _parameterData.entrySet()) {
             SymbolTable.ParameterData data = entry.getValue();
             copy.addParameter(

@@ -44,6 +44,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionListenOnBeans copy = new ActionListenOnBeans(sysName, userName);
+        copy.setComment(getComment());
         for (NamedBeanReference reference : _namedBeanReferences.values()) {
             copy.addReference(reference);
         }

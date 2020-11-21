@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -58,6 +60,17 @@ public class ActionThrottle extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "E2");
         _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E3");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionThrottle copy = new ActionThrottle(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

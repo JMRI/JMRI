@@ -30,6 +30,7 @@ public class StringExpressionConstant extends AbstractStringExpression {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringExpressionConstant copy = new StringExpressionConstant(sysName, userName);
+        copy.setComment(getComment());
         copy.setValue(_value);
         return manager.registerExpression(copy);
     }

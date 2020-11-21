@@ -5,9 +5,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.FemaleSocket;
+import java.util.Map;
+
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 
 /**
  * Abstract class for scripts that implements a digital expression.
@@ -116,6 +117,16 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         _parentDigitalExpression.getConditionalNG().execute();
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+    
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        throw new UnsupportedOperationException("Not supported");
     }
     
     /** {@inheritDoc} */

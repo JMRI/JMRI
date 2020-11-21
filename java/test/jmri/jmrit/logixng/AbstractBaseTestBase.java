@@ -250,6 +250,7 @@ public abstract class AbstractBaseTestBase {
     public void testGetDeepCopy() throws JmriException {
         Map<String, String> systemNames = new HashMap<>();
         Map<String, String> userNames = new HashMap<>();
+        Map<String, String> comments = new HashMap<>();
         
         StringWriter stringWriter = new StringWriter();
         PrintWriter printWriter = new PrintWriter(stringWriter);
@@ -281,7 +282,7 @@ public abstract class AbstractBaseTestBase {
         // REMOVE LATER!!!!!!!!
         // REMOVE LATER!!!!!!!!
         // REMOVE LATER!!!!!!!!
-        Assume.assumeTrue(originalTree.equals(copyTree));
+//        Assume.assumeTrue(originalTree.equals(copyTree));
         // REMOVE LATER!!!!!!!!
         // REMOVE LATER!!!!!!!!
         // REMOVE LATER!!!!!!!!
@@ -294,6 +295,8 @@ public abstract class AbstractBaseTestBase {
         List<Base> originalList = new ArrayList<>();
         _baseMaleSocket.forEntireTree((Base b) -> {
             if (b instanceof MaleSocket) {
+                b.setComment(RandomStringUtils.randomAlphabetic(10));
+                
                 originalList.add(b);
                 
                 // A system name with a dollar sign after the sub system prefix
@@ -305,6 +308,7 @@ public abstract class AbstractBaseTestBase {
                 
                 systemNames.put(b.getSystemName(), newSystemName);
                 userNames.put(b.getSystemName(), newUserName);
+                comments.put(b.getSystemName(), b.getComment());
             }
         });
         
@@ -323,6 +327,9 @@ public abstract class AbstractBaseTestBase {
             
             Assert.assertEquals(copyList.get(i).getUserName(),
                     userNames.get(originalList.get(i).getSystemName()));
+            
+            Assert.assertEquals(copyList.get(i).getComment(),
+                    comments.get(originalList.get(i).getSystemName()));
         }
     }
     
@@ -1062,6 +1069,16 @@ public abstract class AbstractBaseTestBase {
         @Override
         public void setup() {
             throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
         }
         
     }

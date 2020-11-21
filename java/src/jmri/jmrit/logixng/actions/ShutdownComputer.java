@@ -26,6 +26,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ShutdownComputer copy = new ShutdownComputer(sysName, userName);
+        copy.setComment(getComment());
         return manager.registerAction(copy);
     }
     

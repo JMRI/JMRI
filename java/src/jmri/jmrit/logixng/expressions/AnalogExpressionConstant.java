@@ -31,6 +31,7 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogExpressionConstant copy = new AnalogExpressionConstant(sysName, userName);
+        copy.setComment(getComment());
         copy.setValue(_value);
         return manager.registerExpression(copy);
     }

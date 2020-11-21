@@ -40,7 +40,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionLight copy = new ActionLight(sysName, userName);
-        copy.setLight(_lightHandle);
+        copy.setComment(getComment());
+        if (_lightHandle != null) copy.setLight(_lightHandle);
         copy.setLightState(_lightState);
         return manager.registerAction(copy);
     }

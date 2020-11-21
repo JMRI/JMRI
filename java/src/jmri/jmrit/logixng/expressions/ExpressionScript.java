@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -9,16 +10,7 @@ import javax.script.ScriptException;
 import javax.script.SimpleBindings;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.*;
 import jmri.script.JmriScriptEngineManager;
 
 /**
@@ -34,6 +26,18 @@ public class ExpressionScript extends AbstractDigitalExpression {
     public ExpressionScript(@Nonnull String sys, @CheckForNull String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionScript copy = new ExpressionScript(sysName, userName);
+        copy.setComment(getComment());
+        copy.setScript(_scriptText);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     private void loadScript() {

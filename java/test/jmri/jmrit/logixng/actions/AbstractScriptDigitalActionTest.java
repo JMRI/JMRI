@@ -113,6 +113,7 @@ public class AbstractScriptDigitalActionTest {
                 super.unregisterScriptListeners();
                 unregisterCalled.set(true);
             }
+            
         };
         
         // Test that listeners get registered

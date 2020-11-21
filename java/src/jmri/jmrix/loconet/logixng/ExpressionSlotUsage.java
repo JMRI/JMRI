@@ -2,8 +2,9 @@ package jmri.jmrix.loconet.logixng;
 
 import java.util.*;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrix.loconet.*;
 
@@ -32,6 +33,24 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
     public ExpressionSlotUsage(String sys, String user, LocoNetSystemConnectionMemo memo) {
         super(sys, user);
         _memo = memo;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionSlotUsage copy = new ExpressionSlotUsage(sysName, userName, _memo);
+        copy.setAdvanced(_advanced);
+        copy.set_Has_HasNot(_hasHasNot);
+        copy.setSimpleState(_simpleState);
+        copy.setAdvancedStates(_advancedStates);
+        copy.setCompare(_compare);
+        copy.setNumber(_number);
+        copy.setPercentPieces(_percentPieces);
+        copy.setTotalSlots(_totalSlots);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     /** {@inheritDoc} */

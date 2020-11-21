@@ -5,16 +5,12 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 
 /**
  * Reads a Memory.
@@ -30,6 +26,18 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        AnalogExpressionMemory copy = new AnalogExpressionMemory(sysName, userName);
+        copy.setComment(getComment());
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

@@ -45,6 +45,7 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalActionBean copy = new ActionAtomicBoolean(sysName, userName, new AtomicBoolean(), _newValue);
+        copy.setComment(getComment());
         return manager.registerAction(copy);
     }
     

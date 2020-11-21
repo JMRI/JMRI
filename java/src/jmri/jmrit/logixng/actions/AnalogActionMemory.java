@@ -33,7 +33,8 @@ public class AnalogActionMemory extends AbstractAnalogAction
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogActionMemory copy = new AnalogActionMemory(sysName, userName);
-        copy.setMemory(_memoryHandle);
+        copy.setComment(getComment());
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         return manager.registerAction(copy);
     }
     

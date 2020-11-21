@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
@@ -39,6 +41,17 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 .createFemaleSocket(this, this, "E1");
         _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E2");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        Hold copy = new Hold(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

@@ -404,6 +404,11 @@ public class DefaultLogixNG extends AbstractNamedBean
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        throw new UnsupportedOperationException("Not supported");
+    }
     
     
     private static class ConditionalNG_Entry {

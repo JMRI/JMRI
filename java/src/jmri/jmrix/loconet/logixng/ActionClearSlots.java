@@ -3,9 +3,11 @@ package jmri.jmrix.loconet.logixng;
 import jmri.jmrit.logixng.actions.*;
 
 import java.util.Locale;
+import java.util.Map;
 
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrix.loconet.*;
 
 /**
@@ -22,6 +24,16 @@ public class ActionClearSlots extends AbstractDigitalAction {
     public ActionClearSlots(String sys, String user, LocoNetSystemConnectionMemo memo) {
         super(sys, user);
         _memo = memo;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionUpdateSlots copy = new ActionUpdateSlots(sysName, userName, _memo);
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

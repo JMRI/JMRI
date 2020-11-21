@@ -22,7 +22,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     private boolean _enabled = true;
 
 
-    public DefaultMaleAnalogExpressionSocket(@Nonnull AnalogExpressionManager manager, @Nonnull AnalogExpressionBean expression) {
+    public DefaultMaleAnalogExpressionSocket(@Nonnull BaseManager<? extends NamedBean> manager, @Nonnull AnalogExpressionBean expression) {
         super(manager);
         _expression = expression;
     }
@@ -330,15 +330,6 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
     @Override
     public Base getObject() {
         return _expression;
-    }
-    
-    @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
-            throws JmriException {
-        Base copy = getObject().getDeepCopy(systemNames, userNames);
-        if (copy == null) return null;      // REMOVE LATER!!!!!!!!
-        getManager().register(new DefaultMaleAnalogActionSocket(getManager(), (AnalogActionBean)copy));
-        return copy;
     }
     
     /** {@inheritDoc} */

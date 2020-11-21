@@ -5,16 +5,15 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Light;
-import jmri.LightManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
+import jmri.jmrit.logixng.expressions.Bundle;
 
 /**
  * Evaluates the state of a Light.
@@ -42,6 +41,20 @@ public class ExpressionLight extends AbstractDigitalExpression
             removeLight();
             log.error("light \"{}\" is not found", lightName);
         }
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionLight copy = new ExpressionLight(sysName, userName);
+        copy.setComment(getComment());
+        if (_lightHandle != null) copy.setLight(_lightHandle);
+        copy.set_Is_IsNot(_is_IsNot);
+        copy.setLightState(_lightState);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     public void setLight(@Nonnull NamedBeanHandle<Light> handle) {

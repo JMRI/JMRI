@@ -12,14 +12,7 @@ import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.LogixNG_Manager;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -62,6 +55,18 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             List<SocketData> expressionSystemNames) {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        AnalogExpressionManager manager = InstanceManager.getDefault(AnalogExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        AnalogFormula copy = new AnalogFormula(sysName, userName);
+        copy.setComment(getComment());
+        copy.setFormula(_formula);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     private void setExpressionSystemNames(List<SocketData> systemNames) {

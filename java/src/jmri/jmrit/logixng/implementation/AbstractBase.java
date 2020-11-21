@@ -2,17 +2,14 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import jmri.NamedBean;
+import jmri.*;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.ConditionalNG;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.*;
 
 import org.slf4j.Logger;
 
@@ -33,6 +30,18 @@ public abstract class AbstractBase
     public AbstractBase(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        for (int i=0; i < original.getChildCount(); i++) {
+            if (original.getChild(i).isConnected()) {
+                Base childTree = original.getChild(i).getConnectedSocket().getDeepCopy(systemNames, userNames);
+                getChild(i).connect((MaleSocket) childTree);
+            }
+        }
+        return this;
     }
     
     /** {@inheritDoc} */

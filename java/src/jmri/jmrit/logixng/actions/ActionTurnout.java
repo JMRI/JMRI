@@ -39,7 +39,8 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionTurnout copy = new ActionTurnout(sysName, userName);
-        copy.setTurnout(_turnoutHandle);
+        copy.setComment(getComment());
+        if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
         copy.setTurnoutState(_turnoutState);
         return manager.registerAction(copy);
     }

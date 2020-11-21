@@ -5,8 +5,7 @@ import java.util.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.Manager;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 
 /**
@@ -297,11 +296,6 @@ public class DefaultClipboard implements Clipboard {
         @Override
         public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
             _clipboardItems.removePropertyChangeListener(propertyName, listener);
-        }
-
-        @Override
-        public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
-            throw new UnsupportedOperationException("Not supported");
         }
         
     }

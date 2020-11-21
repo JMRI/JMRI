@@ -5,17 +5,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Memory;
-import jmri.MemoryManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 
 /**
@@ -38,6 +35,23 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     public ExpressionLocalVariable(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionLocalVariable copy = new ExpressionLocalVariable(sysName, userName);
+        copy.setComment(getComment());
+        copy.setVariable(_variableName);
+        copy.setVariableOperation(_variableOperation);
+        copy.setCompareTo(_compareTo);
+        copy.setCaseInsensitive(_caseInsensitive);
+        copy.setConstantValue(_constantValue);
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     public void setVariable(String variableName) {
@@ -413,8 +427,10 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_variableName != null)) {
-            if (_listenToMemory) _memoryHandle.getBean().addPropertyChangeListener("value", this);
+        if (!_listenersAreRegistered && (_memoryHandle != null)) {
+            if (_listenToMemory) {
+                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
             _listenersAreRegistered = true;
         }
     }
@@ -423,7 +439,9 @@ public class ExpressionLocalVariable extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            if (_listenToMemory) _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            if (_listenToMemory && (_memoryHandle != null)) {
+                _memoryHandle.getBean().addPropertyChangeListener("value", this);
+            }
             _listenersAreRegistered = false;
         }
     }

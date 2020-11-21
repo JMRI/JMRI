@@ -1,17 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 
 /**
  * Executes an action depending on the parameter.
@@ -34,11 +28,22 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     private final FemaleDigitalActionSocket _actionSocket;
     Trigger _trigger = Trigger.CHANGE;
     
-    public DigitalBooleanOnChange(String sys, String user, Trigger whichChange) {
+    public DigitalBooleanOnChange(String sys, String user, Trigger trigger) {
         super(sys, user);
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
-        _trigger = whichChange;
+        _trigger = trigger;
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalBooleanActionManager manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DigitalBooleanOnChange copy = new DigitalBooleanOnChange(sysName, userName, _trigger);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

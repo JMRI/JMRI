@@ -10,6 +10,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -737,6 +738,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 
     @After
     public void tearDown() {
+        JUnitAppender.clearBacklog();
         JUnitUtil.tearDown();
     }
     

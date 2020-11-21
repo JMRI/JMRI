@@ -2,11 +2,9 @@ package jmri.jmrit.logixng.expressions;
 
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 
 /**
  * Always evaluates to True.
@@ -27,6 +25,7 @@ public class True extends AbstractDigitalExpression {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalExpressionBean copy = new True(sysName, userName);
+        copy.setComment(getComment());
         return manager.registerExpression(copy);
     }
     

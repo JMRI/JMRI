@@ -61,6 +61,18 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        Antecedent copy = new Antecedent(sysName, userName);
+        copy.setComment(getComment());
+        copy.setAntecedent(_antecedent);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
+    }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {

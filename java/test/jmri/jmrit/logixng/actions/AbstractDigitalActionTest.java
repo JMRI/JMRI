@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
@@ -133,6 +134,16 @@ public class AbstractDigitalActionTest {
         @Override
         public void disconnected(FemaleSocket socket) {
             throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
         }
         
     }

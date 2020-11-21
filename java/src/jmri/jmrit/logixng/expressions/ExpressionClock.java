@@ -3,13 +3,11 @@ package jmri.jmrit.logixng.expressions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.time.Instant;
-import java.util.Date;
+import java.util.*;
 
-import java.util.Locale;
-
-import jmri.InstanceManager;
-import jmri.Timebase;
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.expressions.Bundle;
 
 /**
  * This expression is a clock.
@@ -20,13 +18,27 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private Type _type = Type.FastClock;
-    private Timebase fastClock;
+    private Timebase _fastClock;
     private int _beginTime = 0;
     private int _endTime = 0;
     
     
     public ExpressionClock(String sys, String user) {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionClock copy = new ExpressionClock(sysName, userName);
+        copy.setComment(getComment());
+        copy.set_Is_IsNot(_is_IsNot);
+        copy.setType(_type);
+        copy.setRange(_beginTime, _endTime);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     /** {@inheritDoc} */
@@ -54,9 +66,9 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
         _type = type;
         
         if (_type == Type.FastClock) {
-            fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+            _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
         } else {
-            fastClock = null;
+            _fastClock = null;
         }
     }
     
@@ -92,8 +104,8 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                 break;
                 
             case FastClock:
-                if (fastClock == null) return false;
-                currentTime = fastClock.getTime();
+                if (_fastClock == null) return false;
+                currentTime = _fastClock.getTime();
                 break;
                 
             default:
@@ -161,7 +173,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                     throw new UnsupportedOperationException("Not implemented yet");
                     
                 case FastClock:
-                    fastClock.addPropertyChangeListener("time", this);
+                    _fastClock.addPropertyChangeListener("time", this);
                     break;
                     
                 default:
@@ -181,7 +193,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                     throw new UnsupportedOperationException("Not implemented yet");
                     
                 case FastClock:
-                    fastClock.removePropertyChangeListener("time", this);
+                    _fastClock.removePropertyChangeListener("time", this);
                     break;
                     
                 default:

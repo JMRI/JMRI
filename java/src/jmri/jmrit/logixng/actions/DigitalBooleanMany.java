@@ -7,14 +7,7 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 
 /**
  * Execute many Actions in a specific order.
@@ -39,6 +32,17 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setActionSystemNames(actionSystemNames);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalBooleanActionManager manager = InstanceManager.getDefault(DigitalBooleanActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DigitalBooleanMany copy = new DigitalBooleanMany(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {

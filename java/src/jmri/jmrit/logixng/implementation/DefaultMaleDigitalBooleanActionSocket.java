@@ -301,15 +301,6 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         return _action;
     }
     
-    @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
-            throws JmriException {
-        Base copy = getObject().getDeepCopy(systemNames, userNames);
-        if (copy == null) return null;      // REMOVE LATER!!!!!!!!
-        getManager().register(new DefaultMaleAnalogActionSocket(getManager(), (AnalogActionBean)copy));
-        return copy;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {

@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
@@ -68,6 +70,17 @@ public class IfThenElse extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "A1");
         _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A2");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        IfThenElse copy = new IfThenElse(sysName, userName, _type);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

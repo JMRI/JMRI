@@ -4,19 +4,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.AudioManager;
-import jmri.LightManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.SensorManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
-import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.NamedTableManager;
+import java.util.Map;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 
 /**
@@ -35,6 +25,20 @@ public class ExpressionReference extends AbstractDigitalExpression
     public ExpressionReference(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionReference copy = new ExpressionReference(sysName, userName);
+        copy.setComment(getComment());
+        copy.setReference(_reference);
+        copy.set_Is_IsNot(_is_IsNot);
+        copy.setPointsTo(_pointsTo);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     public void setReference(String reference) {

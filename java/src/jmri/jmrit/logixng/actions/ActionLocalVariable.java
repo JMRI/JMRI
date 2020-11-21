@@ -45,6 +45,7 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
         String userName = systemNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionLocalVariable copy = new ActionLocalVariable(sysName, userName);
+        copy.setComment(getComment());
         copy.setVariable(_variableName);
         copy.setMemory(_memoryHandle);
         copy.setVariableOperation(_variableOperation);

@@ -62,6 +62,19 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        StringExpressionManager manager = InstanceManager.getDefault(StringExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        StringFormula copy = new StringFormula(sysName, userName);
+        copy.setComment(getComment());
+        copy.setFormula(_formula);
+        Base aaa = manager.registerExpression(copy);
+        return aaa.deepCopyChildren(this, systemNames, userNames);
+    }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {

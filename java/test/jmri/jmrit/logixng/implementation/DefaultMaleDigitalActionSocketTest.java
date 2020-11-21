@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -254,6 +255,16 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
         @Override
         public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
             if (_vetoChange) throw new java.beans.PropertyVetoException("Veto change", evt);
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
         }
         
     }

@@ -37,7 +37,8 @@ public class StringActionMemory extends AbstractStringAction
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringActionMemory copy = new StringActionMemory(sysName, userName);
-        copy.setMemory(_memoryHandle);
+        copy.setComment(getComment());
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
         return manager.registerAction(copy);
     }
     

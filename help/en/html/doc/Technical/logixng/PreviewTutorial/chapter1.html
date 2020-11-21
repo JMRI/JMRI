@@ -20,8 +20,8 @@ Logix.
 
 First, we create a LogixNG. We start <b>PanelPro</b> and select <b>Tools</b> &rArr; <b>Tables</b> &rArr; <b>LogixNG</b>
 &rArr; <b>LogixNG</b> to open the table with LogixNGs. Click button <b>Add...</b> to add a new LogixNG. By default, the
-checkbox <b>Automatically generate System Name</b> is checked for all items in LogixNG and it's recommended to keep it
-that way. Click the button <b>Create</b> to create a LogixNG.
+checkbox <b>Automatically generate System Name</b> is checked for all items in LogixNG. Click the button <b>Create</b>
+to create a LogixNG.
 
 <p>
 
@@ -31,6 +31,23 @@ Then we create a ConditionalNG. Click button <b>New ConditionalNG</b> to add a n
 <b>Create</b> to create it.
 
 <p>
+
+
+
+
+
+
+
+All actions and expressions in LogixNG are named beans, which means that they have system names and user names. But
+it's recommended to only use auto system names and no user names for actions and expressions. Therefore, system names
+and user names of actions and expressions are not visible by default. If you want to specify the system names and/or
+user names, you can turn on the setting "Show system names and user names" in the LogixNG preferences.
+<p>
+The most important reason to not use system names and user names for actions and expressions is that it makes it much
+easier to copy things. If only auto system names are used and no user names are used, JMRI can make copies of the
+actions and expressions without the need to ask the user. But if the user wants to specify system names and/or user
+names, he must do that for all items to copy. And since actions and expressions build a tree, a copy can be of many
+actions and/or expressions at once.
 
 
 

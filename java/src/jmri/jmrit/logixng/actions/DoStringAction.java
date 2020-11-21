@@ -1,18 +1,11 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleStringActionSocket;
-import jmri.jmrit.logixng.FemaleStringExpressionSocket;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.*;
 
 /**
  * Executes an string action with the result of an string expression.
@@ -34,6 +27,17 @@ public class DoStringAction
                 .createFemaleSocket(this, this, "E");
         _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
                 .createFemaleSocket(this, this, "A");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DoStringAction copy = new DoStringAction(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

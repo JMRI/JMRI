@@ -209,6 +209,16 @@ public class DefaultConditionalNGTest {
                 hasExecuted = true;
             }
         }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
         
     }
     

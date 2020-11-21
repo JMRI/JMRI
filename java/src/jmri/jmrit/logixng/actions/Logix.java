@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -27,6 +28,17 @@ public class Logix extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "E");
         _actionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class)
                 .createFemaleSocket(this, this, "A");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        Logix copy = new Logix(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

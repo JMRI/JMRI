@@ -62,6 +62,18 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        DigitalFormula copy = new DigitalFormula(sysName, userName);
+        copy.setComment(getComment());
+        copy.setFormula(_formula);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
+    }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {

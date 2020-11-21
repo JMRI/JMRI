@@ -17,7 +17,8 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implements MaleStringExpressionSocket {
+public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
+        implements MaleStringExpressionSocket {
 
     private final StringExpressionBean _expression;
     private DebugConfig _debugConfig = null;
@@ -314,15 +315,6 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     @Override
     public Base getObject() {
         return _expression;
-    }
-    
-    @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
-            throws JmriException {
-        Base copy = getObject().getDeepCopy(systemNames, userNames);
-        if (copy == null) return null;      // REMOVE LATER!!!!!!!!
-        getManager().register(new DefaultMaleAnalogActionSocket(getManager(), (AnalogActionBean)copy));
-        return copy;
     }
     
     /** {@inheritDoc} */

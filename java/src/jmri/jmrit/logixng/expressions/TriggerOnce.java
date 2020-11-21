@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -36,6 +37,17 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E");
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        TriggerOnce copy = new TriggerOnce(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     /** {@inheritDoc} */

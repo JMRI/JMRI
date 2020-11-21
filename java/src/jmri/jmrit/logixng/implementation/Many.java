@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
@@ -213,6 +211,16 @@ public class Many extends AbstractBase
 
     @Override
     public void setLock(Lock lock) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         throw new UnsupportedOperationException("Not supported");
     }
     

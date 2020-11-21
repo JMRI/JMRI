@@ -5,14 +5,13 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.Map;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.Conditional;
-import jmri.ConditionalManager;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
+
+import jmri.*;
+import jmri.jmrit.logixng.*;
 
 /**
  * Evaluates the state of a Conditional.
@@ -29,6 +28,20 @@ public class ExpressionConditional extends AbstractDigitalExpression
     public ExpressionConditional(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
+    }
+    
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ExpressionConditional copy = new ExpressionConditional(sysName, userName);
+        copy.setComment(getComment());
+        copy.set_Is_IsNot(_is_IsNot);
+        if (_conditional != null) copy.setConditional(_conditional);
+        copy.setConditionalState(_conditionalState);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
     public void setConditional(@Nonnull String conditionalName) {

@@ -45,8 +45,9 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionMemory copy = new ActionMemory(sysName, userName);
-        copy.setMemory(_memoryHandle);
-        copy.setOtherMemory(_otherMemoryHandle);
+        copy.setComment(getComment());
+        if (_memoryHandle != null) copy.setMemory(_memoryHandle);
+        if (_otherMemoryHandle != null) copy.setOtherMemory(_otherMemoryHandle);
         copy.setMemoryOperation(_memoryOperation);
         copy.setData(_data);
         return manager.registerAction(copy);

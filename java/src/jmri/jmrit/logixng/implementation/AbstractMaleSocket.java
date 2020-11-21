@@ -161,6 +161,18 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         return _manager;
     }
     
+    @Override
+    public final Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
+            throws JmriException {
+        return getObject().getDeepCopy(systemNames, userNames);
+    }
+
+    @Override
+    public final Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        getObject().deepCopyChildren(original, systemNames, userNames);
+        return this;
+    }
+    
     /**
      * Disposes this object.
      * This must remove _all_ connections!

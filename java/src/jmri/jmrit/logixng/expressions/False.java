@@ -25,6 +25,7 @@ public class False extends AbstractDigitalExpression {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalExpressionBean copy = new False(sysName, userName);
+        copy.setComment(getComment());
         return manager.registerExpression(copy);
     }
     

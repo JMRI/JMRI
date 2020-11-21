@@ -4,6 +4,7 @@ import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
 
+import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 
@@ -431,6 +432,11 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
 
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
+    public Base deepCopyChildren(Base original, Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         throw new UnsupportedOperationException("Not supported");
     }
 

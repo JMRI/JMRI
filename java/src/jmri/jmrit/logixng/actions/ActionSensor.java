@@ -38,7 +38,8 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionSensor copy = new ActionSensor(sysName, userName);
-        copy.setSensor(_sensorHandle);
+        copy.setComment(getComment());
+        if (_sensorHandle != null) copy.setSensor(_sensorHandle);
         copy.setSensorState(_sensorState);
         return manager.registerAction(copy);
     }

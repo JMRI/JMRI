@@ -61,6 +61,25 @@ public class ActionTimer extends AbstractDigitalAction
         setActionData(actionDataList);
     }
     
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        ActionTimer copy = new ActionTimer(sysName, userName);
+        copy.setComment(getComment());
+        copy.setComment(getComment());
+        copy.setNumActions(getNumActions());
+        for (int i=0; i < getNumActions(); i++) {
+            copy.setDelay(i, getDelay(i));
+        }
+        copy.setStartImmediately(_startImmediately);
+        copy.setRunContinuously(_runContinuously);
+        copy.setUnit(_unit);
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+    
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {
             throw new RuntimeException("expression system names cannot be set more than once");

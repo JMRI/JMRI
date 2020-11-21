@@ -41,6 +41,17 @@ public class AnalogMany extends AbstractAnalogAction
         setActionSystemNames(actionSystemNames);
     }
     
+    @Override
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+        AnalogActionManager manager = InstanceManager.getDefault(AnalogActionManager.class);
+        String sysName = systemNames.get(getSystemName());
+        String userName = userNames.get(getSystemName());
+        if (sysName == null) sysName = manager.getAutoSystemName();
+        AnalogMany copy = new AnalogMany(sysName, userName);
+        copy.setComment(getComment());
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
+    }
+    
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_actionEntries.isEmpty()) {
             throw new RuntimeException("action system names cannot be set more than once");

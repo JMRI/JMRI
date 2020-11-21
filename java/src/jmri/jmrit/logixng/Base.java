@@ -148,12 +148,23 @@ public interface Base extends PropertyChangeProvider {
      * @return a deep copy
      * @throws jmri.JmriException in case of an error
      */
-    public default Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
-            throws JmriException {
-        
-        // REMOVE LATER!!!!!!!!
-        return null;
-    }
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames)
+            throws JmriException;
+    
+    /**
+     * Do a deep copy of children from the original to me.
+     * 
+     * @param original the item to copy from
+     * @param systemNames a map of old and new system name
+     * @param userNames a map of old system name and new user name
+     * @return myself
+     * @throws jmri.JmriException in case of an error
+     */
+    public Base deepCopyChildren(
+            Base original,
+            Map<String, String> systemNames,
+            Map<String, String> userNames)
+            throws JmriException;
     
     /**
      * Set associated comment text.

@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.util.Locale;
+import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -207,6 +208,16 @@ public class StringExpressionManagerTest extends AbstractManagerTestBase {
 
         @Override
         public boolean getTriggerOnChange() {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base getDeepCopy(Map<String, String> map, Map<String, String> map1) throws JmriException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
+        public Base deepCopyChildren(Base base, Map<String, String> map, Map<String, String> map1) throws JmriException {
             throw new UnsupportedOperationException("Not supported");
         }
         
