@@ -198,17 +198,23 @@ public class TreeEditor extends TreeViewer {
         _create = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
         panel5.add(_create);
         _create.addActionListener((ActionEvent e) -> {
-            femaleSocket.setName(_socketNameTextField.getText());
-            cancelRenameSocketPressed(null);
-            for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                TreeModelEvent tme = new TreeModelEvent(
-                        femaleSocket,
-                        path.getPath()
-                );
-                l.treeNodesChanged(tme);
+            if (femaleSocket.validateName(_socketNameTextField.getText())) {
+                femaleSocket.setName(_socketNameTextField.getText());
+                cancelRenameSocketPressed(null);
+                for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                    TreeModelEvent tme = new TreeModelEvent(
+                            femaleSocket,
+                            path.getPath()
+                    );
+                    l.treeNodesChanged(tme);
+                }
+                tree.updateUI();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ValidateFemaleSocketMessage", _socketNameTextField.getText()),
+                        Bundle.getMessage("ValidateFemaleSocketTitle"),
+                        JOptionPane.ERROR_MESSAGE);
             }
-//            tree.expandPath(path);
-            tree.updateUI();
         });
         
         contentPanel.add(panel5);
