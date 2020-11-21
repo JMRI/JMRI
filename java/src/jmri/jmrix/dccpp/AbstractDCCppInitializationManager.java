@@ -20,23 +20,23 @@ public abstract class AbstractDCCppInitializationManager {
 
     protected DCCppSystemConnectionMemo systemMemo = null;
 
-    // If there is no answer from an Arduino after 10 sec it's not there
-    // Normal answer time is ~2 sec
-    protected static int INITIALTIMEOUT = 10000;
+    // If there is no answer from an Arduino after 20 sec it's not there
+    // Normal answer time is ~2 sec, with wifi can be much longer
+    protected static int INITIALTIMEOUT = 20000;
 
     protected int getInitTimeout() {
-        return INITIALTIMEOUT;  // this method is overriden for tests.
+        return INITIALTIMEOUT;  // this method is overridden for tests.
     }
 
     public AbstractDCCppInitializationManager(DCCppSystemConnectionMemo memo) {
 
         // spawn a thread to request version information 
         // and wait for the command station to respond
-        log.debug("Starting DCC++ Initialization Process");
+        log.debug("Starting DCC++ Initialization Process, initial timeout={}ms", INITIALTIMEOUT);
         systemMemo = memo;
         initThread = new Thread(new DCCppInitializer(this));
 
-        // We need to wait for the initilization thread 
+        // We need to wait for the initialization thread 
         // to finish before we can continue. 
         synchronized (this) {
             new jmri.util.WaitHandler(this);
@@ -47,7 +47,7 @@ public abstract class AbstractDCCppInitializationManager {
 
     protected abstract void init();
 
-    /* Interal class to configure the DCC++ implementation */
+    /* Internal class to configure the DCC++ implementation */
     protected class DCCppInitializer implements Runnable, DCCppListener {
 
         private javax.swing.Timer initTimer; // Timer used to let he 
@@ -66,32 +66,23 @@ public abstract class AbstractDCCppInitializationManager {
             parent = Parent;
             initTimer = setupInitTimer();
 
-            // Register as an DCCppListener Listener
+            // Register as a DCCppListener Listener, to receive the status and numslots messages
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
 
-            //Send Information request to the Base Station
-            //If DCC++ just has started, it sends the
-            //the status message anyway,
-            //no matter what we send as the first request
-            //(we could ask for current or whatever)
-            //
-            // msg = new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX);
-            // systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
-            //
             //Request hardware and software version 
             msg = DCCppMessage.makeCSStatusMsg();
             //Then Send the version request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
             //Request number of available slots
             msg = DCCppMessage.makeCSMaxNumSlotsMsg();
-            //Then Send the version request to the controller
+            //Then Send the available slots request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
 
             log.debug("DCCppInitializer: MaxNumSlots and Status message sent");
         }
 
         protected javax.swing.Timer setupInitTimer() {
-            // Initialize and start initilization timeout timer.
+            // Initialize and start initialization timeout timer.
             javax.swing.Timer retVal
                     = new javax.swing.Timer(INITIALTIMEOUT,
                             (java.awt.event.ActionEvent e) -> {
@@ -121,7 +112,7 @@ public abstract class AbstractDCCppInitializationManager {
                     parent.notifyAll();
                 }
             } catch (Exception e) {
-                log.error("Exception {} while notifying initilization thread.", e);
+                log.error("Exception {} while notifying initialization thread.", e);
             }
             log.debug("Notification Sent");
             // Then dispose of this object
@@ -150,8 +141,7 @@ public abstract class AbstractDCCppInitializationManager {
                         .setCommandStationInfo(l);
                 gotVersion = true;
             }
-            //If number of slots is not supported, by the DCC++ version
-            //we'll have to wait for the timeout instead, sorry.
+            //If we got both items we were waiting for, stop waiting and allow the init to continue
             if (gotVersion && gotMaxNumSlots) {
                 finish();
             }
