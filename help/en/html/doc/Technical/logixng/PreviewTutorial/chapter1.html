@@ -1,12 +1,40 @@
 <html>
 <head>
 <title>LogixNG preview - Chapter 1</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<style>
+.hidden {
+/*    background-color: yellow; */
+    display: none;
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+  $("#id1").click(function(){
+//    $(this).hide();
+    $("#id2").toggleClass("hidden");
+  });
+});
+</script>
+
 </head>
 
 <body>
+<a id="id1" href="#">Note for developers</a>
+<p id="id2">If you click on me, aaa I will disappear.</p>
+
 <table width="800">
 <tr>
 <td>
+
+
+
+
+
+
+
 
 <h1>LogixNG Preview - Chapter 1</h1>
 

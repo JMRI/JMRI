@@ -58,4 +58,10 @@ public interface Clipboard {
      */
     public void moveItemToTop(MaleSocket maleSocket);
     
+    /**
+     * Setup this object and its children.
+     * This method is used to lookup system names for child sockets.
+     */
+    public void setup();
+    
 }

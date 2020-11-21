@@ -1,11 +1,20 @@
 package jmri.jmrit.logixng.implementation.configurexml;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.implementation.DefaultLogixNGManager;
+
 import org.jdom2.Element;
+
+import jmri.jmrit.logixng.Clipboard;
 import jmri.jmrit.logixng.LogixNG;
+import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.implementation.AnyMany;
+import jmri.jmrit.logixng.implementation.DefaultClipboard;
 import jmri.jmrit.logixng.implementation.DefaultLogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.ThreadingUtil;
@@ -57,6 +66,22 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                 
                 logixNGs.addContent(elem);
             }
+            
+            // Store items on the clipboard
+            Element elemClipboard = new Element("clipboard");  // NOI18N
+            Clipboard clipboard = tm.getClipboard();
+            if (clipboard.getRoot().isConnected()) {
+                Base rootObject = clipboard.getRoot().getConnectedSocket().getObject();
+                try {
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(rootObject);
+                    if (e != null) {
+                        elemClipboard.addContent(e);
+                    }
+                } catch (Exception e) {
+                    log.error("Error storing action: {}", e, e);
+                }
+            }
+            logixNGs.addContent(elemClipboard);
         }
         return (logixNGs);
     }
@@ -86,6 +111,7 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
         replaceLogixNGManager();
         // load individual sharedLogix
         loadLogixNGs(sharedLogixNG);
+        loadClipboard(sharedLogixNG);
         return true;
     }
 
@@ -94,10 +120,10 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
      * additional info needed for a specific logixng type, invoke this with the
      * parent of the set of LogixNG elements.
      *
-     * @param logixNGs Element containing the LogixNG elements to load.
+     * @param sharedLogixNG Element containing the LogixNG elements to load.
      */
-    public void loadLogixNGs(Element logixNGs) {
-        List<Element> logixNGList = logixNGs.getChildren("logixng");  // NOI18N
+    public void loadLogixNGs(Element sharedLogixNG) {
+        List<Element> logixNGList = sharedLogixNG.getChildren("logixng");  // NOI18N
         log.debug("Found " + logixNGList.size() + " logixngs");  // NOI18N
         LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
 
@@ -148,6 +174,51 @@ public class DefaultLogixNGManagerXml extends jmri.managers.configurexml.Abstrac
                     logixNG.setConditionalNG_SystemName(j, systemName);
                 }
             }
+        }
+    }
+    
+    public void loadClipboard(Element sharedLogixNG) {
+        List<Element> clipboardList = sharedLogixNG.getChildren("clipboard");  // NOI18N
+        if (clipboardList.isEmpty()) return;
+        List<Element> clipboardSubList = clipboardList.get(0).getChildren();
+        if (clipboardSubList.isEmpty()) return;
+        
+        String className = clipboardSubList.get(0).getAttribute("class").getValue();
+//        log.error("className: " + className);
+        
+        Class<?> clazz;
+        try {
+            clazz = Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            log.error("cannot load class " + className, ex);
+            return;
+        }
+        
+        Constructor<?> c;
+        try {
+            c = clazz.getConstructor();
+        } catch (NoSuchMethodException | SecurityException ex) {
+            log.error("cannot create constructor", ex);
+            return;
+        }
+        
+        try {
+            Object o = c.newInstance();
+            
+            if (o == null) {
+                log.error("class is null");
+                return;
+            }
+            if (! (o instanceof AnyManyXml)) {
+                log.error("class has wrong type: " + o.getClass().getName());
+                return;
+            }
+
+            LogixNG_Manager tm = InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
+            AnyMany anyMany = ((AnyManyXml)o).loadItem(clipboardList.get(0));
+            ((DefaultClipboard)tm.getClipboard()).replaceClipboardItems(anyMany);
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            log.error("cannot create object", ex);
         }
     }
 

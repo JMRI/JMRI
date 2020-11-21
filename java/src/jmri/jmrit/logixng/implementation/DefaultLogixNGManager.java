@@ -142,6 +142,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.setup();
             logixNG.setParentForAllChildren();
         }
+        _clipboard.setup();
     }
 
     /** {@inheritDoc} */

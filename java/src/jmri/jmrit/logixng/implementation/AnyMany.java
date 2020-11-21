@@ -12,19 +12,19 @@ import jmri.jmrit.logixng.*;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class Many extends AbstractBase
+public class AnyMany extends AbstractBase
         implements FemaleSocketListener {
 
     private final List<ItemEntry> _itemEntries = new ArrayList<>();
     private boolean disableCheckForUnconnectedSocket = false;
     
-    public Many(String sys, String user)
+    public AnyMany(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _itemEntries.add(new ItemEntry(new DefaultFemaleAnySocket(this, this, getNewSocketName())));
     }
 
-    public Many(String sys, String user, List<ItemData> itemSystemNames)
+    public AnyMany(String sys, String user, List<ItemData> itemSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setItemSystemNames(itemSystemNames);
@@ -37,9 +37,9 @@ public class Many extends AbstractBase
         
         for (ItemData itemData : systemNamesAndClasses) {
             FemaleAnySocket socket =
-                    new DefaultFemaleAnySocket(this, this, itemData._systemName);
+                    new DefaultFemaleAnySocket(this, this, itemData._socketName);
             
-            _itemEntries.add(new ItemEntry(socket, itemData._className, itemData._socketName));
+            _itemEntries.add(new ItemEntry(socket, itemData._className, itemData._systemName));
         }
     }
 
@@ -63,8 +63,8 @@ public class Many extends AbstractBase
                     ae._socket.disconnect();
                     if (socketSystemName != null) {
                         NamedBean namedBean =
-                                ((Manager)InstanceManager.getDefault(Class.forName(ae._itemManagerClass)))
-                                        .getBySystemName(socketSystemName);
+                                InstanceManager.getDefault(LogixNG_Manager.class)
+                                        .getManager(ae._itemManagerClass).getBySystemName(socketSystemName);
                         
                         if (namedBean != null) {
                             if (namedBean instanceof MaleSocket) {
@@ -84,8 +84,6 @@ public class Many extends AbstractBase
             } catch (SocketAlreadyConnectedException ex) {
                 // This shouldn't happen and is a runtime error if it does.
                 throw new RuntimeException("socket is already connected");
-            } catch (ClassNotFoundException ex) {
-                log.error("cannot load class " + ae._itemManagerClass, ex);
             }
         }
         
@@ -287,7 +285,7 @@ public class Many extends AbstractBase
         public final String _className;
         public final String _socketName;
         
-        public ItemData(String systemName, String className, String socketName) {
+        public ItemData(String socketName, String systemName, String className) {
             _systemName = systemName;
             _className = className;
             _socketName = socketName;
@@ -296,6 +294,6 @@ public class Many extends AbstractBase
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Many.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnyMany.class);
 
 }

@@ -63,22 +63,37 @@
                 </xs:complexType>
 
               </xs:element>
-<!--
-              <xs:element name="socket" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence>
-                    <xs:element name="socketName" type="xs:string" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
--->
+
             </xs:sequence>
             <xs:attribute name="enabled" type="yesNoType" />
 <!--            <xs:attribute name="order" type="xs:nonNegativeInteger" /> -->
           </xs:complexType>
         </xs:element>
-            
+        
+
+        <xs:element name="clipboard" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="many" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socket" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                          <xs:element name="manager" type="classType" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="class" type="classType" use="required"/>
+                </xs:complexType>
+               </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>

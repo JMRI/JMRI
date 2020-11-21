@@ -15,7 +15,7 @@ import jmri.jmrit.logixng.*;
  */
 public class DefaultClipboard implements Clipboard {
 
-    private final Many _clipboardItems = new Many("", null);
+    private AnyMany _clipboardItems = new AnyMany("", null);
     
     private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(null, new FemaleSocketListener() {
         @Override
@@ -94,6 +94,15 @@ public class DefaultClipboard implements Clipboard {
         } catch (SocketAlreadyConnectedException ex) {
             throw new UnsupportedOperationException("Cannot move item to clipboard", ex);
         }
+    }
+
+    @Override
+    public void setup() {
+        _clipboardItems.setup();
+    }
+    
+    public void replaceClipboardItems(AnyMany clipboardItems) {
+        _clipboardItems = clipboardItems;
     }
     
     
