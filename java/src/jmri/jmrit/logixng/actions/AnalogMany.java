@@ -151,6 +151,10 @@ public class AnalogMany extends AbstractAnalogAction
                             .createFemaleSocket(this, this, getNewSocketName());
             _actionEntries.add(new ActionEntry(socket));
             addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
     private void checkFreeSocket() {
         boolean hasFreeSocket = false;
         
