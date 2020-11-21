@@ -49,6 +49,7 @@ public class AnalogMany extends AbstractAnalogAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         AnalogMany copy = new AnalogMany(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -139,6 +140,17 @@ public class AnalogMany extends AbstractAnalogAction
         return _actionEntries.size();
     }
     
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_actionEntries.size() < num) {
+            FemaleAnalogActionSocket socket =
+                    InstanceManager.getDefault(AnalogActionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _actionEntries.add(new ActionEntry(socket));
+            addList.add(socket);
     private void checkFreeSocket() {
         boolean hasFreeSocket = false;
         

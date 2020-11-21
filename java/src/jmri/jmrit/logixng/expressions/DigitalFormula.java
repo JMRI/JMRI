@@ -71,6 +71,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalFormula copy = new DigitalFormula(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         copy.setFormula(_formula);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
@@ -190,6 +191,20 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         } else {
             return Bundle.getMessage(locale, "Formula_Long", _formula);
         }
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_expressionEntries.size() < num) {
+            FemaleGenericExpressionSocket socket =
+                    createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
 
     private void checkFreeSocket() {

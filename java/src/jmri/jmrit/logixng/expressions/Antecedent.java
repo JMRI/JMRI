@@ -70,6 +70,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
         if (sysName == null) sysName = manager.getAutoSystemName();
         Antecedent copy = new Antecedent(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         copy.setAntecedent(_antecedent);
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
@@ -200,6 +201,21 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
 //        if (result != null) System.out.format("DANIEL: Exception: %s%n", result);
 //        if (result != null) throw new IllegalArgumentException(result);
         _antecedent = antecedent;
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_expressionEntries.size() < num) {
+            FemaleDigitalExpressionSocket socket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
     private void checkFreeSocket() {

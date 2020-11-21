@@ -49,6 +49,7 @@ public class StringMany extends AbstractStringAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringMany copy = new StringMany(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -139,6 +140,21 @@ public class StringMany extends AbstractStringAction
     @Override
     public int getChildCount() {
         return _actionEntries.size();
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_actionEntries.size() < num) {
+            FemaleStringActionSocket socket =
+                    InstanceManager.getDefault(StringActionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _actionEntries.add(new ActionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
     private void checkFreeSocket() {

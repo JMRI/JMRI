@@ -71,9 +71,9 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         if (sysName == null) sysName = manager.getAutoSystemName();
         StringFormula copy = new StringFormula(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         copy.setFormula(_formula);
-        Base aaa = manager.registerExpression(copy);
-        return aaa.deepCopyChildren(this, systemNames, userNames);
+        return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
@@ -191,6 +191,20 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         // parseExpression() may throw an exception and we don't want to set
         // the field _formula until we now parseExpression() has succeeded.
         _formula = formula;
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_expressionEntries.size() < num) {
+            FemaleGenericExpressionSocket socket =
+                    createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
     private void checkFreeSocket() {

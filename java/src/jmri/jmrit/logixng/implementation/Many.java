@@ -196,7 +196,7 @@ public class Many extends AbstractBase
 
     @Override
     public Base getParent() {
-        throw new UnsupportedOperationException("Not supported");
+        return null;
     }
 
     @Override

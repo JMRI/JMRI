@@ -48,6 +48,7 @@ public class DigitalMany extends AbstractDigitalAction
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalMany copy = new DigitalMany(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -136,6 +137,21 @@ public class DigitalMany extends AbstractDigitalAction
     @Override
     public int getChildCount() {
         return _actionEntries.size();
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_actionEntries.size() < num) {
+            FemaleDigitalActionSocket socket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _actionEntries.add(new ActionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
     private void checkFreeSocket() {

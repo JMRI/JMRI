@@ -47,6 +47,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
         if (sysName == null) sysName = manager.getAutoSystemName();
         Or copy = new Or(sysName, userName);
         copy.setComment(getComment());
+        copy.setNumSockets(getChildCount());
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -110,6 +111,21 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Or_Long");
+    }
+    
+    // This method ensures that we have enough of children
+    private void setNumSockets(int num) {
+        List<FemaleSocket> addList = new ArrayList<>();
+        
+        // Is there not enough children?
+        while (_expressionEntries.size() < num) {
+            FemaleDigitalExpressionSocket socket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, getNewSocketName());
+            _expressionEntries.add(new ExpressionEntry(socket));
+            addList.add(socket);
+        }
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
 
     private void checkFreeSocket() {
