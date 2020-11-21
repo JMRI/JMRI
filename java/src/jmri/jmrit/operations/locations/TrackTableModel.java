@@ -441,11 +441,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     private void setMoves(int row, Object value) {
         Track track = _tracksList.get(row);
-        try {
-            track.setMoves((Integer.parseInt((String) value)));
-        } catch (NumberFormatException e) {
-            log.error("Moves ({}) for track ({}) not a number", value, track.getName());
-        }
+        track.setMoves((int) value);
     }
 
     private void removePropertyChangeTracks() {
