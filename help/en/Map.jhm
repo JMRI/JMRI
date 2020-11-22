@@ -604,6 +604,8 @@
 
 <mapID target="manual.DecoderPro3.Basic_Start" url="manual/DecoderPro3/Basic_Start.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.OBlockTable_BlockSpeed" url="package/jmri/jmrit/beantable/OBlockTable.shtml#BlockSpeed"/>
+
 <mapID target="manual.DecoderPro3.Main_NCE_Editconsist" url="manual/DecoderPro3/Main_NCE.shtml#Editconsist"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LoopingTrainsThroughStaging" url="package/jmri/jmrit/operations/Operations.shtml#LoopingTrainsThroughStaging"/>
@@ -715,6 +717,8 @@
 <mapID target="html.hardware.XPressNet.index_commandstation" url="html/hardware/XPressNet/index.shtml#commandstation"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.AutoTrains" url="package/jmri/jmrit/dispatcher/AutoTrains.shtml"/>
+
+<mapID target="package.jmri.jmrit.beantable.OBlockTable" url="package/jmri/jmrit/beantable/OBlockTable.shtml"/>
 
 <mapID target="html.doc.Technical.index_writecode" url="html/doc/Technical/index.shtml#writecode"/>
 
@@ -3474,6 +3478,8 @@
 
 <mapID target="html.tools.Audio_table" url="html/tools/Audio.shtml#table"/>
 
+<mapID target="package.jmri.jmrit.beantable.OBlockTable_blockPaths" url="package/jmri/jmrit/beantable/OBlockTable.shtml#blockPaths"/>
+
 <mapID target="manual.DecoderPro.Main_LocoNet_Clock" url="manual/DecoderPro/Main_LocoNet.shtml#Clock"/>
 
 <mapID target="html.hardware.ieee801254.index_hardware" url="html/hardware/ieee801254/index.shtml#hardware"/>
@@ -4786,6 +4792,8 @@
 
 <mapID target="html.tools.Audio_sources" url="html/tools/Audio.shtml#sources"/>
 
+<mapID target="package.jmri.jmrit.beantable.OBlockTable_addBlock" url="package/jmri/jmrit/beantable/OBlockTable.shtml#addBlock"/>
+
 <mapID target="html.web.JsonServlet" url="html/web/JsonServlet.shtml"/>
 
 <mapID target="html.apps.DecoderPro.MultiDecoder_digitraxproposal" url="html/apps/DecoderPro/MultiDecoder.shtml#digitraxproposal"/>
@@ -4878,7 +4886,7 @@
 
 <mapID target="package.jmri.jmrit.display.images.SingleOptions" url="package/jmri/jmrit/display/images/SingleOptions.png"/>
 
-<mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.images.StatusBar" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/images/StatusBar.png"/>
+<mapID target="package.jmri.jmrix.can.cbus.swing.modeswitcher.images.StatusBar" url="package/jmri/jmrix/can/cbus/swing/modeswitcher/images/StatusBar.PNG"/>
 
 <mapID target="manual.DecoderPro3.images.sflogo" url="manual/DecoderPro3/images/sflogo.png"/>
 

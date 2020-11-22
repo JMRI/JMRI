@@ -249,7 +249,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             return "";
         }
 
-        // ovewrdife to get right width
+        // typical to get right width
         @Override
         protected void configDeleteColumn(JTable table) {
             // have the delete column hold a button

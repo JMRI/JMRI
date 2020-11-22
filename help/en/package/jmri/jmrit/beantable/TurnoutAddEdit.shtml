@@ -49,13 +49,13 @@
       <p>When checking the "Add a sequential range" box, this will
       enable the "Number of items" spinner. Click the small arrows
       up or down to set the number of Turnouts you wish to add.
-      This will create that number of
-      sequential Turnouts.</p>If a User Name has been entered, a
-      number will be added to the end of that names of all but the first
+      This will create that number of sequential Turnouts.</p>
+      <p>If a User Name has been entered, a
+      number will be added to the end of the names of all but the first
       one to keep each Turnout User Name unique.<br>
       See <a href=
       "../../../../html/doc/Technical/Names.shtml">Names</a> under
-      general help for more information.
+        general help for more information.</p>
 
       <p>Back to the <a href="TurnoutTable.shtml">Turnout Table
       help page</a>.</p>

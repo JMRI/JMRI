@@ -216,6 +216,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     /**
      * Configure the combo box listing managers.
+     * Can be placed on Add New pane to select a connection for the new item.
      *
      * @param comboBox     the combo box to configure
      * @param manager      the current manager

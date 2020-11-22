@@ -301,6 +301,8 @@
 
   <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
+  <tocitem text="OBlock Tables (tabbed) " target="package.jmri.jmrit.beantable.OBlockTable"/>
+
   <tocitem text="O(ccupancy)Block Table " target="package.jmri.jmrit.logix.OBlockTable"/>
 
   <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
