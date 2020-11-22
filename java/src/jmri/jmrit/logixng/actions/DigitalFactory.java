@@ -24,6 +24,8 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionMemory.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionScript.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSensor.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalHead.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalMast.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottle.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ActionTimer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class));
