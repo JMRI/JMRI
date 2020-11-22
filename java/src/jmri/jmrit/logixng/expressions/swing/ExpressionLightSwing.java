@@ -106,11 +106,11 @@ public class ExpressionLightSwing extends AbstractDigitalExpressionSwing {
         }
         ExpressionLight expression = (ExpressionLight)object;
         try {
-            Light turnout = lightBeanPanel.getNamedBean();
-            if (turnout != null) {
+            Light light = lightBeanPanel.getNamedBean();
+            if (light != null) {
                 NamedBeanHandle<Light> handle
                         = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
+                                .getNamedBeanHandle(light.getDisplayName(), light);
                 expression.setLight(handle);
             }
             expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());

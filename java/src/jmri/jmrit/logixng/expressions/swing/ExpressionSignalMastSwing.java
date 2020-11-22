@@ -79,19 +79,21 @@ public class ExpressionSignalMastSwing extends AbstractDigitalExpressionSwing {
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof ExpressionSignalMast)) {
-            throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
+            throw new IllegalArgumentException("object must be an ExpressionSignalMast but is a: "+object.getClass().getName());
         }
         ExpressionSignalMast expression = (ExpressionSignalMast)object;
-        try {
-            SignalMast signalMast = signalMastBeanPanel.getNamedBean();
-            if (signalMast != null) {
-                NamedBeanHandle<SignalMast> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                expression.setSignalMast(handle);
+        if (!signalMastBeanPanel.isEmpty()) {
+            try {
+                SignalMast signalMast = signalMastBeanPanel.getNamedBean();
+                if (signalMast != null) {
+                    NamedBeanHandle<SignalMast> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                    expression.setSignalMast(handle);
+                }
+            } catch (JmriException ex) {
+                log.error("Cannot get NamedBeanHandle for signalMast", ex);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
         expression.setQueryType(queryTypeComboBox.getItemAt(queryTypeComboBox.getSelectedIndex()));

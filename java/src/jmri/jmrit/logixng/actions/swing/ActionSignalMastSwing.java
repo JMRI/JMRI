@@ -79,19 +79,21 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof ActionSignalMast)) {
-            throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
+            throw new IllegalArgumentException("object must be an ActionSignalMast but is a: "+object.getClass().getName());
         }
         ActionSignalMast action = (ActionSignalMast)object;
-        try {
-            SignalMast signalMast = signalMastBeanPanel.getNamedBean();
-            if (signalMast != null) {
-                NamedBeanHandle<SignalMast> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
-                action.setSignalMast(handle);
+        if (!signalMastBeanPanel.isEmpty()) {
+            try {
+                SignalMast signalMast = signalMastBeanPanel.getNamedBean();
+                if (signalMast != null) {
+                    NamedBeanHandle<SignalMast> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(signalMast.getDisplayName(), signalMast);
+                    action.setSignalMast(handle);
+                }
+            } catch (JmriException ex) {
+                log.error("Cannot get NamedBeanHandle for signalMast", ex);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
         action.setOperationType(queryTypeComboBox.getItemAt(queryTypeComboBox.getSelectedIndex()));

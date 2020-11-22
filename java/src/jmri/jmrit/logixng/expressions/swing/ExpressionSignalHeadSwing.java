@@ -81,19 +81,21 @@ public class ExpressionSignalHeadSwing extends AbstractDigitalExpressionSwing {
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof ExpressionSignalHead)) {
-            throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
+            throw new IllegalArgumentException("object must be an ExpressionSignalHead but is a: "+object.getClass().getName());
         }
         ExpressionSignalHead expression = (ExpressionSignalHead)object;
-        try {
-            SignalHead signalHead = signalHeadBeanPanel.getNamedBean();
-            if (signalHead != null) {
-                NamedBeanHandle<SignalHead> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                expression.setSignalHead(handle);
+        if (!signalHeadBeanPanel.isEmpty()) {
+            try {
+                SignalHead signalHead = signalHeadBeanPanel.getNamedBean();
+                if (signalHead != null) {
+                    NamedBeanHandle<SignalHead> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                    expression.setSignalHead(handle);
+                }
+            } catch (JmriException ex) {
+                log.error("Cannot get NamedBeanHandle for signalHead", ex);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
         expression.setQueryType(queryTypeComboBox.getItemAt(queryTypeComboBox.getSelectedIndex()));

@@ -81,19 +81,21 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
     @Override
     public void updateObject(@Nonnull Base object) {
         if (! (object instanceof ActionSignalHead)) {
-            throw new IllegalArgumentException("object must be an ActionMemory but is a: "+object.getClass().getName());
+            throw new IllegalArgumentException("object must be an ActionSignalHead but is a: "+object.getClass().getName());
         }
         ActionSignalHead action = (ActionSignalHead)object;
-        try {
-            SignalHead signalHead = signalHeadBeanPanel.getNamedBean();
-            if (signalHead != null) {
-                NamedBeanHandle<SignalHead> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
-                action.setSignalHead(handle);
+        if (!signalHeadBeanPanel.isEmpty()) {
+            try {
+                SignalHead signalHead = signalHeadBeanPanel.getNamedBean();
+                if (signalHead != null) {
+                    NamedBeanHandle<SignalHead> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(signalHead.getDisplayName(), signalHead);
+                    action.setSignalHead(handle);
+                }
+            } catch (JmriException ex) {
+                log.error("Cannot get NamedBeanHandle for signalHead", ex);
             }
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for memory", ex);
         }
         
         action.setOperationType(queryTypeComboBox.getItemAt(queryTypeComboBox.getSelectedIndex()));
