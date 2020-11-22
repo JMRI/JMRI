@@ -83,7 +83,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient Source src = null;
 
-    DestinationPoints(PointDetails point, String id, Source src) {
+    protected DestinationPoints(PointDetails point, String id, Source src) {
         super(id != null ? id : "IN:" + UUID.randomUUID().toString());
         this.src = src;
         this.point = point;
@@ -1268,12 +1268,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     public void setState(int state) {
     }
 
-    void setActiveEntryExit(boolean boo) {
+    protected void setActiveEntryExit(boolean boo) {
         int oldvalue = getState();
         activeEntryExit = boo;
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
-
     }
 
     @Override
