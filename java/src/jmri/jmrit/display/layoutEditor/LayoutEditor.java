@@ -32,6 +32,7 @@ import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
@@ -144,6 +145,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JRadioButtonMenuItem tooltipNoneMenuItem = null;
     private JRadioButtonMenuItem tooltipInEditMenuItem = null;
     private JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
+
+    private JCheckBoxMenuItem pixelsCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Pixels"));
+    private JCheckBoxMenuItem metricCMCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MetricCM"));
+    private JCheckBoxMenuItem englishFeetInchesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EnglishFeetInches"));
 
     private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
@@ -308,6 +313,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
+    /*==============*\
+    |* Toolbar side *|
+    \*==============*/
     private enum ToolBarSide {
         eTOP("top"),
         eLEFT("left"),
@@ -423,8 +431,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
                 // log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-                if (prefsProp
-                        != null) {
+                if (prefsProp != null) {
                     ToolBarSide newToolBarSide = ToolBarSide.getName((String) prefsProp);
                     setToolBarSide(newToolBarSide);
                 }
@@ -1078,7 +1085,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             optionMenu.add(locationItem);
             locationItem.addActionListener((ActionEvent event) -> {
                 setCurrentPositionAndSize();
-                log.debug("Bounds:{}, {}, {}, {}, {}, {}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}",
+                        gContext.getUpperLeftX(), gContext.getUpperLeftY(),
+                        gContext.getWindowWidth(), gContext.getWindowHeight(),
+                        gContext.getLayoutWidth(), gContext.getLayoutHeight());
             });
         }
 
@@ -1136,6 +1146,46 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             setDirty();
             redrawPanel();
         });
+
+        //
+        // location coordinates format menu
+        //
+        JMenu locationMenu = new JMenu(Bundle.getMessage("LocationMenuTitle")); // used for location format SubMenu
+        optionMenu.add(locationMenu);
+
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+            String windowFrameRef = getWindowFrameRef();
+            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "LocationFormat");
+            // log.debug("{}.LocationFormat is {}", windowFrameRef, prefsProp);
+            if (prefsProp != null) {
+                getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.valueOf((String) prefsProp));
+            }
+        });
+
+        // pixels (jmri classic)
+        locationMenu.add(pixelsCheckBoxMenuItem);
+        pixelsCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.ePIXELS);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+
+        // metric cm's
+        locationMenu.add(metricCMCheckBoxMenuItem);
+        metricCMCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.eMETRIC_CM);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+
+        // english feet/inches/16th's
+        locationMenu.add(englishFeetInchesCheckBoxMenuItem);
+        englishFeetInchesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.eENGLISH_FEET_INCHES);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+        selectLocationFormatCheckBoxMenuItem();
 
         //
         // grid menu
@@ -1364,6 +1414,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
 
         return optionMenu;
+    }
+
+    private void selectLocationFormatCheckBoxMenuItem() {
+        pixelsCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.ePIXELS);
+        metricCMCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.eMETRIC_CM);
+        englishFeetInchesCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.eENGLISH_FEET_INCHES);
     }
 
     /*============================================*\
@@ -1841,8 +1897,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             yLoc = (int) (mouseLoc.getY() / theZoom);
             dLoc = new Point2D.Double(xLoc, yLoc);
 
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         adjustClip();
     }
@@ -2790,8 +2845,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
             selectionActive = false;
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             if (event.isPopupTrigger()) {
                 if (isMetaDown(event) || event.isAltDown()) {
@@ -3314,8 +3368,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
@@ -3327,8 +3380,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if (leToolBarPanel.turnoutRHButton.isSelected()) {
@@ -4512,8 +4564,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         List<Positionable> selections = getSelectedItems(event);
         Positionable selection = null;
@@ -4565,8 +4616,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // process this mouse dragged event
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         currentPoint = MathUtil.add(dLoc, startDelta);
         // don't allow negative placement, objects could become unreachable
@@ -4589,8 +4639,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if ((_positionableSelection.size() > 0)
