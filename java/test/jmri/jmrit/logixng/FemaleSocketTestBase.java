@@ -750,7 +750,17 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
+        public void addLocalVariable(SymbolTable.VariableData variableData) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
         public void removeLocalVariable(String name) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void clearLocalVariables() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

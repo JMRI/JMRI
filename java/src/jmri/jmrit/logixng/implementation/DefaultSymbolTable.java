@@ -203,43 +203,6 @@ public class DefaultSymbolTable implements SymbolTable {
     }
     
     
-    public static class DefaultVariableData implements SymbolTable.VariableData {
-        
-        public String _name;
-        public InitialValueType _initalValueType;
-        public String _initialValueData;
-        
-        public DefaultVariableData(
-                String name,
-                InitialValueType initalValueType,
-                String initialValueData) {
-            
-            _name = name;
-            _initalValueType = initalValueType;
-            _initialValueData = initialValueData;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public String getName() {
-            return _name;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public InitialValueType getInitalValueType() {
-            return _initalValueType;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public String getInitialValueData() {
-            return _initialValueData;
-        }
-        
-    }
-    
-    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSymbolTable.class);
     
 }

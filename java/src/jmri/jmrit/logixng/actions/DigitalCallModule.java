@@ -241,7 +241,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
             String returnValueData) {
         
         _parameterData.put(name,
-                new DefaultModule.DefaultParameterData(
+                new Module.ParameterData(
                         name,
                         initialValueType,
                         initialValueData,

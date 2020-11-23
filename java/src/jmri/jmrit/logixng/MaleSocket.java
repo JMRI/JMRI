@@ -3,6 +3,7 @@ package jmri.jmrit.logixng;
 import java.util.Collection;
 
 import jmri.NamedBean;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
@@ -39,10 +40,14 @@ public interface MaleSocket extends Debugable {
     
     public void addLocalVariable(
             String name,
-            SymbolTable.InitialValueType initialValueType,
+            InitialValueType initialValueType,
             String initialValueData);
     
+    public void addLocalVariable(VariableData variableData);
+    
     public void removeLocalVariable(String name);
+    
+    public void clearLocalVariables();
     
     public Collection<VariableData> getLocalVariables();
     

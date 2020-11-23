@@ -102,18 +102,39 @@ public interface SymbolTable {
     /**
      * Data for a parameter.
      */
-    public interface VariableData {
+    public static class VariableData {
+        
+        public String _name;
+        public InitialValueType _initalValueType;
+        public String _initialValueData;
+        
+        public VariableData(
+                String name,
+                InitialValueType initalValueType,
+                String initialValueData) {
+            
+            _name = name;
+            _initalValueType = initalValueType;
+            _initialValueData = initialValueData;
+        }
         
         /**
          * The name of the variable
          * @return the name
          */
-        public String getName();
+        public String getName() {
+            return _name;
+        }
         
-        public InitialValueType getInitalValueType();
+        public InitialValueType getInitalValueType() {
+            return _initalValueType;
+        }
         
-        public String getInitialValueData();
+        public String getInitialValueData() {
+            return _initialValueData;
+        }
         
     }
+    
     
 }

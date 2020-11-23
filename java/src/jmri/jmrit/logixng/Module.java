@@ -3,6 +3,8 @@ package jmri.jmrit.logixng;
 import java.util.Collection;
 
 import jmri.NamedBean;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * Represent a LogixNG module.
@@ -64,11 +66,31 @@ public interface Module extends Base, NamedBean {
     /**
      * Data for a parameter.
      */
-    public interface ParameterData extends SymbolTable.VariableData {
+    public static class ParameterData extends VariableData {
         
-        public ReturnValueType getReturnValueType();
+        public ReturnValueType _returnValueType;
+        public String _returnValueData;
         
-        public String getReturnValueData();
+        public ParameterData(
+                String name,
+                InitialValueType initalValueType,
+                String initialValueData,
+                ReturnValueType returnValueType,
+                String returnValueData) {
+            
+            super(name, initalValueType, initialValueData);
+            
+            _returnValueType = returnValueType;
+            _returnValueData = returnValueData;
+        }
+        
+        public ReturnValueType getReturnValueType() {
+            return _returnValueType;
+        }
+        
+        public String getReturnValueData() {
+            return _returnValueData;
+        }
         
     }
     

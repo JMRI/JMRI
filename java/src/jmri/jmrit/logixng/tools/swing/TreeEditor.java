@@ -64,6 +64,7 @@ public class TreeEditor extends TreeViewer {
     
     private SwingConfiguratorInterface _addSwingConfiguratorInterface;
     private SwingConfiguratorInterface _editSwingConfiguratorInterface;
+    private SwingConfiguratorInterface _swingConfiguratorInterfaceMaleSocket;
     
     private final boolean _enableClipboard;
     
@@ -397,6 +398,7 @@ public class TreeEditor extends TreeViewer {
                     } else {
                         socket = _addSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
                     }
+                    _swingConfiguratorInterfaceMaleSocket.updateObject(socket);
                     socket.setComment(_addComment.getText());
                     try {
                         femaleSocket.connect(socket);
@@ -474,6 +476,7 @@ public class TreeEditor extends TreeViewer {
                     ((NamedBean)object).setUserName(_addUserName.getText());
                     ((NamedBean)object).setComment(_addComment.getText());
                     _editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
+                    _swingConfiguratorInterfaceMaleSocket.updateObject(femaleSocket.getConnectedSocket());
                     _editSwingConfiguratorInterface.dispose();
                     _editConditionalNGDialog.dispose();
                     _editConditionalNGDialog = null;
@@ -608,24 +611,22 @@ public class TreeEditor extends TreeViewer {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         
-        SwingConfiguratorInterface swingConfiguratorInterfaceMaleSocket;
-        
         // Get panel for the item
         JPanel panel33;
         JPanel panel34;
         if (femaleSocket.isConnected()) {
             panel33 = swingConfiguratorInterface.getConfigPanel(femaleSocket.getConnectedSocket().getObject(), panel5);
-            swingConfiguratorInterfaceMaleSocket =
+            _swingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getClass());
-            panel34 = swingConfiguratorInterfaceMaleSocket.getConfigPanel(femaleSocket.getConnectedSocket(), panel5);
+            panel34 = _swingConfiguratorInterfaceMaleSocket.getConfigPanel(femaleSocket.getConnectedSocket(), panel5);
         } else {
             panel33 = swingConfiguratorInterface.getConfigPanel(panel5);
             
             Class<? extends MaleSocket> maleSocketClass =
                     swingConfiguratorInterface.getManager().getMaleSocketClass();
-            swingConfiguratorInterfaceMaleSocket =
+            _swingConfiguratorInterfaceMaleSocket =
                     SwingTools.getSwingConfiguratorForClass(maleSocketClass);
-            panel34 = swingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
+            panel34 = _swingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
         }
         panel3.add(panel31);
         panel3.add(panel32);

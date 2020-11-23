@@ -9,6 +9,7 @@ import java.util.Map;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.util.LoggingUtil;
 
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket {
 
-    protected final Map<String, SymbolTable.VariableData> _localVariables = new HashMap<>();
+    protected final Map<String, VariableData> _localVariables = new HashMap<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
@@ -35,8 +36,13 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             String initialValueData) {
         
         _localVariables.put(name,
-                new DefaultSymbolTable.DefaultVariableData(
-                        name, initialValueType, initialValueData));
+                new VariableData(name, initialValueType, initialValueData));
+    }
+    
+    @Override
+    public void addLocalVariable(VariableData variableData) {
+        System.out.format("AbstractMaleSocket.addLocalVariable: Add variable: %s%n", variableData._name);
+        _localVariables.put(variableData._name, variableData);
     }
     
     @Override
@@ -45,7 +51,12 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     @Override
-    public Collection<SymbolTable.VariableData> getLocalVariables() {
+    public void clearLocalVariables() {
+        _localVariables.clear();
+    }
+    
+    @Override
+    public Collection<VariableData> getLocalVariables() {
         return _localVariables.values();
     }
 

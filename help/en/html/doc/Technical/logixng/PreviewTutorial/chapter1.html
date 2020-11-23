@@ -2,39 +2,17 @@
 <head>
 <title>LogixNG preview - Chapter 1</title>
 <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
-<style>
-.hidden {
-/*    background-color: yellow; */
-    display: none;
-}
-</style>
-
-
-<script>
-$(document).ready(function(){
-  $("#id1").click(function(){
-//    $(this).hide();
-    $("#id2").toggleClass("hidden");
-  });
-});
-</script>
-
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 <a id="id1" href="#">Note for developers</a>
-<p id="id2">If you click on me, aaa I will disappear.</p>
+<p id="id2" class="hidden">If you click on me, aaa I will disappear.</p>
 
 <table width="800">
 <tr>
 <td>
-
-
-
-
-
-
-
 
 <h1>LogixNG Preview - Chapter 1</h1>
 
@@ -61,21 +39,15 @@ Then we create a ConditionalNG. Click button <b>New ConditionalNG</b> to add a n
 <p>
 
 
-
-
-
-
-
 All actions and expressions in LogixNG are named beans, which means that they have system names and user names. But
 it's recommended to only use auto system names and no user names for actions and expressions. Therefore, system names
 and user names of actions and expressions are not visible by default. If you want to specify the system names and/or
 user names, you can turn on the setting "Show system names and user names" in the LogixNG preferences.
 <p>
 The most important reason to not use system names and user names for actions and expressions is that it makes it much
-easier to copy things. If only auto system names are used and no user names are used, JMRI can make copies of the
-actions and expressions without the need to ask the user. But if the user wants to specify system names and/or user
-names, he must do that for all items to copy. And since actions and expressions build a tree, a copy can be of many
-actions and/or expressions at once.
+easier to copy things. Currently, when a copy is made of actions and/or expressions, the copies get auto names and no
+user names. It would be possible to add support for the user to specify system names and/or user names when doing a
+copy, but since actions and expressions build a tree, a copy can be of many actions and/or expressions at once.
 
 
 
@@ -129,41 +101,9 @@ the IfThenElse action. The IfThenElse action will then be moved to the first row
 to the ConditionalNG and paste the IfThenElse action to the ConditionalNG.
 <p>
 You can also use the clipbord to move items from one ConditionalNG to another.
-
-
-
-
-<h3>Copy</h3>
-
+<p>
 If the popup menu is opened on an item that can be copied, the menu item Copy is enabled. If "Copy" is selected, the
-item and its sub tree are copied to the clipboard. For each item, an auto system name is given, and if an item has a
-user name, a new user name is given. The new user name is dependent on the current selected language, but for English
-the new user name is "Copy of NNN" or "Copy # of NNN", there NNN is the original user name and # is an integer number
-to get an unique user name.
-<p>
-If at least one of the items in the sub tree of the item has either a system name that's not an auto system name or has
-a user name that is not empty, the menu item "Copy manually" is also enabled. If "Copy manually" is selected, a dialog
-box will be shown with a table there the user may enter new system names and/or user names for the items to copy.
-
-
-
-
-
-<h3>------------------- Remove this ---------- Why is Copy disabled? It's not implemented yet.</h3>
-
-The ability to make a copy of actions and expressions is important. But it's also a more complicated operation than
-cut and paste. When an item is cut and pasted, it's only moved from place A to place B. But if an item (or a sub tree)
-is copied, it gets more complicated.
-<p>
-Each action and expression has a system name that must be unique. And the actions and expressions may have a user name
-that also needs to be unique. How should this be done? The best answer is probably to give the user some options, for
-example to let LogixNG create new automatic system names, or to give the user a table there he can enter new system
-names for each item to copy. This needs some careful thinking and then someone has to implement it. Until then, Copy
-is disabled.
-
-
-
-
+item and its sub tree are copied to the clipboard. Each item gets an auto system name and no user name.
 
 
 </td>

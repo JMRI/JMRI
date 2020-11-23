@@ -17,7 +17,7 @@ import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.ModuleManager;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.implementation.DefaultSymbolTable.DefaultVariableData;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * The default implementation of LogixNG.
@@ -182,7 +182,7 @@ public class DefaultModule extends AbstractBase
             String initialValueData) {
         
         _localVariables.put(name,
-                new DefaultParameterData(
+                new ParameterData(
                         name,
                         initialValueType,
                         initialValueData,
@@ -278,39 +278,6 @@ public class DefaultModule extends AbstractBase
     }
 
 
-    public static class DefaultParameterData extends DefaultVariableData implements ParameterData {
-        
-        public ReturnValueType _returnValueType;
-        public String _returnValueData;
-        
-        public DefaultParameterData(
-                String name,
-                InitialValueType initalValueType,
-                String initialValueData,
-                ReturnValueType returnValueType,
-                String returnValueData) {
-            
-            super(name, initalValueType, initialValueData);
-            
-            _returnValueType = returnValueType;
-            _returnValueData = returnValueData;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public ReturnValueType getReturnValueType() {
-            return _returnValueType;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public String getReturnValueData() {
-            return _returnValueData;
-        }
-        
-    }
-    
-    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
     
 }
