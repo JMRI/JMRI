@@ -59,7 +59,6 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         }
         createTablePanel(maleSocket);
         c.gridy = row;
-//        c.gridy = row++;
         panel.add(tablePanel, c);
     }
     
