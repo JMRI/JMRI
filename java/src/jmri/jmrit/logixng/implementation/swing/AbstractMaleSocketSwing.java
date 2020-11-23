@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation.swing;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -8,6 +10,7 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
 /**
@@ -18,6 +21,7 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     private JPanel panel;
     private JPanel tablePanel;
     private JTable table;
+    private VariableTableModel tableModel;
     
     /** {@inheritDoc} */
     @Override
@@ -65,7 +69,13 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
     private void createTablePanel(MaleSocket maleSocket) {
         tablePanel = new JPanel();
         table = new JTable();
-        tablePanel.add(table);
+        tableModel = new VariableTableModel(maleSocket);
+        table.setModel(tableModel);
+        table.setDefaultRenderer(InitialValueType.class, new VariableTableModel.TypeCellRenderer());
+        table.setDefaultEditor(InitialValueType.class, new VariableTableModel.TypeCellEditor());
+        JScrollPane scrollpane = new JScrollPane(table);
+        scrollpane.setPreferredSize(new Dimension(400, 200));
+        tablePanel.add(scrollpane, BorderLayout.CENTER);
     }
     
     /** {@inheritDoc} */
@@ -139,9 +149,5 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
      */
     public void disposeSubPanel() {
     }
-    
-    
-    
-    
     
 }

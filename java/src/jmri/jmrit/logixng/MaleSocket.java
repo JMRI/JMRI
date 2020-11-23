@@ -3,6 +3,7 @@ package jmri.jmrit.logixng;
 import java.util.Collection;
 
 import jmri.NamedBean;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 
 /**
  * A LogixNG male socket.
@@ -43,7 +44,7 @@ public interface MaleSocket extends Debugable {
     
     public void removeLocalVariable(String name);
     
-    public Collection<SymbolTable.VariableData> getLocalVariables();
+    public Collection<VariableData> getLocalVariables();
     
     /**
      * Get the error handling type for this socket.

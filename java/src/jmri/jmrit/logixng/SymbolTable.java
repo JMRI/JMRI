@@ -37,14 +37,16 @@ public interface SymbolTable {
      * @param symbolDefinitions the definitions of the new symbols
      * @throws JmriException if an exception is thrown
      */
-    public void createSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException;
+    public void createSymbols(Collection<? extends VariableData> symbolDefinitions)
+            throws JmriException;
     
     /**
      * Removes symbols from the symbol table
      * @param symbolDefinitions the definitions of the symbols to be removed
      * @throws JmriException if an exception is thrown
      */
-    public void removeSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException;
+    public void removeSymbols(Collection<? extends VariableData> symbolDefinitions)
+            throws JmriException;
     
     /**
      * Print the symbol table on a stream
