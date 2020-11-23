@@ -228,13 +228,14 @@ public class VariableTableModel extends AbstractTableModel {
                 typeComboBox.addItem(type);
             }
             
-            typeComboBox.setSelectedItem((InitialValueType) value);
+            typeComboBox.setSelectedItem(value);
             typeComboBox.addActionListener(this);
             
             return typeComboBox;
         }
         
         @Override
+        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<InitialValueType>
         public void actionPerformed(ActionEvent event) {
             if (! (event.getSource() instanceof JComboBox)) {
                 throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
@@ -281,13 +282,14 @@ public class VariableTableModel extends AbstractTableModel {
                 menuComboBox.addItem(menu);
             }
             
-            menuComboBox.setSelectedItem((Menu) value);
+            menuComboBox.setSelectedItem(value);
             menuComboBox.addActionListener(this);
             
             return menuComboBox;
         }
         
         @Override
+        @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<Menu>
         public void actionPerformed(ActionEvent event) {
             if (! (event.getSource() instanceof JComboBox)) {
                 throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
