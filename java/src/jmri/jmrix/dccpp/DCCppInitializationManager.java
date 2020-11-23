@@ -33,11 +33,6 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         String version = "Unknown";
 
         DCCppCommandStation cs = systemMemo.getDCCppTrafficController().getCommandStation();
-        if (cs != null) {
-            base_station = cs.getStationType();
-            code_build = cs.getBuild();
-            version = cs.getVersion();
-        }
 
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
         log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
@@ -62,6 +57,13 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         predefinedMeters = new DCCppPredefinedMeters(systemMemo);
 
         systemMemo.register();
+
+        if (cs != null) {
+            base_station = cs.getStationType();
+            code_build = cs.getBuild();
+            version = cs.getVersion();
+        }
+        
         log.info("DCC++ Initialization Complete with station type '{}', version '{}' and build '{}'",base_station, version, code_build);
     }
 
