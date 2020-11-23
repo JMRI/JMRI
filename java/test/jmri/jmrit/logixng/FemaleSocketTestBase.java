@@ -755,7 +755,7 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public Collection<SymbolTable.ParameterData> getLocalVariables() {
+        public Collection<SymbolTable.VariableData> getLocalVariables() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

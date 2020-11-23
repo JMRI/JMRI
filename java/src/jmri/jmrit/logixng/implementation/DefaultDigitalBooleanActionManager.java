@@ -44,6 +44,12 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleDigitalBooleanActionSocket.class;
+    }
+
     protected MaleDigitalBooleanActionSocket createMaleActionSocket(DigitalBooleanActionBean action) {
         MaleDigitalBooleanActionSocket socket = new DefaultMaleDigitalBooleanActionSocket(this, action);
         action.setParent(socket);

@@ -17,7 +17,7 @@ public abstract class AbstractAnalogExpressionSwing extends AbstractSwingConfigu
     
     /** {@inheritDoc} */
     @Override
-    public Manager<? extends NamedBean> getManager() {
+    public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(AnalogExpressionManager.class);
     }
     

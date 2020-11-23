@@ -43,7 +43,7 @@ public interface MaleSocket extends Debugable {
     
     public void removeLocalVariable(String name);
     
-    public Collection<SymbolTable.ParameterData> getLocalVariables();
+    public Collection<SymbolTable.VariableData> getLocalVariables();
     
     /**
      * Get the error handling type for this socket.

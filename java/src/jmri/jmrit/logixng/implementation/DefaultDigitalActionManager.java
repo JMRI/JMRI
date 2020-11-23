@@ -45,6 +45,12 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleDigitalActionSocket.class;
+    }
+
     protected MaleDigitalActionSocket createMaleActionSocket(DigitalActionBean action) {
         MaleDigitalActionSocket socket = new DefaultMaleDigitalActionSocket(this, action);
         action.setParent(socket);

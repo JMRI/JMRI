@@ -1,11 +1,13 @@
 package jmri.jmrit.logixng;
 
+import jmri.*;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.DigitalCallModule;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.DigitalMany;
-import jmri.*;
+import jmri.jmrit.logixng.Module.ReturnValueType;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
 import jmri.util.JUnitUtil;
@@ -98,8 +100,8 @@ public class RecursiveModuleTest {
         
         module.addParameter("n", true, false);
         module.addParameter("result", false, true);
-        module.addLocalVariable("temp1", SymbolTable.InitialValueType.None, null);
-        module.addLocalVariable("temp2", SymbolTable.InitialValueType.None, null);
+        module.addLocalVariable("temp1", InitialValueType.None, null);
+        module.addLocalVariable("temp2", InitialValueType.None, null);
         
         module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
@@ -167,8 +169,8 @@ public class RecursiveModuleTest {
         // Call the module for n-1
         DigitalCallModule moduleDigitalAction925 = new DigitalCallModule("IQDA925", null);
         moduleDigitalAction925.setModule("IQM1");
-        moduleDigitalAction925.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 1", SymbolTable.ReturnValueType.None, null);
-        moduleDigitalAction925.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp1");
+        moduleDigitalAction925.addParameter("n", InitialValueType.Formula, "n - 1", ReturnValueType.None, null);
+        moduleDigitalAction925.addParameter("result", InitialValueType.None, "", ReturnValueType.LocalVariable, "temp1");
         MaleSocket maleSocket925 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction925);
         manySocket921.getChild(0).connect(maleSocket925);
@@ -176,8 +178,8 @@ public class RecursiveModuleTest {
         // Call the module
         DigitalCallModule moduleDigitalAction932 = new DigitalCallModule("IQDA932", null);
         moduleDigitalAction932.setModule("IQM1");
-        moduleDigitalAction932.addParameter("n", SymbolTable.InitialValueType.Formula, "n - 2", SymbolTable.ReturnValueType.None, null);
-        moduleDigitalAction932.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.LocalVariable, "temp2");
+        moduleDigitalAction932.addParameter("n", InitialValueType.Formula, "n - 2", ReturnValueType.None, null);
+        moduleDigitalAction932.addParameter("result", InitialValueType.None, "", ReturnValueType.LocalVariable, "temp2");
         MaleSocket maleSocket932 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction932);
         manySocket921.getChild(1).connect(maleSocket932);
@@ -202,7 +204,7 @@ public class RecursiveModuleTest {
         conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         
-//        conditionalNG.addLocalVariable("n", SymbolTable.InitialValueType.Memory, "IMN");
+//        conditionalNG.addLocalVariable("n", InitialValueType.Memory, "IMN");
         
         DigitalMany many = new DigitalMany("IQDA1", null);
         MaleSocket manySocket =
@@ -220,9 +222,9 @@ public class RecursiveModuleTest {
         
         DigitalCallModule moduleDigitalAction = new DigitalCallModule("IQDA4", null);
         moduleDigitalAction.setModule("IQM1");
-//        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.LocalVariable, "n");
-        moduleDigitalAction.addParameter("n", SymbolTable.InitialValueType.Memory, "IMN", SymbolTable.ReturnValueType.None, null);
-        moduleDigitalAction.addParameter("result", SymbolTable.InitialValueType.None, "", SymbolTable.ReturnValueType.Memory, "IMRESULT");
+//        moduleDigitalAction.addParameter("n", InitialValueType.LocalVariable, "n");
+        moduleDigitalAction.addParameter("n", InitialValueType.Memory, "IMN", ReturnValueType.None, null);
+        moduleDigitalAction.addParameter("result", InitialValueType.None, "", ReturnValueType.Memory, "IMRESULT");
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(moduleDigitalAction);
         manySocket.getChild(1).connect(maleSocket2);

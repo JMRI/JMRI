@@ -30,8 +30,68 @@ public interface Module extends Base, NamedBean {
     
     public void removeLocalVariable(String name);
     
-    public Collection<SymbolTable.Parameter> getParameters();
+    public Collection<Parameter> getParameters();
     
-    public Collection<SymbolTable.ParameterData> getLocalVariables();
+    public Collection<ParameterData> getLocalVariables();
+    
+    
+    /**
+     * The definition of a parameter.
+     */
+    public interface Parameter {
+        
+        /**
+         * The name of the parameter
+         * @return the name
+         */
+        public String getName();
+        
+        /**
+         * Answer whenether or not the parameter is input to the module.
+         * @return true if the parameter is input, false otherwise
+         */
+        public boolean isInput();
+        
+        /**
+         * Answer whenether or not the parameter is output to the module.
+         * @return true if the parameter is output, false otherwise
+         */
+        public boolean isOutput();
+        
+    }
+    
+    
+    /**
+     * Data for a parameter.
+     */
+    public interface ParameterData extends SymbolTable.VariableData {
+        
+        public ReturnValueType getReturnValueType();
+        
+        public String getReturnValueData();
+        
+    }
+    
+    
+    /**
+     * An enum that defines the types of initial value.
+     */
+    public enum ReturnValueType {
+        
+        None(Bundle.getMessage("ReturnValueType_None")),
+        LocalVariable(Bundle.getMessage("ReturnValueType_LocalVariable")),
+        Memory(Bundle.getMessage("ReturnValueType_Memory"));
+        
+        private final String _descr;
+        
+        private ReturnValueType(String descr) {
+            _descr = descr;
+        }
+        
+        public String getDescr() {
+            return _descr;
+        }
+    }
+    
     
 }

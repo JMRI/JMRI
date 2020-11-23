@@ -44,6 +44,12 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleStringActionSocket.class;
+    }
+
     protected MaleStringActionSocket createMaleActionSocket(StringActionBean action) {
         MaleStringActionSocket socket = new DefaultMaleStringActionSocket(this, action);
         action.setParent(socket);

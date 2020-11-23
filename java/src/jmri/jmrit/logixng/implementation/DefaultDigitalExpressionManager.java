@@ -46,6 +46,12 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleDigitalExpressionSocket.class;
+    }
+
     protected MaleDigitalExpressionSocket createMaleExpressionSocket(DigitalExpressionBean expression) {
         MaleDigitalExpressionSocket socket = new DefaultMaleDigitalExpressionSocket(this, expression);
         expression.setParent(socket);

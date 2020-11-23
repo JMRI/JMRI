@@ -14,6 +14,7 @@ import jmri.NamedBean;
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.BaseManager;
 import jmri.jmrit.logixng.MaleSocket;
 
 /**
@@ -42,7 +43,7 @@ public interface SwingConfiguratorInterface {
      * 
      * @return the manager
      */
-    public Manager<? extends NamedBean> getManager();
+    public BaseManager<? extends NamedBean> getManager();
     
     /**
      * Get a configuration panel when a new object is to be created and we don't

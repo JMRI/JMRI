@@ -4,8 +4,6 @@ import static jmri.NamedBean.UNKNOWN;
 
 import java.io.PrintWriter;
 import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -15,7 +13,11 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.Module.Parameter;
+import jmri.jmrit.logixng.Module.ParameterData;
 import jmri.jmrit.logixng.ModuleManager;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable.DefaultVariableData;
 
 /**
  * The default implementation of LogixNG.
@@ -29,8 +31,8 @@ public class DefaultModule extends AbstractBase
     private FemaleSocketManager.SocketType _rootSocketType;
     private FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
-    private final Map<String, SymbolTable.Parameter> _parameters = new HashMap<>();
-    private final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
+    private final Map<String, Parameter> _parameters = new HashMap<>();
+    private final Map<String, ParameterData> _localVariables = new HashMap<>();
     
     
     public DefaultModule(String sys, String user) throws BadUserNameException, BadSystemNameException  {
@@ -180,11 +182,11 @@ public class DefaultModule extends AbstractBase
             String initialValueData) {
         
         _localVariables.put(name,
-                new DefaultSymbolTable.DefaultParameterData(
+                new DefaultParameterData(
                         name,
                         initialValueType,
                         initialValueData,
-                        SymbolTable.ReturnValueType.None,
+                        ReturnValueType.None,
                         null));
     }
     
@@ -194,12 +196,12 @@ public class DefaultModule extends AbstractBase
     }
     
     @Override
-    public Collection<SymbolTable.Parameter> getParameters() {
+    public Collection<Parameter> getParameters() {
         return _parameters.values();
     }
     
     @Override
-    public Collection<SymbolTable.ParameterData> getLocalVariables() {
+    public Collection<ParameterData> getLocalVariables() {
         return _localVariables.values();
     }
     
@@ -276,6 +278,39 @@ public class DefaultModule extends AbstractBase
     }
 
 
+    public static class DefaultParameterData extends DefaultVariableData implements ParameterData {
+        
+        public ReturnValueType _returnValueType;
+        public String _returnValueData;
+        
+        public DefaultParameterData(
+                String name,
+                InitialValueType initalValueType,
+                String initialValueData,
+                ReturnValueType returnValueType,
+                String returnValueData) {
+            
+            super(name, initalValueType, initialValueData);
+            
+            _returnValueType = returnValueType;
+            _returnValueData = returnValueData;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public ReturnValueType getReturnValueType() {
+            return _returnValueType;
+        }
+        
+        /** {@inheritDoc} */
+        @Override
+        public String getReturnValueData() {
+            return _returnValueData;
+        }
+        
+    }
+    
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
     
 }

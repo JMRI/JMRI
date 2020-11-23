@@ -608,16 +608,29 @@ public class TreeEditor extends TreeViewer {
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         
+        SwingConfiguratorInterface swingConfiguratorInterfaceMaleSocket;
+        
         // Get panel for the item
         JPanel panel33;
+        JPanel panel34;
         if (femaleSocket.isConnected()) {
             panel33 = swingConfiguratorInterface.getConfigPanel(femaleSocket.getConnectedSocket().getObject(), panel5);
+            swingConfiguratorInterfaceMaleSocket =
+                    SwingTools.getSwingConfiguratorForClass(femaleSocket.getConnectedSocket().getClass());
+            panel34 = swingConfiguratorInterfaceMaleSocket.getConfigPanel(femaleSocket.getConnectedSocket(), panel5);
         } else {
             panel33 = swingConfiguratorInterface.getConfigPanel(panel5);
+            
+            Class<? extends MaleSocket> maleSocketClass =
+                    swingConfiguratorInterface.getManager().getMaleSocketClass();
+            swingConfiguratorInterfaceMaleSocket =
+                    SwingTools.getSwingConfiguratorForClass(maleSocketClass);
+            panel34 = swingConfiguratorInterfaceMaleSocket.getConfigPanel(panel5);
         }
         panel3.add(panel31);
         panel3.add(panel32);
         panel3.add(panel33);
+        panel3.add(panel34);
         contentPanel.add(panel3);
         
         // Cancel

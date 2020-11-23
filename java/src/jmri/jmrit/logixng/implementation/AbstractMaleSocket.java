@@ -19,7 +19,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket {
 
-    protected final Map<String, SymbolTable.ParameterData> _localVariables = new HashMap<>();
+    protected final Map<String, SymbolTable.VariableData> _localVariables = new HashMap<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
@@ -35,12 +35,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             String initialValueData) {
         
         _localVariables.put(name,
-                new DefaultSymbolTable.DefaultParameterData(
-                        name,
-                        initialValueType,
-                        initialValueData,
-                        SymbolTable.ReturnValueType.None,
-                        null));
+                new DefaultSymbolTable.DefaultVariableData(
+                        name, initialValueType, initialValueData));
     }
     
     @Override
@@ -49,7 +45,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     @Override
-    public Collection<SymbolTable.ParameterData> getLocalVariables() {
+    public Collection<SymbolTable.VariableData> getLocalVariables() {
         return _localVariables.values();
     }
 

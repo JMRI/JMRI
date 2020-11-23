@@ -10,6 +10,10 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.Module.ParameterData;
+import jmri.jmrit.logixng.Module.ReturnValueType;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
+import jmri.jmrit.logixng.implementation.DefaultModule;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
@@ -20,7 +24,7 @@ import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 public class DigitalCallModule extends AbstractDigitalAction implements VetoableChangeListener {
 
     private NamedBeanHandle<Module> _moduleHandle;
-    private final Map<String, SymbolTable.ParameterData> _parameterData = new HashMap<>();
+    private final Map<String, ParameterData> _parameterData = new HashMap<>();
     
     public DigitalCallModule(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -35,8 +39,8 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         if (sysName == null) sysName = manager.getAutoSystemName();
         DigitalCallModule copy = new DigitalCallModule(sysName, userName);
         if (_moduleHandle != null) copy.setModule(_moduleHandle);
-        for (Map.Entry<String, SymbolTable.ParameterData> entry : _parameterData.entrySet()) {
-            SymbolTable.ParameterData data = entry.getValue();
+        for (Map.Entry<String, ParameterData> entry : _parameterData.entrySet()) {
+            ParameterData data = entry.getValue();
             copy.addParameter(
                     entry.getKey(),
                     data.getInitalValueType(),
@@ -112,6 +116,42 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         return true;
     }
     
+    /**
+     * Return the symbols
+     * @param symbolTable the symbol table
+     * @param symbolDefinitions list of symbols to return
+     * @throws jmri.JmriException if an exception occurs
+     */
+    public void returnSymbols(
+            DefaultSymbolTable symbolTable, Collection<ParameterData> symbolDefinitions)
+            throws JmriException {
+        
+        for (ParameterData parameter : symbolDefinitions) {
+            Object returnValue = symbolTable.getValue(parameter.getName());
+            
+            switch (parameter.getReturnValueType()) {
+                case None:
+                    break;
+                    
+                case LocalVariable:
+                    symbolTable.getPrevSymbolTable()
+                            .setValue(parameter.getReturnValueData(), returnValue);
+                    break;
+                    
+                case Memory:
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(parameter.getReturnValueData());
+                    if (m != null) m.setValue(returnValue);
+                    break;
+                    
+                default:
+                    log.error("definition.returnValueType has invalid value: {}", parameter.getReturnValueType().name());
+                    throw new IllegalArgumentException("definition._returnValueType has invalid value: " + parameter.getReturnValueType().name());
+            }
+            
+//            System.out.format("Return symbol: %s = %s%n", symbol.getName(), initialValue);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
@@ -135,7 +175,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         
         ((FemaleDigitalActionSocket)femaleSocket).execute();
         
-        newSymbolTable.returnSymbols(_parameterData.values());
+        returnSymbols(newSymbolTable, _parameterData.values());
         
         InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
         
@@ -195,13 +235,13 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
     
     public void addParameter(
             String name,
-            SymbolTable.InitialValueType initialValueType,
+            InitialValueType initialValueType,
             String initialValueData,
-            SymbolTable.ReturnValueType returnValueType,
+            ReturnValueType returnValueType,
             String returnValueData) {
         
         _parameterData.put(name,
-                new DefaultSymbolTable.DefaultParameterData(
+                new DefaultModule.DefaultParameterData(
                         name,
                         initialValueType,
                         initialValueData,
@@ -213,7 +253,7 @@ public class DigitalCallModule extends AbstractDigitalAction implements Vetoable
         _parameterData.remove(name);
     }
     
-    public Map<String, SymbolTable.ParameterData> getParameterData() {
+    public Map<String, ParameterData> getParameterData() {
         return Collections.unmodifiableMap(_parameterData);
     }
     

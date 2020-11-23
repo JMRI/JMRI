@@ -44,6 +44,12 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleAnalogActionSocket.class;
+    }
+
     protected MaleAnalogActionSocket createMaleActionSocket(AnalogActionBean action) {
         MaleAnalogActionSocket socket = new DefaultMaleAnalogActionSocket(this, action);
         action.setParent(socket);

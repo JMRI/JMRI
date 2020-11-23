@@ -17,7 +17,7 @@ public abstract class AbstractStringExpressionSwing extends AbstractSwingConfigu
     
     /** {@inheritDoc} */
     @Override
-    public Manager<? extends NamedBean> getManager() {
+    public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(StringExpressionManager.class);
     }
     

@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import jmri.*;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.BaseManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.swing.AbstractSwingConfigurator;
 
@@ -20,7 +21,7 @@ public abstract class AbstractDigitalExpressionSwing extends AbstractSwingConfig
     
     /** {@inheritDoc} */
     @Override
-    public Manager<? extends NamedBean> getManager() {
+    public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(DigitalExpressionManager.class);
     }
     

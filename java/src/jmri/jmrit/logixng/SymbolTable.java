@@ -37,14 +37,14 @@ public interface SymbolTable {
      * @param symbolDefinitions the definitions of the new symbols
      * @throws JmriException if an exception is thrown
      */
-    public void createSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException;
+    public void createSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException;
     
     /**
      * Removes symbols from the symbol table
      * @param symbolDefinitions the definitions of the symbols to be removed
      * @throws JmriException if an exception is thrown
      */
-    public void removeSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException;
+    public void removeSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException;
     
     /**
      * Print the symbol table on a stream
@@ -78,27 +78,6 @@ public interface SymbolTable {
     
     
     /**
-     * An enum that defines the types of initial value.
-     */
-    public enum ReturnValueType {
-        
-        None(Bundle.getMessage("ReturnValueType_None")),
-        LocalVariable(Bundle.getMessage("ReturnValueType_LocalVariable")),
-        Memory(Bundle.getMessage("ReturnValueType_Memory"));
-        
-        private final String _descr;
-        
-        private ReturnValueType(String descr) {
-            _descr = descr;
-        }
-        
-        public String getDescr() {
-            return _descr;
-        }
-    }
-    
-    
-    /**
      * The definition of the symbol
      */
     public interface Symbol {
@@ -119,38 +98,12 @@ public interface SymbolTable {
     
     
     /**
-     * The definition of a parameter.
-     */
-    public interface Parameter {
-        
-        /**
-         * The name of the parameter
-         * @return the name
-         */
-        public String getName();
-        
-        /**
-         * Answer whenether or not the parameter is input to the module.
-         * @return true if the parameter is input, false otherwise
-         */
-        public boolean isInput();
-        
-        /**
-         * Answer whenether or not the parameter is output to the module.
-         * @return true if the parameter is output, false otherwise
-         */
-        public boolean isOutput();
-        
-    }
-    
-    
-    /**
      * Data for a parameter.
      */
-    public interface ParameterData {
+    public interface VariableData {
         
         /**
-         * The name of the parameter
+         * The name of the variable
          * @return the name
          */
         public String getName();
@@ -158,10 +111,6 @@ public interface SymbolTable {
         public InitialValueType getInitalValueType();
         
         public String getInitialValueData();
-        
-        public ReturnValueType getReturnValueType();
-        
-        public String getReturnValueData();
         
     }
     

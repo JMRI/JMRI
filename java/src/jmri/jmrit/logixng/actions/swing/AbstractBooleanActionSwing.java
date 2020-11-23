@@ -17,7 +17,7 @@ public abstract class AbstractBooleanActionSwing extends AbstractSwingConfigurat
     
     /** {@inheritDoc} */
     @Override
-    public Manager<? extends NamedBean> getManager() {
+    public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(DigitalBooleanActionManager.class);
     }
     

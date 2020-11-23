@@ -48,5 +48,11 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      *                                          delete to be aborted (see above)
      */
     public void deleteBean(@Nonnull MaleSocket maleSocket, @Nonnull String property) throws PropertyVetoException;
+    
+    /**
+     * Get the default male socket class
+     * @return the class
+     */
+    public Class<? extends MaleSocket> getMaleSocketClass();
 
 }

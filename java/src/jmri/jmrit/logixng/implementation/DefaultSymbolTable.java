@@ -5,6 +5,7 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.SymbolTable;
+import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
@@ -87,45 +88,45 @@ public class DefaultSymbolTable implements SymbolTable {
     
     /** {@inheritDoc} */
     @Override
-    public void createSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
-        for (SymbolTable.ParameterData parameter : symbolDefinitions) {
-            Symbol symbol = new DefaultSymbol(parameter.getName(), _stack.getCount() - _firstSymbolIndex);
+    public void createSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException {
+        for (SymbolTable.VariableData variable : symbolDefinitions) {
+            Symbol symbol = new DefaultSymbol(variable.getName(), _stack.getCount() - _firstSymbolIndex);
             Object initialValue = null;
             
             if (_symbols.containsKey(symbol.getName())) {
                 throw new IllegalArgumentException("Symbol table already contains the variable " + symbol.getName());
             }
             
-            switch (parameter.getInitalValueType()) {
+            switch (variable.getInitalValueType()) {
                 case None:
                     break;
                     
                 case LocalVariable:
-                    initialValue = _prevSymbolTable.getValue(parameter.getInitialValueData());
+                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
                     break;
                     
                 case Memory:
-                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(parameter.getInitialValueData());
+                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(variable.getInitialValueData());
                     if (m != null) initialValue = m.getValue();
                     break;
                     
                 case Reference:
-                    if (ReferenceUtil.isReference(parameter.getInitialValueData())) {
-                        initialValue = ReferenceUtil.getReference(parameter.getInitialValueData());
+                    if (ReferenceUtil.isReference(variable.getInitialValueData())) {
+                        initialValue = ReferenceUtil.getReference(variable.getInitialValueData());
                     } else {
-                        log.error("\"{}\" is not a reference", parameter.getInitialValueData());
+                        log.error("\"{}\" is not a reference", variable.getInitialValueData());
                     }
                     break;
                     
                 case Formula:
                     RecursiveDescentParser parser = createParser();
-                    ExpressionNode expressionNode = parser.parseExpression(parameter.getInitialValueData());
+                    ExpressionNode expressionNode = parser.parseExpression(variable.getInitialValueData());
                     initialValue = expressionNode.calculate();
                     break;
                     
                 default:
-                    log.error("definition._initalValueType has invalid value: {}", parameter.getInitalValueType().name());
-                    throw new IllegalArgumentException("definition._initalValueType has invalid value: " + parameter.getInitalValueType().name());
+                    log.error("definition._initalValueType has invalid value: {}", variable.getInitalValueType().name());
+                    throw new IllegalArgumentException("definition._initalValueType has invalid value: " + variable.getInitalValueType().name());
             }
             
 //            System.out.format("Add symbol: %s = %s%n", symbol.getName(), initialValue);
@@ -137,55 +138,12 @@ public class DefaultSymbolTable implements SymbolTable {
     
     /** {@inheritDoc} */
     @Override
-    public void removeSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
+    public void removeSymbols(Collection<? extends SymbolTable.VariableData> symbolDefinitions) throws JmriException {
         symbolDefinitions.forEach((parameter) -> {
             _symbols.remove(parameter.getName());
         });
     }
     
-    /**
-     * Return the symbols
-     * @param symbolDefinitions list of symbols to return
-     * @throws jmri.JmriException if an exception occurs
-     */
-    public void returnSymbols(Collection<SymbolTable.ParameterData> symbolDefinitions) throws JmriException {
-        for (SymbolTable.ParameterData parameter : symbolDefinitions) {
-            Object returnValue = getValue(parameter.getName());
-            
-            switch (parameter.getReturnValueType()) {
-                case None:
-                    break;
-                    
-                case LocalVariable:
-                    _prevSymbolTable.setValue(parameter.getReturnValueData(), returnValue);
-                    break;
-                    
-                case Memory:
-                    Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(parameter.getReturnValueData());
-                    if (m != null) m.setValue(returnValue);
-                    break;
-                    
-                default:
-                    log.error("definition.returnValueType has invalid value: {}", parameter.getReturnValueType().name());
-                    throw new IllegalArgumentException("definition._returnValueType has invalid value: " + parameter.getReturnValueType().name());
-            }
-            
-//            System.out.format("Return symbol: %s = %s%n", symbol.getName(), initialValue);
-        }
-    }
-    
-    
-/*    
-    public static class SymbolDefinition {
-        
-        public String _name;
-        
-        public InitialValueType _initalValueType;
-        
-        public String _initialValueData;
-        
-    }
-*/    
     
     public static class DefaultSymbol implements Symbol {
         
@@ -212,7 +170,7 @@ public class DefaultSymbolTable implements SymbolTable {
     }
     
     
-    public static class DefaultParameter implements SymbolTable.Parameter {
+    public static class DefaultParameter implements Parameter {
         
         private final String _name;
         private final boolean _isInput;
@@ -245,26 +203,20 @@ public class DefaultSymbolTable implements SymbolTable {
     }
     
     
-    public static class DefaultParameterData implements SymbolTable.ParameterData {
+    public static class DefaultVariableData implements SymbolTable.VariableData {
         
         public String _name;
         public InitialValueType _initalValueType;
         public String _initialValueData;
-        public ReturnValueType _returnValueType;
-        public String _returnValueData;
         
-        public DefaultParameterData(
+        public DefaultVariableData(
                 String name,
                 InitialValueType initalValueType,
-                String initialValueData,
-                ReturnValueType returnValueType,
-                String returnValueData) {
+                String initialValueData) {
             
             _name = name;
             _initalValueType = initalValueType;
             _initialValueData = initialValueData;
-            _returnValueType = returnValueType;
-            _returnValueData = returnValueData;
         }
         
         /** {@inheritDoc} */
@@ -283,18 +235,6 @@ public class DefaultSymbolTable implements SymbolTable {
         @Override
         public String getInitialValueData() {
             return _initialValueData;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public ReturnValueType getReturnValueType() {
-            return _returnValueType;
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public String getReturnValueData() {
-            return _returnValueData;
         }
         
     }

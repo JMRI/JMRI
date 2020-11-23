@@ -46,6 +46,12 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleAnalogExpressionSocket.class;
+    }
+
     protected MaleAnalogExpressionSocket createMaleAnalogExpressionSocket(AnalogExpressionBean expression) {
         MaleAnalogExpressionSocket socket = new DefaultMaleAnalogExpressionSocket(this, expression);
         expression.setParent(socket);

@@ -17,7 +17,7 @@ public abstract class AbstractStringActionSwing extends AbstractSwingConfigurato
     
     /** {@inheritDoc} */
     @Override
-    public Manager<? extends NamedBean> getManager() {
+    public BaseManager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(StringActionManager.class);
     }
     

@@ -47,6 +47,12 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Class<? extends MaleSocket> getMaleSocketClass() {
+        return DefaultMaleStringExpressionSocket.class;
+    }
+
     protected MaleStringExpressionSocket createMaleStringExpressionSocket(StringExpressionBean expression) {
         MaleStringExpressionSocket socket = new DefaultMaleStringExpressionSocket(this, expression);
         expression.setParent(socket);

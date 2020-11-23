@@ -113,6 +113,10 @@ public class ActionsAndExpressionsTest {
                 Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", socket.getObject().getClass().getName(), packageName+"."+file);
                 System.out.format("Swing: %s, Class: %s, class: %s%n", configureSwing.toString(), socket.getShortDescription(), socket.getObject().getClass().getName());
                 Assert.assertEquals("Swing class has correct name", socket.getShortDescription(), configureSwing.toString());
+                System.out.format("MaleSocket class: %s, socket class: %s%n",
+                        configureSwing.getManager().getMaleSocketClass().getName(),
+                        socket.getClass().getName());
+                Assert.assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(socket.getClass()));
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             }
 //            if (configureSwing == null) {
