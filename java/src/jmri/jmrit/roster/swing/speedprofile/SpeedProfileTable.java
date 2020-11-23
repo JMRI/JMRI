@@ -329,7 +329,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
                 case STEP_COL:
                     return Math.round((float)(entry.getKey()*126)/1000);
                 case THROTTLE_COL:
-                    return (float)(entry.getKey())/1000;
+                    return threeDigit.format((float)(entry.getKey())/1000);
                 case FORWARD_SPEED_COL:
                     float speed = entry.getValue().getForwardSpeed();
                     switch(interp) {
