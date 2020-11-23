@@ -60,7 +60,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TableFrames implements InternalFrameListener {
 
-    public static final int ROW_HEIGHT = (new JButton().getPreferredSize().height)*9/10;
+    public static final int ROW_HEIGHT = (new JButton("X").getPreferredSize().height)*9/10;
     public static final int STRUT_SIZE = 10;
     protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();

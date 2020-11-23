@@ -155,6 +155,15 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     }
 
     /**
+     * Is a bean either selected or has the user entered a new name in the combo box?
+     * If either is false, the caller should not try to create a new bean.
+     * @return true if a bean is selected or a name is entered
+     */
+    public boolean hasBeanOrBeanName() {
+        return existingItem.isSelected() || !hardwareAddress.getText().trim().isEmpty();
+    }
+
+    /**
      * Get the named bean that has either been selected in the drop down list or
      * was asked to be created.
      *
