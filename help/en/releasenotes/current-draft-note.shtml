@@ -94,6 +94,7 @@
                     interrogation mechanism now implements a minimum delay from
                     the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
+                <li>Update slot status after a Dispatch</li>
             </ul>
 
         <h4>Maple</h4>

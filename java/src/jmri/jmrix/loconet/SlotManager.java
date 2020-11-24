@@ -782,6 +782,34 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
+     * If it is a slot move message then for
+     *  null moves, do nothing
+     *  for dispatch moves read dispatched slot
+     *  for all others read both slots
+     *
+     * @param m a LocoNet message
+     * @param i the slot to which it is directed
+     */
+    protected void getMoreDetailsForSlotMove(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.
+        // if this is OPC_MOVE_SLOT
+        if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+            int slotTwo;
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo == 0) {
+                // dispatch
+                sendReadSlot(i);
+            } else if (i == slotTwo) {
+                // null move ignore
+            } else {
+                // get both slots (does this ever happen
+                sendReadSlot(i);
+                sendReadSlot(slotTwo);
+            }
+        }
+    }
+    
+    /**
      * Handle LocoNet messages related to CV programming operations
      *
      * @param m a LocoNet message
