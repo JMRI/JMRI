@@ -445,6 +445,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
+            getMoreDetailsForSlotMove(m, i);
         }
 
         // LONG_ACK response?
@@ -839,6 +840,41 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 l.notifyChangedSlot(_slots[i]);
             } else {
                 log.debug("no request for addr {}", addr); // NOI18N
+            }
+        }
+    }
+
+    /**
+     * If it is a slot move message then for
+     *  null moves, do nothing
+     *  for dispatch moves read dispatched slot
+     *  for all others read both slots
+     *
+     * @param m a LocoNet message
+     * @param i the slot to which it is directed
+     */
+    protected void getMoreDetailsForSlotMove(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received. Note that we do
+        // _NOT_ know why a given message happens!
+
+        // if this is OPC_MOVE_SLOT
+        if ((m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) ||
+                ((m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE) && ((m.getElement(3) & 0b01111100) == 0x00))) {
+            int slotTwo;
+            if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+                slotTwo = m.getElement(2);
+            } else {
+                slotTwo = ((m.getElement(3) & 0x03) * 128) + m.getElement(4);
+            }
+            if (i != 0 && slotTwo == 0) {
+                // dispatch
+                sendReadSlot(i);
+            } else if (i == slotTwo) {
+                // null move ignore
+            } else {
+                // get both slots (does this ever happen
+                sendReadSlot(i);
+                sendReadSlot(slotTwo);
             }
         }
     }
