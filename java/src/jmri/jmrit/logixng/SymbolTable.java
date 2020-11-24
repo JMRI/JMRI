@@ -118,6 +118,12 @@ public interface SymbolTable {
             _initialValueData = initialValueData;
         }
         
+        public VariableData(VariableData variableData) {
+            _name = variableData._name;
+            _initalValueType = variableData._initalValueType;
+            _initialValueData = variableData._initialValueData;
+        }
+        
         /**
          * The name of the variable
          * @return the name

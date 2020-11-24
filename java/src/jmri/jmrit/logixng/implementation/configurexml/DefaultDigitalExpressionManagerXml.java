@@ -56,7 +56,7 @@ public class DefaultDigitalExpressionManagerXml extends AbstractManagerXml {
                         e.addContent(storeMaleSocket((MaleSocket)expression));
                         expressions.addContent(e);
                     }
-                } catch (Exception e) {
+                } catch (RuntimeException | IllegalAccessException | NoSuchFieldException e) {
                     log.error("Error storing action: {}", e, e);
                 }
             }

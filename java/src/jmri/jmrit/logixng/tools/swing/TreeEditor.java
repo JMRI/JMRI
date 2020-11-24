@@ -753,6 +753,7 @@ public class TreeEditor extends TreeViewer {
     final protected void cancelEditPressed(ActionEvent e) {
         _editConditionalNGDialog.setVisible(false);
         _editSwingConfiguratorInterface.dispose();
+        _swingConfiguratorInterfaceMaleSocket.dispose();
         _editConditionalNGDialog.dispose();
         _editConditionalNGDialog = null;
 //        _inCopyMode = false;

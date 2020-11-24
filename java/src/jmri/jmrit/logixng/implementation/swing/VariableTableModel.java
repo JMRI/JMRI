@@ -32,8 +32,7 @@ public class VariableTableModel extends AbstractTableModel {
     public VariableTableModel(MaleSocket maleSocket) {
         if (maleSocket != null) {
             for (VariableData v : maleSocket.getLocalVariables()) {
-                System.out.format("VariableTableModel: Add variable: %s%n", v._name);
-                _variables.add(v);
+                _variables.add(new VariableData(v));
             }
         }
     }
