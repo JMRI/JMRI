@@ -23,6 +23,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
         implements DigitalBooleanActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultDigitalBooleanActionManager() {
@@ -58,11 +59,24 @@ public class DefaultDigitalBooleanActionManager extends AbstractBaseManager<Male
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleDigitalBooleanActionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleDigitalBooleanActionSocket");
         }
         register((MaleDigitalBooleanActionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleDigitalBooleanActionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

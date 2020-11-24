@@ -43,6 +43,8 @@
 
               <xs:element name="is_isNot" type="LogixNG_Is_IsNot_Type" minOccurs="0" maxOccurs="1"/>
 
+              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
             </xs:sequence>
             <xs:attribute name="class" type="classType" use="required"/>
 

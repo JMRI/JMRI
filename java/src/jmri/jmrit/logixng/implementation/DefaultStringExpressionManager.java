@@ -25,6 +25,7 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
         implements StringExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultStringExpressionManager() {
@@ -61,11 +62,24 @@ public class DefaultStringExpressionManager extends AbstractBaseManager<MaleStri
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleStringExpressionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleStringExpressionSocket");
         }
         register((MaleStringExpressionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleStringExpressionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

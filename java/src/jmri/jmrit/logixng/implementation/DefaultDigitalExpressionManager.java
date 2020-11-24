@@ -24,6 +24,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         implements DigitalExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultDigitalExpressionManager() {
@@ -60,11 +61,24 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleDigitalExpressionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleDigitalExpressionSocket");
         }
         register((MaleDigitalExpressionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleDigitalExpressionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

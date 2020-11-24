@@ -52,6 +52,8 @@
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
 -->
+              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
             </xs:sequence>
             
 			<xs:attribute name="class" type="classType" use="required"/>

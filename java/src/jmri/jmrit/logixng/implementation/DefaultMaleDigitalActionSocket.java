@@ -90,7 +90,7 @@ public class DefaultMaleDigitalActionSocket
         
         try {
             InstanceManager.getDefault(LogixNG_Manager.class)
-                    .getSymbolTable().createSymbols(_localVariables.values());
+                    .getSymbolTable().createSymbols(_localVariables);
             
             _action.execute();
         } catch (JmriException e) {
@@ -100,7 +100,7 @@ public class DefaultMaleDigitalActionSocket
         }
         InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
         InstanceManager.getDefault(LogixNG_Manager.class)
-                .getSymbolTable().removeSymbols(_localVariables.values());
+                .getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

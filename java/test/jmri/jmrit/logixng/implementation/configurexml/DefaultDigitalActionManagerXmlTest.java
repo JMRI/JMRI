@@ -36,6 +36,7 @@ public class DefaultDigitalActionManagerXmlTest {
         Element e = new Element("logixngDigitalExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot load class jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
@@ -46,6 +47,7 @@ public class DefaultDigitalActionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA1"));
+        e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
         
         e = new Element("logixngDigitalExpressions");
@@ -53,12 +55,14 @@ public class DefaultDigitalActionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA2"));
+        e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
         
         // Test trying to load a class with private constructor
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXmlTest$PrivateConstructorXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
@@ -67,6 +71,7 @@ public class DefaultDigitalActionManagerXmlTest {
         e = new Element("logixngDigitalExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXmlTest$ThrowExceptionXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");

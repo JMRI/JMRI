@@ -45,7 +45,9 @@
             <xs:element name="string-action-memory"  type="LogixNG_StringAction_MemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="string-action-loconet-opc-peer"  type="LogixNG_StringAction_LocoNetOPC_PEER_Type" minOccurs="0" maxOccurs="unbounded" />
 
-          </xs:choice>
+            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>

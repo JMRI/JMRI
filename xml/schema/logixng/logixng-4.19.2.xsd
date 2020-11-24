@@ -27,6 +27,7 @@
         >
 
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/common-types-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/male-socket-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-actions/analog-actions-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/analog-expressions/analog-expressions-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/digital-actions-4.19.2.xsd"/>

@@ -86,6 +86,8 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
             </xs:sequence>
             
 			<xs:attribute name="class" type="classType" use="required"/>

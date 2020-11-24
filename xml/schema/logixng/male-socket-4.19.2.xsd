@@ -25,39 +25,45 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ActionLightType">
+    <xs:complexType name="LogixNG_MaleSocket_Type">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a ActionLight class.
+          Define the XML stucture for storing the contents of a MaleSocket.
         </xs:documentation>
+<!--
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ActionLightXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.engine.configurexml.DefaultLogixNGManagerXml</jmri:usingclass>
         </xs:appinfo>
+-->
       </xs:annotation>
+      <xs:sequence>
         
-            <xs:sequence>
+              <xs:element name="localVariable" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
 
-              <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
-              <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="light" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="type" minOccurs="1" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:token">
+                          <xs:enumeration value="None"/>
+                          <xs:enumeration value="LocalVariable"/>
+                          <xs:enumeration value="Memory"/>
+                          <xs:enumeration value="Reference"/>
+                          <xs:enumeration value="Formula"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
 
-              <xs:element name="lightState" minOccurs="1" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="Off"/>
-                    <xs:enumeration value="On"/>
-                    <xs:enumeration value="Toggle"/>
-                  </xs:restriction>
-                </xs:simpleType>
+                    <xs:element name="data" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                  </xs:sequence>
+
+                </xs:complexType>
+
               </xs:element>
 
-              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
-
-            </xs:sequence>
-            
-			<xs:attribute name="class" type="classType" use="required"/>
-        
+      </xs:sequence>
+<!--      <xs:attribute name="class" type="classType" use="required"/> -->
     </xs:complexType>
 
 </xs:schema>

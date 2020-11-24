@@ -10,15 +10,12 @@ import java.util.Map;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultDigitalActionManager;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
-
-import jmri.jmrit.logixng.DigitalActionBean;
-import jmri.util.ThreadingUtil;
-import jmri.util.ThreadingUtil.ThreadAction;
 
 /**
  * Provides the functionality for configuring ActionManagers
@@ -26,7 +23,7 @@ import jmri.util.ThreadingUtil.ThreadAction;
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
  */
-public class DefaultDigitalActionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultDigitalActionManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
     
@@ -58,6 +55,7 @@ public class DefaultDigitalActionManagerXml extends jmri.managers.configurexml.A
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
                     if (e != null) {
+                        e.addContent(storeMaleSocket((MaleSocket)action));
                         actions.addContent(e);
                     }
                 } catch (Exception e) {
@@ -136,7 +134,13 @@ public class DefaultDigitalActionManagerXml extends jmri.managers.configurexml.A
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
                         
+                        MaleSocket oldLastItem = InstanceManager.getDefault(DigitalActionManager.class).getLastRegisteredMaleSocket();
                         o.load(actionList.get(i), null);
+                        
+                        // Load male socket data if a new bean has been registered
+                        MaleSocket newLastItem = InstanceManager.getDefault(DigitalActionManager.class).getLastRegisteredMaleSocket();
+                        if (newLastItem != oldLastItem) loadMaleSocket(actionList.get(i), newLastItem);
+                        else throw new RuntimeException("No new bean has been added. This class: "+getClass().getName());
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("cannot create object", ex);
                     } catch (JmriConfigureXmlException ex) {

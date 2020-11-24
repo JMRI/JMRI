@@ -54,5 +54,11 @@ public interface BaseManager<E extends NamedBean> extends Manager<E> {
      * @return the class
      */
     public Class<? extends MaleSocket> getMaleSocketClass();
+    
+    /**
+     * Get the last item registered in the mananger.
+     * @return the last item
+     */
+    public MaleSocket getLastRegisteredMaleSocket();
 
 }

@@ -41,6 +41,9 @@
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
               <xs:element name="expressionSystemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="actionSystemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+
+              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
             </xs:sequence>
 
 <!--            <xs:attribute name="enabled" type="yesNoType" /> -->

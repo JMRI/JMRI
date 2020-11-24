@@ -44,7 +44,9 @@
             
             <xs:element name="many"         type="LogixNG_DigitalBooleanAction_ManyType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="on-change"    type="LogixNG_DigitalBooleanAction_OnChangeType" minOccurs="0" maxOccurs="unbounded" />
-            
+
+            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+           
           </xs:choice>
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>

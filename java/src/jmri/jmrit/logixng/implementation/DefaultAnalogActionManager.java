@@ -23,6 +23,7 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
         implements AnalogActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultAnalogActionManager() {
@@ -58,11 +59,24 @@ public class DefaultAnalogActionManager extends AbstractBaseManager<MaleAnalogAc
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleAnalogActionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleAnalogActionSocket");
         }
         register((MaleAnalogActionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleAnalogActionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

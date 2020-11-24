@@ -23,6 +23,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         implements StringActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultStringActionManager() {
@@ -58,11 +59,24 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleStringActionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleStringActionSocket");
         }
         register((MaleStringActionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleStringActionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

@@ -46,6 +46,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA1"));
+        e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
         
         e = new Element("logixngAnalogExpressions");
@@ -53,12 +54,14 @@ public class DefaultAnalogActionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQAA2"));
+        e2.addContent(new Element("maleSocket"));
         b.loadActions(e);
         
         // Test trying to load a class with private constructor
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$PrivateConstructorXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
@@ -67,6 +70,7 @@ public class DefaultAnalogActionManagerXmlTest {
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXmlTest$ThrowExceptionXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadActions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");

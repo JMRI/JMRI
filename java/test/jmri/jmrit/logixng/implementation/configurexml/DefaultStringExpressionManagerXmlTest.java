@@ -36,6 +36,7 @@ public class DefaultStringExpressionManagerXmlTest {
         Element e = new Element("logixngAnalogExpressions");
         Element e2 = new Element("missing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot load class jmri.jmrit.logixng.this.class.does.not.exist.TestClassXml");
@@ -46,6 +47,7 @@ public class DefaultStringExpressionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQSE1"));
+        e2.addContent(new Element("maleSocket"));
         b.loadExpressions(e);
         
         e = new Element("logixngAnalogExpressions");
@@ -53,12 +55,14 @@ public class DefaultStringExpressionManagerXmlTest {
         e2.setAttribute("class", "jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml");
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQSE2"));
+        e2.addContent(new Element("maleSocket"));
         b.loadExpressions(e);
         
         // Test trying to load a class with private constructor
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultStringExpressionManagerXmlTest$PrivateConstructorXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");
@@ -67,6 +71,7 @@ public class DefaultStringExpressionManagerXmlTest {
         e = new Element("logixngAnalogExpressions");
         e2 = new Element("existing_class");
         e2.setAttribute("class", "jmri.jmrit.logixng.implementation.configurexml.DefaultStringExpressionManagerXmlTest$ThrowExceptionXml");
+        e2.addContent(new Element("maleSocket"));
         e.addContent(e2);
         b.loadExpressions(e);
         JUnitAppender.assertErrorMessage("cannot create constructor");

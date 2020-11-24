@@ -24,6 +24,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         implements AnalogExpressionManager, InstanceManagerAutoDefault {
 
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultAnalogExpressionManager() {
@@ -60,11 +61,24 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleAnalogExpressionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleAnalogExpressionSocket");
         }
         register((MaleAnalogExpressionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleAnalogExpressionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

@@ -10,14 +10,12 @@ import java.util.Map;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultStringActionManager;
+import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
-
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringActionBean;
-import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 /**
  * Provides the functionality for configuring ActionManagers
@@ -25,7 +23,7 @@ import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
  */
-public class DefaultStringActionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultStringActionManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
     
@@ -55,6 +53,7 @@ public class DefaultStringActionManagerXml extends jmri.managers.configurexml.Ab
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getAction(action));
                     if (e != null) {
+                        e.addContent(storeMaleSocket((MaleSocket)action));
                         actions.addContent(e);
                     }
                 } catch (Exception e) {
@@ -133,7 +132,13 @@ public class DefaultStringActionManagerXml extends jmri.managers.configurexml.Ab
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
                         
+                        MaleSocket oldLastItem = InstanceManager.getDefault(StringActionManager.class).getLastRegisteredMaleSocket();
                         o.load(actionList.get(i), null);
+                        
+                        // Load male socket data if a new bean has been registered
+                        MaleSocket newLastItem = InstanceManager.getDefault(StringActionManager.class).getLastRegisteredMaleSocket();
+                        if (newLastItem != oldLastItem) loadMaleSocket(actionList.get(i), newLastItem);
+                        else throw new RuntimeException("No new bean has been added. This class: "+getClass().getName());
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("cannot create object", ex);
                     } catch (JmriConfigureXmlException ex) {

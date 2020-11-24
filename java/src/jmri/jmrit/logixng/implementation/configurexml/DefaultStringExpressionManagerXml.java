@@ -10,14 +10,12 @@ import java.util.Map;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultStringExpressionManager;
-
-import org.jdom2.Element;
-
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.ThreadingUtil;
+
+import org.jdom2.Element;
 
 /**
  * Provides the functionality for configuring ExpressionManagers
@@ -25,7 +23,7 @@ import jmri.util.ThreadingUtil;
  * @author Dave Duchamp Copyright (c) 2007
  * @author Daniel Bergqvist Copyright (c) 2018
  */
-public class DefaultStringExpressionManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class DefaultStringExpressionManagerXml extends AbstractManagerXml {
 
     private final Map<String, Class<?>> xmlClasses = new HashMap<>();
     
@@ -55,6 +53,7 @@ public class DefaultStringExpressionManagerXml extends jmri.managers.configurexm
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(getExpression(expression));
                     if (e != null) {
+                        e.addContent(storeMaleSocket((MaleSocket)expression));
                         expressions.addContent(e);
                     }
                 } catch (Exception e) {
@@ -133,7 +132,13 @@ public class DefaultStringExpressionManagerXml extends jmri.managers.configurexm
                     try {
                         AbstractNamedBeanManagerConfigXML o = (AbstractNamedBeanManagerConfigXML)c.newInstance();
                         
+                        MaleSocket oldLastItem = InstanceManager.getDefault(StringExpressionManager.class).getLastRegisteredMaleSocket();
                         o.load(expressionList.get(i), null);
+                        
+                        // Load male socket data if a new bean has been registered
+                        MaleSocket newLastItem = InstanceManager.getDefault(StringExpressionManager.class).getLastRegisteredMaleSocket();
+                        if (newLastItem != oldLastItem) loadMaleSocket(expressionList.get(i), newLastItem);
+                        else throw new RuntimeException("No new bean has been added. This class: "+getClass().getName());
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("cannot create object", ex);
                     } catch (JmriConfigureXmlException ex) {

@@ -1,8 +1,8 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.PrintWriter;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ import org.slf4j.Logger;
  */
 public abstract class AbstractMaleSocket implements MaleSocket {
 
-    protected final Map<String, VariableData> _localVariables = new HashMap<>();
+    protected final List<VariableData> _localVariables = new ArrayList<>();
     private final BaseManager<? extends NamedBean> _manager;
     private Base _parent;
     private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
@@ -35,19 +35,13 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             SymbolTable.InitialValueType initialValueType,
             String initialValueData) {
         
-        _localVariables.put(name,
-                new VariableData(name, initialValueType, initialValueData));
+        _localVariables.add(new VariableData(name, initialValueType, initialValueData));
     }
     
     @Override
     public void addLocalVariable(VariableData variableData) {
         System.out.format("AbstractMaleSocket.addLocalVariable: Add variable: %s%n", variableData._name);
-        _localVariables.put(variableData._name, variableData);
-    }
-    
-    @Override
-    public void removeLocalVariable(String name) {
-        _localVariables.remove(name);
+        _localVariables.add(variableData);
     }
     
     @Override
@@ -56,8 +50,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
     
     @Override
-    public Collection<VariableData> getLocalVariables() {
-        return _localVariables.values();
+    public List<VariableData> getLocalVariables() {
+        return _localVariables;
     }
 
     @Override
@@ -134,6 +128,23 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         writer.println();
     }
     
+    protected void printLocalVariable(
+            Locale locale,
+            PrintWriter writer,
+            String currentIndent,
+            VariableData localVariable) {
+        
+        writer.append(currentIndent);
+        writer.append("   ::: ");
+        writer.append(Bundle.getMessage(
+                locale,
+                "PrintLocalVariable",
+                localVariable._name,
+                localVariable._initalValueType.getDescr(),
+                localVariable._initialValueData));
+        writer.println();
+    }
+    
     /** {@inheritDoc} */
     @Override
     public void printTree(PrintWriter writer, String indent) {
@@ -157,6 +168,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     @Override
     public void printTree(Locale locale, PrintWriter writer, String indent, String currentIndent) {
         printTreeRow(locale, writer, currentIndent);
+        for (VariableData localVariable : _localVariables) {
+            printLocalVariable(locale, writer, currentIndent, localVariable);
+        }
         
         for (int i=0; i < getChildCount(); i++) {
             getChild(i).printTree(locale, writer, indent, currentIndent+indent);

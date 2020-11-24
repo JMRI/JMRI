@@ -24,6 +24,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         implements DigitalActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
+    private MaleSocket _lastRegisteredBean;
 
     
     public DefaultDigitalActionManager() {
@@ -59,11 +60,24 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
 
     /** {@inheritDoc} */
     @Override
+    public MaleSocket getLastRegisteredMaleSocket() {
+        return _lastRegisteredBean;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void register(MaleSocket maleSocket) {
         if (!(maleSocket instanceof MaleDigitalActionSocket)) {
             throw new IllegalArgumentException("maleSocket is not a MaleDigitalActionSocket");
         }
         register((MaleDigitalActionSocket)maleSocket);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void register(MaleDigitalActionSocket maleSocket) {
+        super.register(maleSocket);
+        _lastRegisteredBean = maleSocket;
     }
     
     /**

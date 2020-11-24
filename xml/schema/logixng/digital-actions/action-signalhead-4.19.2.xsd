@@ -54,6 +54,8 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
               <xs:element name="apperance" type="xs:int" minOccurs="0" maxOccurs="1"></xs:element>
 
             </xs:sequence>

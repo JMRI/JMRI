@@ -47,7 +47,9 @@
             <xs:element name="analog-expression-memory"    type="LogixNG_AnalogExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="formula"                     type="LogixNG_AnalogExpression_FormulaType" minOccurs="0" maxOccurs="unbounded" />
 
-          </xs:choice>
+            <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
+
+        </xs:choice>
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>

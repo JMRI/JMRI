@@ -6,10 +6,13 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.ActionScript;
 import jmri.jmrit.logixng.actions.ActionListenOnBeans;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
@@ -115,8 +118,6 @@ public class StoreAndLoadTest {
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
         
         
-        
-        
         // Create module IQM1
         jmri.jmrit.logixng.Module module =
                 InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
@@ -156,12 +157,12 @@ public class StoreAndLoadTest {
         logixNG.setEnabled(false);
         conditionalNG.setEnabled(true);
         
-        FemaleSocket femaleSocket = conditionalNG.getFemaleSocket();
+        FemaleSocket femaleRootSocket = conditionalNG.getFemaleSocket();
         MaleDigitalActionSocket actionManySocket =
                 digitalActionManager.registerAction(new jmri.jmrit.logixng.actions.DigitalMany(
                                         digitalActionManager.getAutoSystemName(), null));
-        femaleSocket.connect(actionManySocket);
-        femaleSocket.setLock(Base.Lock.HARD_LOCK);
+        femaleRootSocket.connect(actionManySocket);
+        femaleRootSocket.setLock(Base.Lock.HARD_LOCK);
         
         
         
@@ -770,7 +771,11 @@ public class StoreAndLoadTest {
         
         
         
-        
+        femaleRootSocket.forEntireTree((Base b) -> {
+            if (b instanceof MaleSocket) {
+                addVariables((MaleSocket) b);
+            }
+        });
         
         
         
@@ -962,7 +967,7 @@ public class StoreAndLoadTest {
                     log.error("New tree:");
                     log.error("XXX"+stringWriter.toString()+"XXX");
                     log.error("--------------------------------------------");
-/*                    
+                    
                     System.out.println("--------------------------------------------");
                     System.out.println("Old tree:");
                     System.out.println("XXX"+originalTree+"XXX");
@@ -970,7 +975,7 @@ public class StoreAndLoadTest {
                     System.out.println("New tree:");
                     System.out.println("XXX"+stringWriter.toString()+"XXX");
                     System.out.println("--------------------------------------------");
-*/                    
+                    
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
                     Assert.fail("tree has changed");
@@ -1037,6 +1042,25 @@ public class StoreAndLoadTest {
         JUnitAppender.clearBacklog();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
+    }
+    
+    
+    
+    private static final String[] initValues = new String[]{
+        "",             // None
+        "index",        // LocalVariable
+        "IM2",          // Memory
+        "{IM3}",        // Reference
+        "index * 2",    // Formula
+    };
+    
+    
+    private void addVariables(MaleSocket maleSocket) {
+        int i = 0;
+        for (InitialValueType type : InitialValueType.values()) {
+            maleSocket.addLocalVariable(String.format("A%d", i+1), type, initValues[i]);
+            i++;
+        }
     }
     
     
