@@ -92,7 +92,7 @@ public class SpeedProfileTable extends jmri.util.JmriJFrame {
         JLabel label = new JLabel(Bundle.getMessage("units"));
         label.setFont(font);
         javax.swing.ButtonGroup bp = new javax.swing.ButtonGroup();
-        JRadioButton mm = new JRadioButton(Bundle.getMessage("mm"));
+        JRadioButton mm = new JRadioButton(Bundle.getMessage("mmps"));
         mm.setFont(font);
         mm.addActionListener((ActionEvent e) -> {
             update(model, SignalSpeedMap.PERCENT_NORMAL);

@@ -122,7 +122,7 @@ public class RosterSpeedProfile {
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
             case SignalSpeedMap.PERCENT_NORMAL:
-                String unitsMms = Bundle.getMessage("mm");
+                String unitsMms = Bundle.getMessage("mmps");
                 formattedWithUnits = String.format("%.2f %s", mms, unitsMms);
                 break;
             default:
