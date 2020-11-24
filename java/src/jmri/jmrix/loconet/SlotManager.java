@@ -397,6 +397,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
+            getMoreDetailsForSlotMove(m, i);
         }
 
         // LONG_ACK response?
