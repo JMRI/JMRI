@@ -18,6 +18,20 @@
 
 <h2>Local variables</h2>
 
+JMRI have memories that can store data. And that's great. But there is a problem with memories. They are global, which
+means that anyone can change them. Lets assume you want to count something so you create a memory IMCOUNTER. You create
+a LogixNG that does the counting and everything works fine.
+<p>
+A year passes and you need to count something else. You create a new LogixNG that does the new counting and you need a
+memory, so you decide to use the memory IMCOUNTER. And your new LogixNG works fine. But then you suddenly realise that
+something else on the layout stops working. Why? What has happen? Well, the problem is that you use the same memory
+IMCOUNTER for two different things in two different places. And when that happens, you get into trouble.
+<p>
+LogixNG has a simple solution to this problem, local variables. A local variable is similar to a memory, but it only
+exists in a very limited context and nothing outside that context can interfer with the variable. This protects the
+local variable from being changed in an unpredictable way.
+<p>
+
 
 
 <p>
