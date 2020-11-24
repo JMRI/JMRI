@@ -14,8 +14,8 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 
-import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.util.JmriJFrame;
 
 /**
@@ -315,9 +315,14 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             
             FemaleSocket socket = (FemaleSocket)value;
             
-//            FemaleSocketPanel panel = new FemaleSocketPanel(socket);
+            JPanel mainPanel = new JPanel();
+            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+            mainPanel.setOpaque(false);
+            
             JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+            mainPanel.add(panel);
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
             panel.setOpaque(false);
             
             JLabel socketLabel = new JLabel(socket.getShortDescription());
@@ -343,11 +348,20 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
                 if (connectedSocket.getComment() != null) {
                     panel.setToolTipText(connectedSocket.getComment());
                 }
+                
+                for (VariableData variableData : connectedSocket.getLocalVariables()) {
+                    JLabel variableLabel = new JLabel(Bundle.getMessage(
+                            "PrintLocalVariable",
+                            variableData._name,
+                            variableData._initalValueType,
+                            variableData._initialValueData));
+                    mainPanel.add(variableLabel);
+                }
             }
             
             panel.add(connectedItemLabel);
             
-            return panel;
+            return mainPanel;
         }
         
     }

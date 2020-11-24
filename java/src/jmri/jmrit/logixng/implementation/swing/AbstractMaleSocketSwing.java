@@ -139,7 +139,6 @@ public abstract class AbstractMaleSocketSwing extends AbstractSwingConfigurator 
         MaleSocket maleSocket = (MaleSocket)object;
         maleSocket.clearLocalVariables();
         for (VariableData variableData : tableModel.getVariables()) {
-            System.out.format("updateObject: Add variable: %s%n", variableData._name);
             maleSocket.addLocalVariable(variableData);
         }
     }

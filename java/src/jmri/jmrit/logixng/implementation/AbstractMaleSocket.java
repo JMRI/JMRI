@@ -40,7 +40,6 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     
     @Override
     public void addLocalVariable(VariableData variableData) {
-        System.out.format("AbstractMaleSocket.addLocalVariable: Add variable: %s%n", variableData._name);
         _localVariables.add(variableData);
     }
     
