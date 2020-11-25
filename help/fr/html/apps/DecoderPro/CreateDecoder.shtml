@@ -4,8 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
- <!--Updated et Translated by Herv&#233; Blorec le 2017-10-10 -->
+ <!--Updated et Translated by Herv&#233; Blorec le 2020-11-25 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
 <!-- Style -->
@@ -18,9 +17,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro</h1>
 <h2>Cr&#233;ation d'un fichier d&#233;codeur personnalis&#233;</h2>
@@ -113,16 +114,17 @@ num&#233;ro suivant.</p>
 <dd>
 Les lignes suivantes identifient la "famille" de d&#233;codeurs que ce fichier 
 d&#233;crit:
-<p class=example>
-&lt;decoder&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DN142" numOuts="4" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;model model="DH083" numOuts="5" numFns="2"/&gt;<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;/family&gt;
-</p>
+<p class="example">&lt;decoder&gt;<br>
+              &lt;family name="Digitrax 1x2" mfg="Digitrax"<br>
+                  lowVersionID="240" highVersionID="242"<br>
+                  comment="Digitrax DH142, etc" &gt;<br>
+                  &lt;model model="DH142" numOuts="4"
+          numFns="2"/&gt;<br>
+                  &lt;model model="DN142" numOuts="4"
+          numFns="2"/&gt;<br>
+                  &lt;model model="DH083" numOuts="5"
+          numFns="2"/&gt;<br>
+              &lt;/family&gt;</p>
 
 <p>L'espacement n'est pas important, mais il est utilis&#233; pour indent&#233; le fichier
 et le rendre plus lisible. XML utilise "&#233;l&#233;ments" 
@@ -130,11 +132,10 @@ et "attributs" pour porter les informations. les choses &lt;model&gt; sont
 des &#233;l&#233;ments; les attributs comme numOuts sont fix&#233;s &#225; des valeurs sp&#233;cifiques &#225; l'int&#233;rieur des &#233;l&#233;ments.
 Dans la 2&#232;me &#225; la 4&#232;me lignes ci-dessus
 
-<p class=example>
-&lt;family name="Digitrax 1x2" mfg="Digitrax"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;lowVersionID="240" highVersionID="242"<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;comment="Digitrax DH142, etc" &gt;
-</p>
+< <p class="example">&lt;family name="Digitrax 1x2"
+          mfg="Digitrax"<br>
+              lowVersionID="240" highVersionID="242"<br>
+              comment="Digitrax DH142, etc" &gt;</p>
 
 <p>L'&#233;l&#233;ment est "family", avec les attributs "name", "mfg",
 "lowVersionID", "highVersionID", et "comment".  Un attribut est 
@@ -203,7 +204,7 @@ de d&#233;codeur dans une entr&#233;e existante de l'inventaire</p>
    <li> Il peut y avoir plusieurs instances de la famille 'y'
    (dans diff&#233;rents fichiers de d&#233;codeur) mais le mod&#232;le 'x' 
    peut seulement apparaitre au sein d'un de celles-ci.</li>
-   <li>La restriction d'unicit&#233; 'family'+'model" s'applique 
+   <li>La restriction d'unicit&#233; 'family' et 'model" s'applique 
    ind&#233;pendamment du fabricant.</li>
  </ul>
  </dd>
