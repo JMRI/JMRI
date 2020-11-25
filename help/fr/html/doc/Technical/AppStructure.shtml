@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-02 -->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2020-11-25 -->
  <html lang="fr">
 <head>
     <TITLE>
@@ -23,7 +23,7 @@
   <meta name="keywords" content="JMRI technical code">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -33,10 +33,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI: Structure de l'Application</h1>
@@ -46,7 +46,7 @@ Cette page discute de la structure des applications JMRI
 Pour la structure de la Librairie JMRI elle-m&#234;me voir le
 <a href="IntroStructure.shtml">Introduction &#224; la page Structure Librairieto JMRI</a>.
 
-JMRI est livr&#233; avec plusieurs"applications" principales:
+JMRI est livr&#233; avec plusieurs "applications" principales:
 <dl>
       <dt>DecoderPro</dt>
         <dd>
@@ -162,7 +162,7 @@ JMRI est livr&#233; avec plusieurs"applications" principales:
        m&#233;canisme "de profil" qui a h&#233;rit&#233; des apps.Apps et
        Classes apps.AppsBase.
 
-      <!--#include virtual="/Footer" --></p>
+      <!--#include virtual="/Footer.shtml" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
