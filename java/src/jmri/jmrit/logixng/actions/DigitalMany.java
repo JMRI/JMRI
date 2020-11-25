@@ -8,7 +8,6 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.actions.Bundle;
 
 /**
  * Execute many Actions in a specific order.
