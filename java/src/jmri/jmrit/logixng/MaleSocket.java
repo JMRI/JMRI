@@ -70,10 +70,10 @@ public interface MaleSocket extends Debugable {
     public Base getObject();
 
     /**
-     * Get the object that this male socket holds.
+     * Get the manager that stores this socket.
      * This method is used when the object is going to be configured.
      * 
-     * @return the object this male socket holds
+     * @return the manager
      */
     public BaseManager<? extends NamedBean> getManager();
 
