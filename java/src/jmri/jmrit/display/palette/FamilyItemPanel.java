@@ -303,8 +303,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 String fam = iter.next();
                 if (mapFamily.equals(fam)) {
                     if (_update) {
+                        String thisType = NAME_MAP.get(_itemType);
                         JOptionPane.showMessageDialog(_frame,
-                                Bundle.getMessage("DuplicateFamilyName", mapFamily, _itemType,
+                                Bundle.getMessage("DuplicateFamilyName", mapFamily, Bundle.getMessage(thisType),
                                         Bundle.getMessage("UseAnotherName")),
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                         mapFamily = null;
@@ -400,7 +401,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
-        blurb.add(new JLabel(Bundle.getMessage("PickRowBean", _itemType)));
+        String thisType = NAME_MAP.get(_itemType);
+        blurb.add(new JLabel(Bundle.getMessage("PickRowBean", Bundle.getMessage(thisType))));
         blurb.add(new JLabel(Bundle.getMessage("DragBean")));
         JPanel panel = new JPanel();
         panel.add(blurb);

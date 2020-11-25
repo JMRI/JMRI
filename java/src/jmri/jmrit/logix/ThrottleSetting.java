@@ -255,39 +255,41 @@ public class ThrottleSetting {
     private Command getCommandFromString(String cmdStr) throws JmriException {
         Command command;
         String cmd = cmdStr.trim().toUpperCase();
-        if ("SPEED".equals(cmd)) {
+        if ("SPEED".equals(cmd) || Bundle.getMessage("speed").toUpperCase().equals(cmd)) {
             command = Command.SPEED;
             _keyNum = -1;
-        } else if ("SPEEDSTEP".equals(cmd)) {
+        } else if ("SPEEDSTEP".equals(cmd) || Bundle.getMessage("speedstep").toUpperCase().equals(cmd)) {
             command = Command.SPEEDSTEP;
             _keyNum = -1;
-        } else if ("FORWARD".equals(cmd)) {
+        } else if ("FORWARD".equals(cmd) || Bundle.getMessage("forward").toUpperCase().equals(cmd)) {
             command = Command.FORWARD;
             _keyNum = -1;
-        } else if (cmd.startsWith("F")) {
+        } else if (cmd.startsWith("F") || Bundle.getMessage("setFunction").toUpperCase().equals(cmd)) {
             command = Command.FKEY;
             try {
                 _keyNum = Integer.parseInt(cmd.substring(1));
             } catch (NumberFormatException nfe) {
                 throw new JmriException(Bundle.getMessage("badFunctionNum"), nfe);
             }
-        } else if (cmd.startsWith("LOCKF")) {
+        } else if (cmd.startsWith("LOCKF") || Bundle.getMessage("setKeyMomentary").toUpperCase().equals(cmd)) {
             command = Command.LATCHF;
             try {
                 _keyNum = Integer.parseInt(cmd.substring(5));
             } catch (NumberFormatException nfe) {
                 throw new JmriException(Bundle.getMessage("badLockFNum"), nfe);
             }
-        } else if ("NOOP".equals(cmd)) {
+        } else if ("NOOP".equals(cmd) || Bundle.getMessage("NoOp").toUpperCase().equals(cmd)) {
             command = Command.NOOP;
             _keyNum = -1;
-        } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd)) {
+        } else if ("SENSOR".equals(cmd) || "SET SENSOR".equals(cmd) || "SET".equals(cmd) 
+                || Bundle.getMessage("SetSensor").toUpperCase().equals(cmd)) {
             command = Command.SET_SENSOR;
             _keyNum = -1;
-        } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd)) {
+        } else if ("WAIT SENSOR".equals(cmd) || "WAIT".equals(cmd) 
+                || Bundle.getMessage("WaitSensor").toUpperCase().equals(cmd)) {
             command = Command.WAIT_SENSOR;
             _keyNum = -1;
-        } else if ("RUN WARRANT".equals(cmd)) {
+        } else if ("RUN WARRANT".equals(cmd) || Bundle.getMessage("runWarrant").toUpperCase().equals(cmd)) {
             command = Command.RUN_WARRANT;
             _keyNum = -1;
         } else {
@@ -304,7 +306,7 @@ public class ThrottleSetting {
         SpeedStepMode mode = SpeedStepMode.UNKNOWN;
         float speed = 0.0F;
         String val = valueStr.trim().toUpperCase();
-        if ("ON".equals(val)) {
+        if ("ON".equals(val) || Bundle.getMessage("StateOn").toUpperCase().equals(val)) {
             switch (command) {
                 case FKEY:
                 case LATCHF:
@@ -313,7 +315,7 @@ public class ThrottleSetting {
                 default:
                     throw new jmri.JmriException(Bundle.getMessage("badValue", valueStr, command));
             }
-        } else if ("OFF".equals(val)) {
+        } else if ("OFF".equals(val) || Bundle.getMessage("StateOff").toUpperCase().equals(val)) {
             switch (command) {
                 case FKEY:
                 case LATCHF:
@@ -322,7 +324,7 @@ public class ThrottleSetting {
                 default:
                     throw new jmri.JmriException(Bundle.getMessage("badValue", valueStr, command));
             }
-        } else  if ("TRUE".equals(val)) {
+        } else  if ("TRUE".equals(val) || Bundle.getMessage("StateTrue").toUpperCase().equals(val)) {
             switch (command) {
                 case FORWARD:
                     type = ValueType.VAL_TRUE;
@@ -334,7 +336,7 @@ public class ThrottleSetting {
                 default:
                     throw new jmri.JmriException(Bundle.getMessage("badValue", valueStr, command));
             }
-        } else if ("FALSE".equals(val)) {
+        } else if ("FALSE".equals(val) || Bundle.getMessage("StateFalse").toUpperCase().equals(val)) {
             switch (command) {
                 case FORWARD:
                     type = ValueType.VAL_FALSE;
@@ -346,7 +348,7 @@ public class ThrottleSetting {
                 default:
                     throw new jmri.JmriException(Bundle.getMessage("badValue", valueStr, command));
             }
-        } else if ("ACTIVE".equals(val)) {
+        } else if ("ACTIVE".equals(val) || Bundle.getMessage("SensorStateActive").toUpperCase().equals(val)) {
             switch (command) {
                 case SET_SENSOR:
                 case WAIT_SENSOR:
@@ -355,7 +357,7 @@ public class ThrottleSetting {
                 default:
                     throw new jmri.JmriException(Bundle.getMessage("badValue", valueStr, command));
             }
-        } else if ("INACTIVE".equals(val)) {
+        } else if ("INACTIVE".equals(val) || Bundle.getMessage("SensorStateInactive").toUpperCase().equals(val)) {
             switch (command) {
                 case SET_SENSOR:
                 case WAIT_SENSOR:
@@ -368,14 +370,14 @@ public class ThrottleSetting {
             try {
                 switch (command) {
                     case SPEED:
-                        speed = Float.parseFloat(valueStr);
+                        speed = Float.parseFloat(valueStr.replace(',', '.'));
                         type = ValueType.VAL_FLOAT;
                         break;
                     case NOOP:
                         type = ValueType.VAL_NOOP;
                         break;
                     case RUN_WARRANT:
-                        speed = Float.parseFloat(valueStr);
+                        speed = Float.parseFloat(valueStr.replace(',', '.'));
                         type = ValueType.VAL_INT;
                         break;
                     case SPEEDSTEP:
