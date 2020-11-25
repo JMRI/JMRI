@@ -19,7 +19,7 @@
 <body>
 <!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
         <!-- Page Body -->
       <h1>Guide Utilisateur DecoderPro - D&eacute;bogage</h1>
@@ -87,9 +87,8 @@
 	fichier. DTD peut &#234;tre trouv&#233; dans le sous-r&#233;pertoire dtd du r&#233;pertoire xml.
 	</p>
 
-   </dd>
- </dl><!--#include virtual="/Footer" -->
-    </div>
-  </div>
+   <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
 </body>
 </html>
