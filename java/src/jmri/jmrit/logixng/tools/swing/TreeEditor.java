@@ -405,9 +405,15 @@ public class TreeEditor extends TreeViewer {
                     } catch (SocketAlreadyConnectedException ex) {
                         throw new RuntimeException(ex);
                     }
+                    
+                    femaleSocket.forEntireTree((Base b) -> {
+                        b.addPropertyChangeListener(this);
+                    });
+                    
                     _addSwingConfiguratorInterface.dispose();
                     _addItemDialog.dispose();
                     _addItemDialog = null;
+                    
                     for (TreeModelListener l : femaleSocketTreeModel.listeners) {
                         TreeModelEvent tme = new TreeModelEvent(
                                 femaleSocket,
@@ -417,6 +423,7 @@ public class TreeEditor extends TreeViewer {
                     }
                     tree.expandPath(path);
                     tree.updateUI();
+                    
                     InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
                         prefMgr.setCheckboxPreferenceState(_systemNameAuto, _autoSystemName.isSelected());
                     });
