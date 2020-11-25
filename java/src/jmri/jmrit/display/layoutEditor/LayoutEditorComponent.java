@@ -44,21 +44,17 @@ class LayoutEditorComponent extends JComponent {
     @Override
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
-            // layoutEditor.draw((Graphics2D) g);
-
             Graphics2D g2 = (Graphics2D) g;
 
-            if (clipBounds != null) {
-                if (!clipBounds.isEmpty()) {
-                    if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        if (!clipBounds.equals(g2.getClipBounds())) {
-                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                            //        clipBounds, g2.getClipBounds());
-                            g2.setClip(clipBounds);
-                        }
-                    }
+            if ((clipBounds != null) && (!clipBounds.isEmpty())) {
+                Rectangle2D oldClipBounds = g2.getClipBounds();
+                if (!clipBounds.equals(oldClipBounds)) {
+                    //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}.",
+                    //        clipBounds, oldClipBounds);
+                    g2.setClip(clipBounds);
                 }
             }
+
             // Optional antialising, to eliminate (reduce) staircase on diagonal lines
             if (layoutEditor.antialiasingOn) {
                 g2.setRenderingHints(antialiasing);
@@ -125,9 +121,10 @@ class LayoutEditorComponent extends JComponent {
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
-        Point2D startPt, stopPt;
-        BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-        BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        Point2D stopPt = new Point2D.Double();
+        //note: a width of zero means one pixel at current resolution (ignores scaling)
+        BasicStroke narrow = new BasicStroke(0.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        BasicStroke wide = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
         g2.setColor(Color.gray);
         g2.setStroke(narrow);
@@ -137,11 +134,11 @@ class LayoutEditorComponent extends JComponent {
             startPt = new Point2D.Double(minX, y);
             stopPt = new Point2D.Double(maxX, y);
 
-            if ((y % wideMod) < wideMin) {
+            if ((y % wideMod) < wideMin) {  // draw major grid line
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
-            } else {
+            } else {    // draw minor grid line
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
         }
@@ -151,11 +148,11 @@ class LayoutEditorComponent extends JComponent {
             startPt = new Point2D.Double(x, minY);
             stopPt = new Point2D.Double(x, maxY);
 
-            if ((x % wideMod) < wideMin) {
+            if ((x % wideMod) < wideMin) {  // draw major grid line
                 g2.setStroke(wide);
                 g2.draw(new Line2D.Double(startPt, stopPt));
                 g2.setStroke(narrow);
-            } else {
+            } else {    // draw minor grid line
                 g2.draw(new Line2D.Double(startPt, stopPt));
             }
         }

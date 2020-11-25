@@ -189,6 +189,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     public LayoutTrack foundTrack = null;      // found object, null if nothing found
     public LayoutTrackView foundTrackView = null;                 // found view object, null if nothing found
+
     private Point2D foundLocation = new Point2D.Double(0.0, 0.0); // location of found object
     public HitPointType foundHitPointType = HitPointType.NONE;          // connection type within the found object
 
@@ -1899,7 +1900,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             leToolBarPanel.setLocationText(dLoc);
         }
-        adjustClip();
     }
 
     private void adjustScrollBars() {
@@ -1944,30 +1944,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         vertScroll.setValue(newY);
 
 //        log.info("w: {}, x: {}, h: {}, y: {}", "" + newMaxX, "" + newX, "" + newMaxY, "" + newY);
-        adjustClip();
-    }
-
-    private void adjustClip() {
-        // log.info("adjustClip()");
-
-        // This is the bounds of what's on the screen
-        JScrollPane scrollPane = getPanelScrollPane();
-        Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        // log.info("  ViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
-
-        JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
-        int scrollX = horScroll.getValue();
-        JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
-        int scrollY = vertScroll.getValue();
-
-        Rectangle2D newClipRect = MathUtil.offset(
-                scrollBounds,
-                scrollX - scrollBounds.getMinX(),
-                scrollY - scrollBounds.getMinY());
-        newClipRect = MathUtil.scale(newClipRect, 1.0 / getZoom());
-        newClipRect = MathUtil.granulize(newClipRect, 1.0); // round to nearest pixel
-        layoutEditorComponent.setClip(newClipRect);
-
         redrawPanel();
     }
 
@@ -2100,7 +2076,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             _paintScale = newZoom;      // just set paint scale directly
             resetTargetSize();          // calculate new target panel size
             adjustScrollBars();         // and adjust the scrollbars ourselves
-            // adjustClip();
 
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
 
@@ -2759,7 +2734,35 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Allow external trigger of re-drawHidden
      */
     public void redrawPanel() {
+        fixClippingRectangle();
         repaint();
+    }
+
+    private void fixClippingRectangle() {
+        // This is the bounds of what's on the screen
+        JScrollPane scrollPane = getPanelScrollPane();
+        Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+        // log.info("  ViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
+
+        JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
+        int scrollX = horScroll.getValue();
+        JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
+        int scrollY = vertScroll.getValue();
+
+        Rectangle2D newClipRect = MathUtil.offset(
+                scrollBounds,
+                scrollX - scrollBounds.getMinX(),
+                scrollY - scrollBounds.getMinY());
+        newClipRect = MathUtil.scale(newClipRect, 1.0 / getZoom());
+        newClipRect = MathUtil.granulize(newClipRect, 1.0); // round to nearest pixel
+
+        //clear graphics clipping rectangle (to prevent culling)
+        Graphics g = this.getGraphics();
+        if (g != null) {
+            g.setClip(MathUtil.zeroToInfinityRectangle2D);
+        }
+        //set the clipping rectangle in the component instead
+        layoutEditorComponent.setClip(newClipRect);
     }
 
     /**
