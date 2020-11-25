@@ -18,8 +18,8 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<!--#include virtual="/Header.shtml" -->
+<!--#include virtual="Sidebar.shtml" -->
 <div id="mainContent">
 
 <h1>JMRI: Guide Utilisateur DecoderPro</h1>
@@ -382,7 +382,7 @@ d&#233;codeurs disponibles est construite .</p>
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
 
 
-<!--#include virtual="/Footer" --></p>
+<!--#include virtual="/Footer.shtml" --></p>
 </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
