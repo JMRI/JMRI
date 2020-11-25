@@ -1,11 +1,10 @@
-<<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
- <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-11 -->
+ <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2020-11-25 -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
 <!-- Style -->
@@ -18,12 +17,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+        <!-- Page Body -->
       <h1>Guide Utilisateur DecoderPro - D&eacute;bogage</h1>
 
       <dl>
