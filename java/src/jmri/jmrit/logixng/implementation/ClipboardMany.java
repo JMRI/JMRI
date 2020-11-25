@@ -87,8 +87,6 @@ public class ClipboardMany extends AbstractBase
             }
         }
         
-        checkFreeSocket();
-        
         disableCheckForUnconnectedSocket = false;
     }
     
@@ -114,23 +112,6 @@ public class ClipboardMany extends AbstractBase
         return _itemEntries.size();
     }
     
-    private void checkFreeSocket() {
-        boolean hasFreeSocket = false;
-        
-        for (ItemEntry entry : _itemEntries) {
-            hasFreeSocket |= !entry._socket.isConnected();
-        }
-        if (!hasFreeSocket) {
-            DefaultFemaleAnySocket socket =
-                    new DefaultFemaleAnySocket(this, this, getNewSocketName());
-            _itemEntries.add(new ItemEntry(socket));
-            
-            List<FemaleSocket> list = new ArrayList<>();
-            list.add(socket);
-            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
-        }
-    }
-    
     public void ensureFreeSocketAtTop() {
         if (_itemEntries.get(0)._socket.isConnected()) {
             DefaultFemaleAnySocket socket =
@@ -153,15 +134,22 @@ public class ClipboardMany extends AbstractBase
                         socket.getConnectedSocket().getSystemName();
             }
         }
-        
-        checkFreeSocket();
     }
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        for (ItemEntry entry : _itemEntries) {
+        for (int i=0; i < _itemEntries.size(); i++) {
+            ItemEntry entry = _itemEntries.get(i);
             if (socket == entry._socket) {
                 entry._socketSystemName = null;
+                
+                // Remove socket if not the first socket
+                if (i > 0) {
+                    List<FemaleSocket> list = new ArrayList<>();
+                    list.add(socket);
+                    _itemEntries.remove(i);
+                    firePropertyChange(Base.PROPERTY_CHILD_COUNT, list, null);
+                }
                 break;
             }
         }
