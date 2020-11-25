@@ -171,16 +171,16 @@ public class DigitalMany extends AbstractDigitalAction
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
         switch (oper) {
-            case Remove:
+            case Remove:        // Possible if socket is not connected
                 return ! getChild(index).isConnected();
             case InsertBefore:
-                return true;
+                return true;    // Always possible
             case InsertAfter:
-                return true;
+                return true;    // Always possible
             case MoveUp:
-                return index > 0;
+                return index > 0;   // Possible if not first socket
             case MoveDown:
-                return index+1 < getChildCount();
+                return index+1 < getChildCount();   // Possible if not last socket
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
@@ -195,6 +195,12 @@ public class DigitalMany extends AbstractDigitalAction
         List<FemaleSocket> addList = new ArrayList<>();
         addList.add(socket);
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
+    private void removeSocket(int index) {
+        List<FemaleSocket> removeList = new ArrayList<>();
+        removeList.add(_actionEntries.remove(index)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
     }
     
     private void moveSocketDown(int index) {
@@ -214,6 +220,8 @@ public class DigitalMany extends AbstractDigitalAction
         switch (oper) {
             case Remove:
                 if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                removeSocket(index);
+                break;
             case InsertBefore:
                 insertNewSocket(index);
                 break;

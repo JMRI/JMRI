@@ -1079,6 +1079,7 @@ public class TreeEditor extends TreeViewer {
             for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
                 if (oper.name().equals(command)) {
                     femaleSocket.doSocketOperation(oper);
+                    return true;
                 }
             }
             return false;
