@@ -26,8 +26,8 @@ public class DCCppCommandStation implements jmri.CommandStation {
      *
      */
     @Nonnull private String stationType = "Unknown";
-    @Nonnull private String build = "Unknown";
-    @Nonnull private String version = "0.0.0";
+    @Nonnull private String build       = "Unknown";
+    @Nonnull private String version     = "0.0.0";
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = DCCppConstants.MAX_MAIN_REGISTERS; //default to register size
 
