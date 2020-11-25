@@ -11,7 +11,7 @@
   Definitions</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -162,7 +162,7 @@
 	<li>depuis le menu d&#233;roulant D&#233;bogage, choisissez l'&#233;l&#233;ment " Reconstruire Index D&#233;codeur". Apr&#232;s que vous ayez 
 	reconstruit le nouvel index d&#233;codeur, le nouveau d&#233;codeur devrait &#234;tre visible dans la liste d&#233;roulante du 
 	Programmeur.</li>
-	 </ul><!--#include virtual="/Footer" -->
+	  <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
