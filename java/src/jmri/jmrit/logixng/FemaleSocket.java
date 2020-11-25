@@ -73,6 +73,36 @@ public interface FemaleSocket extends Base {
     public String getName();
     
     /**
+     * Is the operation allowed on this socket?
+     * @param oper the operation to do
+     * @return true if operation is allowed, false otherwise
+     */
+    public default boolean isSocketOperationAllowed(FemaleSocketOperation oper) {
+        Base parent = getParent();
+        for (int i=0; i < parent.getChildCount(); i++) {
+            if (parent.getChild(i) == this) {
+                return parent.isSocketOperationAllowed(i, oper);
+            }
+        }
+        throw new IllegalArgumentException("Invalid index");
+    }
+
+    /**
+     * Do an operation on this socket
+     * @param oper the operation to do
+     */
+    public default void doSocketOperation(FemaleSocketOperation oper) {
+        Base parent = getParent();
+        for (int i=0; i < parent.getChildCount(); i++) {
+            if (parent.getChild(i) == this) {
+                parent.doSocketOperation(i, oper);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Invalid index");
+    }
+
+    /**
      * Sets whenever listeners are enabled or not.
      * ConditionalNG has always listeners enabled, but Clipboard and Module
      * has never listeners enabled.

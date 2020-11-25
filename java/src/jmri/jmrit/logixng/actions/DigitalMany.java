@@ -4,16 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.Bundle;
 
 /**
  * Execute many Actions in a specific order.
@@ -169,6 +164,72 @@ public class DigitalMany extends AbstractDigitalAction
             List<FemaleSocket> list = new ArrayList<>();
             list.add(socket);
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                return ! getChild(index).isConnected();
+            case InsertBefore:
+                return true;
+            case InsertAfter:
+                return true;
+            case MoveUp:
+                return index > 0;
+            case MoveDown:
+                return index+1 < getChildCount();
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
+    private void insertNewSocket(int index) {
+        FemaleDigitalActionSocket socket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .createFemaleSocket(this, this, getNewSocketName());
+        _actionEntries.add(index, new ActionEntry(socket));
+        
+        List<FemaleSocket> addList = new ArrayList<>();
+        addList.add(socket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
+    private void moveSocketDown(int index) {
+        ActionEntry temp = _actionEntries.get(index);
+        _actionEntries.set(index, _actionEntries.get(index+1));
+        _actionEntries.set(index+1, temp);
+        
+        List<FemaleSocket> list = new ArrayList<>();
+        list.add(_actionEntries.get(index)._socket);
+        list.add(_actionEntries.get(index)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void doSocketOperation(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+            case InsertBefore:
+                insertNewSocket(index);
+                break;
+            case InsertAfter:
+                insertNewSocket(index+1);
+                break;
+            case MoveUp:
+                if (index == 0) throw new UnsupportedOperationException("cannot move up first child");
+                moveSocketDown(index-1);
+                break;
+            case MoveDown:
+                if (index+1 == getChildCount()) throw new UnsupportedOperationException("cannot move down last child");
+                moveSocketDown(index);
+                break;
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
     

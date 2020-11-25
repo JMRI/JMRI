@@ -19,6 +19,60 @@ import jmri.beans.PropertyChangeProvider;
 public interface Base extends PropertyChangeProvider {
     
     
+    /**
+     * The name of the property child count.
+     * To get the number of children, use the method getChildCount().
+     * This constant is used in calls to firePropertyChange().
+     * The class fires a property change then a child is added or removed.
+     * <p>
+     * If children are removed, the field oldValue of the PropertyChange event
+     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
+     * removed from the list so that the listener can unregister itself as a
+     * listener of this female socket.
+     * <p>
+     * If children are added, the field newValue of the PropertyChange event
+     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
+     * added to the list so that the listener can register itself as a
+     * listener of this female socket.
+     */
+    public static final String PROPERTY_CHILD_COUNT = "ChildCount";
+
+    /**
+     * The name of the property child reorder.
+     * The number of children has remained the same, but the order of children
+     * has changed.
+     * <p>
+     * The field newValue of the PropertyChange event must be a
+     * List&lt;FemaleSocket&gt; with the FemaleSockets that are reordered so
+     * that the listener can update the tree.
+     */
+    public static final String PROPERTY_CHILD_REORDER = "ChildReorder";
+
+    /**
+     * The socket has been connected.
+     * This constant is used in calls to firePropertyChange().
+     * The socket fires a property change when it is connected or disconnected.
+     */
+    public static final String PROPERTY_SOCKET_CONNECTED = "SocketConnected";
+
+    /**
+     * The socket has been disconnected.
+     * This constant is used in calls to firePropertyChange().
+     * The socket fires a property change when it is connected or disconnected.
+     */
+    public static final String PROPERTY_SOCKET_DISCONNECTED = "SocketDisconnected";
+
+    /**
+     * Constant representing an "connected" state of the socket
+     */
+    public static final int SOCKET_CONNECTED = 0x02;
+
+    /**
+     * Constant representing an "disconnected" state of the socket
+     */
+    public static final int SOCKET_DISCONNECTED = 0x04;
+
+
     public enum Lock {
         
         /**
@@ -65,49 +119,6 @@ public interface Base extends PropertyChangeProvider {
         }
     }
     
-    /**
-     * The name of the property child count.
-     * To get the number of children, use the method getChildCount().
-     * This constant is used in calls to firePropertyChange().
-     * The class fires a property change then a child is added or removed.
-     * <p>
-     * If children are removed, the field oldValue of the PropertyChange event
-     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
-     * removed from the list so that the listener can unregister itself as a
-     * listener of this female socket.
-     * <p>
-     * If children are added, the field newValue of the PropertyChange event
-     * must be a List&lt;FemaleSocket&gt; with the FemaleSockets that are
-     * added to the list so that the listener can register itself as a
-     * listener of this female socket.
-     */
-    public static final String PROPERTY_CHILD_COUNT = "ChildCount";
-
-    /**
-     * The socket has been connected.
-     * This constant is used in calls to firePropertyChange().
-     * The socket fires a property change when it is connected or disconnected.
-     */
-    public static final String PROPERTY_SOCKET_CONNECTED = "SocketConnected";
-
-    /**
-     * The socket has been disconnected.
-     * This constant is used in calls to firePropertyChange().
-     * The socket fires a property change when it is connected or disconnected.
-     */
-    public static final String PROPERTY_SOCKET_DISCONNECTED = "SocketDisconnected";
-
-    /**
-     * Constant representing an "connected" state of the socket
-     */
-    public static final int SOCKET_CONNECTED = 0x02;
-
-    /**
-     * Constant representing an "disconnected" state of the socket
-     */
-    public static final int SOCKET_DISCONNECTED = 0x04;
-
-
     /**
      * Get the system name.
      * @return the system name
@@ -282,23 +293,30 @@ public interface Base extends PropertyChangeProvider {
     public int getChildCount();
     
     /**
-     * Can a child be removed?
-     * @param childNo the child
-     * @return true if the child may be removed, false otherwise
+     * Is the operation allowed on this child?
+     * @param index the index of the child to do the operation on
+     * @param oper the operation to do
+     * @return true if operation is allowed, false otherwise
      */
-    default public boolean canRemoveChild(int childNo) {
+    public default boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        if (this instanceof MaleSocket) {
+            return ((MaleSocket)this).getObject().isSocketOperationAllowed(index, oper);
+        }
         return false;
     }
-    
+
     /**
-     * Remove the child
-     * @param childNo the child
+     * Do an operation on a child
+     * @param index the index of the child to do the operation on
+     * @param oper the operation to do
      */
-    default public void removeChild(int childNo) {
-        throw new UnsupportedOperationException(
-                "Child "+Integer.toString(childNo)+" cannot be removed");
+    public default void doSocketOperation(int index, FemaleSocketOperation oper) {
+        if (this instanceof MaleSocket) {
+            ((MaleSocket)this).getObject().doSocketOperation(index, oper);
+        }
+        // By default, do nothing if not a male socket
     }
-    
+
     /**
      * Get the category.
      * @return the category

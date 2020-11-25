@@ -829,6 +829,8 @@ public class TreeEditor extends TreeViewer {
         private JMenuItem menuItemCut;
         private JMenuItem menuItemCopy;
         private JMenuItem menuItemPaste;
+        private final Map<FemaleSocketOperation, JMenuItem> menuItemFemaleSocketOperation
+                = new HashMap<>();
         private JMenuItem menuItemLock;
         private JMenuItem menuItemUnlock;
 //        private JMenuItem menuItemExpandTree;
@@ -869,6 +871,16 @@ public class TreeEditor extends TreeViewer {
             menuItemPaste.addActionListener(this);
             menuItemPaste.setActionCommand(ACTION_COMMAND_PASTE);
             add(menuItemPaste);
+            addSeparator();
+            
+            for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
+                JMenuItem menuItem = new JMenuItem(oper.toString());
+                menuItem.addActionListener(this);
+                menuItem.setActionCommand(oper.name());
+                add(menuItem);
+                menuItemFemaleSocketOperation.put(oper, menuItem);
+            }
+            
             addSeparator();
             menuItemLock = new JMenuItem(Bundle.getMessage("PopupMenuLock"));
             menuItemLock.addActionListener(this);
@@ -944,6 +956,11 @@ public class TreeEditor extends TreeViewer {
             menuItemCut.setEnabled(isConnected);
             menuItemCopy.setEnabled(isConnected);
             menuItemPaste.setEnabled(!isConnected && canConnectFromClipboard);
+            
+            for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
+                JMenuItem menuItem = menuItemFemaleSocketOperation.get(oper);
+                menuItem.setEnabled(femaleSocket.isSocketOperationAllowed(oper));
+            }
             
             if (femaleSocket.isConnected()) {
                 MaleSocket connectedSocket = femaleSocket.getConnectedSocket();
@@ -1051,8 +1068,20 @@ public class TreeEditor extends TreeViewer {
                     break;
 */                    
                 default:
-                    log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
+                    // Check if the action is a female socket operation
+                    if (! checkFemaleSocketOperation(_currentFemaleSocket, e.getActionCommand())) {
+                        log.error("e.getActionCommand() returns unknown value {}", e.getActionCommand());
+                    }
             }
+        }
+        
+        private boolean checkFemaleSocketOperation(FemaleSocket femaleSocket, String command) {
+            for (FemaleSocketOperation oper : FemaleSocketOperation.values()) {
+                if (oper.name().equals(command)) {
+                    femaleSocket.doSocketOperation(oper);
+                }
+            }
+            return false;
         }
     }
     

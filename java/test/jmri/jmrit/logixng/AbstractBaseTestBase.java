@@ -536,7 +536,7 @@ public abstract class AbstractBaseTestBase {
             Assert.assertTrue(o instanceof FemaleSocket);
         }
     }
-    
+/*    
     @Test
     public void testRemoveChild() {
         AtomicBoolean ab = new AtomicBoolean(false);
