@@ -1,18 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="fr">
+<html lang="en">
 <head>
-<meta name="generator" content=
+  <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-<!-- Copyright Bob Jacobsen 2008 -->
+  <!-- Copyright Bob Jacobsen 2008 -->
 
-<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-14 -->
+<!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2020-11-25 -->
 <title> JMRI: Guide Utilisateur DecoderPro- Fichiers de Configuration</title>
 
  <!-- Style -->
   <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  "text/html; charset=us-utf-8">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
@@ -21,11 +21,11 @@
   <link rel="home" title="Home" href="/"><!-- /Style -->
 </head>
 
-<body>
-  <!--#include virtual="/Header" -->
-
+body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
 <div id="mainContent">
 	<H1>JMRI: Guide Utilisateur DecoderPro</H1> 
@@ -140,7 +140,7 @@
 
 	Plus d'information au sujet des Fichiers de Configuration JMRI <a href="../../setup/Files.shtml">Fichiers de Configuration 
 JMRI</a>      
- <!--#include virtual="/Footer" -->
+ <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
