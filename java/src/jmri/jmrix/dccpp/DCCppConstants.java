@@ -64,7 +64,7 @@ public final class DCCppConstants {
     public static final char TRACK_POWER_OFF        = '0'; // Track power OFF
     public static final char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public static final char READ_CS_STATUS         = 's'; // Read status from command station
-    public static final char READ_MAXNUMSLOTS    = '#'; // Read max number of slots supported by CS
+    public static final char READ_MAXNUMSLOTS       = '#'; // Read max number of slots supported by CS
 //    public static final char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
     public static final char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public static final char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
