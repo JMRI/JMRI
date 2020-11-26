@@ -120,18 +120,29 @@
 
   <defs>
     <g id="Loco">
-      <rect x="-228" y="-84" width="300" height="162" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />	<!-- frame -->
-      <rect x="-168" y="-40" width="240" height="80" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />       <!-- panna -->
-      <circle cx="-161" cy="0" r="42" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />                  <!-- skorsten -->
-      <rect x="72" y="-119" width="149" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />       <!-- hytt -->
+      <rect x="-228" y="-84" width="300" height="162" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- frame -->
+      <rect x="-168" y="-40" width="240" height="80" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- panna -->
+      <circle cx="-161" cy="0" r="42" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />                    <!-- skorsten -->
+      <rect x="72" y="-119" width="149" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- hytt -->
 	</g>
   </defs>
 
   <use id="LocoHandle" x="0" y="0" xlink:href="#Loco"/>
+
+
+  <defs>
+    <g id="Car">
+      <rect x="-221" y="-119" width="437" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- frame -->
+      <rect x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- panna -->
+      <rect x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#948A54" />     <!-- panna -->
+	</g>
+  </defs>
+
+  <use id="CarHandle" x="0" y="0" xlink:href="#Car"/>
 </svg>
 
 <script>
-window.setInterval(myTimer, 200);
+// window.setInterval(myTimer, 200);
 
 var circle = document.getElementById('Daniel1');
 
@@ -142,6 +153,11 @@ for (var key in circle) {
 }
 */
 
+var circle = document.getElementById('LocoHandle');
+circle.setAttribute("transform", "translate(200,200) scale(0.35) rotate(0)");
+
+var circle = document.getElementById('CarHandle');
+circle.setAttribute("transform", "translate(380,200) scale(0.35) rotate(0)");
 
 
 var angle = 0;
