@@ -2,6 +2,7 @@
 <head>
 <title>LogixNG sequence</title>
 
+<meta charset="utf-8"/>
 
         <!-- include the jquery.jmri library and its dependencies -->
         <script src="/js/jquery-1.11.2.min.js"></script>
@@ -9,6 +10,7 @@
         <script src="/js/jquery.websocket.js"></script>
         <script src="/js/logger.js"></script>
         <script src="/js/jquery.jmri.js"></script>
+        <script src="logixng_sequence.js"></script>
         <script type="text/javascript">
             // set the jmri global variable to null
             var jmri = null;
@@ -24,65 +26,7 @@
                     open: function() {
                         jmri.getPower();
 						jmri.getMemory("IM_91");
-
-/*
-//                        throttle = {
-//                          "name": "21",
-//                          "address": "21"
-//                        };
-						message = {
-						  'type'   : 'throttle',
-						  'method' : 'post',
-						  'data'   : {
-							'name' : '21',
-							'address'  : '21',
-//							'speed'    => "#{speed/10.0}",
-						  }
-						}
-//                        result = jmri.getThrottle({"name":"Daniel","address":"21"});
-                        throttle = {};
-						throttle.name = "Daniel";
-						throttle.address = "21";
-                        result = jmri.getThrottle("Daniel", throttle);
-                        console.log("Try to get throttle: "+result);
-*/
-
-
-
-
-/*
-                        console.log("AAA");
-
-						message = {
-						  'type'   => 'throttle',
-						  'method' => 'post',
-						  'data'   => {
-							'throttle' => 'bolttrain',
-							'address'  => '6871',
-							'speed'    => "#{speed/10.0}",
-						  }
-						}
-//						throttle = {"NAME": "Daniel", "ADDRESS": 21};
-                        result = jmri.getThrottle(message);
-                        console.log("Try to get throttle: "+result);
-*/
-
-/*
-						var loco = jmri.getRosterItem("Loco21");
-                        console.log("BBB");
-						if (loco) {
-	                        console.log("Requested loco: "+loco);
-						} else {
-	                        console.log("Failed to request loco: "+loco);
-						}
-                        console.log("CCC");
-*/
                     },
-
-
-
-
-
 
 
                     memory: function(name, value, data) {
@@ -93,10 +37,7 @@
 					},
 
 
-//                    throttle: function(name, value, data) {
                     throttle: function(data) {
-//						console.log("Memory name: "+name);
-//						console.log("Memory value: "+value);
 						console.log("Throttle data: "+data);
 					},
 
@@ -151,8 +92,58 @@
 
 </head>
 <body>
-Hejsan!!!
+<h1>LogixNG - Sequence</h1>
 
+
+
+
+<svg id="svg-object" width="800" height="800">
+  <circle id="Daniel1" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+  <rect id="Daniel2" x="100" y="100" width="200" height="200" stroke="green" stroke-width="4" fill="yellow" />
+  <defs>
+    <g id="DanielAA">
+      <circle id="Daniel1" cx="0" cy="0" r="40" stroke="green" stroke-width="4" fill="yellow" />
+      <rect id="Daniel" x="0" y="0" width="200" height="200" stroke="green" stroke-width="4" fill="yellow" />
+	</g>
+  </defs>
+
+  <use id="DanielBB" x="0" y="0" xlink:href="#DanielAA">
+</svg>
+
+<script>
+//window.setInterval(myTimer, 1000);
+
+var circle = document.getElementById('Daniel1');
+
+console.log("circle: "+circle);
+/*
+for (var key in circle) {
+  console.log(key);
+}
+*/
+
+
+
+var angle = 0;
+
+function myTimer() {
+//  var circle = document.getElementById('Daniel1');
+//  var cx = parseFloat(circle.getAttributeNS(null, 'cx'));
+//  circle.setAttributeNS(null, 'cx', cx + 10);
+
+//  var circle = document.getElementById('DanielAA');
+  var circle = document.getElementById('DanielBB');
+  var x = parseFloat(circle.getAttributeNS(null, 'x'));
+//  circle.setAttributeNS(null, 'x', x + 1);
+//  circle.setAttributeNS(null, 'rotate', '20deg');
+//  circle.setAttributeNS(null, 'x', 0);
+//  circle.setAttribute("transform", "translate(-100,-100) rotate("+angle+") translate(100,100)");
+  circle.setAttribute("transform", "rotate("+angle+") translate(100,100)");
+//  circle.setAttributeNS(null, 'x', 100);
+  angle += 10;
+} 
+
+</script>
 
 </body>
 </html>
