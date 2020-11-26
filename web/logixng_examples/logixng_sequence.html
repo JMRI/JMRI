@@ -123,15 +123,19 @@
       <rect x="-228" y="-84" width="300" height="162" stroke="green" stroke-width="4" fill="yellow" />	<!-- frame -->
       <rect x="-168" y="-40" width="240" height="80" stroke="green" stroke-width="4" fill="yellow" />       <!-- panna -->
       <circle cx="-161" cy="0" r="42" stroke="green" stroke-width="4" fill="yellow" />                  <!-- skorsten -->
-      <rect x="0,72" y="-119" width="149" height="233" stroke="green" stroke-width="4" fill="yellow" />       <!-- hytt -->
+      <rect x="72" y="-119" width="149" height="233" stroke="green" stroke-width="4" fill="yellow" />       <!-- hytt -->
 	</g>
   </defs>
 
-  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco"/>
+  <use id="LocoHandle3" x="0" y="0" xlink:href="#Loco"/>
+<!--  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco" transform="rotate(10)"/> -->
+<!--  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco" transform="rotate(10)"/> -->
+<!--  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco" transform="rotate(10)"/> -->
+<!--  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco" transform="rotate(10)"/> -->
 </svg>
 
 <script>
-//window.setInterval(myTimer, 1000);
+window.setInterval(myTimer, 200);
 
 var circle = document.getElementById('Daniel1');
 
@@ -147,6 +151,7 @@ for (var key in circle) {
 var angle = 0;
 
 function myTimer() {
+/*
 //  var circle = document.getElementById('Daniel1');
 //  var cx = parseFloat(circle.getAttributeNS(null, 'cx'));
 //  circle.setAttributeNS(null, 'cx', cx + 10);
@@ -160,6 +165,17 @@ function myTimer() {
 //  circle.setAttribute("transform", "translate(-100,-100) rotate("+angle+") translate(100,100)");
   circle.setAttribute("transform", "rotate("+angle+") translate(100,100)");
 //  circle.setAttributeNS(null, 'x', 100);
+*/
+
+  
+//  var circle = document.getElementById('LocoHandle');
+  var circle = document.getElementById('LocoHandle3');
+//  circle.setAttribute("transform", "rotate("+angle+") translate(100,100)");
+//  circle.setAttribute("transform", "rotate("+angle+")");
+  circle.setAttribute("transform", "translate(400,200) scale(0.4) rotate("+angle+")");
+
+//  circle.setAttributeNS(null, 'x', 400);
+
   angle += 10;
 } 
 
