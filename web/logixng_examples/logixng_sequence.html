@@ -120,18 +120,14 @@
 
   <defs>
     <g id="Loco">
-      <rect x="-228" y="-84" width="300" height="162" stroke="green" stroke-width="4" fill="yellow" />	<!-- frame -->
-      <rect x="-168" y="-40" width="240" height="80" stroke="green" stroke-width="4" fill="yellow" />       <!-- panna -->
-      <circle cx="-161" cy="0" r="42" stroke="green" stroke-width="4" fill="yellow" />                  <!-- skorsten -->
-      <rect x="72" y="-119" width="149" height="233" stroke="green" stroke-width="4" fill="yellow" />       <!-- hytt -->
+      <rect x="-228" y="-84" width="300" height="162" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />	<!-- frame -->
+      <rect x="-168" y="-40" width="240" height="80" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />       <!-- panna -->
+      <circle cx="-161" cy="0" r="42" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />                  <!-- skorsten -->
+      <rect x="72" y="-119" width="149" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />       <!-- hytt -->
 	</g>
   </defs>
 
-  <use id="LocoHandle3" x="0" y="0" xlink:href="#Loco"/>
-<!--  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco" transform="rotate(10)"/> -->
-<!--  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco" transform="rotate(10)"/> -->
-<!--  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco" transform="rotate(10)"/> -->
-<!--  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco" transform="rotate(10)"/> -->
+  <use id="LocoHandle" x="0" y="0" xlink:href="#Loco"/>
 </svg>
 
 <script>
@@ -152,10 +148,6 @@ var angle = 0;
 
 function myTimer() {
 /*
-//  var circle = document.getElementById('Daniel1');
-//  var cx = parseFloat(circle.getAttributeNS(null, 'cx'));
-//  circle.setAttributeNS(null, 'cx', cx + 10);
-
 //  var circle = document.getElementById('DanielAA');
   var circle = document.getElementById('DanielBB');
   var x = parseFloat(circle.getAttributeNS(null, 'x'));
@@ -168,10 +160,7 @@ function myTimer() {
 */
 
   
-//  var circle = document.getElementById('LocoHandle');
-  var circle = document.getElementById('LocoHandle3');
-//  circle.setAttribute("transform", "rotate("+angle+") translate(100,100)");
-//  circle.setAttribute("transform", "rotate("+angle+")");
+  var circle = document.getElementById('LocoHandle');
   circle.setAttribute("transform", "translate(400,200) scale(0.4) rotate("+angle+")");
 
 //  circle.setAttributeNS(null, 'x', 400);
