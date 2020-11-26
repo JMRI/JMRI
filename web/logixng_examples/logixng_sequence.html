@@ -98,8 +98,13 @@
 
 
 <svg id="svg-object" width="800" height="800">
+
+<!--
   <circle id="Daniel1" cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
   <rect id="Daniel2" x="100" y="100" width="200" height="200" stroke="green" stroke-width="4" fill="yellow" />
+  <rect id="Daniel55" x="500" y="50" width="200" height="200" stroke="blue" stroke-width="4" fill="yellow"/>
+  <rect id="Daniel55" x="500" y="50" width="200" height="200" stroke="blue" stroke-width="4" fill="lightgreen" transform="translate(10)"/>
+  <rect id="Daniel55" x="500" y="50" width="200" height="200" stroke="blue" stroke-width="4" fill="green" transform="rotate(10)"/>
   <defs>
     <g id="DanielAA">
       <circle id="Daniel1" cx="0" cy="0" r="40" stroke="green" stroke-width="4" fill="yellow" />
@@ -107,7 +112,22 @@
 	</g>
   </defs>
 
-  <use id="DanielBB" x="0" y="0" xlink:href="#DanielAA">
+  <use id="DanielBB" x="0" y="0" xlink:href="#DanielAA"/>
+
+  <rect id="Daniel55" x="500" y="50" width="200" height="200" stroke="blue" stroke-width="4" fill="lightgreen" transform="translate(-600,-150) rotate(10) translate(630,-50)"/>
+  <rect id="Daniel55" x="500" y="50" width="200" height="200" stroke="blue" stroke-width="4" fill="lightgreen" transform="translate(-600,-150) rotate(20) translate(630,-250)"/>
+-->
+
+  <defs>
+    <g id="Loco">
+      <rect x="-228" y="-84" width="300" height="162" stroke="green" stroke-width="4" fill="yellow" />	<!-- frame -->
+      <rect x="-168" y="-40" width="240" height="80" stroke="green" stroke-width="4" fill="yellow" />       <!-- panna -->
+      <circle cx="-161" cy="0" r="42" stroke="green" stroke-width="4" fill="yellow" />                  <!-- skorsten -->
+      <rect x="0,72" y="-119" width="149" height="233" stroke="green" stroke-width="4" fill="yellow" />       <!-- hytt -->
+	</g>
+  </defs>
+
+  <use id="LocoHandle" x="400" y="200" xlink:href="#Loco"/>
 </svg>
 
 <script>
