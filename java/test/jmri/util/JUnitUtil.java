@@ -935,6 +935,7 @@ public class JUnitUtil {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m9, jmri.Manager.LOGIXNG_STRING_EXPRESSIONS);
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
+        m1.activateAllLogixNGs();
     }
 
     public static void initInternalSensorManagerThrowException() {

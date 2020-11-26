@@ -24,7 +24,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Clipboard _clipboard = new DefaultClipboard();
     private final Stack _stack = new DefaultStack();
     private SymbolTable _symbolTable;
-    private boolean _isActive = false;;
+    private boolean _isActive = false;
     
     
     public DefaultLogixNGManager() {

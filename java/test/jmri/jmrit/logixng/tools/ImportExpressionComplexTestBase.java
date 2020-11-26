@@ -174,6 +174,7 @@ public abstract class ImportExpressionComplexTestBase {
         // We want the conditionalNGs run immediately during this test
         InstanceManager.getDefault(ConditionalNG_Manager.class).setRunOnGUIDelayed(false);
         
+        importLogix.getLogixNG().setEnabled(true);
         InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
         
         check.runTest("LogixNG is activated. Enum: "+e.name(), true);
@@ -244,6 +245,8 @@ public abstract class ImportExpressionComplexTestBase {
         ca.setDeviceName("IT1");
         actions.add(ca);
         conditional.setAction(actions);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
     }
 
 //    @After
