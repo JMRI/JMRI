@@ -1153,15 +1153,15 @@ public class SlotManagerTest {
         Assert.assertEquals("check slot f12", false, testSlot.isF12());
 
         slotmanager.forwardMessageToSlot(m, -1);
-        jmri.util.JUnitAppender.assertErrorMessage("Received slot number -1 is greater than array length 128 Message was ED 0B 7F 34 05 50 19 21 00 00 3F");
+        jmri.util.JUnitAppender.assertErrorMessage("Received slot number -1 is greater than array length 433 Message was ED 0B 7F 34 05 50 19 21 00 00 3F");
 
         Assert.assertEquals("check slot f9 - message was not accepted (slot number too low)", false, testSlot.isF9());
         Assert.assertEquals("check slot f10", false, testSlot.isF10());
         Assert.assertEquals("check slot f11", false, testSlot.isF11());
         Assert.assertEquals("check slot f12", false, testSlot.isF12());
 
-        slotmanager.forwardMessageToSlot(m, 129);
-        jmri.util.JUnitAppender.assertErrorMessage("Received slot number 129 is greater than array length 128 Message was ED 0B 7F 34 05 50 19 21 00 00 3F");
+        slotmanager.forwardMessageToSlot(m, 434);
+        jmri.util.JUnitAppender.assertErrorMessage("Received slot number 434 is greater than array length 433 Message was ED 0B 7F 34 05 50 19 21 00 00 3F");
 
         Assert.assertEquals("check slot f9 - message was not accepted (slot number too high)", false, testSlot.isF9());
         Assert.assertEquals("check slot f10", false, testSlot.isF10());

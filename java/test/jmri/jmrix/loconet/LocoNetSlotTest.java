@@ -642,7 +642,7 @@ public class LocoNetSlotTest {
 
     @Test
     public void testWriteSlot() throws LocoNetException {
-        int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
+        int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x07,
             0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
@@ -654,8 +654,21 @@ public class LocoNetSlotTest {
     }
 
     @Test
-    public void testWriteThrottleID() throws LocoNetException {
+    public void testExpWriteSlot() throws LocoNetException {
         int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x47,
+            0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};
+        LocoNetMessage lm = new LocoNetMessage(ia);
+        LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
+        LocoNetMessage lm2 = t.writeSlot();
+        Assert.assertEquals("Opcode", LnConstants.OPC_EXP_WR_SL_DATA, lm2.getOpCode());
+        for (int i = 1; i <= 12; i++) {
+            Assert.assertEquals("Element " + i, lm.getElement(i), lm2.getElement(i));
+        }
+    }
+
+    @Test
+    public void testWriteThrottleID() throws LocoNetException {
+        int ia[] = {0xE7, 0x0E, 0x01, 0x33, 0x28, 0x00, 0x00, 0x07,
             0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};
         LocoNetMessage lm = new LocoNetMessage(ia);
         LocoNetSlot t = new LocoNetSlot(new LocoNetMessage(lm));
@@ -702,7 +715,7 @@ public class LocoNetSlotTest {
         id[2] = 0x20;
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
-        Assert.assertEquals("Change direction and F1 for unconsisted slot", 0x21, t.dirf());
+        Assert.assertEquals("Change direction and F1 for unconsisted slot", 0x20, t.dirf());
 
         int ic[] = {0xE7, 0x0E, 0x01, 0x0b, 0x28, 0x12, 0x02, 0x47,
             0x00, 0x2B, 0x00, 0x00, 0x00, 0x60};   // make slot consist_top
@@ -723,7 +736,7 @@ public class LocoNetSlotTest {
         id[2] = 0x22;
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
-        Assert.assertEquals("Change direction and F1 & F3 for consist-top slot", 0x25, t.dirf());
+        Assert.assertEquals("Change direction and F1 & F3 for consist-top slot", 0x22, t.dirf());
 
         ic[3] = 0x4b;   // make slot consist_mid, common
         lm = new LocoNetMessage(ic);
@@ -761,7 +774,7 @@ public class LocoNetSlotTest {
         id[2] = 0x02;
         lm = new LocoNetMessage(id);
         t.setSlot(lm);
-        Assert.assertEquals("Change F0, F4-F3, F1 for consist-mid slot", 0x22, t.dirf());
+        Assert.assertEquals("Change F0, F4-F3, F1 for consist-top slot", 0x22, t.dirf());
 
         ic[6] = 0x27;   // make slot DIRF direction reversed, F3-F1 on
         lm = new LocoNetMessage(ic);
