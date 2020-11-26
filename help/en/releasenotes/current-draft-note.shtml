@@ -94,6 +94,8 @@
                     interrogation mechanism now implements a minimum delay from
                     the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
+                <li>The "Factory Reset" feature of the "DS64 Configuration Tool" was
+                    fixed.</li>
             </ul>
 
         <h4>Maple</h4>
