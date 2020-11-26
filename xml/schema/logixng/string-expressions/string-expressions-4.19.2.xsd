@@ -25,6 +25,7 @@
             "
         >
 
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/expression-constant-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/string-expressions/expression-memory-4.19.2.xsd"/>
 
     <xs:complexType name="LogixNG_StringExpressionManagerType">
@@ -41,6 +42,7 @@
         <!-- Permit any of these tags in any order in any number -->
         <xs:choice minOccurs="0" maxOccurs="unbounded">
 
+            <xs:element name="string-expression-constant"  type="LogixNG_StringExpression_ConstantType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="string-expression-memory"  type="LogixNG_StringExpression_MemoryType" minOccurs="0" maxOccurs="unbounded" />
 
             <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>

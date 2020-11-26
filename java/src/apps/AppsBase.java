@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 
 import jmri.*;
+import jmri.jmrit.logixng.LogixNGPreferences;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -18,6 +19,7 @@ import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 
 import jmri.util.prefs.JmriPreferencesActionFactory;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,6 +117,9 @@ public abstract class AppsBase {
         jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
         logixNG_Manager.setupAllLogixNGs();
+        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()) {
+            logixNG_Manager.activateAllLogixNGs();
+        }
     }
 
     /**

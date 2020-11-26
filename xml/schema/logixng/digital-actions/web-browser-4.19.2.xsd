@@ -25,28 +25,27 @@
             "
         >
 
-    <xs:complexType name="LogixNG_StringExpression_MemoryType">
+    <xs:complexType name="LogixNG_DigitalAction_WebBrowserType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a StringExpressionMemory class.
+          Define the XML stucture for storing the contents of a WebBrowser class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.string.expressions.configurexml.StringExpressionMemory</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.WebBrowserXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
             <xs:sequence>
-
               <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
-              <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="expressionSystemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 
             </xs:sequence>
-            
-			<xs:attribute name="class" type="classType" use="required"/>
+<!--            <xs:attribute name="enabled" type="yesNoType" /> -->
+            <xs:attribute name="class" type="classType" use="required"/>
         
     </xs:complexType>
 

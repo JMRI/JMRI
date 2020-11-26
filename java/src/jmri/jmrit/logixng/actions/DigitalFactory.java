@@ -36,6 +36,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.EXRAVAGANZA, ShutdownComputer.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class));
         return digitalActionClasses;
     }
 
