@@ -1,267 +1,480 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - MERG CBUS</title>
+<!-- Updated by Blorec Herv&#233; 2020-11-26-> 
+ <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+<title>JMRI Hardware Support - CAN Network</title>
+  <meta name="author" content="Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
 
 <!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<h1>Structure Mat&#233;riel: CBUS MERG</h1>
+ <h1>Support mat&#233;riel de JMRI : CBUS&trade; Page d'assistance principale</h1>
+                <ul class="snav">
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#connecting">Connexion </a></li>
+                    <li><a href="#tools">Outils CBUS</a></li>
+                    <li><a href="#cbusevents">&#201;v&#233;nements de la CUSM</a></li>
+                    <li><a href="#dcc">DCC sur CBUS</a></li>
+                    <li><a href="#signalling"> Signalisation </a></li>
+                    <li><a href="#thirdparty">Soutien compl&#233;mentaire</a></li>
+                </ul>
 
-<em>Le support de MERG est en &#233;volution rapide,
- le code r&#233;el pourrait &#234;tre en avance ou en retard sur
- la documentation un jour donn&#233;.
-</em>
-<ul class="snav"><!-- TOC -->
-<li><a href="#connecting">Connexion</a>
-<li><a href="#tools">Outils JMRI CBUS MERG</a>
-<li><a href="#documentation">Documentation</a>
-</ul>
+                <h2><a name="introduction" id="introduction">Introduction</a></h2>
+                <div>
 
-<h2>Connexion</h2>
-<h3>D&#233;nomination CBUS</h3>
-JMRI fournit une prise en charge pour les 
-<a href="../../../tools/Sensors.shtml"> Capteurs</a> g&#233;n&#233;raux JMRI
- les
-<a href="../../../tools/Turnouts.shtml"> Aiguillages</a> et  <a href=
-      "../../../tools/Lights.shtml"> Lumi&#232;res de JMRI
-en termes d'"&#233;v&#233;nements" CBUS.
+                    <p>Nomm&#233; &#224; l'origine CBUS par son co-fondateur Gil Fuchs, CBUS est un 
+                    protocole "ouvert" pour le mod&#233;lisme ferroviaire. Le protocole et d'autres 
+                    informations utiles sont h&#233;berg&#233;s sur le site web public du MERG (voir 
+                    les liens d'aide). CBUS n'est pas d&#233;tenu ou contr&#244;l&#233; par le MERG, mais 
+                    les co-fondateurs Gil Fuchs et Mike Bolton en sont des membres actifs. 
+                    Les membres du MERG peuvent acheter toute une gamme de kits CBUS.</p>
 
-Le <a  href="../../../doc/Technical/Names.shtml"> syst&#232;me de lettre</a>
-pour les connexions CBUS est "M". 
-<p>Les D&#233;tails  d'&#233;v&#233;nement CBUS et les noms des objet sont
-d&#233;crits ci-dessous, avec des d&#233;tails techniques sur une
-<a href="Names.shtml"> page s&#233;par&#233;e</a>.
+                    <p>Comme le soutien au CBUS continue d'&#233;voluer, ces pages d'aide 
+                    ne sont pas un guide d&#233;finitif du r&#233;seau CBUS et contiennent une 
+                    simplification consid&#233;rable du sch&#233;ma CBUS. Elles sont destin&#233;es &#224; 
+                    aider les nouveaux utilisateurs de l'JMRI ou du CBUS, et non les 
+                    d&#233;veloppeurs de syst&#232;mes qui doivent consulter la sp&#233;cification 
+                    compl&#232;te du protocole et le guide du d&#233;veloppeur h&#233;berg&#233; par le MERG.</p>
+                    
+                    <h3>Autres pages d'aide JMRI CBUS</h3>
+                    <ul>
+                        <li><a href="CbusFastClock.shtml"> Horloge rapide CBUS</a></li>
+                        <li><a href="../index.shtml" > Support JMRI CAN</a></li>
+                        <li><a href="../scripting.shtml"> Script JMRI pour des Trames CAN Utilisant Jython </a></li>
+                    </ul>
+                </div>
 
-<p>
-JMRI Associe les &#233;v&#233;nements CBUS avec les
-objets individues JMRI (capteurs, aiguillages, etc) via le
-Noms Syst&#232;me JMRI. Un  Nom Syst&#232;me comme
-"<code> MS+123; -345</code>"
-d&#233;finit un capteur qui suit les &#233;v&#233;nements CBUS
-"123 ON" et "345 OFF" pour changer d'&#233;tat.
-Selon les &#233;v&#233;nement CBUS - les ID sont utilis&#233;es.
-sur un circuit particulier
-, ces noms syst&#232;mes peuvent &#234;tre tr&#232;s long, auquel
-cas, le "nom utilisateur" devient beaucoup plus utile. 
+                <h2><a name="connecting" id="connecting">Connexion </a></h2>
+                <div>
+                    <p> Pour savoir comment &#233;tablir une connexion &#224; un r&#233;seau CBUS, 
+                    vous devez vous r&#233;f&#233;rer aux pages d'aide de JMRI, ou &#224; d'autres 
+                    documents, pour le mat&#233;riel du fabricant que vous avez choisi.</p>
 
-<h3>Ajout d'un &#233;l&#233;ment dans la table</h3>
-      <p>Lorsque vous ajoutez un &#233;l&#233;ment &#224; l'un des tableaux, il vous suffit souvent de remplir les chiffres pour que JMRI construise le nom complet du syst&#232;me.<br>
-      Voici un r&#233;sum&#233;, divis&#233; pour les Sorties (par exemple, les Aiguillages) et les Entr&#233;es (par exemple, les Capteurs):</p>
-      
-      <table>
-        <tbody><tr>
-          <th>In/Out</th>
-          <th>Entry</th>
-          <th>Meaning</th>
-          <th>makes System Name</th>
-          <th>Mask</th>
-          <th>Equivalent</th>
-          <th>Minimum</th>
-          <th>Maximum</th>
-        </tr>
-        <tr>
-          <td>in</td>
-          <td>200018M07</td>
-          <td>listen to Events 18 .. 1F</td>
-          <td>MS200018M07</td>
-          <td>+ M + hex mask</td>
-          <td>N/A</td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>in</td>
-          <td>X91012;X91019</td>
-          <td>hex CAN frame msg. Active; Inactive</td>
-          <td>MTX91012;X91019</td>
-          <td>hex ; hex</td>
-          <td>N/A</td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>18</td>
-          <td>event 18 On; 18 Off</td>
-          <td>MT18</td>
-          <td>integer</td>
-          <td>+18;-18</td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>18;21</td>
-          <td>event 18 On; 21 On</td>
-          <td>MT18;21</td>
-          <td>integer ; integer</td>
-          <td>+18;+21</td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>+18;-21</td>
-          <td>event 18 On; 21 Off</td>
-          <td>MT+18;-21</td>
-          <td>idem signed</td>
-          <td>N/A</td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>2000018</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MT200018</td>
-          <td>node + (5 digits)</td>
-          <td>N2E18</td>
-          <td>Note: not working</td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>both</td>
-          <td>N2E18</td>
-          <td>Node 2 Event 18; On Event = Active; Off Event = Inactive</td>
-          <td>MTN2E18</td>
-          <td>N + number + E + number</td>
-          <td>2000018</td>
-          <td>Note: not working</td>
-          <td> </td>
-        </tr>
-        </tbody></table>
-      <!-- ce tableau est un extrait du tableau du fichier help/en/html/doc/Technical/Names.shtml 
-      bas&#233; sur les informations des pages d'aide sur le mat&#233;riel par Egbert Broerse @silverailscolo July 2017 -->
+                    <h3>Solutions mat&#233;rielles connues du CBUS (novembre 2020)</h3>
+                    <ul>
+                        <li><a href = ../../merg/index.shtml> MERG</a></li>
+                        <li><a href = ../../sproggen5/index.shtml> SPROG DCC Generation 5</a></li>
+                    </ul>
 
-<h2>Capteurs</h2>
-<p>
-<p>Les messages BUS arrivant dans les applications JMRI sont accessibles via les objets capteurs JMRI. 
-Le capteur <a href= "Names.shtml">Nom du syst&#232;me</a> d&#233;termine &#224; quel(s) message(s) CBUS 
-il correspond. Un capteur est d&#233;fini par deux &#233;v&#233;nements : Celui qui le rend Actif, 
-et celui qui le rend Inactif. Si ceux-ci sont mis en correspondance avec des 
-trames ON et OFF avec le m&#234;me num&#233;ro d'identification d'&#233;v&#233;nement, respectivement, 
-seul le num&#233;ro d'identification d'&#233;v&#233;nement doit &#234;tre sp&#233;cifi&#233;:<br> 
-<code>MS18</code><br> Le num&#233;ro est d&#233;cimal.</p>
+                    <h2><a name="tools" id="tools">Outils CBUS</a></h2>
+                        <p>CBUS tools sont accessibles &#224; partir du menu de la 
+                        connexion syst&#232;me choisie. L'exemple montre une connexion 
+                        au mat&#233;riel du MERG. Les outils disponibles peuvent varier 
+                        en fonction de la connexion syst&#232;me</p>
 
-<p>
-Pour accro&#238;tre la polyvalence, il est possible d'utiliser diff&#233;rents num&#233;ros d'ID d'&#233;v&#233;nement
-pour la transition ACTIVE (par d&#233;faut, une trame ON  ) et transition INACTIVE
-(par d&#233;faut, une trame OFF):
-<br><code> MS18;21</code>
-<p>
-Le codage ON et OFF de CBUS n'est pas tout &#224; fait conforme au mod&#232;le d'&#233;v&#233;nement
-, et il peut &#234;tre utile de connecter la transition ACTIF ou INACTIF
-d'un capteur JMRI  &#224; une trame OFF ou ON  CBUS respectivement.
-Les caract&#232;res "+" et "- " le font. Par exemple,
-<br><code> MS-18;+21</code><br>
-d&#233;finit un capteur qui va ACTIF quand une trame OFF avec num&#233;ro d'identification 18 est re&#231;u,
-et va INACTIF quand une trame avec le num&#233;ro ID 21 est re&#231;u.
-<p>
-Les num&#233;ros d'&#233;v&#233;nement CBUS (en g&#233;n&#233;ral) contiennent un num&#233;ro de n&#339;ud dans leur octets les plus significatifs.
-Vous pouvez sp&#233;cifier le num&#233;ro de n&#339;ud soit
-en utilisant un nombre &#224; 5 chiffres pour le num&#233;ro d'&#233;v&#233;nement lui-m&#234;me,
-pr&#233;c&#233;d&#233; par le num&#233;ro de n&#339;ud:
-<br><code> MS200018</code><br>
-soit en utilisant les lettres "N" et "E" pour pr&#233;ciser les diff&#233;rentes parties:
-<br><code>MSN2E18</code><br>
+                        <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right" width="206" height="145">
 
-<p>
-Vous pouvez masquer une partie du paquet de CBUS, de sorte que les valeurs dans la partie masqu&#233;e vont toujours correspondre, en utilisant la lettre "M" de format. <br><code> MS200018M07</code><br>
+                        <ul>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a> - Outil de visualisation et d'envoi de Tramess CAN/&#201;v&#233;nements.</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Tableau des &#201;v&#233;nements</a> - Surveille les &#233;v&#233;nements et les pr&#233;sente dans un tableau plein de statistiques.</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml"> Gestionnaire de N&#339;uds </a> - Table des N&#339;uds et outils de configuration des N&#339;uds</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+                                    Moniteur Centrale de Commande</a> - Surveillance des sessions d'Exploitation et Outils de Centrale de Commande.</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml"> Envoyer une Trame</a> - Envoyer des trames CAN ou des &#233;v&#233;nements CBUS</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml" > Outil de Capture d'&#201;v&#233;nements </a> - Capture d'&#233;v&#233;nements CBUS</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml" > Moniteur de Demandes d'&#201;v&#233;nements </a> - Outil de surveillance du statut des demandes d'&#233;v&#233;nements</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+                                   >Simulation d'&#233;l&#233;ments de r&#233;seau</a> - Simule les Centrales de Commandet de Cbus et r&#233;pond aux demandes d'&#233;v&#233;nements</li>
+                            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">  Mise &#224; jour du firmware </a> - pour mettre &#224; jour le firmware du module CBUS</li>
+                            <li><a href="CbusMeters.shtml">  Mesure de Tension/Courant </a> - Surveiller l'Intensit&#233;/la tension des voies </li>
+                        </ul>
+                </div>
 
-"M" indique le d&#233;but d'un masque en hexad&#233;cimal qui sera appliqu&#233;e, o&#249; les bits &#224; 1 dans le masque seront bits &#224; z&#233;ro dans la valeur r&#233;sultante.
-Dans l'exemple ci-dessus, "18" correspondra &#224; "1F" . Ceci est particuli&#232;rement utile pour faire correspondre par exemple des &#233;v&#232;nements courts CBUS, o&#244; les pi&#232;ces du paquet incluent le num&#233;ro de n&#339;ud qui devrait (normalement) &#234;tre ignor&#233;
+                <h2><a name="cbusevents" id="cbusevents">&#201;v&#233;nements de CBUS</a></h2>
+                <div>
+                    <a href="Names.shtml">&#201;v&#233;nements de CBUS dans le cadre de JMRI</a>
+                        <ul>
+                            <li><a href="Names.shtml#events">Nom et Num&#233;rotation de l'&#201;v&#233;nement</a></li>
+                            <li><a href="Noms.shtml#sysname">Noms Syst&#232;me</a></li>
+                            <li><a href="Names.shtml#summary">R&#233;sum&#233; des &#201;v&#233;nements de 	CBUS</a></li>
+                            <li><a href="Names.shtml#namingspec">Sp&#233;cification de l'Appellation des &#201;v&#233;nements</a></li>
+                            <li><a href="Names.shtml#hex">Envoi de cha&#238;nes hexad&#233;cimales</a></li>
+                            <li><a href="Names.shtml#opc">Opcodes dans JMRI</a></li>
+                        </ul>        
 
-<p>
- Enfin, il est possible de connecter arbitrairement un Capteur &#224;
-des trames CAN en pr&#233;cisant les donn&#233;es contenu 
-comme une cha&#238;ne hexad&#233;cimale:<br><code>MSX9100000000000012;X9100000000000019</code><br>
+                    <h3> Aper&#231;u de l'&#233;v&#233;nement CBUS </h3>
 
-Ceci permet au Capteur de faire abstraction de toute signification intrins&#232;que d'&#233;v&#233;nements &#224; "ON" et "OFF"
-, et lui permet de r&#233;pondre &#224; n'importe quel trame sur le r&#233;seau.
+                    <p>Les &#233;v&#233;nements de CBUS sont transmis de un &#224; plusieurs sur le r&#233;seaux. Les modules 
+                    connect&#233;s re&#231;oivent tous les messages du r&#233;seau et  choisir d'y donner suite ou non. 
+                    Cela permet &#224; plusieurs modules d'agir sur un seul &#233;v&#233;nement, par exemple </p>
 
-<h4> Cr&#233;ation automatique</h4>
-<p>
-JMRI tente automatiquement de cr&#233;er des objets Capteur depuis le
-trafic qu'il entend sur le CBUS.
-<p>
-Lorsque JMRI entend un &#233;v&#233;nement ON ou OFF sur le CBUS, il cr&#233;e un Capteur
-en utilisant l'ID d'&#233;v&#233;nement correspondant.
-La valeur par d&#233;faut du Capteur sera cr&#233;&#233; automatiquement &#224; ON
-dans le cas de l'activation du capteur ACTIF
-et &#224; OFF dans le cas de l'activation du capteur INACTIF
+                    <ul>
+                        <li>Un capteur d'aiguillage physique (C&#339;ur - pointe) est c&#226;bl&#233; &#224; un module CBUS <b>producteur</b>. 
+                        Le module est con&#231;u pour  envoyer un &#233;v&#233;nement particulier lorsque l'interrupteur est ferm&#233;.</li>
+                        <li>Cet &#233;v&#233;nement est re&#231;u par un pilote de relais (<b>consommateur</b>), qui change la polarit&#233; du c&#339;ur.</li>
+                        <li>L'&#233;v&#233;nement est &#233;galement re&#231;u par un module LED (<b>consommateur</b>) qui n'a pas appris &#224; traiter l'&#233;v&#233;nement, donc ne fait rien.</li>
+                        <li>L'&#233;v&#233;nement est &#233;galement re&#231;u par un module LED (<b>consommateur</b>), qui allume une LED sur un TCO.</li>
+                        <li>L'&#233;v&#233;nement est &#233;galement re&#231;u par JMRI (<b>consommateur</b>)
+                        <li>Un <a href="../../../tools/Sensors.shtml">Capteur JMRIr</a> a &#233;t&#233; cr&#233;&#233; avec le num&#233;ro d'&#233;v&#233;nement,  provoquant un changement d'&#233;tat du capteur
+                            <ul>
+                                <li>Un <a href="../../../tools/Turnouts.shtml">Aiguillage JMRI</a> 
+                                (pointe) a son <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml#Turnout_Feedback"> 
+                                deplacemnt d'aiguille</a> r&#233;gl&#233; par ce capteur.</li>
+                                <li><a href="../../../apps/PanelPro/index.shtml">Le(s) Panneau(x) JMRI sont </a> 
+                                mis &#224; jour pour tenir compte de la nouvelle position de  l'aiguillage.</li>
+                            </ul>
+                        </li>
+                        <li><a href="../../../tools/signaling/SignalMastLogic.shtml" >La Signalisation 
+                        Logique JMRI</a> recalcule, et sur le panneau JMRI, un signal prot&#233;geant l'aiguille passe du rouge au vert.
+                        </li>
 
-<p>
-Parce que les &#233;v&#233;nements ne sont pas intrins&#232;quement associ&#233;s avec des objet mat&#233;riels sp&#233;cifiques
-, et parce que les gens peuvent utiliser les ID d'&#233;v&#233;nement de bien des mani&#232;re, ceci
-ne pas fait ce qui est souhait&#233;. Quand il ne le fait pas, vous pouvez 
-cr&#233;er manuellement des Capteurs appropri&#233;s en utilisant le bouton 
-<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Ajouter...</a>
-sur le
-<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur</a>.
+                        <li> La cartographie du<a href="../../../tools/signaling/SignalMasts.shtml">
+                        M&#226;t de Signalisation JMRI </a> est v&#233;rifi&#233;e et l'&#233;v&#233;nement CBUS concern&#233; 
+                        est envoy&#233; pour &#234;tre modifi&#233;  sur la r&#233;seau (<b>producteur</b>)</li>
+                        <li>Cet &#233;v&#233;nement est re&#231;u par un module qui modifie un signal physique 
+                        sur le terrain (<b>consommateur</b>) </li>
+                        <li>Cet &#233;v&#233;nement est &#233;galement re&#231;u par un module qui modifie un signal  
+                        sur le TCO (<b>consommateur</b>)</li>
 
-<p>
-Notez qu'il y a un
-<a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;venements CBUS</a> qui peut vous aider &#224; cr&#233;er les noms des Aiguillages et Capteurs Sans avoir &#224; travailler directement sur les Noms Syst&#232;me.
+                        <li>Un train, contr&#244;l&#233; par (<a href="../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">
+                        JMRI DispatcherPro</a> pour un <a href="../../../../package/jmri/jmrit/display/LayoutEditor.shtml">&#201;diteur de Panneau JMRI </a> ou ( <a href="../../../../package/jmri/jmrit/logix/Warrant.shtml">des Bulletins JMRI </a> pour un <a  href="../../../../package/jmri/jmrit/display/ControlPanelEditor.shtml" >&#201;diteur Panneau de Contr&#244;le JMRI </a> panel), voit que le signal &#224; venir  s'est d&#233;gag&#233; et peut augmenter sa vitesse.</li>
+                        <li>Les commandes DCC sont g&#233;n&#233;r&#233;es &#224; partir de JMRI et envoy&#233;es sur le CBUS en utilisant &#233;v&#233;nements sp&#233;ciaux (<b>producteur</b>) </li>
 
-<h3>Aiguillages</h3>
-<p>(Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux capteurs ci-dessus,
-sauf que JMRI &#233;met des trames CBUS au lieu de les recevoir, et
-la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21</code>)
+                        <li>Ces &#233;v&#233;nements CBUS sont re&#231;us par un <b>consommateur</b>, par exemple centrale commande DCC,  qui envoie alors la commande DCC proprement dite.
+                            <br>
 
-<h3>Lumi&#232;res</h3>
-<p>Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux Aiguillages ci-dessus,
-sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</code>
+                            <br>Ce train avait demand&#233; la section pr&#233;c&#233;dente, JMRI Dispactcher/Bulletins l'avait allou&#233; 
+                            (apr&#232;s v&#233;rification des r&#232;gles d'occupation et autres),  puis a 
+                            envoy&#233; l'&#233;v&#233;nement d'aiguillage (<b>producteur</b>) pour changer les aiguilles.
+                            <br>L'&#233;v&#233;nement a &#233;t&#233; re&#231;u par un module servo ou sol&#233;no&#239;de (<b>consommateur</b>) 
+                            qui s'&#233;tait d&#233;clench&#233; correctement, en changeant le capteur de de l'aiguille juste en haut de cet exemple.
+                        </li>
 
-<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2></a>
-<img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
-<p>Le menu MERG contient 5 outils:
-<ul>
-  <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>
- 	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#cbusSend">Envoyer Trame</a></li>
-	<li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Outil de Capture d'&#201;v&#233;nement</a>
-	<li><li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml"> Tableau &#201;v&#233;neme</li>
-	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration de N&#339;ud</a></li>
-	</ul>
+                        <li> Vous pouvez commencer petit et penser grand, en ajoutant d'autres modules selon votre temps et votre exp&#233;rience.
 
-<a name="documentation"></a><h2>Documentation</h2>
-<h3>Aide JMRI</h3>
-	<ul>
-	<li>La d&#233;nomination des Entr&#233;es et des Sorties CBUS est d&#233;crites <a href="Names.shtml">ici</a>.
-	<li><a href="Details.shtml">D&#233;tails technique du support CBUS</a>
-	<li><a href="../index.shtml">Page d'Aide Principale du support CAN</a> includnt des liens pour obtenir plus d'outils.
-	</ul>
-	
-	<h3>Tierce Partie/Support</h3>
-      <ul>
-        <li><a href="http://www.merg.org.uk/merg_resources/cbus-dcc.php"> les pages d'aides
-        The Model Electronic Railway Group MERG-DCC</a>
-        </li>
-      </ul>
+                            <br>Bien des gens utilisent le CBUS et le JMRI uniquement pour afficher les positions d'aiguillage, 
+                            en ajoutant ult&#233;rieurement des &#233;l&#233;ments tels que l'occupation des voies, les signaux sur le terrain, les panneaux de simulation, etc.
 
-      <!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
-</body>
+                            <br>Si vous pr&#233;voyez d'ajouter l'occupation des voies,  en particulier le cantonnement &#233;lectrique des 
+                            circuits de voie (indicateurs de train sur la voie), Dans l'id&#233;al, planifiez le sch&#233;ma &#233;lectrique de votre installation &#224; un stade pr&#233;coce.
+                        </li>
+                    </ul>
+
+                    <p>Les &#233;v&#233;nements de CBUS sont g&#233;n&#233;ralement de deux types : "ON" et "OFF".</p>
+
+                    <p>Les &#233;v&#233;nements peuvent &#234;tre de courte dur&#233;e (SLiM), par exemple <code>+11</code> pour l'&#233;v&#233;nement 11 On.</p>
+
+                    <p>Les &#233;v&#233;nements peuvent &#234;tre des &#233;v&#233;nements longs (FLiM), par exemple <code>-N2E7</code> pour le n&#339;ud 2 &#233;v&#233;nement 7 Off.</p>
+
+                    <p>JMRI, &#233;tant &#224; la fois un <b>consommateur</b> et un <b>producteur</b> d'&#233;v&#233;nements,  
+                    peut envoyer et recevoir sur n'importe quel num&#233;ro de n&#339;ud et n'importe quel &#233;v&#233;nement.</p>
+
+                </div>
+
+                <h3>Ajouter des &#233;v&#233;nements &#224; JMRI</h3>
+                <div>
+                    <img src="images/web/merg-cbus-add-light-short-400x292.png" align= "right"
+                         alt="cbus add light" width="400" height="292">
+
+                    <p>Les &#233;v&#233;nements de l'CBUS sont stock&#233;s sous la forme </p>
+                    <ul>
+                        <li><a href="../../../tools/Sensors.shtml" title="Capteurs JMRI">Capteurs JMRI</a> (Entr&#233;es) 
+                        </li>
+                        <li><a href=
+                               "../../../tools/Aiguillages.shtml" title="JMRI Aiguillages">JMRI Aiguillages</a> (R&#233;sultats)
+                        </li>
+                        <li><a href=
+                               "../../../tools/Lights.shtml" title="JMRI Lights">JMRI Lumi&#232;res</a> (Sorties).</li>
+                    </ul>
+
+                    <p> On y acc&#232;de via les tableaux JMRI, c'est-&#224;-dire PanelPro > Outils > Tableaux > ( <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml" title="JMRI Sensor Table">Capteurs</a>, <a href="../../../../package/jmri/jmrit/beantable/AiguillageTable.shtml" title="JMRI Aiguillage Table">Aiguillages</a> ou <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml" title="JMRI Light Table">Lights</a> ) .
+
+                        <br>Lorsque le tableau se charge, cliquez sur " Ajouter... " en bas &#224; gauche pour cr&#233;er un &#233;l&#233;ment.</p>
+
+                    <img src="images/web/merg-cbus-add-sensor-short-781x187.png" alt="cbus add sensor" width="646" height="155">
+
+                    <p>Pour la plupart des &#233;v&#233;nements de courte dur&#233;e, il suffit d'entrer le num&#233;ro. Voici quelques exemples : </p>
+
+                    <img src="images/web/merg-cbus-turnout-long-400x118.png" alt="cbus add aiguillage" width="400" height="118" align="right">
+
+                    <table border="1">
+                        <corps>
+                            <tr>
+                                <th>Adresse mat&#233;rielle</th>
+                                <th> Signification </th>
+                                <th>Ev&#232;nement consomm&#233;<br> comme Capteur</th>
+                                <th>Ev&#232;nement produit<br> comme Aiguillage</th>
+                                <th>&#201;v&#233;nement produit<br> Commutation de la Lumi&#232;re </th>
+                            </tr>
+                            <tr>
+                                <td><code>+18</code></td>
+                                <td>Ev&#232;nement 18  On
+                                    <br>Ev&#232;nement 18 Off</td>
+                                <D&#233;finit le capteur Actif<br> D&#233;finit le capteur Inactif</td>
+                                <td>D&#233;vi&#233;<br>Direct</td>
+                                <td>On<br>Off</td>
+                            </tr>
+                            <tr>
+                                <td><code>+18;+21</code></td>
+                                <td>Ev&#232;nement 18 On
+                                    <br>Ev&#232;nement 21 On</td>
+                                <td>D&#233;fini Capteur actif<br>D&#233;fini Capteur inactif</td>
+                                <td>D&#233;vi&#233;<br>Direct</td>
+                                <td>On<br>Off</td>
+                            </tr>
+                            <tr>
+                                <td><code>+18;-21</code></td>
+                                <td>Ev&#232;nement 18 On 
+                                    <br>Ev&#232;nement 21 Off</td>
+                                <td>D&#233;fini Capteur Actif<br>D&#233;fini Capteurr Inactif</td>
+                                <td>Thrown<br>Closed</td>
+                                <td>On<br>Off</td>
+                            </tr>
+                            <tr>
+                                <td><code>+N2E18</code></td>
+                                <td>N&#339;ud 2 &#201;v&#233;nement 18 On
+                                    <br>N&#339;ud 2 &#201;v&#233;nement 18 Off</td>
+                                <td>D&#233;finit le capteur Actif<br>D&#233;finit le capteur Inactif</td>
+                                <td>D&#233;vi&#233;<br>Direct</td>
+                                <td>On<br>Off</td>
+                            </tr>
+                        </tbody></table>
+
+                    <img src="images/web/merg-add-sensor-invalid-400x124.png" align= "right" 
+                         alt="cbus add new invalid name" width="400" height="124">
+
+                    <p> Vous devrez entrer l'adresse mat&#233;rielle dans un format reconnu par JMRI pour cr&#233;er l'&#233;v&#233;nement.
+                        <br>Si le bouton de cr&#233;ation est gris&#233;, v&#233;rifiez le format de d&#233;signation de votre mat&#233;riel.</p>
+
+                    <p>Ajouter un nom d'utilisateur (en utilisant n'importe quel caract&#232;re) 
+                    lors de la cr&#233;ation d'un &#233;l&#233;ment de tableau peut  faciliter l'acc&#232;s &#224; JMRI. </p>  
+                    <p>Souvenez-vous de sauvegarder vos tables ! </p>
+
+                    <p>Pour plus d'informations sur les &#233;v&#233;nements, voir  <a href="Names.shtml">D&#233;nomination du syst&#232;me JMRI avec CBUS</a>.</p> 
+                </div>
+
+                <h2><a name="dcc" id="dcc">DCC avec CBUS</a></h2>
+                <div>
+                    <p>DCC n'est pas une exclusivit&#233; pour CBUS ou  JMRI. De nombreux r&#233;seaux analogiques 
+                    utilisent  CBUS + JMRI pour d&#233;finir l'itin&#233;raire, la signalisation et l'occupation des voies.</p>
+
+                    <p>Pour plus de d&#233;tails sur l'utilisation de CBUS dans un syst&#232;me DCC, vous 
+                    devez vous r&#233;f&#233;rer aux pages d'aide de JMRI, ou autre documentation, pour 
+                    le mat&#233;riel du fabricant que vous avez choisi. Quelques pr&#233;cisions  sont inclus ci-dessous.</p>
+
+                    <p>JMRI enverra et recevra des paquets DCC encod&#233;s CBUS sur le r&#233;seau CBUS. 
+                    Ces paquets peuventt &#234;tre surveill&#233;s avec la console CBUS</p>
+
+                    <p>Les sessions de commande de Loco sont mieux vues avec le 
+                        <a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml" 
+                           >Moniteur de Centrale CBUS </a>, qui affiche les sessions sous forme de tableau.</p>
+
+                    <h3>R&#233;gulateurs</h3>
+
+                    <p>Tous les programmes de la suite JMRI (y compris le serveur JMRI WiThrottle) 
+                    partagent en interne le m&#234;me cr&#233;neau de centrale de commande pour une adresse 
+                    de locomotive donn&#233;e, de sorte que l'ensemble de JMRI appara&#238;t &#224; la centrale 
+                    de commande comme une seule manette pour n'importe quelle adresse.</p>
+
+                    <p>JMRI (via le Gestionnaire du n&#339;ud CBUS) peut dire si une centrale de commande 
+                    est disponible et supporte le pilotage CBUS  ou partager des 
+                    fonctionnalit&#233;s, lorsque des r&#233;gulateurss d&#233;j&#224; utilis&#233;s sont demand&#233;s  
+                    par quelque chose d'ext&#233;rieur &#224; JMRI (c'est-&#224;-dire un r&#233;gulateur connect&#233; au CBUS).</p>
+
+                    <p>Quand une application JMRI demande une loco (qui est d&#233;j&#224; dans 
+                    une session CBUS), JMRI v&#233;rifiera les principales 
+                    <a href="../../../tools/throttle/ThrottlesPreferencesPane.shtml">Pr&#233;f&#233;rences R&#233;gulateurs</a>.</p>
+
+                    <p>Si Silent Steal ou Silent Share a &#233;t&#233; s&#233;lectionn&#233;, ce sera l'action par d&#233;faut.</p>
+
+                    <p>Si aucun des deux n'a &#233;t&#233; coch&#233; et que vous utilisez le r&#233;gulateur principal 
+                    de JMRI, il vous sera demand&#233;  si vous voulez piloter, partager ou annuler.</p>
+                    <img src="images/web/cbus-throttle-steal-share-dialogue-322x128.png" width="322" height="128" alt=" Dialogue JMRI CBUS Pilotage/Partage ">
+
+                    <p>Si vous utilisez un script d'automatisation et qu'aucune option n'est coch&#233;e, 
+                    le syst&#232;me tentera d'acqu&#233;rir une part sur la session.</p>
+
+                    <p>La station de commande peut d&#233;sactiver ou activer  le pilotage/le partage &#224; 
+                    tout moment ,donc m&#234;me si vous avez une option pr&#233;f&#233;r&#233;e, un script 
+                    d'automatisation peut tenter d'utiliser l'option non pr&#233;f&#233;r&#233;e pour obtenir la session.</p>
+
+
+                    <h4>Pilotage des R&#233;gulateurs depuis JMRI</h4>
+                    <p>Lorsqu'une session R&#233;gulateur a &#233;t&#233; pilot&#233;e/annul&#233;e en dehors de JMRI, 
+                    toute fen&#234;tre r&#233;gulateur JMRI ouverte pour cette locomotive cessera 
+                    d'accepter les commandes, c'est-&#224;-dire que la rampe d'acc&#233;l&#233;ration et 
+                    les touches de fonction seront gris&#233;es.</p>
+
+                    <p>Si le partage silencieux est activ&#233; dans les pr&#233;f&#233;rences du 
+                    r&#233;gulateur  et que le partage est disponible sur la Centrale 
+                    de Commande, apr&#232;s un court d&#233;lai, JMRI tentera de partager le r&#233;gulateur.</p>
+
+                    <p>Pour la plupart des utilisateurs, le partage silencieux permet 
+                    &#224; la plupart des r&#233;seau de fonctionner avec un minimum de tracas.</p>
+
+                    <p>Si Silent Steal est activ&#233; dans les pr&#233;f&#233;rences du r&#233;gulateur, 
+                    et que le pilotage est disponible sur la Centrale de Commande, apr&#232;s un court 
+                    d&#233;lai, jMRI tentera de reprendre le contr&#244;le du r&#233;gulateur.</p>
+
+                    <p> Attention &#224; la cr&#233;ation de boucles Pilotage si plus d'un r&#233;gulateur est capable d'auto-retour-Pilotage !
+                        Si vous constatez que cela se produit, d&#233;sactivez l'option Pilotage pour arr&#234;ter la boucle.</p>
+
+                    <p>Si aucune des deux options n'est activ&#233;e, ou si le Pilotage/Partage n'est pas possible, une notification sera affich&#233;e:</p>
+
+                    <img src="images/web/cbus-throttle-stolen-dialogue-278x138.png"
+                         width=" 278" height=" 138" alt="JMRI CBUS Stolen Throttle Dialogue">
+
+                    <p>Cocher la case avant de fermer le popup supprimera les notifications 
+                    de pilotage le reste de la session JMRI, pour toutes les sessions de loco.</p>
+
+                    <p>Les informations pertinentes peuvent &#234;tre consult&#233;es dans le 
+                    journal principal de la console JMRI.</p>
+
+                    <p>Notez que toutes les applications JMRI ne disposent pas actuellement d'une m&#233;thode pour traiter un r&#233;gulateur pilot&#233;.</p>
+
+                    <h4>Dispatcher/Lib&#233;ration</h4>
+                    <p> Dispatcher  est disponible selon les caract&#233;ristiques de la centrale de commande.
+                    <p>Notez que la disponibilit&#233; de l'envoi pour une seule adresse de 
+                    locomotive peut changer, cela sera refl&#233;t&#233; par la disponibilit&#233; des 
+                    boutons dans le R&#233;gulateur Principal JMRI l.</p>
+
+                    <h3>Couplage</h3>
+                    <p>La prise en charge du Couplage d&#233;pend des caract&#233;ristiques du mat&#233;riel connect&#233;.</p>
+
+                    <p>Bien que le protocole CBUS supporte le Couplage &#233;volu&#233; 
+                    (Advanced Consisting), cette mesure n'a pas encore &#233;t&#233; mise en &#339;uvre au sein de JMRI.
+
+                    <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml"  
+                    title="JMRI Consistant">Couplage JMRI </a> : D&#233;codeur &#224; Couplage  
+                    (Decoder Assisted Consist) n'est actuellement pas pris en charge, 
+                    c'est pourquoi il est d&#233;fini comme Interne dans les pr&#233;f&#233;rences du CBUS.</p>
+
+                    <p>L'adresse primaire est toutefois prise en charge.
+
+
+                    <h3>Programmation des CV</h3>
+                    <img src="images/web/merg-dcc-decoders-355x398.png" width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
+                    <p>Sous r&#233;serve d'&#234;tre support&#233;e par le mat&#233;riel connect&#233;, une connexion 
+                    CBUS supporte enti&#232;rement la programmation de d&#233;codeurs utilisant DecoderPro 
+                    et l'un ou l'autre ou les deux : la programmation en mode service sur une voie 
+                    de programmation et la programmation en mode exploitation sur le r&#233;seau.</p>
+
+                </div>
+                <h2><a id="signalling" name="signalling"> Signalisation </a></h2>
+                <div>
+                    <p>Il existe plusieurs fa&#231;ons d'interfacer <a href="../../../../html/tools/signaling/index.shtml"> 
+                    la signalisation JMRI avec les modules CBUS.</p>
+                    <p>Il vous est fortement conseill&#233; de laisser JMRI contr&#244;ler votre logique 
+                    de signalisation. Cependant, il est &#233;galement possible de relier JMRI &#224; la signalisation de tiers via CBUS.
+
+                    <p>JMRI comprend diverses d&#233;finitions de signalisation, un choix populaire 
+                    pour les r&#233;seaux bas&#233;es au Royaume-Uni &#233;tant  <a href="../../../../../../xml/signals/BR-2003/index.shtml">BR2003</a>, cependant  pour certains r&#233;seaux <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> ou <a  href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> pourrait &#234;tre plus appropri&#233;.</p>
+
+                    <h3>Envoyer une Logique de Signal  contr&#244;l&#233;e par JMRI &#224; votre r&#233;seau</h3>
+
+                    <img src="images/web/signal-aiguillage contr&#244;l&#233;- 400x454.png"
+                         width="400" height="454" alt="JMRI signal m&#226;t d'aiguillage contr&#244;l&#233;" align= "right">
+
+
+                    <p>Il y a plusieurs fa&#231;ons d'envoyer les &#233;v&#233;nements  CBUS de JMRI &#224; la LED ou 
+                    au servo des modules de contr&#244;le des signaux, ce n'est qu'une approche parmi d'autres. </p>
+
+                    <ul>
+                        <li>Ajouter tous les aspects du signal en question &#224; la table d'aiguillage.
+                            <br>exemple: Signal 1 Rouge : <code>+N256E412</code> (n'utilise que l'&#233;v&#233;nement ON) <br> 
+                            exemple: Signal 1 clignotant ,Pr&#233;caution : <code>+N256E416</code> (n'utilise que l'&#233;v&#233;nement ON) 
+                            <br>Signaux qui ne peuvent afficher que 2 aspects (par exemple un servo contr&#244;lant un 
+                            signal de s&#233;maphore)  peut &#234;tre configur&#233; avec 1 &#233;v&#233;nement CBUS, en utilisant le 
+                            statut standard d'&#233;v&#233;nement ON et OFF.
+                        </li>
+
+                        <li>Ajouter un M&#226;t de Signalisation via la <a href="../../../../package/jmri/jmrit/beantable/SignalMastTable.shtml" title="JMRI Signal Mast Table">Signal Table de M&#226;t de Signalisation</a></li>
+                        <li>Sp&#233;cifier le type : <a href="../../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#turnoutCtl
+                                            title="M&#226;t de signalisation contr&#244;l&#233; par l'aiguillage">M&#226;t de signalisation contr&#244;l&#233; par l'aiguillage</a></li>
+                        <li>Sp&#233;cifiez quel r&#233;sultat de l'aiguille vous souhaitez voir afficher pour chaque aspect, ex. Signal 1 Rouge D&#233;vi&#233;.
+                        </li>
+                    </ul>
+
+                    <p>Il est ainsi garanti qu'un seul message CBUS est envoy&#233; pour les aspects clignotants, 
+                    sp&#233;cifiez ce clignotement dans le tableau des modules, pas dans JMRI !  
+                        Certains types de m&#226;t de signalisation envoient un message CBUS pour chaque clignotement.
+                        <br>Un montage avec 20 signaux d'aspect quadruple pourrait envoyer 40 &#233;v&#233;nements CBUS 
+                        impairs toutes les 0,5 secondes, soit 4 800 &#233;v&#233;nements par minute. 
+                        Cela pourrait rendre le diagnostic du r&#233;seau difficile, bien qu'il soit tr&#232;s peu probable qu'un r&#233;seau CBUS soit satur&#233;.</p>
+                    <p>Comme indiqu&#233; pr&#233;c&#233;demment, il ne s'agit l&#224; que d'une approche parmi d'autres. 
+                        Il existe d'autres m&#233;thodes pour interfacer JMRI avec les syst&#232;mes de signalisation CBUS.</p>
+                    <p>Il existe un support initial pour l'OPC CabData exp&#233;rimental disponible dans 
+                    <a href="../../../../package/jmri/jmrit/cabsignalsCabSignalPane.shtml" >JMRI CabSignals</a></p>
+
+                    <h3>Module de r&#233;ception fourni ou logique de signal existante dans JMRI</h3>
+                    <p>Cela se fait normalement dans l'autre sens, mais les gens peuvent avoir 
+                    les syst&#232;mes existants en place qu'ils ne veulent pas changer.</p>
+
+                    <ul>
+                        <li>Cr&#233;er un m&#226;t de signalisation virtuel, nomm&#233; quelque chose comme SignalMast7</li>
+                        <li>Cr&#233;er un ou plusieurs &#233;v&#233;nements CBUS entrants en tant que capteur(s), par exemple "SignalMast7Red".</li>
+                        <li>Pour chaque &#233;tat du signal (par exemple Stop ou Proceed), cr&#233;ez 
+                        une nouvelle <a href="../../../outils/Logix.shtml">JMRI Logix</a> dans la 
+                        <a href="../../../../package/jmri/jmrit/beantable/LogixTable.shtml">JMRI Table Logix </a> pour r&#233;gler le feu ou le m&#226;t de signalisation selon le cas, comme <br>
+                            Si SignalMast7Red est actif, r&#233;glez SignalMast7 sur Stop
+                        </li>
+                        <li> R&#233;p&#233;ter pour chaque &#233;tat du signal</li>
+                    </ul>
+                </div>
+
+                <h2><a id="thirdparty" name="thirdparty">Soutien compl&#233;mentaire</a></h2>
+                <div>
+                    <ul>
+                        <li><a href="https://www.merg.org.uk/merg_resources/cbus.php"> Introduction du MERG &#224; la CBUS</a>.</li>
+                        <li><a href="https://www.merg.org.uk/merg_wikidoku.php?id=software:start#cbus" > CBUS Wiki</a> 
+                          h&#233;berg&#233; sur le site public du MERG du Model Electronic Railway Group, avec la sp&#233;cification compl&#232;te du protocole.</li>
+
+                        <li><a href="https://www.merg.org.uk/merg_resources/cbus-dcc.php" >https://www.merg.org.uk/merg_resources/cbus-dcc.php</a> 
+                            La page d'aide du groupe de travail sur le mod&#232;le de chemin de fer &#233;lectronique MERG-DCC.
+                        </li>
+
+                        <li><a href="https://www.merg.org.uk/kits.php#sect35"
+                               >Kits MERG pour CBUS</a>.</li>
+
+                        <li><a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a><</li>
+                        <li>Pour une journalisation suppl&#233;mentaire pendant le d&#233;bogage, localisez et modifiez 
+                        le fichier default.lcf &#224; la racine de l'installation de JMRI, voir le mod&#232;le &#224; la fin du fichier.
+                            <br> Journalisation g&#233;n&#233;rale du CBUS - log4j.cat&#233;gorie.jmri.jmrix.can.cbus=DEBUG
+                            <br> Enregistrement des connexions - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG
+                            <br>La journalisation suppl&#233;mentaire appara&#238;tra dans la console JMRI, ainsi que les journaux d'erreurs JMRI.
+                        </li>
+
+                        <li><a href="https://github.com/amaurial/mergCanBus">https://github.com/amaurial/mergCanBus</a>
+                            Mise en &#339;uvre du CBUS pour Arduino. (+ voir les autres projets CBUS Github d'Amauria)</li>
+
+                        <li><a href="http://www.oscale.net/?q=en/cbus">http://www.oscale.net/?q=en/cbus</a> CBUS sur 
+                        un Arduino utilisant les shields  CAN BUS - Voir les liens de t&#233;l&#233;chargement en bas (en anglais + allemand)</li>
+
+                        <li><a href="https://www.npmjs.com/search?q=keywords:MERG">https://www.npmjs.com/search?q=keywords:MERG</a>
+                         node.js modules pour cr&#233;er un module CBUS + Class pour cr&#233;er un module CBUS connect&#233; via ethernet.</li>
+
+                    </ul>
+                </div>
+
+                <h2></h2>
+                <p>CBUS est une marque d&#233;pos&#233;e du Dr Michael Bolton</p>
+
+
+
+                <!--#include virtual="/Footer.shtml" -->
+            </div><!-- closes #mainContent-->
+        </div><!-- closes #mBody-->
+    </body>
 </html>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
-</body>
-</html>
-</html>
+
+
