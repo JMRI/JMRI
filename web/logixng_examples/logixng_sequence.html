@@ -1,8 +1,158 @@
 <html>
 <head>
 <title>LogixNG sequence</title>
+
+
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/logger.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script type="text/javascript">
+            // set the jmri global variable to null
+            var jmri = null;
+            $(document).ready(function() {
+                // once the document is loaded, assign a $.JMRI object to
+                // the jmri variable and overload two functions:
+                // open() and power(state)
+                jmri = $.JMRI({
+                    // call getPower() when the JMRI WebSocket connection opens
+                    // getPower() does two things: it requests the current power
+                    // status from JMRI and it starts the power status monitor
+                    // on the JMRI server.
+                    open: function() {
+                        jmri.getPower();
+						jmri.getMemory("IM_91");
+
+/*
+//                        throttle = {
+//                          "name": "21",
+//                          "address": "21"
+//                        };
+						message = {
+						  'type'   : 'throttle',
+						  'method' : 'post',
+						  'data'   : {
+							'name' : '21',
+							'address'  : '21',
+//							'speed'    => "#{speed/10.0}",
+						  }
+						}
+//                        result = jmri.getThrottle({"name":"Daniel","address":"21"});
+                        throttle = {};
+						throttle.name = "Daniel";
+						throttle.address = "21";
+                        result = jmri.getThrottle("Daniel", throttle);
+                        console.log("Try to get throttle: "+result);
+*/
+
+
+
+
+/*
+                        console.log("AAA");
+
+						message = {
+						  'type'   => 'throttle',
+						  'method' => 'post',
+						  'data'   => {
+							'throttle' => 'bolttrain',
+							'address'  => '6871',
+							'speed'    => "#{speed/10.0}",
+						  }
+						}
+//						throttle = {"NAME": "Daniel", "ADDRESS": 21};
+                        result = jmri.getThrottle(message);
+                        console.log("Try to get throttle: "+result);
+*/
+
+/*
+						var loco = jmri.getRosterItem("Loco21");
+                        console.log("BBB");
+						if (loco) {
+	                        console.log("Requested loco: "+loco);
+						} else {
+	                        console.log("Failed to request loco: "+loco);
+						}
+                        console.log("CCC");
+*/
+                    },
+
+
+
+
+
+
+
+                    memory: function(name, value, data) {
+						console.log("Memory name: "+name);
+						console.log("Memory value: "+value);
+						console.log("Memory data: "+data);
+//						jmri.setMemory("IM_92", "Hej");
+					},
+
+
+//                    throttle: function(name, value, data) {
+                    throttle: function(data) {
+//						console.log("Memory name: "+name);
+//						console.log("Memory value: "+value);
+						console.log("Throttle data: "+data);
+					},
+
+
+
+
+
+
+
+                    // when the JMRI object receives a power update, call this
+                    // function, regardless of source of update
+                    power: function(state) {
+                        power = state;
+						console.log("Power: "+power);
+/*
+                        switch (power) {
+                            case jmri.UNKNOWN:
+                                $('#powerImg').prop('src', "/images/PowerGrey.png");
+                                $('#powerImg').prop('alt', "Unknown");
+                                $('#powerImg').prop('title', "Unknown");
+                                break;
+                            case jmri.POWER_ON:
+                                $('#powerImg').prop('src', "/images/PowerGreen.png");
+                                $('#powerImg').prop('alt', "Powered On");
+                                $('#powerImg').prop('title', "Powered On");
+                                break;
+                            case jmri.POWER_OFF:
+                                $('#powerImg').prop('src', "/images/PowerRed.png");
+                                $('#powerImg').prop('alt', "Powered Off");
+                                $('#powerImg').prop('title', "Powered Off");
+                                break;
+                        }
+*/
+                    }
+                });
+                // trigger the initial connection to the JMRI server; this
+                // method call ensures the jmri.open() method is called after
+                // a timeout to begin using fall back methods for monitoring
+                // items on the JMRI server even if a WebSocket connection
+                // cannot be established
+                jmri.connect();
+                // make it possible to click on the power button to turn track
+                // power on or off without using a javascript URI
+                $('#powerImg').click(function(event) {
+                    jmri.setPower((power === jmri.POWER_ON) ? jmri.POWER_OFF : jmri.POWER_ON);
+                });
+            });
+        </script>
+
+
+
+
 </head>
 <body>
 Hejsan!!!
+
+
 </body>
 </html>
