@@ -120,13 +120,22 @@
 
 
 
-  <rect x="0" y="187" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- frame -->
-  <rect x="0" y="213" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- frame -->
+  <rect x="0" y="187" width="354" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect x="0" y="213" width="345" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect x="390" y="187" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect x="380" y="213" width="1000" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect id="turnout_1_1" x="355" y="187" width="34" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+  <rect id="turnout_1_2" x="346" y="213" width="33" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+
+  <rect id="turnout_2_1" x="392" y="90" width="35" height="2" stroke="black" stroke-width="0" fill="black" transform="rotate(15)" />    <!-- rail -->
+  <rect id="turnout_2_2" x="390" y="116" width="30" height="2" stroke="black" stroke-width="0" fill="black" transform="rotate(15)" />    <!-- rail -->
 
   <defs>
     <g id="Track2">
-      <rect x="-400" y="-13" width="800" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- frame -->
-      <rect x="-400" y="+13" width="800" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- frame -->
+      <rect x="-400" y="-13" width="800" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
+      <rect x="-400" y="+13" width="800" height="2" stroke="black" stroke-width="0" fill="black" />    <!-- rail -->
 	</g>
   </defs>
 
@@ -158,7 +167,7 @@
 </svg>
 
 <script>
-// window.setInterval(myTimer, 200);
+window.setInterval(myTimer, 500);
 
 var circle = document.getElementById('Daniel1');
 
@@ -176,10 +185,11 @@ var circle = document.getElementById('CarHandle');
 circle.setAttribute("transform", "translate(250,200) scale(0.3) rotate(0)");
 
 var circle = document.getElementById('Track2_Handle');
-circle.setAttribute("transform", "translate(700,400) rotate(30)");
+circle.setAttribute("transform", "translate(730,410) rotate(30)");
 
 
 var angle = 0;
+var turnoutClosed = true;
 
 function myTimer() {
 /*
@@ -196,11 +206,32 @@ function myTimer() {
 
   
   var circle = document.getElementById('LocoHandle');
-  circle.setAttribute("transform", "translate(400,200) scale(0.4) rotate("+angle+")");
+  circle.setAttribute("transform", "translate(100,200) scale(0.3) rotate("+angle+")");
 
 //  circle.setAttributeNS(null, 'x', 400);
 
   angle += 10;
+
+
+
+  var turnout_1_1 = document.getElementById('turnout_1_1');
+  var turnout_1_2 = document.getElementById('turnout_1_2');
+  var turnout_2_1 = document.getElementById('turnout_2_1');
+  var turnout_2_2 = document.getElementById('turnout_2_2');
+
+  turnoutClosed = !turnoutClosed;
+  if (turnoutClosed) {
+    turnout_1_1.setAttribute("visibility", "visible");
+    turnout_1_2.setAttribute("visibility", "visible");
+    turnout_2_1.setAttribute("visibility", "hidden");
+    turnout_2_2.setAttribute("visibility", "hidden");
+  } else {
+    turnout_1_1.setAttribute("visibility", "hidden");
+    turnout_1_2.setAttribute("visibility", "hidden");
+    turnout_2_1.setAttribute("visibility", "visible");
+    turnout_2_2.setAttribute("visibility", "visible");
+  }
+
 } 
 
 </script>
