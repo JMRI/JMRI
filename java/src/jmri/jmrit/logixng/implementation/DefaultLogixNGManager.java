@@ -24,6 +24,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     private final Clipboard _clipboard = new DefaultClipboard();
     private final Stack _stack = new DefaultStack();
     private SymbolTable _symbolTable;
+    private boolean _isActive = false;;
     
     
     public DefaultLogixNGManager() {
@@ -148,9 +149,30 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     /** {@inheritDoc} */
     @Override
     public void activateAllLogixNGs() {
+        _isActive = true;
         for (LogixNG logixNG : _tsys.values()) {
-            logixNG.setEnabled(true);
+            if (logixNG.isActive()) {
+                logixNG.registerListeners();
+                logixNG.execute();
+            } else {
+                logixNG.unregisterListeners();
+            }
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void deActivateAllLogixNGs() {
+        for (LogixNG logixNG : _tsys.values()) {
+            logixNG.unregisterListeners();
+        }
+        _isActive = false;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isActive() {
+        return _isActive;
     }
 
     /** {@inheritDoc} */

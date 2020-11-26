@@ -48,7 +48,11 @@ public class DefaultSymbolTable implements SymbolTable {
     /** {@inheritDoc} */
     @Override
     public Object getValue(String name) {
-        return _stack.getValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex());
+        Symbol symbol = _symbols.get(name);
+        if (symbol == null) {
+            throw new IllegalArgumentException(String.format("Symbol '%s' does not exist in symbol table", name));
+        }
+        return _stack.getValueAtIndex(_firstSymbolIndex + symbol.getIndex());
     }
     
     /** {@inheritDoc} */
@@ -102,7 +106,8 @@ public class DefaultSymbolTable implements SymbolTable {
                     break;
                     
                 case LocalVariable:
-                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
+                    initialValue = getValue(variable.getInitialValueData());
+//                    initialValue = _prevSymbolTable.getValue(variable.getInitialValueData());
                     break;
                     
                 case Memory:

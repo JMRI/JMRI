@@ -26,6 +26,7 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
     
+    private final LogixNG_Manager _manager = InstanceManager.getDefault(LogixNG_Manager.class);
     private boolean _enabled = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
     
@@ -315,7 +316,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _enabled;
+        return _enabled && _manager.isActive();
     }
     
     /** {@inheritDoc} */

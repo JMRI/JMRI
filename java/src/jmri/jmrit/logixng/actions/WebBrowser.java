@@ -54,41 +54,30 @@ public class WebBrowser
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        System.out.format("SSSSSSSS%n");
         String url = _urlExpressionSocket.evaluate();
         
         try {
-            System.out.format("aaa%n");
             URI uri = new URI(url);
             HttpURLConnection request = (HttpURLConnection) uri.toURL().openConnection();
             request.setRequestMethod("GET");
-            System.out.format("bbb%n");
             request.connect();
-            System.out.format("ccc: %d, %s%n", request.getResponseCode(), request.getResponseMessage());
             if (request.getResponseCode() != 200) {
-                System.out.format("ddd%n");
                 throw new JmriException(String.format(
                         "Failed to connect to web page: %d, %s",
                         request.getResponseCode(), request.getResponseMessage()));
             }
-            System.out.format("eee%n");
             if ( Desktop.getDesktop().isSupported( Desktop.Action.BROWSE) ) {
-                System.out.format("fff%n");
                 // Open browser to URL with draft report
                 Desktop.getDesktop().browse(uri);
             } else {
-                System.out.format("ggg%n");
                 throw new JmriException(String.format(
                         "Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
             }
-            System.out.format("hhh%n");
         } catch (IOException | URISyntaxException e) {
-            System.out.format("iii%n");
             throw new JmriException(String.format(
                     "Failed to connect to web page. Exception thrown: %s",
                     e.getMessage()), e);
         }
-        System.out.format("jjj%n");
     }
 
     @Override

@@ -80,6 +80,21 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public void activateAllLogixNGs();
     
     /**
+     * DeActivate all LogixNGs, stops LogixNG processing by disconnecting all
+     * inputs that are included the ConditionalNGs in this LogixNG.
+     * <p>
+     * A LogixNG must be activated before it will calculate any of its
+     * ConditionalNGs.
+     */
+    public void deActivateAllLogixNGs();
+    
+    /**
+     * Is LogixNGs active?
+     * @return true if LogixNGs are active, false otherwise
+     */
+    public boolean isActive();
+    
+    /**
      * Delete LogixNG by removing it from the manager. The LogixNG must first
      * be deactivated so it stops processing.
      *
