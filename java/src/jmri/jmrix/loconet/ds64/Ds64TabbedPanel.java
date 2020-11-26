@@ -82,7 +82,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      *                   info.
      */
     public Ds64TabbedPanel(int boardNum, boolean readOnInit) {
-        super(boardNum, readOnInit, "DS64");
+        super(boardNum, readOnInit, "DS64"); // NOI18N
         origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
     }
@@ -1033,7 +1033,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
                 justification = "False positive on the implied local variable in indexToRead++")
     private int determineNextStateForRead() {
         switch (indexToRead) {
@@ -1325,6 +1325,10 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             return;
         }
         super.readAll();
+    }
+
+    public void updateBoardAddress() {
+        addrField.setText(addressComboBox.getSelectedItem().toString());
     }
 
     @Override
@@ -1977,6 +1981,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         isWritingResetOpSw = true;
         resetOpSwVal = true;
         opsw[7] = true;
+        updateBoardAddress();
         writeOne(7);
         boardResetResponseTimer = new javax.swing.Timer(750,
                 event -> {
@@ -2023,7 +2028,9 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         //      Routes tab - configure features related to routes
         //          Routes tab has (left side, vertical) sub-tabs, one for each of the 8 routes
 
-        addrField.setText(Bundle.getMessage("LabelBoardID"));
+
+//        JLabel addrFieldLabel = new JTextLabel(Bundle.getMessage("LabelBoardID"));
+//        addrField = addressComboBox(getSelectedItem);
 
         String[] outputTypes = {Bundle.getMessage("ComboBoxOutputType0"),
             Bundle.getMessage("ComboBoxOutputType1")};
@@ -2157,7 +2164,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localSensorType.setName("21"); // NOI18N
         localSensorType.addActionListener(basicConfigChangeActionListener);
 
-        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonResetToFactoryDefault"));
+        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonTextResetToFactoryDefault"));
         factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetToFactoryDefault"));
         factoryResetButton.addActionListener(
                 event -> {
