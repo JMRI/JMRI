@@ -40,6 +40,12 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     // so we must use our last send spd.
     protected int throt_spd;
 
+    // members to record the last known spd/dirf/snd bytes AS READ FROM THE LAYOUT!!
+    protected int throttle_spd;
+    protected int throttle_dirf;
+    protected int throttle_snd;
+    protected int throttle_stat1 = 0;
+
     // slot status to be warned if slot released or dispatched
     protected int slotStatus;
     protected boolean isDisposing = false;
@@ -72,7 +78,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // cache settings
         this.speedSetting = floatSpeed(slot.speed());
-      
+
         for (int i = 0; i < 29; i++) {
             super.updateFunction(i,slot.isFunction(i));
         }
