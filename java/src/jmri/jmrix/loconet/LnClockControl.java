@@ -502,6 +502,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Performs all necessary task for a new fast clock minute
      * Skip this if we are calibrating
      */
+    @SuppressWarnings("deprecation")
     public void newMinute() {
         if (commandStationSyncLimit > 0) {
             // dont mess with the syncing
