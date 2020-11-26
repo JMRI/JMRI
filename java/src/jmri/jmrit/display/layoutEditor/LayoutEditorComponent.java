@@ -45,18 +45,18 @@ class LayoutEditorComponent extends JComponent {
     public void paint(Graphics g) {
         if (g instanceof Graphics2D) {
             // layoutEditor.draw((Graphics2D) g);
-
             Graphics2D g2 = (Graphics2D) g;
 
-            if (clipBounds != null) {
-                if (!clipBounds.isEmpty()) {
-                    if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        if (!clipBounds.equals(g2.getClipBounds())) {
-                            //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}",
-                            //        clipBounds, g2.getClipBounds());
-                            g2.setClip(clipBounds);
-                        }
-                    }
+            if ((clipBounds != null) && (!clipBounds.isEmpty())) {
+                Rectangle2D oldClipBounds = g2.getClipBounds();
+                g2.setColor(Color.red);
+                g2.drawOval((int) oldClipBounds.getX(), (int) oldClipBounds.getY(), (int) oldClipBounds.getWidth(), (int) oldClipBounds.getHeight());
+                if (!clipBounds.equals(oldClipBounds)) {
+                    //log.debug("LEComponent.paint(); clipBounds: {}, oldClipBounds: {}.",
+                    //        clipBounds, oldClipBounds);
+                    g2.setClip(clipBounds);
+                    g2.setColor(Color.green);
+                    g2.drawOval((int) clipBounds.getX(), (int) clipBounds.getY(), (int) clipBounds.getWidth(), (int) clipBounds.getHeight());
                 }
             }
             // Optional antialising, to eliminate (reduce) staircase on diagonal lines
