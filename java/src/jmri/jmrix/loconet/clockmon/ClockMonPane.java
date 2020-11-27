@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.ClockControl;
 import jmri.jmrix.loconet.LnClockControl;
-import jmri.jmrix.loconet.LnClockControl.CommandStationFracType;
+import jmri.jmrix.loconet.LnCommandStationType.CommandStationFracType;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

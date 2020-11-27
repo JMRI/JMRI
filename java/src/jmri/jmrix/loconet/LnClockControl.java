@@ -5,6 +5,8 @@ import jmri.JmriException;
 
 import jmri.PowerManager;
 import jmri.implementation.DefaultClockControl;
+import jmri.jmrix.loconet.LnCommandStationType.CommandStationFracType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -139,10 +141,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     private final int commandStationEndMinuteType1 = 0x4000; //14bit
     private final int commandStationEndMinuteType2 = 0x8000; //16bit
 
-    public enum CommandStationFracType {
-        TYPE1,
-        TYPE2
-    }
     private CommandStationFracType commandStationFracType = CommandStationFracType.TYPE1;
 
     /**
