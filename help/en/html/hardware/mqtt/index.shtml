@@ -99,39 +99,53 @@
     <p>
     <span class="since">Since JMRI 4.15.5</span>
     JMRI publishes and receives MQTT messages on specific "topics."  An MQTT topic is the label or headline for a message that is broadcast
-    or subscribed to.  MQTT topics within JMRI are formed by concatenating the base topic or "MQTT channel," the object type-specific MQTT topic 
-    (different for publishing and subscribing), and the object's system name suffix.
+    or subscribed to.  MQTT topics within JMRI are formed by concatenating:
     </p>
+    
+    <ul>
+    <li>the base topic or "MQTT channel," </li>
+    <li>the object type-specific MQTT topic (may be different for publishing and subscribing), and</li> 
+    <li>the object's system name suffix.</li>
+    </ul>
     
     <p>
     Using the defaults in the JMRI Preferences Connection pane <a href="images/MQTT_Preferences rel4-21-2.png">
     <img src="images/MQTT_Preferences rel4-21-2.png" alt="MQTT preferences rel 4.21.2" align="right" height="278" width="278">(shown in the picture to the right)</a>,
-    JMRI constructs the MQTT topic for a Turnout by concatenating "/trains/" with "track/turnout/" and the system name suffix.  For example, a JMRI Turnout
-    with system name "MTabcd" will publish and subscribe to the topic "/trains/track/turnout/abcd".
+    JMRI constructs the MQTT topic for a Turnout with system name "MTabcd" by concatenating:
+    </p>
+    
+    <ul>
+    <li>the channel: "/trains/"</li>
+    <li>the object-type specific topic: "track/turnout/"</li> 
+    <li>the system name suffix: "abcd"</li>
+    </ul>
+    
+    <p>
+    yielding the topic "/trains/track/turnout/abcd".
     </p>
     
     <p>
-    You can change the "channel" or base topic by going to JMRI Preferences Connections, selecting your MQTT connection's tab, checking the "Additional
-    Connection Settings" box, and then entering the desired value in the "MQTT channel" text box. You should change the default channel, typically to 
+    All default components can by changed by going to Preferences Connections, selecting your MQTT connection's tab, checking the "Additional
+    Connection Settings" box, and then entering the desired values. It is recommended that you change the default channel, typically to 
     something based on your own railroad name. Current guidance from the MQTT community is not to have a leading slash; it is present in the JMRI default 
-    for historical reasons. You then must save your changes and restart JMRI; the program won't continue to operate normally after changing the MQTT channel
-    until you restart it.
+    for historical reasons.
     </p>
     
     <p>
-    Note that the default value of "/trains/" is the default for all JMRI instances.  If you use a public MQTT message broker (like the http://test.mosquitto.org 
-    test server mentioned <a href="#testing">below</a>), keeping that default channel will show you traffic from every other JMRI instance anywhere in the world 
-    connected to that broker and also using the default channel.  
+    One reason to change the default is that "/trains/" is the default for all JMRI instances.  If you use a public MQTT message broker (like the http://test.mosquitto.org 
+    test server mentioned <a href="#testing">below</a>), keeping that default channel will show you messages from every other JMRI instance anywhere in the world 
+    connected to that broker and also using the default channel -- and show everyone else your messages!  
     </p>
     
     <p>You can change the type-specific part of each topic string using the other fields in the preferences.  There are separate fields
     for specifying what JMRI should publish (the "send" field) and what JMRI should subscribe to (recognize back from the layout, the "receive" field).
+    The initial defaults contain two parts and are the same for publish and subscribe but they need not be.
     </p>
 
     <p>
     If you want the object's system name suffix to be in the topic string at some place other than at the end, you can use a "wild card" of "{0}"
-    within the string to put the object's system name suffix at that place.  This allows you to set up topics like "track/turnout/{0}/state" and
-    JMRI will generate "track/turnout/abc123/state" as the specific topic for turnout "MTabc123".
+    within the string to put the object's system name suffix at that place.  This allows you to set up topics like "track/turnout/{0}/state" so
+    JMRI will generate "/trains/track/turnout/abc123/state" for turnout "MTabc123".
     </p>
     
     <p class="noted">
@@ -140,7 +154,8 @@
     </p>
     
     <p>
-    You can also change the object type-specific part of the topic strings as part of JMRI start-up using a script as described <a href="#scripting">below.</a> 
+    You can also change the object type-specific part of the topic strings as part of JMRI start-up using a script as described <a href="#scripting">below.</a>
+    </p>
     
     <h3>Custom Topics</h3>
     
