@@ -1959,7 +1959,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
         // before proceeding, make sure that the user really wants to go forward
         Object[] dialogBoxButtonOptions = {
-            Bundle.getMessage("ButtonTextResetToFactoryDefault"),
+            Bundle.getMessage("ButtonResetToFactoryDefault"),
             Bundle.getMessage("ButtonCancel")};
         int userReply = JOptionPane.showOptionDialog(this.getParent(),
                 Bundle.getMessage("DialogTextBoardResetWarning"),
@@ -2164,7 +2164,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         localSensorType.setName("21"); // NOI18N
         localSensorType.addActionListener(basicConfigChangeActionListener);
 
-        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonTextResetToFactoryDefault"));
+        factoryResetButton = new JToggleButton(Bundle.getMessage("ButtonResetToFactoryDefault"));
         factoryResetButton.setToolTipText(Bundle.getMessage("ToolTipButtonResetToFactoryDefault"));
         factoryResetButton.addActionListener(
                 event -> {
