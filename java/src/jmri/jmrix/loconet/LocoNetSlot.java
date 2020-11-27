@@ -1599,7 +1599,7 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcFracMins invalid for slot {}", getSlot());
         }
-        return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
+        return ((addr & 0x7F) | ((spd & 0x7F) << 8));
     }
 
     /**
@@ -1627,9 +1627,9 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcFracMins invalid for slot {}", getSlot());
         }
-        int temp = 0x3FFF - val;
-        addr = addr | (temp & 0x7F);
-        spd = (temp >> 7) & 0x7F;
+        int temp = 0x7F7F & val;
+        addr = (addr & 0x7F00) | (temp & 0x7F);
+        spd = (temp >> 8) & 0x7F;
     }
 
     /**
