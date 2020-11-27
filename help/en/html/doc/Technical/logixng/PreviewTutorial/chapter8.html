@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>LogixNG preview - Chapter 7</title>
+<script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<a id="id1" href="#">Note for developers</a>
+<p id="id2" class="hidden">If you click on me, aaa I will disappear.</p>
+
+<table width="800">
+<tr>
+<td>
+
+<h1>LogixNG Preview - Chapter 8</h1>
+
+<h2>Local variables</h2>
+
+JMRI have memories that can store data. And that's great. But there is a problem with memories. They are global, which
+means that anyone can change them. Lets assume you want to count something so you create a memory IMCOUNTER. You create
+a LogixNG that does the counting and everything works fine.
+<p>
+A year passes and you need to count something else. You create a new LogixNG that does the new counting and you need a
+memory, so you decide to use the memory IMCOUNTER. And your new LogixNG works fine. But then you suddenly realise that
+something else on the layout stops working. Why? What has happen? Well, the problem is that you use the same memory
+IMCOUNTER for two different things in two different places. And when that happens, you get into trouble.
+<p>
+LogixNG has a simple solution to this problem, local variables. A local variable is similar to a memory, but it only
+exists in a very limited context and nothing outside that context can interfer with the variable. This protects the
+local variable from being changed in an unpredictable way.
+<p>
+
+
+
+<p>
+<h2>Order of local variables</h2>
+
+The order of the local variables that are defined in an action or expression matters if you use one variable in the
+initialization of another. Lets say you define two variables "a" and "b", and that you define "a" to be initialized to
+the formula "34 * 4" and you define "b" to be initialized to "a * 3". This will work if "a" is defined before "b". You
+can define both variables in the same action or expression, but "a" needs to be before "b" since "b" uses "a" in its
+initialization.
+
+<h2>Local variables are local</h2>
+
+This may seem obvious, but when writing scripts that uses local variables, it's important to remember this. A script
+can access the symbol table, but the symbol table is dependent on which action or expression that's currently running.
+
+<h2>Local variables are NOT thread safe</h2>
+
+Never use local variables on any other thread than the GUI thread.
+
+
+</td>
+</tr>
+</table>
+</body>
+</html>

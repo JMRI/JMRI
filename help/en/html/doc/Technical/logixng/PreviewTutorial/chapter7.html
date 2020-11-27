@@ -14,43 +14,31 @@
 <tr>
 <td>
 
-<h1>LogixNG Preview - Chapter 7</h1>
+<h1>LogixNG Preview - Chapter 8</h1>
 
-<h2>Local variables</h2>
+<h2>Sequence - controlling a crane and a loco</h2>
 
-JMRI have memories that can store data. And that's great. But there is a problem with memories. They are global, which
-means that anyone can change them. Lets assume you want to count something so you create a memory IMCOUNTER. You create
-a LogixNG that does the counting and everything works fine.
-<p>
-A year passes and you need to count something else. You create a new LogixNG that does the new counting and you need a
-memory, so you decide to use the memory IMCOUNTER. And your new LogixNG works fine. But then you suddenly realise that
-something else on the layout stops working. Why? What has happen? Well, the problem is that you use the same memory
-IMCOUNTER for two different things in two different places. And when that happens, you get into trouble.
-<p>
-LogixNG has a simple solution to this problem, local variables. A local variable is similar to a memory, but it only
-exists in a very limited context and nothing outside that context can interfer with the variable. This protects the
-local variable from being changed in an unpredictable way.
-<p>
+A layout for exhibitions has a coal storage with a coal crane, there the crane loads coal on a wagon which then
+transports the coal to a harbour and drops the coal into a ship.
+
+At first, we try to run the layout manually to see how it works.
 
 
+IS_7_1 - Start layout
+IS_7_1 - Stop layout
+IS_7_1 - Reset layout
 
-<p>
-<h2>Order of local variables</h2>
+IM_1 - Crane angle left - right, commanded position
+IM_2 - Crane angle left - right, actual position
+IM_3 - Crane bucket up - down, commanded position
+IM_4 - Crane bucket up - down, actual position
+IM_5 - Crane bucket closed - open, commanded position
+IM_6 - Crane bucket closed - open, actual position
 
-The order of the local variables that are defined in an action or expression matters if you use one variable in the
-initialization of another. Lets say you define two variables "a" and "b", and that you define "a" to be initialized to
-the formula "34 * 4" and you define "b" to be initialized to "a * 3". This will work if "a" is defined before "b". You
-can define both variables in the same action or expression, but "a" needs to be before "b" since "b" uses "a" in its
-initialization.
+Throttle 21 - Controls the steam engine
 
-<h2>Local variables are local</h2>
 
-This may seem obvious, but when writing scripts that uses local variables, it's important to remember this. A script
-can access the symbol table, but the symbol table is dependent on which action or expression that's currently running.
-
-<h2>Local variables are NOT thread safe</h2>
-
-Never use local variables on any other thread than the GUI thread.
+Now, lets automate this layout using LogixNG.
 
 
 </td>
