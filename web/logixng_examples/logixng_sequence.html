@@ -73,7 +73,7 @@
 
 
   <rect x="0" y="200" width="1000" height="2" stroke="black" stroke-width="0" fill="blue" />    <!-- center of rail -->
-  <line x1="362" y1="200" x2="1000" y2="568" style="stroke:rgb(255,0,0);stroke-width:2" />      <!-- center of rail -->
+  <line id="DivergingCenterRail" x1="362" y1="200" x2="1000" y2="568" style="stroke:rgb(255,0,0);stroke-width:2" />      <!-- center of rail -->
 
 
 
@@ -99,6 +99,24 @@
   </defs>
 
   <use id="CarHandle" x="0" y="0" xlink:href="#Car"/>
+
+
+
+  <defs>
+    <g id="Crane">
+      <rect x="-150" y="-110" width="300" height="220" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- crane cabin -->
+      <rect x="-10" y="-310" width="20" height="200" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />      <!-- crane arm -->
+      <rect x="-70" y="-410" width="140" height="100" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- empty bucket -->
+      <rect x="-70" y="-410" width="140" height="100" stroke="#385D8A" stroke-width="4" fill="#948A54" />     <!-- filled bucket -->
+	</g>
+  </defs>
+
+  <use id="CraneHandle" x="0" y="0" xlink:href="#Crane"/>
+
+
+
+
+
 </svg>
 
 <script>
@@ -116,14 +134,17 @@ for (var key in circle) {
 }
 */
 
-var circle = document.getElementById('LocoHandle');
-circle.setAttribute("transform", "translate(100,200) scale(0.3) rotate(0)");
+var item = document.getElementById('LocoHandle');
+item.setAttribute("transform", "translate(100,200) scale(0.3) rotate(0)");
 
-var circle = document.getElementById('CarHandle');
-circle.setAttribute("transform", "translate(250,200) scale(0.3) rotate(0)");
+var item = document.getElementById('CarHandle');
+item.setAttribute("transform", "translate(250,200) scale(0.3) rotate(0)");
 
-var circle = document.getElementById('Track2_Handle');
-circle.setAttribute("transform", "translate(730,410) rotate(30)");
+var item = document.getElementById('CraneHandle');
+item.setAttribute("transform", "translate(737,540) scale(0.3) rotate(30)");
+
+var item = document.getElementById('Track2_Handle');
+item.setAttribute("transform", "translate(730,410) rotate(30)");
 
 
 var angle = 0;

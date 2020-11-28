@@ -38,7 +38,21 @@ IM_6 - Crane bucket closed - open, actual position
 Throttle 21 - Controls the steam engine
 
 
-Now, lets automate this layout using LogixNG.
+
+<h3>Some things to note:</h3>
+
+The crane will not rotate left-right unless the bucket is in its top position. So if the crane doesn't rotate, make
+sure that the bucket is lifted to its upmost position.
+<p>
+The bucket will not be loaded unless the bucket is opened, moved down to the bottom position and then closed.
+<p>
+The car will not be loaded unless the bucket of the crane is filled and opened above the car.
+
+
+
+
+
+<h2>Now, lets automate this layout using LogixNG.</h2>
 
 
 </td>
