@@ -1,11 +1,12 @@
 var throttleSpeed = 0;		// The speed of the train
 var throtteForward = true;	// The direction of the train
-var aalocoPos = 100;			// The position of the loco
-var locoPos = 700;			// The position of the loco
-var diverged = false;		// Has the train gone to crane track instead of harbour track?
+var locoPos = 100;			// The position of the loco
+// var locoPos = 700;				// The position of the loco
+var selectDivergedTrack = false;	// Should the train go to crane track instead of harbour track?
 var turnoutThrown = false;	// Is the turnout thrown?
 var diveringTrackAngle = 0;	// The angle of crane track?
 var turnoutPos = 0;			// Where does the diverging track starts?
+var carPos = 0;				// Position of the car
 
 var craneX = 737;				// Crane X position
 var craneY = 540;				// Crane Y position
@@ -164,7 +165,7 @@ function moveLocoOrCar(item, pos)
 	var x = pos;
 	var y = 0;
 	var rotate = 0;
-	if (pos > turnoutPos) {
+	if (selectDivergedTrack && (pos > turnoutPos)) {
 		var posAfterTurnout = pos - turnoutPos;
 		rotate = diveringTrackAngle * 360 / 2 / Math.PI;
 		x = turnoutPos + posAfterTurnout * Math.cos(diveringTrackAngle);
@@ -180,8 +181,10 @@ window.setInterval(runTrain, 50);
 
 function runTrain()
 {
-//	if (throttleSpeed != 0)
+	if (throttleSpeed != 0)
 	{
+		if (carPos < turnoutPos) selectDivergedTrack = turnoutThrown;
+
 		var speed = throttleSpeed;
 		if (throttleForward) speed = -speed;
 
