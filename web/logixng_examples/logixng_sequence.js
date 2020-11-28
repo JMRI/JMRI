@@ -7,6 +7,8 @@ var turnoutThrown = false;	// Is the turnout thrown?
 var diveringTrackAngle = 0;	// The angle of crane track?
 var turnoutPos = 0;			// Where does the diverging track starts?
 
+var craneX = 737;				// Crane X position
+var craneY = 540;				// Crane Y position
 var craneMinAngle = -80;		// Minimum angle of the crane
 var craneMaxAngle = 30;			// Maximum angle of the crane
 var craneAngle = craneMinAngle;	// Current angle of crane
@@ -217,18 +219,33 @@ function runTrain()
 
 
 function rotateCrane(value) {
-	commandedCraneAngle = (craneMaxAngle - craneMinAngle) * value / 100;
-	if (value < craneMinAngle) value = craneMinAngle;
-	if (value > craneMaxAngle) value = craneMaxAngle;
-	commandedCraneAngle = value;
+	commandedCraneAngle = (craneMaxAngle - craneMinAngle) * value / 100 + craneMinAngle;
+	if (commandedCraneAngle < craneMinAngle) commandedCraneAngle = craneMinAngle;
+	if (commandedCraneAngle > craneMaxAngle) commandedCraneAngle = craneMaxAngle;
 }
 
 
 
 function checkCrane()
 {
-	if (commandedCraneAngle < craneAngle)
-	{
+	var lastAngle = craneAngle;
+	if (commandedCraneAngle < craneAngle) {
+		craneAngle -= 0.5;
+		if (craneAngle < commandedCraneAngle) craneAngle = commandedCraneAngle;
 	}
-	var loco = document.getElementById('LocoHandle');
+	if (commandedCraneAngle > craneAngle) {
+		craneAngle += 0.5;
+		if (craneAngle > commandedCraneAngle) craneAngle = commandedCraneAngle;
+	}
+
+	if (craneAngle != lastAngle) {
+		var item = document.getElementById('CraneHandle');
+//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
+		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
+		item.setAttribute("transform", data);
+
+		anglePercent = (craneAngle - craneMinAngle) / (craneMaxAngle - craneMinAngle) * 100;
+		jmri.setMemory("IM_7_2", anglePercent);
+//		console.log("Set memory: "+anglePercent);
+	}
 }
