@@ -107,9 +107,34 @@ Some chapters has a panel and the panels has names like "Chapter 1", that tells 
 <p>
 <a href="chapter11.html">Chapter 12 - Scripts</a>
 <p>
+
+
+<h2>Notes for developers</h2>
+
+The rest of the chapters are aimed at developers of JMRI. These chapters explains the internals of LogixNG and how to
+use LogixNG from other parts of JMRI.
+
+<p>
+
 <a href="chapter12.html">Chapter 13 - Adding a new action or expression</a>
 <p>
 <a href="chapter13.html">Chapter 14 - The future of LogixNG - Expanding it further</a>
+<p>
+<a href="chapter13.html">Chapter 15 - Using LogixNG in other parts of JMRI</a>
+If you are developing some tool, for example something similat to SSL or SSM, and you want to use LogixNG as the
+engine, there are some things that's good to know.
+
+LogixNG has a reserved group of system names for items created by other parts of JMRI. IQDA:JMRI:aaaa. The purpose of
+these special system names is to guarantee that there will never be any collission between JMRI system names and system
+names created by the user.
+<p>
+While developing a tool for JMRI, you may end up with the need to create some special action or expression for LogixNG
+to be used only in your tool. You can do that by developing the tool, but not announce its existence. LogixNG will
+still be happy to use the new action or expression, but the user will not be able to add that action or expression
+anywhere else in his ConditionalNGs. Note that people may argue about whenether this is good or bad, but it's at least
+possible.
+
+
 <p>
 <a href="chapter99.html">Chapter 99 - Note to reviewers of JMRI. When to merge LogixNG?</a>
 <p>
