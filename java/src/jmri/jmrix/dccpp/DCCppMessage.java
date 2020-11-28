@@ -228,8 +228,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 }
             case DCCppConstants.READ_CS_STATUS:
                 return (new DCCppMessage(DCCppConstants.READ_CS_STATUS, DCCppConstants.READ_CS_STATUS_REGEX));
-            case DCCppConstants.READ_CS_MAXNUMSLOTS:
-                return (new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
             case DCCppConstants.READ_TRACK_CURRENT:
                 return (DCCppMessage.makeReadTrackCurrentMsg());
             case DCCppConstants.SENSOR_CMD:
@@ -382,6 +382,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.READ_CS_STATUS:
                 myRegex = DCCppConstants.READ_CS_STATUS_REGEX;
+                break;
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                myRegex = DCCppConstants.READ_MAXNUMSLOTS_REGEX;
                 break;
             case DCCppConstants.WRITE_TO_EEPROM_CMD:
                 myRegex = DCCppConstants.WRITE_TO_EEPROM_REGEX;
@@ -564,6 +567,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                 break;
             case DCCppConstants.READ_CS_STATUS:
                 text = "Status Cmd ";
+                break;
+            case DCCppConstants.READ_MAXNUMSLOTS:
+                text = "Get MaxNumSlots Cmd ";
                 break;
             case DCCppConstants.WRITE_DCC_PACKET_MAIN:
                 text = "Write DCC Packet Main Cmd: ";
@@ -1500,6 +1506,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.TRACK_POWER_OFF:
             case DCCppConstants.READ_TRACK_CURRENT:
             case DCCppConstants.READ_CS_STATUS:
+            case DCCppConstants.READ_MAXNUMSLOTS:
             case DCCppConstants.GET_FREE_MEMORY:
             case DCCppConstants.OUTPUT_CMD:
             case DCCppConstants.LIST_REGISTER_CONTENTS:
@@ -2058,7 +2065,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      * @return status message with to get number of slots.
      */
     public static DCCppMessage makeCSMaxNumSlotsMsg() {
-        return (new DCCppMessage(DCCppConstants.READ_CS_MAXNUMSLOTS, DCCppConstants.READ_CS_MAXNUMSLOTS_REGEX));
+        return (new DCCppMessage(DCCppConstants.READ_MAXNUMSLOTS, DCCppConstants.READ_MAXNUMSLOTS_REGEX));
     }
 
     /**

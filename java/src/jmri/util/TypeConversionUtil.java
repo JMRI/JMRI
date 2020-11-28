@@ -45,7 +45,7 @@ public final class TypeConversionUtil {
     }
     
     /**
-     * Is this object an integer or floating point number?
+     * Is this object an integer or a floating point number?
      * <P>
      * The method returns true if the object is any of these classes:
      * <ul>

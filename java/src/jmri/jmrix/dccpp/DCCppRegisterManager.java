@@ -3,6 +3,9 @@
  */
 package jmri.jmrix.dccpp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Defines and Manages the Registers (~ slots) for DCC++ Base Station
  *
@@ -24,8 +27,9 @@ public class DCCppRegisterManager {
     protected int maxMainRegisters = 0;
     protected DCCppRegister registers[];
 
-    // Constuctors
+    // Constructors
     public DCCppRegisterManager(int maxMainRegisters) {
+        log.debug("DCCppRegisterManager({}) called.", maxMainRegisters);
         this.maxMainRegisters = maxMainRegisters;
         registers = new DCCppRegister[maxMainRegisters];
         for (int i = 0; i < maxMainRegisters; i++) {
@@ -44,6 +48,7 @@ public class DCCppRegisterManager {
         for (int i = 0; i < maxMainRegisters; i++) {
             if (registers[i].getAddress() == addr) {
                 registers[i].allocate();
+                log.debug("requestRegister({}) returns {}", addr, i);
                 return (i);
             }
             // This might be a free spot
@@ -58,6 +63,7 @@ public class DCCppRegisterManager {
             registers[free].allocate();
             registers[free].setAddress(addr);
         }
+        log.debug("requestRegister({}) returns {}", addr, free);
         return (free);
     }
 
@@ -76,13 +82,17 @@ public class DCCppRegisterManager {
                 return (i + 1);
             }
         }
-        // Optional:  If a nonexistant register is requested, create one?
+        // Optional:  If a nonexistent register is requested, create one?
         return (DCCppConstants.NO_REGISTER_FREE);
     }
 
     public int getRegisterAddress(int num) {
         return (registers[num - 1].getAddress());
     }
+    /*
+     * We need to register for logging
+     */
+    private final static Logger log = LoggerFactory.getLogger(DCCppRegisterManager.class);
 
 }
 

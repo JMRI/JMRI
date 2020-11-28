@@ -99,8 +99,8 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
 
     /**
      * Get the sub system prefix of this manager.
-     * The sub system prefix is the prefix and type for the system name and
-     * possibly some extra characters of the NamedBeans handled by this manager.
+     * The sub system prefix is the system name prefix and possibly some extra
+     * characters of the NamedBeans handled by this manager.
      * <P>
      * For most managers, this is the same as {@link #getSystemNamePrefix() },
      * but for some like the managers in LogixNG, it differs.
@@ -711,7 +711,7 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     // has a system name like "IQDE001".
     public static final int LOGIXNGS = ENTRYEXIT + 10;                          // LogixNG
     public static final int LOGIXNG_CONDITIONALNGS = LOGIXNGS + 10;             // LogixNG ConditionalNG
-    public static final int LOGIXNG_TABLES = LOGIXNG_CONDITIONALNGS + 10;       // LogixNG Tables
+    public static final int LOGIXNG_TABLES = LOGIXNG_CONDITIONALNGS + 10;       // LogixNG Tables (not bean tables)
     public static final int LOGIXNG_DIGITAL_EXPRESSIONS = LOGIXNG_TABLES + 10;          // LogixNG Expression
     public static final int LOGIXNG_DIGITAL_ACTIONS = LOGIXNG_DIGITAL_EXPRESSIONS + 10; // LogixNG Action
     public static final int LOGIXNG_DIGITAL_BOOLEAN_ACTIONS = LOGIXNG_DIGITAL_ACTIONS + 10;   // LogixNG Digital Boolean Action

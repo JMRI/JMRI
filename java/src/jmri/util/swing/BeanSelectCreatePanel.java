@@ -162,7 +162,7 @@ public class BeanSelectCreatePanel<E extends NamedBean> extends JPanel {
     public boolean hasBeanOrBeanName() {
         return existingItem.isSelected() || !hardwareAddress.getText().trim().isEmpty();
     }
-    
+
     /**
      * Get the named bean that has either been selected in the drop down list or
      * was asked to be created.
