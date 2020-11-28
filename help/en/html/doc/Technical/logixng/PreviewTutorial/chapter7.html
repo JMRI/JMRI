@@ -55,6 +55,16 @@ The car will not be loaded unless the bucket of the crane is filled and opened a
 <h2>Now, lets automate this layout using LogixNG.</h2>
 
 
+
+<p>
+One problem remains. When we run the automation, the crane will always dig coal from the same spot. It will result in
+that the coal on that spot runs out, while there is plenty of coal close to that spot. To fix this, we want the crane
+to pick a random spot within an interval and dig at that random spot. To do this, we use the expression Formula and the
+function random(). The function random() can take zero arguments and then returns a floating point number between 0 and
+1, and it can take two arguments and then returns a floating point number between the first argument and the second
+argument. We will use the later and give random() two arguments, there the first argument is the minimum value and the
+second argument is the maximum value.
+
 </td>
 </tr>
 </table>
