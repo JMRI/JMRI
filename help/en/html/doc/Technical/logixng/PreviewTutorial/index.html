@@ -120,13 +120,22 @@ use LogixNG from other parts of JMRI.
 <p>
 <a href="chapter13.html">Chapter 14 - The future of LogixNG - Expanding it further</a>
 <p>
-<a href="chapter13.html">Chapter 15 - Using LogixNG in other parts of JMRI</a>
+<a href="chapter13.html">Chapter 15 - Using LogixNG in other parts of JMRI or by third party software</a>
 If you are developing some tool, for example something similat to SSL or SSM, and you want to use LogixNG as the
 engine, there are some things that's good to know.
-
+<p>
 LogixNG has a reserved group of system names for items created by other parts of JMRI. IQDA:JMRI:aaaa. The purpose of
 these special system names is to guarantee that there will never be any collission between JMRI system names and system
 names created by the user.
+<p>
+LogixNG has a reserved group of system names for items created by third party software that uses JMRI as a library.
+IQDA:JMRI-LIB:aaaa. The purpose of
+these special system names is to guarantee that there will never be any collission between the third party software
+system names and system names created by the user or by JMRI.
+<p>
+The user can, but should not, create their own system names using IQDA:JMRI:aaaa or IQDA:JMRI-LIB:aaaa system names. By
+doing so, the user takes the risk of collissions with JMRI or third party software. But for developers, this may be
+useful during development.
 <p>
 While developing a tool for JMRI, you may end up with the need to create some special action or expression for LogixNG
 to be used only in your tool. You can do that by developing the tool, but not announce its existence. LogixNG will
