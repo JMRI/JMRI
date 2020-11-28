@@ -2096,10 +2096,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if (!MathUtil.equals(newZoom, getPaintScale())) {
             log.debug("zoom: {}", zoomFactor);
-            // setPaintScale(newZoom);   //<<== don't call; messes up scrollbars
-            _paintScale = newZoom;      // just set paint scale directly
+            setPaintScale(newZoom);   //<<== don't call; messes up scrollbars
+            //_paintScale = newZoom;      // just set paint scale directly
             resetTargetSize();          // calculate new target panel size
-            adjustScrollBars();         // and adjust the scrollbars ourselves
+            //adjustScrollBars();         // and adjust the scrollbars ourselves
             // adjustClip();
 
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
@@ -2667,7 +2667,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         dim = getTargetPanelSize();
         gContext.setLayoutWidth((int) (dim.width / getZoom()));
         gContext.setLayoutHeight((int) (dim.height / getZoom()));
-        adjustScrollBars();
+        //adjustScrollBars();
 
         Point pt = getLocationOnScreen();
         gContext.setUpperLeftY(pt.x);
@@ -7158,8 +7158,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     private void resetTargetSize() {
-        int newTargetWidth = (int) (gContext.getLayoutWidth() * getZoom());
-        int newTargetHeight = (int) (gContext.getLayoutHeight() * getZoom());
+                // This is the bounds of what's on the screen
+        JScrollPane scrollPane = getPanelScrollPane();
+        Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+
+//        int newTargetWidth = (int) (gContext.getLayoutWidth() * getZoom() + scrollBounds.getWidth());
+//        int newTargetHeight = (int) (gContext.getLayoutHeight() * getZoom() + scrollBounds.getHeight());
+        int newTargetWidth = (int) (gContext.getLayoutWidth() * getPaintScale() * 2);
+        int newTargetHeight = (int) (gContext.getLayoutHeight() * getPaintScale() * 2);
 
         Dimension targetPanelSize = getTargetPanelSize();
         int oldTargetWidth = (int) targetPanelSize.getWidth();
@@ -7167,7 +7173,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         if ((newTargetWidth != oldTargetWidth) || (newTargetHeight != oldTargetHeight)) {
             setTargetPanelSize(newTargetWidth, newTargetHeight);
-            adjustScrollBars();
+//            adjustScrollBars();
         }
     }
 
