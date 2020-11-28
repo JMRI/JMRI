@@ -210,6 +210,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.MADC_SUCCESS_REPLY:
                 text = "Sensor/Turnout/Output MADC Success Reply ";
                 break;
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                text = "Number of slots reply: " + getValueString(1);
+                break;
             default:
                 text = "Unrecognized reply: ";
                 text += toString() + "vals: ";

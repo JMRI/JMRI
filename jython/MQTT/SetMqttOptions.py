@@ -10,8 +10,11 @@ from org.python.core.util import StringUtil
 mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
 
 # set the retain option for transmissions (true is the JMRI default value)
-mqttAdapter.retain = true
+mqttAdapter.retained = True
+print ("MQTT Retained set to: ")
+print (mqttAdapter.retained)
 
 # set the Quality Of Service for transmissions (2 is the JMRI default value, 0-2 valid)
 mqttAdapter.qosflag = 2
-
+print ("MQTT QoS Flag set to: ")
+print (mqttAdapter.qosflag)
