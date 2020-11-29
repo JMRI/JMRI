@@ -5,7 +5,7 @@ import java.awt.geom.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 import javax.annotation.*;
@@ -1089,6 +1089,20 @@ public final class MathUtil {
         return new Rectangle2D.Double(p.getX(), p.getY(), width, height);
     }
 
+    /**
+     * reverse an array of Point2D's
+     * @param points the array
+     * @return the reversed array
+     */
+    public static Point2D[] reverse(Point2D[] points) {
+        Point2D[] results = new Point2D[points.length];
+
+        List<Point2D> itemList = Arrays.asList(points);
+        Collections.reverse(itemList);
+        results = itemList.toArray(results);
+        return results;
+    }
+
     // recursive routine to plot a cubic Bezier...
     // (also returns distance!)
     private static double plotBezier(
@@ -1297,7 +1311,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2           the Graphics2D context to draw to (null to just return length)
+     * @param g2           the Graphics2D context to draw to (null to just
+     *                     return length)
      * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve

@@ -7,10 +7,13 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.swing.Timer;
 
 import jmri.util.MathUtil;
 
@@ -142,10 +145,27 @@ public class LENavigate {
     /*
      * public methods
      */
-    public LENavigate navigate() {
-        LENavigate result = layoutTrack.navigate(this);
+    public void start() {
+        setDistance(0.0);
+        ActionListener timerActions = (ActionEvent ae) -> {
+            setDistance(getDistance() + (getSpeed() / getFPS()));
+            log.error("Navigation timer distance: {}", getDistance());
+            if (getDistance() > 0.0) {
+                LENavigate newNavInfo = navigate();
+                newNavInfo.start();
+            } else {
+                log.error("Fixed Navigation timer stoping");
+            }
+            ((Timer) ae.getSource()).stop();
+        };
+        Timer timer = new Timer((int)(1000 / getFPS()), timerActions);
+        timer.setRepeats(false);
+        log.error("Fixed Navigation timer starting");
+        timer.start();
+    }
 
-        return result;
+    public LENavigate navigate() {
+        return layoutTrack.navigate(this);
     }
 
     public void draw(Graphics g) {
@@ -154,4 +174,5 @@ public class LENavigate {
             // draw something here!
         }
     }
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LENavigate.class);
 }

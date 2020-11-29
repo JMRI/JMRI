@@ -834,20 +834,24 @@ public class TrackSegment extends LayoutTrack {
 
         TrackSegmentView tsv = models.getTrackSegmentView(this);
 
+        boolean nextTrackFlag = false;
         if (tsv.isArc()) {
-            tsv.calculateTrackSegmentAngle();
-            //g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+            //TODO: finish this
+            result = super.navigate(navInfo);   // call super to STOP
         } else if (tsv.isBezier()) {
             Point2D[] points = tsv.getBezierPoints();
-            double bezierLength = MathUtil.drawBezier(null, points);
-
-            if (bezierLength > result.getDistance()) {
+            double distance = MathUtil.drawBezier(null, points);
+            if (result.getDistance() < distance) {  // it's in this track
+                //if entering from the other end...
+                if (connect2.equals(navInfo.getLastTrack())) {
+                    points = MathUtil.reverse(points);  //..reverse the points
+                }
                 GeneralPath path = MathUtil.getBezierPath(points);
                 PathIterator i = path.getPathIterator(null);
                 float[] data = new float[6];
 
                 Point2D p1 = MathUtil.zeroPoint2D, p2;
-
+                boolean nextSegmentFlag = true;
                 while (!i.isDone()) {
                     switch (i.currentSegment(data)) {
                         case PathIterator.SEG_MOVETO:
@@ -856,61 +860,75 @@ public class TrackSegment extends LayoutTrack {
 
                         case PathIterator.SEG_LINETO:
                             p2 = new Point2D.Double(data[0], data[1]);
-                            double distance = MathUtil.distance(p1, p2);
-                            if (distance >= result.getDistance()) {
-
+                            distance = MathUtil.distance(p1, p2);
+                            if (result.getDistance() < distance) {  // it's in this segment
+                                result.setLocation(MathUtil.lerp(p1, p2, result.getDistance() / distance));
+                                result.setDirection(MathUtil.computeAngleDEG(p1, p2));
+                                nextSegmentFlag = false;
+                            } else {    // it's not in this segment
+                                result.setDistance(result.getDistance() - distance);
                             }
 
                             p1 = p2;
                             break;
 
-                        case PathIterator.SEG_QUADTO:
-//                        out.writeInt(PathIterator.SEG_QUADTO);
-//                        out.writeFloat(data[0]);
-//                        out.writeFloat(data[1]);
-//                        out.writeFloat(data[2]);
-//                        out.writeFloat(data[3]);
-                            break;
-
-                        case PathIterator.SEG_CUBICTO:
-//                        out.writeInt(PathIterator.SEG_CUBICTO);
-//                        out.writeFloat(data[0]);
-//                        out.writeFloat(data[1]);
-//                        out.writeFloat(data[2]);
-//                        out.writeFloat(data[3]);
-//                        out.writeFloat(data[4]);
-//                        out.writeFloat(data[5]);
-                            break;
-
-                        case PathIterator.SEG_CLOSE:
-//                        out.writeInt(PathIterator.SEG_CLOSE);
-                            break;
-
                         default:
                             log.error("Unknown path segment type: {}.", i.currentSegment(data));
-                    }
+                        case PathIterator.SEG_QUADTO:
+                        case PathIterator.SEG_CUBICTO:
+                        case PathIterator.SEG_CLOSE:
+                            result = super.navigate(navInfo);   // call super to STOP
+                            break;
 
+                    }
+                    if (nextSegmentFlag) {
+                        break;
+                    }
                     i.next();
-                }
+                }   // while (!i.isDone())
             } else {
-                // it's not in this bezier
+                result.setDistance(result.getDistance() - distance);
+                nextTrackFlag = true;
             }
         } else {
-            Point2D end1 = models.getCoords(
-                    getConnect1(),
-                    getType1());
-            Point2D end2 = models.getCoords(
-                    getConnect2(),
-                    getType2());
-
-            //g2.draw(new Line2D.Double(end1, end2));
-            result = super.navigate(navInfo);   // call super to STOP
+            Point2D p1 = models.getCoords(getConnect1(), getType1());
+            Point2D p2 = models.getCoords(getConnect2(), getType2());
+            double distance = MathUtil.distance(p1, p2);
+            if (result.getDistance() < distance) {  // it's in this track
+                if (connect1.equals(navInfo.getLastTrack())) {
+                } else if (connect2.equals(navInfo.getLastTrack())) {
+                    // if entering from the other end then swap end points
+                    Point2D temp = p1;
+                    p1 = p2;
+                    p2 = temp;
+                } else {    //OOPS! we're lost!
+                    result = super.navigate(navInfo);   // call super to STOP
+                }
+                result.setLocation(MathUtil.lerp(p1, p2, result.getDistance() / distance));
+                result.setDirection(MathUtil.computeAngleDEG(p1, p2));
+            } else {    // it's not in this track
+                nextTrackFlag = true;
+            }
         }
 
-        result.setLastTrack(this);
+        if (nextTrackFlag) {
+            if (connect1.equals(navInfo.getLastTrack())) {
+                result.setLayoutTrack(connect2);
+                result.setHitPointType(type2);
+            } else if (connect2.equals(navInfo.getLastTrack())) {
+                result.setLayoutTrack(connect1);
+                result.setHitPointType(type1);
+            } else {    //OOPS! we're lost!
+                result = super.navigate(navInfo);   // call super to STOP
+                nextTrackFlag = false;
+            }
+            if (nextTrackFlag) {
+                result.setLastTrack(this);
+            }
+        }
 
         return result;
-    }
+    }   // navigate
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
 }

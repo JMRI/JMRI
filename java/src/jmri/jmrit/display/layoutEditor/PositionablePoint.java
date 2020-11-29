@@ -1252,34 +1252,55 @@ public class PositionablePoint extends LayoutTrack {
         LENavigate result = new LENavigate(navInfo);
         switch (type) {
             case ANCHOR: {
-                if (navInfo.getLastTrack() != null) {
-                    if (getConnect1().equals(navInfo.getLastTrack())) {
-                        result.setLayoutTrack(getConnect2());
-                    } else if (getConnect2().equals(navInfo.getLastTrack())) {
-                        result.setLayoutTrack(getConnect1());
-                    } else {
-                        result = super.navigate(navInfo);   // call super to STOP
-                    }
-                } else {
+                if (navInfo.getLastTrack() == null) {
+                    result.setLastTrack(getConnect1());
+                }
+                if (getConnect1().equals(navInfo.getLastTrack())) {
                     result.setLayoutTrack(getConnect2());
+                    result.setHitPointType(HitPointType.POS_POINT);
+                } else if (getConnect2().equals(navInfo.getLastTrack())) {
+                    result.setLayoutTrack(getConnect1());
+                    result.setHitPointType(HitPointType.POS_POINT);
+                } else {
+                    result = super.navigate(navInfo);   // call super to STOP
+                    break;
                 }
                 result.setLastTrack(this);
                 break;
             }
             default:
             case END_BUMPER: {
-                // call super to STOP!
-                result = super.navigate(navInfo);
+                if (navInfo.getLastTrack() == null) {
+                    result.setLayoutTrack(getConnect1());
+                    result.setHitPointType(HitPointType.POS_POINT);
+                    result.setLastTrack(this);
+                } else {
+                    result = super.navigate(navInfo);   // call super to STOP
+                }
                 break;
             }
             case EDGE_CONNECTOR: {
-                TrackSegment c2 = getConnect2();
-                if (c2 != null) {
-                    result.setLayoutEditor(getLinkedEditor());
-                    result.setLayoutTrack(c2);
-                } else {
-                    result = super.navigate(navInfo);
+                if (navInfo.getLastTrack() == null) {
+                    result.setLastTrack(getConnect1());
                 }
+                if (getConnect1().equals(navInfo.getLastTrack())) {
+                    TrackSegment c2 = getConnect2();
+                    if (c2 != null) {
+                        result.setLayoutEditor(getLinkedEditor());
+                        result.setLayoutTrack(c2);
+                        result.setHitPointType(HitPointType.POS_POINT);
+                    } else {
+                        result = super.navigate(navInfo);   // call super to STOP
+                    }
+                } else if (getConnect2().equals(navInfo.getLastTrack())) {
+                    result.setLayoutTrack(getConnect1());
+                    result.setHitPointType(HitPointType.POS_POINT);
+                } else {
+                    result = super.navigate(navInfo);   // call super to STOP
+                    break;
+                }
+                result.setLastTrack(this);
+
                 break;
             }
         }
