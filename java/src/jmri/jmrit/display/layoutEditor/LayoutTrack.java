@@ -11,7 +11,7 @@ import jmri.Turnout;
  * Abstract base class for all layout track objects (PositionablePoint,
  * TrackSegment, LayoutTurnout, LayoutSlip, LevelXing and LayoutTurntable)
  * <p>
- * This is the connectivity/topology information for the layout; the 
+ * This is the connectivity/topology information for the layout; the
  * display information, including screen geometry, is held in {@link LayoutTrackView} subclasses.
  * <ul>
  *   <li>One or more connections, consisting of a LayoutTrack name and {@link HitPointType}
@@ -49,12 +49,12 @@ abstract public class LayoutTrack {
      * Get the track ID.
      * @return track ident.
      */
-    @Nonnull 
+    @Nonnull
     final public String getId() {
         return ident;
     }
 
-    @Nonnull 
+    @Nonnull
     final public String getName() {
         return ident;
     }
@@ -64,9 +64,9 @@ abstract public class LayoutTrack {
     final protected void setIdent(@Nonnull String ident) {
         this.ident = ident;
     }
-    
+
     abstract public boolean isMainline();
- 
+
     /*
     * non-accessor methods
      */
@@ -218,6 +218,23 @@ abstract public class LayoutTrack {
      *                    block to selection" item)
      */
     abstract public void setAllLayoutBlocks(LayoutBlock layoutBlock);
+
+    /**
+     * navigate
+     *
+     * @param navInfo is the info we're navigating from
+     * @return the navigation info for where we are
+     *
+     * note: this is the base implementation;
+     * unimplemented methods in subclasses will fall thru to here and STOP
+     * You may also call super.navigate to stop intentionally.
+     */
+    public LENavigate navigate(@Nonnull LENavigate navInfo) {
+        LENavigate result = new LENavigate(navInfo);
+        result.setSpeed(0.0);
+        result.setDistance(0.0);
+        return result;
+    }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);
 }

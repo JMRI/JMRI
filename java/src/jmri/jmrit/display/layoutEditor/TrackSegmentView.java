@@ -2671,7 +2671,7 @@ public class TrackSegmentView extends LayoutTrackView {
     * @return the points to pass to MathUtil.drawBezier(...)
      */
     @Nonnull
-    private Point2D[] getBezierPoints() {
+    public Point2D[] getBezierPoints() {
         Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         int cnt = bezierControlPoints.size() + 2;

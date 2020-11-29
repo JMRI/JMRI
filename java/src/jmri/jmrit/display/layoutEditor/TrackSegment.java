@@ -2,12 +2,14 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.awt.geom.*;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
+import jmri.util.MathUtil;
 
 /**
  * TrackSegment is a segment of track on a layout linking two nodes of the
@@ -74,7 +76,6 @@ public class TrackSegment extends LayoutTrack {
 
         mainline = main;
     }
-
 
     // defined constants
     // operational instance variables (not saved between sessions)
@@ -262,12 +263,12 @@ public class TrackSegment extends LayoutTrack {
         type1 = type;
         connect1 = o;
     }
-    
+
     public void setConnect2(@CheckForNull LayoutTrack o, HitPointType type) {
         type2 = type;
         connect2 = o;
     }
-    
+
     /**
      * Set up a LayoutBlock for this Track Segment.
      *
@@ -588,7 +589,6 @@ public class TrackSegment extends LayoutTrack {
         log.info("reCheckBlockBoundary is temporary, but was invoked", new Exception("traceback"));
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -623,8 +623,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type1, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect2(), type2,
-                                        getConnect1(), type1 ) );
+                            getConnect2(), type2,
+                            getConnect1(), type1));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type1)) {
@@ -641,8 +641,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type1, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect2(), type2,
-                                        getConnect1(), type1 ) );
+                            getConnect2(), type2,
+                            getConnect1(), type1));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type1)) {
@@ -655,8 +655,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type1, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect2(), type2,
-                                        getConnect1(), type1 ) );
+                            getConnect2(), type2,
+                            getConnect1(), type1));
                     results.add(lc);
                 }
             }
@@ -683,8 +683,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lt, type2, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect1(), type1,
-                                        getConnect2(), type2 ) );
+                            getConnect1(), type1,
+                            getConnect2(), type2));
                     results.add(lc);
                 }
             } else if (HitPointType.isLevelXingHitType(type2)) {
@@ -701,8 +701,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, lx, type2, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect1(), type1,
-                                        getConnect2(), type2 ) );
+                            getConnect1(), type1,
+                            getConnect2(), type2));
                     results.add(lc);
                 }
             } else if (HitPointType.isSlipHitType(type2)) {
@@ -715,8 +715,8 @@ public class TrackSegment extends LayoutTrack {
                     lc = new LayoutConnectivity(lb1, lb2);
                     lc.setConnections(this, ls, type2, null);
                     lc.setDirection(models.computeDirection(
-                                        getConnect1(), type1,
-                                        getConnect2(), type2 ) );
+                            getConnect1(), type1,
+                            getConnect2(), type2));
                     results.add(lc);
                 }
             }
@@ -823,6 +823,93 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         setLayoutBlock(layoutBlock);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LENavigate navigate(@Nonnull LENavigate navInfo) {
+        LENavigate result = new LENavigate(navInfo);
+
+        TrackSegmentView tsv = models.getTrackSegmentView(this);
+
+        if (tsv.isArc()) {
+            tsv.calculateTrackSegmentAngle();
+            //g2.draw(new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN));
+        } else if (tsv.isBezier()) {
+            Point2D[] points = tsv.getBezierPoints();
+            double bezierLength = MathUtil.drawBezier(null, points);
+
+            if (bezierLength > result.getDistance()) {
+                GeneralPath path = MathUtil.getBezierPath(points);
+                PathIterator i = path.getPathIterator(null);
+                float[] data = new float[6];
+
+                Point2D p1 = MathUtil.zeroPoint2D, p2;
+
+                while (!i.isDone()) {
+                    switch (i.currentSegment(data)) {
+                        case PathIterator.SEG_MOVETO:
+                            p1 = new Point2D.Double(data[0], data[1]);
+                            break;
+
+                        case PathIterator.SEG_LINETO:
+                            p2 = new Point2D.Double(data[0], data[1]);
+                            double distance = MathUtil.distance(p1, p2);
+                            if (distance >= result.getDistance()) {
+
+                            }
+
+                            p1 = p2;
+                            break;
+
+                        case PathIterator.SEG_QUADTO:
+//                        out.writeInt(PathIterator.SEG_QUADTO);
+//                        out.writeFloat(data[0]);
+//                        out.writeFloat(data[1]);
+//                        out.writeFloat(data[2]);
+//                        out.writeFloat(data[3]);
+                            break;
+
+                        case PathIterator.SEG_CUBICTO:
+//                        out.writeInt(PathIterator.SEG_CUBICTO);
+//                        out.writeFloat(data[0]);
+//                        out.writeFloat(data[1]);
+//                        out.writeFloat(data[2]);
+//                        out.writeFloat(data[3]);
+//                        out.writeFloat(data[4]);
+//                        out.writeFloat(data[5]);
+                            break;
+
+                        case PathIterator.SEG_CLOSE:
+//                        out.writeInt(PathIterator.SEG_CLOSE);
+                            break;
+
+                        default:
+                            log.error("Unknown path segment type: {}.", i.currentSegment(data));
+                    }
+
+                    i.next();
+                }
+            } else {
+                // it's not in this bezier
+            }
+        } else {
+            Point2D end1 = models.getCoords(
+                    getConnect1(),
+                    getType1());
+            Point2D end2 = models.getCoords(
+                    getConnect2(),
+                    getType2());
+
+            //g2.draw(new Line2D.Double(end1, end2));
+            result = super.navigate(navInfo);   // call super to STOP
+        }
+
+        result.setLastTrack(this);
+
+        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
