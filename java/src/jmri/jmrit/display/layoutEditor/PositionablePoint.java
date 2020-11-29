@@ -1248,63 +1248,60 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public LENavigate navigate(@Nonnull LENavigate navInfo) {
-        LENavigate result = new LENavigate(navInfo);
+    public void navigate(@Nonnull LENavigator navigator) {
         switch (type) {
             case ANCHOR: {
-                if (navInfo.getLastTrack() == null) {
-                    result.setLastTrack(getConnect1());
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLastTrack(getConnect1());
                 }
-                if (getConnect1().equals(navInfo.getLastTrack())) {
-                    result.setLayoutTrack(getConnect2());
-                    result.setHitPointType(HitPointType.POS_POINT);
-                } else if (getConnect2().equals(navInfo.getLastTrack())) {
-                    result.setLayoutTrack(getConnect1());
-                    result.setHitPointType(HitPointType.POS_POINT);
+                if (getConnect1().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect2());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                } else if (getConnect2().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
                 } else {
-                    result = super.navigate(navInfo);   // call super to STOP
+                    super.navigate(navigator);   // call super to STOP
                     break;
                 }
-                result.setLastTrack(this);
+                navigator.setLastTrack(this);
                 break;
             }
             default:
             case END_BUMPER: {
-                if (navInfo.getLastTrack() == null) {
-                    result.setLayoutTrack(getConnect1());
-                    result.setHitPointType(HitPointType.POS_POINT);
-                    result.setLastTrack(this);
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                    navigator.setLastTrack(this);
                 } else {
-                    result = super.navigate(navInfo);   // call super to STOP
+                    super.navigate(navigator);   // call super to STOP
                 }
                 break;
             }
             case EDGE_CONNECTOR: {
-                if (navInfo.getLastTrack() == null) {
-                    result.setLastTrack(getConnect1());
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLastTrack(getConnect1());
                 }
-                if (getConnect1().equals(navInfo.getLastTrack())) {
+                if (getConnect1().equals(navigator.getLastTrack())) {
                     TrackSegment c2 = getConnect2();
                     if (c2 != null) {
-                        result.setLayoutEditor(getLinkedEditor());
-                        result.setLayoutTrack(c2);
-                        result.setHitPointType(HitPointType.POS_POINT);
+                        navigator.setLayoutEditor(getLinkedEditor());
+                        navigator.setLayoutTrack(c2);
+                        navigator.setHitPointType(HitPointType.POS_POINT);
                     } else {
-                        result = super.navigate(navInfo);   // call super to STOP
+                        super.navigate(navigator);   // call super to STOP
                     }
-                } else if (getConnect2().equals(navInfo.getLastTrack())) {
-                    result.setLayoutTrack(getConnect1());
-                    result.setHitPointType(HitPointType.POS_POINT);
+                } else if (getConnect2().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
                 } else {
-                    result = super.navigate(navInfo);   // call super to STOP
+                    super.navigate(navigator);   // call super to STOP
                     break;
                 }
-                result.setLastTrack(this);
-
+                navigator.setLastTrack(this);
                 break;
             }
         }
-        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);

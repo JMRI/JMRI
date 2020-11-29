@@ -2168,7 +2168,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(end1, end2));
             }
         }
-    }
+    }   // draw1
 
     /**
      * {@inheritDoc}

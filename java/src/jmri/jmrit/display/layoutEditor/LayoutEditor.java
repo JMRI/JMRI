@@ -21,6 +21,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.Timer;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -223,7 +224,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Nonnull
-    public List<PositionableLabel> getLabelImageList()  {
+    public List<PositionableLabel> getLabelImageList() {
         return labelImage;
     }
 
@@ -8644,6 +8645,73 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             result = true;
         }
         return result;
+    }
+
+    private List<LENavigator> navigators = new ArrayList<>();
+    private Timer navTimer = null;
+
+    private long navStartTime = System.currentTimeMillis();
+
+    public List<LENavigator> getNavigators() {
+        return navigators;
+    }
+
+    private void setNavStartTime(long navStartTime) {
+        this.navStartTime = navStartTime;
+    }
+
+    public void addNavigator(@Nonnull LENavigator newNavigator) {
+        if (navTimer == null) {
+            setNavStartTime(System.currentTimeMillis());
+            ActionListener timerActions = (ActionEvent ae) -> {
+                long nowTime = System.currentTimeMillis();
+                long deltaTime = nowTime - navStartTime;
+                for (LENavigator navigator : navigators) {
+                    if (navigator.getSpeed() >= 1.0) {
+                        navigator.setDistance(navigator.getDistance() + (navigator.getSpeed() * deltaTime / 1000.0));
+                        if (navigator.getDistance() > 0.0) {
+                            navigator.navigate();
+                            Point2D w = navigator.getLocation();
+                            repaint();
+                            //repaint(0, (int) w.getX(), (int) w.getY(), 20, 20);
+                        }
+                    }
+                }
+                setNavStartTime(nowTime);
+            };
+            navTimer = new Timer(1000, timerActions);   //TODO: change to 250 milliseconds
+        }
+        newNavigator.setName(getUniqueNavName());
+        navigators.add(newNavigator);
+        if (!navTimer.isRunning()) {
+            log.error("Navigation timer starting");
+            setNavStartTime(System.currentTimeMillis());
+            navTimer.start();
+        }
+    }
+
+    public void removeNavigator(@Nonnull LENavigator navigator) {
+        navigators.remove(navigator);
+        if (navigators.isEmpty()) {
+            log.error("Navigation timer stoping");
+            navTimer.stop();
+        }
+    }
+
+    public String getUniqueNavName() {
+        for (int idx = 0; true; idx++) {
+            boolean found = false;
+            String name = String.format("Nav #%d", idx);
+            for (LENavigator navigator : navigators) {
+                if (name.equals(navigator.getName())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                return name;
+            }
+        }
     }
 
     // initialize logging
