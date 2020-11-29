@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.soundloader;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

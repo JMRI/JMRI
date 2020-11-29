@@ -16,11 +16,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<h1>Structure Mat&#233;riel: Noms syst&#232;me CTI Acela </h1>
+<h1>Structure Mat&#233;riel: Noms syst&#232;me CTI Acela</h1>
 <p>
 Les entr&#233;es individuelles (Capteurs) et Sorties (Aiguillages et Lumi&#232;res)
 dans JMRI sont accessibles via des noms.
@@ -66,7 +68,6 @@ bouton "Enregistrer" sur la
 
 <p>Bien que le r&#233;seau CTI Acela utilise des adresses absolue, il a un espace d'adressage s&#233;par&#233; pour toutes les entr&#233;es et un espace d'adressage s&#233;par&#233; pour toutes le sorties. En ce qui concerne les Entr&#233;es, JMRI prend en charge CTI
 <a href="../../tools/Sensors.shtml">Capteurs</a>.</p>
-<p>
 
 <h3>Capteurs</h3>
 <p>
@@ -144,14 +145,14 @@ Les Lumi&#232;res peuvent &#234;tre configur&#233;s avec l'outil de
 <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configuration des n&#339;uds</a>
 . Si vous configurez vos Lumi&#232;res (sorties), n'oubliez pas de les enregistrer avec le
 Bouton "Enregistrer" sur la
-<a fen&#234;tre href="../../../package/apps/TabbedPreferences.shtml"> fen&#234;tre Pr&#233;f&#233;rences</a>
+<a href="../../../package/apps/TabbedPreferences.shtml">fen&#234;tre Pr&#233;f&#233;rences</a>
 (sous "&#201;dition" dans le menu principal).
 
-<H2>Limitations</h2>
+<h2>Limitations</h2>
 
-<UL>
-<LI> CTI prend en charge un grand espace d'adressage pour les entr&#233;es et les sorties. JMRI limite actuellement cela &#224; 1024 entr&#233;es et 1024 sorties (&#233;quivalent &#224; 64 modules Sentry et 64 modules YardMaster). JMRI a actuellement ceci cod&#233; en dur - mais c'est juste une question de priorit&#233;s de d&#233;veloppeur .
-</UL>
+<ul>
+<li> CTI prend en charge un grand espace d'adressage pour les entr&#233;es et les sorties. JMRI limite actuellement cela &#224; 1024 entr&#233;es et 1024 sorties (&#233;quivalent &#224; 64 modules Sentry et 64 modules YardMaster). JMRI a actuellement ceci cod&#233; en dur - mais c'est juste une question de priorit&#233;s de d&#233;veloppeur .
+</ul>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>Aide JMRI</h3>
@@ -161,7 +162,7 @@ Bouton "Enregistrer" sur la
 <p>Des informations compl&#233;mentaires sur le mat&#233;riel  peuvent &#234;tre trouv&#233;es sur le 
 <a href="http://www.cti-electronics.com/app_sw.htm">Site web CTI</a>.</p>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

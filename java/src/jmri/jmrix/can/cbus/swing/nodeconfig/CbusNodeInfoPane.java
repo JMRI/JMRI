@@ -3,19 +3,18 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.swing.BorderFactory;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
+import jmri.jmrix.can.cbus.node.CbusNodeParameterManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,187 +23,271 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2018
  */
-public class CbusNodeInfoPane extends JPanel {
+public class CbusNodeInfoPane extends CbusNodeConfigTab {
     
-    private JScrollPane infoPane;
     private JButton nodesupportlinkbutton;
     private URI supportlink;
+    private JLabel header;
+    private JPanel menuPane;
+    protected JTextArea textArea;
+    private CbusNodeParameterManager paramMgr;
+    private JScrollPane textAreaPanel;
+    
+    private JPanel paneToDisplay;
 
     /**
-     * Create a new instance of CbusEventHighlightPanel.
+     * Create a new instance of CbusNodeInfoPane.
+     * @param main the NodeConfigToolPane this is a component of
      */
-    public CbusNodeInfoPane() {
-        super();
-        
-        nodesupportlinkbutton = new JButton();
-        nodesupportlinkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openUri(supportlink);
-            }
+    public CbusNodeInfoPane(NodeConfigToolPane main) {
+        super(main);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+            paramsHaveUpdated();
         });
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTitle(){
+        return "Node Info";
+    }
+    
+    /**
+     * Initialise the pane for a particular CbusNode ( or CbusBackupNode )
+     * @param node the node to display info for
+     */
+    @Override
+    public void changedNode(CbusNode node) {
+        if (paneToDisplay==null) {
+            paneToDisplay = newInfoPane();
+            add(paneToDisplay);
+        }
+        paramMgr = node.getNodeParamManager();
+        paramsHaveUpdated();
+        validate();
+        repaint();
         
     }
-
-    public void initComponents(CbusNode node) {
+    
+    private JPanel newInfoPane(){
+    
+        JPanel newPane = new JPanel();
+        newPane.setLayout(new BorderLayout() );
         
-        if ( node == null ){
-            
-            this.setVisible(false);
-            
-            return;
+        nodesupportlinkbutton = new JButton("");
+        nodesupportlinkbutton.addActionListener((ActionEvent e) -> {
+            openUri(supportlink);
+        });
+        
+        textArea = new JTextArea();
+        textArea.setEditable(false);
+        textArea.setMargin( new java.awt.Insets(10,10,10,10) );
+        textAreaPanel = new JScrollPane(textArea);
+        
+        header = new JLabel("");
+        menuPane = new JPanel();
+        menuPane.add(header);
+        menuPane.add(nodesupportlinkbutton);
+        
+        newPane.add(menuPane, BorderLayout.PAGE_START);
+        newPane.add(textAreaPanel, BorderLayout.CENTER);
+        newPane.validate();
+        newPane.repaint();
+        
+        return newPane;
+    }
+    
+    private void appendIfKnown( StringBuilder sb, int paramToCheck, String label ){
+        
+        // log.info("returning param index {} val {}",paramToCheck,paramMgr.getParameter(paramToCheck));
+        
+        if (paramMgr.getParameter(paramToCheck) > -1) {
+                appendRaw(sb,String.valueOf(paramMgr.getParameter(paramToCheck)),label);
         }
+    }
+    
+    private void appendRaw( StringBuilder sb, Object value, String label ){
+        sb.append (label).append (" : ").append (value).append(System.getProperty("line.separator"));
+    }
+    
+    private void setHeaderText() {
+        StringBuilder buildheader = new StringBuilder();
+        buildheader.append("<html><h3>");
+        buildheader.append(CbusNodeConstants.getManu(paramMgr.getParameter(1)));
+        buildheader.append(" ");
+        buildheader.append(nodeOfInterest.getNodeStats().getNodeTypeName());
+        buildheader.append("</h3></html>");
+        header.setText(buildheader.toString());
+    }
+    
+    /**
+     * Recalculates pane following notification from CbusNode that parameters have changed
+     */
+    private void paramsHaveUpdated() {
         
-        // Pane to hold Node
-        JPanel evPane = new JPanel();
-        evPane.setLayout(new BoxLayout(evPane, BoxLayout.Y_AXIS));
-
-        nodesupportlinkbutton.setVisible(false);
-
-        JLabel contentTwo;
-        StringBuilder nodepropbuilder;
-        StringBuilder nodePartTwobuilder = new StringBuilder();
+        updateSupportButton();
+                
+        setHeaderText();
         
-        CbusNode nodeOfInterest = node;
+        StringBuilder textAreaString = new StringBuilder();
         
-
-        JLabel header = new JLabel("<html><h2>" 
-            + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) 
-            + " " 
-            + nodeOfInterest.getNodeTypeName()
-            + "</h2></html>");
+        appendRaw(textAreaString,nodeOfInterest.getNodeNumber(),Bundle.getMessage("NodeNumberTitle"));
         
-        nodepropbuilder = new StringBuilder();
-        nodepropbuilder.append("<html>" );
+        appendNodeTypeInfo(textAreaString);
         
-        nodepropbuilder.append ("<p>");
-        nodepropbuilder.append( CbusNodeConstants.getModuleTypeExtra(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3)));
-        nodepropbuilder.append ("</p>");
+        appendIfKnown(textAreaString, 6, Bundle.getMessage("NodeVariables"));
         
-        nodepropbuilder.append("<p> Node Number : " );
-        nodepropbuilder.append( nodeOfInterest.getNodeNumber() );
-        nodepropbuilder.append("</p> " );
+        appendIfKnown(textAreaString, 0, "Parameters");
         
-        // part 2
-        nodePartTwobuilder.append("<html>" );
-        
-        if ((nodeOfInterest.getParameter(2)>0) && (nodeOfInterest.getParameter(7)>0)) {
-        
-            nodePartTwobuilder.append ("<p>");
-            nodePartTwobuilder.append (Bundle.getMessage("FirmwareVer"));
-            nodePartTwobuilder.append (nodeOfInterest.getParameter(7));
-            int converttochar = nodeOfInterest.getParameter(2);
-            nodePartTwobuilder.append(Character.toString((char) converttochar));
-            
-            if ((nodeOfInterest.getParameter(0)>19) && (nodeOfInterest.getParameter(20)>0) ){
-                nodePartTwobuilder.append (" "); 
-                nodePartTwobuilder.append (Bundle.getMessage("FWBeta")); 
-                nodePartTwobuilder.append (nodeOfInterest.getParameter(20));
-            }
-            nodePartTwobuilder.append ("</p>");
-        }
-
-        if (nodeOfInterest.getParameter(6)>0) {
-            nodePartTwobuilder.append ("<p>Total Node Variables: ");
-            nodePartTwobuilder.append ( nodeOfInterest.getParameter(6) );
-            nodePartTwobuilder.append ("</p>");
-        }            
-        
-        if (nodeOfInterest.getParameter(0) > -1) {
-            nodePartTwobuilder.append ("<p> Total Node Parameters : " );
-            nodePartTwobuilder.append ( nodeOfInterest.getParameter(0) );
-            nodePartTwobuilder.append ("</p>");
-            nodePartTwobuilder.append ("<p> </p>");
-        }
-        
-        nodePartTwobuilder.append ("<p>Current Node Data Bytes: ");
-        nodePartTwobuilder.append ( Math.max(0,nodeOfInterest.totalNodeBytes()) );
-        nodePartTwobuilder.append ("</p>");
-        
-        if ( nodeOfInterest.getTotalNodeEvents()> -1 ) {
-            nodePartTwobuilder.append ("<p> Current Events: ");
-            nodePartTwobuilder.append ( nodeOfInterest.getTotalNodeEvents() );
-            nodePartTwobuilder.append ("</p>");
+        if ( nodeOfInterest.getNodeEventManager().getTotalNodeEvents()> -1 ) {
+            appendRaw(textAreaString,nodeOfInterest.getNodeEventManager()
+                .getTotalNodeEvents(), "Current Events");
         }
 
-        if (nodeOfInterest.getParameter(4)>0) {
-            nodePartTwobuilder.append ("<p> Max Events: ");
-            nodePartTwobuilder.append (nodeOfInterest.getParameter(4));
-            nodePartTwobuilder.append ("</p>");
+        appendIfKnown(textAreaString, 4, "Max Events");
+        appendIfKnown(textAreaString, 5, "Max Event Variables per Event");
         
-        }            
-        
-        if (nodeOfInterest.getParameter(5)>0) {
-            nodePartTwobuilder.append ("<p>Event Variables per event: ");
-            nodePartTwobuilder.append (nodeOfInterest.getParameter(5));
-            nodePartTwobuilder.append ("</p>");
+        if ((paramMgr.getParameter(0)>9) && (paramMgr.getParameter(10)>0)) {           
+            textAreaString.append (CbusNodeConstants.getBusType(paramMgr.getParameter(10)));
+            textAreaString.append (" ");
+            textAreaString.append (Bundle.getMessage("BusType"));
+            textAreaString.append(System.getProperty("line.separator"));
         }
         
-        if ((nodeOfInterest.getParameter(0)>9) && (nodeOfInterest.getParameter(10)>0)) {
-            nodePartTwobuilder.append ("<p>");             
-            nodePartTwobuilder.append (CbusNodeConstants.getBusType(nodeOfInterest.getParameter(10)));
-            nodePartTwobuilder.append (" ");
-            nodePartTwobuilder.append (Bundle.getMessage("BusType"));
-            nodePartTwobuilder.append ("</p><p></p>");
-        }
+        appendRaw(textAreaString, Math.max(0,nodeOfInterest.getNodeStats()
+            .totalNodeBytes()), "Current Node Data Bytes");
         
+        addBackupInfo(textAreaString);
         
-        if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {
-            nodePartTwobuilder.append ("<p>Sends WRACK Following NV Set : ");             
-            nodePartTwobuilder.append ( nodeOfInterest.getsendsWRACKonNVSET() );
-            nodePartTwobuilder.append ("</p><p></p>");
-        }
+        appendRaw(textAreaString, nodeOfInterest.getsendsWRACKonNVSET(), "Sends WRACK Following NV Set");
+        
+        appendAllParams(textAreaString);
+        
         //   nodePartTwobuilder.append ("<p> Is Bootable Y / N</p>");
         //   nodePartTwobuilder.append ("<p> Processor : </p>");
-        
         //   nodePartTwobuilder.append ("<p> Flags </p>");
         
-        nodePartTwobuilder.append("</html>" );
+        if ( !(textArea.getText().equals(textAreaString.toString()) )) {
+            textArea.setText(textAreaString.toString());
+            textArea.setCaretPosition(0);
+        }
+    }
+    
+    private void appendNodeTypeInfo(StringBuilder sb) {
+    
+        if (paramMgr.getParameter(1) > -1 && 
+            paramMgr.getParameter(3) > -1 ) {
         
-        JLabel content = new JLabel(nodepropbuilder.toString());
-        contentTwo = new JLabel(nodePartTwobuilder.toString());
+            sb.append(Bundle.getMessage("ManufacturerType",
+                paramMgr.getParameter(1),
+                CbusNodeConstants.getManu(paramMgr.getParameter(1)),
+                paramMgr.getParameter(3)));
+                
+            sb.append(System.getProperty("line.separator"));
         
-        nodesupportlinkbutton.setToolTipText("<html>" + CbusNodeConstants.getManu(nodeOfInterest.getParameter(1)) + 
-        " " + CbusNodeConstants.getModuleType(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3)) + 
-        " " + Bundle.getMessage("Support") + "</html>");
+        }
         
-        String supportLinkStr = CbusNodeConstants.getModuleSupportLink(nodeOfInterest.getParameter(1),nodeOfInterest.getParameter(3));
+        if (!nodeOfInterest.getNodeStats().getNodeTypeName().isEmpty()){
+            sb.append(Bundle.getMessage("IdentifiesAs",
+                nodeOfInterest.getNodeStats().getNodeTypeName(),
+                CbusNodeConstants.getModuleTypeExtra(
+                    paramMgr.getParameter(1),
+                    paramMgr.getParameter(3)))
+            );
+            sb.append(System.getProperty("line.separator"));
+        }
+        
+        appendFirmware(sb);
+        
+    }
+    
+    private void appendFirmware(StringBuilder sb) {
+    
+        if ((paramMgr.getParameter(2)>0) && 
+            (paramMgr.getParameter(7)>0)) {
+            sb.append (Bundle.getMessage("FirmwareVer",
+                paramMgr.getParameter(7),
+                Character.toString((char) paramMgr.getParameter(2))));
+            
+            if ((paramMgr.getParameter(0)>19) && (paramMgr.getParameter(20)>0) ){
+                sb.append (Bundle.getMessage("FWBeta")); 
+                sb.append (paramMgr.getParameter(20));
+            }
+            sb.append(System.getProperty("line.separator"));
+        }
+    }
+    
+    
+    private void addBackupInfo(StringBuilder sb) {
+        
+        sb.append(System.getProperty("line.separator"));
+        
+        appendRaw(sb, nodeOfInterest.getNodeBackupManager()
+            .getBackups().size(), "Entries in Node xml file");
+        
+        appendRaw(sb, nodeOfInterest.getNodeBackupManager()
+            .getNumCompleteBackups(), "Num Backups in Node xml file");
+        
+        if( nodeOfInterest.getNodeBackupManager().getNumCompleteBackups()>0 ) {
+        appendRaw(sb, nodeOfInterest.getNodeBackupManager().getFirstBackupTime(), "First entry");
+        appendRaw(sb, nodeOfInterest.getNodeBackupManager().getLastBackupTime(), "Last entry");
+        }
+    }
+    
+    private void appendAllParams(StringBuilder sb) {
+        
+        if (!paramMgr.getParameterHexString().isEmpty()) {
+            sb.append(System.getProperty("line.separator"));
+            sb.append ("Parameter Hex String : ");
+            sb.append (paramMgr.getParameterHexString());
+            sb.append(System.getProperty("line.separator"));
+        }
+        
+        
+        sb.append(System.getProperty("line.separator"));
+        for (int i = 1; i <= paramMgr.getParameter(0); i++) {
+            if ( paramMgr.getParameter(i) > -1 ) {
+                sb.append ("Parameter ");
+                sb.append (i);
+                sb.append (" : ");
+                sb.append ( paramMgr.getParameter(i) );
+                sb.append (" (dec)");
+                sb.append(System.getProperty("line.separator"));
+            }
+        }
+    }
+    
+    private void updateSupportButton() {
+    
+        String supportLinkStr = CbusNodeConstants.getModuleSupportLink(paramMgr.getParameter(1),paramMgr.getParameter(3));
         
         if ( !supportLinkStr.isEmpty() ) {
             nodesupportlinkbutton.setText(supportLinkStr);
+
+            nodesupportlinkbutton.setToolTipText("<html>" + CbusNodeConstants.getManu(paramMgr.getParameter(1)) + 
+                " " + CbusNodeConstants.getModuleType(paramMgr.getParameter(1),paramMgr.getParameter(3)) + 
+                " " + Bundle.getMessage("Support") + "</html>");            
+
             try {
                 supportlink=new URI(supportLinkStr);
                 nodesupportlinkbutton.setVisible(true);
+                return;
             } 
             catch (URISyntaxException ex) {
-                log.warn("Unable to create support link URI for module type {} {}", nodeOfInterest.getParameter(3), ex);
+                log.warn("Unable to create support link URI for module type {} {}", paramMgr.getParameter(3), ex);
             }
             
-        } else {
-            nodesupportlinkbutton.setVisible(false);
-        }
-        
-        evPane.add(header);
-        evPane.add(content);
-        evPane.add(contentTwo);
-        evPane.add(nodesupportlinkbutton);
-        
-        evPane.setBorder(new EmptyBorder(0, 100, 20, 100));
-        
-        if (infoPane != null ){ 
-            infoPane.setVisible(false);
-        }
-        infoPane = null;
-        infoPane = new JScrollPane(evPane);
-        
-        setLayout(new BorderLayout() );
-        
-        
-        this.add(infoPane);
-        
-        validate();
-        repaint();
-        this.setVisible(true);
+        } 
+        nodesupportlinkbutton.setVisible(false);
         
     }
     

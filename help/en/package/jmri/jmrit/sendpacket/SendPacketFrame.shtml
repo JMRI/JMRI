@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 
 <html lang="en">
 <head>
@@ -13,24 +12,23 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Send DCC Packet">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Send DCC Packet</h1>This is the
-      help/jmri/jmrit/sendpacket/SendPacketFrame help page 
-      <!--#include virtual="/Footer" -->
+      help/jmri/jmrit/sendpacket/SendPacketFrame help page
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

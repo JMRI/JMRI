@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
 
-    private static final Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintMoreOptionPanel.class);
 
     // labels
     // major buttons

@@ -5,15 +5,14 @@ import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the SE8cSignalHead implementation
  *
- * @author	Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009
  * updated to JUnit4 2016
  */
 public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
@@ -27,10 +26,10 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Assert.assertEquals("to high before", Turnout.UNKNOWN, it12.getCommandedState());
 
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12));
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12));
 
-        Assert.assertEquals("system name", "IH:SE8C:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
 
         Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
         Assert.assertEquals("to high", Turnout.CLOSED, it12.getCommandedState());  // dark
@@ -41,12 +40,12 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
 
-        Assert.assertEquals("system name", "IH:SE8C:\"11\";\"12\"", s.getSystemName());
+        Assert.assertEquals("system name", "IH:SE8c:\"11\";\"12\"", s.getSystemName());
         Assert.assertEquals("user name", "user name", s.getUserName());
 
         Assert.assertEquals("to low", Turnout.UNKNOWN, it11.getCommandedState());
@@ -75,8 +74,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
 
@@ -92,8 +91,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
 
@@ -109,8 +108,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
 
@@ -126,8 +125,8 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         SE8cSignalHead s = new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
 
@@ -145,20 +144,20 @@ public class SE8cSignalHeadTest extends AbstractSignalHeadTestBase {
         Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
         Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
         return new SE8cSignalHead(
-                new NamedBeanHandle<Turnout>("11", it11),
-                new NamedBeanHandle<Turnout>("12", it12),
+                new NamedBeanHandle<>("11", it11),
+                new NamedBeanHandle<>("12", it12),
                 "user name"
         );
     }
 
     // The minimal setup for log4J/JUnit4
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

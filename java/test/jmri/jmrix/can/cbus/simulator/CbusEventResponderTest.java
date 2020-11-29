@@ -5,10 +5,9 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -42,7 +41,6 @@ public class CbusEventResponderTest {
         
         t.dispose();
         Assert.assertTrue("0 listeners",tc.numListeners()==0);
-        t = null;
 
     }
     
@@ -121,7 +119,6 @@ public class CbusEventResponderTest {
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "reply didn't arrive");
         Assert.assertTrue("long message sent",tc.inbound.elementAt(tc.inbound.size() - 1).toString().contains("17 00 DE 00"));
         
-        m = null;
         t.dispose();
         
     }
@@ -178,16 +175,46 @@ public class CbusEventResponderTest {
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>3); }, "reply didn't arrive");
         Assert.assertEquals("Event on response", "[5f8] 93 17 00 DE 11",tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
-        m = null;
         t.dispose();
     
+    }
+    
+    @Test
+    public void testShortResponses(){
+    
+        CbusEventResponder t = new CbusEventResponder(memo);
+        t.setMode(2); // odd / even
+        
+        CanMessage m = new CanMessage(120);
+        m.setNumDataElements(5);
+        m.setElement(0, 0x9A); // short request opc
+        m.setElement(1, 0x00);
+        m.setElement(2, 0x00);
+        m.setElement(3, 0xde);
+        m.setElement(4, 0xab); // even
+        t.message(m);
+        
+        JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "reply didn't arrive");
+        Assert.assertEquals("Short Event even response", "[5f8] 9D 00 00 DE AB",tc.inbound.elementAt(tc.inbound.size() - 1).toString());
+        
+        Assert.assertEquals("just 1 reply", 1,(tc.inbound.size()));
+        
+        m.setElement(4, 0xac); // even
+        t.message(m);
+        
+        JUnitUtil.waitFor(()->{ return(tc.inbound.size()>1); }, "reply 2 didn't arrive");
+        Assert.assertEquals("Short Event even response", "[5f8] 9E 00 00 DE AC",tc.inbound.elementAt(tc.inbound.size() - 1).toString());
+        
+        Assert.assertEquals("2 replies", 2,(tc.inbound.size()));
+        
+        t.dispose();
+        
     }
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tc;
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
@@ -196,12 +223,15 @@ public class CbusEventResponderTest {
         memo.setTrafficController(tc);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         
+        tc.terminateThreads();
+        memo.dispose();
         tc = null;
         memo = null;
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);

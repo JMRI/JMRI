@@ -3,7 +3,10 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
@@ -17,10 +20,11 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleSensorServer extends AbstractSensorServer {
 
+    private static final String SENSOR = "SENSOR ";
     private DataOutputStream output;
     private JmriConnection connection;
 
-    public SimpleSensorServer(JmriConnection connection) {
+    public SimpleSensorServer(JmriConnection connection){
         super();
         this.connection = connection;
     }
@@ -39,11 +43,11 @@ public class SimpleSensorServer extends AbstractSensorServer {
         addSensorToList(sensorName);
 
         if (Status == Sensor.INACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " INACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " INACTIVE\n");
         } else if (Status == Sensor.ACTIVE) {
-            this.sendMessage("SENSOR " + sensorName + " ACTIVE\n");
+            this.sendMessage(SENSOR + sensorName + " ACTIVE\n");
         } else {
-            this.sendMessage("SENSOR " + sensorName + " UNKNOWN\n");
+            this.sendMessage(SENSOR + sensorName + " UNKNOWN\n");
         }
     }
 
@@ -55,28 +59,32 @@ public class SimpleSensorServer extends AbstractSensorServer {
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         int index;
-        index = statusString.indexOf(" ") + 1;
+        index = statusString.indexOf(' ') + 1;
         if (statusString.contains("INACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor INACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(' ' , index + 1)));
+            setSensorInactive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else if (statusString.contains("ACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor ACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
-            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            initSensor(statusString.substring(index, statusString.indexOf(' ', index + 1)));
+            setSensorActive(statusString.substring(index, statusString.indexOf(' ', index + 1)));
         } else {
             // default case, return status for this sensor/
-            String sensorName = statusString.substring(index,statusString.length()-1).toUpperCase(); // remove the \n
+            String sensorName = statusString.substring(index);
+            if(sensorName.contains("\n")){
+                // remove anything following the newline
+                sensorName = sensorName.substring(0,sensorName.indexOf('\n'));
+            }
             if( sensorName.contains(" ") ){
                 // remove anything following the space.
-                sensorName = sensorName.substring(0,sensorName.indexOf(" "));
+                sensorName = sensorName.substring(0,sensorName.indexOf(' '));
             }
             try {
-                Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName);
                 sendStatus(sensorName, sensor.getKnownState());
             } catch (IllegalArgumentException ex) {
                 log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
@@ -91,5 +99,5 @@ public class SimpleSensorServer extends AbstractSensorServer {
             this.connection.sendMessage(message);
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleSensorServer.class);
 }

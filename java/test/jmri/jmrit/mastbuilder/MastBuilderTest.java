@@ -1,19 +1,19 @@
 package jmri.jmrit.mastbuilder;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the jmrit.mastbuilder package and jmrit.mastbuilder.MastBuilder
  * class.
  * Note MastBuilder for now is only a demo.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class MastBuilderTest {
 
@@ -25,14 +25,13 @@ public class MastBuilderTest {
         JUnitUtil.dispose(p);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

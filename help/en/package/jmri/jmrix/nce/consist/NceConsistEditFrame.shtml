@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Edit NCE Consist</h1>This tool allows you to review,
       edit, and save NCE style consists. It also allows you to
       backup and restore all the NCE command station consists to
@@ -226,7 +227,7 @@
         been modified. If a loco has been added, the direction of
         the loco isn't known. And if a loco has been deleted from
         the consist, the editor wants you to know!</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -4,20 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +14,9 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.routes.tools.PrintRouteAction;
+import jmri.jmrit.operations.routes.tools.RouteCopyAction;
+import jmri.jmrit.operations.routes.tools.SetTrainIconRouteAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -220,11 +210,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     
     private void loadToolMenu() {
         toolMenu.removeAll();
-        toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), _route));
-        toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"), _route));
+        toolMenu.add(new RouteCopyAction(_route));
+        toolMenu.add(new SetTrainIconRouteAction(_route));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
-        toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
+        toolMenu.add(new PrintRouteAction(false, _route));
+        toolMenu.add(new PrintRouteAction(true, _route));
     }
 
     // Save, Delete, Add
@@ -363,7 +353,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
      * @return true if name is length is okay
      */
     private boolean checkName(String s) {
-        if (routeNameTextField.getText().trim().equals("")) {
+        if (routeNameTextField.getText().trim().isEmpty()) {
             log.debug("Must enter a name for the route");
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotRoute"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
@@ -379,7 +369,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     private void reportRouteExists(String s) {
-        log.info("Can not " + s + ", route already exists");
+        log.info("Can not {}, route already exists", s);
         JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"), MessageFormat.format(Bundle
                 .getMessage("CanNotRoute"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
     }

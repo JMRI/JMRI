@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import jmri.CommandStation;
 import jmri.jmrix.AbstractMRListener;
@@ -163,6 +162,8 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * As we have to poll the tams system to get updates we put request into a
      * queue and allow the abstrct traffic controller to handle them when it
      * is free.
+     * @param mm marklin message to add.
+     * @param ml marklin listener.
      */
     public void addPollMessage(MarklinMessage mm, MarklinListener ml) {
         mm.setTimeout(500);
@@ -178,6 +179,8 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     /**
      * Removes a message that is used for polling from the queue.
+     * @param mm marklin message to remove.
+     * @param ml marklin listener.
      */
     public void removePollMessage(MarklinMessage mm, MarklinListener ml) {
         for (PollMessage pm : pollQueue) {

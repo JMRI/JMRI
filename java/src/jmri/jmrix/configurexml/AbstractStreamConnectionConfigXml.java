@@ -38,7 +38,7 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
      * @return the stream port adapter
      */
     protected AbstractStreamPortController getAdapter() {
-        log.debug("getAdapter({})");
+        log.debug("getAdapter()");
         return adapter;
     }
 
@@ -48,7 +48,7 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
      * @return the stream port adapter
      */
     public AbstractStreamPortController getStreamAdapter() {
-        log.debug("getStreamAdapter({})");
+        log.debug("getStreamAdapter()");
         return adapter;
     }
 

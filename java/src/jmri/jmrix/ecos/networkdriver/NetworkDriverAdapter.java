@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2008
  */
-public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter {
+public class NetworkDriverAdapter extends EcosPortController {
 
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
@@ -42,15 +42,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     @Override
     public boolean status() {
         return opened;
-    }
-
-    protected void closeConnection() {
-        try {
-            socketConn.close();
-        } catch (IOException e) {
-            log.trace("Unable to close socket", e);
-        }
-        opened = false;
     }
 
     @Override

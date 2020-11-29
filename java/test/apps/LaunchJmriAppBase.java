@@ -5,19 +5,15 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
-import org.junit.rules.Timeout;
+import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
-import jmri.managers.DefaultShutDownManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.junit.rules.RetryRule;
+import jmri.util.MockShutDownManager;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
@@ -25,20 +21,8 @@ import jmri.util.junit.rules.RetryRule;
  *
  * @author Bob Jacobsen 2018
  */
+@Timeout(40)
 abstract public class LaunchJmriAppBase {
-
-    static final int RELEASETIME = 3000; // mSec
-    static final int TESTMAXTIME = 40; // seconds - not too long, so job doesn't hang
-    // in particular the #testLaunchInitLoop() test needs this time for setup
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
 
     /**
      * Run one application.
@@ -48,13 +32,11 @@ abstract public class LaunchJmriAppBase {
      * @param frameName         Application (frame) title
      * @param startMessageStart Start of the "we're up!" message as seen in System Console
      */
-    protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
+    protected void runOne(File tempFolder, String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         try {
             // create a custom profile
-            folder.create();
-            File tempFolder = folder.newFolder();
             File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + profileName);
             profileDir.mkdir();
             System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
@@ -80,11 +62,15 @@ abstract public class LaunchJmriAppBase {
             cleanup();
 
             // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager) InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+            if (sdm instanceof MockShutDownManager) {
+                // ShutDownManagers other than MockShutDownManager really shutdown
+                sdm.shutdown();
+            }
 
         } finally {
             // wait for threads, etc
-            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
+            jmri.util.JUnitUtil.releaseThread(this, 40);
         }
     }
 
@@ -96,15 +82,14 @@ abstract public class LaunchJmriAppBase {
     protected void cleanup() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.resetApplication();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

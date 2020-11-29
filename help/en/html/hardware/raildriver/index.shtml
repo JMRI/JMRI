@@ -1,11 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Support - RailDriver Throttle</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -20,30 +18,26 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: RailDriver Throttle</h1>
 
-      <p>JMRI support for RailDriver is evolving rapidly, so check
-      back here or on the <a href=
-      "https://groups.io/g/jmriusers">JMRI
-      users group</a> for changes.<br>
-      <a href="RailDriver.gif"><img src="RailDriver.gif" align=
-      "right" width="389" height="236" alt=
-      "RailDriver line drawing"></a> <a name="hardware" id=
-      "hardware"></a></p>
+      <p>
+      <a href="images/RailDriver.gif"><img src="images/RailDriver.gif"
+      align="right" width="389" height="236" alt=
+      "RailDriver line drawing"></a> </p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <p>JMRI allows you to use a <a href=
       "http://raildriver.com/">RailDriver</a> from <a href=
       "http://www.piengineering.com/">PI Engineering</a> as a
       Hardware Throttle to run Locomotives with your DCC system.
-      RailDriver support was first available in <a href=
-      "http://jmri.org/releasenotes/jmri2.1.7.shtml">JMRI
-      2.1.7</a>.</p>
+      </p>
 
       <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
@@ -61,6 +55,34 @@
       while your JMRI application (PanelPro or DecoderPro) isn't
       running.</p>
 
+      <h3>Configure OS</h3>
+        <h4>Linux</h4>
+        
+        Out of the box Ubuntu classifies HID devices as belonging to root. 
+        You can override this rule by creating your own under /etc/udev/rules.d:
+
+
+<pre style="font-family: monospace;">
+        sudo gedit /etc/udev/rules.d/99-myhid.rules
+</pre>  
+
+        <p>Make the content of this file as below 
+        (using your own discovered hex values for idVendor and idProduct): (note: RailDriver: 0x05F3 / 0x00D2)
+
+<pre style="font-family: monospace;">
+        # My HID device
+        ATTRS{idProduct}=="00D2", ATTRS{idVendor}=="05F3", MODE="0660", GROUP="plugdev"
+</pre>  
+
+        <p>Save and exit from root, then unplug and replug your device. 
+        The rules should take effect immediately. 
+        If they're still not running it may that you're not a member of the plugdev group. 
+        You can fix this as follows (assuming that plugdev is not present on your system):
+
+<pre style="font-family: monospace;">
+        sudo addgroup plugdev
+        sudo addgroup yourusername plugdev
+</pre>            
       <h3>Settings</h3>
 
       <p>Once connected, start the JMRI program and select
@@ -115,16 +137,17 @@
 
       <p>Eventually, we'd like to make a more detailed simulation
       available by connecting the rest of the controls, and adding
-      a detailed model of the trains braking and acceleration.
-      <a name="documentation" id="documentation"></a></p>
+      a detailed model of the trains braking and acceleration.</p>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <p>For technical information on Raildriver, please see the
       <a href="details.shtml">Details Help page</a>.</p>
-      <!--#include virtual="/Footer" -->
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

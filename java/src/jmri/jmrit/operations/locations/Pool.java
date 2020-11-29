@@ -21,7 +21,7 @@ public class Pool extends Bean {
     private final static Logger log = LoggerFactory.getLogger(Pool.class);
 
     // stores tracks for this pool
-    protected List<Track> _tracks = new ArrayList<Track>();
+    protected List<Track> _tracks = new ArrayList<>();
 
     protected String _id = "";
 
@@ -57,13 +57,14 @@ public class Pool extends Bean {
     }
 
     public Pool(String id, String name) {
+        super(false);
         log.debug("New pool ({}) id: {}", name, id);
         _name = name;
         _id = id;
     }
 
     public void dispose() {
-        this.propertyChangeSupport.firePropertyChange(DISPOSE, null, DISPOSE);
+        firePropertyChange(DISPOSE, null, DISPOSE);
     }
 
     /**
@@ -77,7 +78,7 @@ public class Pool extends Bean {
             int oldSize = _tracks.size();
             _tracks.add(track);
 
-            this.propertyChangeSupport.firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+            firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, oldSize, _tracks.size());
         }
     }
 
@@ -92,21 +93,17 @@ public class Pool extends Bean {
             int oldSize = _tracks.size();
             _tracks.remove(track);
 
-            this.propertyChangeSupport.firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+            firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, oldSize, _tracks.size());
         }
     }
 
     public List<Track> getTracks() {
         // Return a copy to protect the internal list
-        return new ArrayList<Track>(_tracks);
+        return new ArrayList<>(_tracks);
     }
 
     public int getTotalLengthTracks() {
-        int total = 0;
-        for (Track track : getTracks()) {
-            total += track.getLength();
-        }
-        return total;
+        return getTracks().stream().map(track -> track.getLength()).reduce(0, Integer::sum);
     }
 
     /**

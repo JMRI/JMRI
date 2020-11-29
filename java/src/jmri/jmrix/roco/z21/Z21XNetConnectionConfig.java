@@ -19,6 +19,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p stream port controller.
      */
     public Z21XNetConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
         super(p);
@@ -69,6 +70,6 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetConnectionConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21XNetConnectionConfig.class);
 
 }

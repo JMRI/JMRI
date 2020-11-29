@@ -31,7 +31,7 @@ public class EasyDccMonAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.warn("EasyDccMonAction starting EasyDccMonFrame: Exception: " + ex.toString());
+            log.warn("EasyDccMonAction starting EasyDccMonFrame: Exception: {}", ex.toString());
         }
         f.setVisible(true);
     }

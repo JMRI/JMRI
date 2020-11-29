@@ -228,7 +228,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             if (t != null) {
                 t.addPropertyChangeListener(this);
                 if (log.isDebugEnabled()) {
-                    log.debug("Add listener to Turnout: " + t.getSystemName());
+                    log.debug("Add listener to Turnout: {}", t.getSystemName());
                 }
             }
 
@@ -247,7 +247,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             if (t != null) {
                 t.removePropertyChangeListener(this);
                 if (log.isDebugEnabled()) {
-                    log.debug("Remove listener from Turnout: " + t.getSystemName());
+                    log.debug("Remove listener from Turnout: {}", t.getSystemName());
                 }
             }
 

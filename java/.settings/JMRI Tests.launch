@@ -16,7 +16,7 @@
 <listEntry value="=jmri/java\/src"/>
 <listEntry value="=jmri/java\/maven-template"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=jmri/java\/test"/>
+<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=jmri/java\/test=/test=/true=/=/optional=/true=/=/maven.pomderived=/true=/"/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>

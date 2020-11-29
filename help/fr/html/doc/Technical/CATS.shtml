@@ -11,19 +11,20 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
+<body>
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
+  <div id="mainContent">
+    <!-- Page Body -->
 
 <h1>Integration avec CATS</h1>
 
@@ -68,7 +69,7 @@ vous pourriez trouver ceux-ci dupliqu&#233;s: cats/cats. Prendre les r&#233;pert
 "designer" du niveau le plus bas et d&#233;placez les directement dans le r&#233;pertoire 
 JMRI java/src, exemple; aux c&#244;t&#233;s des applications existantes et r&#233;pertoires JMRI: 
 <pre><code>
-% ls java/src/<br/>
+% ls java/src/<br>
 META-INF   apps   cats   designer   jmri
 </code></pre>
 
@@ -114,7 +115,7 @@ et autre fichiers associ&#233;s, dans votre r&#233;pertoire JMRI de plus haut-ni
 Si vous avez compil&#233; CATS localement, vous n'avez pas besoin des fichiers cats.jar ou designer.jar.
 <p>
 Puis ex&#233;cutez le script appropri&#233; "cats.csh" (Linux, Mac OS X) et "cats.bat" (Windows) 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->

@@ -5,7 +5,7 @@ import jmri.jmrix.roco.z21.Z21SystemConnectionMemo;
 /**
  * Provide access to Swing components for the Roco Z21 subsystem.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 

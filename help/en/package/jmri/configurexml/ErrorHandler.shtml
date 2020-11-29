@@ -6,7 +6,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
         <meta name="keywords" content="JMRI help XML panel error handler">
         <!-- Style -->
-        <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
         <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
         <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
         <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -28,10 +27,10 @@
     </head>
 
     <body>
-        <!--#include virtual="/Header" -->
-
+        <!--#include virtual="/Header.shtml" -->
         <div class="nomenu" id="mBody">
             <div id="mainContent">
+
                 <h1>XML Error Handling</h1>
                 <p>JMRI will sometimes encounter errors loading XML files including layout
                     and control panels. Some of these errors occur when loading a file
@@ -92,7 +91,7 @@
                         </ol>
                     </dd>
                     <dt>jmri.NamedBean$BadSystemNameException</dt>
-                    <dd>A NamedBean (i.e. Turnout, Sensor, Logix, Conditional, etc) has an invalid 
+                    <dd>A NamedBean (i.e. Turnout, Sensor, Logix, Conditional, etc) has an invalid
                         system name.  You can often figure out which one it was from the traceback
                         just below the message, which will show the type of "manager" that failed,
                         i.e. a reference to jmri.managers.DefaultSensorManager means that problem
@@ -133,7 +132,7 @@
 
                     </dd>
                 </dl>
-                <!--#include virtual="/Footer" -->
+                <!--#include virtual="/Footer.shtml" -->
             </div>
         </div>
     </body>

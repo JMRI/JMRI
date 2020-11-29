@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+    <xs:complexType name="MeterFrameManagerType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing the contents of a MeterFrameManager implementation.
+        </xs:documentation>
+        <xs:appinfo>
+            <jmri:usingclass configurexml="true">jmri.jmrit.swing.meter.configurexml.MeterFrameManagerXml</jmri:usingclass>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:sequence>
+        
+        <xs:element name="meterFrame" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="uuid" type="xs:string" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="meter" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="unit">
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Percent" />
+                  <xs:enumeration value="MicroVolt" />
+                  <xs:enumeration value="MilliVolt" />
+                  <xs:enumeration value="Volt" />
+                  <xs:enumeration value="KiloVolt" />
+                  <xs:enumeration value="MicroAmpere" />
+                  <xs:enumeration value="MilliAmpere" />
+                  <xs:enumeration value="Ampere" />
+                  <xs:enumeration value="KiloAmpere" />
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="x" type="xs:integer" use="required"/>
+            <xs:attribute name="y" type="xs:integer" use="required"/>
+            <xs:attribute name="width" type="xs:integer" use="required"/>
+            <xs:attribute name="height" type="xs:integer" use="required"/>
+            <xs:attribute name="integer-digits" type="xs:integer"/>
+            <xs:attribute name="decimal-digits" type="xs:integer"/>
+          </xs:complexType>
+        </xs:element>
+            
+      </xs:sequence>
+      <xs:attribute name="class" type="classType" use="required"/>
+    </xs:complexType>
+
+</xs:schema>

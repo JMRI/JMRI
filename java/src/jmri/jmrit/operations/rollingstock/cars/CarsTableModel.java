@@ -1,22 +1,26 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Table Model for edit of cars used by operations
@@ -236,7 +240,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         for (int index = start; index < carList.size(); index++) {
             Car c = carList.get(index);
             if (c != null) {
-                String[] number = c.getNumber().split("-");
+                String[] number = c.getNumber().split(TrainCommon.HYPHEN);
                 // check for wild card '*'
                 if (roadNumber.startsWith("*")) {
                     String rN = roadNumber.substring(1);
@@ -649,13 +653,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     csf.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        csf = new CarSetFrame();
-                        csf.initComponents();
-                        csf.loadCar(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    csf = new CarSetFrame();
+                    csf.initComponents();
+                    csf.loadCar(car);
                 });
                 break;
             case EDIT_COLUMN:
@@ -664,13 +665,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     cef.dispose();
                 }
                 // use invokeLater so new window appears on top
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        cef = new CarEditFrame();
-                        cef.initComponents();
-                        cef.load(car);
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    cef = new CarEditFrame();
+                    cef.initComponents();
+                    cef.load(car);
                 });
                 break;
             case MOVES_COLUMN:

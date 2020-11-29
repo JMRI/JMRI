@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import javax.annotation.Nonnull;
+
 /**
  * SignalMast implemented via one SignalHead object.
  * <p>
@@ -63,7 +65,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
     }
 
     @Override
-    public void setAspect(String aspect) {
+    public void setAspect(@Nonnull String aspect) {
         // check it's a choice
         if (!map.checkAspect(aspect)) {
             // not a valid aspect

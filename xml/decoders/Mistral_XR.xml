@@ -10,10 +10,10 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details. -->
-<!-- $Id: MISTRAL_XR.xml 2018/09/04 20:00:00 Alain CARASSO $                      -->
 <!--  Embedded 3 Functions decoder for Rear End red lights and Passengers lights   -->
 <!--  this decoder is dedicated to the DCC XR trailer car                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
 	<version author="Alain CARASSO" version="1" lastUpdated="20180905"/>
 <decoder>
 	<family name="MISTRAL XR" mfg="Mistral Train Models" lowVersionID="20" highVersionID="255">
@@ -97,15 +97,9 @@
 		</enumVal>
 	</variable>
 <!--  Long address and Consist address            -->
-	<variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address">
-		<decVal/>
-	</variable>
-	<variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-		<enumVal>
-             <enumChoice choice="Normal"></enumChoice>
-             <enumChoice choice="Reversed"></enumChoice>
-         </enumVal>
-       </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
 <!--  CV29            -->
 	<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
 		<enumVal>

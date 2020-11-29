@@ -23,7 +23,7 @@ import javax.swing.border.Border;
  */
 public class TieToolFrame extends jmri.util.JmriJFrame {
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.openlcb.swing.tie.TieBundle");
 
     /** 
      * {@inheritDoc}

@@ -3,19 +3,12 @@ package jmri.jmrit.operations.automation;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -23,8 +16,6 @@ import jmri.jmrit.operations.automation.actions.Action;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTablePersistenceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a automation
@@ -319,7 +310,7 @@ public class AutomationTableFrame extends OperationsFrame implements java.beans.
      * @return true if name is less than 26 characters
      */
     private boolean checkName(String s) {
-        if (automationNameTextField.getText().trim().equals("")) {
+        if (automationNameTextField.getText().trim().isEmpty()) {
             return false;
         }
         if (automationNameTextField.getText().length() > MAX_NAME_LENGTH) {

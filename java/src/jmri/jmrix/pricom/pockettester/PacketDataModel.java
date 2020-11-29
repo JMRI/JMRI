@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table data model for display of DCC packet contents
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author Bob Jacobsen Copyright (C) 2005
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -29,6 +29,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     /**
      * Returns the number of rows to be displayed. This can vary depending on
      * what has been seen
+     * @return number of rows
      */
     @Override
     public int getRowCount() {
@@ -128,7 +129,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
                     f.setFilter((String) getValueAt(row, ADDRESSCOLUMN));
                     source.addListener(f);
                 } catch (Exception ex) {
-                    log.error("starting MonitorFrame caught exception: " + ex.toString());
+                    log.error("starting MonitorFrame caught exception: {}", ex.toString());
                 }
                 f.setVisible(true);
 
@@ -139,10 +140,11 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     }
 
     /**
-     * Configure a table to have our standard rows and columns. This is
-     * optional, in that other table formats can use this table model. But we
-     * put it here to help keep it consistent.
+     * Configure a table to have our standard rows and columns.
+     * This is optional, in that other table formats can use this table model.
+     * But we put it here to help keep it consistent.
      *
+     * @param slotTable the table to configure.
      */
     public void configureTable(JTable slotTable) {
         // allow reordering of the columns
@@ -237,6 +239,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
      * The current implementation is address+type, so that separate lines will
      * be used for each type sent to the same address.
      *
+     * @param s Current line of input
      * @return null if not to be displayed, e.g. no address
      */
     String getKey(String s) {
@@ -249,6 +252,8 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
     /**
      * Find the address (1st column) from the current input line
+     * @param s Current line of input
+     * @return address 
      */
     String getPrefix(String s) {
         return s.substring(0, 8);
@@ -258,6 +263,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
      * Find the message type (2nd column) from the current input line. Should
      * not be called if getPrefix has returned null.
      *
+     * @param s Current line of input
      * @return null if not to be displayed, e.g. too short
      */
     String getType(String s) {
@@ -268,6 +274,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
      * Find the message arguments (3rd column) from the current input line.
      * Should not be called if getPrefix has returned null.
      *
+     * @param s Current line of input
      * @return null if not to be displayed, e.g. too short
      */
     String getDetails(String s) {

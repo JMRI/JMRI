@@ -12,12 +12,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import javax.annotation.Nonnull;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -26,8 +24,8 @@ import javax.swing.tree.TreeNode;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.catalog.CatalogTreeLeaf;
-import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.CatalogTreeLeaf;
+import jmri.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -38,6 +36,8 @@ import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Container for adding items to Control Panels. Starting point for palette package.
@@ -142,14 +142,15 @@ ReporterItemPanel *-- preview
 
 public class ItemPalette extends DisplayFrame implements ChangeListener {
 
-    public static final int STRUT_SIZE = 10;
+    public static final int STRUT_SIZE = 5;
+    static final String RED_X = "resources/icons/misc/X-red.gif";
 
     protected static JTabbedPane _tabPane;
-    private static HashMap<String, ItemPanel> _tabIndex;
+    protected static HashMap<String, ItemPanel> _tabIndex;
 
-    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
-    static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    private static volatile HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     private ItemPanel _currentItemPanel;
 
     /**
@@ -169,71 +170,55 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         tree = manager.newCatalogTree("NXPI", "Item Palette");
         CatalogTreeNode root = tree.getRoot();
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
+        for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry : _iconMaps.entrySet()) {
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) {
-                log.debug("Add type node " + entry.getKey());
+                log.debug("Add type node {}", entry.getKey());
             }
         }
 
-        Iterator<Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>> its = _indicatorTOMaps.entrySet().iterator();
-        while (its.hasNext()) {
-            Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry = its.next();
+        for (Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry : _indicatorTOMaps.entrySet()) {
             CatalogTreeNode typeNode = new CatalogTreeNode(entry.getKey());
-            Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent = iter.next();
+            for (Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent : entry.getValue().entrySet()) {
                 typeNode.add(store3levelMap(ent.getKey(), ent.getValue()));
-                if (log.isDebugEnabled()) {
-                    log.debug("Add IndicatorTO node " + ent.getKey());
-                }
+                log.debug("Add IndicatorTO node {}", ent.getKey());
             }
             root.add(typeNode);
-            if (log.isDebugEnabled()) {
-                log.debug("Add IndicatorTO node " + entry.getKey());
-            }
+            log.debug("Add IndicatorTO node {}", entry.getKey());
         }
     }
 
     static CatalogTreeNode store3levelMap(String type, HashMap<String, HashMap<String, NamedIcon>> familyMap) {
         CatalogTreeNode typeNode = new CatalogTreeNode(type);
-        Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = familyMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
-            String family = ent.getKey();
+        for (Entry<String, HashMap<String, NamedIcon>> mapEntry : familyMap.entrySet()) {
+            String family = mapEntry.getKey();
             CatalogTreeNode familyNode = new CatalogTreeNode(family);
-            HashMap<String, NamedIcon> iconMap = ent.getValue();
-            Iterator<Entry<String, NamedIcon>> iterat = iconMap.entrySet().iterator();
-            while (iterat.hasNext()) {
-                Entry<String, NamedIcon> e = iterat.next();
-                String state = e.getKey();
-                String path = e.getValue().getURL();
+            HashMap<String, NamedIcon> iconMap = mapEntry.getValue();
+            for (Entry<String, NamedIcon> iconEntry : iconMap.entrySet()) {
+                String state = iconEntry.getKey();
+                String path = iconEntry.getValue().getURL();
                 familyNode.addLeaf(state, path);
             }
             typeNode.add(familyNode);
-            if (log.isDebugEnabled()) {
-                log.debug("Add familyNode " + familyNode);
-            }
+            log.debug("Add familyNode {}", familyNode);
         }
         return typeNode;
     }
 
-    static public void loadIcons(Editor ed) {
+    public static void loadIcons() {
         if (_iconMaps == null) {
             // long t = System.currentTimeMillis();
-            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+            InstanceManager.getDefault(jmri.CatalogTreeManager.class).loadImageIndex();
             _iconMaps = new HashMap<>();
             _indicatorTOMaps = new HashMap<>();
 
-            if (!loadSavedIcons(ed)) {
-                loadDefaultIcons(ed);
+            if (!loadSavedIcons()) {
+                loadDefaultIcons();
             }
         }
     }
 
-    static boolean loadSavedIcons(Editor ed) {
+    static boolean loadSavedIcons() {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
@@ -246,68 +231,55 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 // not very elegant (i.e. extensible), but maybe all that's needed.
                 if (typeName.equals("IndicatorTO")) {
                     HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                            = loadIndicatorFamilyMap(node, ed);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add {} indicatorTO families to item type {} for _indicatorTOMaps.",
-                                familyTOMap.size(), typeName );
-                    }
+                            = loadIndicatorFamilyMap(node);
+                    log.debug("Add {} indicatorTO families to item type {} for _indicatorTOMaps.",
+                            familyTOMap.size(), typeName );
                     _indicatorTOMaps.put(typeName, familyTOMap);
                 } else {
                     HashMap<String, HashMap<String, NamedIcon>> familyMap
-                            = loadFamilyMap(node, ed);
+                            = loadFamilyMap(node);
                     _iconMaps.put(typeName, familyMap);
                     log.debug("Add item type {} to _iconMaps.", typeName);
                 }
             }
-            if (log.isDebugEnabled()) {
-                log.debug("Icon Map has {} members", _iconMaps.size());
-            }
+            log.debug("Icon Map has {} members", _iconMaps.size());
             return true;
         }
         return false;
     }
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
-            loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
+            loadIndicatorFamilyMap(CatalogTreeNode node) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap
                 = new HashMap<>();
         Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
             String name = (String) famNode.getUserObject();
-            familyMap.put(name, loadFamilyMap(famNode, ed));
+            familyMap.put(name, loadFamilyMap(famNode));
         }
         return familyMap;
     }
 
-    static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
+    static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node) {
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = new HashMap<>();
         Enumeration<TreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
-            String familyName = (String) famNode.getUserObject();
+            String familyName = (String)famNode.getUserObject();
             HashMap<String, NamedIcon> iconMap = new HashMap<>();
             List<CatalogTreeLeaf> list = famNode.getLeaves();
-            for (int i = 0; i < list.size(); i++) {
-                String iconName = list.get(i).getName();
-                CatalogTreeLeaf leaf = list.get(i);
-                String path = leaf.getPath();
+            for (CatalogTreeLeaf catalogTreeLeaf : list) {
+                String iconName = catalogTreeLeaf.getName();
+                String path = catalogTreeLeaf.getPath();
                 NamedIcon icon = NamedIcon.getIconByName(path);
                 if (icon == null) {
-                    icon = ed.loadFailed(iconName, path);
-                    if (icon == null) {
-                        log.info("{} removed for url = {}", iconName, path);
-                    } else {
-                        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-                    }
+                    log.warn("loadFamilyMap cannot find icon \"{}\" in family\"{}\" at path \"{}\"", iconName, familyName, path);
+                    String fileName = RED_X;
+                    icon = new NamedIcon(fileName, fileName);
                 }
-                if (icon != null) {
-                    iconMap.put(iconName, icon);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Add {} icon to family \"{}\"", iconName, familyName);
-                    }
-                }
+                iconMap.put(iconName, icon);
+                log.debug("Add {} icon to family \"{}\"", iconName, familyName);
             }
             familyMap.put(familyName, iconMap);
         }
@@ -317,96 +289,98 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     static List<Element> getDefaultIconItemTypes() throws org.jdom2.JDOMException, java.io.IOException {
         URL file = FileUtil.findURL("xml/defaultPanelIcons.xml");
         if (file == null) {
-            log.error("defaultPanelIcons file (xml/defaultPanelIcons.xml) doesn't exist.");
             throw new IllegalArgumentException("defaultPanelIcons file (xml/defaultPanelIcons.xml) doesn't exist.");
         }
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
         };
         Element root = xf.rootFromURL(file);
-        List<Element> typeList = root.getChild("ItemTypes").getChildren();
-        return typeList;
+        return (root.getChild("ItemTypes").getChildren());
     }
 
-    static void loadDefaultIcons(Editor ed) {
+    static void loadDefaultIcons() {
         try {
             List<Element> typeList = getDefaultIconItemTypes();
-            for (int i = 0; i < typeList.size(); i++) {
-                String typeName = typeList.get(i).getName();
-                List<Element> families = typeList.get(i).getChildren();
-                loadFamilies(typeName, families, ed);
+            for (Element type : typeList) {
+                String typeName = type.getName();
+                List<Element> families = type.getChildren();
+                loadFamilies(typeName, families);
             }
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + ioe);
+        } catch (org.jdom2.JDOMException | java.io.IOException e) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: ", e);
         }
     }
 
-    static void loadFamilies(String typeName, List<Element> families, Editor ed) {
+    static void loadFamilies(String typeName, List<Element> families) {
         // detect this is a 4 level map collection.
         // not very elegant (i.e. extensible), but maybe all that's needed.
         if (typeName.equals("IndicatorTO")) {
             HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                    = loadDefaultIndicatorTOMap(families, ed);
+                    = loadDefaultIndicatorTOMap(families, null);
             _indicatorTOMaps.put(typeName, familyTOMap);
-            if (log.isDebugEnabled()) {
-                log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
-                        familyTOMap.size(), typeName);
-            }
+            log.debug("Add {} indicatorTO families to item type {} to _indicatorTOMaps.",
+                    familyTOMap.size(), typeName);
         } else {
-            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, null);
             _iconMaps.put(typeName, familyMap);
-            if (log.isDebugEnabled()) {
-                log.debug("Add {} families to item type \"{}\" to _iconMaps.",
-                        familyMap.size(), typeName);
-            }
+            log.debug("Add {} families to item type \"{}\" to _iconMaps.",
+                    familyMap.size(), typeName);
         }
     }
 
-    static void loadMissingItemType(String itemType, Editor ed) {
+    @SuppressFBWarnings(value="DLS_DEAD_LOCAL_STORE",justification="Stores are not dead. Both statements APPEND additional items into their maps")
+    static public void loadMissingItemType(String itemType) {
         try {
+            Element thisType = null;
             List<Element> typeList = getDefaultIconItemTypes();
-            for (int i = 0; i < typeList.size(); i++) {
-                String typeName = typeList.get(i).getName();
-                if (!typeName.equals(itemType)) {
-                    continue;
+            for (Element type : typeList) {
+                String typeName = type.getName();
+                if (typeName.equals(itemType)) {
+                    thisType = type;
+                    break;
                 }
-                List<Element> families = typeList.get(i).getChildren();
-                loadFamilies(itemType, families, ed);
-                InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             }
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
-        } catch (java.io.IOException ioe) {
-            log.error("error reading file \"defaultPanelIcons.xml\" due to: " + ioe);
+            if (thisType == null) {
+                log.error("No type \"{}\" in file \"defaultPanelIcons.xml\"", itemType);
+                return;
+            }
+            List<Element> families = thisType.getChildren();
+            if (itemType.equals("IndicatorTO")) {
+                HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMaps = _indicatorTOMaps.get(itemType);
+                familyMaps = loadDefaultIndicatorTOMap(families, familyMaps);
+            } else {
+                HashMap<String, HashMap<String, NamedIcon>> familyMap = ItemPalette.getFamilyMaps(itemType);
+                familyMap = loadDefaultFamilyMap(families, familyMap);
+            }
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        } catch (org.jdom2.JDOMException | java.io.IOException ex) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: {}", ex);
         }
     }
 
-    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed) {
-        HashMap<String, HashMap<String, NamedIcon>> familyMap
-                = new HashMap<>();
-        for (int k = 0; k < families.size(); k++) {
-            String familyName = families.get(k).getName();
-            HashMap<String, NamedIcon> iconMap
-                    = new HashMap<>();     // Map of all icons of in family, familyName
-            List<Element> iconfiles = families.get(k).getChildren();
-            for (int j = 0; j < iconfiles.size(); j++) {
-                String iconName = iconfiles.get(j).getName();
-                String fileName = iconfiles.get(j).getText().trim();
+    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(
+            List<Element> families, HashMap<String, HashMap<String, NamedIcon>> familyMap) {
+        if (familyMap == null) {
+            familyMap = new HashMap<>();
+        }
+        for (Element family : families) {
+            String familyName = family.getName();
+            HashMap<String, NamedIcon> iconMap = new HashMap<>();
+            // Map of all icons of in family, familyName
+            List<Element> iconfiles = family.getChildren();
+            for (Element iconfile : iconfiles) {
+                String iconName = iconfile.getName();
+                String fileName = iconfile.getText().trim();
                 if (fileName.length() == 0) {
-                    fileName = "resources/icons/misc/X-red.gif";
-                    log.warn("loadDefaultFamilyMap: iconName = {} in family {} has no image file.", iconName, familyName);
+                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" has no image file.", iconName, familyName);
+                    fileName = RED_X;
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);
                 if (icon == null) {
-                    icon = ed.loadFailed(iconName, fileName);
-                    if (icon == null) {
-                        log.info("{} removed for url= {}", iconName, fileName);
-                    }
+                    log.warn("loadDefaultFamilyMap: icon \"{}\" in family \"{}\" cannot get icon from file \"{}\".", iconName, familyName, fileName);
+                    fileName = RED_X;
+                    icon = new NamedIcon(fileName, fileName);
                 }
-                if (icon != null) {
-                    iconMap.put(iconName, icon);
-                }
+                iconMap.put(iconName, icon);
             }
             familyMap.put(familyName, iconMap);
             if (log.isDebugEnabled()) {
@@ -417,53 +391,53 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>
-            loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed) {
-        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap
-                = new HashMap<>(); // Map of all families of type, typeName
-        for (int k = 0; k < typeList.size(); k++) {
-            String familyName = typeList.get(k).getName();
-            List<Element> types = typeList.get(k).getChildren();
-            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, ed);
+            loadDefaultIndicatorTOMap(List<Element> typeList,  HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap) {
+        if (familyTOMap == null) {
+            familyTOMap = new HashMap<>();
+        }
+      //  HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap = new HashMap<>();
+        // Map of all families of type, typeName
+        for (Element element : typeList) {
+            String familyName = element.getName();
+            List<Element> types = element.getChildren();
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, null);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) {
-                log.debug("Add {}  IndicatorTO sub-families to item type {}  to IndicatorTO families.",
-                        familyMap.size(), familyName);
+                log.debug("Add {} IndicatorTO sub-families to item type {}  to IndicatorTO families.", familyMap.size(), familyName);
             }
         }
         return familyTOMap;
     }
 
-    static public ItemPalette getDefault(String title, @Nonnull Editor ed) {
+    public static ItemPalette getDefault(String title, @Nonnull Editor ed) {
         if (GraphicsEnvironment.isHeadless()) {
             return null;
         }
-        ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> {
-            return InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed));
-        });
-        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
-        while (iter.hasNext()) {
-            iter.next().setEditor(ed);
+        ItemPalette instance = InstanceManager.getOptionalDefault(ItemPalette.class).orElseGet(() -> InstanceManager.setDefault(ItemPalette.class, new ItemPalette(title, ed)));
+        if (!ed.equals(instance.getEditor())) {
+            instance.updateBackground(ed);
+            InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
         }
-        String name = ed.getName();
-        if (name == null || name.equals("")) {
-            name = Bundle.getMessage("untitled");
-        }
-        instance.setTitle(Bundle.getMessage("MenuItemItemPalette") + " - " + name);
         // pack before setLocation
         instance.pack();
-        instance.setLocation(jmri.util.PlaceWindow.nextTo(ed, null, instance));
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, instance);
         instance.setVisible(true);
         return instance;
     }
     
-    public ItemPalette(String title, Editor ed) {
-        super(false, false);
-        init(title, ed);
+    public void setEditor(Editor ed) {
+        updateBackground(ed);
+        InstanceManager.getDefault(jmri.util.PlaceWindow.class).nextTo(ed, null, this);
     }
-    
-    private void init(String title, Editor ed) {
-        this.setTitle(title);
-        loadIcons(ed);
+
+    public ItemPalette(String title, Editor ed) {
+        super(title, ed);
+        init();
+        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get("Turnout"))));
+    }
+
+    private void init() {
+        loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -471,138 +445,131 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             }
         });
 
-        makeMenus(ed);
-        buildTabPane(this, ed);
+        makeMenus();
+        buildTabPane(this);
 
         setLayout(new BorderLayout(5, 5));
         add(_tabPane, BorderLayout.CENTER);
         JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
         _currentItemPanel = (ItemPanel) sp.getViewport().getView();
+        _currentItemPanel.hideIcons();
     }
 
     /*
      * Add the tabs on the Control Panel Editor.
      */
-    static void buildTabPane(ItemPalette palette, Editor editor) {
+    static void buildTabPane(ItemPalette palette) {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<>();
 
         ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
-                PickListModel.turnoutPickModelInstance(), editor);
+                PickListModel.turnoutPickModelInstance());
         addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
         itemPanel.init();  // show panel on start
 
         itemPanel = new TableItemPanel<>(palette, "Sensor", null,
-                PickListModel.sensorPickModelInstance(), editor);
+                PickListModel.sensorPickModelInstance());
         addItemTab(itemPanel, "Sensor", "BeanNameSensor");
 
         itemPanel = new SignalHeadItemPanel(palette, "SignalHead", null,
-                PickListModel.signalHeadPickModelInstance(), editor);
+                PickListModel.signalHeadPickModelInstance());
         addItemTab(itemPanel, "SignalHead", "BeanNameSignalHead");
 
         itemPanel = new SignalMastItemPanel(palette, "SignalMast", null,
-                PickListModel.signalMastPickModelInstance(), editor);
+                PickListModel.signalMastPickModelInstance());
         addItemTab(itemPanel, "SignalMast", "BeanNameSignalMast");
 
         itemPanel = new MemoryItemPanel(palette, "Memory", null,
-                PickListModel.memoryPickModelInstance(), editor);
+                PickListModel.memoryPickModelInstance());
         addItemTab(itemPanel, "Memory", "BeanNameMemory");
 
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
-                PickListModel.reporterPickModelInstance(), editor);
+                PickListModel.reporterPickModelInstance());
         addItemTab(itemPanel, "Reporter", "BeanNameReporter");
 
         itemPanel = new TableItemPanel<>(palette, "Light", null,
-                PickListModel.lightPickModelInstance(), editor);
+                PickListModel.lightPickModelInstance());
         addItemTab(itemPanel, "Light", "BeanNameLight");
 
         itemPanel = new MultiSensorItemPanel(palette, "MultiSensor", null,
-                PickListModel.multiSensorPickModelInstance(), editor);
+                PickListModel.multiSensorPickModelInstance());
         addItemTab(itemPanel, "MultiSensor", "MultiSensor");
 
-        itemPanel = new IconItemPanel(palette, "Icon", editor);
+        itemPanel = new IconItemPanel(palette, "Icon");
         addItemTab(itemPanel, "Icon", "Icon");
 
-        itemPanel = new BackgroundItemPanel(palette, "Background", editor);
+        itemPanel = new BackgroundItemPanel(palette, "Background");
         addItemTab(itemPanel, "Background", "Background");
 
-        itemPanel = new TextItemPanel(palette, "Text", editor);
+        itemPanel = new TextItemPanel(palette, "Text");
         addItemTab(itemPanel, "Text", "Text");
 
-        itemPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
+        itemPanel = new RPSItemPanel(palette, "RPSReporter", null);
         addItemTab(itemPanel, "RPSReporter", "RPSreporter");
 
-        itemPanel = new ClockItemPanel(palette, "FastClock", editor);
+        itemPanel = new ClockItemPanel(palette, "FastClock");
         addItemTab(itemPanel, "FastClock", "FastClock");
 
-        itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null, editor);
+        itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null);
         addItemTab(itemPanel, "IndicatorTrack", "IndicatorTrack");
 
         itemPanel = new IndicatorTOItemPanel(palette, "IndicatorTO", null,
-                PickListModel.turnoutPickModelInstance(), editor);
+                PickListModel.turnoutPickModelInstance());
         addItemTab(itemPanel, "IndicatorTO", "IndicatorTO");
 
-        itemPanel = new PortalItemPanel(palette, "Portal", null, editor);
+        itemPanel = new PortalItemPanel(palette, "Portal", null);
         addItemTab(itemPanel, "Portal", "BeanNamePortal");
 
         _tabPane.addChangeListener(palette);
     }
-    
+
     static void addItemTab(ItemPanel itemPanel, String key, String tabTitle) {
         JScrollPane scrollPane = new JScrollPane(itemPanel);
-        _tabPane.add(scrollPane, Bundle.getMessage(tabTitle));
+        _tabPane.add(Bundle.getMessage(tabTitle), scrollPane);
         _tabIndex.put(key, itemPanel);
     }
 
     @Override
-    public void updateBackground0(java.awt.image.BufferedImage im) {
-        int bgIdx = getPreviewBg();
-        Iterator<ItemPanel> iter = _tabIndex.values().iterator();
-        while (iter.hasNext()) {
-            ItemPanel panel = iter.next();
-            panel.updateBackground0(im);
-            panel.setPreviewBg(bgIdx);
+    public void setPreviewBg(int index) {
+        super.setPreviewBg(index);
+        if (_currentItemPanel != null) {    // wait until tab panels are created
+            for (ItemPanel panel : _tabIndex.values()) {
+                panel.previewColorChange();
+            }
         }
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        // long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
         ItemPanel p = (ItemPanel) sp.getViewport().getView();
+        p.closeDialogs();
+        p.init(); // (re)initialize tab pane
+        p.invalidate();
+        Dimension newTabDim = p.getPreferredSize();
         Dimension oldTabDim = null;
-        log.debug("different tab displayed for {} previewBgSet updated to {}", p._itemType, getPreviewBg());
         if (_currentItemPanel != null) {
             _currentItemPanel.closeDialogs();
             oldTabDim = _currentItemPanel.getSize();
-        }
-        Dimension totalDim = _tabPane.getSize();
-        p.init(); // (re)initialize tab pane
-        p.revalidate();
-        Dimension newTabDim = p.getPreferredSize();
-        if (oldTabDim == null) {
+        } else {
             oldTabDim = newTabDim;
         }
-        Dimension deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
-        if (log.isDebugEnabled()) 
-            log.debug("_tabPane Dim= ({}, {}) Old Dim({})= ({}, {}) NewDim({})= ({}, {})", totalDim.width, totalDim.height, 
-                _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,  p._itemType, newTabDim.width, newTabDim.height);
-        // tabPane must be larger than the current panel it is displaying
-        if (deltaDim.width < 8) {
-            deltaDim.width = 8;
+        setTitle(Bundle.getMessage("ItemPaletteTitle", Bundle.getMessage(ItemPanel.NAME_MAP.get(p._itemType))));
+        Dimension totalDim = _tabPane.getSize();
+        Dimension deltaDim;
+        if (log.isDebugEnabled()) {
+            deltaDim = new Dimension(totalDim.width - oldTabDim.width, totalDim.height - oldTabDim.height);
+            log.debug(" old _tabPane Dim= ({}, {}) oldType=({})= ({}, {})newType=({})= ({}, {}). diff= ({}, {})",
+                    totalDim.width, totalDim.height, _currentItemPanel._itemType, oldTabDim.width, oldTabDim.height,
+                    p._itemType, newTabDim.width, newTabDim.height, deltaDim.width, deltaDim.height);
         }
-        if (deltaDim.height < 50) { // at least 2 rows of tabs
-            deltaDim.height = 50;
-        }
-        reSize(_tabPane, deltaDim, newTabDim, p._editor);
-        if (p._bgColorBox != null) {
-            p._bgColorBox.setSelectedIndex(getPreviewBg());
-        }
+        deltaDim = p.shellDimension(p);
+        reSize(_tabPane, deltaDim, newTabDim);
         _currentItemPanel = p;
     }
 
-    private void makeMenus(Editor editor) {
+    private void makeMenus() {
         JMenuBar menuBar = new JMenuBar();
         JMenu findIcon = new JMenu(Bundle.getMessage("findIconMenu"));
         menuBar.add(findIcon);
@@ -617,29 +584,25 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         findIcon.addSeparator();
 
         JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
-        openItem.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
-        });
+        openItem.addActionListener((ActionEvent e) -> InstanceManager.getDefault(DirectorySearcher.class).openDirectory());
         findIcon.add(openItem);
 
          JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
-         searchItem.addActionListener((ActionEvent e) -> {
-             jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
-         });
+         searchItem.addActionListener((ActionEvent e) -> DirectorySearcher.instance().searchFS());
          findIcon.add(searchItem);
 
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
 
-    public void closePanels(java.awt.event.WindowEvent e) {
+    private void closePanels(java.awt.event.WindowEvent e) {
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
-            log.debug("closePanels: tab count= " + _tabPane.getTabCount());
+            log.debug("closePanels: tab count= {}", _tabPane.getTabCount());
         }
-        for (int i = 0; i < comps.length; i++) {
-            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comps[i]).getComponent(0);
-            java.awt.Component ip = vp.getView();
+        for (Component comp : comps) {
+            javax.swing.JViewport vp = (javax.swing.JViewport) ((JScrollPane) comp).getComponent(0);
+            Component ip = vp.getView();
             if (ip instanceof ItemPanel) {
                 ((ItemPanel) ip).closeDialogs();
             }
@@ -650,18 +613,17 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /*
      * Look for duplicate name of family in the iterated set.
      */
-    protected static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator<String> it) {
+    static private boolean familyNameOK(String type, String family, Iterator<String> it) {
         if (family == null || family.length() == 0) {
-            JOptionPane.showMessageDialog(frame,
+            JOptionPane.showMessageDialog(null,
                     Bundle.getMessage("EnterFamilyName"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
             String f = it.next();
-            log.debug("familyNameOK compare {} {} to {}", type, family, f);
             if (family.equals(f)) {
-                JOptionPane.showMessageDialog(frame,
+                JOptionPane.showMessageDialog(null,
                         java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"),
                                 new Object[]{family, type}),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -674,30 +636,19 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /**
      * Add a new Family of icons to the device type.
      *
-     * @param frame frame
      * @param type type
      * @param family family
      * @param iconMap iconMap
      * @return result
      */
-    static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
-        if (ItemPalette.getFamilyMaps(type) == null) {
-            HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<>();
-            _iconMaps.put(type, typeMap);
-            // typeMap.put(family, iconMap);
+    static protected boolean addFamily(String type, String family, HashMap<String, NamedIcon> iconMap) {
+        if (family == null) {
+            return false;
         }
-        Iterator<String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
-        if (familyNameOK(frame, type, family, iter)) {
-            getFamilyMaps(type).put(family, iconMap);
-            /*            ItemPanel itemPanel = _tabIndex.get(type);
-             if (itemPanel instanceof FamilyItemPanel) {
-             ((FamilyItemPanel)itemPanel).updateFamiliesPanel();
-             }*/
-            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
-            return true;
-        }
-        log.warn("addFamily: family name \"{}\" for type {} NOT OK! map size= {}", family, type, iconMap.size());
-        return false;
+        HashMap<String, HashMap<String, NamedIcon>> typeMap = ItemPalette.getFamilyMaps(type);
+        typeMap.put(family, iconMap);
+        InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
+        return true;
     }
 
     /**
@@ -706,8 +657,13 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
      * @param type type
      * @return map of families
      */
-    static protected HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
-        return _iconMaps.get(type);
+    static public @Nonnull HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
+        HashMap<String, HashMap<String, NamedIcon>> families = _iconMaps.get(type);
+        if (families == null) {
+            families = new HashMap<>();
+            _iconMaps.put(type, families);
+        }
+        return families;
     }
 
     /**
@@ -720,15 +676,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (log.isDebugEnabled()) {
             log.debug("removeIconMap for family \"{}\" in type \"{}\"", family, type);
         }
-        _iconMaps.get(type).remove(family);
+        HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
+        families.remove(family);
         InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         if (log.isDebugEnabled()) {
-            HashMap<String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
-            if (families != null && families.size() > 0) {
-                Iterator<String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", it.next(), type);
-                }
+            for (String s : families.keySet()) {
+                log.debug("removeIconMap remaining Keys: family \"{}\" in type \"{}\"", s, type);
             }
         }
     }
@@ -736,7 +689,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     /*
      * Get a clone of the Family of icons for a given device type and family.
      */
-    static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
+    static public HashMap<String, NamedIcon> getIconMap(String type, String family) {
         HashMap<String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap == null) {
             log.error("getIconMap failed. item type \"{}\" not found.", type);
@@ -744,7 +697,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         }
         HashMap<String, NamedIcon> iconMap = itemMap.get(family);
         if (iconMap == null) {
-            log.error("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
+            log.warn("getIconMap failed. family \"{}\" not found in item type \"{}\"", family, type);
             return null;
         }
         return cloneMap(iconMap);
@@ -752,17 +705,16 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     /**
      * ************ Currently only needed for IndicatorTO type **************
-     * @param frame frame
      * @param type type
      * @param family family
      * @param iconMap iconMap
      * @return result
      */
     // add entire family
-    static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family,
+    static protected boolean addLevel4Family(String type, String family,
             HashMap<String, HashMap<String, NamedIcon>> iconMap) {
-        Iterator<String> iter = ItemPalette.getLevel4FamilyMaps(type).keySet().iterator();
-        if (familyNameOK(frame, type, family, iter)) {
+        Iterator<String> iter = getLevel4FamilyMaps(type).keySet().iterator();
+        if (familyNameOK(type, family, iter)) {
             getLevel4FamilyMaps(type).put(family, iconMap);
             InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
             return true;
@@ -806,13 +758,11 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     ///////////////////////////////////////////////////////////////////////////////
-    
+
     static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
         HashMap<String, NamedIcon> clone = new HashMap<>();
         if (map != null) {
-            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
+            for (Entry<String, NamedIcon> entry : map.entrySet()) {
                 String name = entry.getKey();
                 NamedIcon icon = new NamedIcon(entry.getValue());
                 clone.put(name, icon);
@@ -821,37 +771,25 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         return clone;
     }
 
+    /**
+     * Default key names as listed in defaultPanelIcons.xml are Bundle keys and
+     * nodes in the CatalogTree. However users also define icon sets and store
+     * them in the CatalogTree. The names the user has defined for these sets
+     * (i.e.family" name) are also nodes in the CatalogTree. So it is expected
+     * that such names will fall through as an Exception.  Thus these names are
+     * returned as the user has entered them.  There is no failure of I18N here.
+     * @param name key name
+     * @return usable UI display name
+     */
     static public String convertText(String name) {
         String cName = null;
         try {
             // NOI18N
             cName = Bundle.getMessage(name);
-        } catch (java.util.MissingResourceException mre) {
-            try {
-                cName = Bundle.getMessage(name);
-            } catch (java.util.MissingResourceException mre2) {
-                cName = name;
-            }
+        } catch (Exception e) {
+            cName = name;
         }
         return cName;
-    }
-
-    static protected JPanel makeBannerPanel(String labelText, Component field) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.CENTER;
-        panel.add(new JLabel(Bundle.getMessage(labelText)), c);
-        c.gridx = 1;
-        c.anchor = java.awt.GridBagConstraints.CENTER;
-        c.weightx = 1.0;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL; // text field will expand
-        panel.add(field, c);
-        return panel;
     }
 
     private final static Logger log = LoggerFactory.getLogger(ItemPalette.class);

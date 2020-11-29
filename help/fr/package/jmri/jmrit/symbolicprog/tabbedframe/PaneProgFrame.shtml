@@ -7,26 +7,27 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
-  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
 
   <title>JMRI: DecoderPro Service Mode Programmer</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <p>MEDIA="screen"&gt; <!-- /Style --></p>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Op&eacute;rations Programmateur DecoderPro en Mode
       Service</h1><a name="contents" id="contents"></a>
 
@@ -52,7 +53,7 @@
       <h3>onglet Liste</h3>
 
       <p>Une liste est une base de donn&eacute;es de toutes les
-      locomotives que votre installation de Decoder Pro a
+      locomotives que votre installation de DecoderPro a
       programm&eacute;es.Elle inclut les informations vu dans
       l'&eacute;cran ci-dessous:</p>
 
@@ -97,7 +98,6 @@
       d&eacute;codeur.</p>
 
       <p><a name="Basic" id="Basic"></a></p>
-
       <h3>Onglet Basique</h3>
 
       <p><img src="BasicTab.png"></p>
@@ -132,16 +132,15 @@
       d&eacute;finies dans le d&eacute;codeur par le fabricant.
       JMRI utilise ceux-ci pour identifier le d&eacute;codeur.</p>
 
-      <p><a name="Other Tabs"></a></p>
-
-      <h3>Autres Onglets</h3>Les autres onglets d&eacute;pendent de
+      <a name="OtherTabs" id="OtherTabs"></a>
+      <h3>Autres Onglets</h3>
+      <p>Les autres onglets d&eacute;pendent de
       ce que le fabricant a install&eacute; dans le
       d&eacute;codeur, si les options n'ont pas &eacute;t&eacute;
       install&eacute;es les volets sont soit gris&eacute;s ou pas
-      activ&eacute;s.
+      activ&eacute;s.</p>
 
-      <p><a name="SpeedTable" id="SpeedTable"></a></p>
-
+      <a name="SpeedTable" id="SpeedTable"></a>
       <h3>Onglet Table de Vitesse</h3>
 
       <p><img src="SpeedTab.png"></p>
@@ -158,7 +157,7 @@
       ne changent pas pour les crans au-dessus, si un cran
       inf&eacute;rieur est modifi&eacute;.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -10,7 +10,7 @@ import jmri.Reporter;
  * Note that we consider it an error for there to be more than one object that
  * corresponds to a particular physical Reporter on the layout.
  *
- * Description: Abstract class providing the basic logic of the Reporter
+ * Abstract class providing the basic logic of the Reporter
  * interface
  *
  * @author Bob Jacobsen Copyright (C) 2001
@@ -19,11 +19,11 @@ import jmri.Reporter;
 public abstract class AbstractReporter extends AbstractNamedBean implements Reporter {
 
     public AbstractReporter(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     public AbstractReporter(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override

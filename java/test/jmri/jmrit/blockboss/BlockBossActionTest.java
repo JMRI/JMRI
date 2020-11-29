@@ -1,30 +1,42 @@
 package jmri.jmrit.blockboss;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class BlockBossActionTest {
 
     @Test
-    public void testCTor() {
+    public void testCtor() {
         BlockBossAction t = new BlockBossAction();
-        Assert.assertNotNull("exists",t);
+        assertThat(t).withFailMessage("exists").isNotNull();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @Test
+    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    public void testAction() {
+        BlockBossAction t = new BlockBossAction();
+        t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event"));
+
+        JFrameOperator fo = new JFrameOperator(Bundle.getMessage("Simple_Signal_Logic"));
+        fo.close();
+    }
+
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

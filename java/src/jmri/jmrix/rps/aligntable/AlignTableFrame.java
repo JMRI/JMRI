@@ -13,7 +13,7 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
  *
  * @see AlignTableAction
  *
- * @author	Bob Jacobsen Copyright (C) 2008
+ * @author Bob Jacobsen Copyright (C) 2008
  */
 public class AlignTableFrame extends jmri.util.JmriJFrame {
 
@@ -23,6 +23,7 @@ public class AlignTableFrame extends jmri.util.JmriJFrame {
 
     /**
      * Constructor method
+     * @param _memo system connection.
      */
     public AlignTableFrame(RpsSystemConnectionMemo _memo) {
         super();

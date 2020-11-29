@@ -5,9 +5,10 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Updated  by Blorec Herv&#233;  2013-09-18-->
+  <!-- Updated by Blorec Herv&#233;  2013-09-18-->
 
-  <title>JMRI: Powerline Controllers</title><!-- Style -->
+  <title>JMRI: Powerline Controllers</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,14 +16,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h2>JMRI: Contr&ocirc;leurs CPL (Powerline)</h2>Cette page
       explique comment configurer JMRI pour dialoguer avec les
       contr&ocirc;leurs de la ligne &eacute;lectrique, par exemple
@@ -60,7 +63,7 @@
       aller sur "OFF".Selon le mat&eacute;riel X10, ce peut
       &ecirc;tre soit un arr&ecirc;t imm&eacute;diat, ou &ecirc;tre
       baisse lente.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

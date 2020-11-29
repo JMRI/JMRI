@@ -3,7 +3,7 @@ package jmri.jmrix.tams.swing;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.tams.Bundle {
 
-    @Nullable private static final String name = null; // No local resources
+    @CheckForNull private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly
@@ -82,7 +82,7 @@ public class Bundle extends jmri.jmrix.tams.Bundle {
     }
    
     private final static Bundle b = new Bundle();
-    @Override @Nullable protected String bundleName() {return name; }
+    @Override @CheckForNull protected String bundleName() {return name; }
     protected static jmri.Bundle getBundle() { return b; }
 
     @Override 

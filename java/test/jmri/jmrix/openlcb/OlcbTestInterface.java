@@ -133,15 +133,6 @@ public class OlcbTestInterface {
         iface.flushSendQueue();
     }
 
-    public static OlcbSystemConnectionMemo createForLegacyTests() {
-        OlcbTestInterface testIf = new OlcbTestInterface();
-        OlcbSystemConnectionMemo memo = new OlcbSystemConnectionMemo();
-        memo.setTrafficController(testIf.tc);
-        memo.setInterface(testIf.iface);
-        testIf.waitForStartup();
-        return memo;
-    }
-
     /**
      * @return an OlcbSystemConnectionMemo bound to this test interface for integration tests.
      */
@@ -164,17 +155,17 @@ public class OlcbTestInterface {
         return t;
     }
 
-    public TestTrafficController tc;
-    public NodeID nodeID;
-    public CanInterface canInterface;
-    public OlcbInterface iface;
+    public final TestTrafficController tc;
+    public final NodeID nodeID;
+    public final CanInterface canInterface;
+    public final OlcbInterface iface;
     public OlcbConfigurationManager configurationManager;
     // Filled in only if called constructor with the argument to create the system connection memo.
     public CanSystemConnectionMemo systemConnectionMemo;
 
     public void dispose(){
       // terminate the OlcbInterface (and terminate thread)
-      new Thread(() -> { iface.dispose();},"OLCB Interface dispose thread").start();
+      new Thread(iface::dispose,"OLCB Interface dispose thread").start();
     }
 
 

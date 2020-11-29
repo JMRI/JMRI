@@ -1,9 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-empty-data",
+    "title": "jmri-json-locale-client-message",
     "type": "object",
-    "description": "Schema data object in when data is empty",
+    "description": "Schema data object in message from client to JMRI for type \"locale\"",
     "properties": {
+        "locale": {
+            "type": "string",
+            "description": "The client locale matching a Java Locale string representation"
+        }
     },
-    "additionalProperties": false
+    "additionalProperties": false,
+    "required": ["locale"]
 }

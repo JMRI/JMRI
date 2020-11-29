@@ -62,7 +62,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         _nDataChars = 0;
         _dataChars = new int[1];
         log.error("LocoNetMessage does not allow a constructor with no argument"); // NOI18N
-
     }
 
     /**
@@ -238,7 +237,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      */
     public void setParity() {
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && getNumDataElements() > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (getNumDataElements() > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (int i = 0; i < 5; i++) {
@@ -278,7 +277,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         int loop;
 
         // check for the D3 special case
-        if (getOpCode() == 0xD3 && len > 6) {
+        if ((getOpCode() == LnConstants.RE_OPC_PR3_MODE) && (len > 6)) {
             // sum the D3 header separately
             int sum = 0xFF;
             for (loop = 0; loop < 5; loop++) {
@@ -388,7 +387,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         return r;
     }
 
-    @Override
     /**
      * Interprets a LocoNet message into a string describing the
      * message.
@@ -417,6 +415,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      *
      * @return a human readable representation of the message.
      */
+    @Override
     public String toMonitorString(){
           return toMonitorString("L"); // NOI18N
     }
@@ -578,7 +577,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
     }
 
     /**
-     * Get turnout address.  Does not check to see that the message is
+     * Get turnout address. Does not check to see that the message is
      * a turnout message.
      *
      * @return address (in range 1 to n )
@@ -588,7 +587,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         int a2 = getElement(2);
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
-
 
     // Hex char array for toString conversion
     static char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};

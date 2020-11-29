@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class DecVariableValue extends VariableValue
-        implements ActionListener, PropertyChangeListener, FocusListener {
+        implements ActionListener, FocusListener {
 
     public DecVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -41,6 +40,7 @@ public class DecVariableValue extends VariableValue
         CvValue cv = _cvMap.get(getCvNum());
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
+        simplifyMask();
     }
 
     @Override
@@ -102,7 +102,7 @@ public class DecVariableValue extends VariableValue
                 }
             }
         } else {
-            //As the user has left the contents blank, we shall re-instate the old
+            // As the user has left the contents blank, we shall re-instate the old
             // value as, when a write to decoder is performed, the cv remains the same value.
             _value.setText(oldContents);
         }
@@ -116,9 +116,7 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     void updatedTextField() {
-        if (log.isDebugEnabled()) {
-            log.debug("updatedTextField");
-        }
+        log.debug("updatedTextField");
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
         // compute new cv value by combining old and request
@@ -140,9 +138,7 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("actionPerformed");
-        }
+        log.debug("actionPerformed");
         try {
             int newVal = textToValue(_value.getText());
             updatedTextField();
@@ -157,17 +153,13 @@ public class DecVariableValue extends VariableValue
      */
     @Override
     public void focusGained(FocusEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("focusGained");
-        }
+        log.debug("focusGained");
         enterField();
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("focusLost");
-        }
+        log.debug("focusLost");
         exitField();
     }
 
@@ -276,9 +268,11 @@ public class DecVariableValue extends VariableValue
     ArrayList<DecVarSlider> sliders = new ArrayList<DecVarSlider>();
 
     /**
-     * Set a new value, including notification as needed. This does the
-     * conversion from string to int, so if the place where formatting needs to
-     * be applied
+     * Set a new value, including notification as needed.
+     * <p>
+     * This does the conversion from string to int, so if the place where 
+     * formatting needs to be applied.
+     * @param value new value.
      */
     public void setValue(int value) {
         int oldVal;
@@ -290,7 +284,7 @@ public class DecVariableValue extends VariableValue
         if (value < _minVal) value = _minVal;
         if (value > _maxVal) value = _maxVal;
         if (log.isDebugEnabled()) {
-            log.debug("setValue with new value " + value + " old value " + oldVal);
+            log.debug("setValue with new value {} old value {}", value, oldVal);
         }
         if (oldVal != value) {
             _value.setText(valueToText(value));
@@ -333,7 +327,7 @@ public class DecVariableValue extends VariableValue
     public boolean isChanged() {
         CvValue cv = _cvMap.get(getCvNum());
         if (log.isDebugEnabled()) {
-            log.debug("isChanged for " + getCvNum() + " state " + cv.getState());
+            log.debug("isChanged for {} state {}", getCvNum(), cv.getState());
         }
         return considerChanged(cv);
     }
@@ -375,7 +369,7 @@ public class DecVariableValue extends VariableValue
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // notification from CV; check for Value being changed
         if (log.isDebugEnabled()) {
-            log.debug("Property changed: " + e.getPropertyName());
+            log.debug("Property changed: {}", e.getPropertyName());
         }
         if (e.getPropertyName().equals("Busy")) {
             if (((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
@@ -396,7 +390,7 @@ public class DecVariableValue extends VariableValue
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
             int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
-            setValue(newVal);  // check for duplicate done inside setVal
+            setValue(newVal);  // check for duplicate done inside setValue
         }
     }
 

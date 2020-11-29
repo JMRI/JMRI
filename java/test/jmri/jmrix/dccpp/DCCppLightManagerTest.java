@@ -1,15 +1,10 @@
 package jmri.jmrix.dccpp;
 
 import jmri.Light;
-import jmri.LightManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.dccpp.DCCppLightManager class.
@@ -23,47 +18,38 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @Override
     public String getSystemName(int i) {
-        return "DCCPPL" + i;
+        return "DL" + i;
     }
 
     @Test
     public void testAsAbstractFactory() {
 
         // ask for a Light, and check type
-        Light tl = l.newLight("DCCPPL21", "my name");
+        Light tl = l.newLight("DL21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received light value " + tl);
-        }
-        Assert.assertTrue(null != (DCCppLight) tl);
+        Assert.assertNotNull(tl);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("DCCPPL21"));
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
-        }
-
-        Assert.assertTrue(null != l.getBySystemName("DCCPPL21"));
-        Assert.assertTrue(null != l.getByUserName("my name"));
+        Assert.assertNotNull(l.getBySystemName("DL21"));
+        Assert.assertNotNull(l.getByUserName("my name"));
     }
 
     // from here down is testing infrastructure
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface, register
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(xnis);
+        xnis.setSystemConnectionMemo(memo);
         // create and register the manager object
-        l = new DCCppLightManager(xnis, "DCCPP");
+        l = new DCCppLightManager(xnis.getSystemConnectionMemo());
         jmri.InstanceManager.setLightManager(l);
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l.dispose();
         l = null;
@@ -73,6 +59,5 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppLightManagerTest.class);
-
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppLightManagerTest.class);
 }

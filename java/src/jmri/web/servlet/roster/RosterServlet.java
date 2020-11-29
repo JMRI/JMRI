@@ -12,6 +12,7 @@ import static jmri.server.json.JSON.MFG;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.NUMBER;
 import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.V5;
 import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -496,11 +497,9 @@ public class RosterServlet extends HttpServlet {
         switch (format) {
             case JSON.JSON:
                 response.setContentType(UTF8_APPLICATION_JSON);
-                JsonRosterServiceFactory factory = InstanceManager.getOptionalDefault(JsonRosterServiceFactory.class).orElseGet(() -> {
-                    return InstanceManager.setDefault(JsonRosterServiceFactory.class, new JsonRosterServiceFactory());
-                });
+                JsonRosterServiceFactory factory = new JsonRosterServiceFactory();
                 try {
-                    response.getWriter().print(factory.getHttpService(mapper).getRoster(request.getLocale(), filter, 0));
+                    response.getWriter().print(factory.getHttpService(mapper, V5).getRoster(request.getLocale(), filter, 0));
                 } catch (JsonException ex) {
                     response.sendError(ex.getCode(), mapper.writeValueAsString(ex.getJsonMessage()));
                 }

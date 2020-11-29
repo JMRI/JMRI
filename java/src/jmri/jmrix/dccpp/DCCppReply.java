@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
-  *
+ * @author Harald Barth Copyright (C) 2019
+ *
  * Based on XNetReply
  */
 
@@ -80,98 +81,100 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     *
     * @return representation of the DCCppReply as a string.
     */
+    @Override
    public String toMonitorString(){
         // Beautify and display
         String text;
 
         switch (getOpCodeChar()) {
             case DCCppConstants.THROTTLE_REPLY:
-                text = "Throttle Reply: \n";
-                text += "\tRegister: " + getRegisterString() + "\n";
-                text += "\tSpeed: " + getSpeedString() + "\n";
-                text += "\tDirection: " + getDirectionString();
+                text = "Throttle Reply: ";
+                text += "Register: " + getRegisterString() + ", ";
+                text += "Speed: " + getSpeedString() + ", ";
+                text += "Direction: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
                 if (isTurnoutDefReply()) {
-                    text = "Turnout Reply: \n";
-                    text += "\tT/O Number: " + getTOIDString() + "\n";
-                    text += "\tT/O Address: " + getTOAddressString() + "\n";
-                    text += "\tT/O Index: " + getTOAddressIndexString() + "\n";
+                    text = "Turnout Reply: ";
+                    text += "T/O Number: " + getTOIDString() + ", ";
+                    text += "T/O Address: " + getTOAddressString() + ", ";
+                    text += "T/O Index: " + getTOAddressIndexString() + ", ";
                     // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
                     if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
                         int boardAddr = getTOAddressInt();
                         int boardIndex = getTOAddressIndexInt();
                         int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
-                        text += "\tT/O DCC Address: " + Integer.toString(dccAddress) + "\n";
+                        text += "T/O DCC Address: " + Integer.toString(dccAddress) + ", ";
                     }
-                    text += "\tDirection: " + getTOStateString();
+                    text += "Direction: " + getTOStateString();
                 } else {
-                    text = "Turnout Reply: \n";
-                    text += "\tT/O Number: " + getTOIDString() + "\n";
-                    text += "\tDirection: " + getTOStateString();
+                    text = "Turnout Reply: ";
+                    text += "T/O Number: " + getTOIDString() + ", ";
+                    text += "Direction: " + getTOStateString();
                 }
                 break;
             case DCCppConstants.SENSOR_REPLY_H:
-                text = "Sensor Reply (Inactive): \n";
-                text += "\tSensor Number: " + getSensorNumString() + "\n";
-                text += "\tState: INACTIVE";
+                text = "Sensor Reply (Inactive): ";
+                text += "Sensor Number: " + getSensorNumString() + ", ";
+                text += "State: INACTIVE";
                 break;
             case DCCppConstants.SENSOR_REPLY_L:
                 // Also covers the V1.0 version SENSOR_REPLY
                 if (isSensorDefReply()) {
-                    text = "Sensor Def Reply: \n";
-                    text += "\tSensor Number: " + getSensorDefNumString() + "\n";
-                    text += "\tSensor Pin: " + getSensorDefPinString() + "\n";
-                    text += "\tSensor Pullup: " + getSensorDefPullupString();
+                    text = "Sensor Def Reply: ";
+                    text += "Sensor Number: " + getSensorDefNumString() + ", ";
+                    text += "Sensor Pin: " + getSensorDefPinString() + ", ";
+                    text += "Sensor Pullup: " + getSensorDefPullupString();
                 } else {
-                    text = "Sensor Reply (Active): \n";
-                    text += "\tSensor Number: " + getSensorNumString() + "\n";
-                    text += "\tState: ACTIVE";
+                    text = "Sensor Reply (Active): ";
+                    text += "Sensor Number: " + getSensorNumString() + ", ";
+                    text += "State: ACTIVE";
                 }
                 break;
             case DCCppConstants.OUTPUT_REPLY:
                 if (isOutputCmdReply()) {
-                    text = "Output Command Reply: \n";
-                    text += "\tOutput Number: " + getOutputNumString() + "\n";
-                    text += "\tOutputState: " + getOutputCmdStateString();
+                    text = "Output Command Reply: ";
+                    text += "Output Number: " + getOutputNumString() + ", ";
+                    text += "OutputState: " + getOutputCmdStateString();
                 } else if (isOutputListReply()) {
-                    text = "Output Command Reply: \n";
-                    text += "\tOutput Number: " + getOutputNumString() + "\n";
-                    text += "\tOutput Pin: " + getOutputListPinString() + "\n";
-                    text += "\tOutput Flags: " + getOutputListIFlagString() + "\n";
-                    text += "\tOutput State: " + getOutputListStateString();
+                    text = "Output Command Reply: ";
+                    text += "Output Number: " + getOutputNumString() + ", ";
+                    text += "Output Pin: " + getOutputListPinString() + ", ";
+                    text += "Output Flags: " + getOutputListIFlagString() + ", ";
+                    text += "Output State: " + getOutputListStateString();
                 } else {
-                    text = "Invalid Output Reply Format: \n";
-                    text += "\t" + toString();
+                    text = "Invalid Output Reply Format: ";
+                    text += toString();
                 }
                 break;
             case DCCppConstants.PROGRAM_REPLY:
                 if (isProgramBitReply()) {
-                    text = "Program Bit Reply: \n";
-                    text += "\tCallback Num: " + getCallbackNumString() + "\n";
-                    text += "\tCallback Sub: " + getCallbackSubString() + "\n";
-                    text += "\tCV: " + getCVString() + "\n";
-                    text += "\tCV Bit: " + getProgramBitString() + "\n";
-                    text += "\tValue: " + getReadValueString();
+                    text = "Program Bit Reply: ";
+                    text += "Callback Num: " + getCallbackNumString() + ", ";
+                    text += "Callback Sub: " + getCallbackSubString() + ", ";
+                    text += "CV: " + getCVString() + ", ";
+                    text += "CV Bit: " + getProgramBitString() + ", ";
+                    text += "Value: " + getReadValueString();
                 } else {
-                    text = "Program Reply: \n";
-                    text += "\tCallback Num: " + getCallbackNumString() + "\n";
-                    text += "\tCallback Sub: " + getCallbackSubString() + "\n";
-                    text += "\tCV: " + getCVString() + "\n";
-                    text += "\tValue: " + getReadValueString();
+                    text = "Program Reply: ";
+                    text += "Callback Num: " + getCallbackNumString() + ", ";
+                    text += "Callback Sub: " + getCallbackSubString() + ", ";
+                    text += "CV: " + getCVString() + ", ";
+                    text += "Value: " + getReadValueString();
                 }
                 break;
             case DCCppConstants.STATUS_REPLY:
-                text = "Base Station Status: \n";
-                text += "\tVersion: " + getStatusVersionString() + "\n";
-                text += "\tBuild: " + getStatusBuildDateString();
+                text = "Status:";
+                text += "Station: " + getStationType();
+                text += ", Build: " + getBuildString();
+                text += ", Version: " + getVersion();
                 break;
             case DCCppConstants.POWER_REPLY:
                 if(isNamedPowerReply()) {
-                    text = "Power Status: \n";
-                    text += "\tName:" + getPowerDistrictName();
-                    text += "\tStatus:" + getPowerDistrictStatus();
+                    text = "Power Status: ";
+                    text += "Name:" + getPowerDistrictName();
+                    text += "Status:" + getPowerDistrictStatus();
                 } else {
                     text = "Power Status: ";
                     text += ((char) (getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
@@ -185,16 +188,16 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             //     text = "List Packet Reply...\n";
             //     break;
             case DCCppConstants.WRITE_EEPROM_REPLY:
-                text = "Write EEPROM Reply...\n";
+                text = "Write EEPROM Reply... ";
                 // TODO: Don't use getProgValueString()
-                text += "\tTurnouts: " + getValueString(1) + "\n";
-                text += "\tSensors: " + getValueString(2);
-                text += "\tOutputs: " + getValueString(3);
+                text += "Turnouts: " + getValueString(1) + ", ";
+                text += "Sensors: " + getValueString(2) + ", ";
+                text += "Outputs: " + getValueString(3);
                 break;
             case DCCppConstants.MEMORY_REPLY:
                 // TODO: Implement this fully
-                text = "Memory Reply...\n";
-                text += "\tFree Memory: " + getFreeMemoryString();
+                text = "Memory Reply... ";
+                text += "Free Memory: " + getFreeMemoryString();
                 break;
             case DCCppConstants.COMM_TYPE_REPLY:
                 text = "Comm Type Reply ";
@@ -207,9 +210,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.MADC_SUCCESS_REPLY:
                 text = "Sensor/Turnout/Output MADC Success Reply ";
                 break;
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                text = "Number of slots reply: " + getValueString(1);
+                break;
             default:
-                text = "Unregonized reply: ";
-                text += toString() + "\n\tvals: ";
+                text = "Unrecognized reply: ";
+                text += toString() + "vals: ";
                 text += toString().replace("", " ").trim(); // inserts a space for every character
         }
 
@@ -246,11 +252,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         switch(s.charAt(0)) {
             case DCCppConstants.STATUS_REPLY:
                 if (s.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) {
-                    log.debug("Status Reply: {}", r.toString());
+                    log.debug("ESP32 Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_ESP32_REGEX;
                 } else if (s.matches(DCCppConstants.STATUS_REPLY_REGEX)) {
-                    log.debug("Status Reply: {}", r.toString());
+                    log.debug("Original Status Reply: {}", r.toString());
                     r.myRegex = DCCppConstants.STATUS_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) {
+                    log.debug("DCC-EX Status Reply: {}", r.toString());
+                    r.myRegex = DCCppConstants.STATUS_REPLY_DCCEX_REGEX;
                 } 
                 return(r);
             case DCCppConstants.THROTTLE_REPLY:
@@ -303,6 +312,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_NAMED_REGEX;
+                }
+                return(r);
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                if (s.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.MAXNUMSLOTS_REPLY_REGEX;
                 }
                 return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -413,7 +427,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(!m.group(idx).equals("0"));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply bool value index too big. idx = {} msg = {}", idx, this.toString());
             return(false);
         }
     }
@@ -423,8 +437,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(m.group(idx));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply string value index too big. idx = {} msg = {}", idx, this.toString());
             return("");
+        }
+    }
+
+    //is there a match at idx?
+    public boolean valueExists(int idx) {
+        Matcher m = DCCppReply.match(myReply.toString(), myRegex, "gvs");
+        if ((m != null) && (idx <= m.groupCount())) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -433,7 +457,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         if ((m != null) && (idx <= m.groupCount())) {
             return(Integer.parseInt(m.group(idx)));
         } else {
-            log.error("DCCppReply value index too big. idx = {} msg = {}", idx, this.toString());
+            log.error("DCCppReply int value index too big. idx = {} msg = {}", idx, this.toString());
             return(0);
         }
     }
@@ -516,17 +540,36 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    public String getStatusVersionString() {
+    public String getStationType() {
         if (this.isStatusReply()) {
-            return(this.getValueString(1));
+            return(this.getValueString(1)); //1st match in all versions
         } else {
             return("Unknown");
         }
     }
 
-    public String getStatusBuildDateString() {
+    //build value is 3rd match in v3+, 2nd in previous 
+    public String getBuildString() {
         if (this.isStatusReply()) {
-            return(this.getValueString(2));
+            if (this.valueExists(3)) {             
+                return(this.getValueString(3));
+            } else {
+                return(this.getValueString(2));
+            }
+        } else {
+            return("Unknown");
+        }
+    }
+
+    //version is in 2nd match for v3+, does not exist prior 
+    public String getVersion() {
+        if (this.isStatusReply()) {
+            String s = this.getValueString(2);   
+                if (jmri.Version.isCanonicalVersion(s)) {
+                    return s;
+                } else {
+                    return("0.0.0");
+                }
         } else {
             return("Unknown");
         }
@@ -1122,6 +1165,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
             (this.matches(DCCppConstants.STATUS_REPLY_ESP32_REGEX)) ||
+            (this.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX)) ||
             (this.isVersionReply())
         ) {
             return(true);

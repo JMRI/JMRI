@@ -5,7 +5,6 @@ import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.ThrottleListener;
-import jmri.ThrottleManager;
 import jmri.jmrix.loconet.LnThrottleManager;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrix.loconet.SlotManager
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class UhlenbrockLnThrottleManager extends LnThrottleManager implements ThrottleManager, SlotListener {
+public class UhlenbrockLnThrottleManager extends LnThrottleManager {
 
     public UhlenbrockLnThrottleManager(UhlenbrockSystemConnectionMemo memo) {
         super(memo);

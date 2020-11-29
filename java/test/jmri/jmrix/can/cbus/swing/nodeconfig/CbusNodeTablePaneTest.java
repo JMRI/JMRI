@@ -1,18 +1,18 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Test simple functioning of CbusNodeTablePane
  *
- * @author	Paul Bender Copyright (C) 2016
- * @author	Paul Bender Copyright (C) 2019
+ * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2019
  */
 public class CbusNodeTablePaneTest {
 
@@ -23,12 +23,12 @@ public class CbusNodeTablePaneTest {
         Assert.assertNotNull("exists",t);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

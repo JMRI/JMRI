@@ -20,12 +20,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Using JMRI&#174; to Operate Trains</h1>
 
       <h2>OperationsPro: Setting your Preferences</h2>
@@ -85,7 +84,7 @@
       configured to the system your selected).</p>
 
       <p>Let's set up JMRI Preferences for the Connection with your
-      Command Station. <span style="align: center;color:grey;">In
+      Command Station. <span style="align: center;color:gray;">In
       this example we are using a Digitrax DCS100 Super Chief
       Command Station, (radio) interfaced to the computer via
       LocoNet, PR3 (in MS100 mode) and USB port. We keep our JMRI
@@ -157,8 +156,7 @@
             connection settings.</p>
 
             <p><input type="submit" name="button" id="button"
-            value="Delete Connection"> will delete all the
-            connection settings.</p>
+            value="X"> will delete this connection.</p>
           </td>
         </tr>
       </table>
@@ -329,7 +327,7 @@
         <p><a href="index.shtml#startOps">Back to Index</a></p>
       </div>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -18,6 +18,8 @@ public class Throttle extends AbstractThrottle {
 
     /**
      * Constructor.
+     * @param address loco address.
+     * @param tc system connection traffic controller.
      */
     public Throttle(DccLocoAddress address, CommandStation tc) {
         super(null);
@@ -25,19 +27,7 @@ public class Throttle extends AbstractThrottle {
 
         // cache settings.
         this.speedSetting = 0;
-        this.f0 = false;
-        this.f1 = false;
-        this.f2 = false;
-        this.f3 = false;
-        this.f4 = false;
-        this.f5 = false;
-        this.f6 = false;
-        this.f7 = false;
-        this.f8 = false;
-        this.f9 = false;
-        this.f10 = false;
-        this.f11 = false;
-        this.f12 = false;
+        // Functions default to false
         this.address = address;
         this.isForward = true;
     }
@@ -85,7 +75,7 @@ public class Throttle extends AbstractThrottle {
     }
 
     /**
-     * Set the speed {@literal &} direction.
+     * Set the speed and direction.
      * <p>
      * This intentionally skips the emergency stop value of 1.
      *
@@ -119,9 +109,7 @@ public class Throttle extends AbstractThrottle {
         for (int j = 0; j < step.length(); j++) {
             m.setElement(i++, step.charAt(j));
         }
-        if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
-        }
+        firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         record(speed);
         // tcl.sendMessage(m, null);
     }
@@ -131,9 +119,7 @@ public class Throttle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
-        if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
-        }
+        firePropertyChange(ISFORWARD, old, isForward);
     }
 
     @Override

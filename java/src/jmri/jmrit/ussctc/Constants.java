@@ -15,7 +15,6 @@ public interface Constants {
 
     final static String nameDivider = ":";
     final static String pkgPrefix = "USS CTC";
-    // Must be upper case by convention
 
     final static String commonNamePrefix = pkgPrefix + nameDivider;
     final static String commonNameSuffix = nameDivider + "1" + nameDivider;

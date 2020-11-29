@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML File to represent failed file, BackupInfo has no closure tag -->
+<CbusNode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSNodeBackup.xsd" NodeNum="41378">
+ <Backups>
+    <BackupInfo >
+  </Backups>
+</CbusNode>

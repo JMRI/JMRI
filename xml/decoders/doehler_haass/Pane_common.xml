@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 5 - 2020-05-03 - RK - correction of a very small spelling mistake -->
 <!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
@@ -174,7 +175,7 @@
         <label>
           <text>Blocks an output even if its main function is activated</text>
           <text xml:lang="fr">Bloque certaines sorties, même si la fonction est activée</text>
-          <text xml:lang="de">Schaltet eine Funktion ab, trozt eingeschaltetem Ausgang</text>
+          <text xml:lang="de">Schaltet eine Funktion ab, trotz eingeschaltetem Ausgang</text>
           <text xml:lang="it">Blocca un uscita anche se la funzione è attivata</text>
           <text xml:lang="ca">Bloca una sortida encara ue la funció estigui activa</text>
         </label>

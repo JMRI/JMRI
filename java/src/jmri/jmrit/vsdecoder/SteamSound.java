@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Steam Sound initial version.
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -24,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018, 2019
+ * @author Klaus Killinger Copyright (C) 2018-2020
  */
 // Usage:
 // SteamSound() : constructor
@@ -112,10 +114,15 @@ class SteamSound extends EngineSound {
     }
 
     private RPMSound getRPMSound(int rpm) {
+        int i = 1;
         for (RPMSound rps : rpm_sounds) {
             if ((rps.min_rpm <= rpm) && (rps.max_rpm >= rpm)) {
+                if (engine_pane != null) {
+                    engine_pane.setThrottle(i);
+                }
                 return rps;
             }
+            i++;
         }
         // Didn't find anything
         return null;
@@ -144,7 +151,6 @@ class SteamSound extends EngineSound {
         if (engine_started) {
             if (t < 0.0f) {
                 // DO something to shut down
-                log.info("Emergency Stop");
                 //t = 0.0f;
                 current_rpm_sound.sound.fadeOut();
                 if (current_rpm_sound.use_chuff) {

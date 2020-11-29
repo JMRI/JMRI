@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Translated  by Blorec Hervé le 2011-10-30-->
+<!-- Translated  by Blorec Herv&#233; le 2011-10-30-->
 
 <html lang="fr">
 <head>
@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Statistiques LocoNet</h1>Les Interfaces
       avanc&Atilde;&copy;es LocoNet comme la s&Atilde;&copy;rie des
       LocoBuffer RR-CirKits ou la s&Atilde;&copy;rie de PRn
@@ -40,10 +41,10 @@
 
       <dl>
         <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
-        <!--#include virtual="/Footer" --></dt>
+        <!--#include virtual="/Footer.shtml" --></dt>
 
         <dt>jmri/jmrix/loconet/locostats/LocoStatsFrame 
-        <!--#include virtual="/Footer" --></dt>
+        <!--#include virtual="/Footer.shtml" --></dt>
 
         <dt>Version</dt>
 
@@ -112,7 +113,7 @@
       d'autres o&Atilde;&sup1; il agit comme une interface (MS100
       mode).</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

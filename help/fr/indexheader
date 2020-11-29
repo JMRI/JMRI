@@ -1,7 +1,7 @@
 <!-- indexheader - This file is included at the top of the page   -->
 <!-- when the web index is displayed online.    -->
 <!-- Copyright 2016 JMRI, Bob Jacobsen  See COPYING file for info -->
-<!-- Translated by Blorec Hervé le 2012-01-23 -->
+<!-- Translated by Blorec Herv&#233; le 2012-01-23 -->
 
 <h1> JMRI Syst&egrave;me d'Aide: Index </h1>
 <p>
@@ -16,5 +16,5 @@ est &eacute;galement disponible en ligne.
 <p>
 Cette page est g&eacute;n&eacute;r&eacute;e automatiquement dans le cadre du
 processus de construction. Pour plus d'informations, consultez la
-Page d&eacute;veloppeur <a href="http://jmri.org/help/fr/html/doc/Technical/Help.shtml"> sur le syst&egrave;me d'aide </a>.
+Page d&eacute;veloppeur <a href="https://jmri.org/help/fr/html/doc/Technical/Help.shtml"> sur le syst&egrave;me d'aide </a>.
 </p>

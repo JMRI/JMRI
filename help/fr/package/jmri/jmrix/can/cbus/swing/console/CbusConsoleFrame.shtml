@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated  by Blorec Hervé le 2011-11-2-->
+<!-- Translated  by Blorec Herv&#233; le 2011-11-2-->
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: CBUS Console Window</title>
+  <title>JMRI: CBUS&trade; Console Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help monitor"><!-- Style -->
+  <meta name="keywords" content="JMRI help monitor">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,15 +18,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Fen&Atilde;&ordf;tre Console CBUS</h1><a href=
+
+      <h1>Fen&Atilde;&ordf;tre Console CBUS&trade;</h1><a href=
       "../../../../../../../html/hardware/can/images/console.jpg"><img src="../../../../../../../html/hardware/can/images/console.jpg"
       width="443" height="265" alt=
       "&Atilde;&copy;cran de l'outil Console" align=
@@ -211,7 +213,9 @@
         <dd>Efface les champs de saisie de donn&Atilde;&copy;es et
         pr&Atilde;&copy;charge les valeurs de
         priorit&Atilde;&copy;.</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

@@ -2,12 +2,14 @@ package jmri.jmrix.pricom.pockettester;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the StatusFrame class
  *
- * @author	Bob Jacobsen Copyright 2005
+ * @author Bob Jacobsen Copyright 2005
  */
 public class StatusFrameTest {
 
@@ -31,14 +33,14 @@ public class StatusFrameTest {
             void sendBytes(byte[] bytes) {
             }
         });
-        f.asciiFormattedMessage(PackageTest.version);
-        f.asciiFormattedMessage(PackageTest.speed0003A);
-        f.asciiFormattedMessage(PackageTest.idlePacket);
-        f.asciiFormattedMessage(PackageTest.status1);
-        f.asciiFormattedMessage(PackageTest.status2);
-        f.asciiFormattedMessage(PackageTest.status3);
-        f.asciiFormattedMessage(PackageTest.status4);
-        f.asciiFormattedMessage(PackageTest.status5);
+        f.asciiFormattedMessage(TestConstants.version);
+        f.asciiFormattedMessage(TestConstants.speed0003A);
+        f.asciiFormattedMessage(TestConstants.idlePacket);
+        f.asciiFormattedMessage(TestConstants.status1);
+        f.asciiFormattedMessage(TestConstants.status2);
+        f.asciiFormattedMessage(TestConstants.status3);
+        f.asciiFormattedMessage(TestConstants.status4);
+        f.asciiFormattedMessage(TestConstants.status5);
 
         f.dispose();
     }
@@ -55,22 +57,22 @@ public class StatusFrameTest {
             void sendBytes(byte[] bytes) {
             }
         });
-        f.asciiFormattedMessage(PackageTest.version);
-        f.asciiFormattedMessage(PackageTest.speed0003A);
-        f.asciiFormattedMessage(PackageTest.idlePacket);
-        f.asciiFormattedMessage(PackageTest.status6);
-        f.asciiFormattedMessage(PackageTest.status2);
+        f.asciiFormattedMessage(TestConstants.version);
+        f.asciiFormattedMessage(TestConstants.speed0003A);
+        f.asciiFormattedMessage(TestConstants.idlePacket);
+        f.asciiFormattedMessage(TestConstants.status6);
+        f.asciiFormattedMessage(TestConstants.status2);
 
         f.dispose();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }

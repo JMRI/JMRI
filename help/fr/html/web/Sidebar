@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<!-- UpDated by Blorec Herv&#233; le 2013-10-08-->
+<!-- Updated by Blorec Herv&#233; le 2013-10-08-->
 
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -8,26 +8,30 @@
 
 		<dt><h3><a href="index.shtml">Utilisation de base</a></h3></dt>
 		<dd>JMRI a un support int&#233;gr&#233; pour voir votre r&#233;seau depuis un navigateur web.
-		    <UL>
-		    <LI><dfn><a href="index.shtml#Start">D&#233;marrage</a></dfn>
-		    <LI><dfn><a href="index.shtml#Configure">Configuration</a></dfn>
-		    <LI><dfn><a href="index.shtml#URLs">URLs</a></dfn>
-		    </UL>
+		<ul>
+		    <li><a href="index.shtml#Start">D&#233;marrage</a></li>
+		    <li><a href="index.shtml#Configure">Configuration</a></li>
+		    <li><a href="index.shtml#URLs">URLs</a></li>
+		</ul>
 		</dd>
 
-		<dt><h3>Serlets</h3></dt>
+		<dt><h3>Servlets</h3></dt>
 		<dd> D&#233;tails des composants web de JMRI.
-		 <UL>
-		    <LI><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
-		    <LI><dfn><a href="RosterServlet.shtml">Liste servlet</a></dfn></li>
-		    <LI><dfn><a href="PanelServlet.shtml">Panneau servlet</a></dfn></li>
-		    <LI><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
-		    <LI><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
-		    </UL>
+		<ul>
+		    <li><a href="FrameServlet.shtml">Frames</a></li>
+		    <li><a href="JsonServlet.shtml">JSON</a></li>
+		    <li><a href="RosterServlet.shtml">Liste</a></li>
+		    <li><a href="PanelServlet.shtml">Panneau</a></li>
+		 </ul>
 		</dd>
 
 	    </dl>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

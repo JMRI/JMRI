@@ -167,6 +167,6 @@ public class SerialPacketGenFrame extends jmri.util.JmriJFrame implements jmri.j
     public void reply(SerialReply r) {
     } // ignore replies
 
-    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenAction.class);
+    private final static Logger log = LoggerFactory.getLogger(SerialPacketGenFrame.class);
 
 }

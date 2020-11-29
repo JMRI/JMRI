@@ -1,22 +1,26 @@
 package jmri.jmrit.operations.trains.excel;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class TrainCustomCommon {
 
+    protected final String xmlElement;
+    protected String directoryName;
     private String mcAppName = "MC4JMRI.xls"; // NOI18N
     private final String mcAppArg = ""; // NOI18N
     private String csvNamesFileName = "CSVFilesFile.txt"; // NOI18N
@@ -24,6 +28,11 @@ public abstract class TrainCustomCommon {
     private long waitTimeSeconds = 0;
     private Process process;
     private boolean alive = false;
+
+    protected TrainCustomCommon(String dirName, String xmlElement) {
+        directoryName = dirName;
+        this.xmlElement = xmlElement;
+    }
 
     public String getFileName() {
         return mcAppName;
@@ -42,13 +51,13 @@ public abstract class TrainCustomCommon {
         csvNamesFileName = name;
     }
 
-    abstract public String getDirectoryName();
+    public String getDirectoryName() {
+        return directoryName;
+    }
 
-    abstract public void setDirectoryName(String name);
-
-//    public int getFileCount() {
-//        return fileCount;
-//    }
+    public void setDirectoryName(String name) {
+        directoryName = name;
+    }
 
     /**
      * Adds one CSV file path to the collection of files to be processed.
@@ -236,7 +245,8 @@ public abstract class TrainCustomCommon {
         return file.exists();
     }
 
-    public void load(Element mc) {
+    public void load(Element options) {
+        Element mc = options.getChild(xmlElement);
         if (mc != null) {
             Attribute a;
             Element directory = mc.getChild(Xml.DIRECTORY);
@@ -254,7 +264,8 @@ public abstract class TrainCustomCommon {
         }
     }
 
-    public void store(Element mc) {
+    public void store(Element options) {
+        Element mc = new Element(Xml.MANIFEST_CREATOR);
         Element file = new Element(Xml.RUN_FILE);
         file.setAttribute(Xml.NAME, getFileName());
         Element directory = new Element(Xml.DIRECTORY);
@@ -264,6 +275,7 @@ public abstract class TrainCustomCommon {
         mc.addContent(directory);
         mc.addContent(file);
         mc.addContent(common);
+        options.addContent(mc);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainCustomCommon.class);

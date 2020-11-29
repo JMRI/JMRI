@@ -12,9 +12,9 @@ public class Segment {
      * @param layoutId The parent layout id.
      * @throws IllegalArgumentException SEGMENT_ADD_FAIL
      */
-    public Segment(int layoutId) throws IllegalArgumentException {
+    public Segment(int layoutId) {
         if (_dm.getLayout(layoutId) == null) {
-            throw new IllegalArgumentException(_dm.SEGMENT_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.SEGMENT_ADD_FAIL);
         }
         _segmentId = _dm.getNextId("Segment");  // NOI18N
         _layoutId = layoutId;

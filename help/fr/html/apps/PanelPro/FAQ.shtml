@@ -6,33 +6,31 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated by Blorec Herv&#233; 2013-09-02-->
+  <!-- Updated by Blorec Herv&#233; 2013-09-02-->
 
-  <title>JMRI: PanelPro Questions Fr&eacute;quemment
-  Pos&eacute;es</title><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <title>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-    <div id="mainContent">
-      <h1>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es
-      (FAQ)</h1><a name="context" id="context"></a>
+      <h1>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es (FAQ)</h1>
+      <a name="context" id="context"></a>
 
-      <h3><a name="context" id="context">Comment JMRI fait le lien
-      avec le reste de mon r&eacute;seau?</a></h3><a name="context"
-      id="context"></a>
+      <h3>Comment JMRI fait le lien
+      avec le reste de mon r&eacute;seau?</h3>
 
       <p>Jim Betz a r&eacute;pondu &agrave; ces questions sur la
       liste des utilisateur de JMRI</p>
@@ -287,11 +285,11 @@
       pr&eacute;f&eacute;rences qui stockent vos param&egrave;tres
       d'applications: <tt>PanelProConfig2.xml</tt> . Vous pouvez
       &eacute;galement rechercher ce fichier pour trouver ce
-      r&eacute;pertoire
+      r&eacute;pertoire .
 
       <p><img src="../../../images/IconFileTree.gif" alt=
       "Capture d'&eacute;cran de l'arborescence de fichiers" align=
-      "right" width="288 HEIGHT=" hspace="5" vspace="0"> Si vous
+      "right" width="288" hspace="5" vspace="0">Si vous
       avez cr&eacute;&eacute; des ic&ocirc;nes et que vous voulez
       qu'elles soient utilisable depuis l'&eacute;diteur de
       panneaux, les mettre dans un r&eacute;pertoire
@@ -318,7 +316,7 @@
       plus r&eacute;cente d'un fichier, peut-&ecirc;tre
       &eacute;crasera votre copie, le remplacement est bas&eacute;
       sur la date du fichier).</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

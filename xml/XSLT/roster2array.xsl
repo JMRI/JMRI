@@ -61,12 +61,9 @@
 				<hr />
 				This page was produced by
 				<a href="http://jmri.org">
-					<img src="http://jmri.org/images/logo-jmri.gif"
+					<img src="https://www.jmri.org/images/logo-jmri.gif"
 					height="31" border="0" alt="JMRI project" />
 				</a>
-					Site hosted by: <br/>
-					<a href="http://www.tagadab.com/">
-					<img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
 
 			</body>
 		</html>

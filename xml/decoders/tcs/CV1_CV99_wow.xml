@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,6 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for Wow sound, based on CV1_CV99_FW86 -->
 <!-- version 2 - remove dither vars -->
+<!-- version 3 - fix bug in CV22 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <variable CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
@@ -141,16 +141,16 @@
   <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F9">
+  <variable CV="22" mask="XXXXXVXX" item="Consist Address Active For F9">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F10">
+  <variable CV="22" mask="XXXXVXXX" item="Consist Address Active For F10">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F11">
+  <variable CV="22" mask="XXXVXXXX" item="Consist Address Active For F11">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
-  <variable CV="22" mask="XXXXXXVX" item="Consist Address Active For F12">
+  <variable CV="22" mask="XXVXXXXX" item="Consist Address Active For F12">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
   </variable>
   <variable item="Consist Acceleration Adjustment" CV="23" tooltip="Values above 128 increase adjustment, below 128 decrease adjustment">

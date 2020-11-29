@@ -1,10 +1,9 @@
 package jmri.util;
 
 import java.util.concurrent.*;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * This class serves as a demonstration of some good
@@ -19,7 +18,7 @@ import org.junit.Before;
  * examples in their associated JUnit test classes:
  * {@link ThreadingUtilTest} and {@lnk WaitHandlerTest}.
  *
- * @author	Bob Jacobsen Copyright 2017
+ * @author Bob Jacobsen Copyright 2017
  */
 public class ThreadingDemoAndTest {
 
@@ -42,6 +41,7 @@ public class ThreadingDemoAndTest {
     public void testThreadingLifeCycle() {
         final Object lock = new Object();  // this object is the lock for the wait and notify
         final Thread t = new Thread() {
+            @Override
             public void run()  {
                 try {
                     synchronized(lock) {
@@ -73,6 +73,7 @@ public class ThreadingDemoAndTest {
     public void testThreadingJoinCycle() {
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @Override
             public void run()  {
                 try {
                     synchronized(lock) {
@@ -86,6 +87,7 @@ public class ThreadingDemoAndTest {
         t1.setDaemon(true);
         
         final Thread t2 = new Thread() {
+            @Override
             public void run()  {
                 try {
                     t1.join();
@@ -126,6 +128,7 @@ public class ThreadingDemoAndTest {
 
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @Override
             public void run()  {
                 try {
                     synchronized(lock) {
@@ -178,6 +181,7 @@ public class ThreadingDemoAndTest {
 
         final Object lock = new Object();
         final Thread t1 = new Thread() {
+            @Override
             public void run()  {
                 try {
                     synchronized(lock) {
@@ -244,6 +248,7 @@ public class ThreadingDemoAndTest {
         BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
         
         final Thread t = new Thread() {
+            @Override
             public void run()  {
                 try {
                     q.put(Integer.valueOf(1));
@@ -321,6 +326,7 @@ public class ThreadingDemoAndTest {
         BlockingQueue<Integer> q = new ArrayBlockingQueue<Integer>(2);
         
         final Thread t = new Thread() {
+            @Override
             public void run()  {
                 try {
                     flagInterrupted1 = true;
@@ -351,12 +357,12 @@ public class ThreadingDemoAndTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }

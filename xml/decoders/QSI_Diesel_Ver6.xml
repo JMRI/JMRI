@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -760,7 +759,7 @@
       <variable label="Motor" CV="52.10" default="11" comment="QSI" item="CV52.10">
         <decVal max="15"/>
       </variable>
-      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14">
+      <variable label="Turbo" CV="52.14" default="11" comment="QSI" item="CV52.14" exclude="112">
         <decVal max="15"/>
       </variable>
       <variable label="Air Pump" CV="52.16" default="11" comment="QSI" item="CV52.16">
@@ -3296,7 +3295,7 @@
       <variable label="Ditch Light Hold Time (seconds)" CV="55.110.5" mask="XXXVVVVV" default="5" item="CV55.110.5" tooltip="0 to 31 seconds" include="103,126,131,132">
         <decVal max="31"/>
       </variable>
-      <variable label="Speed Step to Scale MPH Scale Factor" CV="56.10" default="64" comment="QSI" item="CV56.10">
+      <variable label="Speed Step to Scale MPH Scale Factor" CV="56.10" default="64" comment="QSI" item="CV56.10" exclude="112">
         <decVal max="128"/>
       </variable>
       <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->

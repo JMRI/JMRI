@@ -1,24 +1,18 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.junit.jupiter.api.*;
+
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.duplexgroup.DuplexGroupMessageType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeListener;
 
 /**
  * Test simple functioning of LnDplxGrpInfoImpl
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  * @author      B. Milhaupt Copyright (C) 2018
  */
 public class LnDplxGrpInfoImplTest {
@@ -64,9 +58,6 @@ public class LnDplxGrpInfoImplTest {
         for (LocoNetListener listener : lnis.getListeners()) {
             if (listener == dpxGrpInfoImpl) Assert.fail("dispose did not remove");
         }
-
-        memo.dispose();
-
     }
 
     @Test
@@ -2162,7 +2153,7 @@ public class LnDplxGrpInfoImplTest {
 //    public void connect(jmri.jmrix.loconet.LnTrafficController t) {
 //    public void dispose() {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -2180,7 +2171,7 @@ public class LnDplxGrpInfoImplTest {
 
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         dpxGrpInfoImpl.dispose();
         dpxGrpInfoImpl = null;

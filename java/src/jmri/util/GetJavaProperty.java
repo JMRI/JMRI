@@ -10,7 +10,7 @@ package jmri.util;
  * to print the value of a Java system property in the current JVM, for example,
  * within a script.
  *
- * @author	Bob Jacobsen, Copyright (C) 2008
+ * @author Bob Jacobsen, Copyright (C) 2008
  */
 public class GetJavaProperty {
 

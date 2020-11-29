@@ -1,12 +1,9 @@
 package jmri.jmrit.vsdecoder.listener;
 
-import java.util.List;
 import javax.vecmath.Vector3f;
-import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.jmrit.audio.AudioFactory;
 import jmri.jmrit.audio.AudioListener;
-import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

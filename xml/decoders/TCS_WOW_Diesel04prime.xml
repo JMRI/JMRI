@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20190408"/>
 	<!-- new file, based on Wow diesel sound set 4 -->
+	<version author="Michael Mosher" version="2" lastUpdated="20191111"/>
+	<!-- Add CV 177-181 & new bit in CV182 -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 4 Prime" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 SS4 Prime" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" connector="9pin"
@@ -92,6 +94,7 @@
 		<variables>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/tcs/CV177_CV182_wow.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
 			<xi:include href="http://jmri.org/xml/decoders/tcs/wowDieselCV.xml" />
 			<variable item="Sound Option 3" CV="248" default="4" readOnly="yes">

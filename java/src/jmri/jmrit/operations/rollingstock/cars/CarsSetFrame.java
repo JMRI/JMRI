@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
  */
-public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
+public class CarsSetFrame extends CarSetFrame {
 
     CarsTableModel _carsTableModel;
     JTable _carsTable;

@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;

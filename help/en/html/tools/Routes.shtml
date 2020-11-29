@@ -18,19 +18,26 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Routes Documentation</h1>
 
       <h2>What are Routes?</h2>
+      
+      <p>[After reading this page, see also the <a href="LRoutes.shtml">LRoutes documentation</a>.
+      LRoutes offer extended routing capabilities, transparently implementing them as a series of 
+      <a href="Logix.shtml">Logix conditionals</a>. LRoutes are set up similarly to and are
+      capable of performing all of the tasks of Routes - and more. They can even trigger a Route 
+      for complete compatibility.]</p>
+
 
       <p>Routes are collections of Turnouts and/or Sensors whose
       states may be set all at once. Also when a Route is
@@ -459,7 +466,7 @@
       state _and_ at least one of the triggering Sensors or a
       triggering Turnout must see the appropriate change for the
       Route to be set.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

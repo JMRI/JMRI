@@ -2,28 +2,30 @@ package jmri.jmrix.powerline.simulator;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * JUnit tests for the cm11.SpecficMessage class.
  *
- * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008, 2009
  */
 public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private SerialMessage msg;
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
-	JUnitUtil.setUp();
+        JUnitUtil.setUp();
         m = msg = new SpecificMessage(4);
     }
 
-    @After
-    public void tearDown(){
-	m = msg = null;
-	JUnitUtil.tearDown();
+    @AfterEach
+    public void tearDown() {
+        m = msg = null;
+        JUnitUtil.tearDown();
     }
 
     @Test

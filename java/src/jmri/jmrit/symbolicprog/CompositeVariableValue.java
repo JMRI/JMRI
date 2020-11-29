@@ -3,8 +3,6 @@ package jmri.jmrit.symbolicprog;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,11 +42,13 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * It's therefore recommended that a CompositeVariableValue just make changes to
  * target variables on the same programming page.
+ * <li>To apply a mask when setting a value, use an intermediary variable set
+ * from here, which in turn references the goal variable with a mask.
  * </ol>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2005, 2013
  */
-public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
+public class CompositeVariableValue extends EnumVariableValue {
 
     public CompositeVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -72,9 +72,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     @Override
     public CvValue[] usesCVs() {
         HashSet<CvValue> cvSet = new HashSet<CvValue>(20);  // 20 is arbitrary
-        Iterator<VariableValue> i = variables.iterator();
-        while (i.hasNext()) {
-            VariableValue v = i.next();
+        for (VariableValue v : variables) {
             CvValue[] cvs = v.usesCVs();
             for (int k = 0; k < cvs.length; k++) {
                 cvSet.add(cvs[k]);
@@ -101,19 +99,31 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         Setting(String varName, VariableValue variable, String value) {
             this.varName = varName;
             this.variable = variable;
-            this.value = Integer.parseInt(value);
+            try {
+                this.value = Integer.parseInt(value);
+            } catch (NullPointerException | NumberFormatException e) {
+                log.error("Illegal value received for CompositeVariable {}. Should be int but was {}", varName, value);
+                return;
+            }
             log.debug("    cTor Setting {} = {}", varName, value);
-
         }
 
         void setValue() {
             log.debug("    Setting.setValue of {} to {}", varName, value);
+            if (variable == null) {
+                log.error("Variable {} not (yet) created. Verify correct compositeSetting", varName);
+                return;
+            }
             variable.setIntValue(value);
         }
 
         boolean match() {
             if (log.isDebugEnabled()) {
                 log.debug("         Match checks {} == {}", variable.getIntValue(), value);
+            }
+            if (variable == null) {
+                log.error("Variable {} not (yet) created. Verify correct compositeSetting", varName);
+                return false;
             }
             return (variable.getIntValue() == value);
         }
@@ -178,6 +188,10 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
 
     /**
      * Add a setting to an existing choice.
+     * @param choice existing choice.
+     * @param varName variable name.
+     * @param variable variable value.
+     * @param value setting value.
      */
     public void addSetting(String choice, String varName, VariableValue variable, String value) {
         SettingList s = choiceHash.get(choice);
@@ -247,7 +261,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         log.debug("action event: {}", e);
 
         // notify
-        prop.firePropertyChange("Value", null, Integer.valueOf(getIntValue()));
+        prop.firePropertyChange("Value", null, getIntValue());
         // Here for new values; set as needed
         selectValue(getIntValue());
     }
@@ -269,7 +283,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     protected void selectValue(int value) {
         log.debug("selectValue({})", value);
         if (value > _value.getItemCount() - 1) {
-            log.error("Saw unreasonable internal value: {}", value);
+            log.error("Saw unreasonable internal value for pane combo box: {}", value);
             return;
         }
 
@@ -296,7 +310,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN) {
-            prop.firePropertyChange("Value", null, Integer.valueOf(value));
+            prop.firePropertyChange("Value", null, value);
         }
     }
 
@@ -491,10 +505,8 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
                 // some programming operation just finished
                 if (amReading) {
                     continueRead();
-                    return;
                 } else if (amWriting) {
                     continueWrite();
-                    return;
                 }
                 // if we're not reading or writing, no problem, that's just something else happening
             }

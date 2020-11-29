@@ -66,13 +66,13 @@ public class RosterMediaPane extends JPanel {
     public RosterMediaPane(RosterEntry r) {
         super();
         _imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
-        _imageFilePath.setDropFolder(LocoFile.getFileLocation());
+        _imageFilePath.setDropFolder(Roster.getDefault().getRosterFilesLocation());
         _imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
         _imageFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
         _imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
         _iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
-        _iconFilePath.setDropFolder(LocoFile.getFileLocation());
+        _iconFilePath.setDropFolder(Roster.getDefault().getRosterFilesLocation());
         _iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
         _iconFilePath.setBorder(BorderFactory.createLineBorder(Color.blue));
         _iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));

@@ -1,11 +1,11 @@
 package jmri.server.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -13,12 +13,12 @@ import org.junit.Test;
  */
 public class JsonHttpServiceTest {
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

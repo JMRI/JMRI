@@ -2,13 +2,12 @@ package jmri.jmrix.loconet.locoio;
 
 import java.util.Vector;
 import jmri.jmrix.loconet.LnConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage the set of valid modes for a particular LocoIO port,
  * as well as the conversions between addresses and SV values.
- *
+ * Used in LocoIO tool.
+ * Marked Legacy/Deprecated since 2017 version 4.12.
  * @author John Plocher, January 30, 2007
  */
 public class LocoIOModeList {
@@ -21,7 +20,7 @@ public class LocoIOModeList {
      */
     public LocoIOModeList() {
 
-        /**
+        /*
          * Initialize various configuration modes.
          * @TODO: Need to tag these with which firmware rev supports
          * them and only allow choices that match.
@@ -41,7 +40,7 @@ public class LocoIOModeList {
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x17, 0x70, "Turnout Feedback, single sensor"));
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x37, 0x70, "Turnout Feedback, dual sensor, #1"));
         modeList.add(new LocoIOMode(0, LnConstants.OPC_SW_REP, 0x37, 0x60, "Turnout Feedback, dual sensor, #2"));
-        /**
+        /*
          * and Outputs...
          */
         modeList.add(new LocoIOMode(1, LnConstants.OPC_INPUT_REP, 0xC0, 0x00, "Block Occupied Indication"));
@@ -121,6 +120,7 @@ public class LocoIOModeList {
      *
      * @param lim one of a list of defined port operation modes
      * @param address the address for this port
+     * @return low-bits value
      */
     protected int addressToValue1(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -134,6 +134,7 @@ public class LocoIOModeList {
      *
      * @param lim one of a list of defined port operation modes
      * @param address the address for this port
+     * @return high-bits value
      */
     protected int addressToValue2(LocoIOMode lim, int address) {
         if (lim == null) {
@@ -161,6 +162,7 @@ public class LocoIOModeList {
      * @param sv index of SV value to create, ignored
      * @param v2mask mask to apply on Value2
      * @param address the address for this port
+     * @return 2-byte value
      */
     protected int addressToValues(int opcode, int sv, int v2mask, int address) {
         int v1 = 0;

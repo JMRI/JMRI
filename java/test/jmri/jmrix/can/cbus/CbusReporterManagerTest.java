@@ -1,22 +1,23 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.List;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * CbusReporterManagerTest.java
  *
- * Description:	tests for the CbusReporterManager class
+ * Test for the CbusReporterManager class
  *
- * @author	Paul Bender Copyright (C) 2012,2016
- * @author	Steve Young Copyright (C) 2019 
+ * @author Paul Bender Copyright (C) 2012,2016
+ * @author Steve Young Copyright (C) 2019 
  */
 public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
@@ -48,7 +49,6 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         Assert.assertEquals("MR",NameValidity.INVALID,l.validSystemNameFormat("MR"));
         Assert.assertEquals("no value",NameValidity.INVALID,l.validSystemNameFormat(""));
         Assert.assertEquals("Str ing",NameValidity.INVALID,l.validSystemNameFormat("Jon Smith"));
-        Assert.assertEquals("null",NameValidity.INVALID,l.validSystemNameFormat(null));
     }
     
 
@@ -57,25 +57,65 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         return "MR" + i;
     }
     
-    private CanSystemConnectionMemo memo;
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
+    
+    @Test
+    public void testGetSetDefaultTimeout() {
+        Assert.assertEquals("Default timeout",2000,((CbusReporterManager) l).getTimeout());
+        ((CbusReporterManager) l).setTimeout(5);
+        Assert.assertEquals("New timeout 5",5,((CbusReporterManager) l).getTimeout());
+    }
+    
+    @Test
+    public void testGetKnownBeanProperties() {
+    
+        List<NamedBeanPropertyDescriptor<?>> cbrepproplist =  l.getKnownBeanProperties();
+        Assert.assertEquals("2 properties at present",2,cbrepproplist.size());
+        
+        NamedBeanPropertyDescriptor<?> nbpd = cbrepproplist.get(0);
+        Assert.assertEquals("Column Header matches descriptor key",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
+        Assert.assertEquals("Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
+        Assert.assertEquals("Not Editable if null",false,nbpd.isEditable(null));
+        Assert.assertEquals("Default reporter type set in properties",CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,nbpd.defaultValue);
+        Assert.assertEquals("reporter property key set",CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY,nbpd.propertyKey);
 
-    // The minimal setup for log4J
-    @Before
+        Assert.assertEquals("Currently 2 options",2,((SelectionPropertyDescriptor)nbpd).getOptions().length);
+        Assert.assertEquals("Currently 2 option tooltips",2,((SelectionPropertyDescriptor)nbpd).getOptionToolTips().size());
+        
+        nbpd = cbrepproplist.get(1);
+        Assert.assertEquals("Column Header matches sensor follower descriptor key",CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY,nbpd.getColumnHeaderText());
+        Assert.assertEquals("sensor follower Editable if CBUS Reporter",true,nbpd.isEditable(l.provideReporter("123")));
+        Assert.assertEquals("sensor follower Not Editable if null",false,nbpd.isEditable(null));
+        Assert.assertFalse("Default reporter sensor follower set in properties", (Boolean) nbpd.defaultValue);
+        Assert.assertEquals("sensor follower key set",CbusReporterManager.CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY,nbpd.propertyKey);
+        
+    }
+    
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
+
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         l = new CbusReporterManager(memo);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         l = null;
+        tcis.terminateThreads();
+        tcis = null;
+        memo.dispose();
         memo = null;
-        jmri.util.JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
-
 
 }

@@ -1,16 +1,16 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
 import javax.swing.JLabel;
+
 import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class Pr1ImportActionTest {
 
@@ -24,8 +24,7 @@ public class Pr1ImportActionTest {
         jf.dispose();
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -33,9 +32,9 @@ public class Pr1ImportActionTest {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(Pr1ImportActionTest.class);

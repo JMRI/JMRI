@@ -6,7 +6,7 @@ import javax.swing.JSeparator;
 /**
  * Create an "RPS" menu containing the JMRI RPS-specific tools.
  *
- * @author	Bob Jacobsen Copyright 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright 2006, 2007, 2008
  */
 public class RpsMenu extends JMenu {
 

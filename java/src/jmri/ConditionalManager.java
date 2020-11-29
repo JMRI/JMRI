@@ -48,7 +48,7 @@ public interface ConditionalManager extends Manager<Conditional> {
      * Parses the Conditional system name to get the parent Logix system name,
      * then gets the parent Logix, and returns it.
      *
-     * @param name system name of Conditional (must be trimmed and upper case)
+     * @param name system name of Conditional
      * @return the logix for the conditional
      */
     public Logix getParentLogix(String name);
@@ -67,10 +67,12 @@ public interface ConditionalManager extends Manager<Conditional> {
 
     public Conditional getConditional(String name);
 
+    @Override
     public Conditional getByUserName(String s);
 
     public Conditional getByUserName(Logix x, String s);
 
+    @Override
     public Conditional getBySystemName(String s);
 
     /**

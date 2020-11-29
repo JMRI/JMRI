@@ -5,7 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -77,7 +77,7 @@ public class ExceptionDisplayFrame extends JDialog {
      * @param owner   the associated window, or none if null
      *
      */
-    public ExceptionDisplayFrame(ExceptionContext context, @Nullable Window owner) {
+    public ExceptionDisplayFrame(ExceptionContext context, @CheckForNull Window owner) {
         super(owner, context.getTitle(), ModalityType.DOCUMENT_MODAL);
         Objects.requireNonNull(context, "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
         this.context = context;
@@ -92,7 +92,7 @@ public class ExceptionDisplayFrame extends JDialog {
      * @param owner the associated window, or none if null
      *
      */
-    public ExceptionDisplayFrame(Exception ex, @Nullable Window owner) {
+    public ExceptionDisplayFrame(Exception ex, @CheckForNull Window owner) {
         this(new ExceptionContext(ex, 
              Bundle.getMessage("ExceptionDisplayDefaultOperation"), 
              Bundle.getMessage("ExceptionDisplayDefaultHint")), owner);

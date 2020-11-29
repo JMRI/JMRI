@@ -6,8 +6,6 @@ package jmri.jmrit.ctc;
  * 
  * Just a packet of fields:
  * 
- * Default constructor says "OK" (true) for _mReturnStatus!
- * 
  */
 public class TrafficLockingInfo {
     public boolean      _mReturnStatus;     // JUST a return status, no relation to:

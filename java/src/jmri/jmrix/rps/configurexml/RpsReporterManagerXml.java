@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.configurexml;
 
-import jmri.jmrix.rps.RpsReporterManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,16 +25,11 @@ public class RpsReporterManagerXml extends jmri.managers.configurexml.AbstractRe
     }
 
     @Override
-    public void load(Element element, Object o) {
-        log.error("Invalid method called");
-    }
-
-    @Override
     public boolean load(Element shared, Element perNode) {
         // load individual sensors
         return loadReporters(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class);
+//    private final static Logger log = LoggerFactory.getLogger(RpsReporterManagerXml.class);
 
 }

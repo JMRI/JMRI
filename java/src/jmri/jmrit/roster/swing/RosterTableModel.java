@@ -3,7 +3,7 @@ package jmri.jmrit.roster.swing;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Date;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -62,7 +62,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
      * @param group the roster group to show; if null, behaves the same as
      *              {@link #RosterTableModel()}
      */
-    public RosterTableModel(@Nullable RosterGroup group) {
+    public RosterTableModel(@CheckForNull RosterGroup group) {
         this(false);
         if (group != null) {
             this.setRosterGroup(group.getName());

@@ -1,7 +1,7 @@
 package jmri.jmrix.powerline;
 
 /**
- * Abstract base for classes representing a communications port
+ * Abstract base for classes representing a communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection

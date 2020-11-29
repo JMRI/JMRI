@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- XML Schema for JMRI aspect-signaling support                           -->
+<!-- XML Schema for JMRI XMLIO protocol removed from JMRI in version 3.11   -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->

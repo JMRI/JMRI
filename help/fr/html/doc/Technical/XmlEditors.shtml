@@ -10,20 +10,22 @@
 
 <!-- /Style -->
 </head>
+
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: Editeurs XML</h1>JMRI utilise XML pour un certain
+        <!-- Page Body -->
+
+<h1>JMRI: Editeurs XML</h1>
+
+      <p>JMRI utilise XML pour un certain
       nombre d'objectifs: de tenir d&eacute;codeur
       d&eacute;finitions, pour son <a href=
       "XmlPersistance.shtml">syst&egrave;me de persistance</a> pour
       la configuration et panneau d'information, et de cr&eacute;er
-      des parties du site web &agrave; partir d'autres fichiers.
+      des parties du site web &agrave; partir d'autres fichiers.</p>
 
       <p>XML est un format texte, et vous pouvez l'&eacute;diter
       avec un &eacute;diteur de texte facile (bien que vous
@@ -137,7 +139,11 @@
           Cela semble &ecirc;tre un probl&egrave;me avec son format
           de sortie UDF.</p>
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+</dd>
+</dl>
+
+    <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

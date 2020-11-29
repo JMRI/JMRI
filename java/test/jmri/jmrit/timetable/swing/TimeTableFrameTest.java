@@ -1,12 +1,19 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.GraphicsEnvironment;
+import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
-import jmri.jmrit.timetable.*;
+
 import jmri.util.JUnitUtil;
-import org.junit.*;
-import org.netbeans.jemmy.EventTool;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -14,9 +21,6 @@ import org.netbeans.jemmy.operators.*;
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableFrameTest {
-
-    @Rule
-    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     TimeTableFrame _ttf = null;
     JFrameOperator _jfo = null;
@@ -221,7 +225,7 @@ public class TimeTableFrameTest {
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-        Assert.assertEquals(new JLabelOperator(_jfo, 6).getText(), "6.60 feet");
+        Assert.assertEquals("6.60 feet", new JLabelOperator(_jfo, 6).getText());
 
         // Station:  Distance and staging track.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline", "Alpha"}));  // NOI18N
@@ -302,12 +306,12 @@ public class TimeTableFrameTest {
         // Indirect layout listener veto tests
         try {
             jmri.ScaleManager.getScale("N").setScaleRatio(500.0);
-        } catch (java.beans.PropertyVetoException ex) {
+        } catch (PropertyVetoException ex) {
         }
 
         try {
             jmri.ScaleManager.getScale("UK-N").setScaleRatio(150.0);
-        } catch (Exception ex) {
+        } catch (PropertyVetoException ex) {
         }
     }
 
@@ -484,19 +488,15 @@ public class TimeTableFrameTest {
         return t;
     }
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    public void setUp(@TempDir File folder) throws IOException {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        try {
-            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
-          Assert.fail("failed to setup profile for test");
-        }
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
     }
 
-    @After
+    @AfterEach
     public  void tearDown() {
        // use reflection to reset the static file location.
        try {
@@ -507,7 +507,8 @@ public class TimeTableFrameTest {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrameTest.class);

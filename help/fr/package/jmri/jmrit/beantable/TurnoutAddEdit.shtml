@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Ajout/&Eacute;dition Aiguillages</h1>
 
       <p>Lorsque vous ajoutez un Aiguillage, vous
@@ -54,7 +55,7 @@
       Voir aide g&eacute;n&eacute;rale pour plus d'informations"sur
       les <a href=
       "../../../../html/doc/Technical/Names.shtml">Noms</a>". 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

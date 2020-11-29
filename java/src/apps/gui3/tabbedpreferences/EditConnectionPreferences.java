@@ -81,7 +81,7 @@ public class EditConnectionPreferences extends AppConfigBase {
         this.dialog = dialog;
         
         /*
-         * Adds the place holders for the menu managedPreferences so that any managedPreferences add by
+         * Adds the place holders for the menu managedPreferences so that any managedPreferences added by
          * third party code is added to the end
          */
         preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
@@ -289,8 +289,8 @@ public class EditConnectionPreferences extends AppConfigBase {
 
     @Override
     public void savePressed(boolean restartRequired) {
-        ShutDownManager sdm = InstanceManager.getNullableDefault(ShutDownManager.class);
-        if (!this.isPreferencesValid() && (sdm == null || !sdm.isShuttingDown())) {
+        ShutDownManager sdm = InstanceManager.getDefault(ShutDownManager.class);
+        if (!this.isPreferencesValid() && !sdm.isShuttingDown()) {
             for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
                 if (!panel.isPreferencesValid()) {
                     switch (JOptionPane.showConfirmDialog(this,

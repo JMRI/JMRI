@@ -3,6 +3,7 @@ package jmri.jmris.simpleserver;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
@@ -18,15 +19,15 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
+    private static final String TURNOUT = "TURNOUT ";
     private DataOutputStream output;
     private JmriConnection connection;
 
-    public SimpleTurnoutServer(JmriConnection connection) {
+    public SimpleTurnoutServer(JmriConnection connection){
         this.connection = connection;
     }
 
-    public SimpleTurnoutServer(DataInputStream inStream, DataOutputStream outStream) {
-
+    public SimpleTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
         output = outStream;
     }
 
@@ -38,12 +39,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     public void sendStatus(String turnoutName, int Status) throws IOException {
         addTurnoutToList(turnoutName);
         if (Status == Turnout.THROWN) {
-            this.sendMessage("TURNOUT " + turnoutName + " THROWN\n");
+            this.sendMessage(TURNOUT + turnoutName + " THROWN\n");
         } else if (Status == Turnout.CLOSED) {
-            this.sendMessage("TURNOUT " + turnoutName + " CLOSED\n");
+            this.sendMessage(TURNOUT + turnoutName + " CLOSED\n");
         } else {
             //  unknown state
-            this.sendMessage("TURNOUT " + turnoutName + " UNKNOWN\n");
+            this.sendMessage(TURNOUT + turnoutName + " UNKNOWN\n");
         }
     }
 
@@ -55,22 +56,23 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
         int index;
-        index = statusString.indexOf(" ") + 1;
+        index = statusString.indexOf(' ') + 1;
+        String turnoutName = statusString.substring(index, statusString.indexOf(' ', index + 1));
         log.debug(statusString);
         if (statusString.contains("THROWN")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout THROWN");
             }
             // create turnout if it does not exist since throwTurnout() no longer does so
-            this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            throwTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            this.initTurnout(turnoutName);
+            throwTurnout(turnoutName);
         } else if (statusString.contains("CLOSED")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout CLOSED");
             }
             // create turnout if it does not exist since closeTurnout() no longer does so
-            this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            closeTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            this.initTurnout(turnoutName);
+            closeTurnout(turnoutName);
         } else {
             // default case, return status for this turnout
             try {
@@ -90,5 +92,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class);
 }

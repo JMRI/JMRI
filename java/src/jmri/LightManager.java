@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -45,6 +44,7 @@ public interface LightManager extends ProvidingManager<Light> {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /** {@inheritDoc} */
@@ -109,6 +109,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getByUserName(@Nonnull String s);
 
     /**
@@ -119,6 +120,7 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     @CheckForNull
+    @Override
     public Light getBySystemName(@Nonnull String s);
 
     /**
@@ -128,26 +130,14 @@ public interface LightManager extends ProvidingManager<Light> {
      * @return true if valid; false otherwise
      */
     @CheckReturnValue
-    public boolean validSystemNameConfig(@Nonnull String systemName);
-
-    /**
-     * Normalize the system name.
-     * <p>
-     * This routine is used to ensure that each system name is uniquely linked
-     * to one C/MRI bit, by removing extra zeros inserted by the user.
-     * <p>
-     * This routine is implemented in AbstractLightManager to return the same
-     * name. If a system implementation has names that could be normalized, the
-     * system-specific Light Manager should override this routine and supply a
-     * normalized system name.
-     *
-     * @param systemName the system name to normalize
-     * @return the normalized system name
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public String normalizeSystemName(@Nonnull String systemName);
+    public default boolean validSystemNameConfig(@Nonnull String systemName){
+        try {
+            validateSystemNameFormat(systemName);
+            return true;
+        } catch (jmri.NamedBean.BadSystemNameException ex) {
+            return false;
+        }
+    }
 
     /**
      * Convert the system name to a normalized alternate name.
@@ -192,5 +182,35 @@ public interface LightManager extends ProvidingManager<Light> {
      */
     @CheckReturnValue
     public boolean allowMultipleAdditions(@Nonnull String systemName);
+    
+    /**
+     * Get the Next valid hardware address.
+     * Used by the Turnout / Sensor / Reporter / Light Manager classes.
+     * <p>
+     * System-specific methods may want to override getIncrement() rather than this one.
+     * @param curAddress the starting hardware address to get the next valid from.
+     * @param prefix system prefix, just system name, not type letter.
+     * @param ignoreInitialExisting false to return the starting address if it 
+     *                          does not exist, else true to force an increment.
+     * @return the next valid system name, excluding both system name prefix and type letter.
+     * @throws JmriException    if unable to get the current / next address, 
+     *                          or more than 10 next addresses in use.
+     */
+    @Nonnull
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException;
 
+    /**
+     * Get a system name for a given hardware address and system prefix.
+     *
+     * @param curAddress desired hardware address
+     * @param prefix     system prefix used in system name, excluding Bean type-letter..
+     * @return the complete Light system name for the prefix and current
+     *         address
+     * @throws jmri.JmriException if unable to create a system name for the
+     *                            given address, possibly due to invalid address
+     *                            format
+     */
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException;
+    
 }

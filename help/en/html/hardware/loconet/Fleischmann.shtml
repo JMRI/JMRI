@@ -20,21 +20,27 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Fleischmann Twin Centre</h1>
 
-      <p>JMRI can communicate with the Fleischmann Twin Centre in
-      several ways. For more details, see the <a href=
-      "Uhlenbrock.shtml">page on configuring Uhlenbrock-compatible
-      devices</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <p>JMRI can communicate with the Fleischmann Twin Centre
+      over LocoNet in several ways. For more details, see the
+      <a href="Uhlenbrock.shtml">page on configuring
+      Uhlenbrock-compatible devices</a>.</p>
+
+      <p>The Fleischmann z21 System is covered under
+      <a href="../roco/z21/index.shtml">Roco Z21</a>.</p>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

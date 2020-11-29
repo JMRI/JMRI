@@ -8,14 +8,16 @@ import jmri.Sensor;
 public class SwitchDirectionLever {
     private NBHSensor _mSwitchLeverSensor;
     public SwitchDirectionLever(String userIdentifier,
-                                String switchLeverSensor) {
-        _mSwitchLeverSensor = new NBHSensor("SwitchDirectionLever", userIdentifier, "switchLeverSensor", switchLeverSensor, false); // NOI18N
-        _mSwitchLeverSensor.setKnownState(Sensor.ACTIVE);
+                                NBHSensor switchLeverSensor) {
+        _mSwitchLeverSensor = switchLeverSensor;
+        if (_mSwitchLeverSensor.getKnownState() == Sensor.UNKNOWN) {
+            _mSwitchLeverSensor.setKnownState(Sensor.ACTIVE);
+        }
     }
-    
+
     public void removeAllListeners() {}   // None done.
     public NBHSensor getSwitchLeverSensor() { return _mSwitchLeverSensor; }
-    
+
     public int getPresentState() {
         int presentState =  _mSwitchLeverSensor.getKnownState();
         if (presentState == Sensor.ACTIVE) return CTCConstants.SWITCHNORMAL;

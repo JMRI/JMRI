@@ -7,15 +7,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Stands in for the SerialTrafficController class.
  *
- * @author	Bob Jacobsen Copyright 2006, 2008
+ * @author Bob Jacobsen Copyright 2006, 2008
  */
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     public SerialTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-//        self = this;
+        log.debug("setting instance: {}", this);
     }
 
     // override some SerialTrafficController methods for test purposes
@@ -31,9 +28,7 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
 
     @Override
     public void sendSerialMessage(SerialMessage m, SerialListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("sendSerialMessage [" + m + "]");
-        }
+        log.debug("sendSerialMessage [{}]", m);
         // save a copy
         outbound.addElement(m);
         // we don't return an echo so that the processing before the echo can be
@@ -45,12 +40,9 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
      * forward a message to the listeners, e.g. test receipt
      */
     protected void sendTestMessage(SerialMessage m, SerialListener l) {
-        // forward a test message to NceListeners
-        if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
-        }
+        // forward a test message to MapleListeners
+        log.debug("sendTestMessage    [{}]", m);
         notifyMessage(m, l);
-        return;
     }
 
     /*

@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -352,9 +351,7 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
 
     @Override
     public String getPreferencesItemText() {
-        // need to move resource into ThrottleBundle.properties
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-        return rb.getString("MenuThrottle");
+        return Bundle.getMessage("MenuThrottle");
     }
 
     @Override

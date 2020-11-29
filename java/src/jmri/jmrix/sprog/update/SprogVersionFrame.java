@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Display the firmware version of the attached SPROG hardware.
  *
- * @author	Andrew Crosland Copyright (C) 2008
+ * @author Andrew Crosland Copyright (C) 2008
  */
 public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVersionListener {
 

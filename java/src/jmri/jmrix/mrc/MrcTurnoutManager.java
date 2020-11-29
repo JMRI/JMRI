@@ -1,5 +1,6 @@
 package jmri.jmrix.mrc;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -13,22 +14,21 @@ import jmri.Turnout;
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    public MrcTurnoutManager(MrcTrafficController tc, String prefix) {
-        super();
-        this.prefix = prefix;
-        this.tc = tc;
+    public MrcTurnoutManager(MrcSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getMrcTrafficController();
     }
 
-    String prefix = "";
     MrcTrafficController tc = null;
 
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public MrcSystemConnectionMemo getMemo() {
+        return (MrcSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new MrcTurnout(addr, tc, getSystemPrefix());
         t.setUserName(userName);
@@ -36,7 +36,7 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

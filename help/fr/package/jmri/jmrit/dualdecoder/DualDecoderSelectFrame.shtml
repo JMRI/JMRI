@@ -6,9 +6,10 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- UpDated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
+  <!-- Updated by Herv&#233; Blorec  bzh56420@yahoo.fr 2013-11-02-->
 
-  <title>JMRI: Multi-Decoder Control</title><!-- Style -->
+  <title>JMRI: Multi-Decoder Control</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>A l'origine,
       DCC n'a pas fourni un moyen commode de programmer Les valeurs
       de configuration des (CV) quand vous avez plus d'un
@@ -132,7 +134,7 @@
       la voie principale), vous aurez &eacute;galement besoin de
       sp&eacute;cifier l'adresse de la locomotive en cours de
       programmation.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

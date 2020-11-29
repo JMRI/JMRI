@@ -5,6 +5,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.swing.JFrame;
 
+import jmri.jmrit.display.IndicatorTrackIcon;
+import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import org.jdom2.Document;
@@ -16,6 +18,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Return xml (for specified ControlPanel) suitable for use by external clients.
+ * <p>
+ * See JMRI Web Server - Panel Servlet Help in help/en/html/web/PanelServlet.shtml for an example description of
+ * the interaction between the Web Servlets, the Web Browser and the JMRI application.
  *
  * @author Randall Wood (C) 2016
  */
@@ -23,8 +29,6 @@ import org.slf4j.LoggerFactory;
         urlPatterns = {"/panel/ControlPanel"})
 @ServiceProvider(service = HttpServlet.class)
 public class ControlPanelServlet extends AbstractPanelServlet {
-
-    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
 
     @Override
     protected String getPanelType() {
@@ -36,7 +40,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         log.debug("Getting {} for {}", getPanelType(), name);
         ControlPanelEditor editor = (ControlPanelEditor) getEditor(name);
         if (editor == null) {
-            log.warn("Requested ControlPanel [" + name + "] does not exist.");
+            log.warn("Requested ControlPanel [{}] does not exist.", name);
             return "ERROR Requested panel [" + name + "] does not exist.";
         }
 
@@ -65,11 +69,47 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         log.debug("N elements: {}", contents.size());
         for (Positionable sub : contents) {
             if (sub != null) {
+                Element e = new Element("temp");
                 try {
-                    panel.addContent(positionableElement(sub));
+                    e = positionableElement(sub);
+
                 } catch (Exception ex) {
-                    log.error("Error storing panel element: " + ex, ex);
+                    log.error("Error storing panel element: {}", ex, ex);
                 }
+                // where required, add special stuff to positionable here to use in Web Server
+                switch (e.getName()) {
+                    case "indicatorturnouticon" :
+                        // if separate occ.sensor was set on icon, names for sensor plus the turnout were
+                        // already copied to e as part of 'contents'
+                        Element elem = new Element("oblocksysname");
+                        if (((IndicatorTurnoutIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
+                            String itoioblock = ((IndicatorTurnoutIcon) sub).getOccBlock().getSystemName();
+                            elem.addContent(itoioblock);
+                            log.debug("CP-SERVLET ITOI = {}", itoioblock);
+                        } else {
+                            elem.addContent("none"); // NOI18N
+                            log.debug("no oblocksensor configured on ITOI {}", sub.getNameString());
+                        }
+                        e.addContent(elem);
+                        break;
+                    case "indicatortrackicon" :
+                        // if separate occ.sensor was set on icon, its name was already copied to e as part of 'contents'
+                        elem = new Element("oblocksysname");
+                        if (((IndicatorTrackIcon) sub).getOccBlock() != null) { // optional for CPE, not read on load
+                            String itioblock = ((IndicatorTrackIcon) sub).getOccBlock().getSystemName();
+                            elem.addContent(itioblock);
+                            log.debug("CP-SERVLET ITI = {}", itioblock);
+                        } else {
+                            elem.addContent("none"); // NOI18N
+                            log.debug("no oblocksensor configured on ITI {}", sub.getNameString());
+                        }
+                        e.addContent(elem);
+                        break;
+                    case "" :
+                    default :
+                        // nothing extra
+                }
+                panel.addContent(e);
             }
         }
 
@@ -87,4 +127,7 @@ public class ControlPanelServlet extends AbstractPanelServlet {
         // TODO Auto-generated method stub
         return "ERROR JSON support not implemented";
     }
+
+    private final static Logger log = LoggerFactory.getLogger(ControlPanelServlet.class);
+
 }

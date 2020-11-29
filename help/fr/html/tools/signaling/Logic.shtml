@@ -1,33 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2013-09-30-->
+<!-- Updated by Blorec Herv&#233; le 2013-09-30-->
 
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
-  <!-- $Id$ -->
 
-  <title>JMRI: Simple Signal Logic</title><!-- Style -->
+  <title>JMRI: Simple Signal Logic</title>
+    <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: Logique Simple Signal</h1>
+        <!-- Page Body -->
+<h1>JMRI: Logique Simple Signal</h1>
 
       <p class="subtitle">Informations g&#233;n&#233;rales sur la
       logique utilis&#233;e pour la commande de signaux simples</p>
@@ -41,7 +39,7 @@
         partir des test de lib&#233;ration de JMRI 2.9.1.</p>
       </div>
 
-      <div name="single">
+      <div class="single">
         <h2><a class="section">Sur le Canton Simple</a></h2>
 
         <div class="para">
@@ -53,8 +51,8 @@
         </div>
 
         <div class="para">
-          <pre class="code">
-ulle doSingleBlock () {
+        <pre class="code">
+doSingleBlock () {
 int = apparence SignalHead.GREEN;
 int oldAppearance = ((SignalHead)outputs [0]) getAppearance ().;
 // Cochez pour le jaune, jaune clignotant &#233;crase le vert
@@ -97,7 +95,7 @@ if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appear
         </div>
       </div>
 
-      <div name="trailmain">
+      <div class="trailmain">
         <h2><a class="section">Sur la Branche Droite d'un
         Aiguillage prit en Talon</a></h2>
 
@@ -164,7 +162,7 @@ if (watchTurnout! = null &amp; &amp; watchTurnout.getBean (). getKnownState ()! 
         </div>
       </div>
 
-      <div name="traildiv">
+      <div class="traildiv">
         <h2><a class="section">Sur Branche D&#233;vi&#233;e d'un
         Aiguillage en Talon</a></h2>
 
@@ -311,7 +309,8 @@ if (log.isDebugEnabled ()) Log.DEBUG ("Change appearance of "+name+" to "+appear
             ((SignalHead)outputs[0]).setAppearance(appearance);
 </pre>
       </div>
-    </div><!--#include virtual="/Footer" -->
+
+    </div><!--#include virtual="/Footer.shtml" -->
   </div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package jmri;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import jmri.beans.PropertyChangeProvider;
 
 /**
  * Get access to available {@link Programmer} objects.
@@ -36,7 +37,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @since 3.9.6
  */
-public interface AddressedProgrammerManager {
+public interface AddressedProgrammerManager extends PropertyChangeProvider {
 
     /**
      * Gain access to a Addressed Mode Programmer without reservation.

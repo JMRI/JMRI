@@ -1,21 +1,21 @@
 package jmri.jmris.json;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import jmri.InstanceManager;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-public class JsonServerAction extends AbstractAction {
+/**
+ * 
+ * @author Randall Wood
+ * @deprecated since 4.19.2; use {@link jmri.server.json.JsonServerAction} instead
+ */
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated for replacement.")
+public class JsonServerAction extends jmri.server.json.JsonServerAction {
 
     public JsonServerAction(String s) {
         super(s);
     }
 
     public JsonServerAction() {
-        this(Bundle.getMessage("MenuItemStartServer"));
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        InstanceManager.getDefault(JsonServer.class).start();
+        super();
     }
 }

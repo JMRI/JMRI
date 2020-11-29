@@ -1,15 +1,13 @@
 package jmri.util;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 import jmri.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class NamedBeanComparatorTest {
 
@@ -82,6 +80,7 @@ public class NamedBeanComparatorTest {
             protected void turnoutPushbuttonLockout(boolean b) {
             }
 
+            @Override
             public int compareSystemNameSuffix(String suffix1, String suffix2, jmri.NamedBean n) {
                 hit = true;
                 return super.compareSystemNameSuffix(suffix1, suffix2, n);
@@ -97,13 +96,12 @@ public class NamedBeanComparatorTest {
         Assert.assertTrue(hit);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

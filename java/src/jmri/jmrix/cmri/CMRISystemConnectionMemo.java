@@ -1,29 +1,27 @@
 package jmri.jmrix.cmri;
 
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckReturnValue;
-import jmri.InstanceManager;
-import jmri.Light;
+
+import jmri.*;
 import jmri.Manager.NameValidity;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.jmrix.AbstractNode;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.cmri.serial.SerialLightManager;
-import jmri.jmrix.cmri.serial.SerialNode;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.cmri.serial.SerialTurnoutManager;
+import jmri.jmrix.ConfiguringSystemConnectionMemo;
+import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.jmrix.cmri.serial.*;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
  *
  * @author Randall Wood
  */
-public class CMRISystemConnectionMemo extends SystemConnectionMemo {
+public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implements ConfiguringSystemConnectionMemo {
 
     public CMRISystemConnectionMemo() {
         this("C", CMRIConnectionTypeList.CMRI); // default to "C" prefix
@@ -32,7 +30,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public CMRISystemConnectionMemo(@Nonnull String prefix, @Nonnull String userName) {
         super(prefix, userName);
 
-        register(); // registers general type
         InstanceManager.store(this, CMRISystemConnectionMemo.class); // also register as specific type
 
         // create and register the ComponentFactory for the GUI
@@ -336,14 +333,14 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param type       the device type
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
-            log.error("invalid system prefix in CMRI system name: {}", systemName);
+            log.debug("invalid system prefix in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         if (systemName.charAt(offset) != type) {
-            log.error("invalid type character in CMRI system name: {}", systemName);
+            log.debug("invalid type character in CMRI system name: {}", systemName);
             return NameValidity.INVALID;
         }
         String s = "";
@@ -411,6 +408,85 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
             }
         } // TODO add format check for CLnn:xxx format
         return NameValidity.VALID;
+    }
+
+    /**
+     * Validate system name format. Does not check whether that node is defined
+     * on current system.
+     *
+     * @param systemName the system name
+     * @param type       the device type
+     * @param locale     the Locale for user messages
+     * @return systemName unmodified
+     * @throws IllegalArgumentException if unable to validate systemName
+     */
+    public String validateSystemNameFormat(String systemName, char type, Locale locale) throws IllegalArgumentException {
+        String prefix = getSystemPrefix() + type;
+        if (!systemName.startsWith(prefix)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", systemName),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidPrefix", systemName));
+        }
+        String address = systemName.substring(prefix.length());
+        int node = 0;
+        int bit = 0;
+        if (!address.contains("B") && !address.contains(":")) {
+            // This is a CLnnnxxx pattern address
+            int num;
+            try {
+                num = Integer.parseInt(address);
+                node = num / 1000;
+                bit = num - ((num / 1000) * 1000);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNotInteger", systemName, prefix),
+                        Bundle.getMessage(locale, "InvalidSystemNameNotInteger", systemName, prefix));
+            }
+        } else {
+            // This is a CLnBxxx or CLn:xxx pattern address
+            String[] parts = address.split("B");
+            if (parts.length != 2) {
+                parts = address.split(":");
+                if (parts.length != 2) {
+                    if (address.indexOf(":") == 0 && address.indexOf("B") == 0) {
+                        // no node
+                        throw new NamedBean.BadSystemNameException(
+                                Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, ""),
+                                Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, ""));
+                    } else {
+                        // no bit
+                        throw new NamedBean.BadSystemNameException(
+                                Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, ""),
+                                Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, ""));
+                    }
+                }
+            }
+            try {
+                node = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, parts[0]),
+                        Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, parts[0]));
+            }
+            try {
+                bit = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ex) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, parts[1]),
+                        Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, parts[1]));
+            }
+        }
+        if (node < 0 || node >= 128) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, node),
+                    Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, node));
+        }
+        if (bit < 1 || bit > 2048) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, bit),
+                    Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, bit));
+        }
+        return systemName;
     }
 
     /**
@@ -597,6 +673,9 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * 
      * This is a common implementation for C/MRI Lights, Sensors and Turnouts
      * of the comparison method.
+     * @param suffix1 suffix to compare.
+     * @param suffix2 suffix to compare.
+     * @return CMRI comparison of suffixes.
      */
     @CheckReturnValue
     public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
@@ -635,38 +714,6 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         return Integer.signum(bit1-bit2);
     }
 
-    @Override
-    public boolean provides(Class<?> type) {
-        if (getDisabled()) {
-            return false;
-        } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
-        } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
-        } else if (type.equals(jmri.LightManager.class)) {
-            return true;
-        }
-        return false; // nothing, by default
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> T get(Class<?> T) {
-        if (getDisabled()) {
-            return null;
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
-            return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.LightManager.class)) {
-            return (T) getLightManager();
-        }
-        return null; // nothing by default
-    }
-
     /**
      * Configure the common managers for CMRI connections. This puts the common
      * manager config in one place.
@@ -678,42 +725,28 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.setTurnoutManager(getTurnoutManager());
 
         InstanceManager.setLightManager(getLightManager());
+        register();
     }
-
-    protected SerialTurnoutManager turnoutManager;
 
     public SerialTurnoutManager getTurnoutManager() {
         if (getDisabled()) {
             return null;
         }
-        if (turnoutManager == null) {
-            turnoutManager = new SerialTurnoutManager(this);
-        }
-        return turnoutManager;
+        return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class, (Class c) -> new SerialTurnoutManager(this));
     }
-
-    protected SerialSensorManager sensorManager;
 
     public SerialSensorManager getSensorManager() {
         if (getDisabled()) {
             return null;
         }
-        if (sensorManager == null) {
-            sensorManager = new SerialSensorManager(this);
-        }
-        return sensorManager;
+        return (SerialSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class c) -> new SerialSensorManager(this));
     }
-
-    protected SerialLightManager lightManager;
 
     public SerialLightManager getLightManager() {
         if (getDisabled()) {
             return null;
         }
-        if (lightManager == null) {
-            lightManager = new SerialLightManager(this);
-        }
-        return lightManager;
+        return (SerialLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class c) -> new SerialLightManager(this));
     }
 
     @Override
@@ -722,19 +755,15 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     }
 
     @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    @Override
     public void dispose() {
         InstanceManager.deregister(this, CMRISystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
-        }
-        if (turnoutManager != null) {
-            InstanceManager.deregister(turnoutManager, SerialTurnoutManager.class);
-        }
-        if (lightManager != null) {
-            InstanceManager.deregister(lightManager, SerialLightManager.class);
-        }
-        if (sensorManager != null) {
-            InstanceManager.deregister(sensorManager, SerialSensorManager.class);
         }
         super.dispose();
     }

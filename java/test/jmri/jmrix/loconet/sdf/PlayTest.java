@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet.sdf;
 
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
  *
- * @author	Bob Jacobsen Copyright 2007
+ * @author Bob Jacobsen Copyright 2007
  */
 public class PlayTest {
 

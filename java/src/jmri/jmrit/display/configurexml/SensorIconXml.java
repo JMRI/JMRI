@@ -12,16 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle configuration for display.SensorIcon objects
+ * Handle configuration for display.SensorIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  */
 public class SensorIconXml extends PositionableLabelXml {
 
-    static final HashMap<String, String> _nameMap = new HashMap<String, String>();
+    static final HashMap<String, String> _nameMap = new HashMap<>();
 
     public SensorIconXml() {
-        // map previous store names to actual localized names
+        // map previous store names to property key names
         _nameMap.put("active", "SensorStateActive");
         _nameMap.put("inactive", "SensorStateInactive");
         _nameMap.put("unknown", "BeanStateUnknown");
@@ -29,7 +29,7 @@ public class SensorIconXml extends PositionableLabelXml {
     }
 
     /**
-     * Default implementation for storing the contents of a SensorIcon
+     * Default implementation for storing the contents of a SensorIcon.
      *
      * @param o Object to store, of type SensorIcon
      * @return Element containing the complete info
@@ -153,7 +153,7 @@ public class SensorIconXml extends PositionableLabelXml {
     boolean _icon;
 
     /**
-     * Create a PositionableLabel, then add to a target JLayeredPane
+     * Create a PositionableLabel, then add to a target JLayeredPane.
      *
      * @param element Top level Element to unpack.
      * @param o       an Editor as an Object
@@ -250,17 +250,17 @@ public class SensorIconXml extends PositionableLabelXml {
                 if (icon == null) {
                     icon = ed.loadFailed(msg, iconName);
                     if (icon == null) {
-                        log.info(msg + " removed for url= " + iconName);
+                        log.info("{} removed for url= {}", msg, iconName);
                     }
                 } else {
                     icon.setRotation(rotation, l);
                 }
             } else {
-                log.warn("did not locate " + state + " icon file for " + name);
+                log.warn("did not locate {} icon file for {}", state, name);
             }
         }
         if (icon == null) {
-            log.info(msg + " removed");
+            log.info("{} removed", msg);
         } else {
             l.setIcon(_nameMap.get(state), icon);
         }
@@ -286,7 +286,7 @@ public class SensorIconXml extends PositionableLabelXml {
         Color clrBackground = null;
         List<Element> textList = element.getChildren(state.toLowerCase() + "Text");
         if (log.isDebugEnabled()) {
-            log.debug("Found " + textList.size() + " " + state + "Text objects");
+            log.debug("Found {} {}Text objects", textList.size(), state);
         }
         if (textList.size() > 0) {
             Element elem = textList.get(0);

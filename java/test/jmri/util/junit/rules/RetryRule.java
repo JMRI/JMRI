@@ -34,6 +34,7 @@ public class RetryRule implements TestRule {
         if (retryCount < 0) log.error("retryCount must be zero (no retries) or greater");
     }
 
+    @Override
     public Statement apply(Statement base, Description description) {
         return statement(base, description);
     }

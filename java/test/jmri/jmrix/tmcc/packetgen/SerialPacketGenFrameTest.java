@@ -1,9 +1,11 @@
 package jmri.jmrix.tmcc.packetgen;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of SerialPacketGenFrame
@@ -12,19 +14,20 @@ import org.junit.*;
  */
 public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            frame = new SerialPacketGenFrame(new TmccSystemConnectionMemo("T", "TMCC via Serial"));
-	}
+        }
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown(); 
     }
 
 }

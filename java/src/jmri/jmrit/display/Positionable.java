@@ -39,49 +39,49 @@ import javax.swing.border.Border;
  */
 public interface Positionable extends Cloneable {
 
-    public void setPositionable(boolean enabled);
+    void setPositionable(boolean enabled);
 
-    public boolean isPositionable();
+    boolean isPositionable();
 
-    public void setEditable(boolean enabled);
+    void setEditable(boolean enabled);
 
-    public boolean isEditable();
+    boolean isEditable();
 
-    public void setShowToolTip(boolean set);
+    void setShowToolTip(boolean set);
 
-    public boolean showToolTip();
+    boolean showToolTip();
 
-    public void setToolTip(ToolTip tip);
+    void setToolTip(ToolTip tip);
 
-    public ToolTip getToolTip();
+    ToolTip getToolTip();
 
-    public void setViewCoordinates(boolean enabled);
+    void setViewCoordinates(boolean enabled);
 
-    public boolean getViewCoordinates();
+    boolean getViewCoordinates();
 
-    public void setControlling(boolean enabled);
+    void setControlling(boolean enabled);
 
-    public boolean isControlling();
+    boolean isControlling();
 
-    public void setHidden(boolean enabled);
+    void setHidden(boolean enabled);
 
-    public boolean isHidden();
+    boolean isHidden();
 
-    public void showHidden();
+    void showHidden();
 
-    public int getDisplayLevel();
+    int getDisplayLevel();
 
-    public void setDisplayLevel(int l);
+    void setDisplayLevel(int l);
 
-    public Editor getEditor();
+    Editor getEditor();
 
-    public void setEditor(Editor ed);
+    void setEditor(Editor ed);
 
-    public void updateSize();
+    void updateSize();
 
-    public int maxWidth();
+    int maxWidth();
 
-    public int maxHeight();
+    int maxHeight();
 
     /**
      * Make a deep copy of Positional object. Implementation should create a new
@@ -100,7 +100,7 @@ public interface Positionable extends Cloneable {
      *
      * @return the copy
      */
-    public Positionable deepClone();
+    Positionable deepClone();
 
     /**
      * Get the name of the positional as a String. This is often the display
@@ -108,7 +108,7 @@ public interface Positionable extends Cloneable {
      *
      * @return the name to display
      */
-    public String getNameString();
+    String getNameString();
 
     /**
      * Add additional menu items to the menu.
@@ -116,7 +116,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setRotateOrthogonalMenu(JPopupMenu popup);
+    boolean setRotateOrthogonalMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -124,7 +124,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setRotateMenu(JPopupMenu popup);
+    boolean setRotateMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -132,7 +132,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setScaleMenu(JPopupMenu popup);
+    boolean setScaleMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -140,7 +140,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setEditIconMenu(JPopupMenu popup);
+    boolean setEditIconMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -148,7 +148,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setEditItemMenu(JPopupMenu popup);
+    boolean setEditItemMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -156,7 +156,7 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setDisableControlMenu(JPopupMenu popup);
+    boolean setDisableControlMenu(JPopupMenu popup);
 
     /**
      * Add additional menu items to the menu.
@@ -164,28 +164,28 @@ public interface Positionable extends Cloneable {
      * @param popup the menu to add the menu items to
      * @return true if adding items; false otherwise
      */
-    public boolean setTextEditMenu(JPopupMenu popup);
+    boolean setTextEditMenu(JPopupMenu popup);
 
-    public boolean showPopUp(JPopupMenu popup);
+    boolean showPopUp(JPopupMenu popup);
 
-    public void setScale(double s);
+    void setScale(double s);
 
-    public double getScale();
+    double getScale();
 
-    public void rotate(int deg);
+    void rotate(int deg);
 
-    public int getDegrees();
+    int getDegrees();
 
-    public JComponent getTextComponent();
+    JComponent getTextComponent();
 
-    public void remove();
+    void remove();
 
     /**
      * Check if a permanent copy of this Positionable should be stored.
      *
      * @return true if this Positionable should be stored; false otherwise
      */
-    public boolean storeItem();
+    boolean storeItem();
 
     /**
      * Use the 'Standard' presentation of the popup menu items. The editor will
@@ -194,81 +194,81 @@ public interface Positionable extends Cloneable {
      *
      * @return true if Editor may add the standardpopup menu items
      */
-    public boolean doViemMenu();
+    boolean doViemMenu();
 
     /**
      * Utility to handle Margins, Borders and other common popup items
      *
      * @return null if these item do not apply
      */
-    public PositionablePopupUtil getPopupUtility();
+    PositionablePopupUtil getPopupUtility();
 
-    public void setPopupUtility(PositionablePopupUtil tu);
+    void setPopupUtility(PositionablePopupUtil tu);
 
-    public jmri.NamedBean getNamedBean();
+    jmri.NamedBean getNamedBean();
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.
-    public void doMousePressed(MouseEvent event);
+    void doMousePressed(MouseEvent event);
 
-    public void doMouseReleased(MouseEvent event);
+    void doMouseReleased(MouseEvent event);
 
-    public void doMouseClicked(MouseEvent event);
+    void doMouseClicked(MouseEvent event);
 
-    public void doMouseDragged(MouseEvent event);
+    void doMouseDragged(MouseEvent event);
 
-    public void doMouseMoved(MouseEvent event);
+    void doMouseMoved(MouseEvent event);
 
-    public void doMouseEntered(MouseEvent event);
+    void doMouseEntered(MouseEvent event);
 
-    public void doMouseExited(MouseEvent event);
+    void doMouseExited(MouseEvent event);
 
     // The following are common for all JComponents
-    public Rectangle getBounds(Rectangle r);
+    Rectangle getBounds(Rectangle r);
 
-    public boolean contains(int x, int y);
+    boolean contains(int x, int y);
 
-    public int getX();
+    int getX();
 
-    public int getY();
+    int getY();
 
-    public Point getLocation();
+    Point getLocation();
 
-    public void setLocation(int x, int y);
+    void setLocation(int x, int y);
 
-    public void setLocation(Point p);
+    void setLocation(Point p);
 
-    public void setSize(int width, int height);
+    void setSize(int width, int height);
 
-    public void setVisible(boolean b);
+    void setVisible(boolean b);
 
-    public int getWidth();
+    int getWidth();
 
-    public int getHeight();
+    int getHeight();
 
-    public Container getParent();
+    Container getParent();
 
-    public void setOpaque(boolean isOpaque);
+    void setOpaque(boolean isOpaque);
 
-    public boolean isOpaque();
+    boolean isOpaque();
 
-    public void setBackground(Color bg);
+    void setBackground(Color bg);
 
-    public Color getBackground();
+    Color getBackground();
 
-    public void setForeground(Color bg);
+    void setForeground(Color bg);
 
-    public Color getForeground();
+    Color getForeground();
 
-    public Font getFont();
+    Font getFont();
 
-    public void setBorder(Border border);
+    void setBorder(Border border);
 
-    public Dimension getPreferredSize();
+    Dimension getPreferredSize();
 
-    public void invalidate();
+    void invalidate();
 
-    public void repaint();
+    void repaint();
 
-    public boolean requestFocusInWindow();
+    boolean requestFocusInWindow();
 }

@@ -81,7 +81,7 @@ jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get
 # icon and it should cycle trough all the colors you selected.
 # Repeat for ISPM_nn2 through ISPM_nn4. 
 # The final step is to have this scipt load every time you start your PanelPro application.
-# On PanelPro or Decoder Pro Screen  Select Edit - Preferences
+# On PanelPro or DecoderPro Screen  Select Edit - Preferences
 # Once the screen opens, click the Show Advanced Preferences box
 # Scroll down to the run scripts at startup section - Click Add Script - scroll to where your
 # scripts are stored - On windows normally c:\Program Files\JMRI\Jython\your script name here.

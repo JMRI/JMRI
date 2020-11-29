@@ -54,7 +54,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     @CheckForNull
     public static File getFileCustom(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
-        int retVal = fileChooser.showDialog(null, null);
+        int retVal = fileChooser.showDialog(null, Bundle.getMessage("MenuItemStore"));
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null;  // give up if no file selected
         }
@@ -69,7 +69,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             }
         }
         if (log.isDebugEnabled()) {
-            log.debug("Save file: " + file.getPath());
+            log.debug("Save file: {}", file.getPath());
         }
         // check for possible overwrite
         if (file.exists()) {

@@ -156,7 +156,7 @@ public class InputBits {
                 }
             }
         } catch (JmriException e) {
-            log.error("exception in makeChanges: " + e);
+            log.error("exception in makeChanges: {}", e);
         }
 
         // clear the accumulation array;
@@ -186,11 +186,6 @@ public class InputBits {
             sensorTempSetting[i] = Sensor.UNKNOWN;
             sensorORedSetting[i] = false;
         }
-    }
-
-    @Deprecated
-    public static InputBits instance() {
-        return null;
     }
 
     private final static Logger log = LoggerFactory.getLogger(InputBits.class);

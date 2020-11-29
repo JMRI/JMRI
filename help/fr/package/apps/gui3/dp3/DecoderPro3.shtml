@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Updated by Blorec Herv&#233; le 2013-10-08-->
 
-  <title>JMRI: DecoderPro 3</title><!-- Style -->
+  <title>JMRI: DecoderPro 3</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -15,25 +16,26 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Introduction &agrave; DecoderPro 3</h1>Ce fichier d'aide
       est en cours d'&eacute;laboration. S'il vous pla&icirc;t
       aider JMRI en contribuant &agrave; am&eacute;liorer ce
       fichier d'aide!
 
-      <p>Decoder Pro 3 pr&eacute;sente une liste de vos locomotives
+      <p>DecoderPro 3 pr&eacute;sente une liste de vos locomotives
       (la Liste) et fournit acc&egrave;s aux outils pour les
       variables de configuration du d&eacute;codeur de
       programmation (CV).</p>
 
-      <h1>Description de la Fen&ecirc;tre Decoder Pro 3</h1>
+      <h1>Description de la Fen&ecirc;tre DecoderPro 3</h1>
 
       <p>La fen&ecirc;tre d&eacute;codeur Pro 3 est divis&eacute;e
       en cinq grandes sections de haut en bas.</p>
@@ -61,9 +63,9 @@
 
       <h1>Principales t&acirc;ches avec d&eacute;codeur Pro 3</h1>
 
-      <p>Decoder Pro 3 est con&ccedil;u pour la gestion des
+      <p>DecoderPro 3 est con&ccedil;u pour la gestion des
       d&eacute;codeurs DCC &eacute;quipant les locomotives. Les
-      locomotives reconnues par Decoder Pro 3 sont affich&eacute;es
+      locomotives reconnues par DecoderPro 3 sont affich&eacute;es
       dans le Tableau Liste . Les t&acirc;ches principales sont
       pr&eacute;vues: la cr&eacute;ation d'une nouvelle locomotive
       et le changement des param&egrave;tres dans une locomotive
@@ -163,7 +165,7 @@
       la commande " Cr&eacute;er un groupe de Fiche " dans le le
       menu "R&eacute;glages". Lorsque vous avez cr&eacute;&eacute;
       un groupe de Fiche , une nouvelle liste d&eacute;roulante est
-      ajout&eacute;e &agrave; la barre d'outils en Decoder Pro 3.
+      ajout&eacute;e &agrave; la barre d'outils en DecoderPro 3.
       Apr&egrave;s avoir cr&eacute;&eacute; un groupe , c'est
       d'abord vide . L'&eacute;tape suivante consiste &agrave;
       ajouter des locomotives dans le groupe . Cela se fait avec la
@@ -295,7 +297,7 @@
 
         <li>Ex&eacute;cuter Script</li>
       </ul>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

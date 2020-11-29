@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2014 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,9 +13,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1" lastUpdated="20051012"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
   <!-- Version 1 initial release -->
+  <!-- Version 2 change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Stationary Decoder" mfg="Team Digital" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way">
+    <family name="Stationary Decoder" mfg="Team Digital, LLC" type="stationary" comment="SMD2 is a stationary decoder, but it can be programmed in the usual way">
       <model model="SMD2" lowVersionID="1"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>

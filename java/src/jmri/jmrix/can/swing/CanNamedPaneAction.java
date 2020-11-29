@@ -16,12 +16,24 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
      * Enhanced constructor for placing the pane in various GUIs.
+     * @param s Window Name
+     * @param wi JmriJFrameInterface
+     * @param paneClass Name of class to open
+     * @param memo System Connection
      */
     public CanNamedPaneAction(String s, WindowInterface wi, String paneClass, CanSystemConnectionMemo memo) {
         super(s, wi, paneClass);
         this.memo = memo;
     }
 
+    /**
+     * Enhanced constructor for placing the pane in various GUIs.
+     * @param s Window Name
+     * @param i Icon to display
+     * @param wi JmriJFrameInterface
+     * @param paneClass Name of class to open
+     * @param memo System Connection
+     */
     public CanNamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, CanSystemConnectionMemo memo) {
         super(s, i, wi, paneClass);
         this.memo = memo;
@@ -29,6 +41,10 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     CanSystemConnectionMemo memo;
 
+    /**
+     * Makes Panel and calls initComponents
+     * {@inheritDoc}
+     */
     @Override
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();

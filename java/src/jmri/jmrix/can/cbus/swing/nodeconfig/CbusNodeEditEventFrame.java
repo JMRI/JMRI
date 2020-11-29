@@ -1,29 +1,19 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JTabbedPane;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.text.DefaultFormatter;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeSingleEventTableDataModel;
@@ -38,10 +28,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelListener {
+public class CbusNodeEditEventFrame extends JmriJFrame
+    implements TableModelListener, PropertyChangeListener {
    
     private CbusNodeSingleEventTableDataModel singleEVModel;
-    private CbusNodeTableDataModel nodeModel;
+    private final CbusNodeTableDataModel nodeModel;
     
     private JSpinner numberSpinnerEv;
     private JSpinner numberSpinnernd;
@@ -51,8 +42,9 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
     private JButton frameCopyButton;
     private JTabbedPane tabbedPane;
     private CbusNodeEvent _ndEv;
+    private CbusNode _node;
     private JLabel ndEvNameLabel;
-    private NodeConfigToolPane mainpane;
+    private final NodeConfigToolPane mainpane;
     private jmri.util.swing.BusyDialog busy_dialog;
     
     private CanSystemConnectionMemo _memo;
@@ -60,28 +52,25 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
     private JPanel infoPane;
     private JButton framenewevbutton;
     private JButton frameResetButton;
-    private Boolean isNewEvent;
+    private boolean isNewEvent;
     
     /**
      * Create a new instance of CbusNodeEditEventFrame.
+     * @param tp The main NodeConfigToolPane this is a part of
      */
     public CbusNodeEditEventFrame(NodeConfigToolPane tp) {
         super();
         mainpane = tp;
+        nodeModel = mainpane.getNodeModel();
     }
 
     public void initComponents(CanSystemConnectionMemo memo, CbusNodeEvent ndEv) {
-        
         _ndEv = ndEv;
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            singleEVModel = new CbusNodeSingleEventTableDataModel(memo, 5,
-            CbusNodeSingleEventTableDataModel.MAX_COLUMN, _ndEv); // controller, row, column
-            singleEVModel.addTableModelListener(this);
-            
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
-        }
+        _memo = memo;
+        singleEVModel = new CbusNodeSingleEventTableDataModel(memo, 5,
+        CbusNodeSingleEventTableDataModel.MAX_COLUMN, _ndEv); // controller, row, column
+        singleEVModel.addTableModelListener(this);
+        
         screenInit();
     }
     
@@ -96,12 +85,12 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
             return;
         }
         
-        if ( nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).getNodeEvent(_ndEv.getNn(), _ndEv.getEn()) == null ) {
-            isNewEvent = true;
-        } else {
-            isNewEvent = false;
+        _node = nodeModel.getNodeByNodeNum( _ndEv.getParentNn() );
+        if (_node!=null) {
+            _node.addPropertyChangeListener(this);
         }
-        
+        isNewEvent = _node!=null &&
+            _node.getNodeEventManager().getNodeEvent(_ndEv.getNn(), _ndEv.getEn()) == null;
         log.debug("isNewEvent {}", isNewEvent);
 
         frameeditevbutton = new JButton(Bundle.getMessage("EditEvent"));
@@ -111,14 +100,16 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         frameCopyButton = new JButton(("Copy Event"));
         
         numberSpinnernd = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getNn()), 0, 65535, 1));
-        JComponent compNd = numberSpinnernd.getEditor();
-        JFormattedTextField fieldNd = (JFormattedTextField) compNd.getComponent(0);
+        JSpinner.NumberEditor editor = new JSpinner.NumberEditor(numberSpinnernd, "#");
+        numberSpinnernd.setEditor(editor);
+        JFormattedTextField fieldNd = (JFormattedTextField) editor.getComponent(0);
         DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
         formatterNd.setCommitsOnValidEdit(true);
 
         numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
-        JComponent compEv = numberSpinnerEv.getEditor();
-        JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
+        JSpinner.NumberEditor neditor = new JSpinner.NumberEditor(numberSpinnernd, "#");
+        numberSpinnernd.setEditor(neditor);
+        JFormattedTextField fieldEv = (JFormattedTextField) neditor.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
         formatterEv.setCommitsOnValidEdit(true);        
         
@@ -189,12 +180,10 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         
         updateButtons();
         
-        frameResetButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                singleEVModel.resetnewEVs();
-                numberSpinnernd.setValue(Integer.valueOf( Math.max(0,_ndEv.getNn() ) ) );
-                numberSpinnerEv.setValue(Integer.valueOf( Math.max(1,_ndEv.getEn() ) ) );
-            }
+        frameResetButton.addActionListener((ActionEvent e) -> {
+            singleEVModel.resetnewEVs();
+            numberSpinnernd.setValue(Math.max(0,_ndEv.getNn() ) );
+            numberSpinnerEv.setValue(Math.max(1,_ndEv.getEn() ) );
         });
         
         
@@ -217,11 +206,14 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         framenewevbutton.addActionListener(newEvClicked);
         
         ActionListener deleteClicked = ae -> {
+            if (_node == null ){
+                return;
+            }
             int response = JOptionPane.showConfirmDialog(
-                null,
+                this,
                 ( Bundle.getMessage("NdDelEvConfrm",
-                    new CbusNameService().getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ),
-                    nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).getNodeNumberName() ) ),
+                    new CbusNameService(_memo).getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ),
+                    _node ) ),
                 (Bundle.getMessage("DelEvPopTitle")), 
                 JOptionPane.YES_NO_OPTION,         
                 JOptionPane.ERROR_MESSAGE);
@@ -231,15 +223,9 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
                 busy_dialog.start();
               //  setEnabled(false);
                 jmri.util.ThreadingUtil.runOnLayout( ()->{
-                    
-                    nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), this );
-                    
+                    _node.getNodeEventManager().deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn() );
                 });
-            
-            } else {
-                return;
             }
-            
         };
         framedeletebutton.addActionListener(deleteClicked);
         
@@ -253,66 +239,67 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         };
         frameeditevbutton.addActionListener(editEvClicked);        
         
-        numberSpinnerEv.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                updateButtons();
-            }
+        numberSpinnerEv.addChangeListener((ChangeEvent e) -> {
+            updateButtons();
         });
         
-        numberSpinnernd.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                updateButtons();
-            }
+        numberSpinnernd.addChangeListener((ChangeEvent e) -> {
+            updateButtons();
         });        
         
     }
     
     public boolean spinnersDirty(){
-        if ( ( _ndEv.getNn() != getNodeVal() ) || ( _ndEv.getEn() != getEventVal() ) ){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return ( _ndEv.getNn() != getNodeVal() ) || ( _ndEv.getEn() != getEventVal() );
     }
     
-    public void notifyLearnEvoutcome( int feedback, String message) {
+    private void notifyLearnEvoutcome( String message) {
         
         _ndEv.setNn( getNodeVal() );
         _ndEv.setEn( getEventVal() );
-        
         _ndEv.setEvArr( Arrays.copyOf(
             singleEVModel.newEVs,
             singleEVModel.newEVs.length) );
-        
-        updateButtons();
-        
         singleEVModel.fireTableDataChanged();
         
+        updateButtons();
         busy_dialog.finish();
+        busy_dialog = null;
         
-        if (feedback < 0 ) {          
-            JOptionPane.showMessageDialog(null, 
+        if (!message.isEmpty() ) {
+            JOptionPane.showMessageDialog( this, 
             Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
             JOptionPane.ERROR_MESSAGE);
         }
     }
     
-    public void notifyDeleteEvoutcome( int feedback, String message) {
+    private void notifyDeleteEvoutcome(String message) {
         busy_dialog.finish();
         busy_dialog = null;
         updateButtons();
-        if (feedback < 0 ) {
-            log.info("Frame notified of Teach event status: {} {}",feedback,message);            
-            JOptionPane.showMessageDialog(null, 
+        if (!message.isEmpty()) {
+            JOptionPane.showMessageDialog( this, 
             message, Bundle.getMessage("WarningTitle"),
             JOptionPane.ERROR_MESSAGE);
         }
-        
         this.dispose();
-    }    
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void propertyChange(PropertyChangeEvent ev){
+        
+        if (ev.getPropertyName().equals("DELETEEVCOMPLETE")) {
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                notifyDeleteEvoutcome(ev.getNewValue().toString());
+            });
+        }
+        if (ev.getPropertyName().equals("ADDEVCOMPLETE")) {
+            jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+                notifyLearnEvoutcome(ev.getNewValue().toString());
+            });
+        }
+    }
     
     // called on startup + when number spinners changed
     private void updateButtons(){
@@ -320,22 +307,22 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         setTitle( getTitle() );
         
         ndEvNameLabel.setText("<html><div style='text-align: center;'>" + 
-        new CbusNameService().getEventNodeString(getNodeVal(), getEventVal() )
+        new CbusNameService(_memo).getEventNodeString(getNodeVal(), getEventVal() )
         + "</div></html>");
         
-        if ( singleEVModel.isTableDirty() || spinnersDirty() ){
-            frameResetButton.setEnabled(true);
+        frameResetButton.setEnabled(singleEVModel.isTableDirty() || spinnersDirty());
+        
+        if (_node == null){
+            return;
         }
-        else {
-            frameResetButton.setEnabled(false);
-        }
+        framenewevbutton.setVisible(isNewEvent);
+        frameeditevbutton.setVisible(!isNewEvent);
+        framedeletebutton.setVisible(!isNewEvent);
+        frameCopyButton.setVisible(!isNewEvent);
         
         if (isNewEvent) {
-            framenewevbutton.setVisible(true);
-            frameeditevbutton.setVisible(false);
-            framedeletebutton.setVisible(false);
-            frameCopyButton.setVisible(false);
-            if ( nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).getNodeEvent(getNodeVal(),getEventVal() ) == null ) {
+            
+            if ( _node.getNodeEventManager().getNodeEvent(getNodeVal(),getEventVal() ) == null ) {
                 
                 framenewevbutton.setEnabled(true);
                 framenewevbutton.setToolTipText(null);
@@ -345,14 +332,10 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
                 framenewevbutton.setToolTipText("Event Already on Node");
             }
             
-        } 
-        else {
-            framenewevbutton.setVisible(false);
-            frameeditevbutton.setVisible(true);
-            framedeletebutton.setVisible(true);
-            frameCopyButton.setVisible(true);
+        }
+        else { // not new event
             if ( spinnersDirty() || singleEVModel.isTableDirty() ){
-                if ( nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).getNodeEvent(getNodeVal(),getEventVal() ) == null ) {
+                if ( _node.getNodeEventManager().getNodeEvent(getNodeVal(),getEventVal() ) == null ) {
                     frameeditevbutton.setEnabled(true);
                     frameeditevbutton.setToolTipText(null);
                 } else {
@@ -388,20 +371,32 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
         return (Integer) numberSpinnernd.getValue();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getTitle() {
-        String title;
-        try {
+        
+        if (nodeModel==null){
+            return Bundle.getMessage("NewEvent");
+        }
+        
+        if (_node!=null) {
+            StringBuilder title = new StringBuilder();
             if ( isNewEvent ) {
-                title = Bundle.getMessage("NewEvent") + " ";
+                title.append( Bundle.getMessage("NewEvent"))
+                .append(" ");
             } else {
-                title = Bundle.getMessage("EditEvent") + 
-                new CbusNameService().getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ) + "on ";
+                title.append( Bundle.getMessage("EditEvent"))
+                .append(
+                new CbusNameService(_memo).getEventNodeString(_ndEv.getNn(), _ndEv.getEn() ));
             }
-            return title  + Bundle.getMessage("CbusNode")
-                + nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).getNodeNumberName();
-        } catch (NullPointerException e) {
-            return Bundle.getMessage("CbusNode") + " " + Bundle.getMessage("NewEvent");
+            title.append("on ")
+            .append( Bundle.getMessage("CbusNode"))
+            .append( _node);
+            return title.toString();
+        } else {
+            return Bundle.getMessage("NewEvent");
         }
     }
 
@@ -418,7 +413,9 @@ public class CbusNodeEditEventFrame extends JmriJFrame implements TableModelList
      */
     @Override
     public void dispose() {
-        
+        if (_node!=null) {
+            _node.removePropertyChangeListener(this);
+        }
         if ( mainpane != null ){
             mainpane.clearEditEventFrame();
         }

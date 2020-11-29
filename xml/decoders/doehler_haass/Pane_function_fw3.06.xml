@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 4 - Alain Le Marchand - add CV157 + Simplified productID for PD05 and PD12: no more version indicated -->
 <!-- version 3 - Alain Le Marchand - redesigned for split CVs with enums -->
 <!-- version 2 - 2016-12-14 - RK - exclude for PD12A -->
 <!-- version 1 - for Unified Software -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" exclude="PD12A_2016.03,PD12A_2016.06">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" exclude="PD05A,PD12A">
     <name>Conditions for Outputs</name>
     <name xml:lang="it">Condizioni per Uscite</name>
     <name xml:lang="de">Bedingungen für Ausgänge</name>
     <name xml:lang="fr">Conditions pour Sorties</name>
   <column>
       <row>
-		<grid ipadx="10" ipady="5" weightx="1">
+	<grid ipadx="10" ipady="5" weightx="1">
             <griditem gridx="0" gridy="0" anchor="LINE_END">
                 <label>
                   <text>CV value</text>
@@ -18,28 +19,28 @@
                   <text xml:lang="fr">Valeur CV</text>
                 </label>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <label>
                   <text>Only in Fwd/Rev</text>
                   <text xml:lang="de">Nur bei Vor/Rück</text>
                   <text xml:lang="fr">Seulem. Av/Ar</text>
                 </label>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <label>
                   <text>Only when Stop/Drive</text>
                   <text xml:lang="de">Nur im Stand/Fahrt</text>
                   <text xml:lang="fr">Seulem. Arrêt/Marche</text>
                 </label>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <label>
                   <text>Only F0 (light) Off/On</text>
                   <text xml:lang="de">Nur F0 (Licht) Aus/An</text>
                   <text xml:lang="fr">Seulem. F0 (lumière) Off/On</text>
                 </label>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <label>
                   <text>In Shunting Mode</text>
                   <text xml:lang="de">Im Rangiergang</text>
@@ -52,22 +53,22 @@
                     <separator/>
                 </column>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <column>
                     <separator/>
                 </column>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <column>
                     <separator/>
                 </column>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <column>
                     <separator/>
                 </column>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <column>
                     <separator/>
                 </column>
@@ -77,16 +78,16 @@
                 <display item="Condition LV"></display>
 <!--                <display item="Condition LV enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LV A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LV B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LV C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LV D" label=""></display>
             </griditem>
 
@@ -94,16 +95,16 @@
                 <display item="Condition LR"></display>
 <!--                <display item="Condition LR enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LR A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LR B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LR C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition LR D" label=""></display>
             </griditem>
 
@@ -111,16 +112,16 @@
                 <display item="Condition AUX1"></display>
 <!--                <display item="Condition AUX1 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX1 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX1 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX1 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX1 D" label=""></display>
             </griditem>
 
@@ -128,16 +129,16 @@
                 <display item="Condition AUX2"></display>
 <!--                <display item="Condition AUX2 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX2 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX2 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX2 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX2 D" label=""></display>
             </griditem>
 
@@ -145,16 +146,16 @@
                 <display item="Condition AUX3"></display>
 <!--                <display item="Condition AUX3 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX3 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX3 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX3 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX3 D" label=""></display>
             </griditem>
 
@@ -162,16 +163,16 @@
                 <display item="Condition AUX4"></display>
 <!--                <display item="Condition AUX4 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX4 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX4 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX4 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX4 D" label=""></display>
             </griditem>
 
@@ -179,16 +180,16 @@
                 <display item="Condition AUX5"></display>
 <!--                <display item="Condition AUX5 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX5 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX5 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX5 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX5 D" label=""></display>
             </griditem>
 
@@ -196,17 +197,34 @@
                 <display item="Condition AUX6"></display>
 <!--                <display item="Condition AUX6 enum" label=""></display>-->
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX6 A" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX6 B" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX6 C" label=""></display>
             </griditem>
-			<griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
                 <display item="Condition AUX6 D" label=""></display>
+            </griditem>
+
+            <griditem gridx="0" gridy="NEXT" anchor="LINE_END">
+                <display item="Condition Dimmer"></display>
+<!--                <display item="Condition Dimmer enum" label=""></display>-->
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition Dimmer A" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition Dimmer B" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition Dimmer C" label=""></display>
+            </griditem>
+            <griditem gridx="NEXT" gridy="CURRENT" anchor="CENTER">
+                <display item="Condition Dimmer D" label=""></display>
             </griditem>
         </grid>
       </row>

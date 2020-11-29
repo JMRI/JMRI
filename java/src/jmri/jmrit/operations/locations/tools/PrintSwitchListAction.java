@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainSwitchLists;
@@ -14,8 +16,8 @@ import jmri.jmrit.operations.trains.TrainSwitchLists;
  */
 public class PrintSwitchListAction extends AbstractAction {
 
-    public PrintSwitchListAction(String actionName, Location location, boolean isPreview) {
-        super(actionName);
+    public PrintSwitchListAction(Location location, boolean isPreview) {
+        super(isPreview? Bundle.getMessage("MenuItemPreview") : Bundle.getMessage("MenuItemPrint"));
         this.location = location;
         this.isPreview = isPreview;
         // The switch list must be accessed from the Trains window if running in consolidated mode

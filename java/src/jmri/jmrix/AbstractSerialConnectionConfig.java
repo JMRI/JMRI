@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import apps.startup.StartupActionModelUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -10,19 +9,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
@@ -44,12 +50,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Thought to be safe as default connection config")
     public AbstractSerialConnectionConfig(jmri.jmrix.PortAdapter p) {
-            this((jmri.jmrix.SerialPortAdapter) p);
+        this((jmri.jmrix.SerialPortAdapter) p);
     }
 
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
-        addToActionList();
     }
 
     /**
@@ -58,7 +63,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     public AbstractSerialConnectionConfig() {
         adapter = null;
-        addToActionList();
+
     }
 
     @Override
@@ -144,6 +149,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         });
 
+        // set/change delay interval between (actually before) output (Turnout) commands
+        outputIntervalSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue());
+            }
+        });
+
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             final String item = entry.getKey();
             if (entry.getValue().getComponent() instanceof JComboBox) {
@@ -160,7 +173,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudIndex(baudBox.getSelectedIndex()); // manage by index, not item value
+        adapter.configureBaudRateFromIndex(baudBox.getSelectedIndex()); // manage by index, not item value
         for (Map.Entry<String, Option> entry : options.entrySet()) {
             adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
@@ -177,6 +190,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
+
+    private SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    // the following items are protected so they can be hidden when not applicable from a specific ConnectionConfig (ie. Simulator) implementation
+    protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
+    protected JLabel outputIntervalLabel;
+    protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
+
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
@@ -347,7 +367,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         refreshPortBox();
 
-        baudList = adapter.validBaudRates(); // should not return null, empty String[] {} when not supported
+        baudList = adapter.validBaudRates(); // when not supported should not return null, but an empty String[] {}
         // need to remove ActionListener before addItem() or action event will occur
         if (baudBox.getActionListeners().length > 0) {
             baudBox.removeActionListener(baudBox.getActionListeners()[0]);
@@ -386,6 +406,20 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (baudBox.getItemCount() > 0) { // skip when adapter returned an empty array (= spotbug's preference)
             baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
         }
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setOutputInterval(int)
+        outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip",
+                adapter.getSystemConnectionMemo().getDefaultOutputInterval(),adapter.getManufacturer()));
+        JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
+        field.setColumns(6);
+        outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
+        outputIntervalSpinner.setEnabled(true);
+        outputIntervalReset.addActionListener((ActionEvent event) -> {
+            outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
+            adapter.getSystemConnectionMemo().setOutputInterval(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
+        });
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {
@@ -464,6 +498,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     i++;
                 }
             }
+
+            // interval config field
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(outputIntervalLabel, cL);
+            _details.add(outputIntervalLabel);
+            JPanel intervalPanel = new JPanel();
+            gbLayout.setConstraints(intervalPanel, cR);
+            intervalPanel.add(outputIntervalSpinner);
+            intervalPanel.add(outputIntervalReset);
+            _details.add(intervalPanel);
+            i++;
+
         }
         cL.gridwidth = 2;
         for (JComponent item : additionalItems) {
@@ -555,7 +602,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.dispose();
             adapter = null;
         }
-        removeFromActionList();
     }
 
     class ComboBoxRenderer extends JLabel
@@ -579,7 +625,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -589,14 +634,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 setBackground(list.getBackground());
             }
             if (invalidPort != null) {
-                String port = PortNameMapper.getPortFromName(displayName);
+                String port = PortNameMapper.getPortFromName(name);
                 if (port.equals(invalidPort)) {
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
                 }
             }
 
-            setText(displayName);
+            setText(name);
 
             return this;
         }
@@ -669,38 +714,22 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         return null;
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected final void addToActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, bundle.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
+    /**
+     *
+     * @deprecated since 4.19.7 without direct replacement
+     */
+    @Deprecated
     protected void removeFromActionList() {
-        StartupActionModelUtil util = InstanceManager.getNullableDefault(StartupActionModelUtil.class);
-        ResourceBundle bundle = getActionModelResourceBundle();
-        if (bundle == null || util == null) {
-            return;
-        }
-        Enumeration<String> e = bundle.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.removeAction(key);
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        // nothing to do
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractSerialConnectionConfig.class);

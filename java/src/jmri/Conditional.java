@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 
 /**
  * A Conditional is layout control logic, consisting of a logical expression and
@@ -81,11 +82,6 @@ public interface Conditional extends NamedBean {
         }
     }
 
-    /**
-     * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
-     */
-    @Deprecated // 4.7.1
-    public static final int UNKNOWN = NamedBean.UNKNOWN;
     public static final int FALSE = 0x02;
     public static final int TRUE = 0x04;
 
@@ -146,11 +142,8 @@ public interface Conditional extends NamedBean {
         public static Operator getOperatorFromIntValue(int opern) {
             switch (opern) {
                 case OPERATOR_AND: return Operator.AND;
-                case OPERATOR_NOT: return Operator.NONE;
-                case OPERATOR_AND_NOT: return Operator.AND;
                 case OPERATOR_NONE: return Operator.NONE;
                 case OPERATOR_OR: return Operator.OR;
-                case OPERATOR_OR_NOT: return Operator.OR;
                 default: throw new IllegalArgumentException(String.format("operator %d is unknown", opern));
             }
         }
@@ -162,21 +155,6 @@ public interface Conditional extends NamedBean {
     static final int OPERATOR_AND = 1;
     static final int OPERATOR_NONE = 4;
     static final int OPERATOR_OR = 5;
-    /**
-     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
-     */
-    @Deprecated // 4.7.1
-    public static final int OPERATOR_NOT = 2;
-    /**
-     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
-     */
-    @Deprecated // 4.7.1
-    public static final int OPERATOR_AND_NOT = 3;
-    /**
-     * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
-     */
-    @Deprecated // 4.7.1
-    public static final int OPERATOR_OR_NOT = 6;
 
     // state variable and action items used by logix.
     enum ItemType {
@@ -915,10 +893,11 @@ public interface Conditional extends NamedBean {
     public void setAction(List<ConditionalAction> arrayList);
 
     /**
-     * Make deep clone of actions
+     * Make deep clone of actions.
      *
-     * @return a list of copies of actionss
+     * @return a list of copies of actions
      */
+    @Nonnull
     public List<ConditionalAction> getCopyOfActions();
 
     /**
@@ -932,10 +911,11 @@ public interface Conditional extends NamedBean {
     public void setStateVariables(List<ConditionalVariable> arrayList);
 
     /**
-     * Make deep clone of variables
+     * Make deep clone of variables.
      *
      * @return a list containing copies of variables
      */
+    @Nonnull
     public List<ConditionalVariable> getCopyOfStateVariables();
 
     /**

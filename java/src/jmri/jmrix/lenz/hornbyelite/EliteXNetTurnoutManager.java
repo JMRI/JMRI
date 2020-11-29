@@ -1,7 +1,9 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.jmrix.lenz.XNetAddress;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,29 +15,29 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2008
  */
-public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
+public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager {
 
-    public EliteXNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller, String prefix) {
-        super(controller, prefix);
+    public EliteXNetTurnoutManager(XNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     // XNet-specific methods
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // check if the output bit is available
-        int bitNum = XNetAddress.getBitFromSystemName(systemName, prefix);
+        int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
             return (null);
         }
         // create the new Turnout object
-        Turnout t = new EliteXNetTurnout(prefix, bitNum, tc);
+        Turnout t = new EliteXNetTurnout(getSystemPrefix(), bitNum, tc);
         t.setUserName(userName);
         return t;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -57,7 +59,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                     log.debug("message has address: {}", addr);
                     // reach here for switch command; make sure we know 
                     // about this one
-                    String s = prefix + typeLetter() +(addr - 1);
+                    String s = getSystemNamePrefix() +(addr - 1);
                     forwardMessageToTurnout(s,l);
                     if ((addr & 0x01) == 1) {
                         // If the address we got was odd, we need to check to 
@@ -66,7 +68,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                         if ((a2 & 0x0c) != 0) {
                             // reach here for switch command; make sure we know 
                             // about this one
-                            s = prefix + typeLetter() + (addr);
+                            s = getSystemNamePrefix() + (addr);
                             forwardMessageToTurnout(s,l);
                         }
                     }
@@ -75,6 +77,6 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class);
 
 }

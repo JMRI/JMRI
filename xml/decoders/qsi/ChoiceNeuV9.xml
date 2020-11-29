@@ -12,7 +12,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
 <!-- function output choices for in neutral -->
-<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="None" value="0"/>
   <enumChoice choice="Horn" value="1" include="1115,1123,1127,1173,1130,1132"/>
   <enumChoice choice="Whistle" value="1" include="3104,3109"/>

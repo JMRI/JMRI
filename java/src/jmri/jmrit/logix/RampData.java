@@ -27,7 +27,7 @@ public class RampData {
 
     protected void makeThrottleSettings(float fromSet, float toSet) {
         _upRamp = (toSet >= fromSet);
-        _settings = new ArrayList<Float>();
+        _settings = new ArrayList<>();
         float lowSetting;
         float highSetting;
         float throttleIncre = _throttleInterval;

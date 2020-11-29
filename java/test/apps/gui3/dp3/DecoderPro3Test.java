@@ -1,25 +1,25 @@
 package apps.gui3.dp3;
 
 import apps.AppsBase;
-import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * Description: Tests for the DecoderPro3 application.
+ * Tests for the DecoderPro3 application.
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class DecoderPro3Test {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new DecoderPro3(args) {
             // force the application to not actually start.
@@ -49,28 +49,27 @@ public class DecoderPro3Test {
                 JUnitUtil.initDebugThrottleManager();
             }
 
-            @Override
-            protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
-            }
         };
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
+        
+        // remove a frame opened by DecoderPro3
+        JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
         // shutdown the application
         AppsBase.handleQuit();
-        // remove a frame opened by DecoderPro3
-        JUnitUtil.disposeFrame("Decoder Pro Wizard", false, false);
+        
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        // eventually want to test ShutDownTasks?
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

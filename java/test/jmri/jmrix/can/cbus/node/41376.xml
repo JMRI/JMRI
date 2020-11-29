@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML File to represent a typical file with 12 good complete backups, also 2 node not heard on networks -->
+<CbusNode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSNodeBackup.xsd" NodeNum="41376">
+  <UserName>My Node Name for Node 41376</UserName>
+  <ModuleTypeName>CATFLAP</ModuleTypeName>
+  <FreeText>My Node 41376 Freetext</FreeText>
+  <Backups>
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-11-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-10-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-09-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-08-27 19:51:15" result="NOTONNETWORK" />
+    <BackupInfo dateTimeStamp="2019-08-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-07-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-06-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-05-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-04-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-03-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-02-25 19:51:15" result="NOTONNETWORK" />
+    <BackupInfo dateTimeStamp="2019-02-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-01-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="127" EventNum="100" EvVars="020000000000000000000000FF" />
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="0102030405060708090A0B0CFF" />
+        <NodeEvent NodeNum="127" EventNum="207" EvVars="00000000000F0000000E0000FF" />
+      </NodeEvents>
+    </BackupInfo>
+  </Backups>
+</CbusNode>

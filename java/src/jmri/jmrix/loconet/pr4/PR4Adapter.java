@@ -11,8 +11,8 @@ import purejavacomm.SerialPort;
 import purejavacomm.UnsupportedCommOperationException;
 
 /**
- * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
- * switch settings on the Digitrax PR4
+ * Override {@link jmri.jmrix.loconet.locobuffer.LocoBufferAdapter} so that it refers to the
+ * (switch) settings on the Digitrax PR4.
  * <p>
  * Based on PR3Adapter.java
  *
@@ -39,12 +39,7 @@ public class PR4Adapter extends LocoBufferAdapter {
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumbers().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumbers()[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -55,11 +50,7 @@ public class PR4Adapter extends LocoBufferAdapter {
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
 
-        log.info("PR4 adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
-                + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
-                + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
+        log.info("PR4 adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
     }
 
     /**
@@ -154,6 +145,11 @@ public class PR4Adapter extends LocoBufferAdapter {
     @Override
     public int[] validBaudNumbers() {
         return new int[]{57600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter

@@ -53,7 +53,7 @@ turnouts.provideTurnout("IT17").setUserName("Sta 2 Right Approach TC")
 # The bell and code line are shared by all Stations
 
 bell = PhysicalBell("Bell")
-codeline = CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104")
+codeline = CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104")
 
 # Set up Station 1 - stations are numbered 1, 2, 3 etc. 
 # Station 1 is levers 1 and 2

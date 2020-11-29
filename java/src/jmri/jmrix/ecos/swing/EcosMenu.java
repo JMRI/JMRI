@@ -1,7 +1,10 @@
 package jmri.jmrix.ecos.swing;
 
 import javax.swing.JMenu;
+
+import jmri.InstanceManager;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +45,8 @@ public class EcosMenu extends JMenu {
         }
 
         add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemDatabase"), "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
-        add(new apps.gui3.tabbedpreferences.TabbedPreferencesAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
+        add(InstanceManager.getDefault(JmriPreferencesActionFactory.class).
+                getCategorizedAction(Bundle.getMessage("MenuItemECoSPrefs"), "ECoS", title));
         if (memo != null) {
             add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos(Bundle.getMessage("MenuItemAddLocoToEcos"), memo));
         }

@@ -1,33 +1,25 @@
-<hr class="hide">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!-- Translated by Blorec Herv&#233; le 2012-01-21-->
-<html lang="fr">
+<!-- This is the common sidebar definition for html/tools/throttle pages -->
+<hr class="hide">
   <div id="side"> <!-- Block of text on left side of page -->
-    <div style="text-align: center"><b>Throttle Tool<br>User Guide</b></div>
-    <div style="text-align: center; font: xx-small; font-size: xx-small">Revision 2004.11.21<br>Based on JMRI 1.5.3</div>
-    <br>
-    <div style="text-align: center; font: x-small; font-size: x-small">
-      <a href="http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download" title="Click to view this user guide in PDF format">Voir/Charger<BR>ce document utilisant <BR>Adobe Reader</a>
-    </div>
-    <br>
-    <dl>
-      <dt><a href="ThrottleTOC.shtml" title="Click to view the Throttle Tool Table of Contents"><center>TABLE DES MATI&#232;RES</center></a></dt>
-      <br>Fermer Fen&#238;tre R&#233;gulateur
-      <dt>R&#233;gulateurs avanc&#233;s</dt>
+
+  	<dl>
+      <dt><h3><a href="ThrottleTOC.shtml" title="Click to view the Throttle Tool Table of Contents">R&#233;gulateurs</a></h3>
+    </dt>
       <dd>
 	<ul>
-	  <li>The <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateurs dans JMRI</a></li>
-	  <li>The <a href="BasicThrottleWindow.shtml"> Fen&#238;tre R&#233;gulateurs lui-m&#238;me</a></li>
-	  <li>The <a href="ThrottleWindowMenus.shtml">R&#233;gulateurs Fen&#238;tre menus</a></li>
-	  <li>The <a href="ThrottleToolBar.shtml">R&#233;gulateurs Fen&#238;tre Barre d'Outils</a></li>
-	  <li>The <a href="AdvancedThrottleControl.shtml">R&#233;gulateurs Fen&#238;tre de contr&#244;les</a></li>
-	  <li>The <a href="ThrottlesListWindow.shtml">R&#233;gulateurs Liste Fen&#238;tre</a></li>
-	  <li>The <a href="ThrottlesPreferencesPane.shtml">R&#233;gulateurs volet pr&#233;f&#233;rences</a><br>
+	  <li><a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateurs dans JMRI</a></li>
+	  <li><a href="BasicThrottleWindow.shtml">Fen&#238;tre R&#233;gulateurs lui-m&ecirc;me</a></li>
+	  <li><a href="ThrottleWindowMenus.shtml">R&#233;gulateurs Fen&ecirc;tre menus</a></li>
+	  <li><a href="ThrottleToolBar.shtml">R&#233;gulateurs Fen&ecirc;tre Barre d'Outils</a></li>
+	  <li><a href="AdvancedThrottleControl.shtml">R&#233;gulateurs Fen&ecirc;tre de contr&#244;les</a></li>
+	  <li><a href="ThrottlesListWindow.shtml">R&#233;gulateurs Liste Fen&ecirc;tre</a></li>
+	  <li><a href="ThrottlesPreferencesPane.shtml">R&#233;gulateurs volet pr&#233;f&#233;rences</a><br>
 	  </li>
 	</ul>
 	<br>
 	<ul>
-	  <li>The <a href="RostersMediaPane.shtml">Panneaux Media et Fonction &#233;tiquette dans DecoderPro</a></li>
+	  <li><a href="RostersMediaPane.shtml">Panneaux Media et Fonction &#233;tiquette dans DecoderPro</a></li>
 	  <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
 	  <li><a href="HowToJMRIOrientedThrottle.shtml">Comment construire un R&#233;gulateur orient&#233; JMRI</a></li>
 	</ul>
@@ -36,42 +28,43 @@
       <dt>Introduction</dt>
       <dd>
 	<ul>
-	  <LI><a href="ThrottleMain.shtml" title="What is the throttle tool?">Quel est cet outil?</a>
-	  <LI><a href="ThrottleMain.shtml#HowToUse" title="How to use this guide">Comment utiliser ce guide</a>
+	  <li><a href="ThrottleMain.shtml" title="What is the throttle tool?">Quel est cet outil?</a></li>
+	  <li><a href="ThrottleMain.shtml#HowToUse" title="How to use this guide">Comment utiliser ce guide</a></li>
 	</ul>
       </dd>
       
       <dt>D&#233;marrage</dt>
       <dd>
 	<ul>
-	  <LI><a href="ThrottleChapter1.shtml" title="Where do I find the throttle tool?">O&#249; le trouvert</a>
+	  <li><a href="ThrottleChapter1.shtml" title="Where do I find the throttle tool?">O&#249; le trouvert</a>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter1.shtml#MainMenu" title="The Main Menu">Le Menu Principal</a>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter1.shtml#ThrottlesSub" title="The Throttles Sub-Menu">Les sou-menus R&#233;gulateur</a>
-	    </ul>
+	      <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#MainMenu" title="The Main Menu">Le Menu Principal</a></li>
+	      <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#ThrottlesSub" title="The Throttles Sub-Menu">Les sou-menus R&#233;gulateur</a></li>
+	    </ul></li>
 	</ul>
       </dd>
       
       <dt>Ouvrir et Configurer</dt>
       <dd>
 	<ul>
-	  <LI><a href="ThrottleChapter2.shtml" title="Open a New Throttle Window">Ouvrir un Nouveau R&#233;gulateur</a>
+	  <li><a href="ThrottleChapter2.shtml" title="Open a New Throttle Window">Ouvrir un Nouveau R&#233;gulateur</a>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#StructWin" title="Structure of a Throttle Window">Structure de R&#233;gulateur</a>
-	    </ul>
-	  <LI><a href="ThrottleChapter2.shtml#WinConfig" title="Configure a New Throttle">Configurer un R&#233;gulateur</a>
+	      <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#StructWin" title="Structure of a Throttle Window">Structure de R&#233;gulateur</a></li>
+	    </ul></li>
+	  <li><a href="ThrottleChapter2.shtml#WinConfig" title="Configure a New Throttle">Configurer un R&#233;gulateur</a>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#AddressPanel" title="Assign a Decoder Address to a Throttle Window">Assigner une Adresse</a>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#ControlPanel" title="Control Panel - Let's Run a Train">Panneau de Commande</a>
-		<ul>
-		  <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#StandardActions" title="The Standard Keypad Actions">Clavier de Commande</a>
-		  <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#MouseControl" title="Mouse Control">Commande Souris</a>
+	      <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#AddressPanel" title="Assign a Decoder Address to a Throttle Window">Assigner une Adresse</a></li>
+	      <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#ControlPanel" title="Control Panel - Let's Run a Train">Panneau de Commande</a>
+		  <ul>
+		  <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#StandardActions" title="The Standard Keypad Actions">Clavier de Commande</a></li>
+		  <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#MouseControl" title="Mouse Control">Commande Souris</a>
 		    <ul>
-		      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#SliderBar" title="Slider Bar">Le Curseur</a>
-		    </ul>
-		</ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#Acquiring" title="Acquiring a Dispatched Locomotive">Acqu&#233;rir une Loco</a>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter2.shtml#FunctionPanel" title="The Function Panel">Panneau de Fonctionl</a>
+		      <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#SliderBar" title="Slider Bar">Le Curseur</a></li>
+		    </ul></li>
+		</ul></li>
+		</ul></li>
+	    <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#Acquiring" title="Acquiring a Dispatched Locomotive">Acqu&#233;rir une Loco</a></li>
+	    <li><a style="font-size: x-small" href="ThrottleChapter2.shtml#FunctionPanel" title="The Function Panel">Panneau de Fonctionl</a></li>
 	    </ul>
 	</ul>
       </dd>
@@ -79,28 +72,72 @@
       <dt>Configuration Avanc&#233;e</dt>
       <dd>
 	<ul>
-	  <LI><a href="ThrottleChapter3.shtml" title="Advanced Configuration of the Function Panel">Panneau de Fonction</a>
-	  <LI><a href="ThrottleChapter3.shtml#WinMenuOptions" title="Throttle Window Menu Options">Options Menus</a>
+	  <li><a href="ThrottleChapter3.shtml" title="Advanced Configuration of the Function Panel">Panneau de Fonction</a></li>
+	  <li><a href="ThrottleChapter3.shtml#WinMenuOptions" title="Throttle Window Menu Options">Options Menus</a>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter3.shtml#ViewPanels" title="View (Panels)">Voir Panneaux</a>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter3.shtml#EditFrameProperties" title="Edit (Frame Properties)">&#233;diter les Propri&#233;t&#233;s</a>
-	    </ul>
+	      <li><a style="font-size: x-small" href="ThrottleChapter3.shtml#ViewPanels" title="View (Panels)">Voir Panneaux</a></li>
+	      <li><a style="font-size: x-small" href="ThrottleChapter3.shtml#EditFrameProperties" title="Edit (Frame Properties)">&#233;diter les Propri&#233;t&#233;s</a></li>
+	    </ul></li>
 	</ul>
       </dd>
       
       <dt>Ouvrir/Sauver des configurations</dt>
       <dd>
 	<ul>
-	  <LI><a href="ThrottleChapter4.shtml" title="Saving a Throttle Layout">Sauver une Configuration</a>
+	  <li><a href="ThrottleChapter4.shtml" title="Saving a Throttle Layout">Sauver une Configuration</a></li>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter4.shtml#SaveMultiple" TITLE="Saving Multiple Throttle Windows">Sauvegarder De Multiples R&#233;gulateurs</a>
-	    </ul>
-	  <LI><a href="ThrottleChapter4.shtml#LoadLayout" title="Open/Load a Throttle Layout"Ouvrir/Charger une Configuration</a>
+	      <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#SaveMultiple" title="Saving Multiple Throttle Windows">Sauvegarder De Multiples R&#233;gulateurs</a></li>
+	    </ul></li>
+	  <li><a href="ThrottleChapter4.shtml#LoadLayout" title="Open/Load a Throttle Layout"Ouvrir/Charger une Configuration</a>
 	    <ul>
-	      <LI><a style="font-size: x-small" href="ThrottleChapter4.shtml#Merging" title="Merging Throttle Windows">Fusionner des R&#233;gulateurs</a>
-	    </ul>
-	  <LI><a href="ThrottleChapter4.shtml#CloseThrottle" title="Closing A Throttle Window">Fermer Fen&#238;tre R&#233;gulateur</a>
+	      <li><a style="font-size: x-small" href="ThrottleChapter4.shtml#Merging" title="Merging Throttle Windows">Fusionner des R&#233;gulateurs</a></li>
+	    </ul></li>
+	  <li><a href="ThrottleChapter4.shtml#CloseThrottle" title="Closing A Throttle Window">Fermer Fen&#238;tre R&#233;gulateur</a></li>
 	</ul>
       </dd>
     </dl>
+
+		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
+		    <ul>
+				<li><a href="../Turnouts.shtml">Aiguillages</a></li>
+				<li><a href="../Lights.shtml">Lumi&#232;res</a></li>
+				<li><a href="../Sensors.shtml">Capteurs</a></li>
+				<li><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+				<li><a href="../consisttool/ConsistTool.shtml">Couplage</a></li>
+				<li><a href="../signaling/index.shtml">Signalisation</a></li>
+				<li><a href="../Blocks.shtml">Cantons</a></li>
+				<li><a href="../Reporters.shtml">Rapports</a></li>
+				<li><a href="../Memories.shtml">Variables M&#233;moire</a></li>
+				<li><a href="../Routes.shtml">Itin&#233;raires</a></li>
+				<li><a href="../LRoutes.shtml">LItin&#233;raires</a></li>
+		        <li><a href="../Sections.shtml">Sections</a></li>
+				<li><a href="../Logix.shtml">Logix</a></li>
+				<li><a href="../fastclock/index.shtml">Horloges Rapides</a></li>
+				<li><a href="../speedometer/index.shtml">Compteur</a></li>
+				<li><a href="../Audio.shtml">Audio</a></li>
+				<li><a href="../IdTags.shtml">Etiquettes IDs</a></li>
+
+		    <li><a href="../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></li>
+		    </ul>
+		</dd>
+
+			<dt><h3><a href="../automation/index.shtml">Automatisation du R&#233;seau</a></h3></dt>
+	   	<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties
+			de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement
+			&#224; la circulation de trains en toile de fond.
+		<ul>
+	        <li><a href="../signaling/index.shtml">Signalisation</a></li>
+			<li><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+			<li><a href="../Routes.shtml">Itin&#233;raires</a></li>
+	        <li><a href="../fastclock/index.shtml">Horloges Rapides</a></li>
+	        <li><a href="../scripting/index.shtml">Script</a></li>
+	    </ul>
+		</dd>
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
+
   </div>

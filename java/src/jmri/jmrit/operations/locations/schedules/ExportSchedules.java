@@ -1,35 +1,28 @@
 package jmri.jmrit.operations.locations.schedules;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.JOptionPane;
-import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.locations.tools.ExportLocations;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
+
 /**
- * Exports the Operation Schedules into a comma delimitated file (CSV).
+ * Exports the Operation Schedules into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
  *
  */
 public class ExportSchedules extends XmlFile {
-
-    static final String ESC = "\""; // escape character NOI18N
-    private String del = ","; // delimiter
-
-    public void setDeliminter(String delimiter) {
-        del = delimiter;
-    }
 
     public void writeOperationsScheduleFile() {
         makeBackupFile(defaultOperationsFilename());
@@ -48,133 +41,75 @@ public class ExportSchedules extends XmlFile {
                 }
             }
             writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete: " + e);
+        } catch (IOException e) {
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}", e);
         }
     }
 
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
-        // This is taken in large part from "Java and XML" page 368
         File file = findFile(name);
         if (file == null) {
             file = new File(name);
         }
 
-        PrintWriter fileOut = null;
+        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                    CSVFormat.DEFAULT)) {
 
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+            // create header
+            fileOut.printRecord(Bundle.getMessage("ScheduleName"),
+                    Bundle.getMessage("Id"),
+                    Bundle.getMessage("Type"),
+                    Bundle.getMessage("Random"),
+                    Bundle.getMessage("Delivery"),
+                    Bundle.getMessage("Road"),
+                    Bundle.getMessage("Receive"),
+                    Bundle.getMessage("Ship"),
+                    Bundle.getMessage("Destination"),
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage("Pickup"),
+                    Bundle.getMessage("Count"),
+                    Bundle.getMessage("Wait"),
+                    Bundle.getMessage("Hits"),
+                    Bundle.getMessage("Comment"));
+
+            List<Schedule> schedules = InstanceManager.getDefault(ScheduleManager.class).getSchedulesByNameList();
+            for (Schedule schedule : schedules) {
+                for (ScheduleItem scheduleItem : schedule.getItemsBySequenceList()) {
+                    fileOut.printRecord(schedule.getName(),
+                            scheduleItem.getId(),
+                            scheduleItem.getTypeName(),
+                            scheduleItem.getRandom(),
+                            scheduleItem.getSetoutTrainScheduleName(),
+                            scheduleItem.getRoadName(),
+                            scheduleItem.getReceiveLoadName(),
+                            scheduleItem.getShipLoadName(),
+                            scheduleItem.getDestinationName(),
+                            scheduleItem.getDestinationTrackName(),
+                            scheduleItem.getPickupTrainScheduleName(),
+                            scheduleItem.getCount(),
+                            scheduleItem.getWait(),
+                            scheduleItem.getHits(),
+                            schedule.getComment());
+                }
+
+            }
+            fileOut.flush();
+            fileOut.close();
+            log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
+                schedules.size(), defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportComplete"),
+                    JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             log.error("Can not open export schedules CSV file: {}", file.getName());
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
-                            0, defaultOperationsFilename()}),
+                0, defaultOperationsFilename()}),
                     Bundle.getMessage("ExportFailed"),
                     JOptionPane.ERROR_MESSAGE);
-            return;
         }
-
-        // create header
-        String header = Bundle.getMessage("ScheduleName") +
-                del +
-                Bundle.getMessage("Id") +
-                del +
-                Bundle.getMessage("Type") +
-                del +
-                Bundle.getMessage("Random") +
-                del +
-                Bundle.getMessage("Delivery") +
-                del +
-                Bundle.getMessage("Road") +
-                del +
-                Bundle.getMessage("Receive") +
-                del +
-                Bundle.getMessage("Ship") +
-                del +
-                Bundle.getMessage("Destination") +
-                del +
-                Bundle.getMessage("Track") +
-                del +
-                Bundle.getMessage("Pickup") +
-                del +
-                Bundle.getMessage("Count") +
-                del +
-                Bundle.getMessage("Wait") +
-                del +
-                Bundle.getMessage("Hits") +
-                del +
-                Bundle.getMessage("Comment");
-
-        fileOut.println(header);
-
-        List<Schedule> schedules = InstanceManager.getDefault(ScheduleManager.class).getSchedulesByNameList();
-        for (Schedule schedule : schedules) {
-            for (ScheduleItem scheduleItem : schedule.getItemsBySequenceList()) {
-
-                String line = ESC +
-                        schedule.getName() +
-                        ESC +
-                        del +
-                        scheduleItem.getId() +
-                        del +
-                        ESC +
-                        scheduleItem.getTypeName() +
-                        ESC +
-                        del +
-                        scheduleItem.getRandom() +
-                        del +
-                        ESC +
-                        scheduleItem.getSetoutTrainScheduleName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getRoadName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getReceiveLoadName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getShipLoadName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getDestinationName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getDestinationTrackName() +
-                        ESC +
-                        del +
-                        ESC +
-                        scheduleItem.getPickupTrainScheduleName() +
-                        ESC +
-                        del +
-                        scheduleItem.getCount() +
-                        del +
-                        scheduleItem.getWait() +
-                        del +
-                        scheduleItem.getHits() +
-                        del +
-                        ESC +
-                        schedule.getComment() +
-                        ESC;
-
-                fileOut.println(line);
-            }
-
-        }
-        fileOut.flush();
-        fileOut.close();
-        log.info("Exported " + schedules.size() + " schedules to file " + defaultOperationsFilename());
-        JOptionPane.showMessageDialog(null,
-                MessageFormat.format(Bundle.getMessage("ExportedSchedulesToFile"), new Object[]{
-                        schedules.size(), defaultOperationsFilename()}),
-                Bundle.getMessage("ExportComplete"),
-                JOptionPane.INFORMATION_MESSAGE);
     }
 
     // Operation files always use the same directory
@@ -195,6 +130,6 @@ public class ExportSchedules extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsSchedules.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportLocations.class);
+    private final static Logger log = LoggerFactory.getLogger(ExportSchedules.class);
 
 }

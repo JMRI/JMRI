@@ -216,6 +216,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
     /**
      * Get the first part of the system name
      * for the specific mast type.
+     * @return For this specific class, "F$dsm:"
      */
     protected @Nonnull String getNamePrefix() {
         return "F$dsm:";
@@ -223,6 +224,8 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     /** 
      * Create a mast of the specific subtype.
+     * @param name A valid subtype name
+     * @return A SignalMast of that subtype
      */
     protected DccSignalMast constructMast(@Nonnull String name) {
         return new DccSignalMast(name);
@@ -352,6 +355,7 @@ public class DccSignalMastAddPane extends SignalMastAddPane {
 
     /**
      * Copy aspects by name from another DccSignalMast.
+     * @param strMast User or system name of mast to copy from
      */
     void copyFromAnotherDCCMastAspect(@Nonnull String strMast) {
         DccSignalMast mast = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBean(strMast);

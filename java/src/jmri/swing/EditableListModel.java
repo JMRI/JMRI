@@ -8,7 +8,7 @@ import javax.swing.ListModel;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public interface EditableListModel<E> extends ListModel<E> {
 

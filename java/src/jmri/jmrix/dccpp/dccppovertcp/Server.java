@@ -14,7 +14,6 @@ import java.util.Set;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
-import jmri.implementation.QuietShutDownTask;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
@@ -36,7 +35,7 @@ public class Server {
     boolean settingsLoaded = false;
     ServerListner stateListner;
     boolean settingsChanged = false;
-    QuietShutDownTask shutDownTask;
+    Runnable shutDownTask;
     ZeroConfService service = null;
     static final String AUTO_START_KEY = "AutoStart";
     static final String PORT_NUMBER_KEY = "PortNumber";
@@ -47,17 +46,6 @@ public class Server {
 
     public void setStateListner(ServerListner l) {
         stateListner = l;
-    }
-
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized Server getInstance() {
-        return InstanceManager.getDefault(Server.class);
     }
 
     private void loadSettings() {
@@ -162,18 +150,10 @@ public class Server {
             log.info("Starting ZeroConfService _dccppovertcpserver._tcp.local for DCCppOverTCP Server");
             this.service.publish();
             if (this.shutDownTask == null) {
-                this.shutDownTask = new QuietShutDownTask("DCCppOverTcpServer") {
-                    @Override
-                    public boolean execute() {
-                        InstanceManager.getDefault(Server.class).disable();
-                        return true;
-                    }
-                };
+                this.shutDownTask = this::disable;
             }
             if (this.shutDownTask != null) {
-                InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((sdm) -> {
-                    sdm.register(this.shutDownTask);
-                });
+                InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
             }
         }
     }
@@ -202,7 +182,7 @@ public class Server {
             }
         }
         this.service.stop();
-        if (this.shutDownTask != null && InstanceManager.getNullableDefault(jmri.ShutDownManager.class) != null) {
+        if (this.shutDownTask != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }
     }
@@ -268,7 +248,7 @@ public class Server {
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(Server.class)) {
                 Server instance = new Server();
                 if (instance.getAutoStart()) {

@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2010</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Bob</firstname>
+                <surname>Jacobsen</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Dave</firstname>
+                <surname>Heap</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>8</revnumber>
+            <date>2020-04-10</date>
+            <authorinitials>DH</authorinitials>
+            <revremark>Made from v4cv21.22.xml file</revremark>
+        </revision>
+        <revision>
+            <revnumber>7</revnumber>
+            <date>2017-07-22</date>
+            <authorinitials>RK</authorinitials>
+            <revremark>German translation and revision</revremark>
+        </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2010-03-12</date>
+            <authorinitials>BJ</authorinitials>
+            <revremark>Initial release as separate file</revremark>
+        </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2003-12-05</date>
+            <authorinitials>BJ</authorinitials>
+            <revremark>Revision in original 0NMRA.xml file</revremark>
+        </revision>
+    </revhistory>
+    <!-- Do not label any of these variables. -->
+    <!-- The allocation of bits within the CVs changes depending on the (user-updatable) firmware version. -->
+    <!-- Labels must instead be attached to display items in v5ConsistPaneGroup1.xml and v5ConsistPaneGroup1.xm2. -->
+    <variable item="CV 21 bit 0" CV="21" mask="XXXXXXXV" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 1" CV="21" mask="XXXXXXVX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 2" CV="21" mask="XXXXXVXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 3" CV="21" mask="XXXXVXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 4" CV="21" mask="XXXVXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 5" CV="21" mask="XXVXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 6" CV="21" mask="XVXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 21 bit 7" CV="21" mask="VXXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 0" CV="22" mask="XXXXXXXV" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 1" CV="22" mask="XXXXXXVX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 2" CV="22" mask="XXXXXVXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 3" CV="22" mask="XXXXVXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 4" CV="22" mask="XXXVXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 5" CV="22" mask="XXVXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 6" CV="22" mask="XVXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 22 bit 7" CV="22" mask="VXXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 0" CV="109" mask="XXXXXXXV" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 1" CV="109" mask="XXXXXXVX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 2" CV="109" mask="XXXXXVXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 3" CV="109" mask="XXXXVXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 4" CV="109" mask="XXXVXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 5" CV="109" mask="XXVXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 6" CV="109" mask="XVXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 109 bit 7" CV="109" mask="VXXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 0" CV="110" mask="XXXXXXXV" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 1" CV="110" mask="XXXXXXVX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 2" CV="110" mask="XXXXXVXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 3" CV="110" mask="XXXXVXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 4" CV="110" mask="XXXVXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 5" CV="110" mask="XXVXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 6" CV="110" mask="XVXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+    <variable item="CV 110 bit 7" CV="110" mask="VXXXXXXX" comment="No labels here">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <tooltip>Determines whether the function will respond to the consist address</tooltip>
+        <tooltip xml:lang="ca">Estableix si la Funció respon a l'adreça de la Multi-Tracció</tooltip>
+        <tooltip xml:lang="cs">Určuje zdali se funkce bude řídit adresou soupravy</tooltip>
+        <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
+        <tooltip xml:lang="fr">Détermine si la fonction répond à l'adresse de Multi-Traction (UM)</tooltip>
+        <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Consist</tooltip>
+    </variable>
+</variables>

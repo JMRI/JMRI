@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.HashMap;
+import javax.annotation.Nonnull;
 import jmri.CommandStation;
 import jmri.InstanceManager;
 import jmri.NmraPacket;
@@ -150,8 +151,7 @@ public class DccSignalMast extends AbstractSignalMast {
     protected int packetSendCount = 3;  // default 3
 
     @Override
-    public void setAspect(String aspect) {
-
+    public void setAspect(@Nonnull String aspect) {
         if (appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect) != -1) {
             c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, appearanceToOutput.get(aspect)), packetSendCount);
         } else {
@@ -219,7 +219,7 @@ public class DccSignalMast extends AbstractSignalMast {
     }
 
     /**
-     * get the number of times the packet should be sent to the track.
+     * Get the number of times the packet should be sent to the track.
      *
      * @return the count.
      */

@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder
-  File</title><!-- Style -->
+  File</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,17 +17,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
-      <h1>JMRI: DecoderPro User Guide</h1>
+
+    <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Creating A Custom Decoder File</h2>
 
@@ -72,7 +73,7 @@
           <p>If you're modifying a decoder definition, it is best to
           start with the most recent version, which can always be
           found here on the JMRI web site at <a href=
-          "http://jmri.org/xml/decoders/">http://jmri.org/xml/decoders/</a>.
+          "https://jmri.org/xml/decoders/">https://jmri.org/xml/decoders/</a>.
           That way, it won't be hard to merge your changes with
           ones that might have come before. Please don't do any
           more reformatting than you have to. If you change the
@@ -101,7 +102,6 @@
           href="../XSLT/decoder.xsl"?&gt;<br>
           &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010
           All rights reserved --&gt;<br>
-          &lt;!-- $Id$ --&gt;<br>
           ...<br>
           &lt;decoder-config
           xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -341,7 +341,7 @@
             parts as decimal digits, or even base 3 or 5.
             That's a bit more technical, it's rarely needed, but 
             if you do need it see the 
-            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
+            <a href="https://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
 
             <li><dfn>default</dfn> - The default value for this
             variable. This is used for a new decoder, or when you
@@ -445,10 +445,49 @@
 
               <p class="example">    &lt;enumChoice choice="Blue"
               value="32"/&gt;</p>
+              
             </li>
           </ul>
         </dd>
 
+        <dt class="left">Including fragment files</dt>
+        <dd>
+          <p>Decoder definitions can include "fragment files"
+          which provide common definitions of some CVs.
+          This has the advantage that they're already created and 
+          tested, and often include tooltip text, translations 
+          and other nice features.  See the existing 
+          decoder definitions for 
+          <a href="https://jmri.org/xml/decoders/nmra">examples</a>.  
+          Some key ones:</p>
+
+              <ul>
+                <li>CV1, the primary or short address, 
+                    CV17 and 18, the extended or long address,
+                    and the corresponding CV29 bits can 
+                    be handled by one of these, depending
+                    on what the decode supports:
+                    <ul>
+                    <li>xml/decoders/nmra/shortAddressOnly.xml
+                    <li>xml/decoders/nmra/shortAndLongAddress.xml
+                    </ul>
+                <li>CV19, the consist address and direction, 
+                    can be handled by one of these:
+                    <ul>
+                    <li>xml/decoders/nmra/consistAddr.xml	
+                    <li>xml/decoders/nmra/consistAddrDirection.xml
+                    </ul>
+                 <li>The CV16/CV15 decoder lock feature can be 
+                    handled by the xml/decoders/nmra/decoderLockId16.xml
+                    fragment file. Note that only CV16 is included;
+                    CV15 should not be included in the definition
+                    to prevent it from being changed after decoder
+                    installation.   
+                </ul>
+         
+         <p>You can also use fragment files to include (hence simplify)
+         <a href="https://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+        </dd>
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>
@@ -484,7 +523,7 @@
       <p>For more advanced information on the content of the files,
       please see the <a href="CreateDecoderAdvanced.shtml">Advanced
       Decoder Definitions</a> page.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

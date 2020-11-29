@@ -48,6 +48,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
      *
      * @param m associated systemConnectionMemo object
      */
+    @Override
     public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
         log.debug("LnTrafficController set memo to {}", m.getUserName());
         memo = m;
@@ -58,6 +59,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
      *
      * @return the associated systemConnectionMemo object
      */
+    @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
         return memo;
@@ -163,7 +165,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
                     // normal request
                     if (log.isDebugEnabled()) {
-                        log.debug("forwarding message: " + m.getMessage());
+                        log.debug("forwarding message: {}", m.getMessage());
                     }
                     controller.sendLocoNetMessage(m.getMessage());
                     // and go round again

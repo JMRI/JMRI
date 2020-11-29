@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -15,13 +20,10 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.FileUtil;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class HtmlConductor extends HtmlTrainCommon {
 
@@ -33,7 +35,7 @@ public class HtmlConductor extends HtmlTrainCommon {
     }
 
     public String getLocation() throws IOException {
-        RouteLocation location = train.getCurrentLocation();
+        RouteLocation location = train.getCurrentRouteLocation();
         if (location == null) {
             return String.format(locale, FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,
                     "ConductorSnippet.html"))), train.getIconName(), StringEscapeUtils.escapeHtml4(train
@@ -66,27 +68,27 @@ public class HtmlConductor extends HtmlTrainCommon {
                 pickupEngines(engineList, location), // engines in separate section
                 pickups, setouts, localMoves,
                 dropEngines(engineList, location), // engines in separate section
-                (train.getNextLocation(train.getCurrentLocation()) != null) ? train.getNextLocationName() : null,
+                (train.getNextRouteLocation(train.getCurrentRouteLocation()) != null) ? train.getNextLocationName() : null,
                 getMoveButton(),
                 train.getStatusCode());
     }
 
     private String getCurrentAndNextLocation() {
-        if (train.getCurrentLocation() != null && train.getNextLocation(train.getCurrentLocation()) != null) {
-            return String.format(locale, strings.getProperty("CurrentAndNextLocation"), StringEscapeUtils  // NOI18N
-                    .escapeHtml4(train.getCurrentLocationName()), StringEscapeUtils.escapeHtml4(train
-                            .getNextLocationName()));
-        } else if (train.getCurrentLocation() != null) {
-            return StringEscapeUtils.escapeHtml4(train.getCurrentLocationName());
+        if (train.getCurrentRouteLocation() != null && train.getNextRouteLocation(train.getCurrentRouteLocation()) != null) {
+            return String.format(locale, strings.getProperty("CurrentAndNextLocation"), // NOI18N
+                    StringEscapeUtils.escapeHtml4(splitString(train.getCurrentLocationName())),
+                    StringEscapeUtils.escapeHtml4(splitString(train.getNextLocationName())));
+        } else if (train.getCurrentRouteLocation() != null) {
+            return StringEscapeUtils.escapeHtml4(splitString(train.getCurrentLocationName()));
         }
-        return strings.getProperty("Terminated");  // NOI18N
+        return strings.getProperty("Terminated"); // NOI18N
     }
 
     private String getMoveButton() {
-        if (train.getNextLocation(train.getCurrentLocation()) != null) {
-            return String.format(locale, strings.getProperty("MoveTo"), StringEscapeUtils.escapeHtml4(train  // NOI18N
-                    .getNextLocationName()));
-        } else if (train.getCurrentLocation() != null) {
+        if (train.getNextRouteLocation(train.getCurrentRouteLocation()) != null) {
+            return String.format(locale, strings.getProperty("MoveTo"), // NOI18N
+                    StringEscapeUtils.escapeHtml4(splitString(train.getNextLocationName())));
+        } else if (train.getCurrentRouteLocation() != null) {
             return strings.getProperty("Terminate");  // NOI18N
         }
         return strings.getProperty("Terminated");  // NOI18N
@@ -96,18 +98,18 @@ public class HtmlConductor extends HtmlTrainCommon {
     private String getEngineChanges(RouteLocation location) {
         // engine change or helper service?
         if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (location == train.getSecondLegStartLocation()) {
+            if (location == train.getSecondLegStartRouteLocation()) {
                 return engineChange(location, train.getSecondLegOptions());
             }
-            if (location == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
+            if (location == train.getSecondLegEndRouteLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES) {
                 return String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName())); // NOI18N
             }
         }
         if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
-            if (location == train.getThirdLegStartLocation()) {
+            if (location == train.getThirdLegStartRouteLocation()) {
                 return engineChange(location, train.getSecondLegOptions());
             }
-            if (location == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
+            if (location == train.getThirdLegEndRouteLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES) {
                 return String.format(strings.getProperty("RemoveHelpersAt"), splitString(location.getName())); // NOI18N
             }
         }
@@ -117,7 +119,7 @@ public class HtmlConductor extends HtmlTrainCommon {
     private String getLocationComments() {
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
         StringBuilder builder = new StringBuilder();
-        RouteLocation routeLocation = train.getCurrentLocation();
+        RouteLocation routeLocation = train.getCurrentRouteLocation();
         boolean work = isThereWorkAtLocation(train, routeLocation.getLocation());
 
         // print info only if new location
@@ -236,9 +238,9 @@ public class HtmlConductor extends HtmlTrainCommon {
 
     private String pickupCars() {
         StringBuilder builder = new StringBuilder();
-        RouteLocation location = train.getCurrentLocation();
+        RouteLocation location = train.getCurrentRouteLocation();
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
-        List<Track> tracks = location.getLocation().getTrackByNameList(null);
+        List<Track> tracks = location.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         List<String> pickedUp = new ArrayList<>();
         this.clearUtilityCarTypes();
@@ -276,9 +278,9 @@ public class HtmlConductor extends HtmlTrainCommon {
 
     private String dropCars(boolean local) {
         StringBuilder builder = new StringBuilder();
-        RouteLocation location = train.getCurrentLocation();
+        RouteLocation location = train.getCurrentRouteLocation();
         List<Car> carList = InstanceManager.getDefault(CarManager.class).getByTrainDestinationList(train);
-        List<Track> tracks = location.getLocation().getTrackByNameList(null);
+        List<Track> tracks = location.getLocation().getTracksByNameList(null);
         List<String> trackNames = new ArrayList<>();
         List<String> dropped = new ArrayList<>();
         for (Track track : tracks) {
@@ -292,7 +294,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                                 splitString(car.getDestinationTrackName())))) {
                     continue;
                 }
-                if (isLocalMove(car) == local
+                if (car.isLocalMove() == local
                         && (car.getRouteDestination() == location && car.getDestinationTrack() != null)) {
                     dropped.add(car.getId());
                     if (car.isUtility()) {

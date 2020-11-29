@@ -1,64 +1,18 @@
 package apps.startup;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Abstract startup action model.
  *
- * @author Randall Wood (c) 2016
+ * @author Randall Wood (c) 2016, 2020
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.AbstractStartupModel} instead
  */
-public abstract class AbstractStartupModel implements StartupModel {
-
-    private String name;
-    private final List<Exception> exceptions = new ArrayList<>();
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public abstract class AbstractStartupModel extends jmri.util.startup.AbstractStartupModel {
 
     protected AbstractStartupModel() {
-        this.name = null;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    @Nonnull
-    public String toString() {
-        String string = this.getName();
-        if (string == null) {
-            return super.toString();
-        }
-        return string;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * The default behavior is to return true if {@link #getName()} returns a
-     * non-null, non-empty String.
-     *
-     * @return true if valid; false otherwise
-     */
-    @Override
-    public boolean isValid() {
-        String s = this.getName();
-        return s != null && !s.isEmpty();
-    }
-
-    @Override
-    public List<Exception> getExceptions() {
-        return new ArrayList<>(this.exceptions);
-    }
-
-    @Override
-    public void addException(@Nonnull Exception exception) {
-        this.exceptions.add(exception);
+        super();
     }
 }

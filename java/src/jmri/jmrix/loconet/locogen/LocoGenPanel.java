@@ -152,7 +152,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     javax.swing.Timer timer = null;
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts and restarts
      *
      * @param delay in mSec
      */

@@ -16,14 +16,13 @@ package jmri.jmrit.vsdecoder;
  *
  * @author   Mark Underwood Copyright (C) 2011
  */
-import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListener {
+public class ToggleSoundEvent extends SoundEvent {
 
     JToggleButton button;
 
@@ -77,9 +76,9 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
     protected ButtonTrigger setupButtonAction(Element te) {
         bt = new ButtonTrigger(te.getAttributeValue("name"));
         button_trigger_list.put(bt.getName(), bt);
-        log.debug("new ButtonTrigger " + bt + " name " + bt.getName() + " type " + this.getButtonType());
+        log.debug("new ButtonTrigger {} name {} type {}", bt, bt.getName(), this.getButtonType());
         if (bt != null) {
-            log.debug("name " + bt.getName() + " type " + this.getButtonType().toString());
+            log.debug("name {} type {}", bt.getName(), this.getButtonType().toString());
         }
         if (button == null) {
             log.error("BUTTON SHOULD NOT BE NULL");

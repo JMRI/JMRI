@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; 2013-09-14-->
+<!-- Updated by Blorec Herv&#233; 2013-09-14-->
 
 <html lang="fr">
 <head>
@@ -19,14 +19,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h1>JMRI Guide Mat&eacute;riel: Connexion &agrave; un
       Digitrax PR2</h1><a href=
       "http://digitrax.com/prd_compint_pr2.php"><img src=
@@ -140,6 +142,6 @@
         </li>
       </ul>
     </div>
-  </div><!--#include virtual="/Footer" -->
+  </div><!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

@@ -3,6 +3,12 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -15,27 +21,20 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-import jmri.util.junit.rules.*;
-import org.junit.*;
-import org.junit.rules.*;
 
 /**
  * Tests for the Operations EngineEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
+@Timeout(10)
 public class EngineEditFrameTest extends OperationsTestCase {
-    
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
-    @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries      
 
-//    List<String> tempEngines;
-    
     @Test
     public void testClearRoadNumber() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -270,7 +269,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editRoadButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._attribute);
         
         // test that the attribute edit frame gets disposed
         f.buttonEditActionPerformed(new ActionEvent("null", 0, null));
@@ -289,7 +288,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editModelButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.MODEL, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.MODEL, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -304,7 +303,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editTypeButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.TYPE, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.TYPE, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -319,7 +318,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editLengthButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.LENGTH, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.LENGTH, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -334,7 +333,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editOwnerButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.OWNER, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.OWNER, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -349,7 +348,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.editGroupButton);
         Assert.assertTrue(f.engineAttributeEditFrame.isShowing());
-        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.CONSIST, f.engineAttributeEditFrame._comboboxName);
+        Assert.assertEquals("Check attribute", EngineAttributeEditFrame.CONSIST, f.engineAttributeEditFrame._attribute);
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);
         JUnitUtil.dispose(f);
@@ -440,7 +439,6 @@ public class EngineEditFrameTest extends OperationsTestCase {
 
         // confirm engine location and track changed
         Assert.assertEquals("track", testSpur, engine.getTrack());
-
         JUnitUtil.dispose(f);
     }
 
@@ -490,7 +488,6 @@ public class EngineEditFrameTest extends OperationsTestCase {
         
         Assert.assertTrue(e6.isBunit());
         Assert.assertEquals("Blocking order", Engine.B_UNIT_BLOCKING, e6.getBlocking());
-
         JUnitUtil.dispose(f);
     }
 
@@ -532,12 +529,11 @@ public class EngineEditFrameTest extends OperationsTestCase {
         // test delete button
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("number of Engines", 3, cManager.getNumEntries());
-
         JUnitUtil.dispose(f);
     }
     
     @Test
-    public void testAddNewRoad() {
+    public void testAddNewRoadNo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData(); // load engines
         EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
@@ -571,31 +567,44 @@ public class EngineEditFrameTest extends OperationsTestCase {
         }
 
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
+        JUnitUtil.dispose(f);
+    }
+    
+    @Test
+    public void testAddNewRoadYes() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JUnitOperationsUtil.initOperationsData(); // load engines
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
-        // now answer yes to add road
-        Thread load2 = new Thread(new Runnable() {
+        Engine e1 = engineManager.getByRoadAndNumber("PC", "5524");
+        e1.setRoadName("TEST_ROAD");
+
+        EngineEditFrame f = new EngineEditFrame();
+        f.initComponents();
+
+        // should cause add road dialog to appear
+        Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
                 f.load(e1);
             }
         });
-        load2.setName("load edit frame"); // NOI18N
-        load2.start();
+        load.setName("load edit frame"); // NOI18N
+        load.start();
 
         jmri.util.JUnitUtil.waitFor(() -> {
-            return load2.getState().equals(Thread.State.WAITING);
+            return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("addRoad"), Bundle.getMessage("ButtonYes"));
 
         try {
-            load2.join();
+            load.join();
         } catch (InterruptedException e) {
             // do nothing
         }
 
         Assert.assertTrue(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
-
         JUnitUtil.dispose(f);
     }
     
@@ -663,6 +672,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(EngineModels.class).containsName("TEST_MODEL"));
 
         JUnitUtil.dispose(f);
+
     }
     
     @Test
@@ -726,6 +736,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(EngineTypes.class).containsName("TEST_TYPE"));
 
         JUnitUtil.dispose(f);
+
     }
     
     @Test

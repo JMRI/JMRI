@@ -1,15 +1,14 @@
 package jmri.util.docbook;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author Bob Jacobsen Copyright (C) 2010
  */
 public class RevHistoryTest {
 
@@ -46,12 +45,12 @@ public class RevHistoryTest {
         Assert.assertEquals(expected, result);
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -123,7 +123,7 @@ class TreeListener(java.beans.PropertyChangeListener):
     self.controller = controller
     self.controllerHashCode = controller.hashCode()
     # open a throttle window and get components
-    self.throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow()
+    self.throttleWindow = jmri.InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager).createThrottleWindow()
     self.activeThrottleFrame = self.throttleWindow.addThrottleFrame()
     # move throttle on screen so multiple throttles don't overlay each other
     self.throttleWindow.setLocation(400 * numThrottles, 50 * numThrottles)

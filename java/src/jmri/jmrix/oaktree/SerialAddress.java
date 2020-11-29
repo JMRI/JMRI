@@ -1,7 +1,9 @@
 package jmri.jmrix.oaktree;
 
+import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
-
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +49,8 @@ public class SerialAddress {
     /**
      * Static method to parse a system name and return the Serial Node.
      *
+     * @param systemName system name.
+     * @param tc traffic controller.
      * @return 'NULL' if illegal systemName format or if the node is not found
      */
     public static SerialNode getNodeFromSystemName(String systemName, SerialTrafficController tc) {
@@ -75,7 +79,7 @@ public class SerialAddress {
         if (noB) {
             // This is a OiLnnxxx address
             // try to parse remaining system name part
-            int num = 0;
+            int num;
             try {
                 num = Integer.parseInt(systemName.substring(prefix.length() + 1)); // multi char prefix
             } catch (NumberFormatException ex) {
@@ -95,7 +99,7 @@ public class SerialAddress {
             } else {
                 try {
                     ua = Integer.parseInt(s);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in system name: {}", systemName);
                     return (null);
                 }
@@ -108,6 +112,8 @@ public class SerialAddress {
      * Static method to parse a system name and return the bit number.
      * Note: Bits are numbered from 1.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return 0 if an error is found
      */
     public static int getBitFromSystemName(String systemName, String prefix) {
@@ -131,7 +137,7 @@ public class SerialAddress {
             int num;
             try {
                 num = Integer.parseInt(systemName.substring(prefix.length() + 1));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.error("illegal character in number field of system name: {}", systemName);
                 return (0);
             }
@@ -145,7 +151,7 @@ public class SerialAddress {
             // This is a OiLnnBxxxx address
             try {
                 n = Integer.parseInt(systemName.substring(k, systemName.length()));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.error("illegal character in bit number field system name: {}", systemName);
                 return (0);
             }
@@ -154,12 +160,93 @@ public class SerialAddress {
     }
 
     /**
+     * Validate system name format. Does not check whether that node is defined
+     * on current system.
+     *
+     * @param systemName the system name
+     * @param prefix     the prefix from {@link jmri.Manager#getSystemNamePrefix()}
+     * @param locale     the Locale for user messages
+     * @return systemName unmodified
+     * @throws IllegalArgumentException if unable to validate systemName
+     */
+    public static String validateSystemNameFormat(String systemName, String prefix, Locale locale) throws IllegalArgumentException {
+        if (!systemName.startsWith(prefix)) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", systemName),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidPrefix", systemName));
+        }
+        String address = systemName.substring(prefix.length());
+        int node = 0;
+        int bit = 0;
+        if (!address.contains("B")) {
+            // This is a CLnnnxxx pattern address
+            int num;
+            try {
+                num = Integer.parseInt(address);
+                node = num / 1000;
+                bit = num - ((num / 1000) * 1000);
+            } catch (NumberFormatException e) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNotInteger", systemName, prefix),
+                        Bundle.getMessage(locale, "InvalidSystemNameNotInteger", systemName, prefix));
+            }
+        } else {
+            // This is a CLnBxxx pattern address
+            String[] parts = address.split("B");
+            if (parts.length != 2) {
+                if (address.indexOf("B") == 0) {
+                    // no node
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, ""),
+                            Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, ""));
+                } else {
+                    // no bit
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, ""),
+                            Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, ""));
+                }
+            }
+            try {
+                node = Integer.parseInt(parts[0]);
+            } catch (NumberFormatException e) {
+                log.debug("invalid character in node address field of CMRI system name: {}", systemName);
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, parts[0]),
+                        Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, parts[0]));
+            }
+            try {
+                bit = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException ex) {
+                log.debug("invalid character in bit number field of CMRI system name: {}", systemName);
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, parts[1]),
+                        Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, parts[1]));
+            }
+        }
+        if (node < 0 || node >= 128) {
+            log.debug("node address field out of range in CMRI system name: {}", systemName);
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameNodeInvalid", systemName, node),
+                    Bundle.getMessage(locale, "InvalidSystemNameNodeInvalid", systemName, node));
+        }
+        if (bit < 1 || bit > 2048) {
+            log.debug("bit number field out of range in CMRI system name: {}", systemName);
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBitInvalid", systemName, bit),
+                    Bundle.getMessage(locale, "InvalidSystemNameBitInvalid", systemName, bit));
+        }
+        return systemName;
+    }
+
+    /**
      * Static method to validate system name format.
      *
+     * @param systemName system name.
      * @param type Letter indicating device type expected
+     * @param prefix system prefix.
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 
@@ -182,7 +269,7 @@ public class SerialAddress {
             int num;
             try {
                 num = Integer.parseInt(systemName.substring(prefix.length() + 1));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in number field system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -203,7 +290,7 @@ public class SerialAddress {
             int num;
             try {
                 num = Integer.parseInt(s);
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in node address field of system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -214,7 +301,7 @@ public class SerialAddress {
             // validate the bit number field
             try {
                 num = Integer.parseInt(systemName.substring(k, systemName.length()));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 log.warn("invalid character in bit number field of system name: {}", systemName);
                 return NameValidity.INVALID;
             }
@@ -229,6 +316,9 @@ public class SerialAddress {
     /**
      * Static method to validate system name for configuration.
      *
+     * @param systemName system name.
+     * @param type bean type, e.g. S for Sensor, T for Turnout.
+     * @param memo system connection.
      * @return 'true' if system name has a valid meaning in current configuration, else
      * return 'false'
      */
@@ -269,6 +359,8 @@ public class SerialAddress {
      * Static method to convert one format system name for the alternate
      * format.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return an empty string if the supplied system name does not have a valid
      * format, or if there is no representation in the alternate naming scheme
      */
@@ -278,7 +370,7 @@ public class SerialAddress {
             // No point in trying if a valid system name format is not present
             return "";
         }
-        String altName = "";
+        String altName;
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
         int k = 0;
@@ -316,6 +408,8 @@ public class SerialAddress {
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
      *
+     * @param systemName system name.
+     * @param prefix system prefix.
      * @return an empty string if the supplied system name does not have a valid format.
      * Otherwise a normalized name is returned in the same format as the input name.
      */
@@ -329,7 +423,7 @@ public class SerialAddress {
             // No point in normalizing if a valid system name format is not present
             return "";
         }
-        String nName = "";
+        String nName;
         // check for the presence of a 'B' to differentiate the two address formats
         String s = "";
         int k = 0;

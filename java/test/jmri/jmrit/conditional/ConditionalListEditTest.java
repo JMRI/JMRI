@@ -1,19 +1,20 @@
 package jmri.jmrit.conditional;
 
 import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
 /*
-* Tests for the ConditionalListEdit Class
+* Tests for the ConditionalListEdit Class.
+*
 * @author Dave Sand Copyright (C) 2017
 */
 public class ConditionalListEditTest {
@@ -63,7 +64,7 @@ public class ConditionalListEditTest {
         new JButtonOperator(editFrame, Bundle.getMessage("ButtonDone")).push();  // NOI18N
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -73,8 +74,9 @@ public class ConditionalListEditTest {
         jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

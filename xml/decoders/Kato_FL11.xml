@@ -2,11 +2,12 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="John Crellin" version="1.0" lastUpdated="20111003"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+  <!-- Version 2 - change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Function Only, with transponding" mfg="Kato">
+    <family name="Function Only, with transponding" mfg="KATO Precision Models">
       <model model="FL11" lowVersionID="0"/>
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>

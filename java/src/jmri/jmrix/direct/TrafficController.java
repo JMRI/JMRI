@@ -27,6 +27,7 @@ public class TrafficController implements jmri.CommandStation {
 
     /**
      * Create a new Direct TrafficController instance.
+     * @param memo system connection.
      */
     public TrafficController(DirectSystemConnectionMemo memo) {
         super();

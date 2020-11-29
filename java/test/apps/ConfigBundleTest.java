@@ -1,7 +1,7 @@
 package apps;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the ConfigBundle class
@@ -18,12 +18,7 @@ public class ConfigBundleTest {
 
     @Test
     public void testBadKeyMessage() {
-        try {
-            ConfigBundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test
@@ -34,11 +29,6 @@ public class ConfigBundleTest {
 
     @Test
     public void testBadKeyMessageArg() {
-        try {
-            ConfigBundle.getMessage("FFFFFTTTTTTT", new Object[]{});
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> ConfigBundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 }

@@ -22,12 +22,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Logix Documentation</h1>
 
       <p>Logix&trade; provide a powerful capability for JMRI to
@@ -232,9 +231,7 @@
       example, valid Logix System Names include: IX1, IX34, and
       IX100. The user name is whatever the user wants to use to
       identify the particular Logix, for example, "Signal 5
-      Control". All letters in a System Name must be in upper case.
-      If the user enters lower case letters, JMRI will
-      automatically convert them to upper case. Also, as a
+      Control". As a
       convenience to the user, if the entered System Name does not
       begin with IX, the program will add IX in front of what is
       entered. For example, to enter a System Name of IX32, simply
@@ -973,7 +970,7 @@
         </li>
       </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

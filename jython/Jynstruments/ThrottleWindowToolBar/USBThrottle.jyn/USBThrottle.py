@@ -32,7 +32,7 @@ import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
 import javax.swing.Timer as Timer
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import jmri.jmrit.throttle.AddressListener as AddressListener
-import org.jdom.Element as Element
+import org.jdom2.Element as Element
 
 # Some default speeds that will be used in the program
 speedMaxSpeed = 1

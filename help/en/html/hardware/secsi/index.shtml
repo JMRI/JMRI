@@ -11,10 +11,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: TracTronics SECSI System</h1>
       JMRI can
       connect to TracTronics SECSI system Nodes. <a name=
@@ -24,7 +25,7 @@
 
       <p><strong>As of 2016 TracTronics SECSI is no longer online.</strong> 
       It previously appeared at 
-      <a href="www.tractronics.com">www.tractronics.com</a>.
+      <a href="http://www.tractronics.com">www.tractronics.com</a>.
       A archived version of their web site is available on the
       <a href="http://web.archive.org/web/20160323021156/http://www.TracTronics.com">Internet Archive</a>.
       <p>
@@ -44,7 +45,7 @@
       <p>The system letter is "V", so for example the first Sensor
       on node 5 would be "VS5001".</p>
       
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

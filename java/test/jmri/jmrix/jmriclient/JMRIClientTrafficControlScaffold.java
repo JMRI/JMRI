@@ -1,9 +1,9 @@
 /**
  * JMRIClientInterfaceScaffold.java
  *
- * Description:	Stands in for the JMRIClientTrafficController class
+ * Stands in for the JMRIClientTrafficController class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 package jmri.jmrix.jmriclient;
 
@@ -30,7 +30,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
     @Override
     public void sendJMRIClientMessage(JMRIClientMessage m, JMRIClientListener reply) {
         if (log.isDebugEnabled()) {
-            log.debug("sendJMRIClientMessage [" + m + "]");
+            log.debug("sendJMRIClientMessage [{}]", m);
         }
         // save a copy
         outbound.addElement(m);
@@ -45,7 +45,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
     protected void sendTestMessage(JMRIClientMessage m, JMRIClientListener l) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestMessage    [" + m + "]");
+            log.debug("sendTestMessage    [{}]", m);
         }
         notifyMessage(m, l);
         return;
@@ -57,7 +57,7 @@ public class JMRIClientTrafficControlScaffold extends JMRIClientTrafficControlle
     protected void sendTestReply(JMRIClientReply m) {
         // forward a test message to NceListeners
         if (log.isDebugEnabled()) {
-            log.debug("sendTestReply [" + m + "]");
+            log.debug("sendTestReply [{}]", m);
         }
         notifyReply(m,null);
         return;

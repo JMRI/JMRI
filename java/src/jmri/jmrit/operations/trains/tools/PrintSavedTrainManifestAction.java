@@ -2,8 +2,14 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -14,8 +20,6 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
 import jmri.jmrit.operations.trains.TrainUtilities;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a train's manifest that has been saved.
@@ -26,12 +30,12 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
 
     private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
-    public PrintSavedTrainManifestAction(String actionName, boolean isPreview, Train train) {
-        super(actionName);
+    public PrintSavedTrainManifestAction(boolean isPreview, Train train) {
+        super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedManifest") : Bundle.getMessage("MenuItemPrintSavedManifest"));
         _isPreview = isPreview;
         _train = train;
         setEnabled(Setup.isSaveTrainManifestsEnabled());
-        Setup.addPropertyChangeListener(this);
+        Setup.getDefault().addPropertyChangeListener(this);
     }
 
     /**
@@ -87,33 +91,11 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
             pathName = InstanceManager.getDefault(TrainManagerXml.class).getBackupManifestDirectoryName(_train.getName());
         }
         JFileChooser fc = new JFileChooser(pathName);
-        fc.addChoosableFileFilter(new FileFilter());
+        fc.setFileFilter(new FileNameExtensionFilter(Bundle.getMessage("TextFiles"), "txt"));
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             return null; // canceled
         }
-        if (fc.getSelectedFile() == null) {
-            return null; // canceled
-        }
-        File file = fc.getSelectedFile();
-        return file;
-    }
-
-    private static class FileFilter extends javax.swing.filechooser.FileFilter {
-        @Override
-        public boolean accept(File f) {
-            if (f.isDirectory())
-                return true;
-            String name = f.getName();
-            if (name.matches(".*\\.txt")) // NOI18N
-                return true;
-            else
-                return false;
-        }
-
-        @Override
-        public String getDescription() {
-            return Bundle.getMessage("TextFiles");
-        }
+        return fc.getSelectedFile();
     }
 }

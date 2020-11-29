@@ -15,14 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Digikeijs (Digirails)</h1><a name=
       "hardware" id="hardware"></a>
 
@@ -81,7 +83,7 @@
 
        <li>Select whatever as Command station type (DB150 Empire Builder on my side)</li>
        
-       <li>Additional Connection settings, set port to 5550</li>       
+       <li>Under Additional Connection settings, set port to 5550</li>
       </ul>
       
       <h4>Via USB</h4>
@@ -139,7 +141,7 @@
         Digirails DR5000 documentation</a></li>
       </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

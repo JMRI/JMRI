@@ -13,11 +13,13 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>DecoderPro&reg; Programmeur Avanc&#233;</h1>
 <h2>Volet M&#233;dia Inventaire</h2>
 
@@ -31,7 +33,6 @@
 <p align="center"><img src="images/Adv_04_RosterMedia.png" width="780" height="810" alt="roster media"></p>
 <p align="left"><strong>Image qui doit &#234;tre utilis&#233;e comme image principale pour cet inventaire:</strong> La grand cadre noir est l'espace r&#233;serv&#233; pour l'image. L'image est plac&#233;e dans cet emplacement r&#233;serv&#233; en suivant ces instructions. </p>
 <ol>
-  <ol>
     <li>Premi&#232;rement vous devez trouver une image de la Locomotive et la stocker sur votre disque dur.
       <ol type="a">
         <li>Sources
@@ -51,10 +52,12 @@
       </ol>
     </li>
     <li>Apr&#232;s stockage de l'image sur votre ordinateur, ouvrez le Volet M&#233;dia Inventaire puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le grand cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisser et d&#233;poser dans le M&#233;dia Inventaire depuis l&#225;. NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
-    <li></li>
- Les images de l'Inventaire sont stock&#233;es dans le dossier &lt;JMRI Preferences&gt;/resources.  Quand une image est actualis&#233;e ou supprim&#233;e, elle n'est pas supprim&#233;e de ce dossier.
-  </ol>
+    <li>
+    Les images de l'Inventaire sont stock&#233;es dans le dossier &lt;JMRI Preferences&gt;/resources.
+    Quand une image est actualis&#233;e ou supprim&#233;e, elle n'est pas supprim&#233;e de ce dossier.
+    </li>
 </ol>
+
 <blockquote>
   <blockquote>
     <p align="center"><img src="images/Adv_04a_RosterMedia.png" width="899" height="388" alt="roster media"></p>
@@ -64,9 +67,7 @@
   <p align="left"><strong>L'Image devant &#234;tre utilis&#233;e comme ic&#244;ne dans cet inventaire, doit avoir la t&#234;te &#225; droite:</strong> similairement &#225; l'image, il y a une petit cadre noir qui peut &#234;tre rempli avec l'image &#225; utiliser comme ic&#244;ne pour l'identification de l'entr&#233;e inventaire.&nbsp; Les instructions sont aussi similaires:</p>
 </blockquote>
 <ol>
-  <ol>
-    <ol>
-      <li> vous devez trouver une image de la Locomotive pour l'utiliser comme ic&#244;ne et la stocker sur votre disque dur.
+    <li> vous devez trouver une image de la Locomotive pour l'utiliser comme ic&#244;ne et la stocker sur votre disque dur.
         <ol type="a">
           <li>Sources
             <ol>
@@ -83,11 +84,10 @@
             </ol>
           </li>
         </ol>
-      </li>
-      <li>Apr&#232;s stockage de l'ic&#244;ne image dans votre ordinateur, ouvez le Volet M&#233;dia Inventaire, puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le petit cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisser et d&#233;poser dans le M&#233;dia Inventaire depuis l&#225; NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
-    </ol>
-  </ol>
+    </li>
+    <li>Apr&#232;s stockage de l'ic&#244;ne image dans votre ordinateur, ouvez le Volet M&#233;dia Inventaire, puis ouvrez Windows Explorer ou le Gestionnaire de Fichiers de votre syst&#232;me et glissez et d&#233;posez le fichier image dans le petit cadre noir. Vous pouvez aussi sauver l'image sur votre Bureau et le glisser et d&#233;poser dans le M&#233;dia Inventaire depuis l&#225; NE PAS essayer de  glisser et d&#233;poser depuis un site web.</li>
 </ol>
+
 <blockquote>
   <p>Pour supprimer une image de l'Inventaire, Clic-Droit puis cliquer supprimer dans le menu qui apparait, donc, elle ne sera pas supprim&#233;e du dossier Resources.</p>
   <p><strong>R&#233;f&#233;rences web:</strong> Vous pouvez copier l'URL du site web o&#249; sont localis&#233;es les images de r&#233;f&#233;rences</p>
@@ -100,9 +100,9 @@ Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne,
 <p><a href="http://www.djcooley.com/info/gifs/loco/gifloco.htm" target="_blank">Train GIF Railyard</a>
 <p><a href="http://www.kls2.com/~karl/rr/consists/" target="_blank">Karl's RR Pages</a>
 <p><a href="http://www.bluarcher.com/traingifs/edtraingifsSD40.htm" target="_blank">ED Bindler Train GIF.s</a>
-<p><a href= "http://uxtobirza.free.fr/trains//L2.php" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a> 
-<p><a href= "https://fr.wikipedia.org/wiki/Mat&#233;riel_moteur_de_la_SNCF" target="_blank"> Parc Moteur SNCF </a> 
-<p><a href= "http://letraindalain.free.fr/" target="_blank">Machine &#225; Vapeur SNCF </a>
+<p><a href="http://uxtobirza.free.fr/trains//L2.php" target="_blank"> Locomotives Diesels et &#201;lectriques SNCF GIF</a>
+<p><a href="https://fr.wikipedia.org/wiki/Materiel_moteur_de_la_SNCF" target="_blank">Parc Moteur SNCF</a>
+<p><a href="http://letraindalain.free.fr/" target="_blank">Machine &#225; Vapeur SNCF</a>
 <hr>
 
 <div align="right">
@@ -110,7 +110,7 @@ Apr&#232;s ajout des images dans les cadres pour image principale et ic&#244;ne,
 <p><a href="index.shtml">Retour &#225; l'Index.</a></p>
 </div>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
  </body>

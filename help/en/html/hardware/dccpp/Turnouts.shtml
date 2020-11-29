@@ -20,10 +20,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DCC++ Turnouts and Outputs</h1>
 
       <a name="types" id="types"></a><h2>Types of DCC++ Turnout Control</h2>
@@ -242,7 +243,7 @@
       DCC++ Controller software.  As long as the IDs assigned in the Base Station match the Hardware Address
       assigned in JMRI's Turnout Table, all will be well.</p>
 
-        <!--#include virtual="/Footer" -->
+        <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -1,15 +1,15 @@
 package jmri.jmrix.loconet;
 
-import jmri.IdTag;
-import jmri.IdTagManager;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.managers.TranspondingTagManager class.
  *
- * @author	Matthew Harris Copyright (C) 2011
+ * @author Matthew Harris Copyright (C) 2011
  */
 public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManagerTest {
 
@@ -119,9 +119,19 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 2")));
         Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+    
+    // No manager-specific system name validation at present
+    @Test
+    @Override
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -132,7 +142,8 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         l = getManager();
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() throws Exception {
         l = null;
         jmri.util.JUnitUtil.tearDown();
@@ -140,6 +151,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
 
     // Override init method so as not to load file
     // nor register shutdown task during tests.
+    @Override
     protected TranspondingTagManager getManager() {
         return new TranspondingTagManager() {
             @Override

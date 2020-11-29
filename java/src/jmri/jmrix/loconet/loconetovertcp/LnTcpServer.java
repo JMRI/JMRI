@@ -11,7 +11,6 @@ import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.implementation.QuietShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ public class LnTcpServer {
     private ServerSocket serverSocket;
     private final List<LnTcpServerListener> stateListeners = new ArrayList<>();
     private boolean settingsChanged = false;
-    private QuietShutDownTask shutDownTask;
+    private final Runnable shutDownTask = this::disable;
     private ZeroConfService service = null;
 
     private int portNumber;
@@ -54,19 +53,6 @@ public class LnTcpServer {
     }
 
     /**
-     * Add a state listener to this server.
-     *
-     * @param l the listener to add
-     * @deprecated since 4.7.4; use
-     * {@link #addStateListener(jmri.jmrix.loconet.loconetovertcp.LnTcpServerListener)}
-     * instead.
-     */
-    @Deprecated
-    public void setStateListner(LnTcpServerListener l) {
-        this.addStateListener(l);
-    }
-
-    /**
      * Get the default server instance, creating it if necessary.
      *
      * @return the default server instance
@@ -76,70 +62,6 @@ public class LnTcpServer {
             LnTcpServer server = new LnTcpServer(jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
             return InstanceManager.setDefault(LnTcpServer.class, server);
         });
-    }
-
-    /**
-     * Get the default server instance, creating it if necessary.
-     *
-     * @return the default server
-     * @deprecated since 4.7.5; use {@link #getDefault()} instead
-     */
-    @Deprecated
-    public static synchronized LnTcpServer getInstance() {
-        return LnTcpServer.getDefault();
-    }
-
-    /**
-     * Determine if server will start when created by an action.
-     *
-     * @return true
-     * @deprecated since 4.7.5 without replacement; use the JMRI startup actions
-     * mechanisms to control this
-     */
-    @Deprecated
-    public boolean getAutoStart() {
-        return true;
-    }
-
-    /**
-     * Set if server will start when created by an action.
-     *
-     * @param start ignored
-     * @deprecated since 4.7.5 without replacement; use the JMRI startup actions
-     * mechanism to control this
-     */
-    @Deprecated
-    public void setAutoStart(boolean start) {
-        // do nothing
-    }
-
-    /**
-     * Get the port the server listens to.
-     *
-     * @return the port
-     * @deprecated since 4.7.5; use {@link #getPort() }
-     * instead
-     */
-    @Deprecated
-    public int getPortNumber() {
-        return portNumber;
-    }
-
-    /**
-     * Set the port the server listens to.
-     *
-     * @param port ignored
-     * @deprecated since 4.7.5; use
-     * {@link jmri.jmrix.loconet.loconetovertcp.LnTcpPreferences#setPort(int) }
-     * instead
-     */
-    @Deprecated
-    public void setPortNumber(int port) {
-        if ((port >= 1) && (port <= 65535)) {
-            portNumber = port;
-            settingsChanged = true;
-            updateServerStateListeners();
-        }
     }
 
     public boolean isEnabled() {
@@ -164,18 +86,7 @@ public class LnTcpServer {
             }
             log.info("Starting ZeroConfService _loconetovertcpserver._tcp.local for LocoNetOverTCP Server");
             this.service.publish();
-            if (this.shutDownTask == null) {
-                this.shutDownTask = new QuietShutDownTask("LocoNetOverTcpServer") {
-                    @Override
-                    public boolean execute() {
-                        LnTcpServer.this.disable();
-                        return true;
-                    }
-                };
-            }
-            InstanceManager.getOptionalDefault(jmri.ShutDownManager.class).ifPresent((manager) -> {
-                manager.register(this.shutDownTask);
-            });
+            InstanceManager.getDefault(jmri.ShutDownManager.class).register(this.shutDownTask);
         }
     }
 
@@ -205,9 +116,7 @@ public class LnTcpServer {
         if (this.service != null) {
             this.service.stop();
         }
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((manager) -> {
-            manager.deregister(this.shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
     }
 
     private void updateServerStateListeners() {

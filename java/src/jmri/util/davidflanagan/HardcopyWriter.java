@@ -1,19 +1,7 @@
 package jmri.util.davidflanagan;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.JobAttributes;
+import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
-import java.awt.PageAttributes;
-import java.awt.PrintJob;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Writer;
@@ -21,15 +9,10 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.JWindow;
+
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 import jmri.util.JmriJFrame;
 
 /**
@@ -72,9 +55,7 @@ public class HardcopyWriter extends Writer {
     protected boolean printHeader = true;
 
     protected boolean isPreview;
-//	protected Graphics previewedPage;
     protected Image previewImage;
-//	protected Graphics previewImagegr;
     protected Vector<Image> pageImages = new Vector<>(3, 3);
     protected JmriJFrame previewFrame;
     protected JPanel previewPanel;
@@ -353,6 +334,10 @@ public class HardcopyWriter extends Writer {
      * @throws java.io.IOException if unable to write to printer
      */
     public void write(Color c, String s) throws IOException {
+        charoffset = 0;
+        if (page == null) {
+            newpage();         
+        }
         if (page != null) {
             page.setColor(c);
         }

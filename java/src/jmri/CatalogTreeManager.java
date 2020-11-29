@@ -1,6 +1,7 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 
 /**
  * Locate a CatalogTree object representing some specific information.
@@ -34,7 +35,7 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param name CatalogTree object to locate
      * @return null if no match found
      */
-    public CatalogTree getCatalogTree(String name);
+    public CatalogTree getCatalogTree(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -43,7 +44,8 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param systemName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
-    public CatalogTree getBySystemName(String systemName);
+    @Override
+    public CatalogTree getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -52,13 +54,14 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param userName CatalogTree object to locate
      * @return requested CatalogTree object or null if none exists
      */
-    public CatalogTree getByUserName(String userName);
+    @Override
+    public CatalogTree getByUserName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
-     * two calls with the same arguments will get the same instance; there is
-     * only one CatalogTree object representing a given physical CatalogTree and
-     * therefore only one with a specific system or user name.
+     * Get a CatalogTree instance with the specified system and user names.
+     * Note that two calls with the same arguments will get the same instance;
+     * there is only one CatalogTree object representing a given physical
+     * CatalogTree and therefore only one with a specific system or user name.
      * <p>
      * This will always return a valid object reference; a new object will be
      * created if necessary. In that case:
@@ -80,12 +83,16 @@ public interface CatalogTreeManager extends Manager<CatalogTree> {
      * @param userName   user name for new CatalogTree
      * @return requested CatalogTree object (never null)
      */
-    public CatalogTree newCatalogTree(String systemName, String userName);
+    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName);
 
     public void storeImageIndex();
-        
+
+    public void loadImageIndex();
+
     public boolean isIndexChanged();
-    
+
+    public boolean isIndexLoaded();
+
     public void indexChanged(boolean changed);
 
     @SuppressFBWarnings(value = "MS_MUTABLE_ARRAY",

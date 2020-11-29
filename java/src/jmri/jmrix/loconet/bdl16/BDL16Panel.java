@@ -209,7 +209,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
             case 40:
                 return 0;    // done!
             default:
-                log.error("unexpected state " + state); // NOI18N
+                log.error("unexpected state {}", state); // NOI18N
                 return 0;
         }
     }

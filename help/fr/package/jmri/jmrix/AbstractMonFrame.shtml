@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated  by Blorec Hervé bzh56420@yahoo.fr 2013-11-14-->
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14-->
 
 <html lang="fr">
 <head>
@@ -9,7 +9,8 @@
 
   <title>JMRI: Monitor Window</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help monitor"><!-- Style -->
+  <meta name="keywords" content="JMRI help monitor">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>JMRI
       offre une fen&Atilde;&ordf;tre de communication pour
       surveiller pour que vous puissiez voir ce qui se passe sur le
@@ -119,7 +121,7 @@
         donn&Atilde;&copy;es et fermez le fichier.</li>
       </ol>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

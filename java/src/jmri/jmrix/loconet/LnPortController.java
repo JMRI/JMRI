@@ -39,6 +39,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
      * intervals, but it might also stick off if something goes wrong.
      * <p>
      * Provide a default implementation for the MS100, etc.
+     *
      * @return _always_ true, as we rely on the queueing in the port itself
      */
     public boolean okToSend() {

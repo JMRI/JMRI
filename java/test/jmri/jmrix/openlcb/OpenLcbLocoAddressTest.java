@@ -1,11 +1,11 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 import org.openlcb.NodeID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OpenLcbLocoAddress class.
@@ -15,37 +15,20 @@ import org.openlcb.NodeID;
 public class OpenLcbLocoAddressTest {
 
     @Test
-    public void testEqualsNull() {
-        OpenLcbLocoAddress a = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
-        Assert.assertTrue(!a.equals(null));
+    public void testEqualsAndHashCode() {
+        OpenLcbLocoAddress a1 = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
+        OpenLcbLocoAddress a2 = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
+        OpenLcbLocoAddress a3 = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 0, 0}));
+        assertThat(a1).isEqualTo(a2).isNotEqualTo(a3).isNotEqualTo(null).isNotEqualTo("foo");
+        assertThat(a1.hashCode()).isEqualTo(a2.hashCode());
     }
 
-    @Test
-    public void testEquals() {
-        OpenLcbLocoAddress a = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
-        Assert.assertTrue(a.equals(new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}))));
-    }
-
-    @Test
-    public void testNotEqualsDifferentNode() {
-        OpenLcbLocoAddress a = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
-        Assert.assertTrue(!a.equals(new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 0, 0}))));
-    }
-
-    @SuppressWarnings("unlikely-arg-type") // OpenLcbLocoAddress seems to be unrelated to String
-    @Test
-    public void testEqualsWrongType() {
-        OpenLcbLocoAddress a = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
-        Assert.assertTrue(!a.equals("foo"));
-        Assert.assertTrue(!"foo".equals(a));
-    }
-
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

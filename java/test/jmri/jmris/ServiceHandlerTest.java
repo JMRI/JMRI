@@ -1,11 +1,10 @@
 package jmri.jmris;
 
-import java.io.IOException;
-import jmri.JmriException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the jmri.jmris.ServiceHandler class 
@@ -17,58 +16,58 @@ public class ServiceHandlerTest {
     @Test
     public void testCtorDefault() {
         ServiceHandler a = new ServiceHandler();
-        Assert.assertNotNull(a);
+        assertThat(a).isNotNull();
     }
 
     @Test
     public void testSetAndGetPowerServer(){
         AbstractPowerServer ps = new AbstractPowerServer(){
             @Override
-            public void sendStatus(int Status) throws IOException{}
+            public void sendStatus(int Status) {}
             @Override
-            public void sendErrorStatus() throws IOException {}
+            public void sendErrorStatus() {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setPowerServer(ps);
         // make sure we can retrieve it.
-        Assert.assertEquals("Power Server Get or Set failed",ps,a.getPowerServer());
+        assertThat(a.getPowerServer()).withFailMessage("Power Server Get or Set failed").isEqualTo(ps);
     }
 
     @Test
     public void testSetAndGetTurnoutServer(){
         AbstractTurnoutServer ts = new AbstractTurnoutServer(){
             @Override
-            public void sendStatus(String message, int Status) throws IOException{}
+            public void sendStatus(String message, int Status) {}
             @Override
-            public void sendErrorStatus(String status) throws IOException {}
+            public void sendErrorStatus(String status) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setTurnoutServer(ts);
         // make sure we can retrieve it.
-        Assert.assertEquals("Turnout Server Get or Set failed",ts,a.getTurnoutServer());
+        assertThat(a.getTurnoutServer()).withFailMessage("Turnout Server Get or Set failed").isEqualTo(ts);
    }
 
     @Test
     public void testSetAndGetSensorServer(){
         AbstractSensorServer ts = new AbstractSensorServer(){
             @Override
-            public void sendStatus(String message, int Status) throws IOException{}
+            public void sendStatus(String message, int Status) {}
             @Override
-            public void sendErrorStatus(String status) throws IOException {}
+            public void sendErrorStatus(String status) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setSensorServer(ts);
         // make sure we can retrieve it.
-        Assert.assertEquals("Sensor Server Get or Set failed",ts,a.getSensorServer());
+        assertThat(a.getSensorServer()).withFailMessage("Sensor Server Get or Set failed").isEqualTo(ts);
 
    }
 
@@ -76,66 +75,66 @@ public class ServiceHandlerTest {
     public void testSetAndGetLightServer(){
         AbstractLightServer ts = new AbstractLightServer(){
             @Override
-            public void sendStatus(String lightName, int Status) throws IOException{}
+            public void sendStatus(String lightName, int Status) {}
             @Override
-            public void sendErrorStatus(String lightName) throws IOException {}
+            public void sendErrorStatus(String lightName) {}
             @Override
-            public void parseStatus(String statusString) throws JmriException,IOException {}
+            public void parseStatus(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setLightServer(ts);
         // make sure we can retrieve it.
-        Assert.assertEquals("Light Server Get or Set failed",ts,a.getLightServer());
+        assertThat(a.getLightServer()).withFailMessage("Light Server Get or Set failed").isEqualTo(ts);
     }
 
     @Test
     public void testSetAndGetProgrammerServer(){
         AbstractProgrammerServer ts = new AbstractProgrammerServer(){
             @Override
-            public void sendStatus(int CV, int value, int status) throws IOException{}
+            public void sendStatus(int CV, int value, int status) {}
             @Override
-            public void sendNotAvailableStatus() throws IOException{}
+            public void sendNotAvailableStatus() {}
             @Override
-            public void parseRequest(String statusString) throws JmriException,IOException {}
+            public void parseRequest(String statusString) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setProgrammerServer(ts);
         // make sure we can retrieve it.
-        Assert.assertEquals("Programmer Server Get or Set failed",ts,a.getProgrammerServer());
+        assertThat(a.getProgrammerServer()).withFailMessage("Programmer Server Get or Set failed").isEqualTo(ts);
     }
 
     @Test
     public void testSetAndGetTimeServer(){
         AbstractTimeServer ts = new AbstractTimeServer(){
             @Override
-            public void sendTime() throws IOException{}
+            public void sendTime() {}
             @Override
-            public void sendRate() throws IOException{}
+            public void sendRate() {}
             @Override
-            public void sendStatus() throws IOException{}
+            public void sendStatus() {}
             @Override
-            public void sendErrorStatus() throws IOException {}
+            public void sendErrorStatus() {}
             @Override
-            public void parseTime(String status) throws IOException {}
+            public void parseTime(String status) {}
             @Override
-            public void parseRate(String status) throws IOException {}
+            public void parseRate(String status) {}
         };
         ServiceHandler a = new ServiceHandler();
         // set the value
         a.setTimeServer(ts);
         // make sure we can retrieve it.
-        Assert.assertEquals("Light Server Get or Set failed",ts,a.getTimeServer());
+        assertThat(a.getTimeServer()).withFailMessage("Light Server Get or Set failed").isEqualTo(ts);
     }
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @After
-    public void tearDown() throws Exception {
+    @AfterEach
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
 
     }

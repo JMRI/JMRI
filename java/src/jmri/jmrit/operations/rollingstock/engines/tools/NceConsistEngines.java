@@ -149,7 +149,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                         }
                     }
                     if (!engMatch) {
-                        log.info("Lead engine " + engNum + " not found in operations for NCE consist " + consistNum); // NOI18N
+                        log.info("Lead engine {} not found in operations for NCE consist {}", engNum, consistNum); // NOI18N
                     }
                 }
             }
@@ -201,7 +201,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
                     }
                 }
                 if (!engMatch) {
-                    log.warn("Engine " + engNum + " not found in operations for NCE consist " + consistNum);
+                    log.warn("Engine {} not found in operations for NCE consist {}", engNum, consistNum);
                     if (consists.contains(Integer.toString(consistNum))) {
                         JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
                                 .getMessage("NceConsistMissingEngineNumber"), new Object[]{engNum, consistNum}),

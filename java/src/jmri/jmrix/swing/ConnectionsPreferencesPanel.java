@@ -221,7 +221,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
     private void removeTab(ActionEvent e, int x) {
         int i;
 
-        i = x;
+        i = x; // copy x for handling
 
         if (i != -1) {
             // only prompt if triggered by action event
@@ -237,14 +237,15 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
             }
 
             JmrixConfigPane configPane = this.configPanes.get(i);
-
             this.removeChangeListener(addTabListener);
-            this.remove(i); // was x
+            this.remove(i);
+            log.debug("start of connection #{} disposal", i);
             try {
                 JmrixConfigPane.dispose(configPane);
             } catch (NullPointerException ex) {
                 log.error("Caught Null Pointer Exception while removing connection tab");
             }
+            log.debug("connection #{} successfully disposed", i);
             this.configPanes.remove(i);
             if (this.getTabCount() == 1) {
                 addConnectionTab();

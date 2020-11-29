@@ -1,15 +1,14 @@
 package jmri.jmrix.sprog;
 
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.sprog.SprogConstants.SprogState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to a SprogMessage.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
- * @author	Andrew Berridge - refactored, cleaned up, Feb 2010
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Andrew Berridge - refactored, cleaned up, Feb 2010
  */
 public class SprogReply extends AbstractMRReply {
 
@@ -276,33 +275,6 @@ public class SprogReply extends AbstractMRReply {
                 return false;
             }
             return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * @param sprogState the current SPROG state
-     * 
-     * @return true if end of bootloader reply is found
-     * @deprecated 4.11.4 as bootloading old sprogs is no longer supported in JMRI
-     */
-    @Deprecated
-    public boolean endBootloaderReply(SprogState sprogState) {
-        // Detect that the reply buffer ends with "L>" or "." from a SPROG v4
-        // bootloader
-        int num = this.getNumDataElements();
-        int ptr = num - 1;
-        if ((sprogState == SprogState.V4BOOTMODE) && ((this.getElement(ptr) == '.')
-                || (this.getElement(ptr) == 'S'))) {
-            return true;
-        }
-        if (num >= 2) {
-            // ptr is offset of last element in SprogReply
-            if (this.getElement(ptr) != '>') {
-                return false;
-            }
-            return this.getElement(ptr - 1) == 'L';
         } else {
             return false;
         }

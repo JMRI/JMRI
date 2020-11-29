@@ -6,8 +6,8 @@ import org.jdom2.Element;
  * BasicRosterEntry represents a single element in a locomotive roster, including
  * information on how to locate it from decoder information.
  * <p>
- * The roster interface is too allow access to the Basic details of a Roster
- * entry in the jmri.jmrit.roster package from the jmri.jmrix package.
+ * This interface is to allow access to the Basic details of a Roster
+ * entry.
  * <p>
  * Primarily this only deals as a method to provide other packages with access
  * to the information rather than being able set or create items. However access
@@ -56,7 +56,8 @@ public interface BasicRosterEntry {
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
-     * synchronized with the detailed DTD in roster-config.xml.
+     * synchronized with the detailed schema in
+     * xml/schema/locomotive-config.xsd.
      *
      * @return Contents in a JDOM Element
      */

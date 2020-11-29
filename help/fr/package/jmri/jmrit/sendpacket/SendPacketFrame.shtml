@@ -24,13 +24,13 @@
   <!-- Updated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-11-->
    <!-- Style -->
    <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
+   <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Envoyer Paquet DCC</h1>Ceci est la page d'aide
       help/en/package/jmri/jmrit/sendpacket/SendPacketFrame 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

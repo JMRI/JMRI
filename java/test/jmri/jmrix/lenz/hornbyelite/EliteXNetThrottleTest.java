@@ -2,19 +2,22 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.SpeedStepMode;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 
 /**
  * EliteXNetThrottleTest.java
+ * <p>
+ * Test for the jmri.jmrix.lenz.EliteXNetThrottle class
  *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetThrottle class
- *
- * @author	Paul Bender
+ * @author Paul Bender
  */
 public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
+
+    private EliteXNetSystemConnectionMemo memo;
 
     @Test
     public void testCtor() {
@@ -27,8 +30,8 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 1;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -38,7 +41,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F/126.0F;
+        float expResult = 1.0F / 126.0F;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -361,6 +364,7 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -368,24 +372,27 @@ public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
     @Override
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
-        EliteXNetSystemConnectionMemo memo = new EliteXNetSystemConnectionMemo(tc);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
-        instance = new EliteXNetThrottle(memo,new jmri.DccLocoAddress(42,false), tc);
+        memo = new EliteXNetSystemConnectionMemo(tc);
+        memo.setThrottleManager(Mockito.mock(EliteXNetThrottleManager.class));
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
+        instance = new EliteXNetThrottle(memo, new jmri.DccLocoAddress(42, false), tc);
     }
 
     @Override
-    @After
+    @AfterEach
     public void tearDown() {
+        memo.getXNetTrafficController().terminateThreads();
+        memo.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -1,17 +1,15 @@
 package jmri.jmrit.operations.locations.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -24,8 +22,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainCommon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for copying a location for operations.
@@ -133,7 +129,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
             Location location = (Location) locationBox.getSelectedItem();
             // check to see if there are cars scheduled for pickup or set out
             if (moveRollingStockCheckBox.isSelected()) {
-                for (Track track : location.getTrackList()) {
+                for (Track track : location.getTracksList()) {
                     if (track.getPickupRS() > 0) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
                                 .getMessage("FoundRollingStockPickUp"), new Object[]{track.getPickupRS()}),
@@ -156,7 +152,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
 
             // does the user want the cars to also move to the new tracks?
             if (moveRollingStockCheckBox.isSelected()) {
-                for (Track track : location.getTrackList()) {
+                for (Track track : location.getTracksList()) {
                     moveRollingStock(track, newLocation.getTrackByName(track.getName(), null));
                     if (deleteTrackCheckBox.isSelected()) {
                         location.deleteTrack(track);
@@ -194,7 +190,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
      * @return true if name entered OK and isn't too long
      */
     protected boolean checkName() {
-        if (loctionNameTextField.getText().trim().equals("")) {
+        if (loctionNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{Bundle.getMessage("ButtonCopy")}), JOptionPane.ERROR_MESSAGE);
             return false;

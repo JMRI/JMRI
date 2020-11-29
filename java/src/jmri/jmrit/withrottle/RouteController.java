@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Route;
@@ -172,9 +173,9 @@ public class RouteController extends AbstractController implements PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Sensor s = (Sensor) evt.getSource();
-            for (NamedBeanHandle<Sensor> namedSensor : indication.keySet()) {
-                if (namedSensor.getBean() == s) {
-                    Route r = indication.get(namedSensor);
+            for (Map.Entry<NamedBeanHandle<Sensor>, Route> entry : indication.entrySet()) {
+                if (entry.getKey().getBean() == s) {
+                    Route r = entry.getValue();
                     String message = "PRA" + s.getKnownState() + r.getSystemName();
 
                     for (ControllerInterface listener : listeners) {
@@ -187,7 +188,7 @@ public class RouteController extends AbstractController implements PropertyChang
     }
 
     /**
-     * Register this as a listener of each managed route's aligned sensor
+     * Register this as a listener of each managed route's aligned sensor.
      */
     @Override
     public void register() {
@@ -225,4 +226,5 @@ public class RouteController extends AbstractController implements PropertyChang
     }
 
     private final static Logger log = LoggerFactory.getLogger(RouteController.class);
+
 }

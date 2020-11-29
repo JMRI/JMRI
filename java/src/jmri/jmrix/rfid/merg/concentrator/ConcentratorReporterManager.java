@@ -1,14 +1,12 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.Reporter;
-import jmri.jmrix.rfid.RfidMessage;
-import jmri.jmrix.rfid.RfidReply;
-import jmri.jmrix.rfid.RfidReporterManager;
-import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.TimeoutRfidReporter;
+import jmri.implementation.decorators.TimeoutReporter;
+import jmri.jmrix.rfid.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +22,10 @@ import org.slf4j.LoggerFactory;
 public class ConcentratorReporterManager extends RfidReporterManager {
 
     private final RfidTrafficController tc;
-    private final String prefix;
 
-    public ConcentratorReporterManager(RfidTrafficController tc, String prefix) {
-        super(prefix);
-        this.tc = tc;
-        this.prefix = prefix;
+    public ConcentratorReporterManager(RfidSystemConnectionMemo memo) {
+        super(memo);
+        this.tc = memo.getTrafficController();
         attach();
     }
 
@@ -38,14 +34,14 @@ public class ConcentratorReporterManager extends RfidReporterManager {
     }
 
     @Override
-    protected Reporter createNewReporter(String systemName, String userName) {
-        log.debug("Create new Reporter: " + systemName);
-        if (!systemName.matches(prefix + typeLetter() + "[" + tc.getRange() + "]")) {
-            log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+        log.debug("Create new Reporter: {}", systemName);
+        if (!systemName.matches(getSystemNamePrefix() + "[" + tc.getRange() + "]")) {
+            log.warn("Invalid Reporter name: {}} - out of supported range {}", systemName, tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
-        TimeoutRfidReporter r;
-        r = new TimeoutRfidReporter(systemName, userName);
+        Reporter r;
+        r = new TimeoutReporter( new RfidReporter(systemName, userName));
         r.addPropertyChangeListener(this);
         return r;
     }
@@ -53,7 +49,7 @@ public class ConcentratorReporterManager extends RfidReporterManager {
     @Override
     public void message(RfidMessage m) {
         if (m.toString().equals(new ConcentratorMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
-            log.info("Sent init string: " + m);
+            log.info("Sent init string: {}", m);
         } else {
             super.message(m);
         }
@@ -68,15 +64,15 @@ public class ConcentratorReporterManager extends RfidReporterManager {
 
     private void processReply(ConcentratorReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
-            log.warn("Invalid message - skipping " + r);
+            log.warn("Invalid message - skipping {}", r);
             return;
         }
         if (!r.isInRange()) {
-            log.warn("Invalid concentrator reader range - skipping " + r);
+            log.warn("Invalid concentrator reader range - skipping {}", r);
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidReporter report = (TimeoutRfidReporter) provideReporter(prefix + typeLetter() + r.getReaderPort());
+        TimeoutReporter report = (TimeoutReporter) provideReporter(getSystemNamePrefix() + r.getReaderPort());
         report.notify(idTag);
     }
 

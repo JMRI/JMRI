@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.jmri.org/xml/XSLT/panelfile.xsl"?>
+
+<!-- <sensor> elements with proper names pass, but see also the ../invalid version of this -->
+
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <sensors class="jmri.jmrix.loconet.configurexml.LnTSensorManagerXml">
+    <sensor>
+      <systemName>LS1</systemName>
+      <userName>User</userName>
+    </sensor>
+  </sensors>
+</layout-config>
+
+

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.swing.BorderFactory;
@@ -48,11 +47,12 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.UserPreferencesManager;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.conditional.ConditionalEditBase;
 import jmri.jmrit.conditional.ConditionalListEdit;
 import jmri.jmrit.conditional.ConditionalTreeEdit;
+import jmri.jmrit.conditional.ConditionalListCopy;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
@@ -92,7 +92,7 @@ import org.slf4j.LoggerFactory;
  * is used with his permission. Apr 2, 2017 - Dave Sand
  *
  * @author Dave Duchamp Copyright (C) 2007
- * @author Pete Cressman Copyright (C) 2009, 2010, 2011
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2020
  * @author Matthew Harris copyright (c) 2009
  * @author Dave Sand copyright (c) 2017
  */
@@ -347,7 +347,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() - 1;  // count the number of menus to insert the TableMenus before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);  // NOI18N
+        log.debug("setMenuBar number of menu items = {}", pos);  // NOI18N
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {  // NOI18N
@@ -669,8 +669,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     ConditionalManager _conditionalManager = null;  // set when LogixAction is created
     LogixManager _logixManager = null;  // set when LogixAction is created
 
-    ConditionalListEdit _listEdit = null;
-    ConditionalTreeEdit _treeEdit = null;
+    ConditionalEditBase _baseEdit;
 
     boolean _showReminder = false;
     jmri.jmrit.picker.PickFrame _pickTables;
@@ -692,6 +691,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     // Edit Logix Variables
     private boolean _inEditMode = false;
     private boolean _inCopyMode = false;
+    private boolean _inAddMode = false;
 
     /**
      * Input selection names.
@@ -754,7 +754,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         _showReminder = true;
         // make an Add Logix Frame
         if (addLogixFrame == null) {
-            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage");  // NOI18N
+            JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage", 
+                    "package.jmri.jmrit.beantable.LogixAddEdit");  // NOI18N
             // Create Logix
             create = new JButton(Bundle.getMessage("ButtonCreate"));  // NOI18N
             panel5.add(create);
@@ -766,9 +767,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             });
             create.setToolTipText(Bundle.getMessage("LogixCreateButtonHint"));  // NOI18N
         }
+        _inAddMode = true;
         addLogixFrame.pack();
         addLogixFrame.setVisible(true);
         _autoSystemName.setSelected(false);
+        addLogixFrame.setLocationRelativeTo(getFrame());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
         });
@@ -780,12 +783,12 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param titleId   property key to fetch as title of the frame (using Bundle)
      * @param messageId part 1 of property key to fetch as user instruction on
      *                  pane, either 1 or 2 is added to form the whole key
+     * @param helpFile help file name
      * @return the button JPanel
      */
-    JPanel makeAddLogixFrame(String titleId, String messageId) {
+    JPanel makeAddLogixFrame(String titleId, String messageId, String helpFile) {
         addLogixFrame = new JmriJFrame(Bundle.getMessage(titleId));
-        addLogixFrame.addHelpMenu(
-                "package.jmri.jmrit.beantable.LogixAddEdit", true);     // NOI18N
+        addLogixFrame.addHelpMenu(helpFile, true);     // NOI18N
         addLogixFrame.setLocation(50, 30);
         Container contentPane = addLogixFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -892,6 +895,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         addLogixFrame.setVisible(false);
         addLogixFrame.dispose();
         addLogixFrame = null;
+        _inAddMode = false;
         _inCopyMode = false;
         if (f != null) {
             f.setVisible(true);
@@ -909,43 +913,46 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         if (!checkFlags(sName)) {
             return;
         }
-
-        Runnable t = new Runnable() {
-            @Override
-            public void run() {
-                JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage");    // NOI18N
-                // Create Logix
-                JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
-                panel5.add(create);
-                create.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        copyLogixPressed(e);
-                    }
-                });
-                addLogixFrame.pack();
-                addLogixFrame.setVisible(true);
-                _autoSystemName.setSelected(false);
-                InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
-                    _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
-                });
-            }
-        };
-        log.debug("copyPressed started for {}", sName);  // NOI18N
-        javax.swing.SwingUtilities.invokeLater(t);
-        _inCopyMode = true;
-        _logixSysName = sName;
+        _showReminder = true;
+        // make an Add Logix Frame
+        if (addLogixFrame == null) {
+            JPanel panel5 = makeAddLogixFrame("TitleCopyLogix", "CopyLogixMessage",
+                    "package.jmri.jmrit.conditional.ConditionalCopy");    // NOI18N
+            // Create Logix
+            JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
+            panel5.add(create);
+            create.addActionListener(new CopyAction(sName));
+            addLogixFrame.pack();
+            addLogixFrame.setVisible(true);
+            _autoSystemName.setSelected(false);
+            addLogixFrame.setLocationRelativeTo(getFrame());
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
+                _autoSystemName.setSelected(prefMgr.getSimplePreferenceState(systemNameAuto));
+            });
+            _inCopyMode = true;
+        }
+        _curLogix = _logixManager.getBySystemName(sName);
     }
 
-    String _logixSysName;
+    class CopyAction implements ActionListener {
+        String _lgxName;
+        CopyAction(String lgxName) {
+            _lgxName = lgxName;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            copyLogixPressed(_lgxName);
+        }
+    }
 
     /**
      * Copy the Logix as configured in the Copy set up pane.
      *
-     * @param e the event heard
+     * @param lgxName Logix system name to be copied
      */
-    void copyLogixPressed(ActionEvent e) {
-        String uName = _addUserName.getText().trim();
+    private void copyLogixPressed(String lgxName) {
+        String sName = _systemName.getText();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }
@@ -956,31 +963,24 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
             targetLogix = _logixManager.createNewLogix(uName);
         } else {
-            if (!checkLogixSysName()) {
-                return;
-            }
-            String sName = _systemName.getText().trim();
-            // check if a Logix with this name already exists
-            boolean createLogix = true;
             targetLogix = _logixManager.getBySystemName(sName);
+            if (targetLogix == null && uName != null) {
+                targetLogix = _logixManager.getByUserName(uName);
+            }
             if (targetLogix != null) {
                 int result = JOptionPane.showConfirmDialog(f,
-                        Bundle.getMessage("ConfirmLogixDuplicate", sName, _logixSysName), // NOI18N
+                        Bundle.getMessage("ConfirmLogixDuplicate",
+                                targetLogix.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), lgxName), // NOI18N
                         Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,    // NOI18N
                         JOptionPane.QUESTION_MESSAGE);
                 if (JOptionPane.NO_OPTION == result) {
                     return;
                 }
-                createLogix = false;
-                String userName = targetLogix.getUserName();
-                if (userName != null && userName.length() > 0) {
-                    _addUserName.setText(userName);
-                    uName = userName;
-                }
-            } else if (!checkLogixUserName(uName)) {
-                return;
             }
-            if (createLogix) {
+            if (targetLogix == null) {
+                if (!checkLogixSysName()) {
+                    return;
+                }
                 // Create the new Logix
                 targetLogix = _logixManager.createNewLogix(sName, uName);
                 if (targetLogix == null) {
@@ -988,75 +988,15 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                     log.error("Failure to create Logix with System Name: {}", sName);  // NOI18N
                     return;
                 }
-            } else if (targetLogix == null) {
-                log.error("Error targetLogix is null!");  // NOI18N
-                return;
             } else {
                 targetLogix.setUserName(uName);
             }
         }
-        Logix srcLogic = _logixManager.getBySystemName(_logixSysName);
-        for (int i = 0; i < srcLogic.getNumConditionals(); i++) {
-            String cSysName = srcLogic.getConditionalByNumberOrder(i);
-            copyConditionalToLogix(cSysName, srcLogic, targetLogix);
-        }
         cancelAddPressed(null);
-    }
-
-    /**
-     * Copy a given Conditional from one Logix to another.
-     *
-     * @param cSysName    system name of the Conditional
-     * @param srcLogix    original Logix containing the Conditional
-     * @param targetLogix target Logix to copy to
-     */
-    void copyConditionalToLogix(String cSysName, Logix srcLogix, Logix targetLogix) {
-        Conditional cOld = _conditionalManager.getBySystemName(cSysName);
-        if (cOld == null) {
-            log.error("Failure to find Conditional with System Name: {}", cSysName);  // NOI18N
-            return;
-        }
-        String cOldSysName = cOld.getSystemName();
-        String cOldUserName = cOld.getUserName();
-
-        // make system name for new conditional
-        int num = targetLogix.getNumConditionals() + 1;
-        String cNewSysName = targetLogix.getSystemName() + "C" + Integer.toString(num);
-        // add to Logix at the end of the calculate order
-        String cNewUserName = Bundle.getMessage("CopyOf", cOldUserName); // NOI18N
-        if (cOldUserName != null && cOldUserName.length() == 0) {
-            cNewUserName += "C" + Integer.toString(num);
-        }
-        do {
-            cNewUserName = JOptionPane.showInputDialog(f,
-                    Bundle.getMessage("NameConditionalCopy", cOldUserName, cOldSysName, _logixSysName,
-                            targetLogix.getUserName(), targetLogix.getSystemName()),
-                    cNewUserName);
-            if (cNewUserName == null || cNewUserName.length() == 0) {
-                return;
-            }
-        } while (!checkConditionalUserName(cNewUserName, targetLogix));
-
-        while (!checkConditionalSystemName(cNewSysName)) {
-            cNewSysName = targetLogix.getSystemName() + "C" + ++num;
-        }
-
-        Conditional cNew = _conditionalManager.createNewConditional(cNewSysName, cNewUserName);
-        if (cNew == null) {
-            // should never get here unless there is an assignment conflict
-            log.error("Failure to create Conditional with System Name: \"{}\" and User Name: \"{}\"", cNewSysName, cNewUserName);  // NOI18N
-            return;
-        }
-        cNew.setLogicType(cOld.getLogicType(), cOld.getAntecedentExpression());
-        cNew.setStateVariables(cOld.getCopyOfStateVariables());
-        cNew.setAction(cOld.getCopyOfActions());
-        targetLogix.addConditional(cNewSysName, -1);
-
-        // Update where used with the copy results
-        _saveTargetNames.clear();
-        TreeSet<String> newTargetNames = new TreeSet<String>();
-        loadReferenceNames(cOld.getCopyOfStateVariables(), newTargetNames);
-        updateWhereUsed(newTargetNames, cNewSysName);
+        _baseEdit = new ConditionalListCopy(lgxName, targetLogix);
+        _baseEdit.locateAt(getFrame());
+        _inCopyMode = true;
+        _baseEdit.addLogixEventListener(new ConditionalBaseListener(lgxName));
     }
 
     /**
@@ -1071,7 +1011,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Logix x = _logixManager.getByUserName(uName);
             if (x != null) {
                 // Logix with this user name already exists
-                JOptionPane.showMessageDialog(addLogixFrame,
+                JOptionPane.showMessageDialog(getFrame(),
                         Bundle.getMessage("LogixError3"), Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1081,27 +1021,24 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     /**
-     * Check validity of Logix system name.
-     * <p>
-     * Fixes name if it doesn't start with "IX".
-     *
-     * @return false if name has length &lt; 1 after displaying a dialog
+     * Check for a valid Logix system name.
+     * A valid name has a Logix prefix, normally IX, and at least 1 additional character.
+     * The prefix will be added if necessary.
+     * makeSystemName errors are logged to the system console and a dialog is displayed.
+     * @return true if the name is now valid.
      */
     boolean checkLogixSysName() {
-        String sName = InstanceManager.getDefault(LogixManager.class).normalizeSystemName(_systemName.getText());
-        if ((sName.length() < 1)) {
-            // Entered system name is blank or too short
-            JOptionPane.showMessageDialog(addLogixFrame,
+        String sName = _systemName.getText();
+
+        try {
+            sName = InstanceManager.getDefault(jmri.LogixManager.class).makeSystemName(sName);
+        } catch (jmri.NamedBean.BadSystemNameException ex) {
+            JOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError8"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if ((sName.length() < 2) || (sName.charAt(0) != 'I')
-                || (sName.charAt(1) != 'X')) {
-            // System name does not begin with IX, prefix IX to it
-            String s = sName;
-            sName = "IX" + s;  // NOI18N
-        }
+
         _systemName.setText(sName);
         return true;
     }
@@ -1116,24 +1053,31 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     boolean checkFlags(String sName) {
         if (_inEditMode) {
             // Already editing a Logix, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixError32", _curLogix.getSystemName()),
                     Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
-            if (_treeEdit != null) {
-                _treeEdit.bringToFront();
-            } else if (_listEdit != null) {
-                _listEdit.bringToFront();
-            }
+            _baseEdit.bringToFront();
+            return false;
+        }
+
+        if (_inAddMode) {
+            // Adding a Logix, ask for completion of that edit
+            JOptionPane.showMessageDialog(getFrame(),
+                    Bundle.getMessage("LogixError33"),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            addLogixFrame.toFront();
             return false;
         }
 
         if (_inCopyMode) {
             // Already editing a Logix, ask for completion of that edit
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("LogixError31", _logixSysName),
+            JOptionPane.showMessageDialog(getFrame(),
+                    Bundle.getMessage("LogixError31", _curLogix.getSystemName()),
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
+            _baseEdit.bringToFront();
             return false;
         }
 
@@ -1142,8 +1086,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Logix x = _logixManager.getBySystemName(sName);
             if (x == null) {
                 // Logix does not exist, so cannot be edited
-                log.error("No Logix with system name: " + sName);
-                JOptionPane.showMessageDialog(null,
+                log.error("No Logix with system name: {}", sName);
+                JOptionPane.showMessageDialog(getFrame(),
                         Bundle.getMessage("LogixError5"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
@@ -1162,7 +1106,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         // possible change
         _showReminder = true;
         String sName = "";
-        String uName = _addUserName.getText().trim();
+        String uName = _addUserName.getText();
         if (uName.length() == 0) {
             uName = null;
         }
@@ -1189,7 +1133,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             }
             if (x != null) {
                 // Logix already exists
-                JOptionPane.showMessageDialog(addLogixFrame, Bundle.getMessage("LogixError1"),
+                JOptionPane.showMessageDialog(getFrame(), Bundle.getMessage("LogixError1"),
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -1214,7 +1158,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     void handleCreateException(String sysName) {
-        JOptionPane.showMessageDialog(addLogixFrame,
+        JOptionPane.showMessageDialog(getFrame(),
                 Bundle.getMessage("ErrorLogixAddFailed", sysName), // NOI18N
                 Bundle.getMessage("ErrorTitle"), // NOI18N
                 JOptionPane.ERROR_MESSAGE);
@@ -1228,65 +1172,61 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName system name of Logix to be edited
      */
     void editPressed(String sName) {
-        _curLogix = _logixManager.getBySystemName(sName);
         if (!checkFlags(sName)) {
             return;
         }
 
         if (sName.equals(SensorGroupFrame.logixSysName)) {
             // Sensor group message
-            JOptionPane.showMessageDialog(null,
+            JOptionPane.showMessageDialog(getFrame(),
                     Bundle.getMessage("LogixWarn8", SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName),
                     Bundle.getMessage("WarningTitle"), // NOI18N
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
+        _curLogix = _logixManager.getBySystemName(sName);
 
         // Create a new conditional edit view, add the listener.
         if (_editMode == EditMode.TREEEDIT) {
-            _treeEdit = new ConditionalTreeEdit(sName);
-            _inEditMode = true;
-            _treeEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
-                @Override
-                public void logixEventOccurred() {
-                    String lgxName = sName;
-                    _treeEdit.logixData.forEach((key, value) -> {
-                        if (key.equals("Finish")) {                  // NOI18N
-                            _treeEdit = null;
-                            _inEditMode = false;
-                            _curLogix.activateLogix();
-                            f.setVisible(true);
-                        } else if (key.equals("Delete")) {           // NOI18N
-                            deletePressed(value);
-                        } else if (key.equals("chgUname")) {         // NOI18N
-                            Logix x = _logixManager.getBySystemName(lgxName);
-                            x.setUserName(value);
-                            m.fireTableDataChanged();
-                        }
-                    });
-                }
-            });
+            _baseEdit = new ConditionalTreeEdit(sName);
         } else {
-            _listEdit = new ConditionalListEdit(sName);
-            _inEditMode = true;
-            _listEdit.addLogixEventListener(new ConditionalEditBase.LogixEventListener() {
-                @Override
-                public void logixEventOccurred() {
-                    String lgxName = sName;
-                    _listEdit.logixData.forEach((key, value) -> {
-                        if (key.equals("Finish")) {                  // NOI18N
-                            _listEdit = null;
-                            _inEditMode = false;
-                            _curLogix.activateLogix();
-                            f.setVisible(true);
-                        } else if (key.equals("Delete")) {           // NOI18N
-                            deletePressed(value);
-                        } else if (key.equals("chgUname")) {         // NOI18N
-                            Logix x = _logixManager.getBySystemName(lgxName);
-                            x.setUserName(value);
-                            m.fireTableDataChanged();
-                        }
-                    });
+            _baseEdit = new ConditionalListEdit(sName);
+        }
+        _baseEdit.locateAt(getFrame());
+        _inEditMode = true;
+        _baseEdit.addLogixEventListener(new ConditionalBaseListener(sName));
+    }
+
+    class ConditionalBaseListener implements ConditionalEditBase.LogixEventListener {
+        String _lgxName;
+        ConditionalBaseListener(String lgxName) {
+            _lgxName = lgxName;
+        }
+
+        @Override
+        public void logixEventOccurred() {
+            _baseEdit.logixData.forEach((key, value) -> {
+                if (key.equals("Finish")) {                  // NOI18N
+                    _baseEdit = null;
+                    _inEditMode = false;
+                    _inCopyMode = false;
+                    Logix x = _logixManager.getBySystemName(value);
+                    if (x == null) {
+                        log.error("Found no logix for name {} when done", value);
+                        return;
+                    }
+                    x.activateLogix();
+                    f.setVisible(true);
+                } else if (key.equals("Delete")) {           // NOI18N
+                    deletePressed(value);
+                } else if (key.equals("chgUname")) {         // NOI18N
+                    Logix x = _logixManager.getBySystemName(_lgxName);
+                    if (x == null) {
+                        log.error("Found no logix for name {} when changing user name (2)", _lgxName);
+                        return;
+                    }
+                    x.setUserName(value);
+                    m.fireTableDataChanged();
                 }
             });
         }
@@ -1339,7 +1279,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             final JDialog dialog = new JDialog();
             String msg;
             dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
-            dialog.setLocationRelativeTo(null);
+            dialog.setLocationRelativeTo(getFrame());
             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();
             container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -1421,10 +1361,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
             Conditional p = _conditionalManager.getByUserName(logix, uName);
             if (p != null) {
                 // Conditional with this user name already exists
-                log.error("Failure to update Conditional with Duplicate User Name: " // NOI18N
-                        + uName);
-                JOptionPane.showMessageDialog(
-                        null, Bundle.getMessage("LogixError10"), // NOI18N
+                log.error("Failure to update Conditional with Duplicate User Name: {}", uName);
+                JOptionPane.showMessageDialog(getFrame(),
+                        Bundle.getMessage("LogixError10"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return false;
@@ -1486,7 +1425,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         // External references have to be removed before the Logix can be deleted.
                         Conditional c = x.getConditional(csName);
                         Conditional cRef = xRef.getConditional(refName);
-                        JOptionPane.showMessageDialog(null,
+                        JOptionPane.showMessageDialog(getFrame(),
                                 Bundle.getMessage("LogixError11", c.getUserName(), c.getSystemName(), cRef.getUserName(),
                                         cRef.getSystemName(), xRef.getUserName(), xRef.getSystemName()), // NOI18N
                                 Bundle.getMessage("ErrorTitle"),
@@ -1636,7 +1575,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @return a TextArea, empty if reference is not used
      * @since 4.7.4
      */
-    JTextArea buildWhereUsedListing() {
+    public JTextArea buildWhereUsedListing() {
         JTextArea condText = new javax.swing.JTextArea();
         condText.setText(null);
         HashMap<String, ArrayList<String>> whereUsed = InstanceManager.getDefault(ConditionalManager.class).getWhereUsedMap();
@@ -1655,7 +1594,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     String getWhereUsedName(String cName) {
-        return _conditionalManager.getBySystemName(cName).getUserName();
+        Conditional cond = _conditionalManager.getBySystemName(cName);
+        if ( cond!=null){
+            return cond.getUserName();
+        }
+        return "";
     }
 
 // ------------ Methods for Conditional Browser Window ------------
@@ -1665,15 +1608,19 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @param sName The selected Logix system name
      */
     void browserPressed(String sName) {
-        // Logix was found, create the window
-        _curLogix = _logixManager.getBySystemName(sName);
-        makeBrowserWindow();
+        makeBrowserWindow(sName);
     }
 
     /**
      * Create and initialize the conditionals browser window.
+     * @param lgxName Logix system name
      */
-    void makeBrowserWindow() {
+    void makeBrowserWindow(String lgxName) {
+        Logix logix = _logixManager.getBySystemName(lgxName);
+        if (logix == null) {
+            return;
+        }
+            // Logix was found, create the window
         JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
         condBrowserFrame.addHelpMenu("package.jmri.jmrit.beantable.LogixAddEdit", true);            // NOI18N
 
@@ -1682,9 +1629,9 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
         // LOGIX header information
         JPanel topPanel = new JPanel();
-        String tStr = Bundle.getMessage("BrowserLogix") + " " + _curLogix.getSystemName() + "    " // NOI18N
-                + _curLogix.getUserName() + "    "
-                + (Boolean.valueOf(_curLogix.getEnabled())
+        String tStr = Bundle.getMessage("BrowserLogix") + " " + logix.getSystemName() + "    " // NOI18N
+                + logix.getUserName() + "    "
+                + (Boolean.valueOf(logix.getEnabled())
                         ? Bundle.getMessage("BrowserEnabled") // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
         topPanel.add(new JLabel(tStr));
@@ -1692,7 +1639,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
 
         // Build the conditionals listing
         JScrollPane scrollPane = null;
-        JTextArea textContent = buildConditionalListing();
+        JTextArea textContent = buildConditionalListing(logix);
         scrollPane = new JScrollPane(textContent);
         contentPane.add(scrollPane);
 
@@ -1712,29 +1659,40 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
         bottomPanel.add(saveBrowse, BorderLayout.EAST);
-        saveBrowse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveBrowserPressed();
-            }
-        });
+        saveBrowse.addActionListener(new SaveAction(lgxName));
         contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
         condBrowserFrame.pack();
         condBrowserFrame.setVisible(true);
     }  // makeBrowserWindow
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    class SaveAction implements ActionListener {
+        String _lgxName;
+        SaveAction(String lgxName) {
+            _lgxName = lgxName;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            saveBrowserPressed(_lgxName);
+        }
+    }
 
     /**
      * Save the Logix browser window content to a text file.
+     * @param lgxName Logix system name
      */
-    void saveBrowserPressed() {
+    void saveBrowserPressed(String lgxName) {
+        Logix logix = _logixManager.getBySystemName(lgxName);
+        if (logix == null) {
+            log.warn("Can't save browsed data, logix {} no longer exits", lgxName);
+            return;
+        }
+        JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         userFileChooser.setApproveButtonText(Bundle.getMessage("BrowserSaveDialogApprove"));  // NOI18N
         userFileChooser.setDialogTitle(Bundle.getMessage("BrowserSaveDialogTitle"));  // NOI18N
         userFileChooser.rescanCurrentDirectory();
         // Default to logix system name.txt
-        userFileChooser.setSelectedFile(new File(_curLogix.getSystemName() + ".txt"));  // NOI18N
+        userFileChooser.setSelectedFile(new File(FileUtil.sanitizeFilename(logix.getSystemName()) + ".txt"));  // NOI18N
         int retVal = userFileChooser.showSaveDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
             log.debug("Save browser content stopped, no file selected");  // NOI18N
@@ -1763,12 +1721,12 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         }
 
         // Create the file content
-        String tStr = Bundle.getMessage("BrowserLogix") + " " + _curLogix.getSystemName() + "    "  // NOI18N
-                + _curLogix.getUserName() + "    "
-                + (Boolean.valueOf(_curLogix.getEnabled())
+        String tStr = Bundle.getMessage("BrowserLogix") + " " + logix.getSystemName() + "    "  // NOI18N
+                + logix.getUserName() + "    "
+                + (Boolean.valueOf(logix.getEnabled())
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
-        JTextArea textContent = buildConditionalListing();
+        JTextArea textContent = buildConditionalListing(logix);
         try {
             // ADD Logix Header inforation first
             FileUtil.appendTextToFile(file, tStr);
@@ -1782,10 +1740,11 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * Builds a Component representing the current conditionals for the selected
      * Logix statement.
      *
+     *@param logix browsing Logix
      * @return a TextArea listing existing conditionals; will be empty if there
      *         are none
      */
-    JTextArea buildConditionalListing() {
+    JTextArea buildConditionalListing(Logix logix) {
         String showSystemName,
                 showCondName,
                 condName,
@@ -1801,12 +1760,14 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         JTextArea condText = new javax.swing.JTextArea();
         condText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         condText.setText(null);
-        int numConditionals = _curLogix.getNumConditionals();
+        int numConditionals = logix.getNumConditionals();
         for (int rx = 0; rx < numConditionals; rx++) {
             conditionalRowNumber = rx;
-            Conditional curConditional = _conditionalManager.getBySystemName(_curLogix.getConditionalByNumberOrder(rx));
+            Conditional curConditional = _conditionalManager.getBySystemName(logix.getConditionalByNumberOrder(rx));
+            if (curConditional==null){
+                continue;
+            }
             variableList = curConditional.getCopyOfStateVariables();
-            _logixSysName = curConditional.getSystemName();
             actionList = curConditional.getCopyOfActions();
 
             showCondName = curConditional.getUserName();

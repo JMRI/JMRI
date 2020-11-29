@@ -1,12 +1,14 @@
 package jmri;
 
 import jmri.implementation.AbstractNamedBean;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the StringIO class
  *
- * @author	Daniel Bergqvist Copyright (C) 2018
+ * @author Daniel Bergqvist Copyright (C) 2018
  */
 public class StringIOTest {
 
@@ -23,12 +25,12 @@ public class StringIOTest {
         Assert.assertTrue("StringIO has value 'Other string'", "Other string".equals(stringIO.getKnownStringValue()));
     }
     
-    @Before
+    @BeforeEach
     public void setUp() {
           jmri.util.JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
           jmri.util.JUnitUtil.tearDown();
     }

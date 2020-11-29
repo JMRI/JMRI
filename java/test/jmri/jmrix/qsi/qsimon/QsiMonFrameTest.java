@@ -7,14 +7,16 @@ import jmri.jmrix.qsi.QsiMessage;
 import jmri.jmrix.qsi.QsiReply;
 import jmri.jmrix.qsi.QsiTrafficController;
 
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the QsiProgrammer class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class QsiMonFrameTest {
 
@@ -84,7 +86,7 @@ public class QsiMonFrameTest {
         @Override
         public void sendQsiMessage(QsiMessage m, QsiListener l) {
             if (log.isDebugEnabled()) {
-                log.debug("sendQsiMessage [" + m + "]");
+                log.debug("sendQsiMessage [{}]", m);
             }
             // save a copy
             outbound.add(m);
@@ -97,7 +99,7 @@ public class QsiMonFrameTest {
         protected void sendTestMessage(QsiMessage m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestMessage    [" + m + "]");
+                log.debug("sendTestMessage    [{}]", m);
             }
             notifyMessage(m, null);
         }
@@ -105,7 +107,7 @@ public class QsiMonFrameTest {
         protected void sendTestReply(QsiReply m) {
             // forward a test message to Listeners
             if (log.isDebugEnabled()) {
-                log.debug("sendTestReply    [" + m + "]");
+                log.debug("sendTestReply    [{}]", m);
             }
             notifyReply(m);
         }
@@ -119,9 +121,15 @@ public class QsiMonFrameTest {
 
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class);

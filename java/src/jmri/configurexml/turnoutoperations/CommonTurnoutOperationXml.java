@@ -40,7 +40,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
 //  boolean noDelete = false;
         TurnoutOperation result = null;
         if (e.getAttribute("name") == null) {
-            log.warn("unexpected null in name " + e + " " + e.getAttributes());
+            log.warn("unexpected null in name {} {}", e, e.getAttributes());
             return null;
         }
         String name = e.getAttribute("name").getValue();
@@ -64,7 +64,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
             return null;
         }
         if (log.isDebugEnabled()) {
-            log.debug("create turnout operation: (" + name + ")");
+            log.debug("create turnout operation: ({})", name);
         }
         return result;
     }

@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
@@ -42,7 +42,7 @@ Signal Mast definitions:
 <li><a href="appearance-CL-3-arm-absolute.xml">Three Arm Absolute Color Light Mast Signals</a>
 <li><a href="appearance-CL-2-arm-absolute.xml">Two Arm Absolute Color Light Mast Signals</a>
 <li><a href="appearance-CL-1-arm-absolute.xml">Single Arm Absolute Color Light Mast Signals</a>
-<li><a href="appearance-CL-2-arm-highspaced-absolute.xml">Two Arm Spaced Absolute Color Light Mast Signals</a>
+<li><a href="appearance-CL-2-arm-highspace-absolute.xml">Two Arm Spaced Absolute Color Light Mast Signals</a>
 <li><a href="appearance-CL-2-arm-permissive.xml">Two Arm Permissive Color Light Mast Signals</a>
 <li><a href="appearance-CL-1-arm-permissive.xml">Single Arm Permissive Color Light Mast Signals</a>
 <li><a href="appearance-2-light-dwarf.xml">Two Light Dwarf Signals</a>
@@ -51,6 +51,6 @@ Signal Mast definitions:
 </ul>
     </div>
 </div>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </body>
 </html>

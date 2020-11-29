@@ -1,11 +1,14 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
+import jmri.jmrit.operations.trains.tools.ToggleShowFullLocationName;
 
 /**
  * Conductor Frame. Shows work for a train one location at a time.
@@ -31,7 +34,8 @@ public class TrainConductorFrame extends OperationsFrame {
         JMenuBar menuBar = new JMenuBar();
         if (train != null) {
             JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-            toolMenu.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), train));
+            toolMenu.add(new ShowCarsInTrainAction(train));
+            toolMenu.add(new ToggleShowFullLocationName());
             menuBar.add(toolMenu);
         }
         setJMenuBar(menuBar);

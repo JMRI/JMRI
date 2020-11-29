@@ -2,10 +2,9 @@ package jmri.jmrix.sprog;
 
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for SprogProgrammer.
@@ -30,16 +29,14 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
                 ((SprogProgrammer)programmer).getBestMode());        
     }
 
-    @Test(expected = java.lang.IllegalArgumentException.class)
+    @Test
     @Override
     public void testSetGetMode() {
-        programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));        
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // prepare an interface
@@ -52,7 +49,8 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         programmer = new SprogProgrammer(m);
     }
 
-    @After
+    @AfterEach
+    @Override
     public void tearDown() {
         stcs.dispose();
         programmer = null;

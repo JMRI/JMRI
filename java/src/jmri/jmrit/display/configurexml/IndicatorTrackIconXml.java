@@ -45,17 +45,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         NamedBeanHandle<OBlock> b = p.getNamedOccBlock();
         if (b != null) {
             element.addContent(storeNamedBean("occupancyblock", b));
+            // additional OBlock information for web server is extracted by ControlPanelServlet at runtime, not stored
         }
         NamedBeanHandle<Sensor> s = p.getNamedOccSensor();
         if (b == null && s != null) {  // only write sensor if no OBlock, don't write double sensing
             element.addContent(storeNamedBean("occupancysensor", s));
         }
-        /*
-         s = p.getErrSensor();
-         if (s!=null) {
-         element.addContent(storeBean("errorsensor", s));
-         }
-         */
+
         Element elem = new Element("showTrainName");
         String show = "no";
         if (p.showTrain()) {
@@ -81,9 +77,9 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         elem = new Element("paths");
         ArrayList<String> paths = p.getPaths();
         if (paths != null) {
-            for (int i = 0; i < paths.size(); i++) {
+            for (String path : paths) {
                 Element e = new Element("path");
-                e.addContent(paths.get(i));
+                e.addContent(path);
                 elem.addContent(e);
 
             }
@@ -95,11 +91,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         return element;
     }
 
-    /*Element storeBean(String elemName, NamedBean nb) {
-     Element elem = new Element(elemName);
-     elem.addContent(nb.getSystemName());
-     return elem;
-     }*/
     static Element storeNamedBean(String elemName, NamedBeanHandle<?> nb) {
         Element elem = new Element(elemName);
         elem.addContent(nb.getName());
@@ -123,14 +114,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         if (elem != null) {
             List<Element> status = elem.getChildren();
             if (status.size() > 0) {
-                for (int i = 0; i < status.size(); i++) {
-                    String msg = "IndicatorTrack \"" + l.getNameString() + "\" icon \"" + status.get(i).getName() + "\" ";
-                    NamedIcon icon = loadIcon(l, status.get(i).getName(), elem,
-                            msg, p);
+                for (Element value : status) {
+                    String msg = "IndicatorTrack \"" + l.getNameString() + "\" icon \"" + value.getName() + "\" ";
+                    NamedIcon icon = loadIcon(l, value.getName(), elem, msg, p);
                     if (icon != null) {
-                        l.setIcon(status.get(i).getName(), icon);
+                        l.setIcon(value.getName(), icon);
                     } else {
-                        log.info(msg + " removed for url= " + status.get(i).getName());
+                        log.info("{} removed for url= {}", msg, value.getName());
                         return;
                     }
                 }
@@ -160,10 +150,10 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
 
         elem = element.getChild("paths");
         if (elem != null) {
-            ArrayList<String> paths = new ArrayList<String>();
+            ArrayList<String> paths = new ArrayList<>();
             List<Element> pth = elem.getChildren();
-            for (int i = 0; i < pth.size(); i++) {
-                paths.add(pth.get(i).getText());
+            for (Element value : pth) {
+                paths.add(value.getText());
             }
             l.setPaths(paths);
         }

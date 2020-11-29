@@ -1,7 +1,7 @@
 package jmri.jmrit.symbolicprog;
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the SymbolicProgBundle class
@@ -19,12 +19,12 @@ public class SymbolicProgBundleTest {
 
     @Test
     public void testBadKey() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT");
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+    }
+
+    @Test
+    public void testBadKeyMessageArg() {
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));  // NOI18N
     }
 
 }

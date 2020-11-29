@@ -51,7 +51,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction {
 
         // read the file for the "from" entry and write it out
         // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
+        FileUtil.createDirectory(Roster.getDefault().getRosterFilesLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);
@@ -61,7 +61,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction {
         try {
             lroot = lf.rootFromName(mFullFromFilename).clone();
         } catch (Exception e) {
-            log.error("Exception while loading loco XML file: " + mFullFromFilename + " exception: " + e);
+            log.error("Exception while loading loco XML file: {} exception: {}", mFullFromFilename, e);
             return false;
         }
 

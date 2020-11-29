@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="9:26 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB0">
+      <systemName>IB0</systemName>
+      <userName>RM Block</userName>
+    </block>
+    <block systemName="IB0" length="0.0" curve="0">
+      <systemName>IB0</systemName>
+      <userName>RM Block</userName>
+      <permissive>no</permissive>
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="IB0" occupiedsense="2" trackcolor="#33FF33" occupiedcolor="red" extracolor="orange">
+      <systemName>IB0</systemName>
+      <userName>RM Block</userName>
+    </layoutblock>
+  </layoutblocks>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Apr 18 12:38:07 PDT 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Decorations Testing" x="0" y="23" windowheight="772" windowwidth="1028" panelheight="580" panelwidth="1000" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="yes" turnoutcircles="yes" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="pink" turnoutcirclethrowncolor="black" turnoutcirclesize="2" turnoutdrawunselectedleg="no" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="yes" redBackground="150" greenBackground="86" blueBackground="150" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="Decorations Testing" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <positionablelabel x="260" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Lines" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="720" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Circles" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="230" y="430" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Ellipses" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="670" y="420" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Bezier" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="357" y="309" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="The ugly colors are intentional (for testing)" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="374" y="334" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Everything drawn oversize (for testing)" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="460" y="10" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="DECORATIONS" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <tracksegment ident="T1" blockname="RM Block" connect1name="EB1" type1="1" connect2name="A3" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" end="entry" color="#FF00FF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <bumper end="start" color="#FF0000" linewidth="3" length="15" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T3" blockname="RM Block" connect1name="A3" type1="1" connect2name="EC10" type2="1" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="left" end="exit" color="#FF00FF" linewidth="1" approachwidth="8" deckwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T5" blockname="RM Block" connect1name="EB6" type1="1" connect2name="A15" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="90.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" end="entry" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <bumper end="start" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="left" end="entry" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T7" blockname="RM Block" connect1name="A7" type1="1" connect2name="EB2" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" end="exit" color="#FF00FF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <bumper end="stop" color="#FF0000" linewidth="3" length="15" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T11" blockname="RM Block" connect1name="EC1" type1="1" connect2name="A7" type2="1" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="start" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="right" end="entry" color="#FF00FF" linewidth="1" approachwidth="8" deckwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T13" blockname="RM Block" connect1name="A15" type1="1" connect2name="A19" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="45.00000000000001" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" end="exit" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="left" end="exit" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T14" blockname="RM Block" connect1name="A16" type1="1" connect2name="A1" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="45.053445375816025" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" end="entry" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="right" end="entry" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T18" blockname="RM Block" connect1name="EB4" type1="1" connect2name="A9" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="start" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="left" end="entry" color="#000000" linewidth="1" entrancewidth="26" floorwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T19" blockname="RM Block" connect1name="A9" type1="1" connect2name="EC2" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <tunnel side="left" end="exit" color="#000000" linewidth="1" entrancewidth="26" floorwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T22" blockname="RM Block" connect1name="EC3" type1="1" connect2name="A14" type2="1" dashed="yes" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="start" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <tunnel side="right" end="entry" color="#000000" linewidth="1" entrancewidth="26" floorwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T23" blockname="RM Block" connect1name="A14" type1="1" connect2name="EB5" type2="1" dashed="yes" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bumper end="stop" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="right" end="exit" color="#000000" linewidth="1" entrancewidth="26" floorwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T27" blockname="RM Block" connect1name="EC7" type1="1" connect2name="A23" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="90.00000000000001" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="start" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="right" end="entry" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="right" end="entry" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T28" blockname="RM Block" connect1name="A23" type1="1" connect2name="A12" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="45.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" end="exit" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="right" end="exit" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T30" blockname="RM Block" connect1name="A25" type1="1" connect2name="A11" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="yes" circle="yes" angle="45.261548845428074" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" end="entry" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="left" end="entry" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T34" blockname="RM Block" connect1name="EB3" type1="1" connect2name="A4" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="yes" circle="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" end="entry" color="#FF0000" linewidth="1" approachwidth="8" deckwidth="20" />
+        <bumper end="start" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="right" end="entry" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T35" blockname="RM Block" connect1name="A31" type1="1" connect2name="EC4" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="no" circle="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="left" end="exit" color="#FF0000" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="left" end="exit" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T38" blockname="RM Block" connect1name="EC9" type1="1" connect2name="A2" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="yes" circle="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="start" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="left" end="entry" color="#FF0000" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="left" end="entry" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T39" blockname="RM Block" connect1name="A36" type1="1" connect2name="EB8" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="no" circle="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" end="exit" color="#FF0000" linewidth="1" approachwidth="4" deckwidth="20" />
+        <bumper end="stop" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="right" end="exit" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T42" blockname="RM Block" connect1name="EB9" type1="1" connect2name="A41" type2="1" dashed="no" mainline="no" hidden="no" bezier="yes" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <controlpoints>
+        <controlpoint index="0" x="630.0" y="520.0" />
+        <controlpoint index="1" x="670.0" y="500.0" />
+        <controlpoint index="2" x="720.0" y="510.0" />
+      </controlpoints>
+      <decorations>
+        <bridge side="both" end="entry" color="#0000FF" linewidth="1" approachwidth="4" deckwidth="20" />
+        <bumper end="start" color="#FF0000" linewidth="3" length="15" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T43" blockname="RM Block" connect1name="A41" type1="1" connect2name="EC5" type2="1" dashed="yes" mainline="no" hidden="no" bezier="yes" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <controlpoints>
+        <controlpoint index="0" x="770.0" y="380.0" />
+        <controlpoint index="1" x="850.0" y="400.0" />
+      </controlpoints>
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <tunnel side="both" end="exit" color="#FFC800" linewidth="1" entrancewidth="26" floorwidth="20" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T9" blockname="RM Block" connect1name="A1" type1="1" connect2name="EC6" type2="1" dashed="yes" mainline="yes" hidden="no" arc="yes" flip="yes" circle="yes" angle="47.550168505635206" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <arrow style="4" end="stop" direction="out" color="#0000FF" linewidth="1" length="6" gap="1" />
+        <bridge side="right" end="exit" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="right" end="exit" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T12" blockname="RM Block" connect1name="A11" type1="1" connect2name="EB7" type2="1" dashed="yes" mainline="no" hidden="no" arc="yes" flip="yes" circle="yes" angle="47.01490956005987" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" end="exit" color="#FFFFFF" linewidth="1" approachwidth="8" deckwidth="20" />
+        <bumper end="stop" color="#FF0000" linewidth="3" length="15" />
+        <tunnel side="left" end="exit" color="#0000FF" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T16" blockname="RM Block" connect1name="A12" type1="1" connect2name="A25" type2="1" dashed="no" mainline="no" hidden="no" arc="yes" flip="no" circle="yes" angle="45.0" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T25" blockname="RM Block" connect1name="A19" type1="1" connect2name="A16" type2="1" dashed="no" mainline="yes" hidden="no" arc="yes" flip="no" circle="yes" angle="45.00000000000001" hideConLines="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="RM Block" connect1name="A2" type1="1" connect2name="A36" type2="1" dashed="yes" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="right" color="#FF0000" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="right" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <tracksegment ident="T4" blockname="RM Block" connect1name="A4" type1="1" connect2name="A31" type2="1" dashed="yes" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml">
+      <decorations>
+        <bridge side="left" color="#FF0000" linewidth="1" approachwidth="8" deckwidth="20" />
+        <tunnel side="left" color="#663300" linewidth="1" entrancewidth="16" floorwidth="10" />
+      </decorations>
+    </tracksegment>
+    <positionablepoint ident="A3" type="1" x="300.0" y="140.0" connect1name="T1" connect2name="T3" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="200.0" y="200.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="290.0" y="160.0" connect1name="T11" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A9" type="1" x="300.0" y="220.0" connect1name="T18" connect2name="T19" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC2" type="3" x="400.0" y="240.0" connect1name="T19" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC3" type="3" x="190.0" y="220.0" connect1name="T22" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A14" type="1" x="290.0" y="240.0" connect1name="T22" connect2name="T23" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A15" type="1" x="630.0" y="100.0" connect1name="T5" connect2name="T13" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A16" type="1" x="730.0" y="120.0" connect1name="T25" connect2name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC6" type="3" x="830.0" y="150.0" connect1name="T9" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="2" x="390.0" y="260.0" connect1name="T23" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="2" x="610.0" y="200.0" connect1name="T5" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="2" x="100.0" y="100.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC10" type="3" x="500.0" y="180.0" connect1name="T3" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC1" type="3" x="90.0" y="120.0" connect1name="T11" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="490.0" y="200.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC7" type="3" x="620.0" y="190.0" connect1name="T27" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A23" type="1" x="640.0" y="110.0" connect1name="T27" connect2name="T28" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A25" type="1" x="720.0" y="130.0" connect1name="T16" connect2name="T30" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB7" type="2" x="840.0" y="160.0" connect1name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="150.0" y="300.0" connect1name="T34" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A31" type="1" x="300.0" y="380.0" connect1name="T4" connect2name="T35" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC4" type="3" x="450.0" y="480.0" connect1name="T35" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC9" type="3" x="130.0" y="300.0" connect1name="T38" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A36" type="1" x="300.0" y="400.0" connect1name="T2" connect2name="T39" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB8" type="2" x="430.0" y="480.0" connect1name="T39" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB9" type="2" x="560.0" y="490.0" connect1name="T42" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A41" type="1" x="750.0" y="450.0" connect1name="T42" connect2name="T43" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EC5" type="3" x="910.0" y="420.0" connect1name="T43" linkedpanel="" linkpointid="" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="773.7868041992188" y="155.71067810058594" connect1name="T14" connect2name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A11" type="1" x="773.7868041992188" y="169.85281372070312" connect1name="T30" connect2name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A12" type="1" x="684.1421508789062" y="103.43145751953125" connect1name="T28" connect2name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A19" type="1" x="684.1421508789062" y="89.28932189941406" connect1name="T13" connect2name="T25" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="250.0" y="400.0" connect1name="T38" connect2name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="250.0" y="380.0" connect1name="T34" connect2name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <layoutShape ident="Putting Green" type="Filled" level="3" linewidth="1" lineColor="#00FF00" fillColor="#338033" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutShapeXml">
+      <points>
+        <point type="Curve" x="457.5" y="47.5" />
+        <point type="Curve" x="517.5" y="77.5" />
+        <point type="Curve" x="517.5" y="147.5" />
+        <point type="Curve" x="387.5" y="87.5" />
+      </points>
+    </layoutShape>
+    <layoutShape ident="Pond-der-rosa" type="Filled" level="3" linewidth="5" lineColor="#FFFFA3" fillColor="#00FFFF" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutShapeXml">
+      <points>
+        <point type="Curve" x="740.0" y="360.0" />
+        <point type="Curve" x="840.0" y="340.0" />
+        <point type="Curve" x="900.0" y="250.0" />
+        <point type="Curve" x="720.0" y="210.0" />
+      </points>
+    </layoutShape>
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Oct 09 09:25:27 PDT 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Oct 09 09:26:26 PDT 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.5ish+geowar+20191009T1625Z+Rada842a26e on Wed Oct 09 09:26:26 PDT 2019-->
+</layout-config>

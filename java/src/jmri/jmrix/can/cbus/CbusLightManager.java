@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
+import java.util.Locale;
 import javax.annotation.Nonnull;
-import jmri.JmriException;
 import jmri.Light;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
@@ -13,8 +11,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement LightManager for CAN CBUS systems.
  * <p>
- * System names are "ML+n;-m", where M is the user configurable system prefix,
- * n and m are the events (signed for on/off, separated by ;).
+ * System names are "ML+n;-m", where M is the user configurable system prefix, n
+ * and m are the events (signed for on/off, separated by ;).
  * <p>
  * Lights must be explicitly created, they are not polled.
  *
@@ -26,40 +24,19 @@ public class CbusLightManager extends AbstractLightManager {
 
     /**
      * Ctor using a given system connection memo
+     * @param memo System Connection
      */
     public CbusLightManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
-    }
-
-    private CanSystemConnectionMemo memo;
-    private String prefix = "M";
-
-    @Override
-    public String getSystemPrefix() {
-        return prefix;
+        super(memo);
     }
 
     /**
      * {@inheritDoc}
-     * Override to normalize System Name
      */
     @Override
     @Nonnull
-    public Light provideLight(@Nonnull String key) {
-        String name = normalizeSystemName(key);
-        //log.debug("passed name {}", name);
-        Light result = getLight(name);
-        if (result == null) {
-            if (name.startsWith(prefix + typeLetter())) {
-                return newLight(name, null); // checks for validity
-            } else if (name.length() > 0) {
-                return newLight(makeSystemName(name), null); // checks for validity
-            } else {
-                throw new IllegalArgumentException("\"" + name + "\" is invalid");
-            }
-        }
-        return result;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     /**
@@ -69,111 +46,90 @@ public class CbusLightManager extends AbstractLightManager {
      * @return never null
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
-        String addr = systemName.substring(prefix.length() + 1);
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
+        String addr;
         // first, check validity
-        try {
-            validateSystemNameFormat(addr);
+        try {            
+            validateSystemNameFormat(systemName);
+            addr = systemName.substring(getSystemNamePrefix().length());
         } catch (IllegalArgumentException e) {
-            log.error(e.toString());
-            throw e;
+            log.error(e.getMessage());
+            throw new IllegalArgumentException (e.getMessage());
         }
         // validate (will add "+" to unsigned int)
         String newAddress = CbusAddress.validateSysName(addr);
         // OK, make
-        Light l = new CbusLight(prefix, newAddress, memo.getTrafficController());
+        Light l = new CbusLight(getSystemPrefix(), newAddress, getMemo().getTrafficController());
         l.setUserName(userName);
         return l;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+        validateSystemNamePrefix(name, locale);
+        try {
+            CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
+        } catch (IllegalArgumentException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCustom", ex.getMessage());
+        }
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         String addr;
         try {
-            addr = systemName.substring(prefix.length() + 1); // get only the address part
-        } catch (StringIndexOutOfBoundsException e){
-            return NameValidity.INVALID;
-        }
-        try {
-            validateSystemNameFormat(addr);
-        } catch (IllegalArgumentException e){
+            addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
+            CbusAddress.validateSysName(addr);
+        } catch (StringIndexOutOfBoundsException | IllegalArgumentException e) {
             return NameValidity.INVALID;
         }
         return NameValidity.VALID;
     }
-
+    
     /**
-     * Work out the details for Cbus hardware address validation.
-     * Logging of handled cases no higher than WARN.
-     *
-     * @param address the hardware address to check
-     * @throws IllegalArgumentException when delimiter is not found
-     */
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
-        String newAddress = CbusAddress.validateSysName(address);
-        log.debug("validated system name {}", newAddress);
-    }
-
-    /** 
-     * {@inheritDoc} 
+     * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
-        String addr = systemName.substring(prefix.length() + 1);
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         try {
-            validateSystemNameFormat(addr);
-        } catch (IllegalArgumentException e){
-            log.debug("Warning: {}", e.getMessage());
-            return false;
+            return prefix + typeLetter() + CbusAddress.validateSysName(curAddress);
+        } catch (IllegalArgumentException e) {
+            throw new jmri.JmriException(e.getMessage());
         }
-        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    @CheckForNull
-    public Light getBySystemName(@Nonnull String key ) {
-        String name = normalizeSystemName(key);
-        return _tsys.get(name);
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
+        return validSystemNameFormat(systemName) == NameValidity.VALID;
     }
-
+    
     /**
+     * Only increments by 1, which is fine for CBUS Lights.
      * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace, adding +/- if not present.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
      */
-    @CheckReturnValue
+    @Nonnull
     @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        String address = inputName.toUpperCase().trim();
-        // check Cbus hardware address parts
-        if ((!address.startsWith(prefix + typeLetter()) || (address.length() < prefix.length() + 2))) {
-            return address;
-        }
-        try {
-            log.debug("Normalize address = {}", address);
-            address = CbusAddress.validateSysName(address.substring(prefix.length() + 1));
-        } catch (IllegalArgumentException e){
-            return address;
-        } catch (StringIndexOutOfBoundsException e){
-            return address;
-        }
-        return prefix + typeLetter() + address;
+    protected String getIncrement(String curAddress, int increment) throws jmri.JmriException {
+        return CbusAddress.getIncrement(curAddress);
     }
 
     /**

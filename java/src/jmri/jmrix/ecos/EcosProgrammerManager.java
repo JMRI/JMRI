@@ -2,8 +2,6 @@ package jmri.jmrix.ecos;
 
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
-import jmri.ProgrammingMode;
-import jmri.jmrix.ecos.EcosOpsModeProgrammer;
 import jmri.managers.DefaultProgrammerManager;
 
 /**

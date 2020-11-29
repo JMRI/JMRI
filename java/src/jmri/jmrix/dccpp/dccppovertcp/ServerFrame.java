@@ -98,22 +98,6 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
         super.windowClosing(e);
     }
 
-    @Override
-    public void dispose() {
-        super.dispose();
-    }
-
-    /**
-     *
-     * @return the managed instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    static public synchronized ServerFrame getInstance() {
-        return InstanceManager.getDefault(ServerFrame.class);
-    }
-
     private void updateServerStatus() {
         Server server = InstanceManager.getDefault(Server.class);
         autoStartCheckBox.setSelected(server.getAutoStart());
@@ -169,7 +153,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
-        public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
+        public <T> Object getDefault(Class<T> type) {
             if (type.equals(ServerFrame.class)) {
                 return new ServerFrame();
             }

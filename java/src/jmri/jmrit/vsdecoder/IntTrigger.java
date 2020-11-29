@@ -17,12 +17,11 @@ package jmri.jmrit.vsdecoder;
  * @author   Mark Underwood Copyright (C) 2011
  */
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class IntTrigger extends Trigger implements PropertyChangeListener {
+class IntTrigger extends Trigger {
 
     int notch;
     CompareType compare_type;
@@ -68,7 +67,7 @@ class IntTrigger extends Trigger implements PropertyChangeListener {
             return;
         }
         if (event.getPropertyName().equals(this.getEventName()) != true) {
-            log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+            log.debug("Quit. Event name mismatch event = {} this = {}", event.getPropertyName(), this.getEventName());
             return;
         }
         if (this.getTriggerType() == TriggerType.NONE) {

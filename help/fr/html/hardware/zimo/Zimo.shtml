@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2013-09-20-->
+<!-- Updated by Blorec Herv&#233; le 2013-09-20-->
 
 <html lang="fr">
 <head>
@@ -19,14 +19,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="../SidebarUp" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h2>JMRI Guide Mat&eacute;riel: Zimo mx-1</h2>
 
       <h3>Mat&eacute;riel support&eacute;</h3>
@@ -95,7 +98,7 @@
           <p><a href=
           "http://www.mrsonline.net/html/zimo.html">Agence Zimo
           Nord Am&eacute;ricaine</a></p>
-          <!--#include virtual="/footer" -->
+          <!--#include virtual="/Footer.shtml" -->
         </li>
       </ol>
     </div>

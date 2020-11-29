@@ -10,21 +10,22 @@ import jmri.DccLocoAddress;
  */
 public class CbusSlotMonitorSession  {
     
-    private DccLocoAddress _locoAddr;
+    private final DccLocoAddress _locoAddr;
     private int _sessionId;
     private int _speed;
     private String _speedSteps;
-    private boolean[] _function;
+    private final boolean[] _function;
     private int _flags;
     private int _consistId;
     
     /**
-    * The table provides and maintains 1 row per loco address
-    *
-    */    
+     * The table provides and maintains 1 row per loco address
+     *
+     * @param locoAddr Loco Address to be monitored
+     */    
     protected CbusSlotMonitorSession( DccLocoAddress locoAddr ){
         _locoAddr = locoAddr;
-        _sessionId = -1;
+        _sessionId = -1; // unset
         _speed = 0;
         _speedSteps="";
         _function = new boolean[29];

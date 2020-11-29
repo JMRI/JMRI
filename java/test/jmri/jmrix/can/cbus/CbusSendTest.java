@@ -1,15 +1,12 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.TextAreaFIFO;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -146,20 +143,17 @@ public class CbusSendTest {
         Assert.assertNotNull("exists",tasend);
         tasend.nodeExitLearnEvMode(22222);
         Assert.assertTrue("textarea is updated 2",(ta.getText()).contains("2 exit learn mode."));
-        tasend = null;
-        ta = null;
+        
     }
 
 
     @Test
     public void testTextAreaAdd3() {
-        TextAreaFIFO ta = new TextAreaFIFO(9);
+        ta = new TextAreaFIFO(9);
         CbusSend tasend = new CbusSend(memo,ta);
         Assert.assertNotNull("exists",tasend);
         tasend.nodeEnterLearnEvMode(33333);
         Assert.assertTrue("textarea is updated 3",(ta.getText()).contains("3 enter learn mode."));
-        tasend = null;
-        ta = null;
     }
 
     public void checknodeExitLearnEvMode() {
@@ -252,8 +246,7 @@ public class CbusSendTest {
         tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -262,13 +255,16 @@ public class CbusSendTest {
         send = new CbusSend(memo,null);
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         send = null;
+        memo.dispose();
+        tcis.terminateThreads();
         tcis = null;
         memo = null;
         ta = null;
         JUnitUtil.tearDown();
+
     }
     
     // private final static Logger log = LoggerFactory.getLogger(CbusSendTest.class);

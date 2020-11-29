@@ -3,7 +3,7 @@
 
 <html lang="fr">
 <head>
-<!-- Updated  by Blorec Herv&#233;  2017-02-05-->
+<!-- Updated by Blorec Herv&#233;  2017-02-05-->
 <title>JMRI Hardware Support - Maple Systems</title>
 
 <!-- Style -->
@@ -16,9 +16,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Mat&#233;riel ris en charge: Syst&#232;mes Maple</h1>
 
@@ -56,7 +58,7 @@ panneau de configuration peut changer ce qui appara&#238;t.
 sur le Volet des Pr&#233;f&#233;rences JMRI. Sur le volet qui s'ouvre, entrez le num&#233;ro du n&#339;ud
 ( ex 1 ou 2, etc ) dans le champ "UA" et cliquez "Add". Laissez tous les autres vides;
 Le support Maple a &#233;t&#233; cr&#233;&#233; &#224; partir du support JMRI C/MRI et &#224; partir de
-JMRI version 2.3.7 la migration n'est pas compl&#232;te.  <p>
+JMRI version 2.3.7 la migration n'est pas compl&#232;te.</p>
 
 <h4>D&#233;nomination</h4>
 <p>
@@ -68,7 +70,7 @@ Vous configurez le p&#233;riph&#233;rique Maple Syst&#232;mes pour utiliser l'un
 et utiliser le "Protocole simple ASCII". Plus d'informations sur le
 protocole et la mani&#232;re de configurer le p&#233;riph&#233;rique Maple Systems est
 sur la
-<a  href="http://www.maplesystems.com/1033/10330073.PDF"> feuille de donn&#233;es PDF </a>.
+<a href="http://www.maplesystems.com/1033/10330073.PDF"> feuille de donn&#233;es PDF </a>.
 
 <p>
 JMRI communique avec le p&#233;riph&#233;rique Maple Systems en lisant et en &#233;crivant
@@ -79,7 +81,7 @@ JMRI communique avec le p&#233;riph&#233;rique Maple Systems en lisant et en &#2
 
 <p>Les registres LB 101 &#224; 148 sont disponibles pour JMRI comme sortie "Aiguillages" 1 &#224; 48.
 
-<P>
+<p>
 Le num&#233;ro des n&#339;uds Maple Systems (programm&#233; dans "Param&#232;tre 5", la "station HMI ID #")
 peut &#234;tre de 1 &#224; 99. Il apparait comme  le chiffre des milliers des noms de Capteur et Aiguillages JMRI.
 Par exemple, KS3001 est le 1er capteur sur le n&#339;ud 3, et serait donc LB 1 dans ce Syst&#232;me d'unit&#233; Maple
@@ -95,7 +97,7 @@ N/A
 <h3>Autre source d'info</h3>
 <p><a href="http://www.maplesystems.com">site web Maple Systems</a>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

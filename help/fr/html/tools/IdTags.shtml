@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; 2017-01-02-->
+<!-- Updated by Blorec Herv&#233; 2017-01-02-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -11,26 +11,22 @@
   <meta name="keywords" content=
   "rfid tag id tag model railroad JMRI decoderpro panelpro">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <div id="container">
-    <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-    <div id="mBody">
-      <!--#include virtual="Sidebar" -->
-
-      <div id="mainContent">
-      <!-- Page Body -->
-        <h2>
+<h2>
 		JMRI: Documentation &#201;tiquette d'Identification 
         </h2>
 
@@ -79,22 +75,21 @@ Objets d'&#233;tiquette d'identification pour les &#233;tiquettes d&#233;tect&#2
 <p>Une &#233;tiquette d'identification peut &#234;tre affich&#233;e sur un panneau via l'utilisation de l'ic&#244;ne Rapport
 associ&#233; &#224; un lecteur donn&#233;.
 Pour ce faire:
-	<ul>
-	<li> Sur la fen&#234;tre &#201;diteur de Panneau pour votre panneau, trouver le bouton " Ajouter Rapport".
-	<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du Rapport d&#233;sir&#233;. 
+<ul>
+    <li> Sur la fen&#234;tre &#201;diteur de Panneau pour votre panneau, trouver le bouton " Ajouter Rapport".</li>
+	<li> Dans la bo&#238;te de texte &#224; c&#244;t&#233; de ce bouton, tapez le nom utilisateur ou syst&#232;me du
+    Rapport d&#233;sir&#233;.</li>
 	<li> Cliquez sur le bouton. L'ic&#244;ne Rapport sera plac&#233; sur le panneau. Si elle n'est pas visible, ce pourrait &#234;tre parce que la valeur est actuellement vide;
-	utiliser le Tableau Rapport pour changer la valeur pour quelque chose qui sera visible.
-	<li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez avec la mani&#232;re habituelle.
-	<li> Le menu pop-up sur l'ic&#244;ne vous permet de changer le formatage.
-	</ul>
-<p>
-Plus d'informations sur les Rapports peuvent &#234;tre trouv&#233;es dans la <a href="Reporters.shtml"> page d'aide Rapportsss</a>.
+    utiliser le Tableau Rapport pour changer la valeur pour quelque chose qui sera visible.</li>
+    <li> Vous pouvez faire glisser l'ic&#244;ne &#224; l'endroit o&#249; vous voulez avec la mani&#232;re habituelle.</li>
+    <li> Le menu pop-up sur l'ic&#244;ne vous permet de changer le formatage.</li>
+</ul>
 
-<!--#include virtual="/Footer" -->
+<p>Plus d'informations sur les Rapports peuvent &#234;tre trouv&#233;es dans la <a href="Reporters.shtml"> page d'aide
+Rapportsss</a>.</p>
 
+<!--#include virtual="/Footer.shtml" -->
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
-  </div><!-- closes #container -->
 </body>
 </html>
-

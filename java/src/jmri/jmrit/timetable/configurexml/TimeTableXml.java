@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -17,7 +16,6 @@ import org.jdom2.JDOMException;
 // import org.jdom2.ProcessingInstruction;
 
 import jmri.jmrit.timetable.*;
-import jmri.jmrit.timetable.swing.*;
 
 /**
  * Load and store the timetable data file: TimeTableData.xml
@@ -136,10 +134,10 @@ public class TimeTableXml {
         try {
             x.writeXML(file, doc);
         } catch (FileNotFoundException ex) {
-            log.error("File not found when writing: " + ex);  // NOI18N
+            log.error("File not found when writing: {}", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("IO Exception when writing: " + ex);  // NOI18N
+            log.error("IO Exception when writing: {}", ex);  // NOI18N
             return false;
         }
 
@@ -421,10 +419,10 @@ public class TimeTableXml {
                 dataMgr.addStop(stopId, newStop);
             }
         } catch (JDOMException ex) {
-            log.error("File invalid: " + ex);  // NOI18N
+            log.error("File invalid: {}", ex);  // NOI18N
             return false;
         } catch (IOException ex) {
-            log.error("Error reading file: " + ex);  // NOI18N
+            log.error("Error reading file: {}", ex);  // NOI18N
             return false;
         }
 
@@ -446,8 +444,8 @@ public class TimeTableXml {
             // Verify that preference:timetable exists
             File chkdir = new File(getFileLocation());
             if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
-                    log.error("Create preference:timetable failed");  // NOI18N
+                if (!chkdir.mkdirs()) {
+                    log.error("Create {} failed", chkdir);  // NOI18N
                     return null;
                 }
             }

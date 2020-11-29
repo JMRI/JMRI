@@ -10,28 +10,27 @@
 # Values can be enclosed in quotes (single or double) if desired.
 #
 # Author: Bob Jacobsen, copyright 2010
+# Author: Randall Wood, copyright 2020
 # Part of the JMRI distribution
 
 import jmri
 
 import java
 import java.io
-import com.csvreader
+import org.apache.commons.csv
 
 b = java.io.FileReader(java.io.File("demo.csv"))
-c = com.csvreader.CsvReader(b)
-c.readRecord()
+c = org.apache.commons.CSVFormat.DEFAULT.parse(b)
 
-while (c.getColumnCount() > 2) :
-    systemname = c.get(0)
-    username = c.get(1)
-    comment = c.get(2)
+for (r : c.getRecords()) :
+    systemname = r.get(0)
+    username = r.get(1)
+    comment = r.get(2)
     turnout = turnouts.provideTurnout(systemname)
     if (username != "") :
         turnout.setUserName(username)
     if (comment != "") :
         turnout.setComment(comment)    
-    print c.get(0),"/",c.get(1),"/",c.get(2)
-    c.readRecord()
+    print systemname,"/",username,"/",comment
     
 

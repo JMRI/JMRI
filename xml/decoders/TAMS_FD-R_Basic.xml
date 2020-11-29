@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
   <!-- 2 Bug fix
   Railcom toggle now shown. 
@@ -44,13 +45,9 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <!-- Consist address (consist direction bit 7 not supported) -->
-      <variable item="Consist Address" CV="19" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Adresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <!-- Definitions for Railcom/Motorola Panel -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
       <!-- Motorola for FD-R Basic: CV 114, for FD-R Extended: CV 47  -->

@@ -16,11 +16,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h2>Guide Mat&eacute;riel JMRI: Bachrus</h2>
+        <!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: Bachrus</h1>
 
@@ -55,7 +55,7 @@ C&#244;t&#233; droit du panneau Speedo
 <p>Informations suppl&#233;mentaires sur les produitd de mesure de vitesse Bachrus sur le site web 
 <a href="http://www.bachrus.com/speedometer.php">Bachrus</a>.   
       
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 </body>

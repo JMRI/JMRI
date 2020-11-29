@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -16,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2011
  */
-public class NmraConsist extends DccConsist implements Consist {
+public class NmraConsist extends DccConsist {
         
     private CommandStation commandStation = null;
 

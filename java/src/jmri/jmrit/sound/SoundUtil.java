@@ -26,8 +26,9 @@ import org.slf4j.LoggerFactory;
 public class SoundUtil {
 
     /**
-     * Play a sound from a buffer
+     * Play a sound from a buffer.
      *
+     * @param wavData the .wav byte array.
      */
     public static void playSoundBuffer(byte[] wavData) {
 
@@ -44,7 +45,7 @@ public class SoundUtil {
         DataLine.Info info = new DataLine.Info(SourceDataLine.class, format); // format is an AudioFormat object
         if (!AudioSystem.isLineSupported(info)) {
             // Handle the error.
-            log.warn("line not supported: " + info);
+            log.warn("line not supported: {}", info);
             return;
         }
         // Obtain and open the line.
@@ -53,7 +54,7 @@ public class SoundUtil {
             line.open(format);
         } catch (LineUnavailableException ex) {
             // Handle the error.
-            log.error("error opening line: " + ex);
+            log.error("error opening line: {}", ex);
             return;
         }
         line.start();
@@ -90,12 +91,12 @@ public class SoundUtil {
         byte[] abBuffer = new byte[nBufferSize];
         while (true) {
             if (log.isDebugEnabled()) {
-                log.debug("trying to read (bytes): " + abBuffer.length);
+                log.debug("trying to read (bytes): {}", abBuffer.length);
             }
             int nBytesRead = inputAIS.read(abBuffer);
 
             if (log.isDebugEnabled()) {
-                log.debug("read (bytes): " + nBytesRead);
+                log.debug("read (bytes): {}", nBytesRead);
             }
             if (nBytesRead == -1) {
                 break;

@@ -118,8 +118,8 @@ import org.slf4j.LoggerFactory;
  * ranges from 0.5 millisecond with 3 receivers to 1.9 millisecond with 15 or
  * more receivers (1.0 GHz Pentium III).
  *
- * @author	Robert Ashenfelter Copyright (C) 2006
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Robert Ashenfelter Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -132,20 +132,11 @@ public class Ash1_1Algorithm implements Calculator {
     }
 
     public Ash1_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[3];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
+        this(new Point3d[]{sensor1, sensor2, sensor3}, vsound);
     }
 
     public Ash1_1Algorithm(Point3d sensor1, Point3d sensor2, Point3d sensor3, Point3d sensor4, double vsound) {
-        this(null, vsound);
-        sensors = new Point3d[4];
-        sensors[0] = sensor1;
-        sensors[1] = sensor2;
-        sensors[2] = sensor3;
-        sensors[3] = sensor4;
+        this(new Point3d[]{sensor1, sensor2, sensor3, sensor4}, vsound);
     }
 
     double Vs;
@@ -158,7 +149,7 @@ public class Ash1_1Algorithm implements Calculator {
 
         int nr = r.getNValues();
         if (nr != sensors.length) {
-            log.error("Mismatch: " + nr + " readings, " + sensors.length + " receivers");
+            log.error("Mismatch: {} readings, {} receivers", nr, sensors.length);
         }
         nr = Math.min(nr, sensors.length); // accept the shortest
 
@@ -179,7 +170,7 @@ public class Ash1_1Algorithm implements Calculator {
         Zt = result.z;
         Vs = result.vs;
 
-        log.debug("x = " + Xt + " y = " + Yt + " z0 = " + Zt + " code = " + result.code);
+        log.debug("x = {} y = {} z0 = {} code = {}", Xt, Yt, Zt, result.code);
         return new Measurement(r, Xt, Yt, Zt, Vs, result.code, "Ash1_1Algorithm");
     }
 
@@ -227,18 +218,18 @@ public class Ash1_1Algorithm implements Calculator {
      * The following is the original algorithm, as provided by Ash as a C
      * routine
      */
-//	RPS  POSITION  SOLVER	Version 1.1	by R. C. Ashenfelter   12-02-06
+//    RPS POSITION SOLVER Version 1.1 by R. C. Ashenfelter 12-02-06
 
-    /*							*
-     *  This algorithm was provided by Robert Ashenfelter	*
-     *  who provides no guarantee as to its usability,	*
-     *  correctness nor intellectual property status.	*
-     *  Use it at your own risk.				*
-     *							*/
-    static final int OFFSET = 0;    		//  Offset (usec), add to delay
-    static final int TMAX = 35000;		//  Max. allowable delay (usec)
-    static final int TMIN = 150;  		//  Min. allowable delay (usec)
-    static final int NMAX = 15;			//  Max. no. of receivers used
+    /*
+     * This algorithm was provided by Robert Ashenfelter
+     * who provides no guarantee as to its usability,
+     * correctness nor intellectual property status.
+     * Use it at your own risk.
+     */
+    static final int OFFSET = 0;   //  Offset (usec), add to delay
+    static final int TMAX = 35000; //  Max. allowable delay (usec)
+    static final int TMIN = 150;   //  Min. allowable delay (usec)
+    static final int NMAX = 15;    //  Max. no. of receivers used
 
     double x, y, z, x0, y0, z0, Rmax;
     double xi, yi, zi, ri, xj, yj, zj, rj, xk, yk, zk, rk;
@@ -368,14 +359,14 @@ public class Ash1_1Algorithm implements Calculator {
     double wgt() {// Weighting Function
         double w;
 
-        w = (1 - ri / Rmax) * (1 - rj / Rmax) * (1 - rk / Rmax);//			 Ranges
-        w *= 1.0 - Math.pow(((x - xi) * (x - xj) + (y - yi) * (y - yj) + (z - zi) * (z - zj)) / ri / rj, 2.);//Angles
+        w = (1 - ri / Rmax) * (1 - rj / Rmax) * (1 - rk / Rmax); // Ranges
+        w *= 1.0 - Math.pow(((x - xi) * (x - xj) + (y - yi) * (y - yj) + (z - zi) * (z - zj)) / ri / rj, 2.); // Angles
         w *= 1.0 - Math.pow(((x - xi) * (x - xk) + (y - yi) * (y - yk) + (z - zi) * (z - zk)) / ri / rk, 2.);
         w *= 1.0 - Math.pow(((x - xj) * (x - xk) + (y - yj) * (y - yk) + (z - zj) * (z - zk)) / rj / rk, 2.);
-        w *= 0.05 + Math.abs((zi + zj + zk - 3 * z) / (ri + rj + rk));//		    Verticality
+        w *= 0.05 + Math.abs((zi + zj + zk - 3 * z) / (ri + rj + rk)); // Verticality
         w *= (((yk - yi) * (zj - zi) - (yj - yi) * (zk - zi)) * (x - xi)
                 + ((zk - zi) * (xj - xi) - (zj - zi) * (xk - xi)) * (y - yi)
-                + ((xk - xi) * (yj - yi) - (xj - xi) * (yk - yi)) * (z - zi)) / (ri * rj * rk);//	 Volume
+                + ((xk - xi) * (yj - yi) - (xj - xi) * (yk - yi)) * (z - zi)) / (ri * rj * rk); // Volume
         w = Math.abs(w);
         if ((w > 0.5) || (w < .0000005)) {
             w = 0.0;
@@ -388,10 +379,10 @@ public class Ash1_1Algorithm implements Calculator {
         double xij, yij, zij, rij, xik, yik, zik, rik;// Inputs (global variables)
         @SuppressWarnings("unused")
         double xjk, yjk, zjk, rjk;//     sat. position, range:
-        double Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz;//        xi, yi, zi, ri
+        double Ax, Ay, Az, Bx, By, Bz, Dx, Dy, Dz; //        xi, yi, zi, ri
         @SuppressWarnings("unused")
-        double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xj, yj, zj, rj
-        double x1, y1, z1, x2, y2, z2, e1, e2;//	   xk, yk, zk, rk
+        double Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz; // xj, yj, zj, rj
+        double x1, y1, z1, x2, y2, z2, e1, e2; // xk, yk, zk, rk
 
         xik = xi - xk;
         yik = yi - yk;

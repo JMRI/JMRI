@@ -1,15 +1,19 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a car on the layout
@@ -149,18 +153,6 @@ public class Car extends RollingStock {
      */
     public String getLoadName() {
         return _loadName;
-    }
-
-    @Deprecated
-    // saved for scripts
-    public void setLoad(String load) {
-        setLoadName(load);
-    }
-
-    @Deprecated
-    // saved for scripts
-    public String getLoad() {
-        return getLoadName();
     }
 
     public void setReturnWhenEmptyLoadName(String load) {
@@ -361,12 +353,6 @@ public class Car extends RollingStock {
         }
     }
 
-    @Deprecated
-    // available for old scripts
-    public void setNextDestination(Location destination) {
-        setFinalDestination(destination);
-    }
-
     public Location getFinalDestination() {
         return _finalDestination;
     }
@@ -395,12 +381,6 @@ public class Car extends RollingStock {
             }
             setDirtyAndFirePropertyChange(FINAL_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
         }
-    }
-
-    @Deprecated
-    // available for old scripts
-    public void setNextDestinationTrack(Track track) {
-        setFinalDestinationTrack(track);
     }
 
     public Track getFinalDestinationTrack() {
@@ -510,6 +490,48 @@ public class Car extends RollingStock {
 
     public boolean isUtility() {
         return _utility;
+    }
+    
+    public boolean isLocalMove() {
+        if (getRouteLocation() == null || getRouteDestination() == null) {
+            return false;
+        }
+        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+            return true;
+        }
+        if (getTrain() == null) {
+            return false;
+        }
+        if (getTrain().isLocalSwitcher() &&
+                TrainCommon.splitString(getRouteLocation().getName())
+                        .equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrack() != null) {
+            return true;
+        }
+        // look for sequential locations with the "same" name
+        if (TrainCommon.splitString(getRouteLocation().getName()).equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrain().getRoute() != null) {
+            boolean foundRl = false;
+            for (RouteLocation rl : getTrain().getRoute().getLocationsBySequenceList()) {
+                if (foundRl) {
+                    if (TrainCommon.splitString(getRouteDestination().getName()).equals(TrainCommon.splitString(rl.getName()))) {
+                        // user can specify the "same" location two more more
+                        // times in a row
+                        if (getRouteDestination() != rl) {
+                            continue;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+                if (getRouteLocation().equals(rl)) {
+                    foundRl = true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -621,7 +643,7 @@ public class Car extends RollingStock {
      * Sets the car's destination on the layout
      *
      * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, {@literal &} road when
+     * @param force when true ignore track length, type, and road when
      *            setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
      *         acceptable, or "length" if the rolling stock length didn't fit,
@@ -829,7 +851,7 @@ public class Car extends RollingStock {
                     _kernel.setLead(this);
                 }
             } else {
-                log.error("Kernel " + a.getValue() + " does not exist");
+                log.error("Kernel {} does not exist", a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.LOAD)) != null) {

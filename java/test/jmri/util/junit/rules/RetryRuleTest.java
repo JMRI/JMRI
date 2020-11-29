@@ -5,7 +5,7 @@ import org.junit.*;
 
 /**
  * Test the RetryRule
- * @author Bob Jacobsen Copyright 2018	
+ * @author Bob Jacobsen Copyright 2018
  */
 public class RetryRuleTest {
 
@@ -43,14 +43,14 @@ public class RetryRuleTest {
         Assert.fail("always fails");
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
+    // before entire class as retryrule messes with before/after
+    @BeforeClass
+    static public void setUp() {
         JUnitUtil.setUp();
     }
-
+    
     @After
-    public void tearDown() {
+    public void afterTest() {
         // test for messages
         if (countPassOnThirdRetry == 4) countPassOnThirdRetry = 0; // done
         if (countPassOnThirdRetry != 0) {
@@ -63,7 +63,11 @@ public class RetryRuleTest {
         }
         
         jmri.util.JUnitAppender.suppressWarnMessage("run  3 failed, RetryRule repeats");
-        
+    }
+
+    // before entire class as retryrule messes with before/after
+    @AfterClass
+    static public void tearDown() {
         JUnitUtil.tearDown();
     }
 

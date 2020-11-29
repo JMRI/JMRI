@@ -86,24 +86,6 @@ public class Llnmon {
 
 
     /**
-     * Create a LocoNet Message Formatter.
-     * <p>
-     * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
-     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
-     * } may need to be called manually to set the correct device managers.
-     *
-     * @deprecated since 4.5.6 and then even more in 4.13.5; use the 
-     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
-     * {@link LocoNetMessage#toMonitorString()}
-     * for each individual LocoNet message instead of creating a formatter.
-     */
-    @Deprecated
-    public Llnmon() {
-        this("L");
-        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
-    }
-    
-    /**
      * Create a LocoNet Message Formatter. Use the system connection memo to get
      * the correct managers to allow the user names of managed devices to be
      * included in messages with the system names.
@@ -137,7 +119,7 @@ public class Llnmon {
             @Nonnull SensorManager sensorManager, 
             @Nonnull ReporterManager reporterManager) {
         this(turnoutManager.getSystemPrefix());
-        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
+        jmri.util.LoggingUtil.deprecationWarning(log, "Llnmon");        
         this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
         this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
     }
@@ -155,7 +137,7 @@ public class Llnmon {
      */
     @Deprecated
     public Llnmon(@Nonnull String prefix) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
+        jmri.util.LoggingUtil.deprecationWarning(log, "Llnmon");        
         turnoutPrefix = prefix+"T";
         sensorPrefix = prefix+"S";
         reporterPrefix = prefix+"R";
@@ -1229,7 +1211,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetTurnoutManager");        
+        jmri.util.LoggingUtil.deprecationWarning(log, "setLocoNetTurnoutManager");        
         turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
     }
 
@@ -1246,7 +1228,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetSensorManager");        
+        jmri.util.LoggingUtil.deprecationWarning(log, "setLocoNetSensorManager");        
         sensorPrefix = sensorManager.getSystemPrefix()+"S";
     }
 
@@ -1263,7 +1245,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetReporterManager");        
+        jmri.util.LoggingUtil.deprecationWarning(log, "setLocoNetReporterManager");        
         reporterPrefix = reporterManager.getSystemPrefix()+"R";
     }
 
@@ -4110,10 +4092,11 @@ public class Llnmon {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));

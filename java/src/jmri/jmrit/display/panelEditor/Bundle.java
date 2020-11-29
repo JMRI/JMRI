@@ -3,7 +3,7 @@ package jmri.jmrit.display.panelEditor;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -23,7 +23,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrit.display.Bundle {
 
-    @Nullable
+    @CheckForNull
     private final static String name = null; // no local Bundle
 
     //
@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
     private final static Bundle b = new Bundle();
 
     @Override
-    @Nullable
+    @CheckForNull
     protected String bundleName() {
         return name;
     }

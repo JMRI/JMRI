@@ -1,31 +1,27 @@
 package apps;
 
 import apps.gui3.tabbedpreferences.TabbedPreferences;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.GraphicsEnvironment;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+
 import javax.swing.SwingUtilities;
-import jmri.Application;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.ShutDownManager;
-import jmri.implementation.AbstractShutDownTask;
-import jmri.implementation.JmriConfigurationManager;
-import jmri.jmrit.display.layoutEditor.BlockValueFile;
+
+import jmri.*;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.managers.DefaultShutDownManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
-import jmri.util.Log4JUtil;
 import jmri.util.ThreadingUtil;
+
+import jmri.util.prefs.JmriPreferencesActionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import apps.util.Log4JUtil;
 
 /**
  * Base class for the core of JMRI applications.
@@ -95,10 +91,6 @@ public abstract class AppsBase {
         configureProfile();
 
         installConfigurationManager();
-
-        installShutDownManager();
-
-        addDefaultShutDownTasks();
 
         installManagers();
 
@@ -184,7 +176,9 @@ public abstract class AppsBase {
     }
 
     protected void installConfigurationManager() {
-        ConfigureManager cm = new JmriConfigurationManager();
+        // install a Preferences Action Factory
+        InstanceManager.store(new AppsPreferencesActionFactory(), JmriPreferencesActionFactory.class);
+        ConfigureManager cm = new AppsConfigurationManager();
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         InstanceManager.store(cm, ConfigureManager.class);
         InstanceManager.setDefault(ConfigureManager.class, cm);
@@ -318,31 +312,12 @@ public abstract class AppsBase {
         return result;
     }
 
+    /**
+     * @deprecated for removal since 4.17.2 without replacement
+     */
+    @Deprecated
     protected void installShutDownManager() {
-        InstanceManager.setDefault(ShutDownManager.class, new DefaultShutDownManager());
-    }
-
-    protected void addDefaultShutDownTasks() {
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(jmri.ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: "+jde); }
-                        catch (java.io.IOException ioe) {
-                            log.error("Exception writing blocks:", ioe);
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
+        // nothing to do
     }
 
     /**
@@ -447,4 +422,6 @@ public abstract class AppsBase {
         }
         return false;
     }
+
+
 }

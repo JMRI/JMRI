@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+  <!-- Version 2 - change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="PpP Decoders" mfg="PpP" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder.">
+    <family name="PpP Decoders" mfg="PpP Digital" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder.">
       <model model="PpP-Sem4"/>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="no"/>

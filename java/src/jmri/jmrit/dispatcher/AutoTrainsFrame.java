@@ -114,8 +114,18 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
     private void handleActiveTrainChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("mode")) {
             handleChangeOfMode(e);
+        } else if (e.getPropertyName().equals("status")) {
+            handleChangeOfStatus(e);
+            handleChangeOfStatus(e);
         }
         displayAutoTrains();
+    }
+
+    private void handleChangeOfStatus(java.beans.PropertyChangeEvent e) {
+        if ((int) e.getOldValue() == ActiveTrain.WORKING) {
+            // put back listener
+            addThrottleListener(((ActiveTrain) e.getSource()).getAutoActiveTrain());
+        }
     }
 
     private synchronized void handleChangeOfMode(java.beans.PropertyChangeEvent e) {
@@ -124,8 +134,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 int newValue = ((Integer) e.getNewValue()).intValue();
                 int oldValue = ((Integer) e.getOldValue()).intValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
-                    removeThrottleListener((AutoActiveTrain) e.getSource());
-//                } else if (oldValue == ActiveTrain.DISPATCHED && newValue != ActiveTrain.DISPATCHED) {
+                    removeThrottleListener(aat);
                 } else if (oldValue == ActiveTrain.DISPATCHED) {
                     setupThrottle(aat);
                 }
@@ -142,19 +151,19 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             }
         }
         else {
-            log.info("No Throttle[{}]",aat.getActiveTrain().getActiveTrainName());
+            log.debug("{}: No Throttle (yet)",aat.getActiveTrain().getTrainName());
         }
     }
 
     private void handleThrottleChange(java.beans.PropertyChangeEvent e) {
-        if (!e.getPropertyName().equals("SpeedSetting") && !e.getPropertyName().equals("IsForward")) {
+        if (!e.getPropertyName().equals(Throttle.SPEEDSETTING) && !e.getPropertyName().equals(Throttle.ISFORWARD)) {
             return; //ignore if not speed or direction
         }
         int index = _throttles.indexOf(e.getSource());
         if (index == -1) {
             jmri.Throttle waThrottle1 =  (Throttle) e.getSource();
             int DDCAddress =  waThrottle1.getLocoAddress().getNumber() ;
-            log.debug("handleThrottleChange - using locoaddress [" + DDCAddress + "]");
+            log.trace("handleThrottleChange - using locoaddress [{}]", DDCAddress);
             for (jmri.Throttle waThrottle  : _throttles ) {
                 if (waThrottle != null) {
                     if ( DDCAddress == waThrottle.getLocoAddress().getNumber()) {
@@ -176,7 +185,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             return;
         }
         jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
-        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+        updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
     }
 
     private void updateStatusLabel(JLabel status, Object speed, Object forward) {
@@ -202,7 +211,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             jmri.DccLocoAddress addy = (jmri.DccLocoAddress) _throttles.get(index).getLocoAddress();
             jmri.InstanceManager.throttleManagerInstance().attachListener(addy, _throttleListeners.get(index));
             JLabel status = _throttleStatus.get(index);
-            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "SpeedSetting"), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, "IsForward"));
+            updateStatusLabel(status, jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.SPEEDSETTING), jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(addy, Throttle.ISFORWARD));
         }
     }
 
@@ -393,7 +402,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     // resume
                     aat.setEngineDirection();
                     aat.getAutoEngineer().setHalt(false);
-                    aat.restoreSavedSpeed();
+                    aat.restoreSavedSpeedAndDirection();
                     at.setStatus(aat.getSavedStatus());
                     if ((at.getStatus() == ActiveTrain.RUNNING)
                             || (at.getStatus() == ActiveTrain.WAITING)) {
@@ -406,7 +415,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 } else {
                     // stop
                     aat.getAutoEngineer().setHalt(true);
-                    aat.saveSpeed();
+                    aat.saveSpeedAndDirection();
                     aat.setSavedStatus(at.getStatus());
                     at.setStatus(ActiveTrain.STOPPED);
                     if (at.getMode() == ActiveTrain.MANUAL) {
@@ -429,7 +438,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.AUTOMATIC) {
                 at.setMode(ActiveTrain.MANUAL);
                 if (aat.getAutoEngineer() != null) {
-                    aat.saveSpeed();
+                    aat.saveSpeedAndDirection();
                     aat.getAutoEngineer().setHalt(true);
                     aat.setTargetSpeed(0.0f);
                     aat.waitUntilStopped();
@@ -438,11 +447,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 }
             } else if (at.getMode() == ActiveTrain.MANUAL) {
                 at.setMode(ActiveTrain.AUTOMATIC);
-                aat.restoreSavedSpeed();
-                aat.setForward(!aat.getRunInReverse());
+                aat.restoreSavedSpeedAndDirection();
                 if ((at.getStatus() == ActiveTrain.RUNNING)
                         || (at.getStatus() == ActiveTrain.WAITING)) {
+                    if (aat.getCurrentSignal() != null) {
                     aat.setSpeedBySignal();
+                    }
                 }
             }
         }
@@ -466,7 +476,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             if (at.getMode() == ActiveTrain.MANUAL) {
                 aat.setForward(_forwardButtons.get(index).isSelected());
             } else {
-                log.warn("unexpected direction button change on line " + s);
+                log.warn("unexpected direction button change on line {}", s);
             }
         }
     }
@@ -481,7 +491,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                 speedValue = speedValue * 0.01f;
                 aat.getAutoEngineer().setSpeedImmediate(speedValue);
             } else {
-                log.warn("unexpected slider change on line " + s);
+                log.warn("unexpected slider change on line {}", s);
             }
         }
     }
@@ -491,12 +501,12 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         try {
             index = Integer.parseInt(s);
         } catch (Exception e) {
-            log.warn("exception when parsing index from AutoTrains window - " + s);
+            log.warn("exception when parsing index from AutoTrains window - {}", s);
         }
         if ((index >= 0) && (index < _autoTrainsList.size())) {
             return index;
         }
-        log.error("bad train index in auto trains table " + index);
+        log.error("bad train index in auto trains table {}", index);
         return (-1);
     }
 
@@ -506,7 +516,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
             ActiveTrain at = aat.getActiveTrain();
             if ((at.getStatus() != ActiveTrain.STOPPED) && (aat.getAutoEngineer() != null)) {
                 aat.getAutoEngineer().setHalt(true);
-                aat.saveSpeed();
+                aat.saveSpeedAndDirection();
                 aat.setSavedStatus(at.getStatus());
                 at.setStatus(ActiveTrain.STOPPED);
             }
@@ -557,14 +567,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                     _reverseButtons.get(i).setVisible(false);
                     _speedSliders.get(i).setVisible(false);
                     _throttleStatus.get(i).setVisible(true);
-                } else if ((at.getMode() == ActiveTrain.MANUAL) && ((at.getStatus() == ActiveTrain.WORKING)
-                        || (at.getStatus() == ActiveTrain.READY))) {
+                } else if (at.getMode() == ActiveTrain.DISPATCHED) {
                     manualButton.setVisible(false);
                     _resumeAutoRunningButtons.get(i).setVisible(true);
                     _forwardButtons.get(i).setVisible(false);
                     _reverseButtons.get(i).setVisible(false);
-                    _speedSliders.get(i).setVisible(true);
-                    _throttleStatus.get(i).setVisible(true);
+                    _speedSliders.get(i).setVisible(false);
+                    _throttleStatus.get(i).setVisible(false);
                 } else {
                     manualButton.setText(Bundle.getMessage("ToAutoButton"));
                     manualButton.setToolTipText(Bundle.getMessage("ToAutoButtonHint"));

@@ -75,8 +75,7 @@ public class PositionablePolygonXml extends PositionableShapeXml {
 
         float[] coord = new float[6];
         java.util.List<Element> list = elem.getChildren("vertex");
-        for (int j = 0; j < list.size(); j++) {
-            Element e = list.get(j);
+        for (Element e : list) {
             int type = getInt(e, "type");
             for (int i = 0; i < coord.length; i++) {
                 coord[i] = getFloat(e, "idx" + i);

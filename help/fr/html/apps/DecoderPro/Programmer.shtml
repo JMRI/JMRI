@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id$ -->
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-02 -->
 <title>JMRI: Create a Custom DecoderPro Programmer</title>
 
@@ -18,10 +17,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 <h2>Cr&#233;er un Programmateur Personnalis&#233;</h2>
@@ -39,7 +39,7 @@ Chacun d'eux devient un volet dans la fen&#234;tre DecoderPro.
 <p>Les volets du fichier programmer apparaissent quand vous s&#233;lectionnez
 ce programmateur dans DecoderPro. Notez que les volets peuvent aussi &#234;tre d&#233;finis
 dans la d&#233;finition d&#233;codeur, au quel cas ces volets apparaissent apr&#232;s
-ceux qui pr&#233;sents dans les d&#233;finitions de programmeur.
+ceux qui pr&#233;sents dans les d&#233;finitions de programmeur.</p>
 	<ul>
 	<li> Il y a une option pour montrer/masquer les volets depuis le fichier decoder. Si
 	vous &#233;crivez un programmateur tr&#232;s basique, vous pouvez vouloir les cacher
@@ -47,11 +47,10 @@ ceux qui pr&#233;sents dans les d&#233;finitions de programmeur.
 	<li>Si un volet est d&#233;fini dans le fichier decoder et le fichier programmer
 	avec le m&#234;me nom, celui du fichier d&#233;codeur ( le plus sp&#233;cifique ) appara&#238;t.
 	</ul>
-</p>
 
 <dl>
-<dt class=left>Sp&#233;cifier les &#233;l&#233;ments &#224; afficher</dt>
-<dd class=first>
+<dt class="left">Sp&#233;cifier les &#233;l&#233;ments &#224; afficher</dt>
+<dd class="first">
 <p>L'&#233;l&#233;ment de base d'un volet de programmation est un "affichage". Cela signifie que
  le programmateur ne pr&#233;sente qu'une seule variable. Les attributs sont:
 	<ul>
@@ -65,15 +64,14 @@ ceux qui pr&#233;sents dans les d&#233;finitions de programmeur.
 	par exemple, la z&#244;ne de texte. Les valeurs possibles sont "gauche", "au-dessus",
 	"en dessous", "droit" , par d&#233;faut "droit" .
 	<li><dfn>format</dfn> -
-	<p>Comment la variable devra &#234;tre pr&#233;sent&#233;e. Les variables num&#233;riques peuvent &#234;tre
+	Comment la variable devra &#234;tre pr&#233;sent&#233;e. Les variables num&#233;riques peuvent &#234;tre
 	pr&#233;sent&#233;es comme
 		<ul>
 		<li> un champ de texte modifiable, qui est la valeur par d&#233;faut si rien n'est sp&#233;cifi&#233;
 		<li><dfn>hslider</dfn> - un curseur horizontal
 		<li><dfn>vslider</dfn> - un curseur vertical
 		</ul>
-	</p>
-	<p>Les variables Enum peuvent &#234;tre pr&#233;sent&#233;es comme
+	Les variables Enum peuvent &#234;tre pr&#233;sent&#233;es comme
 		<ul>
 		<li> une z&#244;ne de s&#233;lection, qui est la valeur par d&#233;faut si rien n'est
 		sp&#233;cifi&#233;
@@ -86,22 +84,21 @@ ceux qui pr&#233;sents dans les d&#233;finitions de programmeur.
 		<li><dfn>onradiobutton</dfn> - Un seul bouton qui donne le choix 1
 		pour la variable lorsqu'il est s&#233;lectionn&#233;.
 		</ul>
-	</p>
-	<p>Ces deux derniers peuvent &#234;tre utiles pour indiquer quelles parties
+	Ces deux derniers peuvent &#234;tre utiles pour indiquer quelles parties
 	d'une configuration sont actives, voir le volet  "Table de Vitesse" de
-	Comprehensive.xml comme exemple.</p>
+	Comprehensive.xml comme exemple.</li>
 	<li><dfn>tooltip</dfn> -
 	Vous permet de sp&#233;cifier une info-bulle par d&#233;faut qui sera pr&#233;sent&#233;e lorsque le curseur
 	survole la variable. Cette info-bulle sera remplac&#233;e par toute info-bulle d&#233;finie dans un fichier de d&#233;codeur.
-  (Note: Ce comportement est diff&#233;rent de celui d&#233;fini pour <a href="#display">l'attribut d'&#233;tiquette 'label'<a>.)
+  	(Note: Ce comportement est diff&#233;rent de celui d&#233;fini pour <a href="#display">l'attribut d'&#233;tiquette
+	'label'</a>.)</li>
 	</ul>
 
-<a name="display">
-<p> Le nom &#224; afficher est command&#233; par le volet de l'attribut "nameFmt"  et l'attribut "label" sur
-chaque &#233;l&#233;ment d'affichage (variable).</p></a>
+<a name="display"></a>
+<p>Le nom &#224; afficher est command&#233; par le volet de l'attribut "nameFmt"  et l'attribut "label" sur
+chaque &#233;l&#233;ment d'affichage (variable).</p>
 
-
-<p>Les choix sont:
+<p>Les choix sont:</p>
 	<ul>
 	<li>Si une &#233;tiquette est sp&#233;cifi&#233;e, elle sera utilis&#233;e. Utilisez une &#233;tiquette si
  	vous souhaitez un contr&#244;le absolu sur comment une variable doit &#234;tre appel&#233;e,
@@ -114,21 +111,19 @@ chaque &#233;l&#233;ment d'affichage (variable).</p></a>
 	le nom du fichier de d&#233;finition de d&#233;codeur sera utilis&#233;. Il s'agit de la forme normale,
 	car il permet au fabricant d'indiquer en d&#233;tail ce qu'une variable d&#233;finit.</li>
 	</ul>
-</p>
 </dd>
 
-<dt class=left>Formatage</dt>
+<dt class="left">Formatage</dt>
 <dd>
-<p>Chaque volet du programmateur se compose de lignes et/ou des colonnes ( imbriqu&#233;es ) .
+Chaque volet du programmateur se compose de lignes et/ou des colonnes ( imbriqu&#233;es ) .
 Les colonnes exposent les variables de haut en bas. Les rang&#233;es exposent les variables
 de gauche &#224; droite. Vous pouvez les imbriquer  pour obtenir des effets diff&#233;rents; pour
 un exemple, voir le volet "Table de Vitesse" du dossier Comprehensive.xml.
 Il a deux colonnes, la gauche de chacune utilise une ligne pour mettre des curseurs
- de gauche &#224; droite .
-</p>
+ de gauche &#224; droite.
 </dd>
 
-<dt class=left>&#201;l&#233;ments sp&#233;ciaux</dt>
+<dt class="left">&#201;l&#233;ments sp&#233;ciaux</dt>
 <dd>
 Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obtenir que le programmateur
  formate exactement comme vous le souhaitez:
@@ -136,11 +131,12 @@ Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obte
 	<li><dfn>grid</dfn> - Cr&#233;er une grille pour exposer les &#233;l&#233;ments en rang&#233;es et colonnes. Voir la section ci-dessous <a
 	href="#grid">Disposition de la grille</a></li>
 	<li><dfn>label</dfn> - Ajouter du texte dans un volet.</li>
-	<li><dfn>soundlabel</dfn> - Ajouter un soundlabel depuis un fichier decoder definition dans un volet. Il a un attribut:</li>
+	<li><dfn>soundlabel</dfn> - Ajouter un soundlabel depuis un fichier decoder definition dans un volet. Il a un attribut:
 		<ul>
-		<li>dfn</dfn> - ( Requise )
+		<li><dfn>dfn</dfn> - ( Requise )
 		C'est le nombre de label son &#224; pr&#233;senter</li>
 		</ul>
+	</li>
 	<li><dfn>separator</dfn> - Ajouter une ligne de s&#233;paration dans un volet. S'il est inclus
 	dans une colonne, ce sera une ligne de s&#233;paration horizontale. S'il
 	est inclus dans une ligne, ce sera une ligne verticale.</li>
@@ -150,17 +146,15 @@ Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obte
 	<li><dfn>fnmapping</dfn> -Afficher une grille fonction Mapping .
 	Cela n&#233;cessite des variables avec des noms sp&#233;cifiques, qui
 	sont d&#233;crites sur une
-	<a HREF="FnMapping.shtml"> page s&#233;par&#233;e </a></li>
+	<a href="FnMapping.shtml"> page s&#233;par&#233;e </a></li>
 	<li><dfn>dccaddress</dfn> - Afficher une variable combin&#233;e pour l'adresse DCC. Il
 	s'agit d'une case &#224; cocher qui permet de s&#233;lectionner l'utilisation de l'adresse courte par rapport &#224; une longue, et
 	un champ texte simple pour entrer l'adresse. Selon la fa&#231;on dont la case est activ&#233;e, le champ de texte
  	permet de configurer l'adresse courte dans CV 1  ou adresse longue dans CV 17/18.</li>
 	</ul>
-<p></p>
 </dd>
 
-<a id="grid"/>
-<dt class="left">Formatage avec la Disposition de la Grille </dt>
+<dt class="left"><a id="grid"></a>Formatage avec la Disposition de la Grille </dt>
 <dd>
 <p>
   Les &#233;l&#233;ments "row" et "column" vous permettent d'aligner les &#233;l&#233;ments dans les rang&#233;es ou les colonnes,
@@ -171,27 +165,27 @@ Il y a un certain nombre d'&#233;l&#233;ments que vous pouvez utiliser pour obte
 La Disposition de la Grille vous permet d'aligner les &#233;l&#233;ments en rang&#233;es et colonnes, en
 conservant l'alignement m&#234;me si un &#233;l&#233;ment particulier est absent. Il y a deux &#233;l&#233;ments:
 	<ul>
-	 <li><dfn>grid</dfn> - Cr&#233;e une Disposition de Grille ( avec en son sein un &#233;l&#233;ment colonne et rang&#233;e ) :</li>
+	 <li><dfn>grid</dfn> - Cr&#233;e une Disposition de Grille ( avec en son sein un &#233;l&#233;ment colonne et rang&#233;e ) :
 	 <ul>
 	   <li>Il peut avoir un ou plusieurs attributs optionnels.</li>
 	   <li>Le seul sous-&#233;l&#233;ment autoris&#233; est "griditem" et il doit y avoir au moins un d'eux.</li>
-	</ul>
-	<li><dfn>griditem</dfn> - Cr&#233;e un &#233;l&#233;ment grille au sein d'un &#233;l&#233;ment "grille":</li>
+	 </ul></li>
+	<li><dfn>griditem</dfn> - Cr&#233;e un &#233;l&#233;ment grille au sein d'un &#233;l&#233;ment "grille":
 	<ul>
 	  <li>Il doit avoir les attributs "gridx" et "gridy".</li>
 	  <li>Il peut avoir aussi un ou pusieurs attributs optionnels.</li>
 	  <li>Il peut contenir un ou plusieurs &#233;l&#233;ments,
 	   qui peuvent &#234;tre n'importe quelle combinaison de n'importe quels &#233;l&#233;ments list&#233;s ci-dessus, incluant "row", column", ou m&#234;me
 	   une autre grille.</li>
-	</ul>
+	</ul></li>
   </ul>
-</p>
-<p>
-Les attributs "gridx" et "gridy" d'un &#233;l&#233;ment d'une grille sp&#233;cifie l'emplacement de l'&#233;l&#233;ment au sein de la grille.
-Une valeur de gridx= "0" met l'&#233;l&#233;ment dans la colonne la plus &#224; gauche.
-Une valeur de gridy= "0" met l'&#233;l&#233;ment dans la rang&#233;e la plus haute.
-D'autres attributs pour commander le format des &#233;l&#233;ments de la grille sont disponibles et sont document&#233;s dans le
-<a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
+
+	<p>
+	Les attributs "gridx" et "gridy" d'un &#233;l&#233;ment d'une grille sp&#233;cifie l'emplacement de l'&#233;l&#233;ment au sein de la grille.
+	Une valeur de gridx= "0" met l'&#233;l&#233;ment dans la colonne la plus &#224; gauche.
+	Une valeur de gridy= "0" met l'&#233;l&#233;ment dans la rang&#233;e la plus haute.
+	D'autres attributs pour commander le format des &#233;l&#233;ments de la grille sont disponibles et sont document&#233;s dans le
+	<a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
     Tutoriel Java&reg; GridBagLayout</a>.
   <ul>
 	<li>Les Attributs de "grid" s'appliquent &#224; tous les &#233;l&#233;ments de la table.</li>
@@ -200,14 +194,14 @@ D'autres attributs pour commander le format des &#233;l&#233;ments de la grille 
 	     <a href="http://docs.oracle.com/javase/tutorial/uiswing/layout/gridbag.html" target="_blank">
 	          documentation</a>) peuvent &#234;tre utilis&#233;es.
 	</li>
-	<li>Deux valeurs litt&#233;rales suppl&#233;mentaires de constantes sont disponibles pour "gridx" et gridy":</li>
+	<li>Deux valeurs litt&#233;rales suppl&#233;mentaires de constantes sont disponibles pour "gridx" et gridy":
 		<ul>
 		  <li>"CURRENT" est la valeur du dernier "griditem" ajout&#233; ( exemple la m&#234;me colonne ou rang&#233;e ).</li>
 		  <li>
 			"NEXT" est un de plus que la derni&#232;re valeur "griditem" ajout&#233;e ( exemple la rang&#233;e ou la colonne suivante ).
-  			<br/>&nbsp;&nbsp;("NEXT" est actuellement synonyme de "RELATIVE". )
+  			<br>&nbsp;&nbsp;("NEXT" est actuellement synonyme de "RELATIVE". )
 		  </li>
-		</ul>
+		</ul></li>
 	<li>L'attribut "insets" est sp&#233;cifi&#233; comme insets= "haut,gauche,bas droit" o&#249; "haut", etc, sont des entiers.</li>
 	<li>Un "griditem peut avancer de plus d'une cellule de la grille. Les attributs "gridwidth" et "gridheight" commandent ceci.</li>
 	<li> Par d&#233;faut les &#233;l&#233;ments de la grille sont agglutin&#233;s au centre d'un container. L'attribut "weightx" peut modifier ceci et
@@ -226,15 +220,14 @@ D'autres attributs pour commander le format des &#233;l&#233;ments de la grille 
 	situation ).
 	</li>
 	</ul>
-</p>
-<p>
-  Pour un exemple d'utilisation de la Disposition de la Grille ( avec quelques explications sur les attributs utilis&#233;s ), voir
+
+	<p>Pour un exemple d'utilisation de la Disposition de la Grille ( avec quelques explications sur les attributs utilis&#233;s ), voir
    <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4soundPane.xml" target="_blank">
       xml/decoders/esu/v4soundPane.xml</a>.
-  Les d&#233;finitons LokSound Select ( et V4 ) utilise ce fichier.
-</p>
+  Les d&#233;finitons LokSound Select ( et V4 ) utilise ce fichier.</p>
+</dd>
 
-<dt class=left>Installation de votre nouveau programmateur</dt>
+<dt class="left">Installation de votre nouveau programmateur</dt>
 <dd>
 <p>
 Tous les fichiers .xml dans le sous-r&#233;pertoire "programmers"
@@ -244,21 +237,17 @@ le sous-r&#233;pertoire "programmers"  du r&#233;pertoire "prefs"  et
 de le s&#233;lectionnez. Vous n'avez pas &#224; red&#233;marrer le programme,
 la liste est refaite &#224; chaque fois que vous ouvrez une nouvelle fen&#234;tre programmateur.
 
-</dd>
-</dl>
-
-
 <p> Il ya une option pour pr&#233;senter/masquer les volets depuis le fichier d&#233;codeur. Si vous &#233;crivez
  un programmateur t&#232;s basique, vous pouvez les cacher.</p>
 
 </dd>
 </dl>
 
-<a name="id">
-<h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3></a>
+<a name="id"></a>
+<h3>Comment les variables dans un fichier d&#233;codeur correspondent avec le fichier programmateur</h3>
 
 Chaque fichier d&#233;codeur d&#233;finit
-<A HREF="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des commandes sp&#233;cifiques dans
+<a href="CreateDecoder.shtml#variable"> les variables </a> qui d&#233;crivent des commandes sp&#233;cifiques dans
  le d&#233;codeur. Le fichier programmateur d&#233;crit ensuite comment les placer sur ces volets, de telle sorte
  que l'utilisateur puisse les trouver et les manipuler
 <p>
@@ -267,7 +256,7 @@ Mais laquelle? C'est contr&#244;l&#233; par l'attribut "name"
 de l'&#233;l&#233;ment "display" . DecoderPro ne prend que "name" et regarde &#224; travers
 la d&#233;finition d&#233;codeur pour un &#233;l&#233;ment "variable" qui a soit le
 m&#234;me "&#233;l&#233;ment" ou le m&#234;me attribut "label".
-<P>
+<p>
 Cela a des effets tr&#232;s int&#233;ressants:
 	<ol>
 	<li>Le "nom" dans l'&#233;l&#233;ment "display"  est effectivement un "nom standard", qui
@@ -276,7 +265,7 @@ Cela a des effets tr&#232;s int&#233;ressants:
 	il est possible d'avoir un fichier programmateur g&#233;n&#233;rique qui fonctionne pour
 	de nombreux types de d&#233;codeurs diff&#233;rents, tout en affichant les noms des variables sp&#233;cifiques.
 	Pour en savoir plus, s'il vous pla&#238;t
-	<a HREF="#display"> voir ci-dessus </a>.
+	<a href="#display"> voir ci-dessus </a>.
 	<li>
 	Il vous permet d'utiliser des noms tr&#232;s g&#233;n&#233;riques pour commander o&#249; vont des choses un peu diff&#233;rentes.
 	Par exemple, diff&#233;rents d&#233;codeurs sonores donnent diff&#233;rents
@@ -285,14 +274,13 @@ Cela a des effets tr&#232;s int&#233;ressants:
 	fichiers programmateur contenant des milliards d'&#233;l&#233;ments "display"
 	&#224; ma&#238;triser avec toutes les options possibles. Au lieu de cela, nous utilisons des &#233;l&#233;ments avec
 	des noms plus g&#233;n&#233;riques, comme "Option Son 1", pour le nom d'affichage.
-	<p>
+	<br>
 	La d&#233;finition d&#233;codeur dispose alors d'un "label" de "Pompe &#224; air" ou que ce soit, et
 	un "&#233;l&#233;ment" de "Option Son 1". Tout correspond correctement, et
-	"Pompe &#224; air" appara&#238;t sur l'&#233;cran de l'ordinateur.
-</ol>
-<p>
+	"Pompe &#224; air" appara&#238;t sur l'&#233;cran de l'ordinateur.</li>
+	</ol>
 
- <!--#include virtual="/Footer" -->
+ <!--#include virtual="/Footer.shtml" -->
   </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->
 </body>

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @see jmri.jmrix.pricom.pockettester.MonitorFrame
  *
- * @author	Bob Jacobsen Copyright (C) 2002,2004
+ * @author Bob Jacobsen Copyright (C) 2002,2004
  */
 public abstract class MonitorAction extends AbstractAction {
 
@@ -29,7 +29,7 @@ public abstract class MonitorAction extends AbstractAction {
         try {
             f.initComponents();
         } catch (Exception ex) {
-            log.error("starting MonitorFrame caught exception: " + ex.toString());
+            log.error("starting MonitorFrame caught exception: {}", ex.toString());
         }
         connect(f);
         f.setVisible(true);

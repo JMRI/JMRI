@@ -10,7 +10,7 @@ import java.util.Set;
  * See the PropertyChangeSupport documentation for complete documentation of
  * those methods.
  *
- * @author rhwood
+ * @author Randall Wood
  * @see java.beans.PropertyChangeSupport
  */
 public abstract class ArbitraryBean extends Bean {
@@ -19,8 +19,8 @@ public abstract class ArbitraryBean extends Bean {
 
     @Override
     public void setProperty(String key, Object value) {
-        if (Beans.hasIntrospectedProperty(this, key)) {
-            Beans.setIntrospectedProperty(this, key, value);
+        if (BeanUtil.hasIntrospectedProperty(this, key)) {
+            BeanUtil.setIntrospectedProperty(this, key, value);
         } else {
             Object oldValue = this.arbitraryPropertySupport.getProperty(key);
             this.arbitraryPropertySupport.setProperty(key, value);
@@ -30,8 +30,8 @@ public abstract class ArbitraryBean extends Bean {
 
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
-        if (Beans.hasIntrospectedIndexedProperty(this, key)) {
-            Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        if (BeanUtil.hasIntrospectedIndexedProperty(this, key)) {
+            BeanUtil.setIntrospectedIndexedProperty(this, key, index, value);
         } else {
             Object oldValue = this.arbitraryPropertySupport.getIndexedProperty(key, index);
             this.arbitraryPropertySupport.setIndexedProperty(key, index, value);

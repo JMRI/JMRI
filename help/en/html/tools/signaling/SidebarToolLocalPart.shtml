@@ -1,0 +1,15 @@
+<!-- This is the local part of the sidebar for signaling -->
+
+<dt><h3><a href="index.shtml">Signaling</a></h3></dt>
+		<dd>Adding signals to your layout with JMRI.
+		    <ul>
+		    <li><a href="SignalingSetup.shtml">Signaling Quick Start</a>
+		    <li><a href="AspectSignaling.shtml">Aspect Signaling</a>
+		    <li><a href="SignalHeads.shtml">Signal Heads</a>
+		    <li><a href="SignalMasts.shtml">Signal Masts</a>
+		    <li><a href="SignalGroups.shtml">Signal Groups</a>
+		    <li><a href="SignalMastLogic.shtml">Signal Mast Logic</a>
+		    <li><a href="interlock/index.shtml">Entry Exit &amp; Interlocking</a>
+		    <li><a href="../../../package/jmri/jmrit/cabsignals/CabSignalPane.shtml">Cab Signaling</a>
+		    </ul>
+		</dd>

@@ -2,7 +2,6 @@ package jmri.jmrit.roster;
 
 import java.util.HashMap;
 import javax.swing.ImageIcon;
-import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 
 /**
@@ -62,16 +61,5 @@ public class RosterIconFactory implements InstanceManagerAutoDefault {
             icons.put(re.getIconPath(), icon);
         }
         return icon;
-    }
-
-    /**
-     *
-     * @return the default RosterIconFactory instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static RosterIconFactory instance() {
-        return InstanceManager.getDefault(RosterIconFactory.class);
     }
 }

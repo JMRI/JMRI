@@ -1,29 +1,36 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
+
+import javax.swing.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class HelpUtilTest {
 
     @Test
     public void testCTor() {
-        HelpUtil t = new HelpUtil();
-        Assert.assertNotNull("exists",t);
+        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
+        
+        JMenuBar menuBar = new JMenuBar();
+        int initialMenuCount = menuBar.getMenuCount();
+        HelpUtil.helpMenu(menuBar,"test",true);
+        menuBar.getMenu(0);
+        assertThat(menuBar.getMenuCount()).withFailMessage("Help Menu not created")
+                .isGreaterThan(initialMenuCount);
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

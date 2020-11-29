@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-config.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-config.dtd">
 <operations-config>
-  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:46:52 EST 2016 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:46:52 EST 2016 -->
   <operations>
     <railRoad name="JMRI Operations Demo Railroad" />
     <setup comment="" />

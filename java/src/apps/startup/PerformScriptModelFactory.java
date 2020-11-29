@@ -1,33 +1,17 @@
 package apps.startup;
 
-import apps.PerformScriptModel;
-import javax.swing.JFileChooser;
-import jmri.script.ScriptFileChooser;
-import org.openide.util.lookup.ServiceProvider;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  *
  * @author Randall Wood
+ * @deprecated since 4.21.1; use {@link jmri.util.startup.PerformScriptModelFactory} instead
  */
-@ServiceProvider(service = StartupModelFactory.class)
-public class PerformScriptModelFactory extends AbstractFileModelFactory {
+@Deprecated
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated by refactoring; retaining unchanged until removal")
+public class PerformScriptModelFactory extends jmri.util.startup.PerformScriptModelFactory {
 
     public PerformScriptModelFactory() {
+        super();
     }
-
-    @Override
-    public Class<? extends StartupModel> getModelClass() {
-        return PerformScriptModel.class;
-    }
-
-    @Override
-    public PerformScriptModel newModel() {
-        return new PerformScriptModel();
-    }
-
-    @Override
-    protected JFileChooser setFileChooser() {
-        return new ScriptFileChooser();
-    }
-
 }

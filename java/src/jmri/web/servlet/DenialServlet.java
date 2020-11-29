@@ -16,10 +16,10 @@ import org.openide.util.lookup.ServiceProvider;
  * Passing requests for certain resources protects those resources from network
  * access.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 @WebServlet(name = "DenialServlet",
-        urlPatterns = {"/prefs/networkServices"})
+        urlPatterns = {"/prefs/networkServices", "/settings/preferences"})
 @ServiceProvider(service = HttpServlet.class)
 public class DenialServlet extends HttpServlet {
 

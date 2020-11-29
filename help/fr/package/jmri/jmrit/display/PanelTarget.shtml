@@ -9,7 +9,8 @@
 
   <title>JMRI: Panel Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Panel"><!-- Style -->
+  <meta name="keywords" content="JMRI help Panel">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Panneau</h1>
       <p>Un panneau est un ensemble d'ic&ocirc;nes
       repr&eacute;sentant les diff&eacute;rentes composantes d'un
@@ -171,7 +173,7 @@
       sessions d'exploitation, vous pouvez sauver le TCO et les
       marqueurs seront sauvegard&eacute;s dans votre fichier
       panneau.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

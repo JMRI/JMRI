@@ -59,10 +59,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         java.util.HashMap<String, NamedIcon> map = p.getMap();
         if (map != null) {
 
-            java.util.Iterator<java.util.Map.Entry<String, NamedIcon>> iterator = map.entrySet().iterator();
-
-            while (iterator.hasNext()) {
-                java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
+            for (java.util.Map.Entry<String, NamedIcon> mi : map.entrySet()) {
                 String key = mi.getKey();
                 String value = mi.getValue().getName();
 
@@ -93,7 +90,7 @@ public class MemoryIconXml extends PositionableLabelXml {
             ed = (Editor) o;
             l = new MemoryIcon("", ed);
         } else {
-            log.error("Unrecognizable class - " + o.getClass().getName());
+            log.error("Unrecognizable class - {}", o.getClass().getName());
             return;
         }
 
@@ -113,7 +110,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         if (m != null) {
             l.setMemory(name);
         } else {
-            log.error("Memory named '" + attr.getValue() + "' not found.");
+            log.error("Memory named '{}' not found.", attr.getValue());
             ed.loadFailed();
         }
 
@@ -136,15 +133,14 @@ public class MemoryIconXml extends PositionableLabelXml {
 
         // get the icon pairs
         List<Element> items = element.getChildren("memorystate");
-        for (int i = 0; i < items.size(); i++) {
+        for (Element item : items) {
             // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
             String iconName = item.getAttribute("icon").getValue();
             NamedIcon icon = NamedIcon.getIconByName(iconName);
             if (icon == null) {
                 icon = ed.loadFailed("Memory " + name, iconName);
                 if (icon == null) {
-                    log.info("Memory \"" + name + "\" icon removed for url= " + iconName);
+                    log.info("Memory \"{}\" icon removed for url= {}", name, iconName);
                 }
             }
             if (icon != null) {

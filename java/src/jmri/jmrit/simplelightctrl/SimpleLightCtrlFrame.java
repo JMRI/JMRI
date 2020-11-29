@@ -1,15 +1,15 @@
 package jmri.jmrit.simplelightctrl;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import jmri.InstanceManager;
-import jmri.Light;
-import jmri.util.swing.JmriBeanComboBox;
+
+import jmri.*;
+import jmri.swing.NamedBeanComboBox;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
     String newState = "";
 
     // GUI member declarations
-
     javax.swing.JButton onButton = new javax.swing.JButton();
     javax.swing.JButton offButton = new javax.swing.JButton();
 
@@ -63,17 +62,18 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
     javax.swing.JTextField transitionTimeTextField = new javax.swing.JTextField(4);
 
     javax.swing.JButton applyButton = new javax.swing.JButton();
-    private JmriBeanComboBox to1;
+    private final NamedBeanComboBox<Light> to1;
     private PropertyChangeListener _parentLightListener = null;
 
     public SimpleLightCtrlFrame() {
         super();
-        
-        to1 = new JmriBeanComboBox(InstanceManager.lightManagerInstance() );
-        to1.setFirstItemBlank(true);
-        to1.addActionListener (new ActionListener () {
+
+        to1 = new NamedBeanComboBox<>(InstanceManager.lightManagerInstance());
+        to1.setAllowNull(true);
+        to1.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                log.info("actionevent");
+                log.debug("actionevent");
                 resetLightToCombo();
             }
         });
@@ -171,7 +171,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
                 applyButtonActionPerformed(e);
             }
         });
-        
+
         // set buttons inactive as no Light yet selected
         setControlFrameActive(false);
 
@@ -189,20 +189,20 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         pane2.add(textStateLabel);
         pane2.add(nowStateTextField);
         getContentPane().add(pane2);
-        
+
         // on off buttons
         pane2 = new JPanel();
         pane2.add(onButton);
         pane2.add(offButton);
         getContentPane().add(pane2);
         getContentPane().add(new javax.swing.JSeparator(javax.swing.SwingConstants.HORIZONTAL));
-        
+
         // Controllers enabled checkbox
         pane2 = new JPanel();
         pane2.add(textIsEnabledLabel);
         pane2.add(statusIsEnabledCheckBox);
         getContentPane().add(pane2);
-        
+
         // Controllers text
         pane2 = new JPanel();
         pane2.add(nowControllersTextField);
@@ -243,21 +243,20 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         pack();
 
     }
-    
-    private void setControlFrameActive(boolean showLight){
-        log.debug("selected light is {}",selectedLight() );
+
+    private void setControlFrameActive(boolean showLight) {
+        log.debug("selected light is {}", to1.getSelectedItem());
         onButton.setEnabled(showLight);
         offButton.setEnabled(showLight);
         statusIsEnabledCheckBox.setEnabled(showLight);
-        
-        if (showLight && light.isIntensityVariable()) {
+
+        if (showLight && (light instanceof VariableLight)) {
             intensityButton.setEnabled(true);
             intensityMinTextField.setEnabled(true);
             intensityMaxTextField.setEnabled(true);
             intensityTextField.setEnabled(true);
             applyButton.setEnabled(true);
-        }
-        else {
+        } else {
             intensityButton.setEnabled(false);
             intensityMinTextField.setEnabled(false);
             intensityMaxTextField.setEnabled(false);
@@ -265,24 +264,18 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             intensityButton.setEnabled(false);
             applyButton.setEnabled(false);
         }
-        
-        if (showLight && light.isTransitionAvailable()) {
+
+        if (showLight && (light instanceof VariableLight)
+                && ((VariableLight)light).isTransitionAvailable()) {
             transitionTimeTextField.setEnabled(true);
-        }
-        else {
+        } else {
             transitionTimeTextField.setEnabled(false);
         }
-        
-    }
-    
-    // returns the Light selected in the Combobox
-    // null if no Light selected
-    private Light selectedLight(){
-        return (Light) to1.getSelectedBean();
+
     }
 
     public void offButtonActionPerformed(ActionEvent e) {
-        if (selectedLight() == null) {
+        if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             return;
         }
@@ -290,13 +283,13 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             // and set commanded state to ON
             light.setState(Light.OFF);
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     public void onButtonActionPerformed(ActionEvent e) {
-        if (selectedLight() == null) {
+        if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             return;
         }
@@ -304,22 +297,25 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
             // and set commanded state to ON
             light.setState(Light.ON);
         } catch (Exception ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     public void intensityButtonActionPerformed(ActionEvent e) {
-        if (selectedLight() == null) {
+        if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             return;
         }
         try {
             log.debug("about to command DIM"); // NOI18N
             // and set commanded state to DIM
-            light.setTargetIntensity(Double.parseDouble(intensityTextField.getText().trim()) / 100);
-        } catch (Exception ex) {
-            log.error(Bundle.getMessage("LightErrorIntensityButtonException") + ex.toString());
+            if (light instanceof VariableLight) {
+                ((VariableLight)light).setTargetIntensity(
+                        Double.parseDouble(intensityTextField.getText().trim()) / 100);
+            }
+        } catch (NumberFormatException ex) {
+            log.error("{}{}", Bundle.getMessage("LightErrorIntensityButtonException"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
@@ -334,72 +330,75 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
 
     /**
      * Handle changes for intensity, rate, etc.
+     * @param e unused.
      */
     public void applyButtonActionPerformed(ActionEvent e) {
-        if (selectedLight() == null) {
+        if (to1.getSelectedItem() == null) {
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
             resetLightToCombo();
             return;
         }
         // load address from switchAddrTextField
         try {
-            double min = Double.parseDouble(intensityMinTextField.getText()) / 100.;
-            double max = Double.parseDouble(intensityMaxTextField.getText()) / 100.;
-            double time = Double.parseDouble(transitionTimeTextField.getText());
-            log.debug("setting min: {} max: {} transition: {}",min,max,time); // NOI18N
-            if (!light.isTransitionAvailable()) {
-                time = 0.0d;
-            }
-            
-            light.setMinIntensity(min);
-            light.setMaxIntensity(max);
-            light.setTransitionTime(time);
-            updateLightStatusFields(false);
+            if (light instanceof VariableLight) {
+                VariableLight variableLight = (VariableLight)light;
+                double min = Double.parseDouble(intensityMinTextField.getText()) / 100.;
+                double max = Double.parseDouble(intensityMaxTextField.getText()) / 100.;
+                double time = Double.parseDouble(transitionTimeTextField.getText());
+                log.debug("setting min: {} max: {} transition: {}", min, max, time); // NOI18N
+                if (!variableLight.isTransitionAvailable()) {
+                    time = 0.0d;
+                }
 
-        } catch (Exception ex) {
-            log.error(Bundle.getMessage("ErrorTitle") + ex.toString());
+                variableLight.setMinIntensity(min);
+                variableLight.setMaxIntensity(max);
+                variableLight.setTransitionTime(time);
+                updateLightStatusFields(false);
+            }
+        } catch (NumberFormatException ex) {
+            log.error("{}{}", Bundle.getMessage("ErrorTitle"), ex.toString());
             nowStateTextField.setText(Bundle.getMessage("ErrorTitle"));
         }
     }
 
     private void resetLightToCombo() {
-        if (light !=null && light == selectedLight() ) {
+        if (light != null && light == to1.getSelectedItem()) {
             return;
         }
-        log.debug("Light changed in combobox to {}",selectedLight());
+        log.debug("Light changed in combobox to {}", to1.getSelectedItem());
         // remove changelistener from previous Light
-        if (light != null ) {
+        if (light != null) {
             light.removePropertyChangeListener(_parentLightListener);
         }
-        light = selectedLight();
-        if (light!=null ) {
+        light = to1.getSelectedItem();
+        if (light != null) {
             light.addPropertyChangeListener(
-            _parentLightListener = new PropertyChangeListener() {
+                    _parentLightListener = new PropertyChangeListener() {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    log.debug("recv propChange: {} {} -> {}",e.getPropertyName(),e.getOldValue(),e.getNewValue());
+                    log.debug("recv propChange: {} {} -> {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
                     updateLightStatusFields(false);
                 }
-            } );
+            });
             setControlFrameActive(true);
             updateLightStatusFields(true);
-            
+
             StringBuilder name = new StringBuilder("<html>");
             light.getLightControlList().forEach((otherLc) -> {
-                name.append(jmri.jmrit.beantable.LightTableAction.getDescriptionText(otherLc,otherLc.getControlType() ));
+                name.append(jmri.jmrit.beantable.LightTableAction.getDescriptionText(otherLc, otherLc.getControlType()));
                 name.append("<br>");
             });
-            
-            if ( light.getLightControlList().size()==0 ) {
+
+            if (light.getLightControlList().isEmpty()) {
                 name.append("None");
             }
             name.append("</html>");
             nowControllersTextField.setText(name.toString());
-            
+
             repaint();
             revalidate();
             pack();
-            
+
         } else {
             setControlFrameActive(false);
             nowStateTextField.setText(Bundle.getMessage("BeanStateUnknown"));
@@ -437,17 +436,41 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
                 break;
         }
         statusIsEnabledCheckBox.setSelected(light.getEnabled());
-        statusIsVariableCheckBox.setSelected(light.isIntensityVariable());
-        statusIsTransitionCheckBox.setSelected(light.isTransitionAvailable());
-        nowIntensityLabel.setText(oneDigits.format(light.getCurrentIntensity() * 100));
-        nowTransitionTimeLabel.setText(oneDotTwoDigits.format(light.getTransitionTime()));
-        nowIntensityMinLabel.setText(oneDigits.format(light.getMinIntensity() * 100));
-        nowIntensityMaxLabel.setText(oneDigits.format(light.getMaxIntensity() * 100));
-        if (flag) {
-            intensityTextField.setText(oneDigits.format(light.getTargetIntensity() * 100));
-            transitionTimeTextField.setText(oneDotTwoDigits.format(light.getTransitionTime()));
-            intensityMinTextField.setText(oneDigits.format(light.getMinIntensity() * 100));
-            intensityMaxTextField.setText(oneDigits.format(light.getMaxIntensity() * 100));
+        if (light instanceof VariableLight) {
+            VariableLight variableLight = (VariableLight)light;
+            statusIsVariableCheckBox.setSelected(true);
+            statusIsTransitionCheckBox.setSelected(variableLight.isTransitionAvailable());
+            nowIntensityLabel.setText(oneDigits.format(variableLight.getCurrentIntensity() * 100));
+            nowTransitionTimeLabel.setText(oneDotTwoDigits.format(variableLight.getTransitionTime()));
+            nowIntensityMinLabel.setText(oneDigits.format(variableLight.getMinIntensity() * 100));
+            nowIntensityMaxLabel.setText(oneDigits.format(variableLight.getMaxIntensity() * 100));
+            if (flag) {
+                intensityTextField.setText(oneDigits.format(variableLight.getTargetIntensity() * 100));
+                transitionTimeTextField.setText(oneDotTwoDigits.format(variableLight.getTransitionTime()));
+                intensityMinTextField.setText(oneDigits.format(variableLight.getMinIntensity() * 100));
+                intensityMaxTextField.setText(oneDigits.format(variableLight.getMaxIntensity() * 100));
+            }
+        } else {
+            statusIsVariableCheckBox.setSelected(false);
+            statusIsTransitionCheckBox.setSelected(false);
+            if (light.getState() == Light.ON) {
+                nowIntensityLabel.setText(oneDigits.format(1));
+            } else {
+                nowIntensityLabel.setText(oneDigits.format(0));
+            }
+            nowTransitionTimeLabel.setText(oneDotTwoDigits.format(0.0));
+            nowIntensityMinLabel.setText(oneDigits.format(0));
+            nowIntensityMaxLabel.setText(oneDigits.format(1));
+            if (flag) {
+                if (light.getState() == Light.ON) {
+                    nowIntensityLabel.setText(oneDigits.format(1));
+                } else {
+                    nowIntensityLabel.setText(oneDigits.format(0));
+                }
+                transitionTimeTextField.setText(oneDotTwoDigits.format(0.0));
+                intensityMinTextField.setText(oneDigits.format(0));
+                intensityMaxTextField.setText(oneDigits.format(1));
+            }
         }
     }
 

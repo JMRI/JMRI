@@ -7,33 +7,25 @@
 
   <title>JMRI: Patterns and Structure</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code patterns structure">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
+  <meta name="keywords" content="JMRI technical code patterns structure">
   <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-		<h1>JMRI: Mod&#232;les et Organisation</h1>
+<h1>JMRI: Mod&#232;les et Organisation</h1>
 <p>
 JMRI a grandi et &#233;volu&#233; avec le temps, et
 vous ne pouvez pas toujours voir les structures et les 
@@ -46,7 +38,7 @@ et fournir des exemples des meilleures pratiques actuelles.
 <a id="namedbeans" name="namedbeans"></a><h2>Noms, NamedBeans, et les gestionnaires</h2>
 
 Le concept "NameBean" est la base de JMRI.
-Un <a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
+Un <a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
 est un objet de base qui repr&#233;sente quelque chose, typiquement quelque chose 
 comme un Capteur ou un Aiguillage.
 <ul>
@@ -58,11 +50,11 @@ Voir la  <a href="Names.shtml">page sur les Noms</a> pour en savoir davantage.
 </ul>
 Fonctionnellement, toutes les classes d'objets du syst&#232;me ( Capteur, Aiguillage,... ) et
 leurs mise en oeuvre sp&#233;cifiques ( LnSensor,  XNetTurnout, ...), h&#233;rite de la classe de base
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>.
+<a href="https://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>.
 <p>
 Pour obtenir l'acc&#232;s &#224; un objet sp&#233;cifique (un NamedBean d'un type sp&#233;cifique avec un nom sp&#233;cifique ), vous faites 
 des demandes &#224; un gestionnaire: vous demandez un
-<a href="http://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> pour un Aiguillage sp&#233;cifique
+<a href="https://jmri.org/JavaDoc/doc/jmri/TurnoutManager.html">TurnoutManager</a> pour un Aiguillage sp&#233;cifique
 &#224; votre tour, vous
 <a href="IntroStructure.shtml">acc&#233;dez aux gestionnaires &#224; travers l'InstanceManager commun</a>.
 
@@ -71,7 +63,7 @@ Un utilisateur peut vouloir r&#233;&#233;f&#233;rencer un NamedBean via un nom u
 changer le NetBean sp&#233;cifique auquel le nom utilisateur se r&#233;f&#232;re. "Yard East Turnout" peut &#234;tre 
 "LT12" &#224; un point et plus tardpeut changer en "CT5". Pour g&#233;rer ceci,
 votre code utilise les objets
-<a href="http://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
+<a href="https://jmri.org/JavaDoc/doc/jmri/NamedBeanHandle.html">NamedBeanHandle</a>
 pour g&#233;rer les r&#233;f&#233;rences pour NamedBeans. Ils automatisent le processus de renommage.
 
 <h2>Organisation du Code</h2>
@@ -120,14 +112,14 @@ d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 <dt>Sous-r&#233;pertoires configurexml 
 <dd>Ceux-ci contiennent le code pour le
 		<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
- 		les paquets de haut niveau, esp util & dependancies, apps.
+ 		les paquets de haut niveau, esp util &amp; dependancies, apps.
 
 <dt>Sous-r&#233;pertoires swing
 <dd>Contient les outils Swing sp&#233;cifiques.
     En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,
 		nous essayons de s&#233;parer le code Swing du
     code normal op&#233;rationnel.
-    Voir la <a href=""> page Swing</a>
+    Voir la <a href="Swing.shtml"> page Swing</a>
 		pour plus d'informations.
 
 <dt>Help files (fichiers d'aide)
@@ -156,7 +148,7 @@ d'appliquer des outils diff&#233;rents pour les deux types de code, etc
 		est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
 		mais nous sommes loin de l'effacer.</p>
 
-	<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer.shtml" -->
 	</div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

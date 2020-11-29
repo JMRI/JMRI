@@ -11,3 +11,5 @@ if (not java.awt.GraphicsEnvironment.isHeadless()) :
     execfile("jython/CmriNodeMonitor.py")
     # need to kill the thread
     jmri.jmrit.automat.AutomatSummary.instance().get("CmriNodeMonitor").stop()
+
+jmri.util.JUnitUtil.clearShutDownManager()

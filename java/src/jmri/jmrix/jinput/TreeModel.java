@@ -249,7 +249,7 @@ public final class TreeModel extends DefaultTreeModel {
         log.debug("start looking for controllers");
         try {
             ca = ControllerEnvironment.getDefaultEnvironment().getControllers();
-            log.debug("Found " + ca.length + " controllers");
+            log.debug("Found {} controllers", ca.length);
         } catch (Throwable ex) {
             log.debug("Handling Throwable", ex);
             // this is probably ClassNotFoundException, but that's not part of the interface
@@ -276,7 +276,7 @@ public final class TreeModel extends DefaultTreeModel {
             UsbNode deviceNode = null;
             // Get this controllers components (buttons and axis)
             Component[] components = controller.getComponents();
-            log.info("Controller " + controller.getName() + " has " + components.length + " components");
+            log.info("Controller {} has {} components", controller.getName(), components.length);
             for (Component component : components) {
                 try {
                     if (controllerNode == null) {
@@ -303,7 +303,7 @@ public final class TreeModel extends DefaultTreeModel {
                     log.error("insertNode({}, {}) Exception {}", deviceNode, controllerNode, e);
                 } catch (Exception e) {
                     // log all others
-                    log.error("Exception " + e);
+                    log.error("Exception {}", e);
                 }
             }
         }

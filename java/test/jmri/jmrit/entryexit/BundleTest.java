@@ -2,7 +2,7 @@ package jmri.jmrit.entryexit;
 
 import java.util.Locale;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Bundle class
@@ -15,13 +15,9 @@ public class BundleTest  {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));  // NOI18N
     }
 
-    @Test public void testBadKeyMessage() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT");  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");  // NOI18N
+    @Test
+    public void testBadKeyMessage() {
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
     @Test public void testGoodKeyMessageArg() {
@@ -29,13 +25,9 @@ public class BundleTest  {
         Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));  // NOI18N
     }
 
-    @Test public void testBadKeyMessageArg() {
-        try {
-            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");  // NOI18N
+    @Test
+    public void testBadKeyMessageArg() {
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));  // NOI18N
     }
 
     @Test public void testLocaleMessage() {

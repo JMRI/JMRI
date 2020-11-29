@@ -6,30 +6,20 @@ import java.awt.FontMetrics;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.util.Optional;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import jmri.InstanceManager;
-import jmri.implementation.swing.SwingShutDownTask;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.swing.JTablePersistenceManager;
-import jmri.util.JmriJFrame;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
+import jmri.swing.JTablePersistenceManager;
+import jmri.util.JmriJFrame;
 
 /**
  * Panel for operations
@@ -65,26 +55,6 @@ public class OperationsPanel extends JPanel {
         gc.weighty = 100.0;
         this.add(c, gc);
     }
-
-//    protected void addItemLeft(JComponent c, int x, int y) {
-//        GridBagConstraints gc = new GridBagConstraints();
-//        gc.gridx = x;
-//        gc.gridy = y;
-//        gc.weightx = 100.0;
-//        gc.weighty = 100.0;
-//        gc.anchor = GridBagConstraints.WEST;
-//        this.add(c, gc);
-//    }
-
-//    protected void addItemWidth(JComponent c, int width, int x, int y) {
-//        GridBagConstraints gc = new GridBagConstraints();
-//        gc.gridx = x;
-//        gc.gridy = y;
-//        gc.gridwidth = width;
-//        gc.weightx = 100.0;
-//        gc.weighty = 100.0;
-//        this.add(c, gc);
-//    }
 
     protected void addItem(JPanel p, JComponent c, int x, int y) {
         GridBagConstraints gc = new GridBagConstraints();
@@ -244,11 +214,13 @@ public class OperationsPanel extends JPanel {
      * preferences file.
      *
      * @param table The table to be adjusted.
-     * @return true if a default instance of the
-     *         {@link jmri.swing.JTablePersistenceManager} is available; false
-     *         otherwise
      */
-    public boolean loadTableDetails(JTable table) {
+    public void loadTableDetails(JTable table) {
+        loadTableDetails(table, getWindowFrameRef());
+        persist(table);
+    }
+    
+    public static void loadTableDetails(JTable table, String name) {
         if (table.getRowSorter() == null) {
             TableRowSorter<? extends TableModel> sorter = new TableRowSorter<>(table.getModel());
             table.setRowSorter(sorter);
@@ -269,14 +241,32 @@ public class OperationsPanel extends JPanel {
         // give each cell a bit of space between the vertical lines and text
         table.setIntercellSpacing(new Dimension(3, 1));
         // table must have a name
-        table.setName(getWindowFrameRef() + ":table"); // NOI18N
+        table.setName(name + ":table"); // NOI18N
         Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
         if (manager.isPresent()) {
             manager.get().resetState(table);
-            manager.get().persist(table);
-            return true;
         }
-        return false;
+    }
+    
+    public static void persist(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().persist(table);
+        }
+    }
+    
+    public static void cacheState(JTable table) {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().cacheState(table);
+        }
+    }
+    
+    public static void saveTableState() {
+        Optional<JTablePersistenceManager> manager = InstanceManager.getOptionalDefault(JTablePersistenceManager.class);
+        if (manager.isPresent()) {
+            manager.get().setPaused(false); // cheater way to save preferences.
+        }
     }
 
     protected void clearTableSort(JTable table) {
@@ -285,69 +275,13 @@ public class OperationsPanel extends JPanel {
         }
     }
 
-    protected synchronized void createShutDownTask() {
-        InstanceManager.getDefault(OperationsManager.class)
-                .setShutDownTask(new SwingShutDownTask("Operations Train Window Check", // NOI18N
-                        Bundle.getMessage("PromptQuitWindowNotWritten"), Bundle.getMessage("PromptSaveQuit"), this) {
-                    @Override
-                    public boolean checkPromptNeeded() {
-                        if (Setup.isAutoSaveEnabled()) {
-                            storeValues();
-                            return true;
-                        }
-                        return !OperationsXml.areFilesDirty();
-                    }
-
-                    @Override
-                    public boolean doPrompt() {
-                        storeValues();
-                        return true;
-                    }
-
-                    @Override
-                    public boolean doClose() {
-                        storeValues();
-                        return true;
-                    }
-                });
-    }
-
     protected void storeValues() {
         OperationsXml.save();
     }
 
-//    protected String lineWrap(String s) {
-//        return this.lineWrap(s, this.getPreferredSize());
-//    }
-
-//    protected String lineWrap(String s, Dimension size) {
-//        int numberChar = 80;
-//        if (size != null) {
-//            JLabel X = new JLabel("X");
-//            numberChar = size.width / X.getPreferredSize().width;
-//        }
-//
-//        String[] sa = s.split(NEW_LINE);
-//        StringBuilder so = new StringBuilder();
-//
-//        for (int i = 0; i < sa.length; i++) {
-//            if (i > 0) {
-//                so.append(NEW_LINE);
-//            }
-//            StringBuilder sb = new StringBuilder(sa[i]);
-//            int j = 0;
-//            while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
-//                sb.replace(j, j + 1, NEW_LINE);
-//            }
-//            so.append(sb);
-//        }
-//        return so.toString();
-//    }
-
-    
-//    protected JPanel pad; // used to pad out lower part of window to fix horizontal scrollbar issue
-
- // Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+/*
+ * Kludge fix for horizontal scrollbar encroaching buttons at bottom of a scrollable window.
+ */
     protected void addHorizontalScrollBarKludgeFix(JScrollPane pane, JPanel panel) {
         JPanel pad = new JPanel(); // kludge fix for horizontal scrollbar
         pad.add(new JLabel(" "));
@@ -357,31 +291,7 @@ public class OperationsPanel extends JPanel {
         pane.setMinimumSize(new Dimension(500, 130));
         pane.setMaximumSize(new Dimension(2000, 170));
         pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-//        pane.addAncestorListener(this); // used to determine if scrollbar is showing
     }
-
-//    @Override
-//    public void ancestorAdded(AncestorEvent event) {
-////  log.debug("Ancestor Added");
-//        // do nothing
-//    }
-//
-//    @Override
-//    public void ancestorRemoved(AncestorEvent event) {
-////  log.debug("Ancestor Removed");
-//        // do nothing
-//    }
-//
-//    @Override
-//    public void ancestorMoved(AncestorEvent event) {
-//        if (pad != null) {
-//            if (pad.isVisible() ^ ((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing()) {
-//                pad.setVisible(((JScrollPane) event.getSource()).getHorizontalScrollBar().isShowing());
-//    log.debug("Scrollbar visible: {}", pad.isVisible());
-//            }
-//        }
-//    }
 
     protected String getWindowFrameRef() {
         Container c = this.getTopLevelAncestor();

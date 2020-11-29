@@ -36,13 +36,13 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     public DCCppOpsModeProgrammer(int pAddress, DCCppTrafficController controller) {
         tc = controller;
         if (log.isDebugEnabled()) {
-            log.debug("Creating Ops Mode Programmer for Address " + pAddress);
+            log.debug("Creating Ops Mode Programmer for Address {}", pAddress);
         }
         mAddressLow = DCCppCommandStation.getDCCAddressLow(pAddress);
         mAddressHigh = DCCppCommandStation.getDCCAddressHigh(pAddress);
         mAddress = pAddress;
         if (log.isDebugEnabled()) {
-            log.debug("High Address: " + mAddressHigh + " Low Address: " + mAddressLow);
+            log.debug("High Address: {} Low Address: {}", mAddressHigh, mAddressLow);
         }
     }
 

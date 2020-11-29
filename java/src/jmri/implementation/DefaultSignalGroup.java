@@ -2,10 +2,12 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.NamedBeanUsageReport;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -30,7 +32,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param userName   provided user name
      */
     public DefaultSignalGroup(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     /**
@@ -39,7 +41,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param systemName suggested system name
      */
     public DefaultSignalGroup(String systemName) {
-        super(systemName.toUpperCase(), null);
+        super(systemName, null);
         log.debug("default SignalGroup {} created", systemName);
     }
 
@@ -545,7 +547,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         public boolean checkActive() {
             boolean state = false;
             for (int x = 0; x < _signalTurnoutList.size(); x++) {
-                log.debug("Real state " + _signalTurnoutList.get(x).getName() + " " + _signalTurnoutList.get(x).getTurnout().getKnownState() + " state we testing for " + _signalTurnoutList.get(x).getState());
+                log.debug("Real state {} {} state we testing for {}", _signalTurnoutList.get(x).getName(), _signalTurnoutList.get(x).getTurnout().getKnownState(), _signalTurnoutList.get(x).getState());
                 if (_signalTurnoutList.get(x).getTurnout().getKnownState() == _signalTurnoutList.get(x).getState()) {
                     state = true;
                 } else {
@@ -593,7 +595,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     return false;
                 }
                 if ((state != Turnout.THROWN) && (state != Turnout.CLOSED)) {
-                    log.warn("Illegal Turnout state " + state + " for : " + getName());
+                    log.warn("Illegal Turnout state {} for : {}", state, getName());
                     return false;
                 }
                 _state = state;
@@ -680,7 +682,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                     return false;
                 }
                 if ((state != Sensor.ACTIVE) && (state != Sensor.INACTIVE)) {
-                    log.warn("Illegal Sensor state " + state + " for : " + getName());
+                    log.warn("Illegal Sensor state {} for : {}", state, getName());
                     return false;
                 }
                 _state = state;
@@ -748,6 +750,32 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     @Override
     public void setState(int state) {
+    }
+
+    @Override
+    public List<NamedBeanUsageReport> getUsageReport(NamedBean bean) {
+        List<NamedBeanUsageReport> report = new ArrayList<>();
+        if (bean != null) {
+            if (bean.equals(getSignalMast())) {
+                report.add(new NamedBeanUsageReport("SignalGroupMast"));  // NOI18N
+            }
+            for (int i = 0; i < getNumHeadItems(); i++) {
+                if (bean.equals(getHeadItemBeanByIndex(i))) {
+                    report.add(new NamedBeanUsageReport("SignalGroupHead"));  // NOI18N
+                }
+                for (int j = 0; j < getNumHeadSensorsByIndex(i); j++) {
+                    if (bean.equals(getSensorByIndex(i, j))) {
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadSensor"));  // NOI18N
+                    }
+                }
+                for (int k = 0; k < getNumHeadTurnoutsByIndex(i); k++) {
+                    if (bean.equals(getTurnoutByIndex(i, k))) {
+                        report.add(new NamedBeanUsageReport("SignalGroupHeadTurnout"));  // NOI18N
+                    }
+                }
+            }
+        }
+        return report;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class);

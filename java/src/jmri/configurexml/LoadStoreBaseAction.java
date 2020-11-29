@@ -2,10 +2,10 @@ package jmri.configurexml;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.implementation.JmriConfigurationManager;
-import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
 
 /**
@@ -41,10 +41,8 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     static private JFileChooser userFileChooser = null;
 
     static private JFileChooser getXmlFileChooser(String path) {
-        FileChooserFilter xmlFilter = new FileChooserFilter("XML files");
-        xmlFilter.addExtension("xml"); // NOI18N
         JFileChooser chooser = new JFileChooser(path);
-        chooser.setFileFilter(xmlFilter);
+        chooser.setFileFilter(new FileNameExtensionFilter("XML files", "xml")); // NOI18N
         return chooser;
     }
 

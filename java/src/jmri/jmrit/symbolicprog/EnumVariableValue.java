@@ -24,10 +24,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extends VariableValue to represent a enumerated variable.
+ * Extends VariableValue to represent an enumerated variable.
+ * @see VariableValue
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2013, 2014
- *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener {
 
@@ -40,6 +40,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         _minVal = minVal;
 
         treeNodes.addLast(new DefaultMutableTreeNode("")); // root
+        simplifyMask();
     }
 
     /**
@@ -80,6 +81,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
      * Create a new item in the enumeration, with a specified associated value.
      *
      * @param s Name of the enumeration item
+     * @param value item value.
      */
     public void addItem(String s, int value) {
         _valueArray[_nstored] = value;
@@ -110,6 +112,10 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
         CvValue cv = _cvMap.get(getCvNum());
+        if (cv == null) {
+            log.error("no CV defined in enumVal {}, skipping setState", getCvName());
+            return;
+        }
         cv.addPropertyChangeListener(this);
         cv.setState(CvValue.FROMFILE);
     }
@@ -160,13 +166,13 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // see if this is from _value itself, or from an alternate rep.
         // if from an alternate rep, it will contain the value to select
         if (log.isDebugEnabled()) {
-            log.debug(label() + " start action event: " + e);
+            log.debug("{} start action event: {}", label(), e);
         }
         if (!(e.getActionCommand().equals(""))) {
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
             if (log.isDebugEnabled()) {
-                log.debug(label() + " action event was from alternate rep");
+                log.debug("{} action event was from alternate rep", label());
             }
             // match and select in tree
             if (_nstored > 0) {
@@ -189,7 +195,10 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvNum());
-        // compute new cv value by combining old and request
+        if (cv == null) {
+            log.error("no CV defined in enumVal {}, skipping setValue", _cvMap.get(getCvName()));
+            return;
+        }
         int oldCv = cv.getValue();
         int newVal = getIntValue();
         int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal-1);
@@ -197,34 +206,33 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
 
             // notify  (this used to be before setting the values)
-            if (log.isDebugEnabled()) {
-                log.debug(label() + " about to firePropertyChange");
-            }
+            log.debug("{} about to firePropertyChange", label());
             prop.firePropertyChange("Value", null, oldVal);
-            if (log.isDebugEnabled()) {
-                log.debug(label() + " returned to from firePropertyChange");
-            }
+            log.debug("{} returned to from firePropertyChange", label());
         }
-        if (log.isDebugEnabled()) {
-            log.debug(label() + " end action event saw oldCv=" + oldCv + " newVal=" + newVal + " newCv=" + newCv);
-        }
+        log.debug("{} end action event saw oldCv={} newVal={} newCv={}", label(), oldCv, newVal, newCv);
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
     @Override
     public String getValueString() {
-        return "" + _value.getSelectedIndex();
+        return Integer.toString(getIntValue());
     }
 
     @Override
     public void setIntValue(int i) {
-        selectValue(i);
+        // needs to fire Value property as well, as per suggestion by Svata Dedic.
+        setValue(i);
     }
 
     @Override
     public String getTextValue() {
-        return _value.getSelectedItem().toString();
+        if (_value.getSelectedItem() != null) {
+            return _value.getSelectedItem().toString();
+        } else {
+            return "";
+        }
     }
 
     @Override
@@ -240,6 +248,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
      * value.
      * <p>
      * If the value is larger than any defined, a new one is created.
+     * @param value What to set to.
      */
     protected void selectValue(int value) {
         if (_nstored > 0) {
@@ -262,8 +271,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
 
         // We can be commanded to a number that hasn't been defined.
         // But that's OK for certain applications.  Instead, we add them as needed
-        log.debug("Create new item with value " + value + " count was " + _value.getItemCount()
-                + " in " + label());
+        log.debug("Create new item with value {} count was {} in {}", value, _value.getItemCount(), label());
         // lengthen arrays
         _valueArray = java.util.Arrays.copyOf(_valueArray, _valueArray.length + 1);
 
@@ -289,8 +297,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     @Override
     public int getIntValue() {
         if (_value.getSelectedIndex() >= _valueArray.length || _value.getSelectedIndex() < 0) {
-            log.error("trying to get value " + _value.getSelectedIndex() + " too large"
-                    + " for array length " + _valueArray.length + " in var " + label());
+            log.error("trying to get value {} too large for array length {} in var {}", _value.getSelectedIndex(), _valueArray.length, label());
         }
         log.debug("SelectedIndex={}", _value.getSelectedIndex());
         return _valueArray[_value.getSelectedIndex()];
@@ -438,7 +445,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     @Override
     public void readChanges() {
         if (isToRead() && !isChanged()) {
-            log.debug("!!!!!!! unacceptable combination in readChanges: " + label());
+            log.debug("!!!!!!! unacceptable combination in readChanges: {}", label());
         }
         if (isChanged() || isToRead()) {
             readAll();
@@ -448,7 +455,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     @Override
     public void writeChanges() {
         if (isToWrite() && !isChanged()) {
-            log.debug("!!!!!! unacceptable combination in writeChanges: " + label());
+            log.debug("!!!!!! unacceptable combination in writeChanges: {}", label());
         }
         if (isChanged() || isToWrite()) {
             writeAll();
@@ -503,7 +510,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                 // update value of Variable
                 CvValue cv = _cvMap.get(getCvNum());
                 int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal-1); // _maxVal value is count of possibles, i.e. radix
-                setValue(newVal);  // check for duplicate done inside setVal
+                setValue(newVal);  // check for duplicate done inside setValue
                 break;
             }
             default:
@@ -529,7 +536,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
                     if (log.isDebugEnabled()) {
-                        log.debug("VarComboBox saw property change: " + e);
+                        log.debug("VarComboBox saw property change: {}", e);
                     }
                     originalPropertyChanged(e);
                 }
@@ -564,16 +571,16 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
     // clean up connections when done
     @Override
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose");
-        }
+        log.debug("dispose");
 
         // remove connection to CV
-        _cvMap.get(getCvNum()).removePropertyChangeListener(this);
-
+        if (_cvMap.get(getCvNum()) == null) {
+            log.error("no CV defined for variable {}, no listeners to remove", getCvNum());
+        } else {
+            _cvMap.get(getCvNum()).removePropertyChangeListener(this);
+        }
         // remove connection to graphical representation
         disposeReps();
-
     }
 
     void disposeReps() {

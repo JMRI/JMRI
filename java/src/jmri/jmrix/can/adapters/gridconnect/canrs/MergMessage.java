@@ -52,7 +52,7 @@ public class MergMessage extends GridConnectMessage {
         setElement(offset + m.getNumDataElements() * 2, ';');
         setNumDataElements(offset + 1 + m.getNumDataElements() * 2);
         if (log.isDebugEnabled()) {
-            log.debug("encoded as " + this.toString());
+            log.debug("encoded as {}", this.toString());
         }
     }
 
@@ -67,20 +67,20 @@ public class MergMessage extends GridConnectMessage {
         if (isExtended()) {
             munged = ((header << 3) & 0xFFE00000) | 0x80000 | (header & 0x3FFFF);
             if (log.isDebugEnabled()) {
-                log.debug("Extended header is " + header);
+                log.debug("Extended header is {}", header);
             }
             if (log.isDebugEnabled()) {
-                log.debug("Munged header is " + munged);
+                log.debug("Munged header is {}", munged);
             }
             super.setHeader(munged);
         } else {
             // 11 header bits are left justified
             munged = header << 5;
             if (log.isDebugEnabled()) {
-                log.debug("Standard header is " + header);
+                log.debug("Standard header is {}", header);
             }
             if (log.isDebugEnabled()) {
-                log.debug("Munged header is " + munged);
+                log.debug("Munged header is {}", munged);
             }
             // Can't use super() as we want to send 4 digits
             setHexDigit((munged >> 12) & 0xF, 2);
@@ -102,13 +102,22 @@ public class MergMessage extends GridConnectMessage {
      * Data bytes are encoded as two ASCII hex digits starting at byte 7 of the
      * message.
      *
-     * @param val the value to set
+     * @param val the value to set, must be in range 0 - 255
      * @param n   the index of the byte to be set
      */
     @Override
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {
             int index = n * 2 + (isExtended() ? 11 : 7);  // differs here from superclass
+            try {
+                if ((val < 0) || (val > 255)) {
+                    val = 0;
+                    throw new IllegalArgumentException();
+                }
+            }
+            catch(IllegalArgumentException e) {
+                log.error("Value out of range for MergMessage data payload {}", e);
+            }
             setHexDigit((val / 16) & 0xF, index++);
             setHexDigit(val & 0xF, index);
         }

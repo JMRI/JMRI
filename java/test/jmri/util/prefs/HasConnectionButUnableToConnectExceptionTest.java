@@ -1,10 +1,9 @@
 package jmri.util.prefs;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for InitializationException class.
@@ -19,13 +18,13 @@ public class HasConnectionButUnableToConnectExceptionTest {
       Assert.assertNotNull("HasConnectionButUnableToConnectException constructor",new HasConnectionButUnableToConnectException("test exception",null));
    }
 
-   @Before
+   @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
    }
 
-   @After
+   @AfterEach
    public void tearDown(){
         JUnitUtil.tearDown();
    }

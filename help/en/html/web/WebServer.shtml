@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright 2015 -->
-  <!-- $Id$ -->
 
-  <title>JMRI Web Server</title><!-- Style -->
+  <title>JMRI Web Server</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,12 +16,13 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
   <meta http-equiv="refresh" content="0; url=index.shtml">
 </head>
 
 <body>
-  <p>This content has been superceded by <a href="index.shtml">JMRI
+  <p>This content has been superseded by <a href="index.shtml">JMRI
   Web Access</a>.</p>
 </body>
 </html>

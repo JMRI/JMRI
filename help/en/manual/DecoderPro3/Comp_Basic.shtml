@@ -15,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -171,6 +170,21 @@
       system was not actively programming decoders when they were
       made.</p>
 
+      <h2>The Find Bar</h2>
+        There's a lot of content on the various panes.  
+        Right now, we recommend you flip through them to get
+        an idea of the options that are available.
+        <p>
+        Later on, you might want to search for a specific options.
+        Ctrl-F or Cmd-F will open a small find bar at the bottom of the pane
+        where you can enter a search string.  Hitting Return will find the first 
+        occurrence. There are right and left arrows to find the next occurrence forward
+        and backwards respectively.  Ctrl-G or Cmd-G will also find the next forward
+        occurance. The "Done" button will dismiss the 
+        bar, but you can leave it up without it interferring.
+    </li>
+
+
       <p>Now Lets go to the Motor Tab.</p>
       <hr>
 
@@ -181,7 +195,7 @@
 
         <p><a href="index.shtml#Advanced%20Programmer">Back to
         Index</a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

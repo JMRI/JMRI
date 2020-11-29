@@ -1,9 +1,9 @@
 package jmri.jmrix.rfid.generic.standalone;
 
-import jmri.InstanceManager;
 import jmri.jmrix.rfid.RfidReporterManager;
 import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
+import jmri.jmrix.rfid.RfidTrafficController;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -25,28 +25,30 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
+ * @deprecated since 4.21.1 use {@link RfidSystemConnectionMemo} directly.
  */
+@Deprecated
 public class StandaloneSystemConnectionMemo extends RfidSystemConnectionMemo {
 
     public StandaloneSystemConnectionMemo() {
         super();
     }
 
+    public StandaloneSystemConnectionMemo(RfidTrafficController rt) {
+        super(rt);
+    }
+    
     /**
      * Configure the common managers for Rfid connections. This puts the common
      * manager config in one place.
      */
     @Override
     public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
-        this.sensorManager = new StandaloneSensorManager(getTrafficController(), getSystemPrefix());
-        InstanceManager.setSensorManager(sensorManager);
-        this.reporterManager = new StandaloneReporterManager(getTrafficController(), getSystemPrefix());
-        InstanceManager.setReporterManager(reporterManager);
+        super.configureManagers(sensorManager,reporterManager);
     }
 
     @Override
     public void dispose() {
-        InstanceManager.deregister(this, StandaloneSystemConnectionMemo.class);
         super.dispose();
     }
 

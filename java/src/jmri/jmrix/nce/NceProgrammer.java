@@ -122,7 +122,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("writeCV " + CV + " listens " + p);
+            log.debug("writeCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         // prevent writing Prog Track mode CV > 256 on PowerPro 2007C and earlier
@@ -162,7 +162,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public synchronized void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
-            log.debug("readCV " + CV + " listens " + p);
+            log.debug("readCV {} listens {}", CV, p);
         }
         useProgrammer(p);
         _progRead = true;
@@ -190,7 +190,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
             if (log.isInfoEnabled()) {
-                log.info("programmer already in use by " + _usingProgrammer);
+                log.info("programmer already in use by {}", _usingProgrammer);
             }
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -228,7 +228,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      */
     @Override
     public void message(NceMessage m) {
-        log.error("message received unexpectedly: " + m.toString());
+        log.error("message received unexpectedly: {}", m.toString());
     }
 
     /** 
@@ -308,7 +308,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
-            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+            log.debug("notifyProgListenerEnd value {} status {}", value, status);
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_

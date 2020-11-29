@@ -10,6 +10,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.streamport.LnStreamPortController;
+import jmri.util.ImmediatePipedOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Parts of this code are derived from the
  * jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter class.
  *
- * @author	Paul Bender Copyright (C) 2014
+ * @author Paul Bender Copyright (C) 2014
  */
 public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable {
 
@@ -29,11 +30,12 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     // internal ends of the pipes
     private DataOutputStream outpipe = null;  // feed pin
     private DataInputStream inpipe = null; // feed pout
-    private Z21SystemConnectionMemo _memo = null;
+    private Z21SystemConnectionMemo _memo;
     private Thread sourceThread;
 
     /**
      * Build a new LocoNet tunnel.
+     * @param memo system connection.
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public Z21LocoNetTunnel(Z21SystemConnectionMemo memo) {
@@ -43,14 +45,14 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         // configure input and output pipes to use for
         // the communication with the LocoNet implementation.
         try {
-            PipedOutputStream tempPipeI = new PipedOutputStream();
+            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new PipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: " + e.toString());
+            log.error("init (pipe): Exception: {}", e.toString());
             return;
         }
 
@@ -143,8 +145,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
                  case 3:
                     /* N byte message */
                     if (byte2 < 2) {
-                       log.error("LocoNet message length invalid: " + byte2
-                          + " opcode: " + Integer.toHexString(opCode)); // NOI18N
+                        log.error("LocoNet message length invalid: {} opcode: {}", byte2, Integer.toHexString(opCode)); // NOI18N
                     }
                     len = byte2;
                     break;
@@ -162,12 +163,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
                  int b = readByteProtected(inpipe) & 0xFF;
                  log.trace("char {} is: {}", i, Integer.toHexString(b)); // NOI18N
                  if ((b & 0x80) != 0) {
-                    log.warn("LocoNet message with opCode: " // NOI18N
-                       + Integer.toHexString(opCode)
-                       + " ended early. Expected length: " + len // NOI18N
-                       + " seen length: " + i // NOI18N
-                       + " unexpected byte: " // NOI18N
-                       + Integer.toHexString(b)); // NOI18N
+                     log.warn("LocoNet message with opCode: {} ended early. Expected length: {} seen length: {} unexpected byte: {}", Integer.toHexString(opCode), len, i, Integer.toHexString(b)); // NOI18N
                     opCode = b;
                     throw new LocoNetMessageException();
                  }
@@ -271,6 +267,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to retrieve the stream port controller
      * associated with this tunnel.
+     * @return PortController for this connection
      */
     jmri.jmrix.loconet.streamport.LnStreamPortController getStreamPortController() {
        return lsc;
@@ -279,6 +276,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
     /**
      * Package protected method to set the stream port controller
      * associated with this tunnel.
+     * @param x PortController for this connection
      */
     void setStreamPortController(LnStreamPortController x){
         lsc = x;

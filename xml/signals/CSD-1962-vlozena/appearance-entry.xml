@@ -69,8 +69,8 @@
     <appearance>
       <aspectname>Opatrně na přivolávací návěst vložená návěstidla</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/231_opn3_4v.gif</imagelink>
-      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.png</imagelink>
-      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.png</imagelink>
+      <imagelink type="AŽD žzčb">../../../resources/icons/smallschematics/aspects/CSD/AZD/31_ygrw.gif</imagelink>
+      <imagelink type="ESP žzčb">../../../resources/icons/smallschematics/aspects/CSD/ESP/31_ygrw.gif</imagelink>
     </appearance>
 
   </appearances>

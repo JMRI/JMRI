@@ -3,17 +3,21 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.junit.rules.*;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.*;
-import org.junit.rules.*;
 
 /**
  *
@@ -100,6 +104,7 @@ public class ImportCarsTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("cars", 9, emanager.getNumEntries());
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);

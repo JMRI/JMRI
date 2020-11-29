@@ -11,14 +11,14 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Logix Table</h1>
 
       <p>A Logix is a small group of Conditionals focused on a single task
@@ -69,7 +69,9 @@
         <li>
         Selecting <strong>Copy</strong> will bring up windows that allow you to
         make a new copy of Logix and its Conditionals or to copy its
-        Conditionals into an existing Logix.</li>
+        Conditionals into an existing Logix. See the
+        <a href="../conditional/ConditionalCopy.shtml">Conditional Copy</a>
+        help page for information on copying Logix Conditionals.</li>
         <li>
         Selecting <strong>Delete</strong> will delete the Logix and its
         Conditionals.</li>
@@ -181,7 +183,7 @@
       <p>For more information, consult the <a href=
       "../../../../html/tools/Logix.shtml">main Logix
       documentation</a>.</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

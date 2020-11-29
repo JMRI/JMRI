@@ -1,17 +1,16 @@
 package jmri;
 
 import jmri.jmrix.internal.InternalSensorManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
+import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for the Block class
  *
- * @author	Bob Jacobsen Copyright (C) 2006
+ * @author Bob Jacobsen Copyright (C) 2006
  */
 public class BlockTest {
 
@@ -72,7 +71,7 @@ public class BlockTest {
 
     @Test
     public void testSensorInvoke() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -95,7 +94,7 @@ public class BlockTest {
 
     @Test
     public void testSensorSequence() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         count = 0;
         Block b = new Block("SystemName");
         Sensor s = sm.provideSensor("IS12");
@@ -127,7 +126,7 @@ public class BlockTest {
     // test going active with only one neighbor
     @Test
     public void testFirstGoActive() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         Block b1 = new Block("SystemName1");
 
@@ -151,7 +150,7 @@ public class BlockTest {
     // b2 is between b1 and b3. b1 contains a train
     @Test
     public void testOneOfTwoGoesActive() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -194,7 +193,7 @@ public class BlockTest {
     // b2 is between b1 and b3. 
     @Test
     public void testTwoOfTwoGoesActive() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -240,7 +239,7 @@ public class BlockTest {
     // b2 is between b1 and b3. 
     @Test
     public void testTwoOfTwoGoesActiveCombination() throws JmriException {
-        SensorManager sm = new InternalSensorManager();
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
 
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -363,8 +362,7 @@ public class BlockTest {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -372,7 +370,7 @@ public class BlockTest {
         JUnitUtil.initInternalTurnoutManager();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -56,6 +56,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
 
+        setOutputInterval(adapter, e);
+
         e.setAttribute("class", this.getClass().getName());
 
         extendElement(e);
@@ -81,7 +83,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudNumber = perNode.getAttribute("speed").getValue();
+        String baudNumber = perNode.getAttribute("speed").getValue(); // updated number string format since JMRI 4.16
         adapter.configureBaudRateFromNumber(baudNumber);
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
@@ -104,8 +106,12 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // if successful so far, go ahead and configure
         adapter.configure();
 
-        // once all the configure processing has happened, do any
-        // extra config
+        // once all the configure processing has happened, do any extra config
+
+        if (perNode.getAttribute("turnoutInterval") != null) { // migrate existing profile, defaults to 250 ms in memo
+            adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
+        }
+
         unpackElement(shared, perNode);
         return result;
     }

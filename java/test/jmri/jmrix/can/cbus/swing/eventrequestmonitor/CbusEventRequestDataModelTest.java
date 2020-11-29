@@ -6,11 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of CbusEventRequestDataModel
@@ -20,8 +18,6 @@ import org.junit.Test;
  */
 public class CbusEventRequestDataModelTest {
 
-    
-
     @Test
     public void testCtor() {
         
@@ -30,7 +26,6 @@ public class CbusEventRequestDataModelTest {
         Assert.assertNotNull("exists", t);
         
         t.dispose();
-        t = null;
         
     }
     
@@ -45,8 +40,6 @@ public class CbusEventRequestDataModelTest {
         t.dispose();
         Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
         
-        t = null;
-        
     }
     
     @Test
@@ -59,11 +52,9 @@ public class CbusEventRequestDataModelTest {
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusEventRequestDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown") );
-        Assert.assertTrue("column has NO width", CbusEventRequestDataModel.getPreferredWidth(999) > 0 );
         Assert.assertTrue("column class integer",
             t.getColumnClass(CbusEventRequestDataModel.FEEDBACKTIMEOUT_COLUMN) ==  Integer.class );
         Assert.assertTrue("column class string",
@@ -78,7 +69,6 @@ public class CbusEventRequestDataModelTest {
             t.getColumnClass(999) ==  null );
         
         t.dispose();
-        t = null;
         
     }
     
@@ -106,8 +96,8 @@ public class CbusEventRequestDataModelTest {
         Assert.assertTrue("Editable",t.isCellEditable(0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN) );
         Assert.assertFalse("Not Editable",t.isCellEditable(0,999) );
         
-        Assert.assertEquals("Event number 7", 7 ,t.getValueAt(0,CbusEventRequestDataModel.EVENT_COLUMN));
-        Assert.assertEquals("Node number 1234", 1234 ,t.getValueAt(0,CbusEventRequestDataModel.NODE_COLUMN));
+        Assert.assertEquals("Event number 7", 7 , (int) t.getValueAt(0,CbusEventRequestDataModel.EVENT_COLUMN));
+        Assert.assertEquals("Node number 1234", 1234 , (int) t.getValueAt(0,CbusEventRequestDataModel.NODE_COLUMN));
         Assert.assertEquals("No name set", "" ,t.getValueAt(0,CbusEventRequestDataModel.NAME_COLUMN));
         Assert.assertEquals("Status button", "Status" ,
             t.getValueAt(0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN));
@@ -117,15 +107,15 @@ public class CbusEventRequestDataModelTest {
             t.getValueAt(0,CbusEventRequestDataModel.LATEST_TIMESTAMP_COLUMN) );
         Assert.assertEquals("last feedback col request", CbusEventRequestMonitorEvent.FbState.LfbFinding ,
             t.getValueAt(0,CbusEventRequestDataModel.LASTFEEDBACK_COLUMN));
-        Assert.assertEquals("feedback tot reqd col", 1 ,
+        Assert.assertEquals("feedback tot reqd col", 1 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKREQUIRED_COLUMN));
-        Assert.assertEquals("feedback still reqd col", 1 ,
+        Assert.assertEquals("feedback still reqd col", 1 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN));
-        Assert.assertEquals("feedback event 0", 0 ,
+        Assert.assertEquals("feedback event 0", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKEVENT_COLUMN));
-        Assert.assertEquals("feedback node 0", 0 ,
+        Assert.assertEquals("feedback node 0", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKNODE_COLUMN));
-        Assert.assertEquals("feedback timeout ms col", 4000 ,
+        Assert.assertEquals("feedback timeout ms col", 4000 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKTIMEOUT_COLUMN));
         Assert.assertNull("no column", t.getValueAt(0,999));
         
@@ -141,14 +131,14 @@ public class CbusEventRequestDataModelTest {
         t.message(m);
         
         Assert.assertTrue("1 row",1 == t.getRowCount() );
-        Assert.assertEquals("feedback lower", 0 ,
+        Assert.assertEquals("feedback lower", 0 , (int)
             t.getValueAt(0,CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN));
         Assert.assertNotNull("LATEST_TIMESTAMP_COLUMN populated",
             t.getValueAt(0,CbusEventRequestDataModel.LATEST_TIMESTAMP_COLUMN) );
         Assert.assertEquals("last feedback good", CbusEventRequestMonitorEvent.FbState.LfbGood ,
             t.getValueAt(0,CbusEventRequestDataModel.LASTFEEDBACK_COLUMN));
         
-        Assert.assertTrue("nothing sent by model",0 == tcis.outbound.size() );
+        Assert.assertTrue("nothing sent by model", tcis.outbound.isEmpty());
         
         t.setValueAt("do button Click",0,CbusEventRequestDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         
@@ -158,7 +148,6 @@ public class CbusEventRequestDataModelTest {
             tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         t.dispose();
-        t = null;
         
     }
     
@@ -206,29 +195,30 @@ public class CbusEventRequestDataModelTest {
         Assert.assertTrue("no rows as rtr",0 == t.getRowCount() );
         
         t.dispose();
-        t = null;
         
     }
     
     private TrafficControllerScaffold tcis;
     private CanSystemConnectionMemo memo;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
-        
+        memo.configureManagers();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {        
-        
+        tcis.terminateThreads();
+        memo.dispose();
         tcis = null;
         memo = null;
         JUnitUtil.tearDown();
+
     }
 
 }

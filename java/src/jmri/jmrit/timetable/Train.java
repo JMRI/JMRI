@@ -12,9 +12,9 @@ public class Train {
      * @param scheduleId The parent schedule id.
      * @throws IllegalArgumentException TRAIN_ADD_FAIL
      */
-    public Train(int scheduleId) throws IllegalArgumentException {
+    public Train(int scheduleId) {
         if (_dm.getSchedule(scheduleId) == null) {
-            throw new IllegalArgumentException(_dm.TRAIN_ADD_FAIL);
+            throw new IllegalArgumentException(TimeTableDataManager.TRAIN_ADD_FAIL);
         }
         _trainId = _dm.getNextId("Train");  // NOI18N
         _scheduleId = scheduleId;
@@ -84,9 +84,9 @@ public class Train {
         return _defaultSpeed;
     }
 
-    public void setDefaultSpeed(int newSpeed) throws IllegalArgumentException {
+    public void setDefaultSpeed(int newSpeed) {
         if (newSpeed < 0) {
-            throw new IllegalArgumentException(_dm.DEFAULT_SPEED_LT_0);
+            throw new IllegalArgumentException(TimeTableDataManager.DEFAULT_SPEED_LT_0);
         }
         int oldSpeed = _defaultSpeed;
         _defaultSpeed = newSpeed;
@@ -104,11 +104,11 @@ public class Train {
         return _startTime;
     }
 
-    public void setStartTime(int newStartTime) throws IllegalArgumentException  {
+    public void setStartTime(int newStartTime) {
         Schedule schedule = _dm.getSchedule(_scheduleId);
         if (!_dm.validateTime(schedule.getStartHour(), schedule.getDuration(), newStartTime)) {
             throw new IllegalArgumentException(String.format("%s~%d~%d",  // NOI18N
-                    _dm.START_TIME_RANGE, schedule.getStartHour(), schedule.getStartHour() + schedule.getDuration()));
+                    TimeTableDataManager.START_TIME_RANGE, schedule.getStartHour(), schedule.getStartHour() + schedule.getDuration()));
         }
         int oldStartTime = _startTime;
         _startTime = newStartTime;
@@ -126,10 +126,10 @@ public class Train {
         return _throttle;
     }
 
-    public void setThrottle(int newThrottle) throws IllegalArgumentException  {
+    public void setThrottle(int newThrottle) {
         Layout layout = _dm.getLayout(_dm.getSchedule(_scheduleId).getLayoutId());
         if (newThrottle < 0 || newThrottle > layout.getThrottles()) {
-            throw new IllegalArgumentException(_dm.THROTTLE_RANGE);
+            throw new IllegalArgumentException(TimeTableDataManager.THROTTLE_RANGE);
         }
 
         _throttle = newThrottle;

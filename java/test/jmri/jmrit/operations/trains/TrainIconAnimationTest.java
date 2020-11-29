@@ -2,8 +2,13 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.Assume;
+
 import jmri.InstanceManager;
-import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -16,11 +21,9 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
 
 /**
  *
@@ -58,7 +61,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
         // create and register a panel
         jmri.jmrit.display.panelEditor.PanelEditor editor = new jmri.jmrit.display.panelEditor.PanelEditor(
                 "Train Test Panel");
-        InstanceManager.getDefault(PanelMenu.class).addEditorPanel(editor);
+        InstanceManager.getDefault(EditorManager.class).add(editor);
 
         // confirm panel creation
         JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
@@ -146,7 +149,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l1.addTrack("North End 1", Track.STAGING);
         l1.addTrack("North End 2", Track.STAGING);
-        List<Track> templist1 = l1.getTrackByNameList(null);
+        List<Track> templist1 = l1.getTracksByNameList(null);
         for (int i = 0; i < templist1.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 1 Staging 1 Name", "North End 1", templist1.get(i).getName());
@@ -213,7 +216,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         l3.addTrack("South End 1", Track.STAGING);
         l3.addTrack("South End 2", Track.STAGING);
-        List<Track> templist3 = l3.getTrackByNameList(null);
+        List<Track> templist3 = l3.getTracksByNameList(null);
         for (int i = 0; i < templist3.size(); i++) {
             if (i == 0) {
                 Assert.assertEquals("RL 3 Staging 1 Name", "South End 1", templist3.get(i).getName());
@@ -372,6 +375,7 @@ public class TrainIconAnimationTest extends OperationsTestCase {
 
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     //    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);

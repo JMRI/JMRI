@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Alain Le Marchand - for fw 3.10 and above -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+
+  <variable item="Dim LV" CV="156" default="1" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim Front Light</label>
+    <label xml:lang="fr">Atténuer Feu AV</label>
+    <label xml:lang="de">Abblendlicht LV</label>
+  </variable>
+  <variable item="Dim LR" CV="156" default="1" mask="XXXXXXVX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim Rear Light</label>
+    <label xml:lang="fr">Atténuer Feu AR</label>
+    <label xml:lang="de">Abblendlicht LR</label>
+  </variable>
+  <variable item="Dim AUX1" CV="156" default="0" mask="XXXXXVXX" minOut="3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim AUX1</label>
+    <label xml:lang="fr">Atténuer AUX1</label>
+    <label xml:lang="de">Abblendlicht AUX1</label>
+  </variable>
+  <variable item="Dim AUX2" CV="156" default="0" mask="XXXXVXXX" minOut="4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Dim AUX2</label>
+    <label xml:lang="fr">Atténuer AUX2</label>
+    <label xml:lang="de">Abblendlicht AUX2</label>
+  </variable>
+
+  <variable item="Condition Dimmer" CV="157" default="0" exclude="PD05A,PD12A">
+    <decVal max="161"/>
+    <label>Condition Dimmer</label>
+    <label xml:lang="de">Bedingung Abblendlicht</label>
+    <label xml:lang="ca">Condició Dimmer</label>
+  </variable>
+  <!-- Older form deprecated -->
+  <variable item="Condition Dimmer enum" CV="157" default="0" exclude="PD05A,PD12A">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
+    <label>Condition Dimmer</label>
+    <label xml:lang="de">Bedingung Abblendlicht</label>
+    <label xml:lang="ca">Condició Dimmer</label>
+  </variable>
+  <!-- New form: split in 4 different sub-CVs / enums -->
+  <variable item="Condition Dimmer A" CV="157" mask="1" default="0" exclude="PD05A,PD12A">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_A.xml"/>
+  </variable>
+  <variable item="Condition Dimmer B" CV="157" mask="3" default="0" exclude="PD05A,PD12A">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_B.xml"/>
+  </variable>
+  <variable item="Condition Dimmer C" CV="157" mask="9" default="0" exclude="PD05A,PD12A">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_C.xml"/>
+  </variable>
+  <variable item="Condition Dimmer D" CV="157" mask="27" default="0" exclude="PD05A,PD12A">
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum_D.xml"/>
+  </variable>
+
+</variables>

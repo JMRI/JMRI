@@ -4,12 +4,14 @@ import jmri.ConsistManager;
 import jmri.InstanceManager;
 import jmri.jmrit.consisttool.TestConsistManager;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of WiFiConsistFile
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class WiFiConsistFileTest {
 
@@ -20,15 +22,16 @@ public class WiFiConsistFileTest {
         Assert.assertNotNull("exists", panel );
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDebugCommandStation();
+        JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());
     }
     
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

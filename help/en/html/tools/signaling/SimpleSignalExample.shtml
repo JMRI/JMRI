@@ -23,11 +23,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 
@@ -59,7 +57,7 @@
 
       <p>A predefined SSL example is provided in the JMRI
       installation (see the <a href=
-      "http://jmri.org/download">download page</a> for information
+      "https://jmri.org/download">download page</a> for information
       on downloading). To use this example:</p>
 
       <ul>
@@ -454,7 +452,7 @@ Red, Red and Yellow respectively.
       Signal Logic help page</a>.</p>
 
       <p>Located at en\html\tools\signaling\ </p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

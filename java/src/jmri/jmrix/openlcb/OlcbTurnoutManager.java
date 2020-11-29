@@ -1,7 +1,8 @@
 package jmri.jmrix.openlcb;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.JmriException;
 import jmri.NamedBean;
@@ -22,24 +23,25 @@ import org.openlcb.OlcbInterface;
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
     public OlcbTurnoutManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
-    CanSystemConnectionMemo memo;
-
-    String prefix = "M";
     // Whether we accumulate partially loaded turnouts in pendingTurnouts.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbTurnout> pendingTurnouts = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    @Nonnull
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbTurnout
@@ -76,7 +78,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * @return never null
      */
     @Override
-    protected Turnout createNewTurnout(String systemName, String userName) {
+    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         t.setUserName(userName);
@@ -108,58 +110,48 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     public void finishLoad() {
         synchronized (pendingTurnouts) {
-            for (OlcbTurnout t : pendingTurnouts) {
-                t.finishLoad();
-            }
+            pendingTurnouts.forEach(OlcbTurnout::finishLoad);
             pendingTurnouts.clear();
             isLoading = false;
         }
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
-            validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),getSystemNamePrefix());
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            throw new JmriException(e.getMessage());
         }
         return prefix + typeLetter() + curAddress;
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         // always return this (the current) name without change
         try {
-            validateSystemNameFormat(curAddress);
-        } catch (IllegalArgumentException e) {
-            throw new JmriException(e.toString());
+            OlcbAddress.validateSystemNameFormat(curAddress,Locale.getDefault(),prefix+"T");
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            throw new JmriException(e.getMessage());
         }
         return curAddress;
     }
-
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable system name: " + address + " to a valid Olcb turnout address");
-        }
-        switch (v.length) {
-            case 1:
-                if (address.startsWith("+") || address.startsWith("-")) {
-                    break;
-                }
-                throw new IllegalArgumentException("can't make 2nd event from systemname " + address);
-            case 2:
-                break;
-            default:
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
-        }
+    
+    /**
+     * Validates to OpenLCB format.
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale) throws jmri.NamedBean.BadSystemNameException {
+        name = super.validateSystemNameFormat(name,locale);
+        return OlcbAddress.validateSystemNameFormat(name,locale,getSystemNamePrefix());
     }
     
     /**

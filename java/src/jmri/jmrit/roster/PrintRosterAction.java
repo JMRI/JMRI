@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import jmri.beans.Beans;
+import jmri.beans.BeanUtil;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -63,8 +63,8 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
         // rosterGroup may legitimately be null
         // but getProperty returns null if the property cannot be found, so
         // we test that the property exists before attempting to get its value
-        if (Beans.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
-            rosterGroup = (String) Beans.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
+        if (BeanUtil.hasProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP)) {
+            rosterGroup = (String) BeanUtil.getProperty(wi, RosterGroupSelector.SELECTED_ROSTER_GROUP);
         }
         if (rosterGroup == null) {
             title = title + " " + Bundle.getMessage("ALLENTRIES");
@@ -93,12 +93,12 @@ public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
                 writer.write(s, 0, s.length());
             }
         } catch (IOException ex) {
-            log.warn("error during printing: " + ex);
+            log.warn("error during printing: {}", ex);
         }
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        log.debug("Roster list size: " + l.size());
+        log.debug("Roster list size: {}", l.size());
         for (RosterEntry re : l) {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null

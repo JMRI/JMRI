@@ -7,47 +7,23 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.tools.ChangeTracksTypeAction;
-import jmri.jmrit.operations.locations.tools.EditCarTypeAction;
-import jmri.jmrit.operations.locations.tools.LocationTrackBlockingOrderAction;
-import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
-import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
-import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrackMovesAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
-import jmri.jmrit.operations.locations.tools.TrackCopyAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Frame for user edit of location
@@ -96,7 +72,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
 
     // radio buttons
-    JRadioButton stageRadioButton = new JRadioButton(Bundle.getMessage("StagingOnly"));
+    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("StagingOnly"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yards"));
     JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spurs"));
@@ -110,8 +86,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<>();
-    
+    NamedBeanComboBox<Reporter> readerSelector;
+
     JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
     public static final String NAME = Bundle.getMessage("Name");
@@ -149,15 +125,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         opsGroup.add(spurRadioButton);
         opsGroup.add(yardRadioButton);
         opsGroup.add(interchangeRadioButton);
-        opsGroup.add(stageRadioButton);
-
-        if (Setup.isRfidEnabled()) {
-            // setup the Reader dropdown.
-            readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
-                readerSelector.addItem((Reporter) r);
-            }
-        }
+        opsGroup.add(stagingRadioButton);
 
         if (_location != null) {
             enableButtons(true);
@@ -176,17 +144,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 } else if (interchangeModel.getRowCount() > 0) {
                     interchangeRadioButton.setSelected(true);
                 } else if (stagingModel.getRowCount() > 0) {
-                    stageRadioButton.setSelected(true);
+                    stagingRadioButton.setSelected(true);
                 } else {
                     spurRadioButton.setSelected(true);
                 }
             } else {
-                stageRadioButton.setSelected(true);
+                stagingRadioButton.setSelected(true);
             }
             setTrainDirectionBoxes();
-            if (Setup.isRfidEnabled()) {
-                readerSelector.setSelectedItem(_location.getReporter());
-            }
         } else {
             enableButtons(false);
             spurRadioButton.setSelected(true);
@@ -234,7 +199,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pOp.add(spurRadioButton);
         pOp.add(yardRadioButton);
         pOp.add(interchangeRadioButton);
-        pOp.add(stageRadioButton);
+        pOp.add(stagingRadioButton);
 
         // row 11
         JPanel pC = new JPanel();
@@ -245,13 +210,21 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
-        // reader row
         JPanel readerPanel = new JPanel();
-        readerPanel.setLayout(new GridBagLayout());
-        readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
-        addItem(readerPanel, readerSelector, 0, 0);
-
-        readerPanel.setVisible(Setup.isRfidEnabled());
+        readerPanel.setVisible(false);
+        // reader row
+        if (Setup.isRfidEnabled()) {
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector = new NamedBeanComboBox<Reporter>(reporterManager);
+            readerSelector.setAllowNull(true);
+            readerPanel.setLayout(new GridBagLayout());
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReporter")));
+            addItem(readerPanel, readerSelector, 0, 0);
+            readerPanel.setVisible(true);
+            if (_location != null) {
+                readerSelector.setSelectedItem(_location.getReporter());
+            }
+        }
 
         // row 12
         JPanel pB = new JPanel();
@@ -293,7 +266,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         addRadioButtonAction(spurRadioButton);
         addRadioButtonAction(yardRadioButton);
         addRadioButtonAction(interchangeRadioButton);
-        addRadioButtonAction(stageRadioButton);
+        addRadioButtonAction(stagingRadioButton);
 
         addCheckBoxTrainAction(northCheckBox);
         addCheckBoxTrainAction(southCheckBox);
@@ -306,7 +279,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        
+
         loadToolMenu();
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
@@ -317,26 +290,25 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setVisible(true);
 
     }
-    
+
     private void loadToolMenu() {
         toolMenu.removeAll();
         toolMenu.add(new TrackCopyAction(this));
         toolMenu.add(new ChangeTracksTypeAction(this));
         toolMenu.add(new ShowTrackMovesAction());
-        toolMenu.add(new ModifyLocationsAction(Bundle.getMessage("TitleModifyLocation"), _location));
+        toolMenu.add(new ModifyLocationsAction(_location));
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         if (_location != null && _location.getLocationOps() == Location.NORMAL) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
-        toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsLocation"), _location,
-                null));
+        toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new EditCarTypeAction());
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
         toolMenu.addSeparator();
-        toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false, _location));
-        toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true, _location));
+        toolMenu.add(new PrintLocationsAction(false, _location));
+        toolMenu.add(new PrintLocationsAction(true, _location));
         if (Setup.isVsdPhysicalLocationEnabled()) {
-            toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), _location));
+            toolMenu.add(new SetPhysicalLocationAction(_location));
         }
     }
 
@@ -494,8 +466,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
-        if (Setup.isRfidEnabled()) {
-            _location.setReporter((Reporter) readerSelector.getSelectedItem());
+        if (Setup.isRfidEnabled() && readerSelector != null) {
+            _location.setReporter(readerSelector.getSelectedItem());
         }
         setLocationOps();
         // save location file
@@ -503,19 +475,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     /**
-     *
      * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
-        if (locationNameTextField.getText().trim().equals("")) {
+        if (locationNameTextField.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(Bundle
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if (TrainCommon.splitString(locationNameTextField.getText()).length() > MAX_NAME_LENGTH) {
-            // log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
+            // log.error("Location name must be less than "+
+            // Integer.toString(MAX_NAME_LENGTH+1) +" characters");
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
-                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
+                    new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}),
+                    MessageFormat.format(Bundle
                             .getMessage("CanNotLocation"), new Object[]{s}),
                     JOptionPane.ERROR_MESSAGE);
             return false;
@@ -531,7 +504,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     }
 
     private void setLocationOps() {
-        if (stageRadioButton.isSelected()) {
+        if (stagingRadioButton.isSelected()) {
             _location.setLocationOps(Location.STAGING);
         } else {
             _location.setLocationOps(Location.NORMAL);
@@ -565,11 +538,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         spurRadioButton.setEnabled(enabled);
         yardRadioButton.setEnabled(enabled);
         interchangeRadioButton.setEnabled(enabled);
-        stageRadioButton.setEnabled(enabled);
+        stagingRadioButton.setEnabled(enabled);
         //
         yardTable.setEnabled(enabled);
-        // enable readerSelect.
-        readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        if (readerSelector != null) {
+            // enable readerSelect.
+            readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        }
     }
 
     @Override
@@ -582,8 +557,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         setEnabledLocations();
         interchangePane.setVisible(interchangeRadioButton.isSelected());
         addInterchangeButton.setVisible(interchangeRadioButton.isSelected());
-        stagingPane.setVisible(stageRadioButton.isSelected());
-        addStagingButton.setVisible(stageRadioButton.isSelected());
+        stagingPane.setVisible(stagingRadioButton.isSelected());
+        addStagingButton.setVisible(stagingRadioButton.isSelected());
         yardPane.setVisible(yardRadioButton.isSelected());
         addYardButton.setVisible(yardRadioButton.isSelected());
         spurPane.setVisible(spurRadioButton.isSelected());
@@ -592,12 +567,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     private void setEnabledLocations() {
         if (spurModel.getRowCount() > 0 || yardModel.getRowCount() > 0 || interchangeModel.getRowCount() > 0) {
-            if (stageRadioButton.isSelected()) {
+            if (stagingRadioButton.isSelected()) {
                 spurRadioButton.setSelected(true);
             }
-            stageRadioButton.setEnabled(false);
+            stagingRadioButton.setEnabled(false);
         } else if (stagingModel.getRowCount() > 0) {
-            stageRadioButton.setSelected(true);
+            stagingRadioButton.setSelected(true);
             spurRadioButton.setEnabled(false);
             yardRadioButton.setEnabled(false);
             interchangeRadioButton.setEnabled(false);
@@ -605,7 +580,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             spurRadioButton.setEnabled(true);
             yardRadioButton.setEnabled(true);
             interchangeRadioButton.setEnabled(true);
-            stageRadioButton.setEnabled(true);
+            stagingRadioButton.setEnabled(true);
         }
     }
 
@@ -680,10 +655,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     private void autoSelectCheckboxes() {
         for (int i = 0; i < checkBoxes.size(); i++) {
             checkBoxes.get(i).setSelected(false);
-            // check each track to determine which car types are serviced by this location
-            List<Track> tracks = _location.getTrackList();
+            // check each track to determine which car types are serviced by
+            // this location
+            List<Track> tracks = _location.getTracksList();
             for (Track track : tracks) {
-                if (track.acceptsTypeName(checkBoxes.get(i).getText())) {
+                if (track.isTypeNameAccepted(checkBoxes.get(i).getText())) {
                     checkBoxes.get(i).setSelected(true);
                 }
             }

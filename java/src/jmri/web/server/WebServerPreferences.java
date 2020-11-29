@@ -1,168 +1,74 @@
 package jmri.web.server;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import jmri.InstanceManager;
+
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
-import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
-import jmri.util.FileUtil;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author Randall Wood Copyright (C) 2012, 2017
  */
-public class WebServerPreferences extends PreferencesBean {
+public class WebServerPreferences extends PreferencesBean implements InstanceManagerAutoDefault {
 
     // preferences elements
     public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #DISALLOWED_FRAMES} instead
-     */
-    @Deprecated
-    public static final String DisallowedFrames = DISALLOWED_FRAMES;
     public static final String WEB_SERVER_PREFERENCES = "WebServerPreferences"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #WEB_SERVER_PREFERENCES} instead
-     */
-    @Deprecated
-    public static final String WebServerPreferences = WEB_SERVER_PREFERENCES;
     public static final String FRAME = "frame"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #FRAME} instead
-     */
-    @Deprecated
-    public static final String Frame = FRAME;
     public static final String PORT = "port"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #PORT} instead
-     */
-    @Deprecated
-    public static final String Port = PORT;
     public static final String CLICK_DELAY = "clickDelay"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #CLICK_DELAY} instead
-     */
-    @Deprecated
-    public static final String ClickDelay = CLICK_DELAY;
     public static final String REFRESH_DELAY = "refreshDelay"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #REFRESH_DELAY} instead
-     */
-    @Deprecated
-    public static final String RefreshDelay = REFRESH_DELAY;
     public static final String USE_AJAX = "useAjax"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #USE_AJAX} instead
-     */
-    @Deprecated
-    public static final String UseAjax = USE_AJAX;
     public static final String SIMPLE = "simple"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #SIMPLE} instead
-     */
-    @Deprecated
-    public static final String Simple = SIMPLE;
     public static final String RAILROAD_NAME = "railroadName"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #RAILROAD_NAME} instead
-     */
-    @Deprecated
-    public static final String RailRoadName = RAILROAD_NAME;
     public static final String ALLOW_REMOTE_CONFIG = "allowRemoteConfig"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #ALLOW_REMOTE_CONFIG} instead
-     */
-    @Deprecated
-    public static final String AllowRemoteConfig = ALLOW_REMOTE_CONFIG;
     public static final String READONLY_POWER = "readonlyPower"; // NOI18N
-    /**
-     * @deprecated since 4.7.1; use {@link #READONLY_POWER} instead
-     */
-    @Deprecated
-    public static final String ReadonlyPower = READONLY_POWER;
     public static final String DISABLE_FRAME_SERVER = "disableFrames"; // NOI18N
     public static final String REDIRECT_FRAMES = "redirectFramesToPanels"; // NOI18N
     public static final String USE_ZERO_CONF = "useZeroConf"; // NOI18N
+    private static final String DEFAULT_RAILROAD_NAME = "DefaultRailroadName"; // NOI18N
 
-    // initial defaults if prefs not found
+    // initial defaults if preferences not found
     private int clickDelay = 1;
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean simple = false;
-    private final ArrayList<String> disallowedFrames = new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
-    private String railroadName = Bundle.getMessage("DefaultRailroadName");
+    private final ArrayList<String> disallowedFrames =
+            new ArrayList<>(Arrays.asList(Bundle.getMessage("DefaultDisallowedFrames").split(";")));
+    private String railroadName = Bundle.getMessage(DEFAULT_RAILROAD_NAME);
     private boolean allowRemoteConfig = false;
     private boolean readonlyPower = true;
     private int port = 12080;
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
     private boolean useZeroConf = true;
 
+    /**
+     * Create a WebServerPreferences instance. Prior to JMRI 4.19.2, this would
+     * migrate web server preferences from a JMRI 3.x configuration if needed.
+     * 
+     * @param fileName name of XML file containing JMRI 3.x configuration; this
+     *                 parameter is ignored
+     * @deprecated since 4.19.2; use {@link #WebServerPreferences()} instead
+     */
+    @Deprecated
     public WebServerPreferences(String fileName) {
-        super(ProfileManager.getDefault().getActiveProfile());
-        boolean migrate = false;
-        Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
-        try {
-            if (sharedPreferences.keys().length == 0) {
-                log.info("No Webserver preferences exist.");
-                migrate = true;
-            }
-        } catch (BackingStoreException ex) {
-            log.info("No preferences file exists.");
-            migrate = true;
-        }
-        if (migrate) {
-            if (fileName != null) {
-                try {
-                    this.openFile(fileName);
-                } catch (FileNotFoundException ex) {
-                    migrate = false;
-                }
-            } else {
-                migrate = false;
-            }
-        }
-        this.readPreferences(sharedPreferences);
-        if (migrate) {
-            try {
-                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:profile"));
-                sharedPreferences.sync();
-            } catch (BackingStoreException ex) {
-                log.error("Unable to write WebServer preferences.", ex);
-            }
-        }
+        this();
     }
 
     public WebServerPreferences() {
         super(ProfileManager.getDefault().getActiveProfile());
         Preferences sharedPreferences = ProfileUtils.getPreferences(super.getProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
-    }
-
-    /**
-     * Get the current default WebServerPreferences object.
-     *
-     * @return the default WebServerPrefeences instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with an argument
-     * of {@code WebServerPreferences.class} instead
-     */
-    @Deprecated
-    public static WebServerPreferences getDefault() {
-        return InstanceManager.getDefault(WebServerPreferences.class);
     }
 
     private void readPreferences(Preferences sharedPreferences) {
@@ -179,7 +85,8 @@ public class WebServerPreferences extends PreferencesBean {
             Preferences frames = sharedPreferences.node(DISALLOWED_FRAMES);
             if (frames.keys().length != 0) {
                 this.disallowedFrames.clear();
-                for (String key : frames.keys()) { // throws BackingStoreException
+                for (String key : frames.keys()) { // throws
+                                                   // BackingStoreException
                     String frame = frames.get(key, null);
                     if (frame != null && !frame.trim().isEmpty()) {
                         this.disallowedFrames.add(frame);
@@ -187,70 +94,34 @@ public class WebServerPreferences extends PreferencesBean {
                 }
             }
         } catch (BackingStoreException ex) {
-            // this is expected if sharedPreferences have not been written previously,
-            // so do nothing.
+            // this is expected if sharedPreferences have not been written
+            // previously, so do nothing.
         }
         this.port = sharedPreferences.getInt(PORT, this.port);
         this.useZeroConf = sharedPreferences.getBoolean(USE_ZERO_CONF, this.useZeroConf);
         this.setIsDirty(false);
     }
 
+    /**
+     * Load an XML element containing JMRI 3.x web server preferences. As of
+     * 4.19.2, this method does nothing.
+     * 
+     * @param child the element to load JMRI 3.x web server preferences from
+     * @deprecated since 4.19.2 without replacement
+     */
+    @Deprecated
     public void load(Element child) {
-        Attribute a;
-        a = child.getAttribute(CLICK_DELAY);
-        if (a != null) {
-            try {
-                setClickDelay(a.getIntValue());
-            } catch (DataConversionException e) {
-                log.debug(e.getLocalizedMessage(), e);
-            }
-        }
-        a = child.getAttribute(REFRESH_DELAY);
-        if (a != null) {
-            try {
-                setRefreshDelay(a.getIntValue());
-            } catch (DataConversionException e) {
-                log.debug(e.getLocalizedMessage(), e);
-            }
-        }
-        a = child.getAttribute(USE_AJAX);
-        if (a != null) {
-            setUseAjax(Boolean.parseBoolean(a.getValue()));
-        }
-        a = child.getAttribute(SIMPLE);
-        if (a != null) {
-            setSimple(Boolean.parseBoolean(a.getValue()));
-        }
-        a = child.getAttribute(ALLOW_REMOTE_CONFIG);
-        if (a != null) {
-            setAllowRemoteConfig(Boolean.parseBoolean(a.getValue()));
-        }
-        a = child.getAttribute(READONLY_POWER);
-        if (a != null) {
-            setReadonlyPower(Boolean.parseBoolean(a.getValue()));
-        }
-        a = child.getAttribute(PORT);
-        if (a != null) {
-            try {
-                setPort(a.getIntValue());
-            } catch (DataConversionException ex) {
-                setPort(12080);
-                log.error("Unable to read port. Setting to default value.", ex);
-            }
-        }
-        a = child.getAttribute(RAILROAD_NAME);
-        if (a != null) {
-            setRailroadName(a.getValue());
-        }
-        Element df = child.getChild(DISALLOWED_FRAMES);
-        if (df != null) {
-            this.disallowedFrames.clear();
-            df.getChildren(FRAME).stream().forEach((f) -> {
-                this.disallowedFrames.add(f.getText().trim());
-            });
-        }
+        // does nothing; empty implementation to avoid changing public API
     }
 
+    /**
+     * Compare two different sets of preferences.
+     * 
+     * @param prefs the preferences to compare to this this preferences
+     * @return true if different; false otherwise
+     * @deprecated since 4.19.2 without replacement
+     */
+    @Deprecated
     public boolean compareValuesDifferent(WebServerPreferences prefs) {
         if (getClickDelay() != prefs.getClickDelay()) {
             return true;
@@ -276,33 +147,35 @@ public class WebServerPreferences extends PreferencesBean {
         return !getRailroadName().equals(prefs.getRailroadName());
     }
 
+    /**
+     * Apply another set of WebServerPreferences to this set of preferences.
+     * 
+     * @param prefs the preferences to apply
+     * @deprecated since 4.19.2 without replacement
+     */
+    @Deprecated
     public void apply(WebServerPreferences prefs) {
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
         setUseAjax(prefs.isUseAjax());
-        this.setAllowRemoteConfig(prefs.allowRemoteConfig());
-        this.setReadonlyPower(prefs.isReadonlyPower());
+        setAllowRemoteConfig(prefs.allowRemoteConfig());
+        setReadonlyPower(prefs.isReadonlyPower());
         setDisallowedFrames(prefs.getDisallowedFrames());
         setPort(prefs.getPort());
         setRailroadName(prefs.getRailroadName());
     }
 
+    /**
+     * Open a JMRI 3.x web server preferences XML file. As of 4.19.2, this
+     * method does nothing.
+     * 
+     * @param fileName the name of the preferences file
+     * @throws FileNotFoundException if the requested file does not exist
+     * @deprecated since 4.19.2 without replacement
+     */
+    @Deprecated
     public final void openFile(String fileName) throws FileNotFoundException {
-        WebServerPreferencesXml prefsXml = new WebServerPreferencesXml();
-        File file = new File(fileName);
-        Element root;
-        try {
-            root = prefsXml.rootFromFile(file);
-        } catch (FileNotFoundException ex) {
-            log.debug("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
-            throw ex;
-        } catch (IOException | JDOMException ex) {
-            log.error("Exception while loading web server preferences: " + ex);
-            root = null;
-        }
-        if (root != null) {
-            load(root);
-        }
+        // does nothing by design; in place only to avoid changing public API
     }
 
     public void save() {
@@ -320,16 +193,15 @@ public class WebServerPreferences extends PreferencesBean {
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
             Preferences node = sharedPreferences.node(DISALLOWED_FRAMES);
-            this.disallowedFrames.stream().forEach((frame) -> {
-                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-            });
+            this.disallowedFrames.stream()
+                    .forEach(frame -> node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame));
             if (this.disallowedFrames.size() < node.keys().length) {
                 for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
                     node.remove(Integer.toString(i));
                 }
             }
             sharedPreferences.sync();
-            setIsDirty(false);  //  Resets only when stored
+            setIsDirty(false); // Resets only when stored
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
@@ -398,6 +270,7 @@ public class WebServerPreferences extends PreferencesBean {
             this.firePropertyChange(USE_ZERO_CONF, old, value);
         }
     }
+
     public boolean allowRemoteConfig() {
         return this.allowRemoteConfig;
     }
@@ -411,14 +284,20 @@ public class WebServerPreferences extends PreferencesBean {
     }
 
     /**
-     * @return the readonlyPower
+     * Can the power state be set from web clients?
+     * 
+     * @return true if web clients are barred from setting power state; false if
+     *         allowed
      */
     public boolean isReadonlyPower() {
         return readonlyPower;
     }
 
     /**
-     * @param readonlyPower the readonlyPower to set
+     * Set if the power state can be set from web clients.
+     * 
+     * @param readonlyPower true to bar setting power from web clients; false to
+     *                      allow
      */
     public void setReadonlyPower(boolean readonlyPower) {
         this.readonlyPower = readonlyPower;
@@ -466,7 +345,7 @@ public class WebServerPreferences extends PreferencesBean {
             if (railroadName != null) {
                 this.railroadName = railroadName;
             } else {
-                this.railroadName = Bundle.getMessage("DefaultRailroadName");
+                this.railroadName = Bundle.getMessage(DEFAULT_RAILROAD_NAME);
             }
             this.firePropertyChange(RAILROAD_NAME, old, this.railroadName);
         }
@@ -478,7 +357,7 @@ public class WebServerPreferences extends PreferencesBean {
      * @return true if user has not set the railroad name.
      */
     public boolean isDefaultRailroadName() {
-        return this.getRailroadName().equals(Bundle.getMessage("DefaultRailroadName"));
+        return this.getRailroadName().equals(Bundle.getMessage(DEFAULT_RAILROAD_NAME));
     }
 
     /**
@@ -488,7 +367,7 @@ public class WebServerPreferences extends PreferencesBean {
      * @return The default railroad name
      */
     public String getDefaultRailroadName() {
-        return Bundle.getMessage("DefaultRailroadName");
+        return Bundle.getMessage(DEFAULT_RAILROAD_NAME);
     }
 
     /**
@@ -536,8 +415,5 @@ public class WebServerPreferences extends PreferencesBean {
             this.redirectFramesToPanels = redirectFramesToPanels;
             this.firePropertyChange(REDIRECT_FRAMES, old, this.redirectFramesToPanels);
         }
-    }
-
-    private static class WebServerPreferencesXml extends XmlFile {
     }
 }

@@ -1,12 +1,15 @@
 package jmri.jmrit.roster;
 
 import jmri.InstanceManager;
-import org.junit.*;
+import jmri.util.JUnitUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntryPane class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class RosterEntryPaneTest {
 
@@ -16,10 +19,11 @@ public class RosterEntryPaneTest {
     RosterEntry rOld = null;
     RosterEntry rNew = null;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
         // create Element
         eOld = new org.jdom2.Element("locomotive")
                 .setAttribute("id", "id info")
@@ -62,9 +66,9 @@ public class RosterEntryPaneTest {
         };
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     @Test

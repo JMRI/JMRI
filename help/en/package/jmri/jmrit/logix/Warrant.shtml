@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
 <html lang="en">
 <head>
@@ -8,22 +7,17 @@
 
   <title>JMRI: Warrants Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI Warrant Help"><!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <meta name="keywords" content="JMRI Warrant Help">
+
+  <!--#include virtual="/Style.shtml" -->
+
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Warrants</h1>
       <p>A Warrant in JMRI is a collection of information
       sufficient to run an automated train. It will set the
@@ -105,13 +99,12 @@
       "../display/CircuitBuilder.shtml">Circuit Builder</a> Help.</p>
 
       <h3>Compatibility with Layout Editor</h3>
-      <p>OBlocks, Portals and OPaths can be used with Layout Editor.
-      Compatibility is
-      achieved by using the same occupancy detection sensors for
-      LayoutBlocks as for OBlocks. If there is no corresponding
-      Control Panel layout diagram, Circuit Builder cannot be used.
-      The Occupancy Block Tables will have to be used to define the
-      OBlocks, Portals and Paths.</p>
+      <p>Layout Editor panel Blocks are created and stored independently from OBlocks, although they can 
+      share use of the same Sensors for determining block occupancy.  OBlocks, Portals and OPaths can be created manually
+      (without using Circuit Builder in a CPE panel) and imported from Layout Editor Blocks (see the command under
+      <strong>Options</strong> in the <a href="OBlockTable.shtml">Occupancy Block Table.</a>
+      It is possible to use OBlocks, Portals, and OPaths without a CPE panel but that would be unusual.
+      </p>
 
       <h2>Creating a Warrant</h2>
       <p>In order to create a
@@ -454,23 +447,18 @@
         train under warrant.</li>
       </ul>
 
-      <h2>Further Reference</h2>
+      <h2>More Warranted Reading</h2>
       <ul>
-        <li>To read about how to prepare for the use of Warrants,
-        see <a href="OBlockTable.shtml">OBlocks and Portals</a>.</li>
-        <li>See
-        <a href="NXWarrant.shtml#prefs">Warrant Preferences</a>
-        to set global Warrant parameters.</li>
-        <li>JMRI <a href=
-        "../../../../html/tools/automation/index.shtml">Automation
-        in General</a></li>
-        <li>For a step-by-step instruction on Warrants and Circuit Builder, check out the
-        <a href="http://jmri.org/community/clinics/">clinic</a> presentation by Dick Bronson on <a
-        href="http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor
-        plus Warrants</a>.</li>
+        <li><a href="../../../../html/tools/WarrantsIntro.shtml">Introduction to Warrants</a></li>
+        <li>How to prepare for Warrants using <a href="OBlockTable.shtml">OBlocks and Portals</a>.</li>
+        <li>Setting global <a href="NXWarrant.shtml#prefs">Warrant Preferences</a></li>
+        <li><a href="../../../../html/tools/automation/index.shtml">JMRI Automation, in general</a></li>
+        <li>Step-by-step instruction on Warrants and Circuit Builder (slightly outdated)
+         <a href="../../../../../../community/clinics/">clinic</a> presentation by Dick Bronson
+         <a href="http://www.rr-cirkits.com/Clinics/Clinics.html">JMRI 2014 Control Panel Editor plus Warrants</a></li>
       </ul>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -2,10 +2,9 @@ package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
 import jmri.util.StringUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.LocoNetMessage class.
@@ -28,9 +27,8 @@ import org.junit.Test;
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
- *
  */
 public class LocoNetMessageTest {
 
@@ -318,11 +316,12 @@ public class LocoNetMessageTest {
 
         m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
 
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
-        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, "L2", false);
-        LnSensorManager lnsm = new LnSensorManager(lnis, "L");
-        LnSensorManager lnsm2 = new LnSensorManager(lnis, "L2");
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo());
+        LocoNetInterfaceScaffold lnis2 = new LocoNetInterfaceScaffold(new LocoNetSystemConnectionMemo("L2", "LocoNet2"));
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis.getSystemConnectionMemo(), lnis, false);
+        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis2.getSystemConnectionMemo(), lnis2, false);
+        LnSensorManager lnsm = new LnSensorManager(lnis.getSystemConnectionMemo());
+        LnSensorManager lnsm2 = new LnSensorManager(lnis2.getSystemConnectionMemo());
 
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setTurnoutManager(lntm2);
@@ -592,12 +591,12 @@ public class LocoNetMessageTest {
         Assert.assertTrue(m.checkParity());
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

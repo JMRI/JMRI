@@ -3,8 +3,8 @@ package jmri.jmrit.operations.locations;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.*;
 import org.junit.Assume;
-import org.junit.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsPanel;
@@ -58,6 +58,8 @@ public class YardmasterByTrackFrameTest extends OperationsTestCase {
         
         JemmyUtil.enterClickAndLeave(yp.nextButton);
         JUnitUtil.dispose(f);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(YardmasterByTrackFrameTest.class);

@@ -104,7 +104,7 @@ public class PanelPro extends Apps {
     @Override
     protected void attachHelp() {
         if (h1 != null) {
-            jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.PanelPro");
+            jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.index");
         }
     }
 

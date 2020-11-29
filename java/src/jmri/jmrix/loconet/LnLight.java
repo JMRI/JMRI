@@ -76,7 +76,7 @@ public class LnLight extends AbstractLight {
         } else if (newState == OFF) {
             hiadr |= 0x10;
         } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+            log.warn("illegal state requested for Light: {}", getSystemName());
             hiadr |= 0x10;
         }
         // store and send

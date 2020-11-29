@@ -23,19 +23,31 @@
         <surname>Billon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2014-02-20</date>
-      <authorinitials>PB</authorinitials>
-      <revremark>Those new Railcom options are only available starting with firmware 3.03 from January 2014.</revremark>
+      <revnumber>3</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV136 as enum</revremark>
     </revision>
     <revision>
       <revnumber>2</revnumber>
       <date>2014-04-17</date>
       <authorinitials>EF</authorinitials>
       <revremark>Italian translation 2014</revremark>
+    </revision>
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-02-20</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Those new Railcom options are only available starting with firmware 3.03 from January 2014.</revremark>
     </revision>
   </revhistory>
   <variable item="Multiplicator for speed fedback" CV="135" tooltip="CV135 (0-255)">
@@ -47,7 +59,15 @@
     <label xml:lang="ca">Multiplicar per a velocitat de feedback</label>
   </variable>
   <variable item="Divider for speed fedback" CV="136" tooltip="CV136 (0-6)">
-    <decVal min="0" max="6"/>
+    <enumVal>
+      <enumChoice choice="1/1"/>
+      <enumChoice choice="1/2"/>
+      <enumChoice choice="1/4"/>
+      <enumChoice choice="1/8"/>
+      <enumChoice choice="1/16"/>
+      <enumChoice choice="1/32"/>
+      <enumChoice choice="1/64"/>
+    </enumVal>
     <label>Divider for speed fedback</label>
     <label xml:lang="fr">Diviseur feedback de vitesse</label>
     <label xml:lang="de">Division Geschwindichkeitsrückmeldung</label>

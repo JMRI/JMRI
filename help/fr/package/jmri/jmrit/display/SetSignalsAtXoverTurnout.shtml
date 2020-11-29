@@ -13,21 +13,20 @@
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;finir Signaux &agrave; une Bretelle</h1>
 
       <h2>Introduction</h2>
@@ -130,8 +129,9 @@
       tourn&eacute;e.)</p>
 
       <p><a href="./images/DoubleXover8.gif"><img src=
-      "./images/DoubleXover8.gif" align="center" width="207"
-      height="109" hspace="0" vspace="0"></a> &lt;/ P&gt;</p>
+      "./images/DoubleXover8.gif" width="207"
+      height="109" hspace="0" vspace="0" alt="Ic?ne Bretelle avec
+      huit signaux"></a></p>
 
       <p>De m&ecirc;me, le diagramme ci-dessous montre le cas de
       quatre signaux avec une bretelle double en position
@@ -141,8 +141,9 @@
       voie de croisement au lieu de deux.</p>
 
       <p><a href="./images/DoubleXover4.gif"><img src=
-      "./images/DoubleXover4.gif" align="center" width="221"
-      height="113" hspace="0" vspace="0"></a> &lt;/ P&gt;</p>
+      "./images/DoubleXover4.gif" alt="Ic?ne Bretelle avec
+      quatre signaux" width="221" height="113" hspace="0"
+      vspace="0"></a></p>
 
       <p>Si les signaux de cette bretelle ont &eacute;t&eacute;
       saisis pr&eacute;c&eacute;demment, cliquez <b>Obtenir

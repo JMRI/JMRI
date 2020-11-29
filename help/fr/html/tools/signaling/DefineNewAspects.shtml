@@ -1,9 +1,9 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-11-->
+<!-- Updated by Blorec Herv&#233; le 2016-09-11-->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -16,62 +16,62 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<H1>JMRI: D&#233;finition de Votre Propre Syst&#232;me de Signalisation</H1>
+<h1>JMRI: D&#233;finition de Votre Propre Syst&#232;me de Signalisation</h1>
 
-Cette page d&#233;crit comment d&#233;finir un nouveau syst&#232;me de signalisation
-de JMRI.
-<p>
-Nous passons par la cr&#233;ation &#224; partir de z&#233;ro, mais
-il est souvent plus facile de copier et de modifier l'un de ceux 
-existants, dans le r&#233;pertoire 
-<a href="http://jmri.org/xml/signals">xml/signaux</a>.
+<p>Cette page d&#233;crit comment d&#233;finir un nouveau syst&#232;me de signalisation
+de JMRI.</p>
+<p>Nous passons par la cr&#233;ation &#224; partir de z&#233;ro, mais
+il est souvent plus facile de copier et de modifier l'un de ceux
+existants, dans le r&#233;pertoire
+<a href="http://jmri.org/xml/signals">xml/signaux</a>.</p>
 
-<h2> Cr&#233;ation d'un Nouveau Syst&#232;me de Signalisation </h2>
+<h2>Cr&#233;ation d'un Nouveau Syst&#232;me de Signalisation</h2>
 
-Premi&#232;rement, vous avez besoin de cr&#233;er manuellement un nouveau r&#233;pertoire dans le 
-r&#233;pertoire syst&#232;me de JMRI  sous le "xml/signaux" ou dans le r&#233;pertoire 
-preferences utilisateur "resources/signals" qui 
+Premi&#232;rement, vous avez besoin de cr&#233;er manuellement un nouveau r&#233;pertoire dans le
+r&#233;pertoire syst&#232;me de JMRI  sous le "xml/signaux" ou dans le r&#233;pertoire
+preferences utilisateur "resources/signals" qui
 d&#233;tiendra votre nouvelle d&#233;finition de signal.
 Par convention, le nom de ce r&#233;pertoire (par exemple "basic" ou
 "AAR-1946") fournit le nom du syst&#232;me pour votre d&#233;finition du signal.
-Tous les M&#226;ts de Signalisation que vous cr&#233;ez 
-utilisent votre nouvelle d&#233;finition de syst&#232;me de signaux qui inclut le 
-nom syst&#232;me du syst&#232;me de signalisation dans leur propre nom syst&#232;me, 
-car c'est un inconv&#233;nient de changer le nom syst&#232;me du syst&#232;me de signaux. 
+Tous les M&#226;ts de Signalisation que vous cr&#233;ez
+utilisent votre nouvelle d&#233;finition de syst&#232;me de signaux qui inclut le
+nom syst&#232;me du syst&#232;me de signalisation dans leur propre nom syst&#232;me,
+car c'est un inconv&#233;nient de changer le nom syst&#232;me du syst&#232;me de signaux.
 Pensez &#224; l'avance un petit peu: ce qu'il y aura de variable dans cette
 d&#233;finiton suivants les &#233;poques diff&#233;rentes ou de divisions diff&#233;rentes? Si
 oui, inclure une ann&#233;e, ou l'emplacement dans le nom, pour rendre facile
 la cr&#233;ation des versions modifi&#233;es.
-Note: ne pas utiliser les caract&#232;res sp&#233;ciaux comme l'esperluette (&amp;) ou les espaces dans les noms de fichiers et 
-de r&#233;pertoires. JMRI s'ex&#233;cute sur pleins d'ordinateurs, et les noms de fichiers avec espaces ou caract&#232;res sp&#233;ciaux peuvent 
-provoquer des probl&#232;mes pour des personnes si jamais vous contribuez avec vos fichiers à la distribution JMRI.
+Note: ne pas utiliser les caract&#232;res sp&#233;ciaux comme l'esperluette (&amp;) ou les espaces dans les noms de fichiers et
+de r&#233;pertoires. JMRI s'ex&#233;cute sur pleins d'ordinateurs, et les noms de fichiers avec espaces ou caract&#232;res sp&#233;ciaux peuvent
+provoquer des probl&#232;mes pour des personnes si jamais vous contribuez avec vos fichiers &agrave; la distribution JMRI.
 <p>
 Ensuite, fournir ces fichiers:
 	<ul>
 	<li> index.shtml - description de forme libre du syst&#232;me de signalisation
 	<li> aspects.xml - D&#233;finir l'ensemble des aspects disponibles
 	<li> apparence-*. xml - Un dossier pour chaque type de M&#226;t de Signalisation, d&#233;finissant
-        comment afficher chaque aspect. Jetez un &#339;il &#224; certains syst&#232;mes de signalisation existants pour 
+        comment afficher chaque aspect. Jetez un &#339;il &#224; certains syst&#232;mes de signalisation existants pour
 	voir les conventions de d&#233;nominations typiques.
 	</ul>
 
-<h3>Cr&#233;ez un nouveau fichier index.shtml </h3>
+<h3>Cr&#233;ez un nouveau fichier index.shtml</h3>
 
-Ce fichier fournit seulement une description mais il est important de le faire en premier 
+Ce fichier fournit seulement une description mais il est important de le faire en premier
 de sorte que vous enregistrez les d&#233;tails de ce que vous avez fait.
-<P>
-Si vous capturez un syst&#232;me r&#233;aliste, 
-enregistrez ce que vous savez &#224; son sujet: compagnie ferroviaire, r&#233;gion/district, ann&#233;e, 
-o&#249; vous avez trouv&#233; les information, etc. 
 <p>
-Si vous faites votre propre syst&#232;me, d&#233;crivez le en quelques 
+Si vous capturez un syst&#232;me r&#233;aliste,
+enregistrez ce que vous savez &#224; son sujet: compagnie ferroviaire, r&#233;gion/district, ann&#233;e,
+o&#249; vous avez trouv&#233; les information, etc.
+<p>
+Si vous faites votre propre syst&#232;me, d&#233;crivez le en quelques
 d&#233;tails de sorte que vous pourrez y revenir plus tard et
-vous rappelez de ce que vous aviez &#224; l'esprit. 
+vous rappelez de ce que vous aviez &#224; l'esprit.
 
 <h3>Cr&#233;er un nouveau fichier aspects.xml</h3>
 
@@ -107,10 +107,10 @@ La plupart des fichiers sont des blocs qui ressemblent &#224; ceci:
   &lt;/aspect&gt;
 </pre>
 
-Vous devez remplir l'&#233;l&#233;ment <code>&lt;name&gt;</code>, Les autres sont facultatifs, mais l'ordre de tous les &#233;l&#233;ments est obligatoire pour passer avec succ&#232;s la validation XML. 
+Vous devez remplir l'&#233;l&#233;ment <code>&lt;name&gt;</code>, Les autres sont facultatifs, mais l'ordre de tous les &#233;l&#233;ments est obligatoire pour passer avec succ&#232;s la validation XML.
 Les &#233;l&#233;ments <code>&lt;title&gt;</code> et <code>&lt;indication&gt;</code>  ne peuvent &#234;tre inclus qu'une fois.
 Les &#233;l&#233;ments  <code>&lt;description&gt;</code>, <code>&lt;reference&gt;</code> et <code>&lt;comment&gt;</code> peuvent &#234;tre inclus
-autant de fois que vous le souhaitez.  
+autant de fois que vous le souhaitez.
 <p>
 L'&#233;l&#233;ment<code>&lt;imagelink&gt;</code>, s'il est pr&#233;sent, doit pointer
 un fichier image (. gif,. png ou. jpg) montrant ce &#224; quoi la famille des
@@ -124,11 +124,13 @@ valeur qui a &#233;t&#233; d&#233;fini dans le fichier signalSpeeds.xml. L'&#233
 rapporte &#224; la vitesse maximale &#224; laquelle un train peut passer &#224; l'aspect. La Logique M&#226;t de Signalisation
 utilise cette vitesse pour aider &#224; d&#233;terminer quel aspect doit &#234;tre affich&#233; o&#249; il
 y a de multiples aspects possibles.
-Un &#233;l&#233;ment facultatif <code>&lt;speed2&gt;</code> contient la vitesse ( valeur ) que le train doit - ou peut - atteindre en 
-arrivant au prochain signal. Pour un aspect Libre, elle sera identique &#224; <code>&lt;speed&gt;</code> mais en aspect Approche D&#233;vi&#233;e, elle sera g&#233;n&#233;ralement moins.<br> 
-Les deux entr&#233;es de vitesse se r&#233;f&#232;rent au bloc prot&#233;g&#233; comme il &#233;tait quand le train est arriv&#233; 
-au signal, Parce que naturellement il aura chang&#233; pour "stop" une fois le train entr&#233; 
-dans le canton suivant ( plus sur les vitesses <a href="https://sourceforge.net/p/jmri/mailman/jmri-developers/?viewmonth=201106&viewday=22">dans la liste des developpeurs JMRI</a>). 
+Un &#233;l&#233;ment facultatif <code>&lt;speed2&gt;</code> contient la vitesse ( valeur ) que le train doit - ou peut - atteindre en
+arrivant au prochain signal. Pour un aspect Libre, elle sera identique &#224; <code>&lt;speed&gt;</code> mais en aspect Approche D&#233;vi&#233;e, elle sera g&#233;n&#233;ralement moins.<br>
+Les deux entr&#233;es de vitesse se r&#233;f&#232;rent au bloc prot&#233;g&#233; comme il &#233;tait quand le train est arriv&#233;
+au signal, Parce que naturellement il aura chang&#233; pour "stop" une fois le train entr&#233;
+dans le canton suivant ( plus sur les vitesses <a
+        href="https://sourceforge.net/p/jmri/mailman/jmri-developers/?viewmonth=201106&amp;viewday=22">dans la liste
+    des developpeurs JMRI</a>).
 <p>
 L'&#233;l&#233;ment  <code>&lt;route&gt;</code>, s'il est pr&#233;sent, devrait &#234;tre entr&#233; simplement comme "D&#233;vi&#233;", "Droit"
 ou "Autre". Si l'&#233;l&#233;ment est omis ou laiss&#233; vide alors il est pris comme &#233;tant "Droit".
@@ -141,7 +143,7 @@ L'&#233;l&#233;ment <code>&lt;dccAspect&gt;</code>, s'il est pr&#233;sent, est l
 Ces valeurs sont ensuite utilis&#233;es pour remplir les identifiants d'aspect quand un pilote de signal DCC ou LNCP est utilis&#233;.
 Les valeurs peuvent &#234;tre &#233;cras&#233;es par l'utilisateur lors de la cr&#233;ation ou de la modification du M&#226;t de Signalisation particulier.
 <p>
-L'&#233;l&#233;ment <code>&lt;delay&gt;</code> s'il est pr&#233;sent, permet &#224; une temporisation d'&#234;tre configur&#233;e entre 
+L'&#233;l&#233;ment <code>&lt;delay&gt;</code> s'il est pr&#233;sent, permet &#224; une temporisation d'&#234;tre configur&#233;e entre
 l'&#233;volution de l'aspect sur chaque t&#234;te de signal o&#249; plusieurs t&#234;tes sont configur&#233;s sur un m&#226;t. <br>
 Ceci est id&#233;alement utilis&#233; dans le prototype o&#249; un signal &#224; commande manuelle (par exemple s&#233;maphore)
 devrait &#234;tre configur&#233; par le signaleur, donc seul la t&#234;te du signal (ou Bras) pourrait
@@ -155,46 +157,46 @@ Ci-dessous les blocs <code>&lt;aspect&gt;</code>, il y a un bloc qui nomme tous 
       &lt;appearancefile href="appearance-SL-1-high-pbs.xml"/&gt;
       &lt;appearancefile href="appearance-SL-1-low.xml"/&gt;
     &lt;/appearancefiles&gt;
-</pre> 
+</pre>
 
 Cr&#233;er cette partie quand vous cr&#233;ez les fichiers apparence (voir ci-dessous),
 pour que le programme puisse localiser chacun d'eux et les afficher pour l'utilisateur.
 
- <a name="appearances"><h3>Cr&#233;er les fichiers apparence-*. xml </h3>
+    <a name="appearances"></a><h3>Cr&#233;er les fichiers apparence-*. xml </h3>
 
 Pour chaque sorte de signal sur le r&#233;seau (un feu,
-deux feux, nain, s&#233;maphore, etc), vous avez besoin de 
+deux feux, nain, s&#233;maphore, etc), vous avez besoin de
 cr&#233;er un fichier apparence d&#233;di&#233;.
 
-<p> 
+<p>
 Jetez un &#339;il &#224; certains syst&#232;mes de signalisation existants pour
 voir les conventions typiques de d&#233;nomination.
-Note: ne pas utiliser les caract&#232;res sp&#233;ciaux comme l'esperluette (&amp;) ou les espaces dans les noms de fichiers et 
-de r&#233;pertoires. JMRI s'ex&#233;cute sur pleins d'ordinateurs, et les noms de fichiers avec espaces ou caract&#232;res sp&#233;ciaux peuvent 
+Note: ne pas utiliser les caract&#232;res sp&#233;ciaux comme l'esperluette (&amp;) ou les espaces dans les noms de fichiers et
+de r&#233;pertoires. JMRI s'ex&#233;cute sur pleins d'ordinateurs, et les noms de fichiers avec espaces ou caract&#232;res sp&#233;ciaux peuvent
 provoquer des probl&#232;mes pour des personnes si jamais vous contribuez avec vos fichiers pour la distribution JMRI .
 
 <p>
-Le haut du fichier est un certain texte standard que vous pouvez 
-copier depuis un syst&#232;me existant, puis modifier avec votre 
+Le haut du fichier est un certain texte standard que vous pouvez
+copier depuis un syst&#232;me existant, puis modifier avec votre
 information d'historique de r&#233;vision et d'auteur.
 
 <p>
-La valeur de l'&#233;l&#233;ment <code>&lt;aspecttable&gt;</code> devrait &#234;tre le nom utilisateur pour 
+La valeur de l'&#233;l&#233;ment <code>&lt;aspecttable&gt;</code> devrait &#234;tre le nom utilisateur pour
 le syst&#232;me global, comme d&#233;fini dans l'&#233;l&#233;ment <code>&lt;name&gt;</code> du fichier aspects.xml.
 
 <p>
-L'&#233;l&#233;ment <code>&lt;name&gt;</code> est le nom utilisateur pour ce type particulier de m&#226;t de signalisation. 
+L'&#233;l&#233;ment <code>&lt;name&gt;</code> est le nom utilisateur pour ce type particulier de m&#226;t de signalisation.
 Il devrait &#234;tre assez descriptif du m&#226;t, et relater d'une certaine fa&#231;on &#233;vidente
 le nom du fichier.
-Utilisez les &#233;l&#233;ments <code>&lt;reference&gt;</code> et <code>&lt;description&gt;</code> pour fournir des informations au 
-futurs utilisateurs de ce syst&#232;me de signaux. Vous pouvez voir comment ceci est affich&#233; 
+Utilisez les &#233;l&#233;ments <code>&lt;reference&gt;</code> et <code>&lt;description&gt;</code> pour fournir des informations au
+futurs utilisateurs de ce syst&#232;me de signaux. Vous pouvez voir comment ceci est affich&#233;
 dans un <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.xml">fichier exemple</a>.
 
 <p>
-Ensuite il y a l'&#233;l&#233;ment <code>&lt;appearances&gt;</code>, qui contient une s&#233;rie d'&#233;l&#233;ments de <code>&lt;appearance&gt;</code> 
+Ensuite il y a l'&#233;l&#233;ment <code>&lt;appearances&gt;</code>, qui contient une s&#233;rie d'&#233;l&#233;ments de <code>&lt;appearance&gt;</code>
 qui d&#233;finissent comment apparaissent les divers Aspects sur ce type de m&#226;t de signalisation.
 Chaque aspect ne doit pas &#234;tre d&#233;fini dans chaque fichier, car
-chaque type de signal ne peut pas montrer tous les aspects.<p>
+chaque type de signal ne peut pas montrer tous les aspects.</p>
 
 <p>
 Chaque aspect que le signal peut montrer a besoin d'&#234;tre
@@ -282,13 +284,15 @@ Ou un syst&#232;me plus complexe un-&#224;-plusieurs mod&#232;le o&#249; il pour
 Exemple le signal Avanc&#233; pr&#233;sente Stop, mais nous pourrions afficher soit une
 Approche ou Approche D&#233;vi&#233;e en fonction d'autres conditions.
 <p>
-La valeur de <code>&lt;advancedAspect&gt;</code> peut &#234;tre n'importe quoi de d&#233;fini dans le tableau Aspect 
-pour ce syst&#232;me de signalisation. <br> 
+La valeur de <code>&lt;advancedAspect&gt;</code> peut &#234;tre n'importe quoi de d&#233;fini dans le tableau Aspect
+pour ce syst&#232;me de signalisation. <br>
 La valeur de <code>&lt;ourAspect&gt;</code>, doit &#234;tre celui qui est d&#233;fini et soutenu par le fichier apparence (Il peut &#234;tre affich&#233; sur ce type de m&#226;t de signalisation).
   dans le fichier apparence.
 <p>
-Toutes les modélisations, sont contenues dans les balises <aspectMappings>, au sein de leurs propres balises <aspectMapping>
+Toutes les mod&eacute;lisations sont contenues dans les balises &lt;aspectMappings&gt;, au sein de leurs propres
+    balises &lt;aspectMapping&gt;.
 
+<code>
 &lt;aspectMappings&gt;
     &lt;aspectMapping&gt;
         &lt;advancedAspect&gt;Approach&lt;/advancedAspect&gt;
@@ -301,43 +305,44 @@ Toutes les modélisations, sont contenues dans les balises <aspectMappings>, au 
         &lt;ourAspect&gt;Diverging Approach&lt;/ourAspect&gt;
     &lt;/aspectMapping&gt;
 &lt;/aspectMappings&gt;
-</pre>
+</code>
+
 <h3>V&#233;rifiez votre Travail</h3>
-<p>
-Vous pouvez utiliser les outils " V&#233;rifier le fichier XML" et "Valider le fichier XML"
- sous la fen&#234;tre JMRI "Debogaga" fen&#234;tre pour v&#233;rifier vos fichiers. 
-( Notez que vous devez &#234;tre connect&#233; &#224; internet pour le faire 
-car les fichiers se r&#233;f&#232;rent &#224; plusieurs ressources de v&#233;rification qui sont sur le site web de JMRI ). 
-Le premier v&#233;rifie le format de base: que tous les caract&#232;res  &lt; e &gt; 
+
+<p>Vous pouvez utiliser les outils " V&#233;rifier le fichier XML" et "Valider le fichier XML"
+ sous la fen&#234;tre JMRI "Debogaga" fen&#234;tre pour v&#233;rifier vos fichiers.
+( Notez que vous devez &#234;tre connect&#233; &#224; internet pour le faire
+car les fichiers se r&#233;f&#232;rent &#224; plusieurs ressources de v&#233;rification qui sont sur le site web de JMRI ).
+Le premier v&#233;rifie le format de base: que tous les caract&#232;res  &lt; e &gt;
  soient au bon endroit? Etc. Le second permet de s'assurer que
 les &#233;l&#233;ments de droite sont dans les bons endroits, et v&#233;rifie une partie du contenu,.
 
-<h3>Modifications apport&#233;es &#224; un syst&#232;me de signalisation existant, etc. </h3>
+<h3>Modifications apport&#233;es &#224; un syst&#232;me de signalisation existant, etc.</h3>
 
 Il ya un certain nombre de d&#233;finitions de signalisation d&#233;j&#224; fournis dans JMRI qui sont
-situ&#233;és dans le r&#233;pertoire "xml/signal", certaines d'entre elles peuvent g&#233;n&#233;ralement r&#233;pondre &#224; vos 
+situ&#233;&eacute;s dans le r&#233;pertoire "xml/signal", certaines d'entre elles peuvent g&#233;n&#233;ralement r&#233;pondre &#224; vos
 exigences mais certaines peuvent n&#233;cessiter des modifications pour s'adapter au mat&#233;riel que vous utilisez,
 ou il y a des variations locales dans les op&#233;rations, ou tout simplement que vous n'avez pas la possibilit&#233; de
 travailler &#224; un ensemble enti&#232;rement r&#233;aliste de signaux.
 <p>
-Dans ce cas, il est possible de modifier et de cr&#233;er vos propres fichiers d'apparence qui 
+Dans ce cas, il est possible de modifier et de cr&#233;er vos propres fichiers d'apparence qui
 &#233;crasera ceux fournis par JMRI. Vous devrez d'abord cr&#233;er un sous-r&#233;pertoire dans
 le r&#233;pertoire de ressources situ&#233; dans la z&#244;ne de pr&#233;f&#233;rences de l'utilisateur appel&#233; "signals", vous
-aurez alors besoin de cr&#233;er un sous-r&#233;pertoire dans lequel il a exactement le m&#234;me nom que le nom 
-fourni par JMRI. De l&#224;, tous les fichiers d'apparence que vous cr&#233;ez ou copiez soit seront 
+aurez alors besoin de cr&#233;er un sous-r&#233;pertoire dans lequel il a exactement le m&#234;me nom que le nom
+fourni par JMRI. De l&#224;, tous les fichiers d'apparence que vous cr&#233;ez ou copiez soit seront
 ajouter &#224; la liste de m&#226;t pour ce syst&#232;me de signalisation soit &#233;craseront le M&#226;t de Signalisation JMRI pr&#233;d&#233;finie
 <p>
 L'avantage de placer les fichiers (nouveaux  et modifi&#233;s) de l'Apparence du m&#226;t de signalisation ici est que lorsque
 JMRI est mis &#224; jour, ces fichiers ne seront pas &#233;cras&#233;es et perdues!.
-<li>
-<li>
+<p>
 Lexique:
+<ul>
+    <li>* Aspect= couleur du feu</li>
+    <li>* Apparence (du M&#226;t)= ce qu'il signifie ex: Rappel de ralentissement</li>
+</ul>
 
-<li>* Aspect= couleur du feu
-<li>* Apparence (du M&#226;t)= ce qu'il signifie ex: Rappel de ralentissement
-
-<!--#include virtual="/Footer" -->
-  </div> 
- </div>
+        <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

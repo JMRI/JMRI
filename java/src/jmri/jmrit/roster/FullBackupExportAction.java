@@ -74,7 +74,22 @@ public class FullBackupExportAction
 
             // create a zip file roster entry for each entry in the main roster
             for (RosterEntry entry : roster.getAllEntries()) {
-                copyFileToStream(entry.getPathName(), "roster", zipper, entry.getId());
+                try {
+                    copyFileToStream(entry.getPathName(), "roster", zipper, "roster: "+entry.getId());
+                    
+                    // process image files if present
+                    if (entry.getImagePath() != null && ! entry.getImagePath().isEmpty())
+                        copyFileToStream(entry.getImagePath(), "roster", zipper, "image: "+entry.getId());
+                    if (entry.getIconPath() != null && ! entry.getIconPath().isEmpty())
+                        copyFileToStream(entry.getIconPath(), "roster", zipper, "icon: "+entry.getId());
+                        
+                } catch (FileNotFoundException ex) {
+                    log.error("Unable to find file in entry {}", entry.getId(), ex);
+                } catch (IOException ex) {
+                    log.error("Unable to write during entry {}", entry.getId(), ex);
+                } catch (Exception ex) {
+                    log.error("Unexpected exception during entry {}", entry.getId(), ex);
+                }
             }
 
             // Now the full roster entry
@@ -105,6 +120,9 @@ public class FullBackupExportAction
      */
     private void copyFileToStream(String filename, String dirname, ZipOutputStream zipper, String comment)
             throws IOException {
+            
+        log.debug("write: {}", filename);
+        
         File file = new File(filename);
         String entryName;
 

@@ -6,9 +6,9 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Decoder Pro 3</title>
+  <title>JMRI: DecoderPro 3</title>
   <meta name="author" content="Nigel Cliffe">
-  <meta name="keywords" content="JMRI help Decoder Pro 3">
+  <meta name="keywords" content="JMRI help DecoderPro 3">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -22,22 +22,22 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Introduction to Decoder Pro 3</h1>
+
+      <h1>Introduction to DecoderPro 3</h1>
 
       <p><b>THIS HELP FILE IS WORK IN PROGRESS</b>. Please help
       JMRI by contributing to improve this help file !</p>
 
-      <p>Decoder Pro 3 presents a list of your locomotives (the
+      <p>DecoderPro 3 presents a list of your locomotives (the
       Roster) and provides access to tools for programming decoder
       configuration variables (CV's).</p>
 
-      <h2>Description of Decoder Pro 3 Window</h2>
+      <h2>Description of DecoderPro 3 Window</h2>
 
-      <p>The Decoder Pro 3 Window is divided into five main
+      <p>The DecoderPro 3 Window is divided into five main
       sections from top to bottom.</p>
       <img src="../../images/Dp3Roster.png" width="509" height="265">
 
@@ -58,11 +58,11 @@
         line. Error information is also posted here.</li>
       </ol>
 
-      <h2>Main Tasks with Decoder Pro 3</h2>
+      <h2>Main Tasks with DecoderPro 3</h2>
 
-      <p>Decoder Pro 3 is designed for the management of DCC
+      <p>DecoderPro 3 is designed for the management of DCC
       decoders fitted to locomotives. The locomotives known to
-      Decoder Pro 3 are displayed in the Roster Table. The
+      DecoderPro 3 are displayed in the Roster Table. The
       anticipated main tasks are: creating a new locomotive and
       changing the settings in an existing locomotive
       (programming).</p>
@@ -132,13 +132,13 @@
       locos", but also "Burlington Locos" and "Canadian Pacific
       Locos". Thus a single locomotive in the Roster could be a
       member of several groups. Roster Groups are used to filter
-      the Roster View in Decoder Pro 3, and select the locomotives
+      the Roster View in DecoderPro 3, and select the locomotives
       offered in an on-screen Throttle.</p>
 
       <p>To create your first Roster Group, use the "Create Roster
       Group" command on the "Settings" menu. When you have created
       a Roster Group, a new drop-list is added to the Tool Bar in
-      Decoder Pro 3. Having created a group, it is initially empty.
+      DecoderPro 3. Having created a group, it is initially empty.
       The next step is to add locomotives to the group. This is
       done with the "Roster Group Table Association" command on the
       "Settings" menu. With the "Roster Group Table" window, select
@@ -300,7 +300,7 @@
       can be done using the "Roster Group Table Associations"
       pane, accessible from the "Settings" menu.</p>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -16,37 +16,38 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
-
-	<H1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</H1>
-	<P>
- 	D&#233;marrer Decoder Pro (ou la d&#233;mo JMRI)
-	<p>  Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
-	<P>
- 	Le volet suivant va s'ouvrir:<br
+	<h1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</h1>
+	<p>
+ 	D&#233;marrer DecoderPro (ou la d&#233;mo JMRI)
+	<p>Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
+	<p>
+ 	Le volet suivant va s'ouvrir:<br>
   	<img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
 
-		h4>Boutons</h4>
+		<h4>Boutons</h4>
 				<ul>
 				<li>"Clear Screen" enl&#232;ve tout l'historique du panneau
 				<li>"Freeze Screen" Arr&#234;te le chargement de nouvelle donn&#233;e pour vous aider &#224; &#233;tudier le contenu actuel de l'affichage
 				<li>Cliquer sur le bouton "Choisir fichier journal", et choisir le nom d'un fichier de connexion &#224; utiliser
-				( vous pouvez garder le nom par d&#233;faut; l'important est de savoir où le fichier est stock&#233; )
-				<li>Ensuite vous cliquez "Save" dans la boite de dialogue fichier, cliquez le bouton "Start logging" sur le panneau.<br> 
+				( vous pouvez garder le nom par d&#233;faut; l'important est de savoir o&#249; le fichier est stock&#233; )
+				<li>Ensuite vous cliquez "Save" dans la boite de dialogue fichier, cliquez le bouton "Start logging" sur le panneau.<br>
    				Maintenant, vous pouvez effectuer toutes les actions que vous souhaitez effectuer dans JMRI. Un journal est conserv&#233; de tout le trafic sur la connexion XPressNet.
  				<li>Cliquez le bouton "Stop Logging" sur le volet XPressNet Monitor, pour - bien - arr&#234;ter l'enregistrement.
 				</ul>
 
-<p>Retour &#224; la page <a href="index.shtml">Aide XPressNet</a>  
+<p>Retour &#224; la page <a href="index.shtml">Aide XPressNet</a>
 
 <hr>
 Paul Bender<br>
 paul.bender@acm.org
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

@@ -4,8 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -18,22 +17,21 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
-    <div id="mainContent">
-      <!-- Page Body -->
-        <H2>
-		JMRI: Applications
-        </H2>
+        <h1>JMRI: Applications</h1>
 
-		<P>JMRI offre plusieurs applications qui sont optimis&#233;es pour 
+		<p>JMRI offre plusieurs applications qui sont optimis&#233;es pour
 		des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement 
-		<a href="../doc/Technical/	index.shtml#writecode">&#233;crire les votres</a>.
-   <dl>
-			<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+		<a href="../doc/Technical/index.shtml#writecode">&#233;crire les votres</a>.
+
+   		<dl>
+			<dt><a href="./DecoderPro/index.shtml">DecoderPro</a></dt>
 			<dd>
 			   Un meilleur outil pour programmer les d&#233;codeurs.		    
 			   DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;codeurs DCC
@@ -42,7 +40,7 @@
 			   Ouvrez DecoderPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI.
 			</dd>
 
-			<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+			<dt><a href="./PanelPro/PanelPro.shtml">PanelPro</a></dt>
 			<dd>
 		       L'exploitation CRT d&#233;riv&#233;e des panneaux contr&#244;le CTC qui refl&#232;tent en temps r&#233;el
 		       l'&#233;tat de votre r&#233;seau <em>et</em> vous permettent de le contr&#244;ler - presque comme un
@@ -50,36 +48,37 @@
 			   Ouvrez PanelPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI.
 			</dd>
 			
-			<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3></dt>
+			<dt><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></dt>
 			<dd>
-			   Un syst&#232:me pour Dispatcher, regroupant votre Inventaire et Vos R&#233;gulateurs.
+			   Un syst&#232;me pour Dispatcher, regroupant votre Inventaire et Vos R&#233;gulateurs.
 			</dd>		
 
-	  <dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
-    <dd>
-    Cr&#233;er des Manifestes de Train qui d&#233;taillent le travail que vos &#233;quipes de train 
-	produiront lors d'une session d'exploitation. 
-    Le Manifeste liste les wagons collect&#233;s et d&#233;pos&#233;s,  
-    montrant o&#249; sont localis&#233;s les wagons ainsi que leurs destinations
-    </dd>
-
-
-		<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
+	  	<dt><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></dt>
 		<dd>
-		    Un jeu d'outil pour l'utilisation Audio avec JMRI.<br>
-		    Ouvrez SoundPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI
+		Cr&#233;er des Manifestes de Train qui d&#233;taillent le travail que vos &#233;quipes de train
+		produiront lors d'une session d'exploitation.
+		Le Manifeste liste les wagons collect&#233;s et d&#233;pos&#233;s,
+		montrant o&#249; sont localis&#233;s les wagons ainsi que leurs destinations
 		</dd>
+
+
+	<dt><a href="./SoundPro/SoundPro.shtml">SoundPro</a></dt>
+	<dd>
+		Un jeu d'outil pour l'utilisation Audio avec JMRI.<br>
+		Ouvrez SoundPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI
+	</dd>
  </dl>		
 		
 <h2>Plus d'Outils</h2>
   <ul>
-  <li<a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre r&#233;seau partag&#233; par la 
-  plupart des applications JMRI.</li>
-			<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232:me-Sp&#233;cifique </a> sont disponibles dans la plupart des 
-			applications JMRI depuis leur propre menu quand vous avez configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
-	</ul>
+  	<li><a href="../tools/index.shtml">Outils et Caract&#233;ristiques Communes</a> pour configurer et exploiter votre
+	r&#233;seau partag&#233; par la plupart des applications JMRI.</li>
+	<li><a href="../tools/index.shtml#systemSpecificTools">Des Outils Syst&#232;me-Sp&#233;cifique </a>
+	sont disponibles dans la plupart des applications JMRI depuis leur propre menu quand vous avez
+	configur&#233; JMRI pour ce Syst&#232;me de Connexion.</li>
+  </ul>
 
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </div> <!-- close #mainContent -->
 </div> <!-- close #mBody -->
 </body>

@@ -64,7 +64,7 @@ public class NameCheckAction extends AbstractAction {
 
                 NameFile nfile = InstanceManager.getDefault(NameFile.class);
 
-                String warnings = "";
+                StringBuffer warnings = new StringBuffer();
 
                 while (iter.hasNext()) {
                     Element varElement = iter.next();
@@ -81,22 +81,18 @@ public class NameCheckAction extends AbstractAction {
                         item = itemAttr.getValue();
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("Variable called \""
-                                + ((label != null) ? label : "<none>") + "\" \""
-                                + ((item != null) ? item : "<none>")); // NOI18N
+                        log.debug("Variable called \"{}\" \"{}", (label != null) ? label : "<none>", (item != null) ? item : "<none>"); // NOI18N
                     }
                     if (!(label == null ? false : nfile.checkName(label))
                             && !(item == null ? false : nfile.checkName(item))) {
-                        log.warn("Variable not found: label=\""
-                                + ((label != null) ? label : "<none>") + "\" item=\""
-                                + ((item != null) ? label : "<none>") + "\""); // NOI18N
-                        warnings += "Variable not found: label=\""
-                                + ((label != null) ? label : "<none>") + "\" item=\""
-                                + ((item != null) ? item : "<none>") + "\"\n"; // TODO I18N
+                        log.warn("Variable not found: label=\"{}\" item=\"{}\"", (label != null) ? label : "<none>", (item != null) ? label : "<none>"); // NOI18N
+                        warnings.append("Variable not found: label=\"")
+                                .append(((label != null) ? label : "<none>")).append("\" item=\"")
+                                .append(((item != null) ? item : "<none>")).append("\"\n"); // TODO I18N
                     }
                 }
 
-                if (!warnings.equals("")) {
+                if (warnings.length()!=0) {
                     JOptionPane.showMessageDialog(_who, warnings);
                 } else {
                     JOptionPane.showMessageDialog(_who, "No mismatched items found"); // TODO I18N

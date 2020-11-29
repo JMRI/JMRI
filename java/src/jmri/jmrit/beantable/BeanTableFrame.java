@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
@@ -44,8 +43,6 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
     int bottomBoxIndex; // index to insert extra stuff
     static final int bottomStrutWidth = 20;
 
-    ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
-
     public BeanTableFrame() {
         super();
     }
@@ -83,9 +80,9 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
-        fileMenu.add(new jmri.configurexml.SaveMenu());
+        fileMenu.add(new jmri.configurexml.StoreMenu());
 
-        JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
             @Override
@@ -95,7 +92,7 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
                     MessageFormat footerFormat = new MessageFormat(getTitle() + " page {0,number}");
                     dataTable.print(JTable.PrintMode.FIT_WIDTH, null, footerFormat);
                 } catch (java.awt.print.PrinterException e1) {
-                    log.warn("error printing: " + e1, e1);
+                    log.warn("error printing: {}", e1, e1);
                 }
             }
         });

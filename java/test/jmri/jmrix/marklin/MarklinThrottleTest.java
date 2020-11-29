@@ -1,14 +1,15 @@
 package jmri.jmrix.marklin;
 
+import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.SpeedStepMode;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
@@ -45,8 +46,8 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = 2; 
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -368,6 +369,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup4 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup4() {
     }
 
@@ -375,12 +377,12 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test of sendFunctionGroup5 method, of class AbstractThrottle.
      */
     @Test
+    @Override
     public void testSendFunctionGroup5() {
     }
 
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
@@ -389,20 +391,19 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
            public void sendMarklinMessage(MarklinMessage m, MarklinListener reply) {
            }
         };
-        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc){
-          @Override
-          public MarklinThrottleManager getThrottleManager() {
-             return (MarklinThrottleManager)jmri.InstanceManager.getDefault(jmri.ThrottleManager.class);
-          }
-        };
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new MarklinThrottleManager(c));
+        MarklinSystemConnectionMemo c = new MarklinSystemConnectionMemo(tc);
+        c.store(new MarklinThrottleManager(c), ThrottleManager.class);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,c.get(ThrottleManager.class));
+
         instance = new MarklinThrottle(c,new jmri.DccLocoAddress(42,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MarklinThrottleTest.class);

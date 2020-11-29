@@ -1,9 +1,7 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.event.ActionEvent;
-import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register a TimeTableFrame

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2013-09-18-->
+<!-- Updated by Blorec Herv&#233; le 2013-09-18-->
 
 <html lang="fr">
 <head>
@@ -13,22 +13,22 @@
   <meta name="keywords" content=
   "Oak Tree Systems Railroad Control Interface RCI java model railroad JMRI install windows">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
-      <h1>Guide Mat&eacute;riel JMRI: Oak Tree Systems Railroad
+        <!-- Page Body -->
+
+<h1>Guide Mat&eacute;riel JMRI: Oak Tree Systems Railroad
       Control Interface (RCI)</h1>
 
       <h3>Mat&eacute;riel Support&eacute;</h3>
@@ -184,7 +184,7 @@
       <p>Pour plus d'informations sur le mat&eacute;riel Oak Tree
       Systems, voir leur <a href=
       "http://www.oaktreesystems.com">site web</a> .</p>
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

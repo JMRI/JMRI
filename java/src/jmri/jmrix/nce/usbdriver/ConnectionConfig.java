@@ -51,7 +51,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"Silicon Labs CP210x USB to UART Bridge", "Silicon Labs CP210x"};
+            return new String[]{"Silicon Labs CP210x USB to UART Bridge", "Silicon Labs CP210x"}; // NOI18N
         }
         return new String[]{};
     }

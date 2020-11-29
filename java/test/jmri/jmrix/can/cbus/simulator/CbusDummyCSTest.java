@@ -6,10 +6,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.After;
+
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -18,22 +17,18 @@ import org.junit.Test;
  */
 public class CbusDummyCSTest {
 
-    TrafficControllerScaffold tc;
+    
 
     @Test
     public void testCTor() {
         CbusDummyCS t = new CbusDummyCS(null);
         Assert.assertNotNull("exists",t);
         t.dispose();
-        t = null;
     }
 
     @Test
     public void testCTorTC() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
         Assert.assertTrue("0 listeners",tc.numListeners()==0);
         CbusDummyCS t = new CbusDummyCS(memo);
         Assert.assertNotNull("exists",t);
@@ -46,19 +41,15 @@ public class CbusDummyCSTest {
         Assert.assertEquals("getSetDelay", 7,t.getDelay());
         
         t.dispose();
-        t = null;
         Assert.assertTrue("0 listeners after dispose",tc.numListeners()==0);
-        tc=null;
-        memo = null;
+
+
     }
 
 
     @Test
     public void testProcessInOutTrackOnOff() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
         CbusDummyCS t = new CbusDummyCS(memo);
 
         Assert.assertEquals("start getProcessIn", false,t.getProcessIn());
@@ -99,21 +90,16 @@ public class CbusDummyCSTest {
         Assert.assertEquals("rton acknowledged out to in", "[5f8] 05",
             tc.inbound.elementAt(tc.inbound.size() - 1).toString());
 
-        m = null;
-        r = null;
+
         t.dispose();
-        t = null;
-        tc=null;
-        memo = null;
+
     }
 
 
     @Test
     public void testProcessASession() {
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        tc = new TrafficControllerScaffold();
-        memo.setTrafficController(tc);
+        
         CbusDummyCS t = new CbusDummyCS(memo);
 
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_RLOC, 0xC4, 0xD2 },0x12 ); // 1234 Long
@@ -177,23 +163,32 @@ public class CbusDummyCSTest {
         
         Assert.assertTrue("kloc 0 session",t.getNumberSessions()==0);
         
-        m = null;
-        t.dispose();
-        t = null;
-        tc=null;
-        memo = null;        
+
+        t.dispose();      
+        
+    }
+    
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+        
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
         
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
+    @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
+        memo.dispose();
+        tc = null;
+        memo = null;
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDummyCSTest.class);

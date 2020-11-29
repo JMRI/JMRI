@@ -73,7 +73,7 @@ public class PanelProPane extends apps.AppsLaunchPane {
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
         JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
-        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.PanelPro");
+        jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.PanelPro.index");
         h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));

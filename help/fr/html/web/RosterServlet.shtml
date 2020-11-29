@@ -1,13 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
+<!-- Translated by Herv&#233; Blorec 2013-10-08 -->
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <!-- Translated by Herv&#233; Blorec 2013-10-08 -->
-
-  <title>JMRI: Roster Servlet</title><!-- Style -->
+  <title>JMRI: Roster Servlet</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,16 +15,15 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  5132683101821190 <!-- /Style -->
-   <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Liste Servlet</h1>La Liste Servlet JMRI fournit un
       acc&egrave;s Web &agrave; des informations sur les
       entr&eacute;es liste JMRI. Ce servlet r&eacute;pond aux
@@ -45,7 +43,9 @@
         <li>/roster/&lt;ID&gt;/image</li>
 
         <li>/roster/&lt;ID&gt;/icon</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+      <!--#include virtual="/Footer.shtml" -->
     </div>
   </div>
 </body>

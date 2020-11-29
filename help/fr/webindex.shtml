@@ -10,7 +10,7 @@
 <LINK REL="home" TITLE="Home" HREF="/">
 </HEAD>
 <BODY>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 <!--#include virtual="indexheader" -->
 <ul>
  
@@ -126,7 +126,7 @@
 </li>
  
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
+<a href="html/hardware/can/cbus/index.shtml">CBUS&trade; </a>
 <ul></ul>
 </li>
 
@@ -1321,6 +1321,6 @@
 </li>
 
 </ul>
-<!--#include virtual="/Footer" -->
+<!--#include virtual="/Footer.shtml" -->
 </BODY>
 </HTML>

@@ -3,7 +3,6 @@ package jmri.jmrix.nce.macro;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -129,7 +128,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                     break;
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("macro " + line);
+                    log.debug("macro {}", line);
                 }
                 // check that each line contains the NCE memory address of the macro
                 String macroAddr = ":" + Integer.toHexString(curMacro);
@@ -251,7 +250,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
     @Override
     public void reply(NceReply r) {
         if (log.isDebugEnabled()) {
-            log.debug("waiting for " + waiting + " responses ");
+            log.debug("waiting for {} responses ", waiting);
         }
         if (waiting <= 0) {
             log.error("unexpected response");

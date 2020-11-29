@@ -9,15 +9,12 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.*;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
  *
- * @author	Bob Jacobsen, Copyright 2002
+ * @author Bob Jacobsen, Copyright 2002
  */
 public abstract class AbstractVariableValueTestBase {
 
@@ -159,6 +156,19 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 256 * 128 + 3, cv.getValue());
     }
 
+    @Test
+    public void testVariableValueTwinMask() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(3);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VXXXXXXX XXXXVVVV", 0, 64, v, null, null);
+
+        Assert.assertEquals("mask at start", "VXXXXXXX", variable.getMask());
+    }
+
+
     // can we change the CV and see the result in the Variable?
     @Test
     public void testVariableFromCV() {
@@ -168,7 +178,7 @@ public abstract class AbstractVariableValueTestBase {
         v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertTrue("getValue not null ", variable.getCommonRep() != null);
+        Assert.assertNotNull("getValue not null ", variable.getCommonRep());
         setValue(variable, "5");
         checkValue(variable, "variable value", "5");
 
@@ -359,7 +369,7 @@ public abstract class AbstractVariableValueTestBase {
         }
     }
 
-    // check synchonization of value, representations
+    // check synchronization of value, representations
     @Test
     public void testVariableSynch() {
 
@@ -434,7 +444,7 @@ public abstract class AbstractVariableValueTestBase {
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
     @Test
-    @Ignore("Disabled in JUnit 3")
+    @Disabled("Disabled in JUnit 3")
     public void testSpaceUsage() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -476,8 +486,6 @@ public abstract class AbstractVariableValueTestBase {
         return m;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
-
     public void setUp() {
         JUnitUtil.setUp();
     }
@@ -485,5 +493,7 @@ public abstract class AbstractVariableValueTestBase {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
+    private final static  org.slf4j.Logger log =  org.slf4j.LoggerFactory.getLogger(AbstractVariableValueTestBase.class);
 
 }

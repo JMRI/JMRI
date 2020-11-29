@@ -1,7 +1,11 @@
 package jmri.jmrix.loconet;
 
+import jmri.CommandStation;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import jmri.SpeedStepMode;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -24,8 +28,8 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        int expResult = jmri.DccThrottle.SpeedStepMode28;
-        int result = instance.getSpeedStepMode();
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
+        SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
 
@@ -35,7 +39,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F;
+        float expResult = SpeedStepMode.NMRA_DCC_28.increment;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -47,7 +51,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testGetSpeed_float() {
         // set speed step mode to 28 (PR2Throttle does not support 128?)
-        instance.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode28);
+        instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
         Assert.assertEquals("Full Speed", 124, ((Pr2Throttle)instance).intSpeed(1.0F)); // 124 from class source
         float incre = 1.F/(112F-1F); // not clear where the -1 comes from
         float speed = incre;
@@ -390,19 +394,19 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    // The minimal setup for log4J
-    @Before
+    @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo.store(slotmanager, CommandStation.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnPr2ThrottleManager(memo));
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }
 
-    @After
+    @AfterEach
     @Override
     public void tearDown() {
         memo.dispose();

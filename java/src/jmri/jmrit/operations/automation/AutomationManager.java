@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import org.jdom2.Element;
@@ -20,24 +21,12 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationManager implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
     private int _id = 0; // retain highest automation Id seen to ensure no Id collisions
 
     public AutomationManager() {
-    }
-
-    /**
-     * Get the default instance of this class.
-     *
-     * @return the default instance of this class
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static synchronized AutomationManager instance() {
-        return InstanceManager.getDefault(AutomationManager.class);
     }
 
     // stores known Automation instances by id
@@ -208,6 +197,18 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
             box.addItem(automation);
         }
     }
+    
+    /**
+     * Restarts all automations that were running when the operations program
+     * was last saved.
+     */
+    public void resumeAutomations() {
+        for (Automation automation : getAutomationsByNameList()) {
+            if (!automation.isActionRunning() && !automation.isReadyToRun()) {
+                automation.resume();
+            }
+        }
+    }
 
     /**
      * Makes a new copy of automation
@@ -266,20 +267,10 @@ public class AutomationManager implements InstanceManagerAutoDefault, PropertyCh
         }
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
-
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-        pcs.removePropertyChangeListener(l);
-    }
-
     protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
-        pcs.firePropertyChange(p, old, n);
+        firePropertyChange(p, old, n);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);

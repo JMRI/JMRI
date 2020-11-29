@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2004 All rights reserved                            -->
-<!-- $Id$                                                                   -->
+<!-- Copyright (C) JMRI 2004 - 2019 All rights reserved                     -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,14 +14,17 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
 	<version author="W.D.Kok" version="2.00" lastUpdated="20180217"/>
+    <version author="Bob Jacobsen" version="3" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
+	<version author="W.D.Kok" version="3.00" lastUpdated="20191202"/>
 	<!-- version 1.00 - initial version                                          -->
 	<!-- Version 2.00 - CV Corrections and German and Dutch translating inserted -->
+	<!-- Version 3.00 - Input of tool-tips                                       -->
 	<decoder>
 		<family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
-			<model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ModelA">
+			<model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ATL2051">
 			<size length="25" width="13.5" height="5.5" units="mm"/>
 			</model>
-			<model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ModelB">
+			<model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ATL2054">
 			<size length="25" width="12.5" height="5" units="mm"/>
 			</model>
 		</family>
@@ -30,45 +32,60 @@
 		<variables>
 			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
 			<variable CV="2" item="Vstart" comment="Range 0-15"  default="8">
-				<decVal max="15"/>
-				<label>Start value (0-15)</label>
-				<label xml:lang="it">Volt Partenza (0-15)</label>
-				<label xml:lang="fr">V démarr. (0-15)</label>
-				<label xml:lang="de">Startspannung (0-15)</label>
-				<label xml:lang="nl">Start spanning (0-15)</label>
+				<decVal min="0" max="15"/>
+				<label>Start value</label>
+				<label xml:lang="it">Volt Partenza</label>
+				<label xml:lang="fr">V démarr.</label>
+				<label xml:lang="de">Start-spanning</label>
+				<label xml:lang="nl">Start-spanning</label>
+				<tooltip>&lt;html&gt;If speed regulation is disabled this value determines the voltage that makes &lt;br&gt;the motor just start to turn. The effect decreases at higher speed steps. &lt;br&gt;(Range: 0-15, Default: 8) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt; ungeregelten Betrieb kann hier eine bestimmte&lt;br&gt; Anfahrspanning eingestellt werden, bei welcher &lt;br&gt; Motor gerade zu drehen beginnt. Der Einfluss &lt;br&gt; mit zunehmender Fahr-Stufe ab. &lt;br&gt;(Bereich: 0-15, voreingestellt: 8) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Als snelheidsregeling is uitgeschakeld kan hier een bepaalde wegrijspanning &lt;br&gt;ingesteld worden, waarbij de motor gaat draaien. Het effect daalt bij &lt;br&gt;hogere snelheidsstappen. &lt;br&gt;(Bereik: 0-15, standaardinstelling: 8) &lt;/html&gt;</tooltip>
 				<comment>Range 0-15</comment>
 			</variable>
 			<variable CV="3" item="Accel Normal" mask="XXXXVVVV" default="4">
 				<decVal min="0" max="15"/>
 				<label>Acceleration</label><!--Normal Mode-->
-				<label xml:lang="it">Accellerazione (0-15)</label>
-				<label xml:lang="fr">Accelération (0-15)</label>
-				<label xml:lang="de">Anfahrverzögerung (015)</label>
-				<label xml:lang="nl">Acceleratie tijd (0-15)</label>
+				<label xml:lang="it">Accellerazione</label>
+				<label xml:lang="fr">Accelération</label>
+				<label xml:lang="de">Beschleunigung zeit</label>
+				<label xml:lang="nl">Acceleratie tijd</label>
+				<tooltip>&lt;html&gt;At 0 the given speed step is reached without delay.&lt;br&gt; Higher values reduce the acceleration.&lt;br&gt;(Range: 0-15, Default: 4)&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Bei 0 wird die gewählte Fahrstufe ohne Verzögerung eingestellt.&lt;br&gt; Höhere Werte ergeben weniger starke Beschleunigung.&lt;br&gt;(Bereich: 0-15, voreingestellt: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Bij 0 wordt de geselecteerde snelheid gelijk ingesteld.&lt;br&gt; Hogere waarden resulteren in minder snelle acceleratie.&lt;br&gt;(Bereik: 0-15, standaardinstelling: 4) &lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="3" item="Accel Signal" mask="VVVVXXXX" default="4">
 				<decVal min="0" max="15"/>
 				<label>Acceleration</label><!--Signal Mode-->
-				<label xml:lang="it">Accellerazione (0-15)</label>
-				<label xml:lang="fr">Accelération (0-15)</label>
-				<label xml:lang="de">Beschleunigung zeit (0-15)</label>
-				<label xml:lang="nl">Acceleratie tijd (0-15)</label>
+				<label xml:lang="it">Accellerazione</label>
+				<label xml:lang="fr">Accelération</label>
+				<label xml:lang="de">Beschleunigung zeit</label>
+				<label xml:lang="nl">Acceleratie tijd</label>
+				<tooltip>&lt;html&gt;Acceleration in signal mode.&lt;br&gt; With a "0" the block speed is reached immediately.&lt;br&gt; Higher values result in less acceleration.&lt;br&gt;(Range: 0-15 Default: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Beschleunigung im Signal-betrieb.&lt;br&gt; Bei 0 wird die Block-Geschwindigkeit ohne Verzögerung erreicht.&lt;br&gt; Höhere Werte ergeben weniger starke Beschleunigung.&lt;br&gt;(Bereich: 0-15, voreingestellt: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Acceleratie in signaal bedrijf.&lt;br&gt; Bij 0, wordt de blok snelheid bereikt zonder vertraging.&lt;br&gt; Hogere waarden resulteren in minder snelle acceleratie.&lt;br&gt;(Bereik: 0-15 standaardinstelling: 4) &lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="4" item="Decel Normal" mask="XXXXVVVV" default="4">
 				<decVal min="0" max="15"/>
 				<label>Deceleration</label><!--Normal Mode-->
-				<label xml:lang="it">Decellerazione (0-15)</label>
-				<label xml:lang="fr">Décélération (0-15)</label>
-				<label xml:lang="de">Bremszeit (0-15)</label>
-				<label xml:lang="nl">Rem tijd (0-15)</label>
+				<label xml:lang="it">Decellerazione</label>
+				<label xml:lang="fr">Décélération</label>
+				<label xml:lang="de">Bremszeit</label>
+				<label xml:lang="nl">Rem tijd</label>
+				<tooltip>&lt;html&gt;With a 0 the train stops immediately.&lt;br&gt; Higher values decrease brake momentum.&lt;br&gt;(Range: 0-15, Default: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Bei 0 hält die Lok sofort an.&lt;br&gt; Höhere Werte ergeben weniger starkes Bremsen.&lt;br&gt;(Bereich: 0-15, voreingestellt: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Met een 0 stopt de trein onmiddellijk.&lt;br&gt; Hogere waarden verminderen rem vertraging.&lt;br&gt;(Bereik: 0-15, standaardinstelling: 4) &lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="4" item="Decel Signal" mask="VVVVXXXX" default="4">
 				<decVal min="0" max="15"/>
 				<label>Deceleration</label><!--Signal Mode-->
-				<label xml:lang="it">Decellerazione (0-15)</label>
-				<label xml:lang="fr">Décélération (0-15)</label>
-				<label xml:lang="de">Bremszeit (0-15)</label>
-				<label xml:lang="nl">Rem tijd (0-15)</label>
+				<label xml:lang="it">Decellerazione</label>
+				<label xml:lang="fr">Décélération</label>
+				<label xml:lang="de">Bremszeit</label>
+				<label xml:lang="nl">Rem tijd</label>
+				<tooltip>&lt;html&gt;Deceleration in signal mode.&lt;br&gt; With a "0" the engine stops immediately in a braking area.&lt;br&gt; Higher values result in less brake momentum giving a longer braking distance.&lt;br&gt; from full speed to still stand. CV4 Bit4-7 and CV6&lt;br&gt; define the braking distance from beginning of the braking area.&lt;br&gt;(Range: 0-15, Default: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Bremsrate im Signalbetrieb.&lt;br&gt; Bei 0 hält die Lok bei Einfahrt in die Bremsstrecke sofort an.&lt;br&gt; Höhere Werte ergeben weniger starkes Bremsen.&lt;br&gt; CV4 Bit4-7 and CV6 bestimmen gemeinsam die Anhalte strecke ab Beginn des Haltebereichs &lt;br&gt;(Bereich: 0-15, voreingestellt: 4) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Afremmen in de signaal modus.&lt;br&gt; Bij 0, stopt de loc onmiddellijk wanneer hij in de remsectie komt.&lt;br&gt; Hogere waarden resulteren in minder krachtig remmen.&lt;br&gt;CV4 Bit4-7 and CV6 bepalen samen de remweg van af het begin&lt;br&gt; van de stop sectie&lt;br&gt;(Bereik: 0-15, standaardinstelling: 4) &lt;/html&gt;</tooltip>
 			</variable>
 			<!-- ATL CV -->
 			<variable CV="5" item="ATL-A" mask="XXXXXXXV"> <!-- ++ mode -->
@@ -87,97 +104,97 @@
 				<label>Speed Control Mode</label>
 				<label xml:lang="de">Spezielle Betriebsart</label>
 				<label xml:lang="nl">Speciale modus</label>
+				<tooltip>&lt;html&gt;Switches on the ++mode.&lt;br&gt; Special remote control mode which allows acceleration,&lt;br&gt; steady speed or deceleration.&lt;br&gt; Control is with speed steps all the same:&lt;br&gt; 0 to 4 results in deceleration (and stop), &lt;br&gt;5 to 9 holds the speed (incl uding stop),&lt;br&gt;10 to 14 will accelerate.&lt;br&gt; Very easy operation with Lenz LH100, big buttons.&lt;br&gt; (Set controller  to 14 speed steps and&lt;br&gt; the loco address, CV29-2 to 0).&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Schaltet ++Modus ein, spezielle Betriebsart der Fernsteuerung:&lt;br&gt; Erhöhen, Halten oder Reduktion der Geschwindigkeit.&lt;br&gt; Ansteuerung über Fahrstufen: 0-4 = Bremsen, 5-9 = Halten, 10-14 = Beschleunigen.&lt;br&gt; Mit den grossen Tasten des Lenz LH100 sehr einfach zu bedienen.&lt;br&gt; (Zentrale auf 14 Stufen einstellen, in der Lok CV29-2 auf 0 setzen).&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Schakelt de + +-modus in. speciale bediening van de afstandsbediening:&lt;br&gt; Verhoog, houden of verminder de snelheid.&lt;br&gt;De controle is met snelheids stappen:&lt;br&gt; 0-4 = remmen,&lt;br&gt; 5-9 = houden (inclusief stop),&lt;br&gt; 10-14 = Versnellen.&lt;br&gt; Met de grote toetsen van de Lenz LH100 zeer makkelijk te gebruiken.&lt;br&gt; (Stel de regelaar in op 14 snelheids stappen en de loc CV29-2 op 0)&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="5" item="ATL-B" mask="XXXXXXVX"> <!-- Shuttle mode -->
-				<enumVal>
-					<enumChoice choice="No Shuttle">
-						<choice>No Shuttle</choice>
-						<choice xml:lang="de">Pendelbetrieb Aus</choice>
-						<choice xml:lang="nl">Pendelautomaat uit</choice>
-					</enumChoice>
-					<enumChoice choice="Shuttle Operation">
-						<choice>Shuttle Operation</choice>
-						<choice xml:lang="de">Pendelbetrieb Ein</choice>
-						<choice xml:lang="nl">Pendelautomaat aan</choice>
-					</enumChoice>
-				</enumVal>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Shuttle Operation</label>
 				<label xml:lang="de">Pendelbetrieb</label>
 				<label xml:lang="nl">Pendeldienst</label>
+				<tooltip>&lt;html&gt;Selects shuttle operation:&lt;br&gt; Heading signal mode is not controlled any more from the command station,&lt;br&gt; but by track magnets in the end stations.&lt;br&gt; Connect the module to the reed contact under the loco.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Aktiviert den Pendelbetrieb:&lt;br&gt; Fahrrichtung im Signalbetrieb nicht mehr von Zentrale gesteuert,&lt;br&gt; sondern von Gleismagneten in den Endstationen.&lt;br&gt; Modul mit Reedkontakt unter der Lok verbinden.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Activeert de pendelbedrijf:&lt;br&gt; rijrichting in de signaal-modus niet meer gecontroleerd door de centrale,&lt;br&gt; maar in de eindstations door magneten in het spoor.&lt;br&gt; Module met een reedcontact onder de loc verbinden.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="5" item="ATL-C" mask="XXXXXVXX"> <!-- Signal mode -->
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Signal mode</label>
 				<label xml:lang="de">Signal Modus</label>
 				<label xml:lang="nl">Signaal modus</label>
+				<tooltip>&lt;html&gt;Signal operation by asymmetry spanning in the stop section. &lt;br&gt;If signal operation is switched off, key F0 switches the light &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Signalbetrieb durch Asymmetrie Spannung in der Stoppstrecke. &lt;br&gt;Wen Signalbetrieb ausgeschaltet ist, schaltet taste F0 das Licht. &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Signaalbedrijf door asymmetriespanning in de stopsectie. &lt;br&gt;Wanneer het signaalbedrijf is uitgeschakeld, schakelt de &lt;br&gt; toets F0 het licht. &lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="5" item="ATL-D" mask="XXXXVXXX"> <!-- Whistle mode -->
 				<enumVal>
 					<enumChoice choice="Lanier brake">
-						<choice>One tone whistle</choice>
-						<choice xml:lang="de">Ein Ton Pfeife</choice>
-						<choice xml:lang="nl">Één ton fluit</choice>
+						<choice>Single-tone-whistle </choice>
+						<choice xml:lang="de">einzel-tön-pfeifen</choice>
+						<choice xml:lang="nl">Eentonige fluit</choice>
 					</enumChoice>
 					<enumChoice choice="Braking curve">
-						<choice>Two-tone whistle</choice>
-						<choice xml:lang="de">Zwei Ton Pfeife</choice>
-						<choice xml:lang="nl">Twee ton fluit</choice>
+						<choice>Two-tone-whistle</choice>
+						<choice xml:lang="de">Zweiton-Pfeife</choice>
+						<choice xml:lang="nl">Tweetonige fluit</choice>
 					</enumChoice>
 				</enumVal>
 				<label>Whistle mode</label>
 				<label xml:lang="de">Pfeife Modus</label>
 				<label xml:lang="nl">Fluit modus</label>
+				<tooltip>&lt;html&gt; This Memory location Indicates whether one &lt;br&gt; Toons whistle or two Tones whistle is Used.&lt;br&gt;At three-Tones whistle, inactive.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt; Dieser Speicherplatz gibt an oder einzel-tön-pfeifen &lt;br&gt; oder Zweiton-pfeife gebraucht wird.&lt;br&gt;Bei Dreiton-Pfeife, inaktiv.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt; Deze geheugenplaats geeft aan of één Toons &lt;br&gt; fluit of twee Toons fluit gebruikt wordt.&lt;br&gt;Bij drietonige-fluit, inactief.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>      
-			<variable CV="5" item="ATL-E" mask="XXXVXXXX"> <!-- Sound Style -->
+			<variable CV="5" item="ATL-E" mask="XXVVXXXX"> <!-- Sound Style -->
 				<enumVal>
-					<enumChoice choice="Steam">
-				<choice>Steam</choice>
-				<choice xml:lang="de">Dampf</choice>
-				<choice xml:lang="nl">Stoom</choice>
+					<enumChoice choice="Steam Intern" value = "0">
+						<choice>Steam, Exhaust Beat Control Internal</choice>
+						<choice xml:lang="de">Dampf, Dampftrigger Intern</choice>
+						<choice xml:lang="nl">Stoom, Interne stoom slag controle</choice>
 					</enumChoice>
-					<enumChoice choice="Diesel">
+					<enumChoice choice="Steam extern" value = "2">
+						<choice>Steam, Exhaust Beat Control External</choice>
+						<choice xml:lang="de">Dampf, Dampftrigger Extern</choice>
+						<choice xml:lang="nl">Stoom, Externe stoom slag controle</choice>
+					</enumChoice>
+					<enumChoice choice="Diesel" value = "1">
 						<choice>Diesel</choice>
 					</enumChoice>
-				</enumVal>
-				<label>Sound Style</label>
-				<label xml:lang="de">Sound type</label>
-				<label xml:lang="nl">Geluids type</label>
-			</variable>
-			<variable CV="5" item="ATL-F" mask="XXVXXXXX"> <!-- Exhaust Beat Control -->
-				<enumVal>
-					<enumChoice choice="Internal">
-						<choice>Internal</choice>
-						<choice xml:lang="de">Intern</choice>
-						<choice xml:lang="nl">Interne</choice>
-					</enumChoice>
-					<enumChoice choice="External e.g. Cam">
-						<choice>External e.g. Cam</choice>
-						<choice xml:lang="de">Extern</choice>
-						<choice xml:lang="nl">Externe</choice>
+					<enumChoice choice="Whistle" value = "3">
+						<choice>Only Whistle</choice>
+						<choice xml:lang="de">Nur Pfeife</choice>
+						<choice xml:lang="nl">Alleen fluit</choice>
 					</enumChoice>
 				</enumVal>
-				<label>Exhaust Beat Control</label>
-				<label xml:lang="de">Dampftrigger</label>
-				<label xml:lang="nl">Stoom slag controle</label>
+				<label>Internal Locomotive Sound</label>
+				<label xml:lang="de">Internen Lok Sound</label>
+				<label xml:lang="nl">Interne Locomotief geluid</label>
+				<tooltip>&lt;html&gt;Internal engine sound:&lt;br&gt;&lt;strong&gt;Steam:&lt;/strong&gt;&lt;br&gt;• With internal steam trigger.&lt;br&gt;• With external steam trigger.&lt;br&gt;&lt;strong&gt;Diesel:&lt;/strong&gt;&lt;br&gt;Reproduction A diesel sound.&lt;br&gt;&lt;strong&gt;Whistle:&lt;/strong&gt;&lt;br&gt;Only Whistle possible (At Pre Bild E-Loco).&lt;br&gt;&lt;/html&gt; </tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;internen Lok-Sound,&lt;br&gt;&lt;strong&gt;Dampf&lt;/strong&gt;:&lt;br&gt;• Mit interner Dampftrigger.&lt;br&gt;• Mit externer Dampftrigger&lt;br&gt;&lt;strong&gt;Diesel&lt;/strong&gt;:&lt;br&gt;Widergabe einen Diesel-Sound. &lt;br&gt;&lt;strong&gt;Lokpfeife&lt;/strong&gt;:&lt;br&gt;Nur Lokpfeife möglich (E-Lok Stellung). &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Interne Loc geluid: &lt;br&gt;&lt;strong&gt;Stoom:&lt;/strong&gt; &lt;br&gt;• Met interne stoom slag controle. &lt;br&gt;• Met externe stoom slag controle&lt;br&gt;&lt;strong&gt;Diesel:&lt;/strong&gt;&lt;br&gt; Geeft een diesel geluid weer.&lt;br&gt;&lt;b&gt;Fluit:&lt;/b&gt;&lt;br&gt; Alleen fluit mogelijk (b.v. E-loc).&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="5" item="ATL-G" mask="XVXXXXXX"> <!-- module input -->
-				<enumVal>
+					<enumVal>
 					<enumChoice choice="Remote Only">
-						<choice>Remote Only</choice>
-						<choice xml:lang="de">Nur Pendelfunktion</choice>
-						<choice xml:lang="nl">Pendelbetrieb</choice>
+						<choice>Whistle only by remote control</choice>
+						<choice xml:lang="de">Pfeife nur per Fernsteuerung</choice>
+						<choice xml:lang="nl">Fluit alleen door afstandsbediening</choice>
 					</enumChoice>
 					<enumChoice choice="Remote and Reed Switch">
-						<choice>Remote and Reed Switch</choice>
-						<choice xml:lang="de">Pendelfunktion und Lokpfeife</choice>
-						<choice xml:lang="nl">Pendelbetrieb en Lokpfeife</choice>
+						<choice>Local possible (with Reed contact)</choice>
+						<choice xml:lang="de">Auch lokale Auslösung (mit Reedkontakt) </choice>
+						<choice xml:lang="nl">Ook lokale mogelijk (met reed contact)</choice>
 					</enumChoice>
 				</enumVal>
-				<label>Switches the module input</label>
-				<label xml:lang="de">Schaltet den Moduleingang</label>
-				<label xml:lang="nl">Schakelt de module-ingang</label>
+				<label>Whistle Switching method</label>
+				<label xml:lang="de">Pfeife Schalt Methode</label>
+				<label xml:lang="nl">Fluit Schakel methode</label>
+				<tooltip>&lt;html&gt;Directs the module input (reed below engine) to the whistle/horn.&lt;br&gt; This is for local release by a rail magnet, e.g. in front of a street crossing.&lt;br&gt; Because there is only one module input that may possibly control shuttle operation, too (CV49-2 set),&lt;br&gt; the following has to betaken in account: &lt;br&gt;•	The whistle will be triggered when passing a reverse control magnet. &lt;br&gt;•	Street crossings with whistle magnets must not be in braking areas, &lt;br&gt;because the engine would reverse if it comes to a stop inside the braking&lt;br&gt;area (except for end stations in shuttle mode).&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Schaltet den Moduleingang (mit Reedkontakt unter der Lok) auf die Lokpfeife. Für lokale Auslösung &lt;br&gt; der Lokpfeife mit Gleismagnet (bei Bahnübergängen o.ä.). Da der Moduleingang auch für die  &lt;br&gt;Pendelfunktion genutzt werden kann, folgendes beachten: &lt;br&gt;• Lokpfeife bzw. -Horn ertönt auch beim Überfahren der Umschaltmagnete in den Endstationen. &lt;br&gt;• Bahnübergänge mit Magneten dürfen bei Pendelbetrieb nicht im Bereich von&lt;br&gt; Anhalte strecken liegen (ausser bei Endstationen).&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Schakelt de module-ingang (met Reed contact onder de locomotief) naar de Lokfluit.&lt;br&gt; Voor het lokale bedienen van Lokfluit met een magneet in het spoor&lt;br&gt; (voor spoorwegovergangen enz.).&lt;br&gt; Aangezien de ingang ook voor het pendelbedrijf functie gebruikt kan worden,&lt;br&gt; Let op het volgende: &lt;br&gt; • Lokfluit of Horn klinkt ook als de lok over die schakel magneet rijd bij de eindstations. &lt;br&gt;• Spoorwegovergangen met magneten mogen in geval van een pendelbedrijf niet in het&lt;br&gt; bereik van halte stellen zijn (met uitzondering van de eindstations).&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ModelA"> <!-- Motor EMP -->
+			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ATL2051"> <!-- Motor EMP -->
 				<enumVal>
 					<enumChoice choice="Brake">
 						<choice>Normal pulse rate to motor</choice>
@@ -193,8 +210,11 @@
 				<label>Motor EMP, Optimises the speed regulator</label>
 				<label xml:lang="de">Motor EMP, optimiert den Drehzahlregler</label>
 				<label xml:lang="nl">Motor EMP, optimaliseert de snelheidsregelaar</label>
+				<tooltip>&lt;html&gt;The pulse rate to the motor is quadrupled, which may be   &lt;br&gt;helpful for some motors.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Die puls rate wird beim setzen des Bit vervierfacht. Dies   &lt;br&gt;ist vorteilhaft bei bestimmten Motoren.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De pul frequents wordt Verviervoudigd wanneer het bit   &lt;br&gt;is ingeschakeld. Dit is voordelig voor verschillende  &lt;br&gt; motoren.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ModelB"> <!-- Motor EMP -->
+			<variable CV="5" item="ATL-H" mask="VXXXXXXX" include="ATL2054"> <!-- Motor EMP -->
 				<enumVal>
 					<enumChoice choice="Brake">
 						<choice>Normal pulse rate to motor</choice>
@@ -210,90 +230,126 @@
 				<label>Motor EMP, Optimises the speed regulator</label>
 				<label xml:lang="de">Motor EMP, optimiert den Drehzahlregler</label>
 				<label xml:lang="nl">Motor EMP, optimaliseert de snelheidsregelaar</label>
+				<tooltip>&lt;html&gt;The pulse rate to the motor is halved when the bit is set.&lt;br&gt;This is an advantage for motors with high inductivity.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Die puls rate wird beim setzen des Bit halbiert. Dies ist&lt;br&gt; vorteilhaft bei Motoren mit hoher Induktivität.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De pul frequents wordt gehalveerd wanneer het bit is&lt;br&gt;ingeschakeld. Dit is voordelig voor motoren met hoge&lt;br&gt;inductie.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
 			<variable CV="6" item="Vmax Signal Mode" default="40" comment="Range 30-63">
 				<decVal min="30" max="63"/>
-				<label>Run Speed</label>
+				<label>Signal Run Speed</label>
 				<label xml:lang="de">Signal-Geschwindigkeit</label>
 				<label xml:lang="nl">Signaal snelheid</label>
+				<tooltip>&lt;html&gt;A value between 30 and 63 may be programmed. This defines how fast the &lt;br&gt;engine runs in signal mode after acceleration. This value affects the brake &lt;br&gt;distance as well as CV4, upper four bits. The higher this value the longer is &lt;br&gt;the brake distance. &lt;br&gt;(Range: 30-63, Default: 40) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Einen Wert zwischen 30 und 63 eingeben. Dieser Wert bestimmt wie &lt;br&gt;schnell die Lok bei signalbetrieb nach dem beschleunigen fährt. Dieser wert &lt;br&gt;ist neben CV4 auch am Anhalteweg mitbeteiligt. Je höher er ist, desto &lt;br&gt;weiter fährt die Lok beim Abbremsen.&lt;br&gt;(Bereich: 30-63, voreingestellt: 40) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Een waarde tussen 30 en 63 invoeren. Deze waarde bepaalt hoe snel de loc &lt;br&gt;bij signaal bedrijf na het accelereren zal rijden. Deze waarde is samen met  &lt;br&gt;CV4 betrokken bij de rem weg. Hoe hoger er is, hoe verder de locomotief &lt;br&gt;zal rijden bij het remmen.&lt;br&gt;(Bereik: 30-63, standaardinstelling: 40) &lt;/html&gt;</tooltip>
 				<comment>Range 30-63</comment>
 			</variable>
-			<variable CV="7" item="Decoder Version" readOnly="yes" default="59" include="ModelA">
-				<decVal/>
-				<label>Decoder Version No</label>
-				<label xml:lang="it">Versione Decoder: </label>
-				<label xml:lang="fr">Version décodeur: </label>
-				<label xml:lang="de">Decoder Version: </label>
-				<label xml:lang="nl">Decoder versie: </label>				
-			</variable>
-			<variable CV="7" item="Decoder Version" readOnly="yes" default="17" include="ModelB">
+			<variable CV="7" item="Decoder Version" readOnly="yes" default="59" include="ATL2051">
 				<decVal/>
 				<label>Decoder Version No</label>
 				<label xml:lang="it">Versione Decoder: </label>
 				<label xml:lang="fr">Version décodeur: </label>
 				<label xml:lang="de">Decoder Version: </label>
 				<label xml:lang="nl">Decoder versie: </label>
+				<tooltip>&lt;html&gt;Decoder Version&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Decoder Version&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Decoder versie&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="8" item="Manufacturer"    readOnly="yes" default="147">
+			<variable CV="7" item="Decoder Version" readOnly="yes" default="17" include="ATL2054">
+				<decVal/>
+				<label>Decoder Version No</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
+				<tooltip>&lt;html&gt;Decoder Version&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Decoder Version&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Decoder versie&lt;br&gt;&lt;/html&gt;</tooltip>
+			</variable>
+			<variable CV="8" item="Manufacturer" readOnly="yes" default="147">
 				<decVal/>
 				<label>Manufacturer ID</label>
 				<label xml:lang="it">ID Costruttore: </label>
 				<label xml:lang="fr">ID constructeur: </label>
 				<label xml:lang="de">Hersteller ID: </label>
 				<label xml:lang="nl">Fabrikanten ID: </label>
+				<tooltip>&lt;html&gt;ID 147 = UMELEC Ing. Büro&lt;br&gt; https://www.umelec.ch/hompa10.htm &lt;br&gt; umelec@netwings.ch &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;ID 147 = UMELEC Ing. Büro&lt;br&gt; https://www.umelec.ch &lt;br&gt; umelec@netwings.ch &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;ID 147 = UMELEC Ing. Büro&lt;br&gt; https://www.umelec.ch &lt;br&gt; umelec@netwings.ch &lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="9" item="Total PWM Period ATL2051"    default="17"  comment="Range 0-250, default is 17  on ATL2051" include="ModelA">
+			<variable CV="9" item="Total PWM Period ATL2051" default="17" comment="Range 0-250, default is 17 on ATL2051" include="ATL2051">
 				<decVal/>
 				<label>Total PWM Period</label>
 				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
 				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)</label>
 				<label xml:lang="nl">Periode PWM (Pulsbreedtemodulatie der Motoraansteuering)</label>
+				<tooltip>&lt;html&gt;This value influences the speed regulation behaviour of the &lt;br&gt;motor and should not be changed in general. &lt;br&gt;(Range: 0-250, 17) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Dieser Wert beeinflusst das regelverhalten des Motors und &lt;br&gt;braucht im allgemeinen nicht verstellt zu werden. &lt;br&gt;(Bereich: 0-250, voreingestellt: 17) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Deze waarde beïnvloedt de regelgedrag van de motor&lt;br&gt; en hoeft in het algemeen niet aangepast te worden. &lt;br&gt;(Bereik: 0-250, standaardinstelling: 17) &lt;/html&gt;</tooltip>
 				<comment>Range 0-250, default is 17 on ATL2051</comment>
 				</variable>
-			<variable CV="9" item="Total PWM Period ATL2054"    default="240" comment="Range 0-250, default is 240 on ATL2054" include="ModelB">
+			<variable CV="9" item="Total PWM Period ATL2054" default="240" comment="Range 0-250, default is 240 on ATL2054" include="ATL2054">
 				<decVal/>
 				<label>Total PWM Period</label>
 				<label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
 				<label xml:lang="de">Periode PWM (Pulsweitenmodulation der Motoransteuerung)</label>
 				<label xml:lang="nl">Periode PWM (Pulsbreedtemodulatie der Motoraansteuering)</label>
+				<tooltip>&lt;html&gt;The regulation may be refined by raising this value to about 252. But &lt;br&gt;there is an increasing tendency to unstable speed. Lower values down to &lt;br&gt;about 210 are recommended for rough motors.&lt;br&gt;(Range: 0-250, Default: 240) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Die Regelung kann verfeinert werden indem man den Wert bis etwa &lt;br&gt;252 erhöht. Allerdings besteht zunehmend die Tendenz zum Pendeln der &lt;br&gt;Drehzahl. Tiefere Werte bis etwa 210 sind eventuell bei ruppig laufenden &lt;br&gt;Motoren angebracht. &lt;br&gt;(Bereich: 0-250, voreingestellt: 240) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;De regeling kan worden verfijnd door het verhogen van de waarde tot &lt;br&gt;ongeveer 252. Nochtans, is er een stijgende tendens van een schommelende &lt;br&gt;de snelheid. De lagere waarden tot ongeveer 210 kunnen voor schokken &lt;br&gt;lopende motoren nodig zijn. &lt;br&gt;(Bereik: 0-250, standaardinstelling: 240) &lt;/html&gt;</tooltip>
 				<comment>Range 0-250, default is 240 on ATL2054</comment>
 			</variable>
-			<variable CV="10" item="Vmax ++Mode"                default="48"  comment="Range 30-63">
+			<variable CV="10" item="Vmax ++Mode" default="48" comment="Range 30-63">
 				<decVal/>
 				<label>Vmax ++Mode</label>
 				<label xml:lang="de">Vmax ++Modus</label>
 				<label xml:lang="nl">Vmax ++Modus</label>
+				<tooltip>&lt;html&gt; This value is used for the ++remote mode defining the highest speed. &lt;br&gt; This value has no influence in the speed step mode (with bit 0 of CV5 = 0). &lt;br&gt;(Range: 30-63, Default: 48) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt; Dieser Wert wird beim ++-Fernsteuermodus verwendet, um &lt;br&gt; eine maximale Geschwindigkeit festzulegen. Dieser Wert hat keinen Einfluss &lt;br&gt; im Fahrstufenmodus (falls CV5 Bit 0 = 0). &lt;br&gt;(Bereich: 30-63, voreingestellt: 48) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt; Deze warde wordt Gebruikt in + +afstandsbedieningsmodus &lt;br&gt; om een maximale snelheid in te stellen. Deze waarde heeft &lt;br&gt;geen effect op de snelheidstapmodus (als CV5 bit 0 = 0). &lt;br&gt;(Bereik: 30-63, standaardinstelling: 48) &lt;/html&gt;</tooltip>
 				<comment>Range 30-63</comment>
 			</variable>
-			<variable CV="11" item="Sound Group 1 Option 1"     default="64"  comment="Range 0-255, default is 64  on ATL2051" include="ModelA">
+			<variable CV="11" item="Sound Group 1 Option 2" default="64" comment="Range 0-255" include="ATL2051">
 				<decVal/>
 					<label>Steam Divider per wheel turn</label>
 					<label xml:lang="de">Dampftrigger</label>
 					<label xml:lang="nl">Stoom deler per wiel omdraaiing</label>
+					<tooltip>&lt;html&gt;This number determines the number of steam beats per speed&lt;br&gt;step and time unit. The correct value can only be determined&lt;br&gt;by trying it out. As a guideline, when driving slowly, four or six&lt;br&gt;steam beats per wheel must be heard.&lt;br&gt;(Range: 0-255, Default: 64) &lt;/html&gt;</tooltip>
+					<tooltip xml:lang="de">&lt;html&gt;Diese Zahl bestimmt die Anzahl Dampfstösse pro Fahrstufe und Zeiteinheit.&lt;br&gt;Den richtigen Wert können Sie nur durch Versuche ermitteln. Als Richtlinie&lt;br&gt;gilt, dass bei langsamer Fahrt vier bzw. sechs Dampfstösse pro Radumdrehung&lt;br&gt;ertönen sollen.&lt;br&gt;(Bereich: 0-255, 64) &lt;/html&gt;</tooltip>
+					<tooltip xml:lang="nl">&lt;html&gt;Dit getal bepaalt het aantal stoomslagen per snelheidsstap&lt;br&gt;en tijdseenheid. De juiste waarde kunnen zie alleen bepalen&lt;br&gt;door het uit te proberen. Als richtsnoer geldt dat bij langzaam&lt;br&gt;rijden er vier of zes stoomslagen per wiel omdring te horen&lt;br&gt;zijn moeten.&lt;br&gt;(Bereik: 0-255, standaardinstelling: 64) &lt;/html&gt;</tooltip>
 					<comment>Range 0-255, default is 64 on ATL2051</comment>
 			</variable>
-			<variable CV="11" item="Sound Group 1 Option 2"     default="127" comment="Range 0-255, default is 127 on ATL2054" include="ModelB">			
+			<variable CV="11" item="Sound Group 1 Option 2" default="127" comment="Range 0-255" include="ATL2054">
 				<decVal/>
 					<label>Steam Divider per wheel turn</label>
 					<label xml:lang="de">Dampftrigger</label>
 					<label xml:lang="nl">Stoom deler per wiel omdraaiing</label>
+					<tooltip>&lt;html&gt;This number determines the number of steam beats per speed&lt;br&gt;step and time unit. The correct value can only be determined&lt;br&gt;by trying it out. As a guideline, when driving slowly, four or six&lt;br&gt;steam beats per wheel must be heard.&lt;br&gt;(Range: 0-255, Default: 127) &lt;/html&gt;</tooltip>
+					<tooltip xml:lang="de">&lt;html&gt;Diese Zahl bestimmt die Anzahl Dampfstösse pro Fahrstufe und Zeiteinheit.&lt;br&gt;Den richtigen Wert können Sie nur durch Versuche ermitteln. Als Richtlinie&lt;br&gt;gilt, dass bei langsamer Fahrt vier bzw. sechs Dampfstösse pro Radumdrehung&lt;br&gt;ertönen sollen.&lt;br&gt;(Bereich: 0-255, voreingestellt: 127) &lt;/html&gt;</tooltip>
+					<tooltip xml:lang="nl">&lt;html&gt;Dit getal bepaalt het aantal stoomslagen per snelheidsstap&lt;br&gt;en tijdseenheid. De juiste waarde kunnen zie alleen bepalen&lt;br&gt;door het uit te proberen. Als richtsnoer geldt dat bij langzaam&lt;br&gt;rijden er vier of zes stoomslagen per wiel omdring te horen&lt;br&gt;zijn moeten.&lt;br&gt;(Bereik: 0-255, standaardinstelling: 127) &lt;/html&gt;</tooltip>
 					<comment>Range 0-255, default is 127 on ATL2054</comment>
 			</variable>
-			<variable CV="12" item="Sound Group 2 Option 1"     default="44"  comment="Range 44-63">
+			<variable CV="12" item="Sound Group 2 Option 1" default="44" comment="Range 44-63">
 				<decVal min="44" max="63"/>
-				<label>Whistle Tone Start Pointer 1 </label>
-				<label xml:lang="de">Pfeifton Start punkt 1 </label>
-				<label xml:lang="nl">Fluittoon start punt 1 </label>
+				<label>Whistle Tone, Start Pointer 1</label>
+				<label xml:lang="de">Pfeifton, Start punkt</label>
+				<label xml:lang="nl">Fluittoon, start punt</label>
+				<tooltip>&lt;html&gt;The whistle memory in CV45 to 64 can be divided into two blocks&lt;br&gt;for a two-tone-whistle. This number defines the first space of the&lt;br&gt;first block. In the case of a one-tone-whistle, this value has no effect.&lt;br&gt;(Range: 44-63, Default: 44) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Der Pfeifspeicher in CV45 bis 64 kann für eine zweitonpfeife in zwei&lt;br&gt;Blöcke unterteilt werden. Diese Zahl definiert den ersten Speicherplatz&lt;br&gt;des ersten Blockes. Bei Ein Tonpfeifen hat dieser Wert keinen Einfluss.&lt;br&gt;(Bereich: 44-63, voreingestellt: 44) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Het fluit geheugen in CV45 tot 64 kan worden onderverdeeld in twee&lt;br&gt;blokken voor een twee-toons-fluit. Dit getal definieert die eerste&lt;br&gt;geheugenplaats in het eerste blok. In het geval van een één-toons-fluit&lt;br&gt;heeft deze waarde geen effect.&lt;br&gt;(Bereik: 44-63, standaardinstelling: 44) &lt;/html&gt;</tooltip>
 				<comment>Range 44-63</comment>
 			</variable>
-			<variable CV="13" item="Sound Group 2 Option 2"     default="44"  comment="Range 44-63">
+			<variable CV="13" item="Sound Group 2 Option 2" default="44" comment="Range 44-63">
 				<decVal min="44" max="63"/>
-				<label>Whistle Tone Start Pointer 2 </label>
-				<label xml:lang="de">Pfeifton Start punkt 2 </label>
-				<label xml:lang="nl">Fluittoon start punt 2 </label>
+				<label>Whistle Tone, Start Pointer 2</label>
+				<label xml:lang="de">Pfeifton, Start punkt 2</label>
+				<label xml:lang="nl">Fluittoon, start punt 2</label>
+				<tooltip>&lt;html&gt;The whistle memory in CV45 to 64 can be divided into two blocks&lt;br&gt;for a second whistle. This number defines the first space of the&lt;br&gt;second block or the first space for the one tone-whistle.&lt;br&gt;(Range: 44-63, Default: 44) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Der Pfeifspeicher in CV45 bis 64 kann für eine zweitonpfeife in zwei&lt;br&gt;Blöcke unterteilt werden. Diese Zahl definiert den ersten Speicherplatz&lt;br&gt;des zweiten Blocks oder den Speicherplatz für den einzel-tön-pfeifen. &lt;br&gt;(Bereich: 44-63, voreingestellt: 44) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Het fluit geheugen in CV45 tot 64 kan worden onderverdeeld in twee blokken&lt;br&gt;voor een twee-toons-fluit. Dit getal definieert de eerste geheugenplaats&lt;br&gt;van het tweede blok of de eerste geheugenplaats van de één-toons-fluit.&lt;br&gt;(Bereik: 44-63, standaardinstelling: 44) &lt;/html&gt;</tooltip>
 				<comment>Range 44-63</comment>
 			</variable>
-			<variable CV="14" item="Function 1" mask="XXXXXXVV" default="0"   include="ModelB"> <!-- Function output C -->
+			<variable CV="14" item="Function 1" mask="XXXXXXVV" default="0" include="ATL2054"> <!-- Function output C -->
 				<enumVal>
 					<enumChoice choice="F1">
 						<choice> F1 </choice>
@@ -311,8 +367,11 @@
 				<label>Function output C (FET) on </label>
 				<label xml:lang="de">Funktion Ausgang C (FET) auf </label>
 				<label xml:lang="nl">Functie uitgang C (FET) op </label>
+				<tooltip>&lt;html&gt;Here you can choose, which Butten&lt;br&gt; you wants to use for output C.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier kann man wählen, welchen&lt;br&gt; Taste man für Ausgang C verwenden möchte.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier kan men kiezen, welke knop&lt;br&gt; men wil gebruiken voor uitgang C.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="14" item="Function 2" mask="XXXVVXXX" default="1"   include="ModelB"> <!-- Function output D -->
+			<variable CV="14" item="Function 2" mask="XXXVVXXX" default="1" include="ATL2054"> <!-- Function output D -->
 				<enumVal>
 					<enumChoice choice="F1">
 						<choice> F1 </choice>
@@ -330,11 +389,36 @@
 				<label>Function output D (CMOS) on </label>
 				<label xml:lang="de">Funktion Ausgang D (CMOS) auf </label>
 				<label xml:lang="nl">Functie uitgang D (CMOS) op </label>
+				<tooltip>&lt;html&gt;Here you can choose, which Butten&lt;br&gt; you wants to use for output D.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Hier kann man wählen, welchen&lt;br&gt; Taste man für Ausgang D verwenden möchte.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hier kan men kiezen, welke knop&lt;br&gt; men wil gebruiken voor uitgang D.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="14" item="Function 3" mask="XVVXXXXX" default="0"   include="ModelB"> <!-- Function output D Blink/Whistle/output -->
+			<variable CV="14" item="Function 3" mask="XXXXXVXX" default="0" include="ATL2054"> <!-- Function output C Blink/output -->
 				<enumVal>
 					<enumChoice choice="off">
-						<choice> - </choice>
+						<choice>Off</choice>
+						<choice xml:lang="de">Aus</choice>
+						<choice xml:lang="nl">Uit</choice>
+					</enumChoice>
+					<enumChoice choice="blink/flash">
+						<choice> blink/flash </choice>
+						<choice xml:lang="de"> Blinken/Blitzen </choice>
+						<choice xml:lang="nl">Knipperen/Flitsend </choice>
+					</enumChoice>
+				</enumVal>
+				<label>Function output C </label>
+				<label xml:lang="de">Funktion Ausgang C </label>
+				<label xml:lang="nl">Functie uitgang C </label>
+				<tooltip>&lt;html&gt;Or output C will blink/flash&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Oder Ausgang C Sol blink/Flash&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Of uitgang C zal knipperen/flitsen&lt;br&gt;&lt;/html&gt;</tooltip>
+			</variable>
+			<variable CV="14" item="Function 4" mask="XVVXXXXX" default="0" include="ATL2054"> <!-- Function output D Blink/Whistle/output -->
+				<enumVal>
+					<enumChoice choice="off">
+						<choice>Off</choice>
+						<choice xml:lang="de">Aus</choice>
+						<choice xml:lang="nl">Uit</choice>
 					</enumChoice>
 					<enumChoice choice="blink/flash">
 						<choice> blink/flash </choice>
@@ -350,28 +434,25 @@
 				<label>Function output D </label>
 				<label xml:lang="de">Funktion Ausgang D </label>
 				<label xml:lang="nl">Functie uitgang D </label>
+				<tooltip>&lt;html&gt;Or output D will blink/flash or whistle&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Oder Ausgang D Sol blink/Flash oder pfeife&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Of uitgang  D zal knipperen/flitsen of fluiten&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="14" item="Function 4" mask="VXXXXXXX" default="0"   include="ModelB"> <!-- Main switch -->
-				<enumVal>
-					<enumChoice choice="On">
-						<choice> On </choice>
-						<choice xml:lang="de"> Ein </choice>
-						<choice xml:lang="nl"> Aan </choice>
-					</enumChoice>
-					<enumChoice choice="Off">
-						<choice> Off </choice>
-						<choice xml:lang="de"> Aus </choice>
-						<choice xml:lang="nl"> Uit </choice>
-					</enumChoice>
-				</enumVal>
+			<variable CV="14" item="Function 5" mask="VXXXXXXX" default="0" include="ATL2054"> <!-- Main switch -->
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Main switch on F4</label>
 				<label xml:lang="de">Hauptschalter auf F4 </label>
 				<label xml:lang="nl">Hoofdschakelaar op F4 </label>
+				<tooltip>&lt;html&gt;this Bit switches the main switch off, so that&lt;br&gt; key F4 can be assigned to a function output.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Dieses Bit schaltet der Hauptschalter aus, sodass taste F4&lt;br&gt; ein Funktionsausgang  zugeordnet kann worden.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Dit bit schakelt de hoofdschakelaar uit, zodat de toets F4&lt;br&gt; kan worden toegewezen aan een functie-uitgang.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="15" item="Period"     mask="XXXXXVVV" default="1"   include="ModelB"> <!-- Blink/flash generator Period -->
+			<variable CV="15" item="Period" mask="XXXXXVVV" default="1" include="ATL2054"> <!-- Blink/flash generator Period -->
 				<enumVal>
 					<enumChoice choice="-">
-						<choice> - </choice>
+						<choice> Off </choice>
+						<choice xml:lang="de"> Aus </choice>
+						<choice xml:lang="nl"> Uit </choice>
 					</enumChoice>
 					<enumChoice choice="1800">
 						<choice> 1800 ms </choice>
@@ -398,8 +479,11 @@
 				<label>Period </label>
 				<label xml:lang="de">Zeitraum </label>
 				<label xml:lang="nl">Periode </label>
+				<tooltip>&lt;html&gt;Blink/flash generator. Definition of period. At delivery 1800 ms.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Blinkgenerator. Einstellen von Taktperiode. Bei Lieferung 1800 ms.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Blink generator. Instellen van de takt. Bij levering 1800 ms.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="15" item="Duty cycle" mask="VVVVVXXX" default="16"  include="ModelB"> <!-- Blink/flash generator Duty cycle-->
+			<variable CV="15" item="Duty cycle" mask="VVVVVXXX" default="16" include="ATL2054"> <!-- Blink/flash generator Duty cycle-->
 				<enumVal>	
 					<enumChoice choice="3%" value = "1">
 						<choice> 3% </choice>
@@ -426,264 +510,373 @@
 				<label>Duty cycle </label>
 				<label xml:lang="de">Einschaltdauer </label>
 				<label xml:lang="nl">Inschakeltijd </label>
+				<tooltip>&lt;html&gt;Blink/flash generator. Definition of duty cycle. At delivery 50%.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Blinkgenerator. Einstellen von Einschaltzeit. Bei Lieferung 50%.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Blink generator. Instellen van de insteltijd. Bij levering 50%.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<variable CV="16" item="Operation byte" readOnly="yes" default="160">
+			<variable CV="16" item="Operation byte" default="160">
 				<decVal min="160" max="160"/>
 				<label>Operation byte</label>
 				<label xml:lang="de">Betriebs Byte</label>
 				<label xml:lang="nl">Werking byte</label>
+				<tooltip>&lt;html&gt;This memory location is used by the program for its operation &lt;br&gt;status, so that an engine resumes its behaviour after a power &lt;br&gt;interruption, even without new packets. No inputs are needed. &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Dieser Speicherplatz wird vom Programm zur Speicherung der  &lt;br&gt;Betriebszustände gebraucht, damit die Lok nach Speisungsunterbruch  &lt;br&gt;die Funktionen auch ohne Telegramme an die Lok wieder richtig  &lt;br&gt;einstellt. Hier sind im Allgemeinen keine Eingaben erforderlich. &lt;br&gt; &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Deze geheugenplaats wordt gebruikt door het programma om &lt;br&gt;bedrijfstoestanden op te slaan, zodat de loc na stroomonderbreking, &lt;br&gt;de functies ook zelfs zonder telegrammen aan de loc correct instelt. &lt;br&gt;In het algemeen is geen invoer vereist. &lt;br&gt;&lt;/html&gt;</tooltip>
 				<comment>Range 160</comment>
 			</variable>
 			<!-- CV=19 -->
-			<variable CV="19" item="ConsistAddress"         mask="XVVVVVVV" default="0">
-				<decVal min="0" max="127"/>
-				<label>Advanced Consist Address</label>
+			<variable CV="19" item="Consist Address" default="0">
+				<decVal min="0" max="255"/>
+				<label>Consist Address</label>
 				<label xml:lang="it">Indirizzo Consist Avanzato</label>
 				<label xml:lang="fr">Addresse UM</label>
 				<label xml:lang="de">Verbundadresse</label>
-				<label xml:lang="cs">Adresa soupravy</label>
+				<label xml:lang="cs">Adresa soupravy </label>
 				<label xml:lang="nl">Multitractie-adres</label>
+				<tooltip>&lt;html&gt;Stores consist address. Range 0-255.&lt;br&gt;For compatibility reasons, do not set above 127.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="it">&lt;html&gt; Consist. Valori 0-255.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt; Das Verbundadresse. Grenzwerte 0-255.&lt;br&gt;Aus Kompatibilitätsgründe nicht über 127 setzen.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="cs">&lt;html&gt; adresu soupravy. Meze 0-255.&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt; Het Multitractie-adres. Grenswaarden 0-255.&lt;br&gt;Van wege compatibiliteitsredenen, niet boven 127 instellen.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<!--<variable CV="19" item="ConsistDirection"   mask="VXXXXXXX" default="0">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
-				<label>Locomotive Direction In Consist</label>
-				<label xml:lang="it">Direzione Loco nel Consist</label>
-				<label xml:lang="fr">Direction UM</label>
-				<label xml:lang="de">Verbund-Richtung</label>
-				<label xml:lang="cs">Směr lokomotivy v soupravě</label>
-				<label xml:lang="nl">Rijrichting Multitractie</label>
-			</variable>-->
 			<!-- CV=29 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
 			<variable CV="29" item="Speed Step Mode" mask="XXXXXXVX" default="1">
 				<enumVal>
 					<enumChoice choice="14 speed step mode">
 						<choice xml:lang="de">14 Fahrstufen Modus</choice>
-						<choice xml:lang="nl">14 rijstappen modus</choice>
+						<choice xml:lang="nl">14 rij stappen modus</choice>
 					</enumChoice>
 					<enumChoice choice="28 speed step mode">
 						<choice>28 speed step mode</choice>
 						<choice xml:lang="de">28 Fahrstufen Modus</choice>
-						<choice xml:lang="nl">28 rijstappen modus</choice>
+						<choice xml:lang="nl">28 rij stappen modus</choice>
 					</enumChoice>
 				</enumVal>
 				<label>Speed Steps</label>
 				<label xml:lang="de">Fahrstufen</label>
 				<label xml:lang="nl">Rij stappen</label>
-				<tooltip>Sets the Speed Step mode in</tooltip>
-				<tooltip xml:lang="de">Setzt den Fahrstufenmodus in</tooltip>
-				<tooltip xml:lang="nl">Hiermee stelt u de rijstappenmodus in</tooltip>
+				<tooltip>&lt;html&gt;Sets the Speed Step,&lt;br&gt;and can affect certain light effects..&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="cs">&lt;html&gt;Nastaví režim rychlostních kroků,&lt;br&gt; může mít také vliv na některé efekty .&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Setzt den Fahrstufenmodus und &lt;br&gt;und kann bestimmte Lichteffekte beeinflussen..&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="fr">&lt;html&gt;Règle les Pas de vitesse pour le moteur;&lt;br&gt; peut aussi influencer certains réglages de .&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="it">&lt;html&gt;Seleziona Step Velocità motore,&lt;br&gt; potrebbe avere effetti sulle .&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Hiermee stelt u de rijstappenmodus in en&lt;br&gt;kan invloed hebben op bepaalde lichteffecten.&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
 			<variable CV="29" item="Speed Table Definition" mask="XXXVXXXX" default="0">
 				<enumVal>
 					<enumChoice choice="Don't use Speed Table, use Start Voltage (Vstart)">
 						<choice>Use bild-in Speed Table </choice>
 						<choice xml:lang="de">Interne Geschwindigkeitstabelle verwenden </choice>
-						<choice xml:lang="nl">Gebruik interne snelheidstabel </choice>
+						<choice xml:lang="nl">Gebruik interne snelheid's tabel </choice>
 					</enumChoice>
 					<enumChoice choice="Use Speed Table">
 						<choice>Use Speed Table (CV30 - CV43, CV44)</choice>
 						<choice xml:lang="de">Geschw.-Kennlinie nutzen (CV30 - CV43, CV44)</choice>
-						<choice xml:lang="nl">Gebruik de snelheidsgrafiek (CV30 - CV43, CV44)</choice>
+						<choice xml:lang="nl">Gebruik de snelheid's grafiek (CV30 - CV43, CV44)</choice>
 					</enumChoice>
 				</enumVal>
-				<label>                    </label>
-				<label xml:lang="de">                     </label>
-				<label xml:lang="nl">                     </label>
+				<label>speed curve</label>
+				<label xml:lang="de">Fahrkurve</label>
+				<label xml:lang="nl">Rij curve</label>
 			</variable>
-			<variable CV="29" item="Speed control"          mask="XVXXXXXX" default="0">
+			<variable CV="29" item="Speed control" mask="XVXXXXXX" default="0">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Speed control</label>
 				<label xml:lang="de">Drehzahlregelung</label>
-				<label xml:lang="nl">Toerentalregeling</label>
+				<label xml:lang="nl">Toerental regeling</label>
+				<tooltip>&lt;html&gt;Switches off the speed control. May be used for consist.&lt;br&gt; Use programmed speed curve to align locos (CV2, CV30-44) &lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Schaltet Drehzahlregelung aus,&lt;br&gt; z.B. für Verbundadresse.&lt;br&gt; Loks gegenseitig abstimmen (CV2, CV30-44)&lt;br&gt;&lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Schakelt de snelheidsregeling uit,&lt;br&gt; bijvoorbeeld voor Multi tractie adres.&lt;br&gt; Locs op elkaar afstemmen (CV2, CV30-44)&lt;br&gt;&lt;/html&gt;</tooltip>
 			</variable>
-			<!-- Non-Standard Speed Table -->
+			<!-- Non-voreingestellt Speed Table -->
 			<variable CV="30" item="Speed Table" comment="Range 1-63">
 				<speedTableVal min="1" max="63" entries="14"/>
-				<label>Speed Table (CV30-CV43)</label>
-				<label xml:lang="de">Einstellbare Fahrkurve (CV30-CV43)</label>
-				<label xml:lang="nl">Instelbare snelheidstabel (CV30-CV43)</label>
+				<label>                                                     Speed Table (CV30-43) (1-63)</label>
+				<label xml:lang="de">                                                             Einstellbare Fahrkurve (CV30-43) (1-63)</label>
+				<label xml:lang="nl">                                                             Instelbare snelheid’s tabel (CV30-43) (1-63)</label>
 			</variable>
-			<variable CV="44" item="Speed Table 15" comment="Range 1-126" default="29">
+			<variable CV="30" item="Speed Table 1" comment="Range 1-63" default="1">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 1</label>
+				<label xml:lang="de">Fahrstufe 1</label>
+				<label xml:lang="nl">Snelheid's stap 1</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="31" item="Speed Table 2" comment="Range 1-63" default="3">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 2</label>
+				<label xml:lang="de">Fahrstufe 2</label>
+				<label xml:lang="nl">Snelheid's stap 2</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="32" item="Speed Table 3" comment="Range 1-63" default="5">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 3</label>
+				<label xml:lang="de">Fahrstufe 3</label>
+				<label xml:lang="nl">Snelheid's stap 3</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="33" item="Speed Table 4" comment="Range 1-63" default="7">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 4</label>
+				<label xml:lang="de">Fahrstufe 4</label>
+				<label xml:lang="nl">Snelheid's stap 4</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="34" item="Speed Table 5" comment="Range 1-63" default="9">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 5</label>
+				<label xml:lang="de">Fahrstufe 5</label>
+				<label xml:lang="nl">Snelheid's stap 5</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="35" item="Speed Table 6" comment="Range 1-63" default="11">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 6</label>
+				<label xml:lang="de">Fahrstufe 6</label>
+				<label xml:lang="nl">Snelheid's stap 6</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="36" item="Speed Table 7" comment="Range 1-63" default="13">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 7</label>
+				<label xml:lang="de">Fahrstufe 7</label>
+				<label xml:lang="nl">Snelheid's stap 7</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="37" item="Speed Table 8" comment="Range 1-63" default="15">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 8</label>
+				<label xml:lang="de">Fahrstufe 8</label>
+				<label xml:lang="nl">Snelheid's stap 8</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="38" item="Speed Table 9" comment="Range 1-63" default="17">
+				<decVal min="1" max="126"/>
+				<label>Speed Step 9</label>
+				<label xml:lang="de">Fahrstufe 9</label>
+				<label xml:lang="nl">Snelheid's stap 9</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="39" item="Speed Table 10" comment="Range 1-63" default="21">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 10</label>
+				<label xml:lang="de">Fahrstufe 10</label>
+				<label xml:lang="nl">Snelheid's stap 10</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="40" item="Speed Table 11" comment="Range 1-63" default="25">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 11</label>
+				<label xml:lang="de">Fahrstufe 11</label>
+				<label xml:lang="nl">Snelheid's stap 11</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="41" item="Speed Table 12" comment="Range 1-63" default="29">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 12</label>
+				<label xml:lang="de">Fahrstufe 12</label>
+				<label xml:lang="nl">Snelheid's stap 12</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="42" item="Speed Table 13" comment="Range 1-63" default="35">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 13</label>
+				<label xml:lang="de">Fahrstufe 13</label>
+				<label xml:lang="nl">Snelheid's stap 13</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="43" item="Speed Table 14" comment="Range 1-63" default="41">
+				<decVal min="1" max="63"/>
+				<label>Speed Step 14</label>
+				<label xml:lang="de">Fahrstufe 14</label>
+				<label xml:lang="nl">Snelheid's stap 14</label>
+				<comment>Range 1-63</comment>
+			</variable>
+			<variable CV="44" item="Speed Table 15" comment="Range 1-126" default="49">
 				<decVal min="1" max="126"/>
 				<label>Speed Step 15</label>
 				<label xml:lang="de">Fahrstufe 15</label>
-				<label xml:lang="nl">Snelheidsstap 15</label>
+				<label xml:lang="nl">Snelheid's stap 15</label>
+				<tooltip>&lt;html&gt;Speed Step 15 is required &lt;br&gt;to calculate step 28&lt;br&gt;(Range: 1-126, Default: 49) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Fahrstufe 15 ist erforderlich,&lt;br&gt; um stufe 28 zu berechnen&lt;br&gt;(Bereich: 1-126, voreingestellt: 49) &lt;/html&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Snelheid's stap 15 is nodig om stap 28 te berekenen&lt;br&gt;&lt;(Bereik: 1-126, standaardinstelling: 49) &lt;/html&gt;</tooltip>
 				<comment>Range 1-126</comment>
 			</variable>
 			<!-- Whistle Table -->
-			<variable CV="45" item="Sound Group 3 Option 1"  comment="Range 0-255" default="0">
+			<variable CV="45" item="Sound Group 3 Option 1" comment="Range 0-255" default="0">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 1  (44) </label>
-				<label xml:lang="de">Pfeif Speicher 1  (44) </label>
-				<label xml:lang="nl">Fluit geheugen 1  (44) </label>
+				<label>Whistle Memory 1</label>
+				<label xml:lang="de">Pfeif Speicher 1</label>
+				<label xml:lang="nl">Fluit geheugen 1</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="46" item="Sound Group 3 Option 2"  comment="Range 0-255" default="255">
+			<variable CV="46" item="Sound Group 3 Option 2" comment="Range 0-255" default="255">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 2  (45) </label>
-				<label xml:lang="de">Pfeif Speicher 2  (45) </label>
-				<label xml:lang="nl">Fluit geheugen 2  (45) </label>
+				<label>Whistle Memory 2</label>
+				<label xml:lang="de">Pfeif Speicher 2</label>
+				<label xml:lang="nl">Fluit geheugen 2</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="47" item="Sound Group 3 Option 3"  comment="Range 0-255" default="128">
+			<variable CV="47" item="Sound Group 3 Option 3" comment="Range 0-255" default="128">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 3  (46) </label>
-				<label xml:lang="de">Pfeif Speicher 3  (46) </label>
-				<label xml:lang="nl">Fluit geheugen 3  (46) </label>
+				<label>Whistle Memory 3</label>
+				<label xml:lang="de">Pfeif Speicher 3</label>
+				<label xml:lang="nl">Fluit geheugen 3</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="48" item="Sound Group 3 Option 4"  comment="Range 0-255" default="252">
+			<variable CV="48" item="Sound Group 3 Option 4" comment="Range 0-255" default="252">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 4  (47) </label>
-				<label xml:lang="de">Pfeif Speicher 4  (47) </label>
-				<label xml:lang="nl">Fluit geheugen 4  (47) </label>
+				<label>Whistle Memory 4</label>
+				<label xml:lang="de">Pfeif Speicher 4</label>
+				<label xml:lang="nl">Fluit geheugen 4</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="49" item="Sound Group 3 Option 5"  comment="Range 0-255" default="15">
+			<variable CV="49" item="Sound Group 3 Option 5" comment="Range 0-255" default="15">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 5  (48) </label>
-				<label xml:lang="de">Pfeif Speicher 5  (48) </label>
-				<label xml:lang="nl">Fluit geheugen 5  (48) </label>
+				<label>Whistle Memory 5</label>
+				<label xml:lang="de">Pfeif Speicher 5</label>
+				<label xml:lang="nl">Fluit geheugen 5</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="50" item="Sound Group 3 Option 6"  comment="Range 0-255" default="231">
+			<variable CV="50" item="Sound Group 3 Option 6" comment="Range 0-255" default="231">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 6 (49) </label>
-				<label xml:lang="de">Pfeif Speicher 6  (49) </label>
-				<label xml:lang="nl">Fluit geheugen 6  (49) </label>
+				<label>Whistle Memory 6</label>
+				<label xml:lang="de">Pfeif Speicher 6</label>
+				<label xml:lang="nl">Fluit geheugen 6</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="51" item="Sound Group 3 Option 7"  comment="Range 0-255" default="65">
+			<variable CV="51" item="Sound Group 3 Option 7" comment="Range 0-255" default="65">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 7 (50) </label>
-				<label xml:lang="de">Pfeif Speicher 7  (50) </label>
-				<label xml:lang="nl">Fluit geheugen 7  (50) </label>
+				<label>Whistle Memory 7</label>
+				<label xml:lang="de">Pfeif Speicher 7</label>
+				<label xml:lang="nl">Fluit geheugen 7</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="52" item="Sound Group 3 Option 8"  comment="Range 0-255" default="243">
+			<variable CV="52" item="Sound Group 3 Option 8" comment="Range 0-255" default="243">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 8 (51) </label>
-				<label xml:lang="de">Pfeif Speicher 8  (51) </label>
-				<label xml:lang="nl">Fluit geheugen 8  (51) </label>
+				<label>Whistle Memory 8</label>
+				<label xml:lang="de">Pfeif Speicher 8</label>
+				<label xml:lang="nl">Fluit geheugen 8</label>
 				<comment>Range 0-255</comment>
 			</variable>
-			<variable CV="53" item="Sound Group 3 Option 9"  comment="Range 0-255" default="120">
+			<variable CV="53" item="Sound Group 3 Option 9" comment="Range 0-255" default="120">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 9  (52) </label>
-				<label xml:lang="de">Pfeif Speicher 9  (52) </label>
-				<label xml:lang="nl">Fluit geheugen 9  (52) </label>
+				<label>Whistle Memory 9</label>
+				<label xml:lang="de">Pfeif Speicher 9</label>
+				<label xml:lang="nl">Fluit geheugen 9</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="54" item="Sound Group 3 Option 10" comment="Range 0-255" default="31">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 10 (53) </label>
-				<label xml:lang="de">Pfeif Speicher 10 (53) </label>
-				<label xml:lang="nl">Fluit geheugen 10 (53) </label>
+				<label>Whistle Memory 10</label>
+				<label xml:lang="de">Pfeif Speicher 10</label>
+				<label xml:lang="nl">Fluit geheugen 10</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="55" item="Sound Group 3 Option 11" comment="Range 0-255" default="0">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 11 (54) </label>
-				<label xml:lang="de">Pfeif Speicher 11 (54) </label>
-				<label xml:lang="nl">Fluit geheugen 11 (54) </label>
+				<label>Whistle Memory 11</label>
+				<label xml:lang="de">Pfeif Speicher 11</label>
+				<label xml:lang="nl">Fluit geheugen 11</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="56" item="Sound Group 3 Option 12" comment="Range 0-255" default="255">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 12 (55) </label>
-				<label xml:lang="de">Pfeif Speicher 12 (55) </label>
-				<label xml:lang="nl">Fluit geheugen 12 (55) </label>
+				<label>Whistle Memory 12</label>
+				<label xml:lang="de">Pfeif Speicher 12</label>
+				<label xml:lang="nl">Fluit geheugen 12</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="57" item="Sound Group 3 Option 13" comment="Range 0-255" default="0">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 13 (56) </label>
-				<label xml:lang="de">Pfeif Speicher 13 (56) </label>
-				<label xml:lang="nl">Fluit geheugen 13 (56) </label>
+				<label>Whistle Memory 13</label>
+				<label xml:lang="de">Pfeif Speicher 13</label>
+				<label xml:lang="nl">Fluit geheugen 13</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="58" item="Sound Group 3 Option 14" comment="Range 0-255" default="252">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 14 (57) </label>
-				<label xml:lang="de">Pfeif Speicher 14 (57) </label>
-				<label xml:lang="nl">Fluit geheugen 14 (57) </label>
+				<label>Whistle Memory 14</label>
+				<label xml:lang="de">Pfeif Speicher 14</label>
+				<label xml:lang="nl">Fluit geheugen 14</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="59" item="Sound Group 3 Option 15" comment="Range 0-255" default="31">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 15 (58) </label>
-				<label xml:lang="de">Pfeif Speicher 15 (58) </label>
-				<label xml:lang="nl">Fluit geheugen 15 (58) </label>
+				<label>Whistle Memory 15</label>
+				<label xml:lang="de">Pfeif Speicher 15</label>
+				<label xml:lang="nl">Fluit geheugen 15</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="60" item="Sound Group 3 Option 16" comment="Range 0-255" default="135">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 16 (59) </label>
-				<label xml:lang="de">Pfeif Speicher 16 (59) </label>
-				<label xml:lang="nl">Fluit geheugen 16 (59) </label>
+				<label>Whistle Memory 16</label>
+				<label xml:lang="de">Pfeif Speicher 16</label>
+				<label xml:lang="nl">Fluit geheugen 16</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="61" item="Sound Group 3 Option 17" comment="Range 0-255" default="192">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 17 (60) </label>
+				<label>Whistle Memory 17</label>
 				<comment>Range 0-255</comment>
-				<label xml:lang="de">Pfeif Speicher 17 (60) </label>
-				<label xml:lang="nl">Fluit geheugen 17 (60) </label>
+				<label xml:lang="de">Pfeif Speicher 17</label>
+				<label xml:lang="nl">Fluit geheugen 17</label>
 			</variable>
 			<variable CV="62" item="Sound Group 3 Option 18" comment="Range 0-255" default="255">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 18 (61) </label>
+				<label>Whistle Memory 18</label>
 				<comment>Range 0-255</comment>
-				<label xml:lang="de">Pfeif Speicher 18 (61) </label>
-				<label xml:lang="nl">Fluit geheugen 18 (61) </label>
+				<label xml:lang="de">Pfeif Speicher 18</label>
+				<label xml:lang="nl">Fluit geheugen 18</label>
 			</variable>
 			<variable CV="63" item="Sound Group 3 Option 19" comment="Range 0-255" default="96">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 19 (62) </label>
-				<label xml:lang="de">Pfeif Speicher 19 (62) </label>
-				<label xml:lang="nl">Fluit geheugen 19 (62) </label>
+				<label>Whistle Memory 19</label>
+				<label xml:lang="de">Pfeif Speicher 19</label>
+				<label xml:lang="nl">Fluit geheugen 19</label>
 				<comment>Range 0-255</comment>
 			</variable>
 			<variable CV="64" item="Sound Group 3 Option 20" comment="Range 0-255" default="127">
 				<decVal min="0" max="255"/>
-				<label>Whistle Memory 20 (63) </label>
-				<label xml:lang="de">Pfeif Speicher 20 (63) </label>
-				<label xml:lang="nl">Fluit geheugen 20 (63) </label>
+				<label>Whistle Memory 20</label>
+				<label xml:lang="de">Pfeif Speicher 20</label>
+				<label xml:lang="nl">Fluit geheugen 20</label>
 				<comment>Range 0-255</comment>
 			</variable>
 		</variables>	
 	</decoder>
 	<pane nameFmt="label"> <!-- Consist mode -->
+		<name>Consist</name>
+		<name xml:lang="ca">Multi-Tracció</name>
+		<name xml:lang="cs">Soupravy</name>
+		<name xml:lang="da">Consist (Forspand)</name>
+		<name xml:lang="de">Consist (Mehrfachtraktion)</name>
+		<name xml:lang="fr">Multi-Traction</name>
+		<name xml:lang="it">Consist (Multi-Trazione)</name>
+		<name xml:lang="nl">Multi-tractie</name>
 		<column>
-			<display item="ConsistAddress" layout="left" format="default"/>
-			<display item="ConsistDirection" layout="left" format="default"/>
+			<row>
+				<display item="Consist Address" layout="left" format="hslider"/>
+				<display item="Consist Address" layout="left" format="default" label=""/>
+			</row>
 			<label>
-				<text>  </text>
+			<text>  </text>
 			</label>
 			<separator/>
 			<label>
-				<text>The additional functions are always</text>
-				<text xml:lang="de">Die Zusatzfunktionen werden immer nur</text>
-				<text xml:lang="nl">De extrafuncties worden altijd </text>
-			</label>
-			<label>
-				<text>addressed via the own address</text>
-				<text xml:lang="de">über die eigene Adresse angesprochen</text>
-				<text xml:lang="nl">aangesproken via het eigen adres</text>
+				<text>The additional functions und the direction are always addressed via the own address</text>
+				<text xml:lang="de">Die Zusatzfunktionen und die Fahrtrichtung werden immer nur über die eigene Adresse angesprochen</text>
+				<text xml:lang="nl">De extrafuncties en rijrichting worden altijd aangesproken via het eigen adres</text>
 			</label>
 		</column>
-		<name>Consist Address</name>
-		<name xml:lang="de">Verbundadresse</name>
-		<name xml:lang="nl">Multi-tractie</name>
 	</pane>
 	<pane nameFmt="label"> <!-- Speed Table -->
-				<column>
-			<!-- BEGIN Start options grid(s)  -->
-			<label>
-				<text> </text>
-			</label>
+		<name>Speed Table</name>
+		<name xml:lang="de">Geschwindigkeitkenlinnie</name>
+		<name xml:lang="nl">Snelheidsgrafiek</name>
+		<column>
 			<grid gridy="NEXT" weightx="1" ipadx="10">
 				<griditem gridx="0" gridy="0" gridwidth="1">
 					<label>
@@ -692,12 +885,12 @@
 						<text xml:lang="nl">Selecteer om onderstaande snelheidsgrafiek toe te passen</text>
 					</label>
 				</griditem>
-				<griditem>
+				<griditem gridx="0" gridy="1" gridwidth="1">
 					<row>
-						<display item="Speed Table Definition" format="onradiobutton"/>
+						<display item="Speed Table Definition" format="onradiobutton" label=""/>
 					</row>
 				</griditem>
-				<griditem>
+				<griditem gridx="0" gridy="2" gridwidth="1">
 					<label>
 						<text>To turn off, use Basic Speed Control pane</text>
 						<text xml:lang="de">Zum Deselektieren, die lasche Geschwindigkeit aktivieren</text>
@@ -708,18 +901,21 @@
 			<label>
 				<text> </text>
 			</label>
-			<display item="Speed Table" layout="above"/>
-			<!-- END Start options grid(s)  -->
+			<label>
+				<text> </text>
+			</label>
+			<row>
+				<display item="Speed Table" layout="above"/>
+			</row>
 			<separator/>
 			<label>
 				<text>  </text>
 			</label>
-			<!-- Start 2 grid(s)  -->
 			<grid>
 				<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
 					<display item="Speed Step Mode" layout="left" format="default"/>
 				</griditem>
-				<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+				<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
 					<row>
 						<display item="Speed Table 15" layout="left" format="hslider"/>
 						<display item="Speed Table 15" layout="left" label=""/>
@@ -730,132 +926,130 @@
 						<text>     </text>
 					</label>
 				</griditem>
-				<griditem gridx="2" gridy="0" gridwidth="1" anchor="LINE_START">
+				<griditem gridx="2" gridy="0" gridwidth="1" gridheight="3" anchor="LINE_START">
 					<label>
-						<text>In 14-step-mode, these 14 values correspond directly to the speed steps. In the 28-step-mode, these 14 values apply to the</text>
-						<text xml:lang="de">Im 14-Stufen-Modus entsprechen diese 14 werte direkt den Geschwindigkeitsstufen. Beim 28-Stufen-Modus gelten diese 14</text>
-						<text xml:lang="nl">In de 14-stappen-modus corresponderen deze 14 waarden rechtstreeks met de snelheid stappen. In de 28-stape-modus zijn </text>
-					</label>
-				</griditem>
-				<griditem gridx="2" gridy="1" gridwidth="1" anchor="LINE_START">
-					<label>
-						<text>ungraded levels 1, 3, 5,…, The even steps 2, 4, 6,… are then calculated from the mean value from the adjacent steps. The</text>
-						<text xml:lang="de">Werte für die ungraden Stufen 1, 3, 5, … die geraden Stufen 2, 4, 6,. ergeben sich dann als Mittelwert aus den benachbarten</text>
-						<text xml:lang="nl">deze 14 waarden van toepassing op de oneven stappen 1, 3, 5,…, de even stappen 2, 4, 6, … word dan uit de aangrenzende</text>
-					</label>
-				</griditem>
-				<griditem gridx="2" gridy="2" gridwidth="1" anchor="LINE_START">
-					<label>
-						<text>value for Speed step 14 corresponds to the 28 mode of step 27. Therefore, in this case, the module still needs a 15de value</text>
-						<text xml:lang="de">Stufen. Der Wert für Fahrstufe 14 entspricht im 28-mode der stufe 27. Deshalb benötigt das Modul in diesem Fall noch einen</text>
-						<text xml:lang="nl">stappen de gemiddelde waarde berekent. De waarde voor stap 14 komt in de 28-modus overeen met stap 27. Daarom heeft</text>
-					</label>
-				</griditem>
-				<griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_START">
-					<label>
-						<text>so that level 28 can be calculated. Value 15 may need to be higher than 63 for level 28 to be calculated.</text>
-						<text xml:lang="de">15de wert, damit Stufe 28 berechnet werden kann. kann. Wert 15 muss eventuell höher als 63 sein, damit Stufe 28 berechnet</text>
-						<text xml:lang="nl">de module in dit geval nog een 15de waarde nodig, zodat stap 28 kan worden berekend. Waarde 15 moet eventueel hoger</text>
-					</label>
-				</griditem>	
-				<griditem gridx="2" gridy="4" gridwidth="1" anchor="LINE_START">
-					<label>
-						<text></text>
-						<text xml:lang="de">werden kann.</text>
-						<text xml:lang="nl">zijn dan 63 voor het berekenen van stap 28.</text>
+						<text>&lt;html&gt;In 14-step-mode, these 14 values correspond directly to the speed steps. In the 28-step-mode, these 14 values apply to the&lt;br&gt;ungraded levels 1, 3, 5,…, The even steps 2, 4, 6,… are then calculated from the mean value from the adjacent steps. The&lt;br&gt;value for Speed step 14 corresponds to the 28 mode of step 27. Therefore, in this case, the module still needs a 15de value&lt;br&gt;so that level 28 can be calculated. Value 15 may need to be higher than 63 for level 28 to be calculated.&lt;/html&gt;</text>
+						<text xml:lang="de">&lt;html&gt;Im 14-Stufen-Modus entsprechen diese 14 werte direkt den Geschwindigkeitsstufen. Beim 28-Stufen-Modus gelten diese 14&lt;br&gt;Werte für die ungraden Stufen 1, 3, 5, … die geraden Stufen 2, 4, 6,. ergeben sich dann als Mittelwert aus den benachbarten&lt;br&gt;Stufen. Der Wert für Fahrstufe 14 entspricht im 28-mode der stufe 27. Deshalb benötigt das Modul in diesem Fall noch einen&lt;br&gt;15de wert, damit Stufe 28 berechnet werden kann. kann. Wert 15 muss eventuell höher als 63 sein, damit Stufe 28 berechnet&lt;br&gt;werden kann.&lt;/html&gt;</text>
+						<text xml:lang="nl">&lt;html&gt;In de 14-stappen-modus corresponderen deze 14 waarden rechtstreeks met de snelheid stappen. In de 28-stape-modus zijn&lt;br&gt;deze 14 waarden van toepassing op de oneven stappen 1, 3, 5,…, de even stappen 2, 4, 6, … word dan uit de aangrenzende&lt;br&gt;stappen de gemiddelde waarde berekent. De waarde voor stap 14 komt in de 28-modus overeen met stap 27. Daarom heeft&lt;br&gt;de module in dit geval nog een 15de waarde nodig, zodat stap 28 kan worden berekend. Waarde 15 moet eventueel hoger&lt;br&gt;zijn dan 63 voor het berekenen van stap 28.&lt;/html&gt;</text>
 					</label>
 				</griditem>
 			</grid>
 		</column>
-		<name>Speed Table</name>
-		<name xml:lang="de">Fahrstufe Tabelle</name>
-		<name xml:lang="nl">Snelheidsgrafiek</name>
 	</pane>
-	<pane nameFmt="label" include="ModelB"> <!-- Function assignment -->
+	<pane nameFmt="label" include="ATL2054"> <!-- Function assignment -->
+		<name>Function Map</name>
+		<name xml:lang="ca">Mapejat de funcions</name>
+		<name xml:lang="cs">Přiřazení funkcí</name>
+		<name xml:lang="da">Funktions Indstillinger</name>
+		<name xml:lang="de">Funktionszuordnung</name>
+		<name xml:lang="fr">Carte des Fonctions</name>
+		<name xml:lang="it">Mappa Funzioni</name>
+		<name xml:lang="nl">Funktietoewijzing</name>
 		<column>
 			<label>
-				<text>This memory location contains bits for the definition</text>
-				<text xml:lang="de">Dieser Speicherplatz enthält Bits zur Definition</text>
-				<text xml:lang="nl">Deze geheugenlocatie bevat bits voor de definitie van</text>
-			</label>
-			<label>
-				<text>of the functional outputs on the ATL2054 module</text>
-				<text xml:lang="de">der Funktion Ausgänge des ATL2054-Moduls</text>
-				<text xml:lang="nl">de functionele uitgangen op de ATL2054 module</text>
-			</label>
-			<separator/>
-			<label>
 				<text>  </text>
 			</label>
 			<row>
-				<label>
-					<text>Function mapping</text>
-					<text xml:lang="de">Funktionszuordnung</text>
-					<text xml:lang="nl">Functie mapping</text>
-				</label>
+			<column>
+				<row>
+					<column>
+						<label>
+							<text>  </text>
+						</label>
+						<row>
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Function output mapping&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Funktion Ausgang zuordnen&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Functie uitgang toewijzen&lt;/html&gt;</text>
+							</label>
+						</row>
+						<label>
+							<text>  </text>
+						</label>
+						<display item="Function 1" layout="left" format="default"/>
+						<display item="Function 2" layout="left" format="default"/>
+					</column>
+					<column>
+						<label>
+							<text>  </text>
+						</label>
+					</column>
+					<separator/>
+					<column>
+						<label>
+							<text>  </text>
+						</label>
+					</column>
+					<column>
+						<row>
+							<label>
+								<text>  </text>
+							</label>
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Function mapping&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Funktion zuordnen&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Functie toewijzen&lt;/html&gt;</text>
+							</label>
+						</row>
+						<label>
+							<text>  </text>
+						</label>
+						<display item="Function 3" layout="left" format="default"/>
+						<display item="Function 4" layout="left" format="default"/>
+						<display item="Function 5" layout="left" format="default"/>
+						<label>
+							<text>  </text>
+						</label>
+					</column>
+				</row>
+				<separator/>
+				<row>
+					<column>
+						<label>
+							<text>  </text>
+						</label>
+						<row>
+						<label>
+							<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Blink-/Flash-generator&lt;/html&gt;</text>
+							<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Blink-/Flash-Generators&lt;/html&gt;</text>
+							<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Blink-/Flits-Generator&lt;/html&gt;</text>
+						</label>
+						</row>
+						<label>
+							<text>  </text>
+						</label>
+							<display item="Period" format="default"/>
+							<display item="Duty cycle" format="default"/>
+						<label>
+							<text>  </text>
+						</label>
+					</column>
+				</row>
+				<separator/>
+			</column>
 			</row>
-			<separator/>
-			<display item="Function 1" layout="left" format="default"/>
-			<display item="Function 2" layout="left" format="default"/>
-			<display item="Function 3" layout="left" format="default"/>
-			<display item="Function 4" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>This value drives the period and the duty</text>
-				<text xml:lang="de">Dieser Wert steuert den Zeitraum und den</text>
-				<text xml:lang="nl">Deze waarde stuurt de periode en de arbeid</text>
-			</label>
-			<label>
-				<text>cycle of the blink/flash generator in CV14</text>
-				<text xml:lang="de">Einschaltzyklus des Blink/Flash-Generators in CV14</text>
-				<text xml:lang="nl">cyclus van de Blink/Flash Generator in CV14</text>
-			</label>
-			<label>
-				<text>Only for ATL2054 modules)</text>
-				<text xml:lang="de">Nur beim Modul 2054 wirksam</text>
-				<text xml:lang="nl">Werkt alleen bij het 2054 module</text>
-			</label>
-			<separator/>
-			<label>
-				<text>  </text>
-			</label>
-			<row>
-				<label>
-					<text>Blink Generator</text>
-					<text xml:lang="de">Blinkgenerator</text>
-					<text xml:lang="nl">Flitsgenerator</text>
-				</label>
-			</row>
-			<separator/>
-				<display item="Period" format="default"/>
-				<display item="Duty cycle" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
 		</column>
-		<name>Function assignment</name>
-		<name xml:lang="de">Funktion Zuordnung</name>
-		<name xml:lang="nl">Functietoewijzing</name>
 	</pane>
 	<pane nameFmt="label"> <!-- ATLPlus -->
+		<name>ATLPlus</name>
 		<column>
-			<label>
-		<text>CV>5, Configuration byte ATL, Defines special ATL functions</text>
-		<text xml:lang="de">CV 5, ATL Konfiguration byte, Definiert spezielle ATL-Funktionen</text>
-		<text xml:lang="nl">CV 5, ATL Configuratie byte, Definieert speciale ATL-Functies</text>
-			</label>
-			<separator/>
-			<label>
-				<text>  </text>
-			</label>
+			<row>
+				<column>
+					<label>
+						<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;ATL Configuration  (CV 5),&lt;/html&gt;</text>
+						<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;ATL Konfiguration (CV 5),&lt;/html&gt;</text>
+						<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;ATL Configuratie (CV 5),&lt;/html&gt;</text>
+					</label>
+					<label>
+						<text>&lt;html&gt;Defines special ATL functions&lt;/html&gt;</text>
+						<text xml:lang="de">&lt;html&gt;Definiert spezielle ATL-Funktionen&lt;/html&gt;</text>
+						<text xml:lang="nl">&lt;html&gt;Definieert speciale ATL-Functies&lt;/html&gt;</text>
+					</label>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+			</row>
 			<display item="ATL-A" layout="left" format="default"/>
 			<display item="ATL-B" layout="left" format="default"/>
 			<display item="ATL-C" layout="left" format="default"/>
@@ -867,215 +1061,3127 @@
 			<label>
 				<text>  </text>
 			</label>
-			<display item="Vmax ++Mode" layout="left" format="default"/>			
-		</column>
-		<name>ATLPlus</name>
-	</pane>
-	<pane nameFmt="label"> <!-- Motor -->
-		<column>
-			<display item="Vstart" layout="left" format="default"/>
+			<separator/>
 			<label>
 				<text>  </text>
 			</label>
-			<display item="Accel Normal" layout="left" format="default"/>
-			<display item="Decel Normal" layout="left" format="default"/>
-				<label>
-				<text>  </text>
-			</label>     
-			<display item="Total PWM Period ATL2051" layout="left" format="default"/>
-			<display item="Total PWM Period ATL2054" layout="left" format="default"/>
+			<display item="Vmax ++Mode" layout="left" format="default"/>
 			<label>
 				<text>  </text>
 			</label>
-			<display item="ATL-H" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
-			<display item="Speed control" layout="left" format="default"/>	
+			<separator/>
 			<label>
 				<text>  </text>
 			</label>
 			<display item="Operation byte" layout="left" format="default"/>	
 		</column>
-	<name>Motor</name>
+	</pane>
+	<pane nameFmt="label"> <!-- Motor -->
+		<name>Motor</name>
+		<column>
+			<grid gridy="NEXT" weightx="1" ipadx="10">
+				<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Vstart" layout="left" format="default"/>
+						<display item="Vstart" layout="left" format="hslider" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+					<label>
+						<text>  </text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Accel Normal" layout="left" format="default"/>
+						<display item="Accel Normal" layout="left" format="hslider" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Decel Normal" layout="left" format="default"/>
+						<display item="Decel Normal" layout="left" format="hslider" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+					<label>
+						<text>  </text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Total PWM Period ATL2051" layout="left" format="default"/>
+						<display item="Total PWM Period ATL2051" layout="left" format="hslider" label=""/>
+						<display item="Total PWM Period ATL2054" layout="left" format="default"/>
+						<display item="Total PWM Period ATL2054" layout="left" format="hslider" label=""/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+					<label>
+						<text>  </text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="ATL-H" layout="left" format="default"/>
+					</row>
+				</griditem>
+				<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+					<label>
+						<text>  </text>
+					</label>
+				</griditem>
+				<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+					<row>
+						<display item="Speed control" layout="left" format="default"/>
+					</row>
+				</griditem>
+			</grid>
+		</column>
 	</pane>
 	<pane nameFmt="label"> <!-- Signal Mode -->
+		<name>Signal Mode (ABC)</name>
+		<name xml:lang="de">Signal Modes (ABC)</name>
+		<name xml:lang="nl">Signaal modes (ABC)</name>
 		<column>
-				<display item="ATL-C" layout="left" format="default"/>
+			<row>
+				<column>
+					<display item="ATL-C" layout="left" format="default"/>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+			</row>
+			<separator/>
 			<label>
 				<text>  </text>
 			</label>
 			<label>
-				<text>Parameters employed in Signal Mode only</text>
-				<text xml:lang="de">Parameter, die nur im Signal Modus verwendet werden</text>
-				<text xml:lang="nl">Alleen in de signaal modus gehanteerde parameters</text>
+				<text>  </text>
+			</label>
+			<row>
+				<column>
+					<label>
+						<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Parameters employed in Signal Mode only&lt;/html&gt;</text>
+						<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Parameter, die nur im Signal Modus verwendet werden&lt;/html&gt;</text>
+						<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Alleen in de signaal modus gehanteerde parameters&lt;/html&gt;</text>
+					</label>
+				</column>
+			</row>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<column>
+					<grid gridy="next" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+							<display item="Accel Signal" layout="left" format="default"/>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+							<display item="Decel Signal" layout="left" format="default"/>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+							<row>
+								<label>
+									<text>Run speed</text>
+									<text xml:lang="de">Geschwindigkeit</text>
+									<text xml:lang="nl">Snelheid</text>
+								</label>
+								<display item="Vmax Signal Mode" layout="left" format="default" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="1" gridy="0" gridwidth="1" anchor="LINE_END">
+							<display item="Accel Signal" layout="right" format="hslider" label=""/>
+						</griditem>
+						<griditem gridx="1" gridy="1" gridwidth="1" anchor="LINE_END">
+							<display item="Decel Signal" layout="right" format="hslider" label=""/>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="1" anchor="LINE_END">
+							<display item="Vmax Signal Mode" layout="right" format="hslider" label=""/>
+						</griditem>
+					</grid>
+				</column>
+			</row>
+			<label>
+				<text>  </text>
 			</label>
 			<separator/>
 			<label>
-				<text/>
-			</label>
-			<display item="Accel Signal" layout="left" format="default"/>
-			<display item="Decel Signal" layout="left" format="default"/>
-			<label>
 				<text>  </text>
 			</label>
-			<label>
-				<text>  </text>
-			</label>			
-			<label>
-				<text>Additionale parameters for Signal mode</text>
-				<text xml:lang="de">Zusätzliche Parameter für den Signal Modus</text>
-				<text xml:lang="nl">Extra parameters voor signaal modus</text>
-			</label>
-			<separator/>
-				<display item="ATL-B" layout="left" format="default"/>
-				<display item="ATL-G" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
+			<row>
+				<column>
+					<label>
+						<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Additionale parameter for Signal mode&lt;/html&gt;</text>
+						<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Zusätzliche Parameter für den Signal Modus&lt;/html&gt;</text>
+						<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Extra parameter voor signaal modus&lt;/html&gt;</text>
+					</label>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+			</row>
+			<row>
+				<column>
+					<display item="ATL-B" layout="left" format="default"/>
+					
+				</column>
+			</row>
 		</column>
-		<name>Signal Mode</name>
-		<name xml:lang="de">Signal Modes</name>
-		<name xml:lang="nl">Signaal modes</name>
-		
 	</pane>
 	<pane nameFmt="label"> <!-- Sound -->
-		<column>
-			<display item="ATL-F" layout="left" format="default"/>
-			<display item="Sound Group 1 Option 1" layout="left" format="default"/>
-			<display item="Sound Group 1 Option 2" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
-			<separator/>
-			<label>
-				<text>  </text>
-			</label>
-			<display item="ATL-E" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
-			<separator/>
-			<label>
-				<text>  </text>
-			</label>
-			<display item="ATL-D" layout="left" format="default"/>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>The whistle memory from CV45 to 64 is divided in</text>
-				<text xml:lang="de">Die Pfeife Speicher von CV45 bis 64 ist für in</text>
-				<text xml:lang="nl">Het Fluit geheugen van CV45 tot 64 is voor</text>
-			</label>
-			<label>
-				<text>two blocks for a two-tone whistle.</text>
-				<text xml:lang="de">zwei Tons-Pfeife in zwei Blöcke aufgeteilt.</text>
-				<text xml:lang="nl">tweetoons-fluit verdeeld in twee blokken.</text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>For single-tone whistles The starting point</text>
-				<text xml:lang="de">Für Eintönige-Pfeifen wird dem Start punkt 1</text>
-				<text xml:lang="nl">Voor ééntoons-fluit wordt het start punt 1</text>
-			</label>
-			<label>
-				<text>1 is not used.</text>
-				<text xml:lang="de">nicht verwendet.</text>
-				<text xml:lang="nl">niet gebruikt.</text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
-				<display item="Sound Group 2 Option 1" layout="left" format="default"/>
-				<display item="Sound Group 2 Option 2" layout="left" format="default"/>
-		</column>
-		<column>
-			<row>
-				<display item="Sound Group 3 Option 1" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 1" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 2" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 2" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 3" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 3" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 4" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 4" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 5" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 5" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 6" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 6" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 7" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 7" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 8" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 8" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 9" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 9" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 10" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 10" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 11" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 11" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 12" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 12" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 13" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 13" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 14" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 14" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 15" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 15" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 16" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 16" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 17" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 17" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 18" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 18" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 19" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 19" layout="left" label=""/>
-			</row>
-			<row>
-				<display item="Sound Group 3 Option 20" layout="left" format="hslider"/>
-				<display item="Sound Group 3 Option 20" layout="left" label=""/>
-			</row>
-		</column>
 		<name>Sound</name>
 		<name xml:lang="de">Sound</name>
 		<name xml:lang="nl">Geluid</name>
+		<column>
+			<row>
+				<column>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2" anchor="LINE_END">
+							<display item="ATL-E" layout="left" format="default"/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 1 Option 2" layout="left" format="default"/>
+								<display item="Sound Group 1 Option 2" layout="left" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+					<separator/>
+					<separator/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<display item="ATL-D" layout="left" format="default"/>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;The whistle Register from CV45&lt;br&gt;to 64 is divided in two blocks for&lt;br&gt;a two-tone whistle.&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;Das Pfeife Register von CV45 bis&lt;br&gt;64 ist für die Zwei-Töne-Pfeife in &lt;br&gt;zwei Blöcke aufgeteilt.&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;Het Fluit register van CV45 t.e.m&lt;br&gt;64 is voor die Tweetonige-fluit&lt;br&gt;verdeeld in twee blokken.&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 2 Option 1" layout="left" format="default"/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<display item="Sound Group 2 Option 2" layout="left" format="default"/>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;For single-tone-whistle starting&lt;br&gt;point 1 is not used.&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;Für Einzeltöne-Pfeifen wird dem&lt;br&gt;Start punkt 1 nicht verwendet.&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;Voor eentonige-fluit wordt het&lt;br&gt;start punt 1 niet gebruikt.&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<label>
+								<text>&lt;html&gt;For a three-tone-whistle, starting&lt;br&gt;points 1 and 2 are set to 44.&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;Bei einer Drei-Töne-Pfeife&lt;br&gt;werden die Startpunkten 1 und&lt;br&gt;2 auf 44 gesetzt.&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;Voor een drietonige-fluit wordt&lt;br&gt;startpunten 1 en 2 ingesteld&lt;br&gt;op 44.&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text> </text>
+							</label>
+						</griditem>
+					</grid>
+					<separator/>
+					<separator/>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="3">
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Whistle Register&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Pfeif Register&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Fluit register&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="3">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="3">
+							<label>
+								<text>(0-255)</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="2" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Default</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 1" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 1" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 2" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 2" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 3" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 3" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>128</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 4" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 4" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 5" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 5" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 6" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 6" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>231</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 7" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 7" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>65</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 8" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 8" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>231</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 9" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 9" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 10" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 10" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 11" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 11" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 12" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 12" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 13" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 13" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="16" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 14" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 14" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="16" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="17" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 15" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 15" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="17" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="18" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 16" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 5" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="18" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="19" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 17" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 17" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="19" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="20" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 18" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 18" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="20" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="21" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 19" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 19" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="21" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>96</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="22" gridwidth="2" anchor="LINE_END">
+							<row>
+								<display item="Sound Group 3 Option 20" layout="left" format="hslider"/>
+								<display item="Sound Group 3 Option 20" layout="left" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="2" gridy="22" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+					</grid>
+					<label>
+						<text>    </text>
+					</label>
+				</column>
+				<separator/>
+				<separator/>
+				<column>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="23">
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;Single-tone-whistle&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Einzeltöne-Pfeife&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;één-toons-fluit&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="1" gridwidth="2" anchor="">
+							<label>
+								<text>Start Pointer</text>
+								<text xml:lang="de">Start Punkt</text>
+								<text xml:lang="nl">Start punt</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="1" gridwidth="20" anchor="">
+							<label>
+								<text>Whistle Memory</text>
+								<text xml:lang="de">Pfeif Speicher</text>
+								<text xml:lang="nl">Fluit geheugen </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>Frequency</text>
+								<text xml:lang="de">Frequenz</text>
+								<text xml:lang="de">Frequentie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>4</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>5</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>6</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="2" gridwidth="1" anchor="">
+							<label>
+						<text>8</text>
+					</label>
+				</griditem>
+						<griditem gridx="11" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>9</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>10</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>11</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>12</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>13</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>14</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>16</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>17</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>18</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>19</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="2" gridwidth="1" anchor="">
+							<label>
+								<text>20</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1" anchor="">
+							<label>
+								<text>4545</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="3" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="3" gridwidth="1" anchor="">
+							<label>
+								<text>85</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="">
+							<label>
+								<text>3030</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="4" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="4" gridwidth="1" anchor="">
+							<label>
+								<text>109</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="4" gridwidth="1" anchor="">
+							<label>
+								<text>182</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="4" gridwidth="1" anchor="">
+							<label>
+								<text>219</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="">
+							<label>
+								<text>2273</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="5" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+							</griditem>
+						<griditem gridx="22" gridy="5" gridwidth="1" anchor="">
+							<label>
+								<text>51</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>1818</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>59</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>206</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>115</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>165</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="6" gridwidth="1" anchor="">
+							<label>
+								<text>231</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="">
+							<label>
+								<text>1515</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="7" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="7" gridwidth="1" anchor="">
+							<label>
+								<text>28</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="7" gridwidth="1" anchor="">
+							<label>
+								<text>113</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="7" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>1299</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>30</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>227</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="8" gridwidth="1" anchor="">
+							<label>
+								<text>243</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="">
+							<label>
+								<text>1136</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="9" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="9" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>1010</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>55</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>135</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>195</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>225</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>124</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>62</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="10" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>909</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>59</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>193</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>124</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="11" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>826</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>53</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>224</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>131</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>126</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>193</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="12" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="">
+							<label>
+								<text>758</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="13" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="13" gridwidth="1" anchor="">
+								<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="13" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="13" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>699</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>51</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>245</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>129</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>244</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="14" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>649</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="15" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>606</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>49</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>254</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>224</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>128</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="16" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="17" gridwidth="1" anchor="">
+							<label>
+								<text>568</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="17" gridwidth="1" anchor="">
+							<label>
+								<text>62</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="17" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="17" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>535</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>47</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>128</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>224</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>254</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="18" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>505</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>55</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="19" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>478</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>45</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>224</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>128</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>254</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="20" gridwidth="1" anchor="">
+								<label>
+									<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="20" gridwidth="1" anchor="">
+							<label>
+									<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="20" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>455</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>59</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="21" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>413</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>53</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="22" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="23" gridwidth="1" anchor="">
+							<label>
+								<text>379</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="23" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="23" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="23" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="23" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>350</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>51</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="24" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>325</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="25" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>303</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>49</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="26" gridwidth="1" anchor="">
+							<label>
+									<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="26" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>Frequency</text>
+								<text xml:lang="de">Frequenz</text>
+								<text xml:lang="de">Frequentie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>4</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>5</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>6</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>8</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>9</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>10</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>11</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>12</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>13</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>14</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>16</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>17</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>18</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>19</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="27" gridwidth="1" anchor="">
+							<label>
+								<text>20</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="28" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+					<separator/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="28" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="29" gridwidth="23">
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;two-tone-whistle&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Zwei-Töne-Pfeifen&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Tweetonige-fluit&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="30" gridwidth="2" anchor="">
+							<label>
+								<text>Start Pointer</text>
+								<text xml:lang="de">Start Punkt</text>
+								<text xml:lang="nl">Start punt</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="30" gridwidth="20" anchor="">
+							<label>
+								<text>Whistle Memory</text>
+								<text xml:lang="de">Pfeif Speicher</text>
+								<text xml:lang="nl">Fluit geheugen </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>Frequency</text>
+								<text xml:lang="de">Frequenz</text>
+								<text xml:lang="de">Frequentie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>4</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>5</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>6</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>8</text>
+								</label>
+						</griditem>
+						<griditem gridx="11" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>9</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>10</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>11</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>12</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>13</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>14</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>16</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>17</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>18</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>19</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="31" gridwidth="1" anchor="">
+							<label>
+								<text>20</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>1818 / 1515</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>56</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>59</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>28</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>113</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="32" gridwidth="1" anchor="">
+					<label>
+						<text>57</text>
+					</label>
+				</griditem>
+						<griditem gridx="19" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>206</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>115</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>156</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="32" gridwidth="1" anchor="">
+							<label>
+								<text>231</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>1515 / 1299</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>54</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>30</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>227</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>143</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>28</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>113</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="33" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>1299 / 1136</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>56</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>30</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>227</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="34" gridwidth="1" anchor="">
+							<label>
+								<text>143</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>1136 / 1010</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>54</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>135</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>195</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>225</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>124</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>62</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="35" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>1399 / 1299</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>50</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>56</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>30</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>227</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>143</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>28</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>112</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>195</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="36" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>1515 / 1363</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>56</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>61</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>14</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>60</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>112</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>227</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>28</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>113</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="37" gridwidth="1" anchor="">
+							<label>
+								<text>199</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>758 / 699</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>54</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>254</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>129</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>224</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="38" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>2273 / 2020</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>54</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>57</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>156</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>206</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>103</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>51</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="39" gridwidth="1" anchor="">
+							<label>
+						<text>153</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>204</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>230</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>115</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="39" gridwidth="1" anchor="">
+							<label>
+								<text>51</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="40" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+					<separator/>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="41" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="42" gridwidth="23">
+							<label>
+								<text>&lt;html&gt;&lt;b&gt;&lt;u&gt;three-tone-whistle&lt;/html&gt;</text>
+								<text xml:lang="de">&lt;html&gt;&lt;b&gt;&lt;u&gt;Drei-Töne-Pfeifen&lt;/html&gt;</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;b&gt;&lt;u&gt;Drietonige-fluit&lt;/html&gt;</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="43" gridwidth="2" anchor="">
+							<label>
+								<text>Start Pointer</text>
+								<text xml:lang="de">Start Punkt</text>
+								<text xml:lang="nl">Start punt</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="43" gridwidth="20" anchor="">
+							<label>
+								<text>Whistle Memory</text>
+								<text xml:lang="de">Pfeif Speicher</text>
+								<text xml:lang="nl">Fluit geheugen </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>Frequency</text>
+								<text xml:lang="de">Frequenz</text>
+								<text xml:lang="de">Frequentie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>1</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>2</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>4</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>5</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>6</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>8</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>9</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>10</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>11</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>12</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>13</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>14</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>16</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>17</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>18</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>19</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="44" gridwidth="1" anchor="">
+							<label>
+								<text>20</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>505 / 568 / 699</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>112</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>248</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>254</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>241</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>4</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="45" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>478 / 568 / 758</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>48</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>7</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>63</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>3</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>240</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>251</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="46" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>568 / 699 / 909</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="2" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>44</text>
+							</label>
+						</griditem>
+						<griditem gridx="3" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="4" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="5" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>128</text>
+							</label>
+						</griditem>
+						<griditem gridx="6" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="7" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>15</text>
+							</label>
+						</griditem>
+						<griditem gridx="8" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>231</text>
+							</label>
+						</griditem>
+						<griditem gridx="9" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>65</text>
+							</label>
+						</griditem>
+						<griditem gridx="10" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>243</text>
+							</label>
+						</griditem>
+						<griditem gridx="11" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>120</text>
+							</label>
+						</griditem>
+						<griditem gridx="12" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="13" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="14" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="15" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>0</text>
+							</label>
+						</griditem>
+						<griditem gridx="16" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>252</text>
+							</label>
+						</griditem>
+						<griditem gridx="17" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>31</text>
+							</label>
+						</griditem>
+						<griditem gridx="18" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>135</text>
+							</label>
+						</griditem>
+						<griditem gridx="19" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>192</text>
+							</label>
+						</griditem>
+						<griditem gridx="20" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>255</text>
+							</label>
+						</griditem>
+						<griditem gridx="21" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>96</text>
+							</label>
+						</griditem>
+						<griditem gridx="22" gridy="47" gridwidth="1" anchor="">
+							<label>
+								<text>127</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="48" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+			</row>
+			<separator/>
+			<separator/>
+		</column>
 	</pane>
 </decoder-config>

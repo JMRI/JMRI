@@ -23,8 +23,20 @@
         <surname>Kuhn</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2019-07-28</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Simplified productID for PD05 and PD12: no more version indicated</revremark>
+    </revision>
     <revision>
       <revnumber>1</revnumber>
       <date>2016-12-14</date>
@@ -32,7 +44,7 @@
       <revremark>merge different CV137-files</revremark>
     </revision>
   </revhistory>
-  <variable CV="137" item="SUSI mode" mask="XXXXXXXV" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable CV="137" item="SUSI mode" mask="XXXXXXXV" exclude="PD05A,PD12A">
     <enumVal>
       <enumChoice choice="Activated" value="0">
         <choice>Activated</choice>
@@ -62,7 +74,7 @@
     <label xml:lang="ca">Desactiva estalvi d'energia</label>
     <tooltip>bit 1</tooltip>
   </variable>
-  <variable CV="137" item="Revert SUSI direction" mask="XXXXXVXX" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable CV="137" item="Revert SUSI direction" mask="XXXXXVXX" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Revert SUSI direction</label>
     <label xml:lang="fr">Inverser sens de marche SUSI</label>
@@ -70,14 +82,14 @@
 	    <label xml:lang="ca">nverteix sentit SUSI</label>
     <tooltip>bit 2</tooltip>
   </variable>
-  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable CV="137" item="Deactivate SUSI startup delay" mask="XXXXVXXX" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Deactivate SUSI startup delay</label>
     <label xml:lang="fr">Désactiver délai de départ SUSI</label>
     <label xml:lang="de">SUSI­Anfahrverzögerung ausschalten</label>
     <tooltip>bit 3</tooltip>
   </variable>
-  <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable CV="137" item="Extended mapping" mask="XXXVXXXX" exclude="PD05A,PD12A">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Extended mapping</label>
     <label xml:lang="de">Erweiterte Funktionszuordnung</label>
@@ -85,7 +97,7 @@
     <tooltip>bit4</tooltip>
     <tooltip xml:lang="de">Erweiterte Funktionszuordnungen aktivieren</tooltip>
   </variable>
-  <variable CV="137" item="AUX on ZCLK" mask="XXVXXXXX" exclude="PD12A_2016.03,PD12A_2016.06">
+  <variable CV="137" item="AUX on ZCLK" mask="XXVXXXXX" exclude="PD05A,PD12A">
     <!--xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/-->
     <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
      <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">

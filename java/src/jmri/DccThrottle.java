@@ -23,28 +23,20 @@ public interface DccThrottle extends Throttle {
     // always positive.
     public float getSpeedIncrement();
 
-    // Handle Speed Step Information
-    // There are 4 valid speed step modes
-    public static final int SpeedStepMode128 = 1;
-    public static final int SpeedStepMode28 = 2;
-    public static final int SpeedStepMode27 = 4;
-    public static final int SpeedStepMode14 = 8;
-    public static final int SpeedStepMode28Mot = 16;
-
     /**
      * Set the speed step value. Default should be 128 speed step mode in most
      * cases
      *
      * @param Mode the current speed step mode
      */
-    public void setSpeedStepMode(int Mode);
+    public void setSpeedStepMode(SpeedStepMode Mode);
 
     /**
      * Get the current speed step value.
      *
      * @return the current speed step mode
      */
-    public int getSpeedStepMode();
+    public SpeedStepMode getSpeedStepMode();
 
     // information on consisting  (how do we set consisting?)
     // register for notification

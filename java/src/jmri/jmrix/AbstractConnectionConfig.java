@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -27,7 +28,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
-    @SuppressWarnings("deprecation")  // two temporary references during migration
     public AbstractConnectionConfig() {
         try {
             // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
@@ -41,11 +41,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                         setToolTipText(null);
                     }
                     super.setValue(value);
-                    // check for legacy, and if so paint red (will have not gotten here if not valid)
-                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) { // temporary reference during migration, see @SuppressWarnings above
-                        setBackground(java.awt.Color.RED);
-                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
-                    }                    
                 }
                 
                 @Override
@@ -56,11 +51,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                         setToolTipText(null);
                     }
                     super.setText(value);
-                    // check for legacy, and if so paint red (will have not gotten here if not valid)
-                    if (jmri.Manager.isLegacySystemPrefix(value)) { // temporary reference during migration, see @SuppressWarnings above
-                        setBackground(java.awt.Color.RED);
-                        setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
-                    }                    
                 }
             };
             
@@ -110,7 +100,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     protected JPanel _details = null;
 
-    protected final HashMap<String, Option> options = new HashMap<>();
+    protected final Map<String, Option> options = new TreeMap<>();
 
     /**
      * Determine if configuration needs to be written to disk.
@@ -144,7 +134,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
-	    JLabel label = null;
+        JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;
@@ -295,6 +285,6 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConnectionConfig.class);
 
 }

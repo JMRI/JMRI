@@ -9,7 +9,6 @@ import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -28,7 +27,6 @@ import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.swing.NcePanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Ken Cameron Copyright (C) 2007
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  */
-public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, NceListener {
+public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceListener {
 
     public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;
@@ -605,7 +603,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRatio != nceLastRatio) {
                 if (log.isDebugEnabled()) {
-                    log.debug("NCE Change Rate from cab: prior vs last: " + priorNceRatio + " vs " + nceLastRatio);
+                    log.debug("NCE Change Rate from cab: prior vs last: {} vs {}", priorNceRatio, nceLastRatio);
                 }
                 rateNce.setText("" + nceLastRatio);
                 nceSyncInitStateCounter = 1;
@@ -616,7 +614,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         if (clockMode == SYNCMODE_NCE_MASTER) {
             if (priorClockReadPacket != null && priorNceRunning != nceLastRunning) {
                 if (log.isDebugEnabled()) {
-                    log.debug("NCE Stop/Start: prior vs last: " + priorNceRunning + " vs " + nceLastRunning);
+                    log.debug("NCE Stop/Start: prior vs last: {} vs {}", priorNceRunning, nceLastRunning);
                 }
                 if (nceLastRunning) {
                     nceSyncInitStateCounter = 1;
@@ -1196,7 +1194,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             try {
                 internalClock.setRate(newInternalRate);
                 if (log.isDebugEnabled()) {
-                    log.debug("changing internal rate: " + newInternalRate);
+                    log.debug("changing internal rate: {}", newInternalRate);
                 }
             } catch (TimebaseRateException e) {
                 log.error("recomputeNceSync: Failed setting new internal rate: {}", newInternalRate);
@@ -1385,7 +1383,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                         diffTime = nceTime;
                     }
                     if (log.isDebugEnabled()) {
-                        log.debug("new diffTime: " + diffTime + " = " + nceTime + " - " + intTime);
+                        log.debug("new diffTime: {} = {} - {}", diffTime, nceTime, intTime);
                     }
                     // save error to array
                     while (priorDiffs.size() >= MAX_ERROR_ARRAY) {

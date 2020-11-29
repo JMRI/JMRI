@@ -1,11 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Graphics;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 /**
  * This class provides a concrete implementation of the Abstract Editor 
@@ -19,8 +15,7 @@ import java.awt.event.MouseMotionListener;
  * @author Paul Bender Copyright (c) 2016
  *
  */
-public class EditorScaffold extends Editor implements MouseListener, MouseMotionListener,
-        ActionListener, KeyListener, java.beans.VetoableChangeListener {
+public class EditorScaffold extends Editor {
 
     public EditorScaffold() {
         this("foo");

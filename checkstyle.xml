@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Check Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!--
+    Checkstyle-Configuration: JMRI
+    Description: Checkstyle configuration for JMRI
+-->
+<module name="Checker">
+  <!-- default severity is warning to not fail in CI -->
+  <!-- individual checks that should fail in CI have error severity -->
+  <property name="severity" value="warning"/>
+  <module name="SuppressWarningsFilter"/>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <!-- do not check images -->
+    <property name="fileNamePattern" value=".*(gif|png)$"/>
+  </module>
+  <module name="TreeWalker">
+    <module name="SuppressWarningsHolder"/>
+    <module name="RedundantImport">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="UnusedImports"/>
+    <module name="PackageDeclaration">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="UpperEll">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="InterfaceIsType"/>
+    <module name="MissingOverride">
+      <property name="severity" value="error"/>
+    </module>
+    <module name="Regexp">
+      <!-- Flag uses of FindBugs NonNull that need to be javax.annotations.Nonnull -->
+      <property name="format" value="edu\.umd\.cs\.findbugs\.annotations\.NonNull"/>
+      <property name="illegalPattern" value="true"/>
+      <property name="severity" value="error"/>
+      <!-- message is appended to "Line matches the illegal pattern " -->
+      <property name="message" value="edu.umd.cs.findbugs.annotations.NonNull (replace with javax.annotations.Nonnull)" />
+    </module>
+    <module name="Regexp">
+      <!-- Flag uses of e.g. {0} in a logging statement (should be {} )  -->
+      <!-- the attribute takes the regex string, without Java quoting, then uses the Java regex support -->
+      <property name="format" value="log\..*\(.*\{[0-9][0-9]*}"/>
+      <property name="illegalPattern" value="true"/>
+      <property name="severity" value="error"/>
+      <!-- message is appended to "Line matches the illegal pattern " -->
+      <property name="message" value="{digit} in logging call, should be {}" />
+    </module>
+  </module>
+  <module name="FileTabCharacter">
+    <property name="severity" value="error"/>
+    <property name="eachLine" value="true"/>
+    <property name="fileExtensions" value="java"/>
+  </module>
+  <module name="NewlineAtEndOfFile">
+    <property name="severity" value="error"/>
+    <property name="lineSeparator" value="lf"/>
+    <property name="fileExtensions" value="java, xml, py"/>
+  </module>
+  <!-- disable newline at end of file check for JHelpDev generated content -->
+  <module name="SuppressionSingleFilter">
+    <property name="checks" value="NewlineAtEndOfFile"/>
+    <property name="files" value="help\/(en|fr)/JmriHelp_(en|fr)(Index|TOC)\.xml$"/>
+  </module>
+  <!-- from https://stackoverflow.com/questions/32903412/how-to-tell-checkstyle-to-check-all-lines-for-linefeed-newline-lf-and-not-crlf/33000451 -->
+  <module name="RegexpMultiline">
+    <property name="format" value="\r\n"/>
+    <property name="message" value="CRLF line endings are prohibited"/>
+  </module> 
+  <!-- disable warnings for existing interfaces that are not types -->
+  <!-- serves as example of suppressing a check against a Regex of files -->
+  <module name="SuppressionSingleFilter">
+    <property name="checks" value="InterfaceIsType"/>
+    <property name="files" value="(\/ussctc\/|\/rps\/)Constants.java$"/>
+  </module>
+  <!-- disable package name check on sample package-info.java -->
+  <module name="SuppressionSingleFilter">
+    <property name="checks" value="PackageDeclaration"/>
+    <property name="files" value="java\/package-info.java$"/>
+  </module>
+</module>

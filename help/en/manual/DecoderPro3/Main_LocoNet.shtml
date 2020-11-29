@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>LocoNet Menu</title><!-- Style -->
+  <title>LocoNet Menu</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,15 +15,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
@@ -548,7 +548,7 @@
       interface. If you're using a PR3, it needs to be put into
       "Programmer mode" before trying to download, see the main
       <a target="_blank" href=
-      "http://jmri.org/help/en/html/hardware/loconet/PR3.shtml">PR3
+      "https://jmri.org/help/en/html/hardware/loconet/PR3.shtml">PR3
       page</a>.</p>
 
       <p>Digitrax provides sample sound project files at their
@@ -558,10 +558,10 @@
       additional tools there.</p>
 
       <p>JMRI also provides tools for <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
+      "https://jmri.org/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
       editing sound project files</a> to include new sounds and
       even to <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
+      "https://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
       change the sound logic</a>. When you first select the
       Download Sounds tool, it opens a dialog with most of the
       controls disabled:<br>
@@ -630,7 +630,7 @@
 
         <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
         "index.shtml"></a></p>
-      </div><!--#include virtual="/Footer" -->
+      </div><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
