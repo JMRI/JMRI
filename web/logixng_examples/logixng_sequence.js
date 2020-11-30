@@ -1,5 +1,5 @@
 var throttleSpeed = 0;		// The speed of the train
-var throtteForward = true;	// The direction of the train
+var throttleForward = true;	// The direction of the train
 // var locoPos = 100;			// The position of the loco
 // var locoPos = 700;				// The position of the loco
 //var locoPos = 830;			// The position of the loco
@@ -15,8 +15,9 @@ var craneY = 540;				// Crane Y position
 var craneMinAngle = -160;		// Minimum angle of the crane
 var craneMaxAngle = 90;			// Maximum angle of the crane
 var craneAngle = craneMinAngle;	// Current angle of crane
-var craneUpDown = 0;			// Current crane arm up/down (up = 100, down = 0)
-var commandedCraneAngle = craneAngle;	// Commanded angle of the crane
+var commandedCraneAngle = -1;	// Commanded angle of the crane
+var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
+var commandedCraneUpDown = 0;	// Commanded crane arm up/down (up = 100, down = 0)
 
 var sensor1_active = false;
 var sensor1_Pos = 30;
@@ -59,6 +60,7 @@ $(document).ready(function() {
 
 		memory: function(name, value, data) {
 			if (name == "IM_7_1") rotateCrane(value);
+			if (name == "IM_7_3") liftLowerCrane(value);
 
 //			console.log("Memory name: "+name);
 //			console.log("Memory value: "+value);
@@ -160,17 +162,6 @@ function calculateDivergingTrackAngle()
 	var y = y2 - y1;
 
 	diveringTrackAngle = Math.atan(y/x);
-
-	console.log("x1: " + x1);
-	console.log("y1: " + y1);
-	console.log("x2: " + x2);
-	console.log("y2: " + y2);
-	console.log("x: " + x);
-	console.log("y: " + y);
-	console.log("y_div_x: " + (y/x));
-	console.log("atan y_div_x: " + Math.atan(y/x));
-	console.log("atan y_div_x: " + (Math.atan(y/x)*360/2/Math.PI));
-	console.log("diveringTrackAngle: " + (diveringTrackAngle*360/2/Math.PI));
 }
 
 
@@ -255,6 +246,9 @@ function checkSensors()
 }
 
 
+
+
+
 window.setInterval(runTrain, 50);
 
 function runTrain()
@@ -289,16 +283,7 @@ function runTrain()
 	// Check the sensors
 	checkSensors();
 
-
-
-//	jmri.setMemory("IM_92", "Hej");
-
-//	throttleData = {"speed": Math.random()};
-//	jmri.setThrottle("Daniel", throttleData);
-
-//	throttleData = {"speed": Math.random(), "forward": (Math.random() > 0.5)};
-//	jmri.setThrottle("MyLoco", throttleData);
-
+	// Check the crane
 	checkCrane();
 }
 
@@ -312,16 +297,23 @@ function rotateCrane(value) {
 }
 
 
+function liftLowerCrane(value) {
+	commandedCraneUpDown = value;
+	if (commandedCraneUpDown < 0) commandedCraneUpDown = 0;
+	if (commandedCraneUpDown > 100) commandedCraneUpDown = 100;
+}
+
+
 
 function checkCrane()
 {
 	var lastAngle = craneAngle;
 	if (commandedCraneAngle < craneAngle) {
-		craneAngle -= 0.5;
+		craneAngle -= 1;
 		if (craneAngle < commandedCraneAngle) craneAngle = commandedCraneAngle;
 	}
 	if (commandedCraneAngle > craneAngle) {
-		craneAngle += 0.5;
+		craneAngle += 1;
 		if (craneAngle > commandedCraneAngle) craneAngle = commandedCraneAngle;
 	}
 
@@ -333,6 +325,30 @@ function checkCrane()
 
 		anglePercent = (craneAngle - craneMinAngle) / (craneMaxAngle - craneMinAngle) * 100;
 		jmri.setMemory("IM_7_2", anglePercent);
+//		console.log("Set memory: "+anglePercent);
+	}
+
+
+
+//	craneUpDown = 0;			// Current crane arm up/down (up = 100, down = 0)
+	var lastCraneUpDown = craneUpDown;
+	if (commandedCraneUpDown < craneUpDown) {
+		craneUpDown -= 1;
+		if (craneUpDown < commandedCraneUpDown) craneUpDown = commandedCraneUpDown;
+	}
+	if (commandedCraneUpDown > craneUpDown) {
+		craneUpDown += 1;
+		if (craneUpDown > commandedCraneUpDown) craneUpDown = commandedCraneUpDown;
+	}
+
+	if (craneUpDown != lastCraneUpDown) {
+		var item = document.getElementById('CraneUpDown');
+//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
+//		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
+		var data = "translate(0,0) rotate("+((100-craneUpDown)*1.80)+")";
+		item.setAttribute("transform", data);
+
+		jmri.setMemory("IM_7_4", craneUpDown);
 //		console.log("Set memory: "+anglePercent);
 	}
 }
