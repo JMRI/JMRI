@@ -15,6 +15,14 @@ var craneMaxAngle = 90;			// Maximum angle of the crane
 var craneAngle = craneMinAngle;	// Current angle of crane
 var commandedCraneAngle = craneAngle;	// Commanded angle of the crane
 
+var sensor1_active = false;
+var sensor1_Pos = 30;
+
+var locoWidth = 450 * 0.3;		// 0.3 is the scale factor
+var carWidth = 437 * 0.3;		// 0.3 is the scale factor
+
+
+
 
 
 // set the jmri global variable to null
@@ -33,6 +41,9 @@ $(document).ready(function() {
 			jmri.getMemory("IM_7_5");	// Crane bucket closed - open, commanded position
 			jmri.getMemory("IM_7_6");	// Crane bucket closed - open, actual position
 			jmri.getTurnout("IT_7_1");	// Turnout
+			jmri.getSensor("IS_7_1");	// Sensor at turnout
+			jmri.getSensor("IS_7_2");	// Sensor at ship
+			jmri.getSensor("IS_7_3");	// Sensor at coal yard
 
 			console.log("Throttle data: ");
 			console.log("MyLoco throttle");
@@ -177,10 +188,29 @@ function moveLocoOrCar(item, pos)
 
 
 
+function checkSensors()
+{
+	if (((locoPos-locoWidth/2) <= sensor1_Pos) && ((locoPos+locoWidth/2) >= sensor1_Pos)) {
+		// Sensor 1 triggered
+		if (!sensor1_active) {
+			sensor1_active = true;
+			jmri.setSensor("IS_7_1", 2);
+		}
+	} else {
+		// Sensor 1 not triggered
+		if (sensor1_active) {
+			sensor1_active = false;
+			jmri.setSensor("IS_7_1", 4);
+		}
+	}
+}
+
+
 window.setInterval(runTrain, 50);
 
 function runTrain()
 {
+	jmri.setSensor("IS_7_2", "ACTIVE");
 	if (throttleSpeed != 0)
 	{
 		if (carPos < turnoutPos) selectDivergedTrack = turnoutThrown;
@@ -203,6 +233,8 @@ function runTrain()
 
 //		loco.setAttribute("transform", "translate("+(trainPos+300)+",200) scale(0.3) rotate(0)");
 //		console.log("Loco: "+data);
+
+		checkSensors();
 	}
 
 
