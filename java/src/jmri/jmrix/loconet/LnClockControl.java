@@ -141,7 +141,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     private final int commandStationEndMinuteType1 = 0x4000; //14bit
     private final int commandStationEndMinuteType2 = 0x8000; //16bit
 
-    private CommandStationFracType commandStationFracType = CommandStationFracType.TYPE1;
+    private CommandStationFracType commandStationFracType = CommandStationFracType.CLOCK13BIT;
 
     /**
      * This must be in the correct type 1 or type 2 format
@@ -174,7 +174,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Force a Calibration Cycle - Total Reset
      */
     public void startCalibrate() {
-        commandStationFracType = CommandStationFracType.TYPE1;
+        commandStationFracType = CommandStationFracType.CLOCK13BIT;
         commandStationZeroSecond =  commandStationEndMinute;
         calibrateCommandStationClock();
     }
@@ -186,7 +186,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      */
     public int convertMilliSecondsToFcFracMin(int milliSecs) {
         int fracmins;
-        if (commandStationFracType == CommandStationFracType.TYPE1) {
+        if (commandStationFracType == CommandStationFracType.CLOCK13BIT) {
             fracmins = (((commandStationEndMinuteType1 - commandStationZeroSecond) * milliSecs) / (int) MSECPERMINUTE ) + commandStationZeroSecond ;
             // the completed calculation fits.
             return (((fracmins & 0x7F80) << 1) +  (fracmins & 0x00F7));
@@ -207,7 +207,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             // not calibrated
             return 0;
         }
-        if (commandStationFracType == CommandStationFracType.TYPE1) {
+        if (commandStationFracType == CommandStationFracType.CLOCK13BIT) {
             int temp = (( fcMinFrac & 0x4f00 ) * 128) + ( fcMinFrac & 0x7F );
             millis = (( temp - commandStationZeroSecond ) * MSECPERMINUTE )/ (commandStationEndMinuteType1 - commandStationZeroSecond );
         } else {
@@ -236,9 +236,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                     log.debug("Found 7F");
                     found7FCommandStationClockSync = true;
                 }
-                if (commandStationFracType == CommandStationFracType.TYPE1 && prevHiFrac == msg.getElement(5) && prevLoFrac > msg.getElement(4) ) {
+                if (commandStationFracType == CommandStationFracType.CLOCK13BIT && prevHiFrac == msg.getElement(5) && prevLoFrac > msg.getElement(4) ) {
                     log.debug("Found CS Type 2");
-                    commandStationFracType = CommandStationFracType.TYPE2;
+                    commandStationFracType = CommandStationFracType.CLOCK15BIT;
                 }
                 prevHiFrac = msg.getElement(5);
                 prevLoFrac = msg.getElement(4);
@@ -517,7 +517,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         }
 
         if (newCommandStationZero < commandStationZeroSecond) {
-            if (commandStationFracType == CommandStationFracType.TYPE1) {
+            if (commandStationFracType == CommandStationFracType.CLOCK13BIT) {
                 commandStationZeroSecond = (( newCommandStationZero & 0x7f00 ) >> 1) + (newCommandStationZero & 0x7f);
             } else {
                 commandStationZeroSecond = newCommandStationZero;

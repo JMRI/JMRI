@@ -167,7 +167,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         rate.setText("" + s.getFcRate());
         frac_mins.setText(Integer.toHexString(s.getFcFracMins()));
 
-        if (loconetClock.getCommandStationFracType() == CommandStationFracType.TYPE1) {
+        if (loconetClock.getCommandStationFracType() == CommandStationFracType.CLOCK13BIT) {
             commandStationType.setText("14bit");
         } else {
             commandStationType.setText("16bit");

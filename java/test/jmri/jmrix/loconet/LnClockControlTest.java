@@ -126,7 +126,7 @@ public class LnClockControlTest {
         lm =new LocoNetMessage(ia);
         t.message(lm);
         JUnitUtil.waitFor(()->{ return t.commandStationSyncLimit<1 ;}, "Wait for sync done");
-        Assert.assertEquals("CommandStationType", CommandStationFracType.TYPE1, t.getCommandStationFracType());
+        Assert.assertEquals("CommandStationType", CommandStationFracType.CLOCK13BIT, t.getCommandStationFracType());
         // flip minute
         t.newMinute();
         // clock goes back to start of minute.
@@ -172,7 +172,7 @@ public class LnClockControlTest {
         JUnitUtil.waitFor(()->{ return t.commandStationSyncLimit <1 ;}, "Wait for sync done2");
         // ask for time
         t.newMinute();
-        Assert.assertEquals("CommandStationType2", CommandStationFracType.TYPE2, t.getCommandStationFracType());
+        Assert.assertEquals("CommandStationType2", CommandStationFracType.CLOCK15BIT, t.getCommandStationFracType());
         Assert.assertEquals("ZeroSecBase", 0x6910, t.getCommandStationZeroSecond());
         // clock goes back to start of minute.
         JUnitUtil.waitFor(()->{ return lnis.outbound.size()>6;}, "Wait for read fcslot No6");

@@ -11,6 +11,8 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,26 +56,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     static public int postProgDelay = 100; // this is public to allow changes via script
 
     public int slotScanInterval = 50; // this is public to allow changes via script and tests
-    /**
-     * slotMapEntry - a from to pair of slot numbers defining a valid range of loco/system slots
-     * TODO add slottype, eg systemslot, std slot, expanded slot etc
-     * @author sg
-     *
-     */
-    static public class SlotMapEntry {
-        public SlotMapEntry(int from, int to) {
-            fromSlot = from;
-            toSlot = to;
-        }
-        int fromSlot;
-        int toSlot;
-        public int getFrom() {
-            return fromSlot;
-        }
-        public int getTo() {
-            return toSlot;
-        }
-    }
     
     /**
      * a Map of the CS slots.
@@ -1029,7 +1011,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         mProgEndSequence = value.getProgPowersOff();
         if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
             numSlots = SLOTS_DCS240;
-            slotMap = Arrays.asList((new SlotMapEntry(0,432)));
+            slotMap = Arrays.asList((new SlotMapEntry(0,432,SlotType.SYSTEM)));
         } else if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS052)) {
             numSlots = SLOTS_DCS240;
             slotMap = Arrays.asList(new SlotMapEntry(0,21),new SlotMapEntry(121,127),new SlotMapEntry(248,256),new SlotMapEntry(376,386));
