@@ -1,7 +1,9 @@
 var throttleSpeed = 0;		// The speed of the train
 var throtteForward = true;	// The direction of the train
-var locoPos = 100;			// The position of the loco
+// var locoPos = 100;			// The position of the loco
 // var locoPos = 700;				// The position of the loco
+//var locoPos = 830;			// The position of the loco
+var locoPos = 982;			// The position of the loco
 var selectDivergedTrack = false;	// Should the train go to crane track instead of harbour track?
 var turnoutThrown = false;	// Is the turnout thrown?
 var diveringTrackAngle = 0;	// The angle of crane track?
@@ -13,15 +15,18 @@ var craneY = 540;				// Crane Y position
 var craneMinAngle = -160;		// Minimum angle of the crane
 var craneMaxAngle = 90;			// Maximum angle of the crane
 var craneAngle = craneMinAngle;	// Current angle of crane
+var craneUpDown = 0;			// Current crane arm up/down (up = 100, down = 0)
 var commandedCraneAngle = craneAngle;	// Commanded angle of the crane
 
 var sensor1_active = false;
 var sensor1_Pos = 30;
+var sensor2_active = false;
+var sensor2_Pos = 760;
+var sensor3_active = false;
+var sensor3_Pos = 914;
 
-var locoWidth = 450 * 0.3;		// 0.3 is the scale factor
-var carWidth = 437 * 0.3;		// 0.3 is the scale factor
-
-
+var locoLength = 450 * 0.3;		// 0.3 is the scale factor
+var carLength = 437 * 0.3;		// 0.3 is the scale factor
 
 
 
@@ -190,17 +195,61 @@ function moveLocoOrCar(item, pos)
 
 function checkSensors()
 {
-	if (((locoPos-locoWidth/2) <= sensor1_Pos) && ((locoPos+locoWidth/2) >= sensor1_Pos)) {
+	var sensorTriggered = false;
+	sensorTriggered = (((locoPos-locoLength/2) <= sensor1_Pos) && ((locoPos+locoLength/2) >= sensor1_Pos));
+	sensorTriggered |= (((carPos-carLength/2) <= sensor1_Pos) && ((carPos+carLength/2) >= sensor1_Pos));
+
+	if (sensorTriggered) {
 		// Sensor 1 triggered
-		if (!sensor1_active) {
+		if (true ||    !sensor1_active) {
 			sensor1_active = true;
 			jmri.setSensor("IS_7_1", 2);
 		}
 	} else {
 		// Sensor 1 not triggered
-		if (sensor1_active) {
+		if (true ||    sensor1_active) {
 			sensor1_active = false;
 			jmri.setSensor("IS_7_1", 4);
+		}
+	}
+
+
+	sensorTriggered = false;
+	if (!selectDivergedTrack) {
+		sensorTriggered = (((locoPos-locoLength/2) <= sensor2_Pos) && ((locoPos+locoLength/2) >= sensor2_Pos));
+		sensorTriggered |= (((carPos-carLength/2) <= sensor2_Pos) && ((carPos+carLength/2) >= sensor2_Pos));
+	}
+	if (sensorTriggered) {
+		// Sensor 2 triggered
+		if (true ||    !sensor2_active) {
+			sensor2_active = true;
+			jmri.setSensor("IS_7_2", 2);
+		}
+	} else {
+		// Sensor 2 not triggered
+		if (true ||    sensor2_active) {
+			sensor2_active = false;
+			jmri.setSensor("IS_7_2", 4);
+		}
+	}
+
+
+	sensorTriggered = false;
+	if (selectDivergedTrack) {
+		sensorTriggered = (((locoPos-locoLength/2) <= sensor3_Pos) && ((locoPos+locoLength/2) >= sensor3_Pos));
+		sensorTriggered |= (((carPos-carLength/2) <= sensor3_Pos) && ((carPos+carLength/2) >= sensor3_Pos));
+	}
+	if (sensorTriggered) {
+		// Sensor 3 triggered
+		if (true ||    !sensor3_active) {
+			sensor3_active = true;
+			jmri.setSensor("IS_7_3", 2);
+		}
+	} else {
+		// Sensor 3 not triggered
+		if (true ||    sensor3_active) {
+			sensor3_active = false;
+			jmri.setSensor("IS_7_3", 4);
 		}
 	}
 }
@@ -211,7 +260,9 @@ window.setInterval(runTrain, 50);
 function runTrain()
 {
 	jmri.setSensor("IS_7_2", "ACTIVE");
-	if (throttleSpeed != 0)
+
+
+//	if (throttleSpeed != 0)
 	{
 		if (carPos < turnoutPos) selectDivergedTrack = turnoutThrown;
 
@@ -233,9 +284,10 @@ function runTrain()
 
 //		loco.setAttribute("transform", "translate("+(trainPos+300)+",200) scale(0.3) rotate(0)");
 //		console.log("Loco: "+data);
-
-		checkSensors();
 	}
+
+	// Check the sensors
+	checkSensors();
 
 
 
