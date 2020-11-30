@@ -18,6 +18,8 @@ var craneAngle = craneMinAngle;	// Current angle of crane
 var commandedCraneAngle = -1;	// Commanded angle of the crane
 var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
 var commandedCraneUpDown = 0;	// Commanded crane arm up/down (up = 100, down = 0)
+var craneBucketOpenClosed = -1;	// Current crane bucket open/closed (open = 0, closed = 100)
+var commandedCraneBucketOpenClosed = 0;	// Commanded crane arm up/down (open = 0, closed = 100)
 
 var sensor1_active = false;
 var sensor1_Pos = 30;
@@ -61,6 +63,7 @@ $(document).ready(function() {
 		memory: function(name, value, data) {
 			if (name == "IM_7_1") rotateCrane(value);
 			if (name == "IM_7_3") liftLowerCrane(value);
+			if (name == "IM_7_5") openCloseCraneBucket(value);
 
 //			console.log("Memory name: "+name);
 //			console.log("Memory value: "+value);
@@ -304,6 +307,13 @@ function liftLowerCrane(value) {
 }
 
 
+function openCloseCraneBucket(value) {
+	commandedCraneBucketOpenClosed = value;
+	if (commandedCraneBucketOpenClosed < 2) commandedCraneBucketOpenClosed = 2;
+	if (commandedCraneBucketOpenClosed > 100) commandedCraneBucketOpenClosed = 100;
+}
+
+
 
 function checkCrane()
 {
@@ -330,7 +340,6 @@ function checkCrane()
 
 
 
-//	craneUpDown = 0;			// Current crane arm up/down (up = 100, down = 0)
 	var lastCraneUpDown = craneUpDown;
 	if (commandedCraneUpDown < craneUpDown) {
 		craneUpDown -= 1;
@@ -349,6 +358,32 @@ function checkCrane()
 		item.setAttribute("transform", data);
 
 		jmri.setMemory("IM_7_4", craneUpDown);
+//		console.log("Set memory: "+anglePercent);
+	}
+
+
+
+	var lastCraneBucketOpenClosed = craneBucketOpenClosed;
+	if (commandedCraneBucketOpenClosed < craneBucketOpenClosed) {
+		craneBucketOpenClosed -= 1;
+		if (craneBucketOpenClosed < commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
+	}
+	if (commandedCraneBucketOpenClosed > craneBucketOpenClosed) {
+		craneBucketOpenClosed += 1;
+		if (craneBucketOpenClosed > commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
+	}
+
+	if (craneBucketOpenClosed != lastCraneBucketOpenClosed) {
+		var item = document.getElementById('CraneBucket');
+//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
+//		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
+		var data = "translate(0,0) rotate("+((100-craneBucketOpenClosed)*1.80)+")";
+		item.setAttribute("height", craneBucketOpenClosed);
+
+		if (craneBucketOpenClosed < 50) item.setAttribute("fill", "#4F81BD");
+		else item.setAttribute("fill", "#948A54");
+
+		jmri.setMemory("IM_7_6", craneBucketOpenClosed);
 //		console.log("Set memory: "+anglePercent);
 	}
 }
