@@ -20,6 +20,7 @@ var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
 var commandedCraneUpDown = 0;	// Commanded crane arm up/down (up = 100, down = 0)
 var craneBucketOpenClosed = -1;	// Current crane bucket open/closed (open = 0, closed = 100)
 var commandedCraneBucketOpenClosed = 0;	// Commanded crane arm up/down (open = 0, closed = 100)
+var craneBucketFilled = false;	// Is the crane bucket filled?
 
 var sensor1_active = false;
 var sensor1_Pos = 30;
@@ -318,13 +319,16 @@ function openCloseCraneBucket(value) {
 function checkCrane()
 {
 	var lastAngle = craneAngle;
-	if (commandedCraneAngle < craneAngle) {
-		craneAngle -= 1;
-		if (craneAngle < commandedCraneAngle) craneAngle = commandedCraneAngle;
-	}
-	if (commandedCraneAngle > craneAngle) {
-		craneAngle += 1;
-		if (craneAngle > commandedCraneAngle) craneAngle = commandedCraneAngle;
+
+	if (craneUpDown >= 80) {
+		if (commandedCraneAngle < craneAngle) {
+			craneAngle -= 1;
+			if (craneAngle < commandedCraneAngle) craneAngle = commandedCraneAngle;
+		}
+		if (commandedCraneAngle > craneAngle) {
+			craneAngle += 1;
+			if (craneAngle > commandedCraneAngle) craneAngle = commandedCraneAngle;
+		}
 	}
 
 	if (craneAngle != lastAngle) {
@@ -336,6 +340,7 @@ function checkCrane()
 		anglePercent = (craneAngle - craneMinAngle) / (craneMaxAngle - craneMinAngle) * 100;
 		jmri.setMemory("IM_7_2", anglePercent);
 //		console.log("Set memory: "+anglePercent);
+//		console.log("Crane angle: "+craneAngle);
 	}
 
 
@@ -367,10 +372,16 @@ function checkCrane()
 	if (commandedCraneBucketOpenClosed < craneBucketOpenClosed) {
 		craneBucketOpenClosed -= 1;
 		if (craneBucketOpenClosed < commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
+		if (craneBucketFilled && (craneBucketOpenClosed < 50)) {
+			craneBucketFilled = false;
+		}
 	}
 	if (commandedCraneBucketOpenClosed > craneBucketOpenClosed) {
 		craneBucketOpenClosed += 1;
 		if (craneBucketOpenClosed > commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
+		if (!craneBucketFilled && (craneBucketOpenClosed > 50) && (craneUpDown < 20) && (anglePercent >= 22) && (anglePercent <= 48)) {
+			craneBucketFilled = true;
+		}
 	}
 
 	if (craneBucketOpenClosed != lastCraneBucketOpenClosed) {
@@ -380,7 +391,8 @@ function checkCrane()
 		var data = "translate(0,0) rotate("+((100-craneBucketOpenClosed)*1.80)+")";
 		item.setAttribute("height", craneBucketOpenClosed);
 
-		if (craneBucketOpenClosed < 50) item.setAttribute("fill", "#4F81BD");
+//		if (craneBucketOpenClosed < 50) item.setAttribute("fill", "#4F81BD");
+		if (!craneBucketFilled) item.setAttribute("fill", "#4F81BD");
 		else item.setAttribute("fill", "#948A54");
 
 		jmri.setMemory("IM_7_6", craneBucketOpenClosed);
