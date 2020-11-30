@@ -1091,6 +1091,7 @@ public final class MathUtil {
 
     /**
      * reverse an array of Point2D's
+     *
      * @param points the array
      * @return the reversed array
      */
@@ -1271,10 +1272,12 @@ public final class MathUtil {
         } else {    // (nope)
             result = plotBezier(path, p, 0, displacement);
         }
-        if (fillFlag) {
-            g2.fill(path);
-        } else {
-            g2.draw(path);
+        if (g2 != null) {
+            if (fillFlag) {
+                g2.fill(path);
+            } else {
+                g2.draw(path);
+            }
         }
         return result;
     }

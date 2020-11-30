@@ -845,10 +845,11 @@ public class TrackSegment extends LayoutTrack {
             if (distanceOnTrack < distance) {  // it's on this track
                 double dirDeltaDEG = 90.0;
                 double ratio = distanceOnTrack / distance;
-                if (connect1.equals(navigator.getLastTrack())) {
+                boolean isFlipped = tsv.isFlip();
+                if (isFlipped ^ connect1.equals(navigator.getLastTrack())) {
                     //if entering from this end...
                     tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-                } else if (connect2.equals(navigator.getLastTrack())) {
+                } else if (isFlipped ^ connect2.equals(navigator.getLastTrack())) {
                     //if entering from the other end...
                     tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
                     dirDeltaDEG = -90.0;
@@ -859,7 +860,7 @@ public class TrackSegment extends LayoutTrack {
 
                 // Compute location
                 Point2D loc = new Point2D.Double(centre.getX() + radius, centre.getY());
-                loc = MathUtil.rotateDEG(loc, centre, (Math.PI / 2) - (startAdjDEG + tmpAngleDEG));
+                loc = MathUtil.rotateDEG(loc, centre, startAdjDEG + tmpAngleDEG);
                 navigator.setLocation(loc);
                 navigator.setDirectionDEG(startAdjDEG + tmpAngleDEG + dirDeltaDEG);
                 navigator.setDistance(0);
@@ -883,7 +884,8 @@ public class TrackSegment extends LayoutTrack {
 
                 Point2D p1 = MathUtil.zeroPoint2D, p2;
                 boolean nextSegmentFlag = true;
-                while (!i.isDone()) {
+                double bezierDistance = 0;
+                while (!i.isDone() && nextSegmentFlag) {
                     switch (i.currentSegment(data)) {
                         case PathIterator.SEG_MOVETO:
                             p1 = new Point2D.Double(data[0], data[1]);
@@ -892,13 +894,13 @@ public class TrackSegment extends LayoutTrack {
                         case PathIterator.SEG_LINETO:
                             p2 = new Point2D.Double(data[0], data[1]);
                             distance = MathUtil.distance(p1, p2);
-                            if (distanceOnTrack < distance) {  // it's on this segment
-                                navigator.setLocation(MathUtil.lerp(p1, p2, distanceOnTrack / distance));
-                                navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(p1, p2));
+                            bezierDistance += distance;
+                            log.warn(String.format("#   Bezier %.1f, %.1f", bezierDistance, distance));
+                            if (distanceOnTrack < bezierDistance) {  // it's on this segment
+                                navigator.setLocation(MathUtil.lerp(p1, p2, (bezierDistance - distanceOnTrack) / distance));
+                                navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(p2, p1));
                                 nextSegmentFlag = false;
                             }
-                            navigator.setDistance(distanceOnTrack - distance);
-                            distanceOnTrack += distance;
                             p1 = p2;
                             break;
 
@@ -912,21 +914,21 @@ public class TrackSegment extends LayoutTrack {
                             break;
 
                     }
-                    if (!nextSegmentFlag) {
-                        break;
-                    }
                     i.next();
-                }   // while (!i.isDone())
-                navigator.setDistanceOnTrack(distanceOnTrack);
+                }   // while (!i.isDone() && nextSegmentFlag)
+                if (nextSegmentFlag) {  // this should NEVER happen
+                    log.error("Bezier overflow!");
+                }
+                navigator.setDistance(bezierDistance - distanceOnTrack);
+                navigator.setDistanceOnTrack(bezierDistance);
             } else {
                 navigator.setDistance(distanceOnTrack - distance);
-                distanceOnTrack = 0;
+                navigator.setDistanceOnTrack(0);
                 result = true;
             }
         } else {
             Point2D p1 = models.getCoords(getConnect1(), getType1());
             Point2D p2 = models.getCoords(getConnect2(), getType2());
-            distanceOnTrack = navigator.getDistance() + navigator.getDistanceOnTrack();
             double distance = MathUtil.distance(p1, p2);
             if (distanceOnTrack < distance) {  // it's on this track
                 if (connect1.equals(navigator.getLastTrack())) {

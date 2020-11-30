@@ -8679,7 +8679,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
                 setNavStartTime(nowTime);
             };
-            navTimer = new Timer(1000, timerActions);   //TODO: change to 250 milliseconds
+            navTimer = new Timer(250, timerActions);
         }
         newNavigator.setName(getUniqueNavName());
         navigators.add(newNavigator);
