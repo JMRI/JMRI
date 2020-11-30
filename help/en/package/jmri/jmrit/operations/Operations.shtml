@@ -99,7 +99,13 @@
 
           <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
 
-          <li><a href="#Options">Options</a></li>
+          <li><a href="#Options">Options</a>
+           <ul>
+            <li><a href="#SaveTrainManifests">Save Train Manifests</a></li>
+            <li><a href="#EnableValueFields">Enable Value Fields</a></li>
+            <li><a href="#EnableIdentificationTagFields">Enable RFID Fields</a></li>
+            <li><a href="#EnableVirtualSoundDecoder">Enable physical locations for Virtual Sound Decoder</a></li>
+           </ul></li>
          </ul></li>
 
         <li><a href="#PrintOptions">Manifest Print Options</a>
@@ -1667,6 +1673,7 @@
    <a name="Options" id="Options"></a>
    <h3>Options</h3>
 
+   <a name="SaveTrainManifests" id="SaveTrainManifests"></a>
    <h4>Save Train Manifests</h4>
    When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
@@ -1681,17 +1688,27 @@
     in a directory called "switchListBackups" located in the "operations" directory. A separate
     directory is created for each location's switch list that you create.</p>
 
-   <h4>Enable Value Fields and Identification Tag Fields</h4>
-
-   <p>There are two other options, "Enable Value Fields" and "Identification Fields". You can
-    use these fields to enter the value or cost of your rolling stock and the IDTag of your rolling
-    stock. You can rename the value fields if you wish and use them for other purposes.</p>
-
+   <a name="EnableValueFields" id="EnableValueFields"></a>
+   <h4>Enable Value Fields</h4>
+   You can use the value field to enter the value or cost of your rolling stock. You can rename the
+   value field if you wish and use it for other purposes.
+   
+   <a name="EnableIdentificationTagFields" id="EnableIdentificationTagFields"></a>
+   <h4>Enable Identification Tag Fields</h4>
+   You can enable the assignment of reporters and tags for your locations and rolling stock.
+   Reporters can be assigned to locations and tracks. When this option is enabled, the Cars and
+   Locomotives windows will display the last location and time the rolling stock was detected. The
+   edit car and locomotive windows allow you to select an
+   <a href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI. The
+   edit location and track windows allow you to select
+   <a href="../../../../html/tools/Reporters.shtml">Reporters</a> that you want to associate with
+   them. You can rename the RFID field if you wish and use it for other purposes. 
+   
+   <a name="EnableVirtualSoundDecoder" id="EnableVirtualSoundDecoder"></a>
    <h4>Enable physical locations for Virtual Sound Decoder</h4>
-
-   <p>If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
-    locations by enabling this option.</p>
-
+   If you're using Virtual Sound Decoder, you can enter the physical coordinates of your locations
+   by enabling this option. 
+   
    <a name="PrintOptions" id="PrintOptions"></a>
    <h2>Manifest Print Options</h2>
    You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
@@ -3021,10 +3038,11 @@
    more control over the car's movement or load.
 
    <p>
-    Normally during the train build process, the program will check the alternate track for cars after assigning cars
-    from the spur to the train being built. This way cars on the alternate are used to keep the spur full. Note that the
-    <a href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the alternate to the
-    spur, so it is recommended that you don't use both features for a spur.
+    During the train build process in <a href="#BuildOptions">aggressive</a> mode, the program will
+    check the alternate track for cars after assigning cars from the spur to the train being built.
+    This way cars on the alternate are used to keep the spur full. Note that the <a
+     href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the
+    alternate to the spur, so it is recommended that you don't use both features for a spur.
    </p>
 
    <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /

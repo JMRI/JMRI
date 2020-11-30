@@ -1691,7 +1691,7 @@ public class PositionablePointView extends LayoutTrackView {
 
     /**
      * Draw track decorations.
-     * <p>
+     *
      * This type of track has none, so this method is empty.
      */
     @Override
@@ -1987,6 +1987,5 @@ public class PositionablePointView extends LayoutTrackView {
         // nothing to see here, move along...
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class
-    );
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePointView.class);
 }

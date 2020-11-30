@@ -62,7 +62,7 @@
 
  <indexitem text="CAN Bus - Hardware, Connection, Tools " target="html.hardware.can.index"/>
 
- <indexitem text="CBUS (MERG) " target="html.hardware.can.cbus.index">
+ <indexitem text="CBUS " target="html.hardware.can.cbus.index">
   <indexitem text="Connection Details " target="html.hardware.can.cbus.Details"/>
 
   <indexitem text="Console Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
@@ -71,11 +71,17 @@
 
   <indexitem text="Event Table Tool " target="package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane"/>
 
+  <indexitem text="Firmware update " target="package.jmri.jmrix.can.cbus.swing.bootloader.CbusBootloaderPane"/>
+
   <indexitem text="Naming Events " target="html.hardware.can.cbus.Names"/>
 
   <indexitem text="Node Config Tool " target="package.jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane"/>
 
   <indexitem text="Send Frame / Event Tool " target="package.jmri.jmrix.can.swing.send.CanSendFrame"/>
+
+  <indexitem text="Simulator " target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane"/>
+
+  <indexitem text="Voltage / Current Meter " target="html.hardware.can.cbus.CbusMeters"/>
 
  </indexitem>
  <indexitem text="Circuit Builder (CPE) " target="package.jmri.jmrit.display.CircuitBuilder"/>
@@ -414,7 +420,7 @@
   <indexitem text="Memory Variable Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
  </indexitem>
- <indexitem text="MERG (CBUS) - Hardware, Connection, Tools " target="html.hardware.can.cbus.index"/>
+ <indexitem text="MERG - Hardware, Connection, Tools " target="html.hardware.merg.index"/>
 
  <indexitem text="Modbus - Hardware, Connection, Tools " target="html.hardware.modbus.index"/>
 
@@ -439,6 +445,8 @@
  <indexitem text="OakTree Systems - Hardware, Connection, Tools " target="html.hardware.oaktree.OakTree"/>
 
  <indexitem text="OBlock (Occupancy Block, Warrants) " target="package.jmri.jmrit.logix.OBlockTable"/>
+
+ <indexitem text="OBlock (using tabbed interface) " target="package.jmri.jmrit.beantable.OBlockTable"/>
 
  <indexitem text="OPath (Occupancy Path, Warrants) " target="package.jmri.jmrit.logix.OBlockEdit"/>
 
@@ -665,13 +673,25 @@
  <indexitem text="SPROG " target="html.hardware.sprog.SPROG">
   <indexitem text="Console " target="package.jmri.jmrix.sprog.console.SprogConsoleFrame"/>
 
+  <indexitem text="Send Packet " target="package.jmri.jmrix.sprog.packetgen.SprogPacketGenFrame"/>
+
+  <indexitem text="Slot Monitor " target="package.jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame"/>
+
+  <indexitem text="SPROG Version " target="package.jmri.jmrix.sprog.update.SprogVersionFrame"/>
+
   <indexitem text="Update SPROG II " target="package.jmri.jmrix.sprog.update.SprogIIUpdateFrame"/>
 
-  <indexitem text="Update SPROG V3/V4 " target="package.jmri.jmrix.sprog.update.Sprogv4UpdateFrame"/>
+ </indexitem>
+ <indexitem text="SPROG Generation 5 " target="html.hardware.sproggen5.index">
+  <indexitem text="Hardware Support " target="html.hardware.sproggen5.hardware"/>
+
+  <indexitem text="Pi SPROG 3 Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSimpleModeSwitcherFrame"/>
+
+  <indexitem text="Pi-Sprog/SPROG 3 Plus Mode Switcher " target="package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame"/>
+
+  <indexitem text="See also: CBUS " target="html.hardware.can.cbus.index"/>
 
  </indexitem>
- <indexitem text="SRCP " target="html.hardware.SRCP.index"/>
-
  <indexitem text="Supported Decoders " target="html.apps.DecoderPro.index_decoderlisting"/>
 
  <indexitem text="Supported Digital Control Hardware " target="html.hardware.index"/>

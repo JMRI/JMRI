@@ -1,8 +1,12 @@
 package jmri.util;
 
+import java.awt.*;
+import java.awt.geom.*;
 import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
@@ -45,6 +49,19 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point2D infinityPoint2D() {
         return new Point2D.Double(POSITIVE_INFINITY, POSITIVE_INFINITY);
+    }
+
+    /**
+     * @param a the first number
+     * @param b the second number
+     * @return the greatest common divisor of a and b
+     */
+    public static int gcd(int a, int b) {
+        int result = b;
+        if (a != 0) {
+            result = gcd(b % a, a);
+        }
+        return result;
     }
 
     /**

@@ -551,8 +551,6 @@ public class TrackSegmentView extends LayoutTrackView {
      */
     @Override
     public Rectangle2D getBounds() {
-        Rectangle2D result;
-
         Point2D ep1 = getCoordsCenter(), ep2 = getCoordsCenter();
         if (getConnect1() != null) {
             ep1 = layoutEditor.getCoords(getConnect1(), getType1());
@@ -561,11 +559,14 @@ public class TrackSegmentView extends LayoutTrackView {
             ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         }
 
-        result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
+        Rectangle2D result = new Rectangle2D.Double(ep1.getX(), ep1.getY(), 0, 0);
         result.add(ep2);
 
-        if (isCircle()) {
-            result.add(getCoordsCenterCircle());
+        if (isArc()) {
+            result.add(getCentreSeg());
+            if (isCircle()) {
+                result.add(getCoordsCenterCircle());
+            }
         } else if (isBezier()) {
             for (int index = 0; index < bezierControlPoints.size(); index++) {
                 result.add(bezierControlPoints.get(index));
@@ -1904,9 +1905,9 @@ public class TrackSegmentView extends LayoutTrackView {
             Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
 
             if (isCircle()) {
-                result = getCoordsCenter(); // new Point2D.Double(centreX, centreY);
+                result = getCoordsCenter();
             } else if (isArc()) {
-                super.setCoordsCenter(MathUtil.midPoint(getBounds()));
+                super.setCoordsCenter(MathUtil.midPoint(ep1, ep2));
                 if (isFlip()) {
                     Point2D t = ep1;
                     ep1 = ep2;

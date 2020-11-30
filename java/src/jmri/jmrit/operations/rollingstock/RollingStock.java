@@ -821,10 +821,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id);
                     if (tag != null) {
                         log.debug("Tag {} found", tag);
+                        setIdTag(tag);
                     } else {
                         log.error("Tag {} not found", id);
                     }
-                    setIdTag(tag);
                 } catch (NullPointerException e) {
                     log.error("Tag manager not found");
                 }

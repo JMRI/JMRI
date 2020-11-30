@@ -14,9 +14,12 @@ import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+
 public class PacketGenAction extends AbstractAction {
 
-       jmri.jmrix.dccpp.DCCppSystemConnectionMemo _memo = null;
+    jmri.jmrix.dccpp.DCCppSystemConnectionMemo _memo = null;
 
     public PacketGenAction(String s, jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
         super(s);
@@ -27,7 +30,11 @@ public class PacketGenAction extends AbstractAction {
         this("Generate DCC++ message", memo);
     }
 
-       @Override
+    public PacketGenAction() {
+        this(InstanceManager.getDefault(DCCppSystemConnectionMemo.class));
+    }
+
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create a PacketGenFrame
         PacketGenFrame f = new PacketGenFrame();

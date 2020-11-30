@@ -655,7 +655,7 @@
              */
             jmri.getThrottle = function (throttle) {
                 if (jmri.socket) {
-                    jmri.socket.send("throttle", { throttle: throttle, status: true });
+                    jmri.socket.send("throttle", throttle);
                     return true;
                 } else {
                     return false;

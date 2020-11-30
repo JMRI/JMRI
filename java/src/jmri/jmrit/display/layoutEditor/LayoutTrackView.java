@@ -29,7 +29,7 @@ import jmri.util.*;
  * <li>Hidden status
  * </ul>
  *
- * @author Bob Jacobsen Copyright (c) 2020
+ * @author Bob Jacobsen  Copyright (c) 2020
  *
  */
 abstract public class LayoutTrackView {
@@ -48,8 +48,8 @@ abstract public class LayoutTrackView {
     /**
      * constructor method
      *
-     * @param track        the track to view
-     * @param c            display location
+     * @param track the track to view
+     * @param c display location
      * @param layoutEditor for reference to tools
      */
     public LayoutTrackView(@Nonnull LayoutTrack track, @Nonnull Point2D c, @Nonnull LayoutEditor layoutEditor) {
@@ -124,7 +124,7 @@ abstract public class LayoutTrackView {
 
     /**
      * Set new decorations
-     * <p>
+     *
      * This is a complete replacement of the decorations, not an appending.
      *
      * @param decorations A map from strings ("arrow", "bridge", "bumper",..) to
@@ -412,8 +412,8 @@ abstract public class LayoutTrackView {
      * @since 7.4.3
      */
     abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint,
-            boolean useRectangles,
-            boolean requireUnconnected);
+                                                    boolean useRectangles,
+                                                    boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {

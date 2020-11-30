@@ -1,20 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - RFID Readers</title>
   <!-- Style -->
   <meta name="keywords" content="JMRI hardware rfid readers">
-  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
+  <!--#include virtual="/Style.shtml" -->
   <!-- /Style -->
+
 </head>
 
 <body>
@@ -114,9 +108,9 @@
       is within the proximity of an RFID Reader, the associated
       sensor is ACTIVE; outside of these times it is INACTIVE. You
       create Sensors using the <a href=
-      "../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
+      "../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">
       Add...</a> button on the <a href=
-      "../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
+      "../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor
       Table</a>.</p>
 
       <h3>Reporters</h3>
@@ -152,28 +146,32 @@
 
       <h4>Displaying Reporter Values on Panels</h4>
 
-      <p>A Reporter's value can be displayed on a Panel via an
-      icon. To do this:</p>
+      <p>A Reporter's value can be displayed on a Control Panel via either the 
+      <a href="../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a> or the
+      <a href="../../../package/jmri/jmrit/display/ControlPanelEditor.shtml"> Control Panel Editor</a>.
+      These are the steps for using Panel Editor:</p>
 
       <ul>
-        <li>On the Panel Editor window for your panel, find the
-        "Add Reporter" button.</li>
+        <li>Open the Panel Editor window for your panel and select "Reporter" from the pulldown menu under
+        "Select the type of icon to Add to Panel."</li>
 
-        <li>In the text box next to that button, type the User Name
-        or System Name of the desired Reporter.</li>
+        <li>Select the Reporter from the list, or add a new one by typing the desired System Name.</li>
 
-        <li>Click the button. The Reporter icon will be placed on
-        the Panel. If it's not visible, that might be because the
-        value is currently blank; use the Reporter Table to change
-        the value to something that will be visible.</li>
+        <li>Click the button to "Add to Panel." The Reporter icon will be placed on the Panel. You will see
+        "&lt;no report&gt;" displayed.  Use the Reporter Table to change the value.</li>
 
-        <li>You can drag the icon to where you want it in the usual
-        way.</li>
+        <li>You can drag the icon to where you want by right-clicking your mouse and dragging the value.</li>
 
         <li>The pop-up menu on the icon will let you change the
         formatting.</li>
         
       </ul>
+      
+      <p>Note that a Reporter cannot be displayed directly on a Layout Editor Panel.  Instead, use a script
+      such as <a href="../../../../../jython/ReporterFormatter.py">ReporterFormatter.py</a> to parse the 
+      information in the Reporter and copy what you want into a <a href="../../tools/Memories.shtml">Memory.</a>
+      That Memory can then be displayed on a Layout Editor Panel.
+      </p>
       
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
