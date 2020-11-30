@@ -166,14 +166,13 @@ public class LENavigator {
      * navigate
      */
     public void navigate() {
-        while (getDistance() > 0.0) {
+        do {
             log.error(String.format(
                     "%s on track: %s at {%.0f, %.0f}, dir: %.0f, distance: %.0f",
                     getName(), layoutTrack.getName(),
                     getLocation().getX(), getLocation().getY(),
                     getDirectionDEG(), getDistance()));
-            layoutTrack.navigate(this);
-        }
+        } while (layoutTrack.navigate(this));
     }
 
     public void draw(@Nonnull Graphics2D g2) {
@@ -185,13 +184,13 @@ public class LENavigator {
 //        g2.rotate(directionRAD);
         //g2.translate(-location.getX(), -location.getY());
         g2.setColor(Color.red);
-        Point2D p1 = MathUtil.add(location, new Point2D.Double(+10.0, 0.0));
-        Point2D p2 = MathUtil.add(location, new Point2D.Double(-10.0, +5.0));
-        Point2D p3 = MathUtil.add(location, new Point2D.Double(-10.0, -5.0));
+        Point2D p1 = MathUtil.add(location, new Point2D.Double(+16.0, 0.0));
+        Point2D p2 = MathUtil.add(location, new Point2D.Double(-16.0, +8.0));
+        Point2D p3 = MathUtil.add(location, new Point2D.Double(-16.0, -8.0));
 
-        p1 = MathUtil.rotateDEG(p1, location, directionRAD);
-        p2 = MathUtil.rotateDEG(p2, location, directionRAD);
-        p3 = MathUtil.rotateDEG(p3, location, directionRAD);
+        p1 = MathUtil.rotateRAD(p1, location, directionRAD);
+        p2 = MathUtil.rotateRAD(p2, location, directionRAD);
+        p3 = MathUtil.rotateRAD(p3, location, directionRAD);
 
         g2.draw(new Line2D.Double(p1.getX(), p1.getY(), p2.getX(), p2.getY()));
         g2.draw(new Line2D.Double(p2.getX(), p2.getY(), p3.getX(), p3.getY()));

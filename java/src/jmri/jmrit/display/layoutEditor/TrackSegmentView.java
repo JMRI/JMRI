@@ -2091,7 +2091,7 @@ public class TrackSegmentView extends LayoutTrackView {
             double chord = Math.hypot(a, o);
             setChordLength(chord);
 
-            // Make sure chord is not null
+            // Make sure chord is not zero
             // In such a case (ep1 == ep2), there is no arc to draw
             if (chord > 0.D) {
                 double radius = (chord / 2.D) / Math.sin(halfAngleRAD);

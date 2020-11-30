@@ -223,14 +223,16 @@ abstract public class LayoutTrack {
      * navigate
      *
      * @param navInfo is the info we're navigating from
+     * @return true to continue navigating
      *
      * note: this is the base implementation;
      * unimplemented methods in subclasses will fall thru to here and STOP
      * You also allows you to call super.navigate to stop intentionally.
      */
-    public void navigate(@Nonnull LENavigator navInfo) {
+    public boolean navigate(@Nonnull LENavigator navInfo) {
         navInfo.setSpeed(0.0);
         navInfo.setDistance(0.0);
+        return false;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTrack.class);

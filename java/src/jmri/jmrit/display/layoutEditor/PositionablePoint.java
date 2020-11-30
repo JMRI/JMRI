@@ -1248,7 +1248,8 @@ public class PositionablePoint extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
-    public void navigate(@Nonnull LENavigator navigator) {
+    public boolean navigate(@Nonnull LENavigator navigator) {
+        boolean result = true;  // always goto next track
         switch (type) {
             case ANCHOR: {
                 if (navigator.getLastTrack() == null) {
@@ -1261,7 +1262,7 @@ public class PositionablePoint extends LayoutTrack {
                     navigator.setLayoutTrack(getConnect1());
                     navigator.setHitPointType(HitPointType.POS_POINT);
                 } else {
-                    super.navigate(navigator);   // call super to STOP
+                    result = super.navigate(navigator);   // call super to STOP
                     break;
                 }
                 navigator.setLastTrack(this);
@@ -1274,7 +1275,7 @@ public class PositionablePoint extends LayoutTrack {
                     navigator.setHitPointType(HitPointType.POS_POINT);
                     navigator.setLastTrack(this);
                 } else {
-                    super.navigate(navigator);   // call super to STOP
+                    result = super.navigate(navigator);   // call super to STOP
                 }
                 break;
             }
@@ -1289,19 +1290,20 @@ public class PositionablePoint extends LayoutTrack {
                         navigator.setLayoutTrack(c2);
                         navigator.setHitPointType(HitPointType.POS_POINT);
                     } else {
-                        super.navigate(navigator);   // call super to STOP
+                        result = super.navigate(navigator);   // call super to STOP
                     }
                 } else if (getConnect2().equals(navigator.getLastTrack())) {
                     navigator.setLayoutTrack(getConnect1());
                     navigator.setHitPointType(HitPointType.POS_POINT);
                 } else {
-                    super.navigate(navigator);   // call super to STOP
+                    result = super.navigate(navigator);   // call super to STOP
                     break;
                 }
                 navigator.setLastTrack(this);
                 break;
             }
         }
+        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);
