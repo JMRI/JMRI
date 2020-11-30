@@ -887,40 +887,41 @@ public class TrackSegment extends LayoutTrack {
                 double bezierDistance = 0;
                 while (!i.isDone() && nextSegmentFlag) {
                     switch (i.currentSegment(data)) {
-                        case PathIterator.SEG_MOVETO:
+                        case PathIterator.SEG_MOVETO: {
                             p1 = new Point2D.Double(data[0], data[1]);
                             break;
-
-                        case PathIterator.SEG_LINETO:
+                        }
+                        case PathIterator.SEG_LINETO: {
                             p2 = new Point2D.Double(data[0], data[1]);
                             distance = MathUtil.distance(p1, p2);
                             bezierDistance += distance;
-                            log.warn(String.format("#   Bezier %.1f, %.1f", bezierDistance, distance));
+                            //log.warn(String.format("#   Bezier d:%.1f, bd:%.1f, dot:%.1f", distance, bezierDistance, distanceOnTrack));
                             if (distanceOnTrack < bezierDistance) {  // it's on this segment
-                                navigator.setLocation(MathUtil.lerp(p1, p2, (bezierDistance - distanceOnTrack) / distance));
+                                navigator.setLocation(MathUtil.lerp(p2, p1, (bezierDistance - distanceOnTrack) / distance));
                                 navigator.setDirectionRAD((Math.PI / 2) - MathUtil.computeAngleRAD(p2, p1));
                                 nextSegmentFlag = false;
                             }
                             p1 = p2;
                             break;
-
+                        }
                         default:
                             log.error("Unknown path segment type: {}.", i.currentSegment(data));
                         case PathIterator.SEG_QUADTO:
                         case PathIterator.SEG_CUBICTO:
-                        case PathIterator.SEG_CLOSE:
+                        case PathIterator.SEG_CLOSE: {
                             // OOPS! we're lost!
                             result = super.navigate(navigator);   // call super to STOP
                             break;
-
+                        }
                     }
                     i.next();
                 }   // while (!i.isDone() && nextSegmentFlag)
                 if (nextSegmentFlag) {  // this should NEVER happen
                     log.error("Bezier overflow!");
                 }
-                navigator.setDistance(bezierDistance - distanceOnTrack);
-                navigator.setDistanceOnTrack(bezierDistance);
+                //navigator.setDistance(bezierDistance - distanceOnTrack);
+                navigator.setDistance(0);
+                navigator.setDistanceOnTrack(distanceOnTrack);
             } else {
                 navigator.setDistance(distanceOnTrack - distance);
                 navigator.setDistanceOnTrack(0);

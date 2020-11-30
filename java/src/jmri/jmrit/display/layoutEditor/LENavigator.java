@@ -167,8 +167,8 @@ public class LENavigator {
      */
     public void navigate() {
         do {
-            log.error(String.format(
-                    "%s on track: %s at {%.0f, %.0f}, dir: %.0f, distance: %.0f",
+            log.warn(String.format(
+                    "#  %s on track: %s at {%.0f, %.0f}, dir: %.0f, distance: %.0f",
                     getName(), layoutTrack.getName(),
                     getLocation().getX(), getLocation().getY(),
                     getDirectionDEG(), getDistance()));
