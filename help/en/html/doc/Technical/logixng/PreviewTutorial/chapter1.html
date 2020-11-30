@@ -106,6 +106,21 @@ If the popup menu is opened on an item that can be copied, the menu item Copy is
 item and its sub tree are copied to the clipboard. Each item gets an auto system name and no user name.
 
 
+
+<h2>Stop the power during lunch</h2>
+
+Logix support reading the fast clock. LogixNG also supports reading the system clock. Lets assume you want to cut power
+to the layout during the lunch. This can easily be done by the following ConditionalNG:
+
+* IfThenElse
+  * If: And
+    * E1: Clock: System clock between 12.00 and 13.00
+	* E2: Power: Is power ON?
+  * Then: Power: Turn power off
+  * Else:
+
+
+
 </td>
 </tr>
 </table>

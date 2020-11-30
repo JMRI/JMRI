@@ -10,8 +10,8 @@ var carPos = 0;				// Position of the car
 
 var craneX = 737;				// Crane X position
 var craneY = 540;				// Crane Y position
-var craneMinAngle = -80;		// Minimum angle of the crane
-var craneMaxAngle = 30;			// Maximum angle of the crane
+var craneMinAngle = -160;		// Minimum angle of the crane
+var craneMaxAngle = 90;			// Maximum angle of the crane
 var craneAngle = craneMinAngle;	// Current angle of crane
 var commandedCraneAngle = craneAngle;	// Commanded angle of the crane
 
