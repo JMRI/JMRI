@@ -48,6 +48,8 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     public static final String OWNER = Bundle.getMessage("Owner");
     // only here for name checking
     public static final String TYPE = Bundle.getMessage("Type");
+    // here for length check
+    public static final String LENGTH = Bundle.getMessage("Length");
 
     protected static boolean showDialogBox = true;
     public boolean showQuanity = false;
@@ -55,7 +57,7 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     // property change
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public RollingStockAttributeEditFrame() {
+    public RollingStockAttributeEditFrame(){
     }
 
     public String _attribute; // used to determine which attribute is being edited
@@ -108,20 +110,19 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("edit frame button activated");
         if (ae.getSource() == addButton) {
-            String addItem = addTextBox.getText().trim();
-            if (!checkItemName(addItem, Bundle.getMessage("canNotAdd"))) {
+            if (!checkItemName(Bundle.getMessage("canNotAdd"))) {
                 return;
             }
-            addAttributeName(addItem);
+            addAttributeName(addTextBox.getText().trim());
         }
         if (ae.getSource() == deleteButton) {
             deleteAttributeName((String) comboBox.getSelectedItem());
         }
         if (ae.getSource() == replaceButton) {
-            String newItem = addTextBox.getText().trim();
-            if (!checkItemName(newItem, Bundle.getMessage("canNotReplace"))) {
+            if (!checkItemName(Bundle.getMessage("canNotReplace"))) {
                 return;
             }
+            String newItem = addTextBox.getText().trim();
             String oldItem = (String) comboBox.getSelectedItem();
             if (JOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem, newItem }),
@@ -141,9 +142,15 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
         }
     }
 
-    protected boolean checkItemName(String itemName, String errorMessage) {
+    protected boolean checkItemName(String errorMessage) {
+        String itemName = addTextBox.getText().trim();
         if (itemName.isEmpty()) {
             return false;
+        }
+        if (_attribute.equals(LENGTH)) {
+            if (convertLength(itemName).equals(FAILED)) {
+                return false;
+            }
         }
         if (_attribute.equals(ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
@@ -215,9 +222,9 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
             InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         }
     }
-    
+
     public static final String FAILED = "failed";
-    
+
     public String convertLength(String addItem) {
         // convert from inches to feet if needed
         if (addItem.endsWith("\"")) { // NOI18N
@@ -231,6 +238,7 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
                         Bundle.getMessage("ErrorRsLength"), JOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
+            addTextBox.setText(addItem);
         }
         if (addItem.endsWith("cm")) { // NOI18N
             addItem = addItem.substring(0, addItem.length() - 2);
@@ -243,12 +251,16 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
                         Bundle.getMessage("ErrorRsLength"), JOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
+            addTextBox.setText(addItem);
         }
         // confirm that length is a number and less than 10000 feet
         try {
             int length = Integer.parseInt(addItem);
             if (length < 0) {
                 log.error("length ({}) has to be a positive number", addItem);
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
+                        MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
+                        JOptionPane.ERROR_MESSAGE);
                 return FAILED;
             }
             if (addItem.length() > Control.max_len_string_length_name) {
@@ -261,6 +273,9 @@ public class RollingStockAttributeEditFrame extends OperationsFrame implements j
             }
         } catch (NumberFormatException e) {
             log.error("length ({}) is not an integer", addItem);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRsLength"),
+                    MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[] { _attribute }),
+                    JOptionPane.ERROR_MESSAGE);
             return FAILED;
         }
         return addItem;
