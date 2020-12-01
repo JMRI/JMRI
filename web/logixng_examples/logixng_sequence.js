@@ -1,9 +1,9 @@
 var throttleSpeed = 0;		// The speed of the train
 var throttleForward = true;	// The direction of the train
-// var locoPos = 100;			// The position of the loco
+var locoPos = 100;			// The position of the loco
 // var locoPos = 700;				// The position of the loco
-//var locoPos = 830;			// The position of the loco
-var locoPos = 982;			// The position of the loco
+// var locoPos = 830;			// The position of the loco
+// var locoPos = 982;			// The position of the loco
 var selectDivergedTrack = false;	// Should the train go to crane track instead of harbour track?
 var turnoutThrown = false;	// Is the turnout thrown?
 var diveringTrackAngle = 0;	// The angle of crane track?
@@ -282,7 +282,7 @@ function runTrain()
 
 //		loco.setAttribute("transform", "translate("+(trainPos+300)+",200) scale(0.3) rotate(0)");
 //		console.log("Loco: "+data);
-	}
+}
 
 	// Check the sensors
 	checkSensors();
@@ -397,5 +397,28 @@ function checkCrane()
 
 		jmri.setMemory("IM_7_6", craneBucketOpenClosed);
 //		console.log("Set memory: "+anglePercent);
+	}
+
+//	if (craneBucketFilled && (craneBucketOpenClosed > 50)) {
+	{
+//		console.log("aaa");
+		// Is bucket above car?
+		var car = document.getElementById('CarHandle');
+		var carRect = car.getBoundingClientRect();
+		var bucket = document.getElementById('CraneBucket');
+		var bucketRect = bucket.getBoundingClientRect();
+//		console.log(carRect);
+//		console.log(bucketRect);
+//		console.log(carRect.x1+", "+bucketRect.x1+" - "+carRect.y1+", "+bucketRect.y1+" - "+carRect.x2+", "+bucketRect.x2+" - "+carRect.y2+", "+bucketRect.y2);
+		console.log(carRect.x+", "+bucketRect.x+" - "+carRect.y+", "+bucketRect.y+" - "+(carRect.x+carRect.width)+", "+(bucketRect.x+bucketRect.width)+" - "+(carRect.y+carRect.height)+", "+(bucketRect.y+bucketRect.height));
+		if ((carRect.x < bucketRect.x) && (carRect.y < bucketRect.y) && (carRect.x+carRect.width > bucketRect.x+bucketRect.width) && (carRect.y+carRect.height > bucketRect.y+bucketRect.height)) {
+			console.log("bbb");
+			var carLoad = document.getElementById('CarLoad');
+			carLoad.setAttribute("visibility", "hidden");
+		} else {
+//			console.log("ccc");
+			var carLoad = document.getElementById('CarLoad');
+			carLoad.setAttribute("visibility", "visible");
+		}
 	}
 }
