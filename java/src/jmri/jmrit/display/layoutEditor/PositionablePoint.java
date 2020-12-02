@@ -8,7 +8,6 @@ import javax.annotation.*;
 import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;  // temporary
 
-
 /**
  * PositionablePoint is a Point defining a node in the Track that can be dragged
  * around the inside of the enclosing LayoutEditor panel using a right-drag
@@ -42,8 +41,8 @@ public class PositionablePoint extends LayoutTrack {
     // defined constants
     public enum PointType {
         NONE,
-        ANCHOR,        // 1
-        END_BUMPER,    // 2
+        ANCHOR, // 1
+        END_BUMPER, // 2
         EDGE_CONNECTOR // 3
     }
 
@@ -101,6 +100,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * Get the point type.
+     *
      * @return point type, i.e. ANCHOR, END_BUMPER, EDGE_CONNECTOR
      */
     public PointType getType() {
@@ -124,7 +124,7 @@ public class PositionablePoint extends LayoutTrack {
                     break;
                 }
             }
-                
+
             log.info("temporary - repaint was removed here, needs to be rescoped");
             // models.repaint();
 
@@ -194,18 +194,22 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * Provide the destination TrackSegment of the 1st connection.
+     *
      * @return destination track segment
      */
     public TrackSegment getConnect1() {
         return connect1;
     }
 
-    public void setConnect1(TrackSegment trk) { connect1 = trk; }
-    
+    public void setConnect1(TrackSegment trk) {
+        connect1 = trk;
+    }
+
     /**
-     * Provide the destination TrackSegment of the 2nd connection.
-     * When this is an EDGE CONNECTOR, it looks through the linked point (if any)
-     * to the far-end track connection.
+     * Provide the destination TrackSegment of the 2nd connection. When this is
+     * an EDGE CONNECTOR, it looks through the linked point (if any) to the
+     * far-end track connection.
+     *
      * @return destination track segment
      */
     public TrackSegment getConnect2() {
@@ -216,16 +220,18 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Provide the destination TrackSegment of the 2nd connection
-     * without doing the look-through present in {@link #getConnect2()}
+     * Provide the destination TrackSegment of the 2nd connection without doing
+     * the look-through present in {@link #getConnect2()}
+     *
      * @return destination track segment
      */
     public TrackSegment getConnect2Actual() {
         return connect2;
     }
-    
-    public void setConnect2Actual(TrackSegment trk) { connect2 = trk; }
 
+    public void setConnect2Actual(TrackSegment trk) {
+        connect2 = trk;
+    }
 
     private PositionablePoint linkedPoint;
 
@@ -261,7 +267,7 @@ public class PositionablePoint extends LayoutTrack {
                 TrackSegment ts = oldLinkedPoint.getConnect1();
                 oldLinkedPoint.getLayoutEditor().getLEAuxTools().setBlockConnectivityChanged();
                 ts.updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedPoint.getLayoutEditor().repaint();
 
@@ -269,7 +275,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect1() != null) {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
@@ -280,7 +286,7 @@ public class PositionablePoint extends LayoutTrack {
             if (getConnect1() != null) {
                 models.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // models.repaint();
             }
@@ -760,7 +766,7 @@ public class PositionablePoint extends LayoutTrack {
             result = false;
         }
         return result;
-    } 
+    }
 
     void removeSML(SignalMast signalMast) {
         if (signalMast == null) {
@@ -843,7 +849,7 @@ public class PositionablePoint extends LayoutTrack {
                 LayoutEditor oldLinkedEditor = getLinkedEditor();
                 TrackSegment ts = getConnect2();
                 getLinkedPoint().setLinkedPoint(null);
-                
+
                 log.info("temporary - repaint was removed here, needs to be rescoped");
                 // oldLinkedEditor.repaint();
 
@@ -866,6 +872,7 @@ public class PositionablePoint extends LayoutTrack {
 
     /**
      * "active" means that the object is still displayed, and should be stored.
+     *
      * @return true if active
      */
     protected boolean isActive() {
@@ -1001,10 +1008,10 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-     //
-     // This uses a getCoords() call, and having that at this level
-     // has to be temporary
-     //
+    //
+    // This uses a getCoords() call, and having that at this level
+    // has to be temporary
+    //
     @Override
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
@@ -1024,13 +1031,12 @@ public class PositionablePoint extends LayoutTrack {
 
                     // determine direction from block 1 to block 2
                     lc.setDirection(
-                        models.computeDirection(
-                            ts1.getConnect1() == this ? ts1.getConnect2()   : ts1.getConnect1(),
-                            ts1.getConnect1() == this ? ts1.getType2()      : ts1.getType1(),
-
-                            ts2.getConnect1() == this ? ts2.getConnect2() : ts2.getConnect1(),
-                            ts2.getConnect1() == this ? ts2.getType2() : ts2.getType1() 
-                        )
+                            models.computeDirection(
+                                    ts1.getConnect1() == this ? ts1.getConnect2() : ts1.getConnect1(),
+                                    ts1.getConnect1() == this ? ts1.getType2() : ts1.getType1(),
+                                    ts2.getConnect1() == this ? ts2.getConnect2() : ts2.getConnect1(),
+                                    ts2.getConnect1() == this ? ts2.getType2() : ts2.getType1()
+                            )
                     );
 
                     // save Connections
@@ -1053,7 +1059,7 @@ public class PositionablePoint extends LayoutTrack {
 
                     // determine direction from block 1 to block 2
                     int result;
-                    
+
                     if (ts1.getConnect1() == this) {
                         result = models.computeDirectionToCenter(ts1.getConnect2(), ts1.getType2(), this);
                     } else {
@@ -1236,6 +1242,68 @@ public class PositionablePoint extends LayoutTrack {
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
         // positionable points don't have blocks...
         // nothing to see here, move along...
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean navigate(@Nonnull LENavigator navigator) {
+        boolean result = true;  // always goto next track
+        switch (type) {
+            case ANCHOR: {
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLastTrack(getConnect1());
+                }
+                if (getConnect1().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect2());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                } else if (getConnect2().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                } else {
+                    result = super.navigate(navigator);   // call super to STOP
+                    break;
+                }
+                navigator.setLastTrack(this);
+                break;
+            }
+            default:
+            case END_BUMPER: {
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                    navigator.setLastTrack(this);
+                } else {
+                    result = super.navigate(navigator);   // call super to STOP
+                }
+                break;
+            }
+            case EDGE_CONNECTOR: {
+                if (navigator.getLastTrack() == null) {
+                    navigator.setLastTrack(getConnect1());
+                }
+                if (getConnect1().equals(navigator.getLastTrack())) {
+                    TrackSegment c2 = getConnect2();
+                    if (c2 != null) {
+                        navigator.setLayoutEditor(getLinkedEditor());
+                        navigator.setLayoutTrack(c2);
+                        navigator.setHitPointType(HitPointType.POS_POINT);
+                    } else {
+                        result = super.navigate(navigator);   // call super to STOP
+                    }
+                } else if (getConnect2().equals(navigator.getLastTrack())) {
+                    navigator.setLayoutTrack(getConnect1());
+                    navigator.setHitPointType(HitPointType.POS_POINT);
+                } else {
+                    result = super.navigate(navigator);   // call super to STOP
+                    break;
+                }
+                navigator.setLastTrack(this);
+                break;
+            }
+        }
+        return result;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionablePoint.class);

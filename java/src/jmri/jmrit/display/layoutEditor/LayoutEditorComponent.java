@@ -11,6 +11,7 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -107,6 +108,10 @@ class LayoutEditorComponent extends JComponent {
                 if (layoutEditor.allControlling()) {
                     drawTurnoutControls(g2);
                 }
+            }
+            List<LENavigator> navigators = layoutEditor.getNavigators();
+            for (LENavigator navigator : navigators) {
+                navigator.draw(g2);
             }
         } else {
             log.error("LayoutEditor drawing requires Graphics2D");

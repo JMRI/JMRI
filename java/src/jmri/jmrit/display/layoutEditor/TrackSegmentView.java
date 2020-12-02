@@ -2091,7 +2091,7 @@ public class TrackSegmentView extends LayoutTrackView {
             double chord = Math.hypot(a, o);
             setChordLength(chord);
 
-            // Make sure chord is not null
+            // Make sure chord is not zero
             // In such a case (ep1 == ep2), there is no arc to draw
             if (chord > 0.D) {
                 double radius = (chord / 2.D) / Math.sin(halfAngleRAD);
@@ -2168,7 +2168,7 @@ public class TrackSegmentView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(end1, end2));
             }
         }
-    }
+    }   // draw1
 
     /**
      * {@inheritDoc}
@@ -2671,7 +2671,7 @@ public class TrackSegmentView extends LayoutTrackView {
     * @return the points to pass to MathUtil.drawBezier(...)
      */
     @Nonnull
-    private Point2D[] getBezierPoints() {
+    public Point2D[] getBezierPoints() {
         Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
         int cnt = bezierControlPoints.size() + 2;
