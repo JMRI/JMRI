@@ -394,10 +394,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
+            getMoreDetailsForSlotMove(m, i);
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
-            getMoreDetailsForSlotMove(m, i);
         }
 
         // LONG_ACK response?
@@ -786,28 +786,54 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * If it is a slot move message then for
      *  null moves, do nothing
      *  for dispatch moves read dispatched slot
-     *  for all others read both slots
-     *
+     *  for true moves read from slot (most, but not all already return the toSlot)
+     * If the status is going to common from anything else 
      * @param m a LocoNet message
      * @param i the slot to which it is directed
      */
     protected void getMoreDetailsForSlotMove(LocoNetMessage m, int i) {
         // is called any time a LocoNet message is received.
-        // if this is OPC_MOVE_SLOT
-        if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+        // sets up delayed slot read to update our effected slots to match the CS
+        if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 && 
+                ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON && _slots[i].slotStatus() != LnConstants.LOCO_COMMON ) ) {
+            // Changing a slot to common.
+            sendReadSlotDelayed(i,1000);
+        } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+            //moving other than null move which always returns a slot status  
             int slotTwo;
             slotTwo = m.getElement(2);
             if (i != 0 && slotTwo == 0) {
                 // dispatch
-                sendReadSlot(i);
+                sendReadSlotDelayed(i,1000);
             } else if (i == slotTwo) {
                 // null move ignore
             } else {
-                // get both slots (does this ever happen
-                sendReadSlot(i);
-                sendReadSlot(slotTwo);
+                // Command Stations that execute true moves correctly return
+                // the to slot in response, so we only need the from slot.
+                sendReadSlotDelayed(i,1000);
             }
         }
+    }
+    
+    /**
+     * Scedule a delayed slot read.
+     * @param slotNo - the slot.
+     * @param delay - delay in msecs.
+     */
+    protected void sendReadSlotDelayed(int slotNo, long delay) {
+        java.util.TimerTask meterTask = null;
+        meterTask = new java.util.TimerTask() {
+            int slotNumber = slotNo;
+            @Override
+            public void run() {
+                try {
+                    sendReadSlot(slotNumber);
+                } catch (Exception e) {
+                    log.error("Exception occurred sendReadSlotDelayed:", e);
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(meterTask, delay);
     }
     
     /**
