@@ -31,6 +31,34 @@ car.
 <p>
 
 
+<hr>
+
+
+
+<h2>Att göra med demonstationen</h2>
+
+Is crane bucket loaded?
+
+If not, and if crane is lowered at the coal yard and bucket is closed, bucket is loaded.
+If not lowered or not over coal yard, bucket is unloaded.
+
+If bucket is opened above the car, the car is loaded.
+
+If the train is stopped near the ship, the car is emptied.
+
+
+
+
+
+* The crane doesn't rotate if the crane arm is lower than 80.
+
+* The crane bucket gets loaded if the bucket is closed below 50 while the arm is lower than 20 and the bucket is above the coal yard.
+
+* The crane bucket is emptied if the bucket is opened above 50.
+
+
+
+<hr>
 
 <svg id="svg-object" width="1000" height="800">
 
@@ -113,6 +141,7 @@ car.
       <rect x="-221" y="-119" width="437" height="233" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />    <!-- frame -->
       <rect x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#4F81BD" />     <!-- empty loading dock -->
       <rect id="CarLoad" x="-191" y="-93" width="381" height="186" stroke="#385D8A" stroke-width="4" fill="#948A54" />     <!-- filled loading dock -->
+      <circle cx="0" cy="0" r="20" stroke="black" stroke-width="2" fill="blue" />   <!-- only used to see the center of the car -->
 	</g>
   </defs>
 

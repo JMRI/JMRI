@@ -1,11 +1,13 @@
 var throttleSpeed = 0;		// The speed of the train
 var throttleForward = true;	// The direction of the train
-var locoPos = 100;			// The position of the loco
+// var locoPos = 100;			// The position of the loco
 // var locoPos = 700;				// The position of the loco
 // var locoPos = 830;			// The position of the loco
 // var locoPos = 982;			// The position of the loco
+// var locoPos = 765;			// The position of the loco
+var locoPos = 707;			// The position of the loco
 var selectDivergedTrack = false;	// Should the train go to crane track instead of harbour track?
-var turnoutThrown = false;	// Is the turnout thrown?
+var turnoutThrown = true;	// Is the turnout thrown?
 var diveringTrackAngle = 0;	// The angle of crane track?
 var turnoutPos = 0;			// Where does the diverging track starts?
 var carPos = 0;				// Position of the car
@@ -14,9 +16,11 @@ var craneX = 737;				// Crane X position
 var craneY = 540;				// Crane Y position
 var craneMinAngle = -160;		// Minimum angle of the crane
 var craneMaxAngle = 90;			// Maximum angle of the crane
-var craneAngle = craneMinAngle;	// Current angle of crane
+//var craneAngle = craneMinAngle;	// Current angle of crane
+var craneAngle = 59;	// Current angle of crane
 var commandedCraneAngle = -1;	// Commanded angle of the crane
-var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
+//var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
+var craneUpDown = 100;			// Current crane arm up/down (up = 100, down = 0)
 var commandedCraneUpDown = 0;	// Commanded crane arm up/down (up = 100, down = 0)
 var craneBucketOpenClosed = -1;	// Current crane bucket open/closed (open = 0, closed = 100)
 var commandedCraneBucketOpenClosed = 0;	// Commanded crane arm up/down (open = 0, closed = 100)
@@ -254,6 +258,7 @@ function checkSensors()
 
 
 window.setInterval(runTrain, 50);
+//window.setInterval(runTrain, 500);
 
 function runTrain()
 {
@@ -298,6 +303,7 @@ function rotateCrane(value) {
 	commandedCraneAngle = (craneMaxAngle - craneMinAngle) * value / 100 + craneMinAngle;
 	if (commandedCraneAngle < craneMinAngle) commandedCraneAngle = craneMinAngle;
 	if (commandedCraneAngle > craneMaxAngle) commandedCraneAngle = craneMaxAngle;
+	console.log("commandedCraneAngle: "+commandedCraneAngle);
 }
 
 
@@ -313,7 +319,6 @@ function openCloseCraneBucket(value) {
 	if (commandedCraneBucketOpenClosed < 2) commandedCraneBucketOpenClosed = 2;
 	if (commandedCraneBucketOpenClosed > 100) commandedCraneBucketOpenClosed = 100;
 }
-
 
 
 function checkCrane()
@@ -400,6 +405,7 @@ function checkCrane()
 	}
 
 //	if (craneBucketFilled && (craneBucketOpenClosed > 50)) {
+//	if (false)	// DANIEL DANIEL
 	{
 //		console.log("aaa");
 		// Is bucket above car?
@@ -410,7 +416,12 @@ function checkCrane()
 //		console.log(carRect);
 //		console.log(bucketRect);
 //		console.log(carRect.x1+", "+bucketRect.x1+" - "+carRect.y1+", "+bucketRect.y1+" - "+carRect.x2+", "+bucketRect.x2+" - "+carRect.y2+", "+bucketRect.y2);
-		console.log(carRect.x+", "+bucketRect.x+" - "+carRect.y+", "+bucketRect.y+" - "+(carRect.x+carRect.width)+", "+(bucketRect.x+bucketRect.width)+" - "+(carRect.y+carRect.height)+", "+(bucketRect.y+bucketRect.height));
+
+
+//		console.log("Car: "+carRect.x+", "+carRect.y+", "+(carRect.x+carRect.width)+", "+(carRect.y+carRect.height));
+//		console.log("Bucket: "+bucketRect.x+", "+bucketRect.y+", "+(bucketRect.x+bucketRect.width)+", "+(bucketRect.y+bucketRect.height));
+
+//		console.log(carRect.x+", "+bucketRect.x+" - "+carRect.y+", "+bucketRect.y+" - "+(carRect.x+carRect.width)+", "+(bucketRect.x+bucketRect.width)+" - "+(carRect.y+carRect.height)+", "+(bucketRect.y+bucketRect.height));
 		if ((carRect.x < bucketRect.x) && (carRect.y < bucketRect.y) && (carRect.x+carRect.width > bucketRect.x+bucketRect.width) && (carRect.y+carRect.height > bucketRect.y+bucketRect.height)) {
 			console.log("bbb");
 			var carLoad = document.getElementById('CarLoad');

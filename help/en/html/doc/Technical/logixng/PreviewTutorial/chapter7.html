@@ -14,29 +14,93 @@
 <tr>
 <td>
 
-<h1>LogixNG Preview - Chapter 8</h1>
+<h1>LogixNG Preview - Chapter 7</h1>
+
+This example is a bit complex and needs some introduction on how it works. But it gives a good introduction to the
+action Sequence which is very useful with LogixNG. This example uses a web page that's included in JMRI. Start
+<b>PanelPro</b> and open a web browser and visit the page
+<a href="http://localhost:12080/web/logixng_examples/logixng_sequence.html">http://localhost:12080/web/logixng_examples/logixng_sequence.html</a>.
+This link assumes that PanelPro uses the port 12080 for its web server.
+
+<p>
+
+<hr>
+
+<img src="images/chapter7_layout.png"><br>
+
+<hr>
 
 <h2>Sequence - controlling a crane and a loco</h2>
+
+<p>
 
 A layout for exhibitions has a coal storage with a coal crane, there the crane loads coal on a wagon which then
 transports the coal to a harbour and drops the coal into a ship.
 
-At first, we try to run the layout manually to see how it works.
+<p>
+
+<img src="images/chapter7_crane.png"><br>
+The above image shows the crane in four different positions. The left crane has an empty bucket and the arm
+that holds the bucket is in its up position. This demo uses an arrow on the crane's cabin that shows if the crane is
+up or down. When the arm is up, the arrow points to the bucket. When the arm is down, the arrow points away from the
+bucket. The middle left crane has also an empty bucket but the arm that holds the bucket is in its down position. The
+middle right crane has a filled bucket and its arm in the up position. The right crane has the bucket open, while the
+other three cranes have the bucket closed.
+<p>
+
+<img src="images/chapter7_train.png"><br>
+
+The above image shows the steam engine and a coal car. On this image, the car is loaded with coal. Right to the train
+is the turnout that lets the train go either to the harbour or to the coal yard.
+<p>
+North of the track is the harbour with the ship that gets loaded with coal. And next to the crane is the coal yard
+there the crane picks up coal to put in the car.
+<p>
+The red circles between the rails are sensors that goes active when the engine or the car is above it.
+<p>
+
+<hr>
+
+<h3>Running the layout</h3>
+
+At first, we try to run the layout manually to see how it works. And to do that, we need to define some sensors and
+memories in JMRI. There is some support for AnalogIOs in JMRI, items on the layout that uses numbers instead of on/off
+states, but it's limited today to meters. Therefore, this demo uses memories to send and receive analog values to and
+from the layout. But the goal is to use AnalogIO devices instead.
+
+<p>
+
+We have a turnout on the layout:
+<ul>
+<li>IT_7_1 - The turnout</li>
+</ul>
+
+We need three sensors to detect where the train are on the layout:
+<ul>
+<li>IS_7_1 - Start layout</li>
+<li>IS_7_1 - Stop layout</li>
+<li>IS_7_1 - Reset layout</li>
+</ul>
+
+And we need six memories to control the three axis of the crane. The memories with odd numbers are used for JMRI to
+tell the crane where to go. The memories with even numbers are used by the crane to tell JMRI where the current
+position of the axis.
+<ul>
+<li>IM_7_1 - Crane angle left - right, commanded position</li>
+<li>IM_7_2 - Crane angle left - right, actual position</li>
+<li>IM_7_3 - Crane bucket up - down, commanded position</li>
+<li>IM_7_4 - Crane bucket up - down, actual position</li>
+<li>IM_7_5 - Crane bucket closed - open, commanded position</li>
+<li>IM_7_6 - Crane bucket closed - open, actual position</li>
+</ul>
+
+We also need to control the loco. We do it by opening a new throttle in JMRI and select loco address 21.
+<ul>
+<li>Throttle with address 21 - Controls the steam engine</li>
+</ul>
 
 
-IS_7_1 - Start layout
-IS_7_1 - Stop layout
-IS_7_1 - Reset layout
-
-IM_1 - Crane angle left - right, commanded position
-IM_2 - Crane angle left - right, actual position
-IM_3 - Crane bucket up - down, commanded position
-IM_4 - Crane bucket up - down, actual position
-IM_5 - Crane bucket closed - open, commanded position
-IM_6 - Crane bucket closed - open, actual position
-
-Throttle 21 - Controls the steam engine
-
+<h3>Some rules when running this layout</h3>
 
 
 <h3>Some things to note:</h3>
