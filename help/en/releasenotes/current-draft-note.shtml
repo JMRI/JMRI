@@ -575,7 +575,34 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>The table of throttle commands when creating or editing warrants has been changed:
+            	<ul>
+            		<li>The <b>Command</b> column is now a drop down combo box. This will allow the
+            			command names to be translated into languages other than English.</li>
+            	    <li>The <b>Value</b> column is a drop down combo box for throttle commands
+            	    	other than "Speed" or "Run Warrant". Again, done to permit translation
+            	    	into other languages.</li>
+            	</ul>
+            </li>
+            <li>The algorithm for executing speed changes due to track conditions for warrants
+                has been modified and is better able to restore the scripted speeds once the
+                track speed restrictions are lifted.</li>
+            <li>The constant used to approximate track speed of trains has been changed to 
+            	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
+            	on roster entries having Speed Profiles.</li>
+            <li>The Address column of the Warrant Table list and the Address field of the NXWarrant
+            	window now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
+            <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
+            	non-speed script commands are executed at approximately the same elapsed times as  
+            	written in the script.</li>
+            <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
+            	settings and commands are edited. This button updates the <b>Speed</b> column to
+            	list the track speeds (mm/sec) for the current Speed Profile measurements of
+            	the locomotive address entered in the 'Engine Consist' box.</li>           	
+            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of 
+            	speed profiles are fixed.</li>          	
+			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths 
+            	are also added to the imported OPaths.</li>
         </ul>
 
    <h3>Web Access</h3>

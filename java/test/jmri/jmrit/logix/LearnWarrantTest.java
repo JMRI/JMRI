@@ -69,7 +69,7 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
 
-        frame._speedUtil.setDccAddress("99");
+        frame._speedUtil.setAddress("99");
         frame.setTrainInfo(null);
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
@@ -105,7 +105,7 @@ public class LearnWarrantTest {
         NXFrameTest.setAndConfirmSensorAction(lastSensor, Sensor.INACTIVE, 
                 _OBlockMgr.getOBlock(route[route.length-1]));
         // change address and run
-        frame._speedUtil.setDccAddress("111");
+        frame._speedUtil.setAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         address = frame._speedUtil.getDccAddress();

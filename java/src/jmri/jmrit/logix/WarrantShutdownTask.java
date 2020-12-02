@@ -92,9 +92,11 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Iterator<RosterSpeedProfile> it = sessionProfiles.values().iterator();
         while(it.hasNext()) {
             RosterSpeedProfile profile = it.next();
-            if (profile.hasForwardSpeeds() || profile.hasReverseSpeeds()) {
-                allEmpty = false;
-                break;
+            if (profile != null) {
+                if (profile.hasForwardSpeeds() || profile.hasReverseSpeeds()) {
+                    allEmpty = false;
+                    break;
+                }
             }
         }
         if (allEmpty) {
@@ -109,7 +111,10 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }
-            _mergeCandidates.put(entry.getKey(), true);
+            String rosterId = entry.getKey();
+            if (Roster.getDefault().getEntryForId(rosterId) != null) {
+                _mergeCandidates.put(rosterId, true);
+            }
         }
         return true;
     }

@@ -476,7 +476,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case ADDRESS_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
                 String addr = (String) value;
-                if (!w.getSpeedUtil().setDccAddress(addr)) {
+                if (!w.getSpeedUtil().setAddress(addr)) {
                     msg = Bundle.getMessage("BadDccAddress", addr);                
                 }
             } else {
@@ -640,6 +640,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         SpeedUtil copySU = w.getSpeedUtil();
         SpeedUtil su = warrant.getSpeedUtil();
         copySU.setDccAddress(su.getDccAddress());
+        copySU.setRosterId(su.getRosterId());
         return w;
     }
 

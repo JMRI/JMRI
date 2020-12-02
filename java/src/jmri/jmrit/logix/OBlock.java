@@ -361,13 +361,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                     for (OPath path : entry.getValue()) {
                         // call sharing block to see if another warrant has allocated it
                         String warrantName = block.isPathSet(path.getName());
-                        if (warrantName != null) {
-                            // another warrant has allocated block that is it has precedence over _warrant
-                            log.debug("Path \"{}\" in block \"{}\" for warrant \"{}\" has turnouts shared with path \"{}\" in block \"{}\" for warrant \"{}\"",
-                                    _pathName, getDisplayName(), _warrant.getDisplayName(), path.getName(), block.getDisplayName(), warrantName);
+                        if (warrantName != null && !warrantName.equals(_warrant.getDisplayName())) {
+                            // another warrant has allocated a block using a common TO and it has precedence over _warrant
                             _warrant.setShareTOBlock(block, this);
                             return Bundle.getMessage("pathIsSet", _pathName, getDisplayName(), _warrant.getDisplayName(), path.getName(), block.getDisplayName(), warrantName);
-                        }   // else shared block unallocated
+                        }   // else shared TO unallocated
                     }
                 }
             }
@@ -543,7 +541,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param pathName name of a path
      * @return error message, otherwise null
      */
-    public String allocate(String pathName) {
+    public String allocatePath(String pathName) {
         log.debug("Allocate OBlock path \"{}\" in block \"{}\", state= {}",
                 pathName, getSystemName(), getState());
         if (pathName == null) {
@@ -705,7 +703,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     public Portal getPortalByName(String name) {
-        log.debug("getPortalByName: name= \"{}\".", name);
+//        log.debug("getPortalByName: name= \"{}\".", name);
         for (Portal po : _portals) {
             if (po.getName().equals(name)) {
                 return po;
@@ -717,6 +715,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     @Nonnull
     public List<Portal> getPortals() {
         return new ArrayList<>(_portals);
+    }
+
+    public void setPortals(ArrayList<Portal> portals) {
+        _portals = portals;
     }
 
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "OPath extends Path")
@@ -849,6 +851,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _warrant = warrant;
         if (!_ownsTOs) {
             // If shared block owned by another warrant a callback to the warrant sets up a wait
+            // ignore shared TO message - No longer an issue 11/26/2020 pwc
+            // Let code remain for now.
             msg = checkSharedTO();
         }
         if (msg == null && path != null) {  // _warrant has precedence - OK to throw
@@ -857,7 +861,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             firePropertyChange("pathState", 0, getState());
         }
         log.debug("setPath: Path \"{}\" in OBlock \"{}\" {} set for warrant {}",
-                    pathName, getDisplayName(), (msg == null ? "" : "NOT"), warrant.getDisplayName());
+                    pathName, getDisplayName(), warrant.getDisplayName());
         return msg;
     }
 

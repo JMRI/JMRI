@@ -206,7 +206,7 @@ public class NXFrame extends WarrantRoute {
 
     private void maxThrottleEventAction() {
         boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+        RosterSpeedProfile profile = _speedUtil.getMergeProfile();
         if (profile != null) {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
@@ -236,7 +236,7 @@ public class NXFrame extends WarrantRoute {
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
             boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+            RosterSpeedProfile profile = _speedUtil.getMergeProfile();
             if (profile != null) {
                 NumberFormat formatter = NumberFormat.getNumberInstance(); 
                 float num = 0;
@@ -411,7 +411,7 @@ public class NXFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        log.debug("propertyChange \"{}\" old= {} new= {} source= {}",property,
+        log.trace("propertyChange \"{}\" old= {} new= {} source= {}",property,
                                             e.getOldValue(),e.getNewValue(),
                                             e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
@@ -577,7 +577,10 @@ public class NXFrame extends WarrantRoute {
         }
         _maxThrottle = maxSpeed;
 
-        setAddress();
+        String msg = setAddress();
+        if (msg != null) {
+            return msg;
+        }
 
         int time = (Integer)_timeIncre.getValue();
         _speedUtil.setRampTimeIncrement(time);
@@ -923,7 +926,7 @@ public class NXFrame extends WarrantRoute {
         // distance in block where down ramp is started
         blkDistance += remMaxSpeedDist;
         // time to start down ramp
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
 
         if (log.isDebugEnabled()) {
             log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",
