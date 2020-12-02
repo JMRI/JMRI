@@ -67,7 +67,8 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
                 // create a Generic Stand-alone port controller
                 log.debug("Create Generic Standalone SpecificTrafficController"); // NOI18N
                 control = new StandaloneTrafficController(this.getSystemConnectionMemo());
-                this.getSystemConnectionMemo().configureManagers(
+                this.getSystemConnectionMemo().setRfidTrafficController(control);
+		this.getSystemConnectionMemo().configureManagers(
                         new StandaloneSensorManager(this.getSystemConnectionMemo()),
                         new StandaloneReporterManager(this.getSystemConnectionMemo()));
                 break;

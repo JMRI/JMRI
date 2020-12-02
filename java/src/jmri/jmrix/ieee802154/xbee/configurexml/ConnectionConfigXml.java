@@ -167,7 +167,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 AbstractStreamPortController connectedController = null;
                 jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
 
-                Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
+                Element connect; 
+	        try {
+			connect = n.getChildren("connection").get(0); // there should only be one connection child.
+		} catch(IndexOutOfBoundsException ioobe){
+			connect = null;
+		}
 
                 // configure the controller.
                 if (streamController != null) {
@@ -215,17 +220,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
                         log.error("Unable to load {} into {}", shared, className, ex);
                     }
-                }
 
-                // after loading either config or controller, connect them.
-                if (connectedConfig != null) {
-                    node.connectPortController(connectedConfig);
-                } else if (connectedController != null) {
-                    // fallback for connections created with a script
-                    node.connectPortController(connectedController);
+                   // after loading either config or controller, connect them.
+                   if (connectedConfig != null) {
+                       node.connectPortController(connectedConfig);
+                   } else if (connectedController != null) {
+                       // fallback for connections created with a script
+                       node.connectPortController(connectedController);
+                   }
+                   log.info("loaded {} onto node ", node.getConnectionConfig(), node);
+                   log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
                 }
-                log.info("loaded {} onto node ", node.getConnectionConfig(), node);
-                log.info("manuf {} userName {} ", node.getConnectionConfig().getManufacturer(), node.getConnectionConfig().name());
             } catch (TimeoutException toe) {
                 log.error("Timeout adding node {} from configuration file.",
                         remoteDevice);
