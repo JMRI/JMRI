@@ -70,19 +70,10 @@ $(document).ready(function() {
 			if (name == "IM_7_1") rotateCrane(value);
 			if (name == "IM_7_3") liftLowerCrane(value);
 			if (name == "IM_7_5") openCloseCraneBucket(value);
-
-//			console.log("Memory name: "+name);
-//			console.log("Memory value: "+value);
-//			console.log("Memory data: "+data);
-//			jmri.setMemory("IM_92", "Hej");
 		},
 
 
 		turnout: function(name, value, data) {
-//			console.log("Turnout name: "+name);
-//			console.log("Turnout value: "+value);
-//			console.log("Turnout data: "+data);
-//			jmri.setMemory("IM_92", "Hej");
 			turnoutThrown = (value == 4);
 
 			if (turnoutThrown) {
@@ -259,7 +250,6 @@ function checkSensors()
 
 
 window.setInterval(runTrain, 50);
-//window.setInterval(runTrain, 500);
 
 function runTrain()
 {
@@ -276,23 +266,12 @@ function runTrain()
 		locoPos += speed*2;
 		carPos = locoPos + 150;
 
-//		console.log("carPos: "+carPos);
-
 		var loco = document.getElementById('LocoHandle');
-//		var data = "translate("+(trainPos)+",200) scale(0.3) rotate(0)";
-//		loco.setAttribute("transform", data);
 		moveLocoOrCar(loco, locoPos);
 
 		var car = document.getElementById('CarHandle');
-//		var data = "translate("+(carPos)+",200) scale(0.3) rotate(0)";
-//		car.setAttribute("transform", data);
 		moveLocoOrCar(car, carPos);
-
-//		loco.setAttribute("transform", "translate("+(trainPos+300)+",200) scale(0.3) rotate(0)");
-//		console.log("Loco: "+data);
 	} else {
-		// throttleSpeed == 0
-		// Check if unloading the car. This happens next to ship
 		if ((carPos >= 591) && (carPos <= 858) && !selectDivergedTrack) {
 			// Unload car
 			carIsFilled = false;
@@ -315,7 +294,6 @@ function rotateCrane(value) {
 	commandedCraneAngle = (craneMaxAngle - craneMinAngle) * value / 100 + craneMinAngle;
 	if (commandedCraneAngle < craneMinAngle) commandedCraneAngle = craneMinAngle;
 	if (commandedCraneAngle > craneMaxAngle) commandedCraneAngle = craneMaxAngle;
-//	console.log("commandedCraneAngle: "+commandedCraneAngle);
 }
 
 
@@ -335,11 +313,7 @@ function openCloseCraneBucket(value) {
 
 function checkLoadingOfCar()
 {
-//	console.log("checkLoadingOfCar()");
-
 	// If here, the crane bucket is filled, but the bucket is opened to drop its coal
-
-//	console.log("craneAngle: "+craneAngle);
 
 	// Check if crane bucket is close to the track
 	if ((craneAngle < 0) || (craneAngle > 60)) return;
@@ -349,14 +323,8 @@ function checkLoadingOfCar()
 	// perpendicular to the track.
 	var cranePosRelativeToTrack = Math.sin((craneAngle-30) * 2 * Math.PI / 360) * 2 * 57 + 857;
 
-//	console.log("cranePosRelativeToTrack: "+cranePosRelativeToTrack);
-//	console.log("carPos: "+carPos);
-//	console.log("carLength: "+carLength);
-
-	if (Math.abs(carPos - cranePosRelativeToTrack) < carLength/3) {
+	if (selectDivergedTrack && (Math.abs(carPos - cranePosRelativeToTrack) < carLength/3)) {
 		carIsFilled = true;
-//		var carLoad = document.getElementById('CarLoad');
-//		carLoad.setAttribute("visibility", "hidden");
 		var carLoad = document.getElementById('CarLoad');
 		carLoad.setAttribute("visibility", "visible");
 	}
@@ -380,14 +348,11 @@ function checkCrane()
 
 	if (craneAngle != lastAngle) {
 		var item = document.getElementById('CraneHandle');
-//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
 		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
 		item.setAttribute("transform", data);
 
 		anglePercent = (craneAngle - craneMinAngle) / (craneMaxAngle - craneMinAngle) * 100;
 		jmri.setMemory("IM_7_2", anglePercent);
-//		console.log("Set memory: "+anglePercent);
-//		console.log("Crane angle: "+craneAngle);
 	}
 
 
@@ -404,13 +369,10 @@ function checkCrane()
 
 	if (craneUpDown != lastCraneUpDown) {
 		var item = document.getElementById('CraneUpDown');
-//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
-//		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
 		var data = "translate(0,0) rotate("+((100-craneUpDown)*1.80)+")";
 		item.setAttribute("transform", data);
 
 		jmri.setMemory("IM_7_4", craneUpDown);
-//		console.log("Set memory: "+anglePercent);
 	}
 
 
@@ -420,7 +382,6 @@ function checkCrane()
 		craneBucketOpenClosed -= 1;
 		if (craneBucketOpenClosed < commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
 		if (craneBucketFilled && (craneBucketOpenClosed < 50)) {
-//		if ((craneBucketOpenClosed < 50)) {
 			checkLoadingOfCar();
 			craneBucketFilled = false;
 		}
@@ -435,17 +396,13 @@ function checkCrane()
 
 	if (craneBucketOpenClosed != lastCraneBucketOpenClosed) {
 		var item = document.getElementById('CraneBucket');
-//		var data = "translate("+x+","+(y+200)+") scale(0.3) rotate("+rotate+")";
-//		var data = "translate("+craneX+","+(craneY)+") scale(0.3) rotate("+craneAngle+")";
 		var data = "translate(0,0) rotate("+((100-craneBucketOpenClosed)*1.80)+")";
 		item.setAttribute("height", craneBucketOpenClosed);
 
-//		if (craneBucketOpenClosed < 50) item.setAttribute("fill", "#4F81BD");
 		if (!craneBucketFilled) item.setAttribute("fill", "#4F81BD");
 		else item.setAttribute("fill", "#948A54");
 
 		jmri.setMemory("IM_7_6", craneBucketOpenClosed);
-//		console.log("Set memory: "+anglePercent);
 	}
 
 }
