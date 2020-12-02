@@ -1,16 +1,17 @@
-var throttleSpeed = 0;		// The speed of the train
-var throttleForward = true;	// The direction of the train
-// var locoPos = 100;			// The position of the loco
-// var locoPos = 700;				// The position of the loco
+var throttleSpeed = 0;			// The speed of the train
+var throttleForward = true;		// The direction of the train
+var locoPos = 100;			// The position of the loco
+// var locoPos = 700;			// The position of the loco
 // var locoPos = 830;			// The position of the loco
 // var locoPos = 982;			// The position of the loco
 // var locoPos = 765;			// The position of the loco
-var locoPos = 707;			// The position of the loco
+// var locoPos = 707;				// The position of the loco
 var selectDivergedTrack = false;	// Should the train go to crane track instead of harbour track?
-var turnoutThrown = true;	// Is the turnout thrown?
-var diveringTrackAngle = 0;	// The angle of crane track?
-var turnoutPos = 0;			// Where does the diverging track starts?
-var carPos = 0;				// Position of the car
+var turnoutThrown = true;		// Is the turnout thrown?
+var diveringTrackAngle = 0;		// The angle of crane track?
+var turnoutPos = 0;				// Where does the diverging track starts?
+var carPos = 0;					// Position of the car
+var carIsFilled = false;		// Is the car loaded with coal?
 
 var craneX = 737;				// Crane X position
 var craneY = 540;				// Crane Y position
@@ -58,8 +59,8 @@ $(document).ready(function() {
 			jmri.getSensor("IS_7_2");	// Sensor at ship
 			jmri.getSensor("IS_7_3");	// Sensor at coal yard
 
-			console.log("Throttle data: ");
-			console.log("MyLoco throttle");
+//			console.log("Throttle data: ");
+//			console.log("MyLoco throttle");
 			throttle = {"name": "MyLoco", "address": 21};
 			result = jmri.getThrottle(throttle);
 		},
@@ -78,9 +79,9 @@ $(document).ready(function() {
 
 
 		turnout: function(name, value, data) {
-			console.log("Turnout name: "+name);
-			console.log("Turnout value: "+value);
-			console.log("Turnout data: "+data);
+//			console.log("Turnout name: "+name);
+//			console.log("Turnout value: "+value);
+//			console.log("Turnout data: "+data);
 //			jmri.setMemory("IM_92", "Hej");
 			turnoutThrown = (value == 4);
 
@@ -100,12 +101,12 @@ $(document).ready(function() {
 
 		throttle: function(throttle, data) {
 			if (typeof data.speed !== 'undefined') {
-				console.log("Speed: ", data.speed);
+//				console.log("Speed: ", data.speed);
 				if (data.speed >= 0) throttleSpeed = data.speed;
 				else throttleSpeed = 0;
 			}
 			if (typeof data.forward !== 'undefined') {
-				console.log("Forward: ", data.forward);
+//				console.log("Forward: ", data.forward);
 				throttleForward = data.forward;
 			}
 //			for (var key in data2) {
@@ -118,7 +119,7 @@ $(document).ready(function() {
 		// function, regardless of source of update
 		power: function(state) {
 			power = state;
-			console.log("Power: "+power);
+//			console.log("Power: "+power);
 /*
 			switch (power) {
 				case jmri.UNKNOWN:
@@ -265,7 +266,7 @@ function runTrain()
 	jmri.setSensor("IS_7_2", "ACTIVE");
 
 
-//	if (throttleSpeed != 0)
+	if (throttleSpeed != 0)
 	{
 		if (carPos < turnoutPos) selectDivergedTrack = turnoutThrown;
 
@@ -274,6 +275,8 @@ function runTrain()
 
 		locoPos += speed*2;
 		carPos = locoPos + 150;
+
+//		console.log("carPos: "+carPos);
 
 		var loco = document.getElementById('LocoHandle');
 //		var data = "translate("+(trainPos)+",200) scale(0.3) rotate(0)";
@@ -287,7 +290,16 @@ function runTrain()
 
 //		loco.setAttribute("transform", "translate("+(trainPos+300)+",200) scale(0.3) rotate(0)");
 //		console.log("Loco: "+data);
-}
+	} else {
+		// throttleSpeed == 0
+		// Check if unloading the car. This happens next to ship
+		if ((carPos >= 591) && (carPos <= 858) && !selectDivergedTrack) {
+			// Unload car
+			carIsFilled = false;
+			var carLoad = document.getElementById('CarLoad');
+			carLoad.setAttribute("visibility", "hidden");
+		}
+	}
 
 	// Check the sensors
 	checkSensors();
@@ -303,7 +315,7 @@ function rotateCrane(value) {
 	commandedCraneAngle = (craneMaxAngle - craneMinAngle) * value / 100 + craneMinAngle;
 	if (commandedCraneAngle < craneMinAngle) commandedCraneAngle = craneMinAngle;
 	if (commandedCraneAngle > craneMaxAngle) commandedCraneAngle = craneMaxAngle;
-	console.log("commandedCraneAngle: "+commandedCraneAngle);
+//	console.log("commandedCraneAngle: "+commandedCraneAngle);
 }
 
 
@@ -318,6 +330,36 @@ function openCloseCraneBucket(value) {
 	commandedCraneBucketOpenClosed = value;
 	if (commandedCraneBucketOpenClosed < 2) commandedCraneBucketOpenClosed = 2;
 	if (commandedCraneBucketOpenClosed > 100) commandedCraneBucketOpenClosed = 100;
+}
+
+
+function checkLoadingOfCar()
+{
+//	console.log("checkLoadingOfCar()");
+
+	// If here, the crane bucket is filled, but the bucket is opened to drop its coal
+
+//	console.log("craneAngle: "+craneAngle);
+
+	// Check if crane bucket is close to the track
+	if ((craneAngle < 0) || (craneAngle > 60)) return;
+
+	// Calculate where the crane bucket are relative to the track
+	// 857 = position of the car when the car is below the crane bucket and the crane arm is
+	// perpendicular to the track.
+	var cranePosRelativeToTrack = Math.sin((craneAngle-30) * 2 * Math.PI / 360) * 2 * 57 + 857;
+
+//	console.log("cranePosRelativeToTrack: "+cranePosRelativeToTrack);
+//	console.log("carPos: "+carPos);
+//	console.log("carLength: "+carLength);
+
+	if (Math.abs(carPos - cranePosRelativeToTrack) < carLength/3) {
+		carIsFilled = true;
+//		var carLoad = document.getElementById('CarLoad');
+//		carLoad.setAttribute("visibility", "hidden");
+		var carLoad = document.getElementById('CarLoad');
+		carLoad.setAttribute("visibility", "visible");
+	}
 }
 
 
@@ -378,6 +420,8 @@ function checkCrane()
 		craneBucketOpenClosed -= 1;
 		if (craneBucketOpenClosed < commandedCraneBucketOpenClosed) craneBucketOpenClosed = commandedCraneBucketOpenClosed;
 		if (craneBucketFilled && (craneBucketOpenClosed < 50)) {
+//		if ((craneBucketOpenClosed < 50)) {
+			checkLoadingOfCar();
 			craneBucketFilled = false;
 		}
 	}
@@ -404,32 +448,4 @@ function checkCrane()
 //		console.log("Set memory: "+anglePercent);
 	}
 
-//	if (craneBucketFilled && (craneBucketOpenClosed > 50)) {
-//	if (false)	// DANIEL DANIEL
-	{
-//		console.log("aaa");
-		// Is bucket above car?
-		var car = document.getElementById('CarHandle');
-		var carRect = car.getBoundingClientRect();
-		var bucket = document.getElementById('CraneBucket');
-		var bucketRect = bucket.getBoundingClientRect();
-//		console.log(carRect);
-//		console.log(bucketRect);
-//		console.log(carRect.x1+", "+bucketRect.x1+" - "+carRect.y1+", "+bucketRect.y1+" - "+carRect.x2+", "+bucketRect.x2+" - "+carRect.y2+", "+bucketRect.y2);
-
-
-//		console.log("Car: "+carRect.x+", "+carRect.y+", "+(carRect.x+carRect.width)+", "+(carRect.y+carRect.height));
-//		console.log("Bucket: "+bucketRect.x+", "+bucketRect.y+", "+(bucketRect.x+bucketRect.width)+", "+(bucketRect.y+bucketRect.height));
-
-//		console.log(carRect.x+", "+bucketRect.x+" - "+carRect.y+", "+bucketRect.y+" - "+(carRect.x+carRect.width)+", "+(bucketRect.x+bucketRect.width)+" - "+(carRect.y+carRect.height)+", "+(bucketRect.y+bucketRect.height));
-		if ((carRect.x < bucketRect.x) && (carRect.y < bucketRect.y) && (carRect.x+carRect.width > bucketRect.x+bucketRect.width) && (carRect.y+carRect.height > bucketRect.y+bucketRect.height)) {
-			console.log("bbb");
-			var carLoad = document.getElementById('CarLoad');
-			carLoad.setAttribute("visibility", "hidden");
-		} else {
-//			console.log("ccc");
-			var carLoad = document.getElementById('CarLoad');
-			carLoad.setAttribute("visibility", "visible");
-		}
-	}
 }
