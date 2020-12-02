@@ -837,11 +837,13 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_MOVE_SLOTS: {
-                int toSlot = l.getElement(2);
-                if ( toSlot == 0 ) {
-                    //dispatched implies common
-                    stat = (stat & ~LnConstants.LOCOSTAT_MASK) | LnConstants.LOCO_COMMON;
-                }
+                //int toSlot = l.getElement(2);
+                // dont update slot to anthing, the CS move does this itself
+                // but only if not rejected
+                //if ( toSlot == 0 ) {
+                //    //dispatched implies common
+                //    stat = (stat & ~LnConstants.LOCOSTAT_MASK) | LnConstants.LOCO_COMMON;
+                //}
                 // change in slot status will be reported by the reply,
                 // so don't need to do anything here (but could)
                 lastUpdateTime = System.currentTimeMillis();
