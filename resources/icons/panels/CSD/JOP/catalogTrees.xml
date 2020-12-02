@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/panelfile.xsl" type="text/xsl"?>
 <!DOCTYPE catalogTrees SYSTEM "/xml/DTD/catalogTree.dtd">
 <catalogTrees class="jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML">
-  <!--Written by JMRI version 4.21.3ish+tata+20201116T1559Z+R30f856570a on Tue Nov 17 13:39:21 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+tata+20201127T1751Z+R7256178f23 on Fri Nov 27 19:35:55 CET 2020-->
   <catalogTree systemName="NXPI" userName="Item Palette">
     <node nodeName="Item Palette">
       <node nodeName="Background">
@@ -22,26 +22,38 @@
           <leaf name="second" path="program:resources/icons/panels/CSD/JOP/permission/permission-none/permission_none_grey.png" />
         </node>
         <node nodeName="Výkolejka pravá">
-          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_cyan.png" />
-          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
-          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_yellow.png" />
-          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
-          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
-          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
-          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_black.png" />
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-u/derailer_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-n/derailer_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-i/derailer_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_magenta.png" />
           <leaf name="first" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-right/derailer_right_grey.png" />
-          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
         </node>
         <node nodeName="Přejezd">
-          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_cyan.png" />
-          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_magenta.png" />
-          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_yellow.png" />
-          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_red.png" />
-          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_white.png" />
-          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_green.png" />
-          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_black.png" />
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-u/rxr_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-n/rxr_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-i/rxr_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_magenta.png" />
           <leaf name="first" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-opened/rxr_opened_grey.png" />
-          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/r-r/railroad-crossing-closed/rxr_closed_grey.png" />
         </node>
         <node nodeName="lever">
           <leaf name="SensorStateInactive" path="program:resources/icons/USS/plate/levers/l-inactive.gif" />
@@ -52,15 +64,21 @@
           <leaf name="second" path="program:resources/icons/USS/plate/levers/l-vertical.gif" />
         </node>
         <node nodeName="Výkolejka levá">
-          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_cyan.png" />
-          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
-          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_yellow.png" />
-          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
-          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
-          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
-          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_black.png" />
+          <leaf name="tenth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_magenta.png" />
+          <leaf name="eighth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_red.png" />
+          <leaf name="eleventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_cyan.png" />
+          <leaf name="BeanStateUnknown" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-u/derailer_u_grey.png" />
+          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_red.png" />
+          <leaf name="SensorStateInactive" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-n/derailer_n_grey.png" />
+          <leaf name="sixth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_white.png" />
+          <leaf name="BeanStateInconsistent" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-i/derailer_i_grey.png" />
+          <leaf name="third" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_green.png" />
+          <leaf name="seventh" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
+          <leaf name="twelfth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_white.png" />
+          <leaf name="nineth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_green.png" />
+          <leaf name="fifth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_cyan.png" />
+          <leaf name="fourth" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_magenta.png" />
           <leaf name="first" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-left/derailer_left_grey.png" />
-          <leaf name="second" path="program:resources/icons/panels/CSD/JOP/derailer/derailer-outside/derailer_outside_grey.png" />
         </node>
       </node>
       <node nodeName="Reporter" />

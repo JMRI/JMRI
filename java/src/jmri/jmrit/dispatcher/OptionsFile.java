@@ -154,6 +154,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setHasOccupancyDetection(false);
                         }
                     }
+                    if (options.getAttribute("sslcheckdirectionsensors") != null) {
+                        dispatcher.setSetSSLDirectionalSensors(true);
+                        if (options.getAttribute("sslcheckdirectionsensors").getValue().equals("no")) {
+                            dispatcher.setSetSSLDirectionalSensors(false);
+                        }
+                    }
                     if (options.getAttribute("shortactivetrainnames") != null) {
                         dispatcher.setShortActiveTrainNames(true);
                         if (options.getAttribute("shortactivetrainnames").getValue().equals("no")) {
@@ -203,11 +209,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     if (options.getAttribute("stoppingspeedname") != null) {
                         dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
                     }
-                    log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}", 
+                    log.debug("  Options: {}, Detection={}, AutoAllocate={}, AutoTurnouts={}, SetSSLDirectionSensors={}", 
                             (dispatcher.getSignalType()==SIGNALHEAD?"SignalHeads/SSL":"SignalMasts"),
                             (dispatcher.getHasOccupancyDetection()?"yes":"no"),
                             (dispatcher.getAutoAllocate()?"yes":"no"),
-                            (dispatcher.getAutoTurnouts()?"yes":"no"));
+                            (dispatcher.getAutoTurnouts()?"yes":"no"),
+                            (dispatcher.getSetSSLDirectionalSensors()?"yes":"no"));
                 }
             }
         } else {
@@ -249,6 +256,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));
+        options.setAttribute("sslcheckdirectionsensors", "" + (dispatcher.getSetSSLDirectionalSensors() ? "yes" : "no"));
         options.setAttribute("shortactivetrainnames", "" + (dispatcher.getShortActiveTrainNames() ? "yes" : "no"));
         options.setAttribute("shortnameinblock", "" + (dispatcher.getShortNameInBlock() ? "yes" : "no"));
         options.setAttribute("extracolorforallocated", "" + (dispatcher.getExtraColorForAllocated() ? "yes" : "no"));
