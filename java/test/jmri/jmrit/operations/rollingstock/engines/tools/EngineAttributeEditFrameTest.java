@@ -153,6 +153,9 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // now add a bogus length
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeave(f.addButton);
+        
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");
@@ -165,6 +168,9 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
         // now add a negative length
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeave(f.addButton);
+        
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         assertThat(f.comboBox.getItemAt(0)).withFailMessage("1st number before bogus add").isEqualTo("32");

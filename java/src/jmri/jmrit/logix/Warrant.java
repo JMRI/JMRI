@@ -714,12 +714,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 speed = _engineer.getSpeedSetting() * 100;
                 break;
             case SignalSpeedMap.SPEED_MPH:
-                units = "Mph";
+                units = Bundle.getMessage("mph");
                 speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting()) * speedMap.getLayoutScale();
                 speed = speed * 2.2369363f;
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                units = "Kmph";
+                units = Bundle.getMessage("kph");
                 speed = _speedUtil.getTrackSpeed(_engineer.getSpeedSetting()) * speedMap.getLayoutScale();
                 speed = speed * 3.6f;
                 break;

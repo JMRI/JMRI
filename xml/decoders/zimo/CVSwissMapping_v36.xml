@@ -827,7 +827,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 13 A2 vzad</label>
   </variable>
 
- <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="130,195,197,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 14 F-key" CV="800" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -835,7 +835,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 Tasto F</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 tlačítko F</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 M-key" CV="801" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 M-key" CV="801" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
@@ -843,7 +843,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 Tasto M</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 tlačítko M</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Fw" CV="802" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -851,7 +851,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Fw" CV="803" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -859,7 +859,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A2 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A1 Rw" CV="804" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -867,7 +867,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 14 A1 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 14 A2 Rw" CV="805" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -876,7 +876,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 14 A2 vzad</label>
   </variable>
 
- <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="130,195,197,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 15 F-key" CV="806" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -884,7 +884,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 Tasto F</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 tlačítko F</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 M-key" CV="807" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 M-key" CV="807" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
@@ -892,7 +892,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 Tasto M</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 tlačítko M</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Fw" CV="808" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -900,7 +900,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Fw" CV="809" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -908,7 +908,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A2 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A1 Rw" CV="810" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -916,7 +916,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 15 A1 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 15 A2 Rw" CV="811" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -925,7 +925,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 15 A2 vzad</label>
   </variable>
 
- <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="130,195,197,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 16 F-key" CV="812" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -933,7 +933,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 Tasto F</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 tlačítko F</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 M-key" CV="813" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 M-key" CV="813" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
@@ -941,7 +941,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 Tasto M</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 tlačítko M</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Fw" CV="814" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -949,7 +949,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Fw" CV="815" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -957,7 +957,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A2 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A1 Rw" CV="816" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -965,7 +965,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 16 A1 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 16 A2 Rw" CV="817" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -974,7 +974,7 @@
     <label xml:lang="cs">Švýcyrské přiřazení skupina 16 A2 vzad</label>
   </variable>
 
- <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="130,195,197,199,201,211,218,240">
+ <variable item="Swiss Mapping Group 17 F-key" CV="818" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>
     </enumVal>
@@ -982,7 +982,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 Tasto F</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 17 tlačítko F</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 M-key" CV="819" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 M-key" CV="819" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-M-key_v34.xml"/>
     </enumVal>
@@ -990,7 +990,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 Tasto M</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 17 tlačítko M</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Fw" CV="820" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -998,7 +998,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 17 A1 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Fw" CV="821" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1006,7 +1006,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A2 Avanti</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 17 A2 vpřed</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A1 Rw" CV="822" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>
@@ -1014,7 +1014,7 @@
     <label xml:lang="it">Mappatura Svizzera Gruppo 17 A1 Retro</label>
     <label xml:lang="cs">Švýcyrské přiřazení skupina 17 A1 vzad</label>
   </variable>
-  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" exclude="130,195,197,199,201,211,218,240">
+  <variable item="Swiss Mapping Group 17 A2 Rw" CV="823" exclude="130,177,195,197,199,201,211,218,240">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-FO1FO13.xml"/>
     </enumVal>

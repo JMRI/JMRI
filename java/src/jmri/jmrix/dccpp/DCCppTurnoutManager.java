@@ -30,7 +30,11 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
     public DCCppTurnoutManager(DCCppSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getDCCppTrafficController();
+        // set up listener
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        // request list of turnouts
+        DCCppMessage msg = DCCppMessage.makeTurnoutListMsg();
+        tc.sendDCCppMessage(msg, this);
     }
 
     /**

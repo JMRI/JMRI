@@ -91,7 +91,7 @@
       Lights, Signal Heads) have a pick list of their items displayed.
       Under the table is a <b>Add New Table Item</b>
       button. This button opens the corresponding device table from
-      the <b>Tools<b/> menu for you to create a new device item.
+      the <b>Tools</b> menu for you to create a new device item.
       <br>Tabs with tables require a device to be selected (a
       row in the table) before the an icon can be dragged to a
       control panel to represent it.

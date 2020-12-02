@@ -113,14 +113,17 @@ public class RosterSpeedProfile {
         String formattedWithUnits;
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
-                formattedWithUnits = String.format("%.2f mph", mms * scale * MMS_TO_MPH);
+                String unitsMph = Bundle.getMessage("mph");
+                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_MPH, unitsMph);
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                formattedWithUnits = String.format("%.2f kph", mms * scale * MMS_TO_KPH);
+                String unitsKph = Bundle.getMessage("kph");
+                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_KPH, unitsKph);
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
             case SignalSpeedMap.PERCENT_NORMAL:
-                formattedWithUnits = String.format("%.2f mms", mms);
+                String unitsMms = Bundle.getMessage("mmps");
+                formattedWithUnits = String.format("%.2f %s", mms, unitsMms);
                 break;
             default:
                 log.warn("ScaleSpeedToMMS: Signal Speed Map has no interp, not modifing.");
