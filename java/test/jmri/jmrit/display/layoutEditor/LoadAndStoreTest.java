@@ -63,9 +63,32 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
         JUnitUtil.waitFor(() -> {
             return jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised || done;
         });
+        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
+            log.debug("not stabilized after check");
+        }
+        
+        // and wait yet another 2 sec before writing out
+        done = false;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+                done = true;
+            }, 2000);
+        jmri.util.JUnitUtil.waitFor(()->{return done;});
 
+        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
+            log.debug(" still not stabilized");
+        }
+
+        done = false;
+        jmri.util.ThreadingUtil.runOnGUIDelayed(()->{ 
+                done = true;
+            }, 2000);
+        jmri.util.JUnitUtil.waitFor(()->{return done;});
+
+        if ( ! jmri.InstanceManager.getDefault(LayoutBlockManager.class).stabilised ) {
+            log.debug(" nor now");
+        }
     }
-
+     
     /**
      * Also writes out image files from these for later offline checking.This
      * can't be (easily) automated, as the images vary from platform to

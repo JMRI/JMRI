@@ -329,6 +329,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private String _StoppingSpeedName = "RestrictedSlow";
     private boolean _UseConnectivity = false;
     private boolean _HasOccupancyDetection = false; // "true" if blocks have occupancy detection
+    private boolean _SetSSLDirectionalSensors = true;
     private boolean _TrainsFromRoster = true;
     private boolean _TrainsFromTrains = false;
     private boolean _TrainsFromUser = false;
@@ -1285,7 +1286,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 return null;
             }
             // check/set direction sensors in signal logic for all Sections in this Transit.
-            if (getSignalType() == SIGNALHEAD) {
+            if (getSignalType() == SIGNALHEAD && getSetSSLDirectionalSensors()) {
                 numErrors = checkSignals(t, _LE);
                 if (numErrors == 0) {
                     t.initializeBlockingSensors();
@@ -2455,6 +2456,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setHasOccupancyDetection(boolean set) {
         _HasOccupancyDetection = set;
+    }
+
+    protected boolean getSetSSLDirectionalSensors() {
+        return _SetSSLDirectionalSensors;
+    }
+
+    protected void setSetSSLDirectionalSensors(boolean set) {
+        _SetSSLDirectionalSensors = set;
     }
 
     protected boolean getUseScaleMeters() {

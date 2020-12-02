@@ -17,7 +17,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
- * Exports the Operation Schedules into a comma delimitated file (CSV).
+ * Exports the Operation Schedules into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
  *

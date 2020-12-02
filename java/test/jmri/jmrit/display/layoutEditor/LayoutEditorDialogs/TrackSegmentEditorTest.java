@@ -33,14 +33,14 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
-        trackSegment.setArc(true);
-        trackSegment.setCircle(true);
+        trackSegmentView.setArc(true);
+        trackSegmentView.setCircle(true);
         createBlocks();
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editLayoutTrack(trackSegment);
+        editor.editLayoutTrack(trackSegmentView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Select dashed
@@ -88,13 +88,13 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
     @Test
     public void testEditTrackSegmentCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        trackSegment.setArc(false);
-        trackSegment.setCircle(false);
+        trackSegmentView.setArc(false);
+        trackSegmentView.setCircle(false);
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editLayoutTrack(trackSegment);
+        editor.editLayoutTrack(trackSegmentView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Create empty block edit dialog
@@ -108,6 +108,8 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     @Test
@@ -117,23 +119,25 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editLayoutTrack(trackSegment);
+        editor.editLayoutTrack(trackSegmentView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
     @Test
     public void testEditTrackSegmentError() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        trackSegment.setArc(true);
-        trackSegment.setCircle(true);
+        trackSegmentView.setArc(true);
+        trackSegmentView.setCircle(true);
 
         TrackSegmentEditor editor = new TrackSegmentEditor(layoutEditor);
         
         // Edit the track trackSegment
-        editor.editLayoutTrack(trackSegment);
+        editor.editLayoutTrack(trackSegmentView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Set arc angle
@@ -142,12 +146,15 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
+        
+        jmri.util.JUnitAppender.assertErrorMessage("provideLayoutBlock: no name given and not assigning auto block names");
     }
 
 
 
     private LayoutEditor layoutEditor = null;
     private TrackSegment trackSegment = null;
+    private TrackSegmentView trackSegmentView = null;
 
     @BeforeEach
     public void setUp() {
@@ -166,19 +173,27 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
             Point2D delta = new Point2D.Double(50.0, 10.0);
 
             // Track Segment
-            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
+            PositionablePoint pp1 = new PositionablePoint("a", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView pp1v = new PositionablePointView(pp1, point, layoutEditor);
+            layoutEditor.addLayoutTrack(pp1, pp1v);
+                       
             point = MathUtil.add(point, delta);
-            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, point, layoutEditor);
+            PositionablePoint pp2 = new PositionablePoint("b", PositionablePoint.PointType.ANCHOR, layoutEditor);
+            PositionablePointView pp2v = new PositionablePointView(pp2, point, layoutEditor);
+            layoutEditor.addLayoutTrack(pp2, pp2v);
+            
             trackSegment = new TrackSegment("Segment", pp1, HitPointType.POS_POINT, pp2, HitPointType.POS_POINT, 
-                                            false, false, layoutEditor);
+                                            false, layoutEditor);
+            trackSegmentView = new TrackSegmentView(trackSegment, layoutEditor);
+            layoutEditor.addLayoutTrack(trackSegment, trackSegmentView);
         }
     }
 
     @AfterEach
     public void tearDown() {
         if (trackSegment != null) {
+            trackSegmentView.dispose();
             trackSegment.remove();
-            trackSegment.dispose();
         }
 
         if (layoutEditor != null) {
@@ -186,6 +201,7 @@ public class TrackSegmentEditorTest extends LayoutTrackEditorTest {
             efo.closeFrameWithConfirmations();
         }
         trackSegment = null;
+        trackSegmentView = null;
         layoutEditor = null;
 
         JUnitUtil.resetWindows(false, false);

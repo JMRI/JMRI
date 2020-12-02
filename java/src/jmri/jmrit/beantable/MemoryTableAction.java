@@ -275,7 +275,7 @@ public class MemoryTableAction extends AbstractTableAction<Memory> {
             } catch (IllegalArgumentException ex) {
                 // uName input no good
                 handleCreateException(sName);
-                errorMessage = "An error has occurred";
+                errorMessage = Bundle.getMessage("ErrorAddFailedCheck");
                 statusBarLabel.setText(errorMessage);
                 statusBarLabel.setForeground(Color.red);
                 return; // without creating

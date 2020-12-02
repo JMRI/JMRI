@@ -83,7 +83,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     transient Source src = null;
 
-    DestinationPoints(PointDetails point, String id, Source src) {
+    protected DestinationPoints(PointDetails point, String id, Source src) {
         super(id != null ? id : "IN:" + UUID.randomUUID().toString());
         this.src = src;
         this.point = point;
@@ -378,7 +378,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                                             int slipState = turnoutlist.get(x).getExpectedState();
                                             LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
                                             int taState = ls.getTurnoutState(slipState);
-                                            turnoutSettings.put(ls.getTurnout(), taState);
+                                            Turnout t = ls.getTurnout();
+                                            if (t==null) {
+                                                log.warn("Found unexpected Turnout reference at {}: {}",i,ls);
+                                                continue; // not sure what else do to here
+                                            }
+                                            turnoutSettings.put(t, taState);
 
                                             int tbState = ls.getTurnoutBState(slipState);
                                             ls.getTurnoutB().setCommandedState(tbState);
@@ -1263,12 +1268,11 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     public void setState(int state) {
     }
 
-    void setActiveEntryExit(boolean boo) {
+    protected void setActiveEntryExit(boolean boo) {
         int oldvalue = getState();
         activeEntryExit = boo;
         src.setMenuEnabled(boo);
         firePropertyChange("active", oldvalue, getState());  // NOI18N
-
     }
 
     @Override

@@ -47,9 +47,9 @@ public class CbusAddress {
 
     private final Matcher hCode = Pattern.compile("^" + SINGLE_ADDRESS_PATTERN + "$").matcher("");
 
-    String aString = null;
-    int[] aFrame = null;
-    boolean match = false;
+    private String aString = null;
+    protected int[] aFrame = null;
+    private boolean match = false;
 
     static final int NODEFACTOR = 100000;
 
@@ -344,7 +344,7 @@ public class CbusAddress {
                 break;
             default:
                 log.debug("validateSysName switch 1 found > 2 events");
-                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+                throw new IllegalArgumentException("Unable to convert Address: " + address);
         }
 
         CbusAddress a = new CbusAddress(address);
@@ -443,7 +443,7 @@ public class CbusAddress {
     }
 
     int[] elements() {
-        return aFrame;
+        return java.util.Arrays.copyOf(aFrame, aFrame.length);
     }
 
     /**

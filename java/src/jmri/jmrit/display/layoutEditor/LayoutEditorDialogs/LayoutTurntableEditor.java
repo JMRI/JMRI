@@ -2,20 +2,20 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
+import jmri.NamedBean.DisplayOptions;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.*;
-import jmri.NamedBean.DisplayOptions;
+import jmri.util.JmriJFrame;
 
 /**
  * MVC Editor component for PositionablePoint objects.
@@ -38,6 +38,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     \*==============*/
     // variables for Edit Turntable pane
     private LayoutTurntable layoutTurntable = null;
+    private LayoutTurntableView layoutTurntableView = null;
 
     private JmriJFrame editLayoutTurntableFrame = null;
     private final JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
@@ -60,11 +61,12 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
      * Edit a Turntable.
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
-        if ( layoutTrack instanceof LayoutTurntable ) {
-            this.layoutTurntable = (LayoutTurntable) layoutTrack;
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
+        if ( layoutTrackView instanceof LayoutTurntableView ) {
+            this.layoutTurntableView = (LayoutTurntableView) layoutTrackView;
+            this.layoutTurntable = this.layoutTurntableView.getTurntable();
         } else {
-            log.error("editLayoutTrack called with wrong type {}", layoutTrack, new Exception("traceback"));
+            log.error("editLayoutTrack called with wrong type {}", layoutTrackView, new Exception("traceback"));
         }
         sensorList.clear();
 

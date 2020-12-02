@@ -25,35 +25,31 @@
    <div id="mainContent">
 
    <h1>JMRI: OperationsPro&trade;</h1>
-			The JMRI Operations program allows you to create computer generated
-			train Manifests for your railroad. A train
-			<a href="#PrintingManifests">Manifest</a> details the work that a
-			crew will perform during an operations session. The Manifest provides
-			a list of car pick up and set outs and shows where the cars are
-			located and where they should be eventually positioned on the
-			railroad. The program allows you to enter a roster of
-			<a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>,
-			define <a href="#Locations">locations</a> (stations) on the railroad,
-			and <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to
-			travel. The car roster includes information about the car, including
-			road, number, type of car, color, length, weight, load, date built,
-			and owner. Trains are assigned routes that define locations or
-			stations where cars can be picked up or set out. Features include the
-			ability to control what car types, roads, and car loads a location or
-			industry can service, the available track space for a location, and
-			the maximum length the train can be between any two locations in the
-			train's route.
+   The JMRI Operations program allows you to create computer generated train Manifests for your
+   railroad. A train
+   <a href="#PrintingManifests">Manifest</a> details the work that a crew will perform during an
+   operations session. The Manifest provides a list of car pick up and set outs and shows where the
+   cars are located and where they should be eventually positioned on the railroad. The program
+   allows you to enter a roster of
+   <a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>, define <a
+    href="#Locations">locations</a> (stations) on the railroad, and
+   <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to travel. The car roster includes
+   information about the car, including road, number, type of car, color, length, weight, load, date
+   built, and owner. Trains are assigned routes that define locations or stations where cars can be
+   picked up or set out. Features include the ability to control what car types, roads, and car
+   loads a location or industry can service, the available track space for a location, and the
+   maximum length the train can be between any two locations in the train's route.
 
-			<p>
-    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used to service
-    industries, and can optionally have
-    <a href="#Schedules">schedules</a> assigned to them which allows for very fine control over car movement and loads.
-    Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates
-    Manifests for each train and switch lists for any location. A
-    <a href="#SwitchList">switch list</a> for a location shows the work for all of the trains that will visit that
-    location. The program can also place
-    <a href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be taught to move in
-    the panel along with the train from location to location.
+   <p>
+    Locations can have <a href="#Sidings">spurs</a>, <a href="#Yards">yards</a>, <a href="#Staging">staging</a>
+    and <a href="#Interchange">classification/interchange</a> tracks. Spurs are used to service
+    industries, and can optionally have <a href="#Schedules">schedules</a> assigned to them which
+    allows for very fine and realistic control over car movement and loads. Trains can be configured to require a
+    caboose or car with Flashing Rear End Device (FRED). The program generates Manifests for each
+    train and switch lists for any location. A <a href="#SwitchList">switch list</a> for a location
+    shows the work for all of the trains that will visit that location. The program can also place <a
+     href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be
+    taught to move in the panel along with the train from location to location.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
@@ -103,7 +99,13 @@
 
           <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
 
-          <li><a href="#Options">Options</a></li>
+          <li><a href="#Options">Options</a>
+           <ul>
+            <li><a href="#SaveTrainManifests">Save Train Manifests</a></li>
+            <li><a href="#EnableValueFields">Enable Value Fields</a></li>
+            <li><a href="#EnableIdentificationTagFields">Enable RFID Fields</a></li>
+            <li><a href="#EnableVirtualSoundDecoder">Enable physical locations for Virtual Sound Decoder</a></li>
+           </ul></li>
          </ul></li>
 
         <li><a href="#PrintOptions">Manifest Print Options</a>
@@ -1671,6 +1673,7 @@
    <a name="Options" id="Options"></a>
    <h3>Options</h3>
 
+   <a name="SaveTrainManifests" id="SaveTrainManifests"></a>
    <h4>Save Train Manifests</h4>
    When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
@@ -1685,17 +1688,27 @@
     in a directory called "switchListBackups" located in the "operations" directory. A separate
     directory is created for each location's switch list that you create.</p>
 
-   <h4>Enable Value Fields and Identification Tag Fields</h4>
-
-   <p>There are two other options, "Enable Value Fields" and "Identification Fields". You can
-    use these fields to enter the value or cost of your rolling stock and the IDTag of your rolling
-    stock. You can rename the value fields if you wish and use them for other purposes.</p>
-
+   <a name="EnableValueFields" id="EnableValueFields"></a>
+   <h4>Enable Value Fields</h4>
+   You can use the value field to enter the value or cost of your rolling stock. You can rename the
+   value field if you wish and use it for other purposes.
+   
+   <a name="EnableIdentificationTagFields" id="EnableIdentificationTagFields"></a>
+   <h4>Enable Identification Tag Fields</h4>
+   You can enable the assignment of reporters and tags for your locations and rolling stock.
+   Reporters can be assigned to locations and tracks. When this option is enabled, the Cars and
+   Locomotives windows will display the last location and time the rolling stock was detected. The
+   edit car and locomotive windows allow you to select an
+   <a href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI. The
+   edit location and track windows allow you to select
+   <a href="../../../../html/tools/Reporters.shtml">Reporters</a> that you want to associate with
+   them. You can rename the RFID field if you wish and use it for other purposes. 
+   
+   <a name="EnableVirtualSoundDecoder" id="EnableVirtualSoundDecoder"></a>
    <h4>Enable physical locations for Virtual Sound Decoder</h4>
-
-   <p>If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
-    locations by enabling this option.</p>
-
+   If you're using Virtual Sound Decoder, you can enter the physical coordinates of your locations
+   by enabling this option. 
+   
    <a name="PrintOptions" id="PrintOptions"></a>
    <h2>Manifest Print Options</h2>
    You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
@@ -3025,10 +3038,11 @@
    more control over the car's movement or load.
 
    <p>
-    Normally during the train build process, the program will check the alternate track for cars after assigning cars
-    from the spur to the train being built. This way cars on the alternate are used to keep the spur full. Note that the
-    <a href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the alternate to the
-    spur, so it is recommended that you don't use both features for a spur.
+    During the train build process in <a href="#BuildOptions">aggressive</a> mode, the program will
+    check the alternate track for cars after assigning cars from the spur to the train being built.
+    This way cars on the alternate are used to keep the spur full. Note that the <a
+     href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the
+    alternate to the spur, so it is recommended that you don't use both features for a spur.
    </p>
 
    <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /

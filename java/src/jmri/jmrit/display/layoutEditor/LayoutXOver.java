@@ -1,14 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
- * A LayoutXOver corresponds to a crossover (connection between parallel tracks) on the layout.
+ * A LayoutXOver corresponds to a crossover (connection between parallel tracks) on the layout. 
  * <p>
  * Three types are supported: double crossover,
- * right-handed single crossover, and left-handed single crossover.
+ * right-handed single crossover, and left-handed single crossover. 
  * <p>
  * A LayoutXOver has four connection points, designated A, B, C, and
  * D. The A-B and C-D routes are a straight segment (continuing
@@ -36,7 +34,7 @@ import javax.annotation.*;
  * is assigned, that block applies to the entire turnout.
  * <p>
  * For drawing purposes, each LayoutXOver carries a center point and
- * displacements for B and C.
+ * displacements for B and C. 
  * For double crossovers, the center point is at the center of the turnout, and
  * the displacement for A = - the displacement for C and the displacement for D
  * = - the displacement for B. The center point and these displacements may be
@@ -66,12 +64,11 @@ import javax.annotation.*;
  */
 abstract public class LayoutXOver extends LayoutTurnout {
 
-    public LayoutXOver(@Nonnull String id, TurnoutType t, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, t, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutXOverEditor(layoutEditor);
+    public LayoutXOver(@Nonnull String id, TurnoutType t, 
+            @Nonnull LayoutEditor layoutEditor, 
+            int v) {
+        super(id, t, layoutEditor, 1);
     }
-
+    
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

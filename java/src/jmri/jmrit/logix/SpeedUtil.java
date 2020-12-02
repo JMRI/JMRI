@@ -52,7 +52,7 @@ public class SpeedUtil {
     private float _ma;  // milliseconds needed to increase speed by throttle step amount 
     private float _md;  // milliseconds needed to decrease speed by throttle step amount
 
-    public static final float SCALE_FACTOR = 110; // divided by _scale, gives a rough correction for track speed
+    public static final float SCALE_FACTOR = 40; // divided by _scale, gives a rough correction for track speed
 
     protected SpeedUtil() {
     }
@@ -548,7 +548,7 @@ public class SpeedUtil {
             return 0.0f;
         }
         RosterSpeedProfile speedProfile = getSpeedProfile();
-        // Note SpeedProfile uses milliseconds per second.
+        // Note SpeedProfile uses millimeters per second.
         float speed = speedProfile.getSpeed(throttleSetting, _isForward) / 1000;            
         if (speed <= 0.0f) {
             float factor = _signalSpeedMap.getDefaultThrottleFactor() * SCALE_FACTOR / _signalSpeedMap.getLayoutScale();

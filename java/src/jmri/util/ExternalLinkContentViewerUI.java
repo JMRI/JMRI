@@ -53,6 +53,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
 
     public static void activateURL(URL u) throws IOException, URISyntaxException {
         if (u.getProtocol().equalsIgnoreCase("mailto") || u.getProtocol().equalsIgnoreCase("http")
+                || u.getProtocol().equalsIgnoreCase("https")
                 || u.getProtocol().equalsIgnoreCase("ftp")) {
             URI uri = u.toURI();
             log.debug("defer protocol {} to browser via {}", u.getProtocol(), uri);

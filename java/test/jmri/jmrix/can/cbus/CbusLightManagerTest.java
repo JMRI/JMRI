@@ -91,7 +91,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             l.provideLight("ML+7;-5;+11");
             Assert.fail("3 split Should have thrown an exception");
         } catch (IllegalArgumentException e) {
-            JUnitAppender.assertErrorMessage("Invalid system name for Light: Wrong number of events in address: +7;-5;+11");
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: Unable to convert Address: +7;-5;+11");
         }
     }
 

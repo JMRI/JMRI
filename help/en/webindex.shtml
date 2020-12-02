@@ -204,17 +204,23 @@
 
  
 <li>
-<a href="html/hardware/can/cbus/index.shtml">CBUS (MERG) </a>
+<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
 <ul>
   
 <li>
-<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
+<a href="">Connection Details </a>
 <ul></ul>
 </li>
 
   
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
@@ -245,6 +251,24 @@
   
 <li>
 <a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware update </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
 <ul></ul>
 </li>
 
@@ -1268,7 +1292,7 @@
 </li>
  
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) - Hardware, Connection, Tools </a>
+<a href="html/hardware/merg/index.shtml">MERG - Hardware, Connection, Tools </a>
 <ul></ul>
 </li>
 
@@ -1343,6 +1367,12 @@
 <li>
 <a href="package/jmri/jmrit/logix/OBlockTable.shtml">OBlock (Occupancy Block, Warrants) </a>
 <ul></ul>
+</li>
+
+
+<li>
+  <a href="package/jmri/jmrit/beantable/OBlockTable.shtml">OBlock (tabbed interface) </a>
+  <ul></ul>
 </li>
 
  
@@ -2028,6 +2058,24 @@
 <ul>
   
 <li>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">Send Packet </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame.shtml">Slot Monitor </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
 <ul></ul>
 </li>
@@ -2038,21 +2086,40 @@
 <ul></ul>
 </li>
 
+ 
+</ul>
+</li>
+ 
+<li>
+<a href="html/hardware/sproggen5/index.shtml">SPROG Generation 5 </a>
+<ul>
   
 <li>
-<a href="package/jmri/jmrix/sprog/update/Sprogv4UpdateFrame.shtml">Update SPROG V3/V4 </a>
+<a href="html/hardware/sproggen5/hardware.shtml">Hardware Support </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml">Pi SPROG 3 Mode Switcher </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-Sprog/SPROG 3 Plus Mode Switcher </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/can/cbus/index.shtml">See also: CBUS </a>
 <ul></ul>
 </li>
 
  
 </ul>
 </li>
- 
-<li>
-<a href="html/hardware/SRCP/index.shtml">SRCP </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="html/apps/DecoderPro/index.shtml#decoderlisting">Supported Decoders </a>

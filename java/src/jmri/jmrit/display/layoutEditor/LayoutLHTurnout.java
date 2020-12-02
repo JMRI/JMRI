@@ -1,8 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.geom.Point2D;
-
-import javax.annotation.*;
+import javax.annotation.Nonnull;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
@@ -103,28 +101,20 @@ import javax.annotation.*;
 public class LayoutLHTurnout extends LayoutTurnout {
 
     public LayoutLHTurnout(@Nonnull String id,
-            @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor,
             @Nonnull LayoutEditor layoutEditor) {
-        this(id, c, rot, xFactor, yFactor, layoutEditor, 1);
+        this(id, layoutEditor, 1);
     }
 
     /**
      * Main constructor method.
      * @param id turnout ID string.
-     * @param c 2D point.
-     * @param rot rotation.
-     * @param xFactor horizontal factor.
-     * @param yFactor vertical factor.
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutLHTurnout(@Nonnull String id, @Nonnull Point2D c, double rot,
-            double xFactor, double yFactor, @Nonnull LayoutEditor layoutEditor, int v) {
-        super(id, TurnoutType.LH_TURNOUT, c, rot, xFactor, yFactor, layoutEditor, 1);
-
-        editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHTurnoutEditor(layoutEditor);
+    public LayoutLHTurnout(@Nonnull String id, 
+            @Nonnull LayoutEditor layoutEditor, int v) {
+        super(id, TurnoutType.LH_TURNOUT, layoutEditor, 1);
     }
-
+    
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHTurnout.class);
 }

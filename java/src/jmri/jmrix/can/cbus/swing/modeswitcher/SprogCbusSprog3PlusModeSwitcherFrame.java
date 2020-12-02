@@ -17,9 +17,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherFrame {
     
-    protected static final int PROG_OFF_MODE = 0; // Prog track off when not programming
-    protected static final int PROG_ON_MODE = 1;  // Prog track follows main when not programming
-    protected static final int PROG_AR_MODE = 2;  // Prog track is auto-reverse power district, no programming on progtrack
+    public static final int PROG_OFF_MODE = 0; // Prog track off when not programming
+    public static final int PROG_ON_MODE = 1;  // Prog track follows main when not programming
+    public static final int PROG_AR_MODE = 2;  // Prog track is auto-reverse power district, no programming on progtrack
 
     private JRadioButton progOffButton;
     private JRadioButton progOnButton;
@@ -103,11 +103,22 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
             panel.add(modePane, BorderLayout.CENTER);
         }
         
+        // add help menu to window
+        setHelp();
+
         this.add(panel);
         pack();
         setVisible(true);
     }
     
+    
+    /**
+     * Define help menu for this window.
+     */
+    protected void setHelp() {
+        addHelpMenu("package.jmri.jmrix.can.cbus.swing.modeswitcher.SprogCbusSprog3PlusModeSwitcherFrame", true); // NOI18N
+    }
+
     
     /**
      * disconnect from the CBUS

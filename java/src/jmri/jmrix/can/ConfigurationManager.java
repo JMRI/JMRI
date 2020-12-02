@@ -30,7 +30,8 @@ abstract public class ConfigurationManager {
      * Enumerate support for switching programming modes in connected hardware
      */
     public enum ProgModeSwitch {
-        NONE,       // No support for switching programming modes or no programmer
+        NONE,       // No support for switching programming modes, or no programmer,
+                    // or unknown CBUS attached command station/programmer
         EITHER,     // Service mode or ops mode, but not both at the same time
         SPROG3PLUS  // Specific hardware choice
     }
