@@ -11,6 +11,7 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -30,7 +31,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
-    private boolean disableCheckForUnconnectedSocket = false;
+    private boolean _disableCheckForUnconnectedSocket = false;
     
     /**
      * Create a new instance of Formula with system name and user name.
@@ -292,7 +293,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     
     @Override
     public void connected(FemaleSocket socket) {
-        if (disableCheckForUnconnectedSocket) return;
+        if (_disableCheckForUnconnectedSocket) return;
         
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
@@ -318,7 +319,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     @Override
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
-        disableCheckForUnconnectedSocket = true;
+        _disableCheckForUnconnectedSocket = true;
         
         for (ExpressionEntry ee : _expressionEntries) {
             try {
@@ -350,7 +351,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         
         checkFreeSocket();
         
-        disableCheckForUnconnectedSocket = false;
+        _disableCheckForUnconnectedSocket = false;
     }
     
     

@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.actions.swing;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.annotation.CheckForNull;
@@ -10,6 +9,7 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.AbstractDigitalAction;
 import jmri.jmrit.logixng.actions.ActionTimer;
 
 /**
@@ -40,7 +40,7 @@ public class ActionTimerSwing extends AbstractDigitalActionSwing {
         for (int i=0; i < MAX_NUM_TIMERS; i++) {
             names[numExpr+i] = _timerSocketNames[i].getText();
         }
-        return action.getNewSocketName(names);
+        return AbstractDigitalAction.getNewSocketName(names);
     }
     
     @Override

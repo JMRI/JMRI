@@ -17,8 +17,8 @@ var craneX = 737;				// Crane X position
 var craneY = 540;				// Crane Y position
 var craneMinAngle = -160;		// Minimum angle of the crane
 var craneMaxAngle = 90;			// Maximum angle of the crane
-//var craneAngle = craneMinAngle;	// Current angle of crane
-var craneAngle = 59;	// Current angle of crane
+var craneAngle = craneMinAngle;	// Current angle of crane
+// var craneAngle = 59;	// Current angle of crane
 var commandedCraneAngle = -1;	// Commanded angle of the crane
 //var craneUpDown = -1;			// Current crane arm up/down (up = 100, down = 0)
 var craneUpDown = 100;			// Current crane arm up/down (up = 100, down = 0)

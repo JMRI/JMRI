@@ -11,14 +11,8 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
@@ -37,7 +31,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     private String _formula = "";
     private ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
-    private boolean disableCheckForUnconnectedSocket = false;
+    private boolean _disableCheckForUnconnectedSocket = false;
     
     /**
      * Create a new instance of Formula with system name and user name.
@@ -226,7 +220,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     
     @Override
     public void connected(FemaleSocket socket) {
-        if (disableCheckForUnconnectedSocket) return;
+        if (_disableCheckForUnconnectedSocket) return;
         
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
@@ -252,7 +246,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
     @Override
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
-        disableCheckForUnconnectedSocket = true;
+        _disableCheckForUnconnectedSocket = true;
         
         for (ExpressionEntry ee : _expressionEntries) {
             try {
@@ -284,7 +278,7 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
         
         checkFreeSocket();
         
-        disableCheckForUnconnectedSocket = false;
+        _disableCheckForUnconnectedSocket = false;
     }
     
     
