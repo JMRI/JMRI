@@ -596,7 +596,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix issue where Jynstrument would not start correctly <a href="https://groups.io/g/jmriusers/topic/78674589">(user group message)</a>.</li>
+            <li>Added a throttle frame Jynstrument that hides throttle window menubar and toolbar and switches to semitransparent mode (and vice versa) (idea from <a href="https://groups.io/g/jmriusers/topic/76582490">this user message</a>).</li>
         </ul>
 
     <h3>Timetable</h3>
