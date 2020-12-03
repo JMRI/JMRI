@@ -797,20 +797,20 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 &&
                 ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON && _slots[i].slotStatus() != LnConstants.LOCO_COMMON ) ) {
             // Changing a slot to common.
-            sendReadSlotDelayed(i,1000);
+            sendReadSlotDelayed(i,10);
         } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
             //moving other than null move which always returns a slot status
             int slotTwo;
             slotTwo = m.getElement(2);
             if (i != 0 && slotTwo == 0) {
                 // dispatch
-                sendReadSlotDelayed(i,1000);
+                sendReadSlotDelayed(i,10);
             } else if (i == slotTwo) {
                 // null move ignore
             } else {
                 // Command Stations that execute true moves correctly return
                 // the to slot in response, so we only need the from slot.
-                sendReadSlotDelayed(i,1000);
+                sendReadSlotDelayed(i,10);
             }
         }
     }
