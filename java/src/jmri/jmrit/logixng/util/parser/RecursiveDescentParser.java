@@ -165,7 +165,23 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule4.parse(state);
+            ExpressionNodeAndState leftSide = rule4.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BOOLEAN_AND))) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule4.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }
@@ -177,7 +193,23 @@ public class RecursiveDescentParser {
 
         @Override
         public ExpressionNodeAndState parse(State state) throws ParserException {
-            return rule5.parse(state);
+            ExpressionNodeAndState leftSide = rule5.parse(state);
+            if (leftSide == null) {
+                return null;
+            }
+            State newState = leftSide._state;
+            while ((newState._token != null)
+                    && ((newState._token._tokenType == TokenType.BOOLEAN_AND))) {
+                
+                TokenType operatorTokenType = newState._token._tokenType;
+                newState = next(newState);
+                ExpressionNodeAndState rightSide = rule5.parse(newState);
+                
+                ExpressionNode exprNode = new ExpressionNodeBooleanOperator(operatorTokenType, leftSide._exprNode, rightSide._exprNode);
+                leftSide = new ExpressionNodeAndState(exprNode, rightSide._state);
+                newState = rightSide._state;
+            }
+            return leftSide;
         }
         
     }

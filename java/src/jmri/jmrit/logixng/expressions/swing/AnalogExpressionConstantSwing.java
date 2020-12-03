@@ -41,7 +41,7 @@ public class AnalogExpressionConstantSwing extends AbstractAnalogExpressionSwing
         try {
             Double.parseDouble(_constant.getText());
         } catch (NumberFormatException e) {
-                errorMessages.add(Bundle.getMessage("AnalogExpressionConstant_NotANumber", _constant.getText()));
+            errorMessages.add(Bundle.getMessage("AnalogExpressionConstant_NotANumber", _constant.getText()));
             return false;
         }
         return true;
@@ -59,7 +59,7 @@ public class AnalogExpressionConstantSwing extends AbstractAnalogExpressionSwing
     @Override
     public void updateObject(@Nonnull Base object) {
         if (!(object instanceof AnalogExpressionConstant)) {
-            throw new IllegalArgumentException("object must be an ActionTimer but is a: "+object.getClass().getName());
+            throw new IllegalArgumentException("object must be an AnalogExpressionConstant but is a: "+object.getClass().getName());
         }
         
         AnalogExpressionConstant expression = (AnalogExpressionConstant)object;

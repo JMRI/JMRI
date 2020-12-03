@@ -102,6 +102,23 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
                 .getGenericSocket();
     }
 
+    public final void setFormula(String formula) throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+        for (int i=0; i < getChildCount(); i++) {
+            Variable v = new GenericExpressionVariable((FemaleGenericExpressionSocket)getChild(i));
+            variables.put(v.getName(), v);
+        }
+        _expressionNode = parser.parseExpression(formula);
+        // parseExpression() may throw an exception and we don't want to set
+        // the field _formula until we now parseExpression() has succeeded.
+        _formula = formula;
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -174,23 +191,6 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
         }
     }
 
-    public String getFormula() {
-        return _formula;
-    }
-    
-    public final void setFormula(String formula) throws ParserException {
-        Map<String, Variable> variables = new HashMap<>();
-        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
-        for (int i=0; i < getChildCount(); i++) {
-            Variable v = new GenericExpressionVariable((FemaleGenericExpressionSocket)getChild(i));
-            variables.put(v.getName(), v);
-        }
-        _expressionNode = parser.parseExpression(formula);
-        // parseExpression() may throw an exception and we don't want to set
-        // the field _formula until we now parseExpression() has succeeded.
-        _formula = formula;
-    }
-    
     // This method ensures that we have enough of children
     private void setNumSockets(int num) {
         List<FemaleSocket> addList = new ArrayList<>();

@@ -89,8 +89,10 @@ public class AnalogFormulaXml extends jmri.managers.configurexml.AbstractNamedBe
             expressionSystemNames.add(new AnalogFormula.SocketData(socketName, systemName, manager));
         }
         
+        // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
+        
         AnalogFormula h = new AnalogFormula(sys, uname, expressionSystemNames);
 
         loadCommon(h, shared);

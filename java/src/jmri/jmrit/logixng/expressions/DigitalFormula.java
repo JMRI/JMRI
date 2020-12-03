@@ -52,7 +52,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
      * this formula uses
      */
     public DigitalFormula(@Nonnull String sys, @CheckForNull String user,
-            List<Map.Entry<String, String>> expressionSystemNames) {
+            List<SocketData> expressionSystemNames) {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
     }
@@ -70,19 +70,19 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
-    private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
+    private void setExpressionSystemNames(List<SocketData> systemNames) {
         if (!_expressionEntries.isEmpty()) {
             throw new RuntimeException("expression system names cannot be set more than once");
         }
         
-        for (Map.Entry<String, String> entry : systemNames) {
+        for (SocketData socketData : systemNames) {
             FemaleGenericExpressionSocket socket =
-                    createFemaleSocket(this, this, entry.getKey());
+                    createFemaleSocket(this, this, socketData._socketName);
 //            FemaleGenericExpressionSocket socket =
-//                    InstanceManager.getDefault(DigitalExpressionManager.class)
+//                    InstanceManager.getDefault(AnalogExpressionManager.class)
 //                            .createFemaleSocket(this, this, entry.getKey());
             
-            _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
+            _expressionEntries.add(new ExpressionEntry(socket, socketData._socketSystemName, socketData._manager));
         }
     }
     
@@ -90,6 +90,18 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         return _expressionEntries.get(index)._socketSystemName;
     }
     
+    public String getExpressionManager(int index) {
+        return _expressionEntries.get(index)._manager;
+    }
+    
+    private FemaleGenericExpressionSocket createFemaleSocket(
+            Base parent, FemaleSocketListener listener, String socketName) {
+        
+        return new DefaultFemaleGenericExpressionSocket(
+                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
+                .getGenericSocket();
+    }
+
     public final void setFormula(String formula) throws ParserException {
         Map<String, Variable> variables = new HashMap<>();
         RecursiveDescentParser parser = new RecursiveDescentParser(variables);
@@ -107,14 +119,6 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         return _formula;
     }
     
-    private FemaleGenericExpressionSocket createFemaleSocket(
-            Base parent, FemaleSocketListener listener, String socketName) {
-        
-        return new DefaultFemaleGenericExpressionSocket(
-                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
-                .getGenericSocket();
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -354,24 +358,6 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         _disableCheckForUnconnectedSocket = false;
     }
     
-    
-    
-    /* This class is public since ExpressionFormulaXml needs to access it. */
-    public static class ExpressionEntry {
-        private String _socketSystemName;
-        private final FemaleGenericExpressionSocket _socket;
-        
-        public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName) {
-            _socketSystemName = socketSystemName;
-            _socket = socket;
-        }
-        
-        private ExpressionEntry(FemaleGenericExpressionSocket socket) {
-            this._socket = socket;
-        }
-        
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -388,6 +374,39 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     @Override
     public void disposeMe() {
     }
+    
+    
+    public static class SocketData {
+        public final String _socketName;
+        public final String _socketSystemName;
+        public final String _manager;
+        
+        public SocketData(String socketName, String socketSystemName, String manager) {
+            _socketName = socketName;
+            _socketSystemName = socketSystemName;
+            _manager = manager;
+        }
+    }
+    
+    
+    /* This class is public since ExpressionFormulaXml needs to access it. */
+    public static class ExpressionEntry {
+        private final FemaleGenericExpressionSocket _socket;
+        private String _socketSystemName;
+        public String _manager;
+        
+        public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName, String manager) {
+            _socket = socket;
+            _socketSystemName = socketSystemName;
+            _manager = manager;
+        }
+        
+        private ExpressionEntry(FemaleGenericExpressionSocket socket) {
+            this._socket = socket;
+        }
+        
+    }
+    
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalFormula.class);
 }

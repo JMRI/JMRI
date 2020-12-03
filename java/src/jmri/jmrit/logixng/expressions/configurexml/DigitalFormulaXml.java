@@ -45,13 +45,19 @@ public class DigitalFormulaXml extends jmri.managers.configurexml.AbstractNamedB
             MaleSocket socket = p.getChild(i).getConnectedSocket();
             
             String socketSystemName;
+            String socketManager;
             if (socket != null) {
                 socketSystemName = socket.getSystemName();
+                socketManager = socket.getManager().getClass().getName();
             } else {
                 socketSystemName = p.getExpressionSystemName(i);
+                socketManager = p.getExpressionManager(i);
             }
             if (socketSystemName != null) {
                 e2.addContent(new Element("systemName").addContent(socketSystemName));
+            }
+            if (socketManager != null) {
+                e2.addContent(new Element("manager").addContent(socketManager));
             }
             e.addContent(e2);
         }
@@ -65,7 +71,7 @@ public class DigitalFormulaXml extends jmri.managers.configurexml.AbstractNamedB
     
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
-        List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
+        List<DigitalFormula.SocketData> expressionSystemNames = new ArrayList<>();
         
         Element actionElement = shared.getChild("expressions");
         for (Element socketElement : actionElement.getChildren()) {
@@ -75,7 +81,12 @@ public class DigitalFormulaXml extends jmri.managers.configurexml.AbstractNamedB
             if (systemNameElement != null) {
                 systemName = systemNameElement.getTextTrim();
             }
-            expressionSystemNames.add(new AbstractMap.SimpleEntry<>(socketName, systemName));
+            Element managerElement = socketElement.getChild("manager");
+            String manager = null;
+            if (managerElement != null) {
+                manager = managerElement.getTextTrim();
+            }
+            expressionSystemNames.add(new DigitalFormula.SocketData(socketName, systemName, manager));
         }
         
         // put it together
