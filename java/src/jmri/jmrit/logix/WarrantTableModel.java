@@ -209,14 +209,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
      
     protected String checkAddressInUse(Warrant warrant) {
-        String address = warrant.getSpeedUtil().getAddress();
+        jmri.DccLocoAddress address = warrant.getSpeedUtil().getDccAddress();
 
         if (address ==null) {
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
             if (w._runMode != Warrant.MODE_NONE) {
-                if (address.equals(w.getSpeedUtil().getAddress())) {
+                if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());
                 }
             }

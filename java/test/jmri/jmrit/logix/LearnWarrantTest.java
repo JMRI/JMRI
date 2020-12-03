@@ -70,7 +70,7 @@ public class LearnWarrantTest {
         assertThat(orders.size()).withFailMessage("5 BlockOrders").isEqualTo(5);
 
         frame._speedUtil.setAddress("99");
-        frame.setTrainInfo(null);
+        frame.setTrainInfo("Student");
         JUnitUtil.waitFor(() -> (frame._speedUtil.getDccAddress() != null), "Found address");
         jmri.DccLocoAddress address = frame._speedUtil.getDccAddress();
         assertThat(address.getNumber()).withFailMessage("address=99").isEqualTo(99);
@@ -201,20 +201,17 @@ public class LearnWarrantTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDebugPowerManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initMemoryManager();
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
-        JUnitUtil.initConditionalManager();
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @AfterEach

@@ -798,23 +798,6 @@ public class SpeedUtil {
         }
         clearStats();
         _changetime = exitTime;
-        /*
-        // check for legitimate speed - derailing, abort, etc. can make bogus measurement.
-        if (throttle > 0.8) {
-            if (measuredSpeed > 1.2*getTrackSpeed(1.0f)) {// assume 20% over max OK
-                return;
-            }
-        } else if (measuredSpeed > getTrackSpeed(1.0f)) {// assume 80% less than max OK
-            return;
-        }
-
-        if (profileSpeed > 0) {
-            float ratio = profileSpeed / measuredSpeed;
-            if (ratio < 0.5f || ratio > 2.0f) {   // too much inconsistency
-                return;
-            }
-        }
-        */
         setSpeedProfile(_sessionProfile, aveSettings, measuredSpeed, isForward);   // post session result, regardless
         setSpeedProfile(_mergeProfile, aveSettings, measuredSpeed, isForward);
     }
@@ -839,13 +822,6 @@ public class SpeedUtil {
             }
         } else {
             mergeSpeed = measuredSpeed;
-        }
-        float stepIncrement = _throttle.getSpeedIncrement();
-        int step = Math.round(throttle / stepIncrement);
-        throttle = stepIncrement * step;
-        if (log.isDebugEnabled())  {
-            log.debug("{} changes, ThrottleSetting= {} (speedStep= {}), measuredSpeed= {} {}",
-                    _numchanges, throttle, step, measuredSpeed, (isForward?"forward":"reverse"));
         }
         if (isForward) {
             profile.setForwardSpeed(throttle, mergeSpeed);

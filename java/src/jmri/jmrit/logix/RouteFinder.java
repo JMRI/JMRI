@@ -147,7 +147,6 @@ public class RouteFinder implements Runnable {
                     }
                 }
                 // walk all paths
-                OBlock prevPathBlock =null;
                 for (int k = 0; k < paths.size(); k++) {
                     OPath path = paths.get(k);
                     if (_avoidBlock != null && _avoidBlock.equals(nextBlock)) {
@@ -157,10 +156,6 @@ public class RouteFinder implements Runnable {
                     }
                     String exitName = path.getOppositePortalName(pName);
                     OBlock pathBlock = (OBlock) path.getBlock();
-                    if (pathBlock.equals(prevPathBlock)) {
-                        continue;
-                    }
-                    prevPathBlock = pathBlock;
                     BlockOrder nOrder = new BlockOrder(pathBlock, path.getName(), pName, exitName);
                     RouteNode child = new RouteNode(nOrder, node.needsViaAncestor());
                     _tree.insertNodeInto(child, node, node.getChildCount());

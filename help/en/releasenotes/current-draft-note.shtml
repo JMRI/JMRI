@@ -614,7 +614,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>The table of throttle commands when creating or editing warrants has been changed:
+            <li>The table of throttle commands shown when creating or editing warrants has been changed:
             	<ul>
             		<li>The <b>Command</b> column is now a drop down combo box. This will allow the
             			command names to be translated into languages other than English.</li>
@@ -629,11 +629,17 @@
             <li>The constant used to approximate track speed of trains has been changed to 
             	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
             	on roster entries having Speed Profiles.</li>
-            <li>The Address column of the Warrant Table list and the Address field of the NXWarrant
-            	window now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
+            <li>The Address column of the Warrant Table list and the Address fields of the
+            	NXWarrant or Create Warrant windows
+            	now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
             <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
             	non-speed script commands are executed at approximately the same elapsed times as  
-            	written in the script.</li>
+            	were written in the script.</li>
+ 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile  
+            	is built that can be seen by  pressing the <b>View Profile</b> button in the
+            	edit warrant window. These profiles can be merged into the existing profiles
+            	for the Roster entry used by the loco of the warrant when the layout session 
+            	is closed. (Recall that Warrant Preferences has 3 options for this merging.)</li>
             <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
             	settings and commands are edited. This button updates the <b>Speed</b> column to
             	list the track speeds (mm/sec) for the current Speed Profile measurements of

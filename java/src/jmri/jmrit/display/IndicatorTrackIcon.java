@@ -280,9 +280,9 @@ public class IndicatorTrackIcon extends PositionableIcon
             try {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             } catch (Exception e) {
-                // Rare. Observed in tests as IllegalArgumentException from add(Component comp, Component comp) in Editor.TargetPane
-                log.error("setStatus on indicator track icon failed in thread {} {}: ",
-                    Thread.currentThread().getName(), Thread.currentThread().getId(), e);
+                // Rare. Observed in tests from add(Component comp, Component comp) in Editor.TargetPane
+                // as "java.lang.IllegalArgumentException: illegal component position"
+                log.error("setStatus on indicator track icon failed  {}", e);
             }
         }
         repaint();

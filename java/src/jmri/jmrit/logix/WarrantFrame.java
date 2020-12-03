@@ -178,7 +178,11 @@ public class WarrantFrame extends WarrantRoute {
         setSpeedUtil(_warrant.getSpeedUtil());
         _speedUtil.setDccAddress(spU.getDccAddress());
         _speedUtil.setRosterId(spU.getRosterId());
-        setTrainInfo(warrant.getTrainName());
+        if (_speedUtil.getDccAddress() != null) {
+            setTrainInfo(warrant.getTrainName());
+        } else {
+            setTrainName(warrant.getTrainName());
+        }
 
         ActionListener checkBoxChange = new ActionListener() {
             @Override
@@ -1047,6 +1051,7 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void runLearnModeTrain() {
+        _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         String msg = null;
         if (isRunning()) {
             msg = Bundle.getMessage("CannotRun", _warrant.getDisplayName(),

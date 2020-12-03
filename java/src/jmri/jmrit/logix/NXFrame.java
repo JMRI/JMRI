@@ -134,11 +134,11 @@ public class NXFrame extends WarrantRoute {
         float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale() ;
         _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
         
-        float prefNormalScale = 0.0F;
-        try {
-            prefNormalScale = WarrantPreferences.getDefault().getSpeedNameValue("Normal");
-        } catch (Exception e) {
-            log.warn("Warrants Aspect Speed table does not contain speed name 'Normal'", e);
+        float prefNormalScale = 0.0f;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp == null) {
+            log.warn("WarrantPreferences.getDefault() == null. (why?) Seems to happen from time to time");
+            prefNormalScale = 100.0f;
         }
         _maxSpeedBox.setText(NumberFormat.getNumberInstance().format(prefNormalScale));
         
