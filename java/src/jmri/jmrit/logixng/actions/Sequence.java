@@ -14,69 +14,84 @@ import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.util.ProtectedTimerTask;
-import jmri.util.TimerUtil;
+import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 
 /**
  * Executes an action after some time.
  * 
- * @author Daniel Bergqvist Copyright 2019
+ * @author Daniel Bergqvist Copyright 2020
  */
-public class ActionTimer extends AbstractDigitalAction
+public class Sequence extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     public static final int EXPRESSION_START = 0;
     public static final int EXPRESSION_STOP = 1;
-    
+    public static final int EXPRESSION_RESET = 2;
+    public static final int NUM_STATIC_EXPRESSIONS = 3;
+
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     private final List<ActionEntry> _actionEntries = new ArrayList<>();
-    private ProtectedTimerTask _timerTask;
-    private int _currentTimer = -1;
-    private TimerState _timerState = TimerState.Off;
+    private int _currentStep = -1;
+    private boolean _isRunning = false;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
-    private Unit _unit = Unit.MilliSeconds;
-    private long _currentTimerDelay = 0;
-    private long _currentTimerStart = 0;
     
-    public ActionTimer(String sys, String user) {
+    public Sequence(String sys, String user) {
         super(sys, user);
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStart"))));
+                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStart"))));
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, Bundle.getMessage("TimerSocketStop"))));
+                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketStop"))));
+        _expressionEntries
+                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .createFemaleSocket(this, this, Bundle.getMessage("SequenceSocketReset"))));
         _actionEntries
                 .add(new ActionEntry(InstanceManager.getDefault(DigitalActionManager.class)
-                        .createFemaleSocket(this, this, getNewSocketName())));
+                        .createFemaleSocket(this, this, getNewActionSocketName())));
+        _expressionEntries
+                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .createFemaleSocket(this, this, getNewExpressionSocketName())));
     }
     
-    public ActionTimer(String sys, String user,
+    public Sequence(String sys, String user,
             List<Map.Entry<String, String>> expressionSystemNames,
-            List<ActionData> actionDataList)
+            List<Map.Entry<String, String>> actionSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         setExpressionSystemNames(expressionSystemNames);
-        setActionData(actionDataList);
+        setActionSystemNames(actionSystemNames);
+    }
+    
+    public String getNewActionSocketName() {
+        String[] names = new String[getChildCount()];
+        for (int i=0; i < getChildCount(); i++) {
+            names[i] = getChild(i).getName();
+        }
+        return getNewSocketName(names);
+    }
+    
+    public String getNewExpressionSocketName() {
+        String[] names = new String[getChildCount()];
+        for (int i=0; i < getChildCount(); i++) {
+            names[i] = getChild(i).getName();
+        }
+        return AbstractDigitalExpression.getNewSocketName(names);
     }
     
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
+//        if (1==1) throw new RuntimeException("Not implemented yet");
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        ActionTimer copy = new ActionTimer(sysName, userName);
+        Sequence copy = new Sequence(sysName, userName);
         copy.setComment(getComment());
         copy.setComment(getComment());
-        copy.setNumActions(getNumActions());
-        for (int i=0; i < getNumActions(); i++) {
-            copy.setDelay(i, getDelay(i));
-        }
         copy.setStartImmediately(_startImmediately);
         copy.setRunContinuously(_runContinuously);
-        copy.setUnit(_unit);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
     
@@ -94,17 +109,17 @@ public class ActionTimer extends AbstractDigitalAction
         }
     }
     
-    private void setActionData(List<ActionData> actionDataList) {
+    private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_actionEntries.isEmpty()) {
             throw new RuntimeException("action system names cannot be set more than once");
         }
         
-        for (ActionData data : actionDataList) {
+        for (Map.Entry<String, String> entry : systemNames) {
             FemaleDigitalActionSocket socket =
                     InstanceManager.getDefault(DigitalActionManager.class)
-                            .createFemaleSocket(this, this, data._socketName);
+                            .createFemaleSocket(this, this, entry.getKey());
             
-            _actionEntries.add(new ActionEntry(data._delay, socket, data._socketSystemName));
+            _actionEntries.add(new ActionEntry(socket, entry.getValue()));
         }
     }
 
@@ -120,115 +135,63 @@ public class ActionTimer extends AbstractDigitalAction
         return false;
     }
     
-    /**
-     * Get a new timer task.
-     */
-    private ProtectedTimerTask getNewTimerTask() {
-        return new ProtectedTimerTask() {
-            @Override
-            public void execute() {
-                try {
-                    long currentTimerTime = System.currentTimeMillis() - _currentTimerStart;
-                    if (currentTimerTime < _currentTimerDelay) {
-                        scheduleTimer(_currentTimerDelay - currentTimerTime);
-                    } else {
-                        _timerState = TimerState.Completed;
-                        getConditionalNG().execute();
-                    }
-                } catch (Exception e) {
-                    log.error("Exception thrown", e);
-                }
-            }
-        };
-    }
-    
-    private void scheduleTimer(long delay) {
-        if (_timerTask != null) _timerTask.stopTimer();
-        _timerTask = getNewTimerTask();
-        TimerUtil.schedule(_timerTask, delay);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+        System.out.format("Sequence.execute()%n");
+        
         if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
-            synchronized(this) {
-                if (_timerTask != null) _timerTask.stopTimer();
-                _timerTask = null;
-            }
-            _timerState = TimerState.Off;
+            _isRunning = false;
+            System.out.format("Sequence.execute(): stop%n");
             return;
         }
         
         if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
-            synchronized(this) {
-                if (_timerTask != null) {
-                    _timerTask.stopTimer();
-                    _timerTask = null;
-                }
-            }
-            _currentTimer = -1;
-            _timerState = TimerState.WaitToRun;
+            System.out.format("Sequence.execute(): start%n");
+            _isRunning = true;
         }
         
-        if (_timerState == TimerState.Off) return;
-        if (_timerState == TimerState.Running) return;
+        if (_expressionEntries.get(EXPRESSION_RESET)._socket.isConnected()
+                && _expressionEntries.get(EXPRESSION_RESET)._socket.evaluate()) {
+            System.out.format("Sequence.execute(): reset%n");
+            _currentStep = -1;
+        }
         
-        int startTimer = _currentTimer;
-        while ((_timerState == TimerState.WaitToRun) || (_timerState == TimerState.Completed)) {
-            // If the timer has passed full time, execute the action
-            if ((_timerState == TimerState.Completed) && _actionEntries.get(_currentTimer)._socket.isConnected()) {
-                _actionEntries.get(_currentTimer)._socket.execute();
+        if (!_isRunning) return;
+        
+        System.out.format("Sequence.execute(): AA _currentStep: %d%n", _currentStep);
+        
+        if (_currentStep == -1) {
+            _currentStep = 0;
+            FemaleDigitalActionSocket socket =
+                    _actionEntries.get(_currentStep)._socket;
+            System.out.format("Sequence.execute(): action connected: %b%n", socket.isConnected());
+            if (socket.isConnected()) socket.execute();
+        }
+        
+        System.out.format("Sequence.execute(): BB _currentStep: %d%n", _currentStep);
+        
+        FemaleDigitalExpressionSocket exprSocket =
+                _expressionEntries.get(_currentStep + NUM_STATIC_EXPRESSIONS)._socket;
+        if (exprSocket.isConnected() && exprSocket.evaluate()) {
+            _currentStep++;
+            if (_currentStep >= _actionEntries.size()) {
+                System.out.format("Sequence.execute(): start over%n");
+//                _runContinuously
+                _currentStep = 0;
             }
             
-            // Start new timer
-            _currentTimer++;
-            if (_currentTimer >= _actionEntries.size()) {
-                _currentTimer = 0;
-                if (!_runContinuously) {
-                    _timerState = TimerState.Off;
-                    return;
-                }
-            }
+            System.out.format("Sequence.execute(): next step: _currentStep: %d%n", _currentStep);
             
-            ActionEntry ae = _actionEntries.get(_currentTimer);
-            if (ae._delay > 0) {
-                synchronized(this) {
-                    _currentTimerDelay = ae._delay * _unit._multiply;
-                    _currentTimerStart = System.currentTimeMillis();
-                    scheduleTimer(ae._delay * _unit._multiply);
-                }
-                return;
-            }
-            
-            if (startTimer == _currentTimer) {
-                // If we get here, all timers has a delay of 0 ms
-                _timerState = TimerState.Off;
-                return;
-            }
+            FemaleDigitalActionSocket actionSocket =
+                    _actionEntries.get(_currentStep)._socket;
+            System.out.format("Sequence.execute(): action connected: %b%n", actionSocket.isConnected());
+            if (exprSocket.isConnected()) actionSocket.execute();
         }
     }
 
-    /**
-     * Get the type.
-     * @param actionSocket the socket
-     * @return the delay
-     */
-    public int getDelay(int actionSocket) {
-        return _actionEntries.get(actionSocket)._delay;
-    }
-    
-    /**
-     * Set the type.
-     * @param actionSocket the socket
-     * @param delay the delay
-     */
-    public void setDelay(int actionSocket, int delay) {
-        _actionEntries.get(actionSocket)._delay = delay;
-    }
-    
     /**
      * Get if to start immediately
      * @return true if to start immediately
@@ -243,6 +206,7 @@ public class ActionTimer extends AbstractDigitalAction
      */
     public void setStartImmediately(boolean startImmediately) {
         _startImmediately = startImmediately;
+        if (_startImmediately) _isRunning = true;
     }
     
     /**
@@ -261,31 +225,16 @@ public class ActionTimer extends AbstractDigitalAction
         _runContinuously = runContinuously;
     }
     
-    /**
-     * Get the unit
-     * @return the unit
-     */
-    public Unit getUnit() {
-        return _unit;
-    }
-    
-    /**
-     * Set the unit
-     * @param unit the unit
-     */
-    public void setUnit(Unit unit) {
-        _unit = unit;
-    }
-    
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         if (index == EXPRESSION_START) return _expressionEntries.get(EXPRESSION_START)._socket;
         if (index == EXPRESSION_STOP) return _expressionEntries.get(EXPRESSION_STOP)._socket;
-        if ((index < 0) || (index >= (_expressionEntries.size() + _actionEntries.size()))) {
-            throw new IllegalArgumentException(
-                    String.format("index has invalid value: %d", index));
-        }
-        return _actionEntries.get(index - _expressionEntries.size())._socket;
+        if (index == EXPRESSION_RESET) return _expressionEntries.get(EXPRESSION_RESET)._socket;
+        
+        index -= NUM_STATIC_EXPRESSIONS;
+        
+        if ((index % 2) == 0) return _actionEntries.get(index >> 1)._socket;
+        else return _expressionEntries.get((index >> 1) + NUM_STATIC_EXPRESSIONS)._socket;
     }
 
     @Override
@@ -325,12 +274,12 @@ public class ActionTimer extends AbstractDigitalAction
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionTimer_Short");
+        return Bundle.getMessage(locale, "Sequence_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ActionTimer_Long");
+        return Bundle.getMessage(locale, "Sequence_Long");
     }
 
     public int getNumExpressions() {
@@ -352,7 +301,7 @@ public class ActionTimer extends AbstractDigitalAction
     public int getNumActions() {
         return _actionEntries.size();
     }
-    
+/*    
     public void setNumActions(int num) {
         List<FemaleSocket> addList = new ArrayList<>();
         List<FemaleSocket> removeList = new ArrayList<>();
@@ -377,7 +326,7 @@ public class ActionTimer extends AbstractDigitalAction
         }
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
-    
+*/    
     public FemaleDigitalActionSocket getActionSocket(int socket) {
         return _actionEntries.get(socket)._socket;
     }
@@ -456,11 +405,6 @@ public class ActionTimer extends AbstractDigitalAction
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
-            // If _timerState is not TimerState.Off, the timer was running when listeners wss unregistered
-            if ((_startImmediately) || (_timerState != TimerState.Off)) {
-                if (_timerState == TimerState.Off) _timerState = TimerState.WaitToRun;
-                getConditionalNG().execute();
-            }
             _listenersAreRegistered = true;
         }
     }
@@ -468,22 +412,12 @@ public class ActionTimer extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        synchronized(this) {
-            // stopTimer() will not return until the timer task
-            // is cancelled and stopped.
-            if (_timerTask != null) _timerTask.stopTimer();
-            _timerTask = null;
-        }
         _listenersAreRegistered = false;
     }
     
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        synchronized(this) {
-            if (_timerTask != null) _timerTask.stopTimer();
-            _timerTask = null;
-        }
     }
     
     
@@ -503,12 +437,10 @@ public class ActionTimer extends AbstractDigitalAction
     }
     
     private static class ActionEntry {
-        private int _delay;
         private String _socketSystemName;
         private final FemaleDigitalActionSocket _socket;
         
-        private ActionEntry(int delay, FemaleDigitalActionSocket socket, String socketSystemName) {
-            _delay = delay;
+        private ActionEntry(FemaleDigitalActionSocket socket, String socketSystemName) {
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
@@ -519,52 +451,7 @@ public class ActionTimer extends AbstractDigitalAction
         
     }
     
-    public static class ActionData {
-        private int _delay;
-        private String _socketName;
-        private String _socketSystemName;
-        
-        public ActionData(int delay, String socketName, String socketSystemName) {
-            _delay = delay;
-            _socketName = socketName;
-            _socketSystemName = socketSystemName;
-        }
-    }
     
-    
-    public enum Unit {
-        MilliSeconds(1, Bundle.getMessage("ActionTimer_UnitMilliSeconds")),
-        Seconds(1000, Bundle.getMessage("ActionTimer_UnitSeconds")),
-        Minutes(1000*60, Bundle.getMessage("ActionTimer_UnitMinutes")),
-        Hours(1000*60*60, Bundle.getMessage("ActionTimer_UnitHours"));
-        
-        private long _multiply;
-        private final String _text;
-        
-        private Unit(long multiply, String text) {
-            this._multiply = multiply;
-            this._text = text;
-        }
-        
-        public long getMultiply() {
-            return _multiply;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-    }
-    
-    
-    private enum TimerState {
-        Off,
-        WaitToRun,
-        Running,
-        Completed,
-    }
-    
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionTimer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sequence.class);
 
 }

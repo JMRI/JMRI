@@ -27,7 +27,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalHead.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionSignalMast.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionThrottle.class));
-        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, ActionTimer.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, ActionTimer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.ITEM, ActionTurnout.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, DigitalCallModule.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DoAnalogAction.class));
@@ -35,6 +35,7 @@ public class DigitalFactory implements DigitalActionFactory {
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, IfThenElse.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, Logix.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, DigitalMany.class));
+        digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.COMMON, Sequence.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.EXRAVAGANZA, ShutdownComputer.class));
         digitalActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, WebBrowser.class));
         return digitalActionClasses;

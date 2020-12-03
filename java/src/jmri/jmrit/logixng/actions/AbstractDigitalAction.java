@@ -64,7 +64,7 @@ public abstract class AbstractDigitalAction extends AbstractBase
         return getNewSocketName(names);
     }
     
-    public String getNewSocketName(String[] names) {
+    public static String getNewSocketName(String[] names) {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
             boolean validName = true;

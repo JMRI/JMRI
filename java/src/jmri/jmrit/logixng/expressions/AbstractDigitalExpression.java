@@ -89,12 +89,20 @@ public abstract class AbstractDigitalExpression extends AbstractBase
     }
     
     public String getNewSocketName() {
+        String[] names = new String[getChildCount()];
+        for (int i=0; i < getChildCount(); i++) {
+            names[i] = getChild(i).getName();
+        }
+        return getNewSocketName(names);
+    }
+    
+    public static String getNewSocketName(String[] names) {
         int x = 1;
         while (x < 10000) {     // Protect from infinite loop
             boolean validName = true;
-            for (int i=0; i < getChildCount(); i++) {
+            for (int i=0; i < names.length; i++) {
                 String name = "E" + Integer.toString(x);
-                if (name.equals(getChild(i).getName())) {
+                if (name.equals(names[i])) {
                     validName = false;
                     break;
                 }
