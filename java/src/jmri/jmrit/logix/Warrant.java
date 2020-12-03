@@ -2466,7 +2466,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * is not immediate, then determine the proper time delay to start the speed
      * change.
      *
-     * @param position estimated position of train inn the block
      * @return false on errors
      */
     private boolean setMovement() {
