@@ -94,7 +94,7 @@
                     interrogation mechanism now implements a minimum delay from
                     the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
-                <li>The "DS64 Configuration Tool" was updated:</li>
+                <li>The "DS64 Configuration Tool" was updated:
                     <ul>
                         <li>to correctly perform the "Factory Reset" operation
                             without encountering a "Java Exception";</li>
@@ -104,6 +104,9 @@
                             tab and maintain value coherency between the "OpSw Values" tab
                             and the "Basic Settings" tab.</li>
                     </ul>
+                </li>
+                <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
+                    Termination!)" for Digitrax PR4.
             </ul>
 
         <h4>Maple</h4>
@@ -477,7 +480,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway 
+	    - Unified Control Place - JOP style.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
