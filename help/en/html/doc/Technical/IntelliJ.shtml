@@ -51,7 +51,10 @@
       <a href="getgitcode.shtml">JMRI: Getting the Code</a>.</p>
 
       <p>These instructions were developed and tested using
-      IntelliJ IDEA 15 and 16 Community Edition (free).</p><a name=
+      IntelliJ IDEA 15 and 16 Community Edition (free).
+      The current version is 2020 and the Community Edition is still free. This page has been updated to reflect the
+        2020 version
+      </p><a name=
       "install" id="install"></a>
 
       <h2>Installing IntelliJ IDEA</h2>
@@ -104,7 +107,7 @@
         alt="IntelliJ Edit vmoptions"></a></li>
 
         <li>IntelliJ 2016 and up are now ready to use for development with
-        JMRI. The vmoptions file is store in
+        JMRI. The vmoptions file is stored in
         <code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
         But in version 15, IntelliJ on OS X did not correctly name
         this vmoptions file ( <a href=
@@ -127,12 +130,9 @@
         <li>Add the line "-Didea.native2ascii.lowercase=true" to
         the contents of this file and select Save All from the File
         menu.<br>
-        It will be saved into the location under user home. That's
-        <code>$HOME/.IdeaICXX/idea$BITS.vmoptions</code> for *nix
-        and
-        <code>%USERPROFILE%\.IdeaICXX\idea%BITS%.exe.vmoptions</code>
-        for Windows (XX = the version number, BITS = the chip
-        version installed).</li>
+        It will be saved into a location relative to the program file. The name
+        will be prefixed with the IntelliJ version number. To find the file location, right-click the tab of
+        the page where you have added the line and select "Show in Explorer"</li>
       </ul>
 
       <p>If the IDEA_VM_OPTIONS environment variable is defined, or
@@ -153,7 +153,7 @@
       <h3>Set Preferences</h3>
 
       <p>Start IntelliJ and choose "Preferences" from the
-      application menu (OS X) or Edit menu (Win).</p>
+      application menu (OS X) or "Settings from the File menu (Win).</p>
 
       <ol>
         <li>From the Editor -&gt; File Encodings tab, check
@@ -172,7 +172,7 @@
 
         <li>From the Build, Execution, Deployment -&gt; Java
         Compiler tab, select "1.8" as the Project bytecode
-        version:<br>
+        version. On the same page, select "Eclipse" from the Use complier drop-down: <br>
         <a href="images/IntelliJ/IjPrefsJava18.png"><img src=
         "images/IntelliJ/IjPrefsJava18.png" width="408" height=
         "263" alt="IntelliJ build java SDK prefs"></a></li>

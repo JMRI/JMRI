@@ -1,16 +1,9 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.event.MouseEvent;
-import java.awt.geom.*;
-import java.util.*;
-import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.annotation.Nonnull;
 
-import jmri.*;
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.util.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackView;
 
 /**
  * MVC Editor component for PositionablePoint objects.
@@ -36,7 +29,7 @@ public class PositionablePointEditor extends LayoutTrackEditor {
      * Edit a PositionablePoint
      */
     @Override
-    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+    public void editLayoutTrack(@Nonnull LayoutTrackView layoutTrackView) {
         log.error("no editor installed for PositionablePoint", new Exception("traceback"));
     }
     

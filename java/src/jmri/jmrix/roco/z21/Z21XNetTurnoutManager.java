@@ -69,6 +69,15 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager {
            t.message(l);
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull java.util.Locale locale) {
+        return this.validateSystemNameFormatOnlyNumeric(systemName, locale);
+    }
 
     private static final Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 

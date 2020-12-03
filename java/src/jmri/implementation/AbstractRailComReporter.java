@@ -23,13 +23,13 @@ public class AbstractRailComReporter extends AbstractIdTagReporter {
     }
 
     // Methods to support PhysicalLocationReporter interface
+    
     /**
-     * getLocoAddress()
-     *
-     * get the locomotive address we're reporting about from the current report.
+     * Get the locomotive address we're reporting about from the current report.
      *
      * Note: We ignore the string passed in, because RailCom Reporters don't send
      * String type reports.
+     * {@inheritDoc}
      */
     @Override
     public LocoAddress getLocoAddress(String rep) {

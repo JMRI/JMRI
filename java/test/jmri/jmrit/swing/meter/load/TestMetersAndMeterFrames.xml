@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>21</minor>
+    <test>2</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="3:59 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <meters class="jmri.managers.configurexml.AbstractMeterManagerXml">
+    <meter>
+      <systemName>ZVCommandStationCurrent</systemName>
+    </meter>
+    <meter>
+      <systemName>ZVCommandStationVoltage</systemName>
+    </meter>
+  </meters>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Sep 18 03:50:49 CEST 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <meterFrames class="jmri.jmrit.swing.meter.configurexml.MeterFrameManagerXml">
+    <meterFrame unit="MilliVolt" integer-digits="3" decimal-digits="0" x="1189" y="89" width="731" height="430">
+      <uuid>399cc071-8baf-4010-b1da-25a7ec0dcd53</uuid>
+      <meter>ZVCommandStationVoltage</meter>
+    </meterFrame>
+    <meterFrame unit="MilliAmpere" integer-digits="1" decimal-digits="2" x="-9" y="91" width="1095" height="231">
+      <uuid>e028e63b-019b-47e2-aab0-c0946dc92204</uuid>
+      <meter>ZVCommandStationCurrent</meter>
+    </meterFrame>
+  </meterFrames>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Fri Sep 18 03:50:48 CEST 2020</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Fri Sep 18 03:59:01 CEST 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.21.2ish+daniel+2020-09-18T01:49:04Z+RUNKNOWN on Fri Sep 18 03:59:01 CEST 2020-->
+</layout-config>

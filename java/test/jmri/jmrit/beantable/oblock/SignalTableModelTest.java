@@ -17,9 +17,9 @@ public class SignalTableModelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TableFrames f = new TableFrames();
-        SignalTableModel t = new SignalTableModel(f);
-        Assert.assertNotNull("exists",t);
+        TableFrames tf = new TableFrames();
+        SignalTableModel stm = new SignalTableModel(tf);
+        Assert.assertNotNull("exists", stm);
     }
 
     @BeforeEach

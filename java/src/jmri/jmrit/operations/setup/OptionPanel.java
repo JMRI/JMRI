@@ -229,6 +229,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // disable staging option if normal mode
         stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
         numberPassesComboBox.setEnabled(buildAggressive.isSelected());
+        tryNormalStagingCheckBox.setEnabled(buildAggressive.isSelected());
 
         initMinimumSize();
     }
@@ -249,6 +250,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         }
         // disable staging option if normal mode
         stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
+        tryNormalStagingCheckBox.setEnabled(buildAggressive.isSelected());
         numberPassesComboBox.setEnabled(buildAggressive.isSelected());
     }
 

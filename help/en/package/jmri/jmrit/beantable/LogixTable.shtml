@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Logix Table">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
@@ -69,7 +69,9 @@
         <li>
         Selecting <strong>Copy</strong> will bring up windows that allow you to
         make a new copy of Logix and its Conditionals or to copy its
-        Conditionals into an existing Logix.</li>
+        Conditionals into an existing Logix. See the
+        <a href="../conditional/ConditionalCopy.shtml">Conditional Copy</a>
+        help page for information on copying Logix Conditionals.</li>
         <li>
         Selecting <strong>Delete</strong> will delete the Logix and its
         Conditionals.</li>

@@ -1,30 +1,17 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Label;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.text.DecimalFormat;
-import java.util.*;
-import javax.annotation.*;
+import java.awt.event.ActionEvent;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
+
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
 
 /**
  * MVC Editor component for LevelXing objects.
@@ -50,6 +37,7 @@ public class LevelXingEditor extends LayoutTurntableEditor {
     | Edit Level Xing |
     \*===============*/
     // variables for Edit Track Segment pane
+    private LevelXingView levelXingView;
     private LevelXing levelXing;
 
     // variables for Edit Level Crossing pane
@@ -69,12 +57,15 @@ public class LevelXingEditor extends LayoutTurntableEditor {
 
     /**
      * Edit a Level Crossing.
-     * @param levelXing the level crossing to edit.
+     * @param levelXingView the level crossing to edit.
      */
-    public void editLayoutTrack(LevelXing levelXing) {
+    public void editLayoutTrack(LevelXingView levelXingView) {
+    try {
         sensorList.clear();
 
-        this.levelXing = levelXing;
+        this.levelXingView = levelXingView;
+        this.levelXing = this.levelXingView.getLevelXing();
+        
         if (editLevelXingOpen) {
             editLevelXingFrame.setVisible(true);
         } else // Initialize if needed
@@ -136,7 +127,7 @@ public class LevelXingEditor extends LayoutTurntableEditor {
             contentPane.add(panel5);
         }
 
-        editLevelXingHiddenCheckBox.setSelected(levelXing.isHidden());
+        editLevelXingHiddenCheckBox.setSelected(levelXingView.isHidden());
 
         // Set up for Edit
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
@@ -156,7 +147,10 @@ public class LevelXingEditor extends LayoutTurntableEditor {
         editLevelXingNeedsBlockUpdate = false;
 
         showSensorMessage();
-    }   // editLevelXing
+    } catch (Throwable t) {
+        log.error("temporary catch for test", t);
+    }
+    }
 
     private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
@@ -232,9 +226,9 @@ public class LevelXingEditor extends LayoutTurntableEditor {
         }
 
         // set hidden
-        boolean oldHidden = levelXing.isHidden();
-        levelXing.setHidden(editLevelXingHiddenCheckBox.isSelected());
-        if (oldHidden != levelXing.isHidden()) {
+        boolean oldHidden = levelXingView.isHidden();
+        levelXingView.setHidden(editLevelXingHiddenCheckBox.isSelected());
+        if (oldHidden != levelXingView.isHidden()) {
             editLevelXingNeedsRedraw = true;
         }
 
@@ -269,5 +263,5 @@ public class LevelXingEditor extends LayoutTurntableEditor {
 
     
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingEditor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingEditor.class);
 }

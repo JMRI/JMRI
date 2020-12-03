@@ -14,6 +14,7 @@ import jmri.AnalogIO;
  */
 public abstract class AbstractAnalogIO extends AbstractNamedBean implements AnalogIO {
 
+    private final boolean _commandedValueSetsKnownValue;
     private double _commandedValue = 0.0;
     private double _knownValue = 0.0;
 
@@ -21,9 +22,12 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
      * Abstract constructor for new AnalogIO with system name
      *
      * @param systemName AnalogIO system name
+     * @param commandedValueSetsKnownValue true if setCommandedValue() also sets
+     * known value, false othervise
      */
-    public AbstractAnalogIO(@Nonnull String systemName) {
+    public AbstractAnalogIO(@Nonnull String systemName, boolean commandedValueSetsKnownValue) {
         super(systemName);
+        this._commandedValueSetsKnownValue = commandedValueSetsKnownValue;
     }
 
     /**
@@ -31,9 +35,12 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
      *
      * @param systemName AnalogIO system name
      * @param userName   AnalogIO user name
+     * @param commandedValueSetsKnownValue true if setCommandedValue() also sets
+     * known value, false othervise
      */
-    public AbstractAnalogIO(@Nonnull String systemName, @CheckForNull String userName) {
+    public AbstractAnalogIO(@Nonnull String systemName, @CheckForNull String userName, boolean commandedValueSetsKnownValue) {
         super(systemName, userName);
+        this._commandedValueSetsKnownValue = commandedValueSetsKnownValue;
     }
 
     /**
@@ -56,7 +63,7 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
     protected void setValue(double newValue) {
         Object _old = this._knownValue;
         this._knownValue = newValue;
-        firePropertyChange("State", _old, _knownValue); //NOI18N
+        firePropertyChange(PROPERTY_STATE, _old, _knownValue); //NOI18N
     }
 
     /** {@inheritDoc} */
@@ -84,6 +91,10 @@ public abstract class AbstractAnalogIO extends AbstractNamedBean implements Anal
             else throw new JmriException("value out of bounds");
         }
         _commandedValue = value;
+        
+        if (_commandedValueSetsKnownValue) {
+            setValue(_commandedValue);
+        }
         sendValueToLayout(_commandedValue);
     }
 

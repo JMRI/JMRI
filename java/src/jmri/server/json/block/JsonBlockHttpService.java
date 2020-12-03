@@ -194,4 +194,5 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
     protected ProvidingManager<Block> getManager() {
         return InstanceManager.getDefault(BlockManager.class);
     }
+
 }

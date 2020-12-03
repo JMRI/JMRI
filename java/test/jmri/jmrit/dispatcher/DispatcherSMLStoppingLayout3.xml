@@ -115,7 +115,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="9:59 AM">
+    <memory value="1:08 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -443,6 +443,12 @@
       <transitsection sectionname="IY:AUTO:0003" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
       <transitsection sectionname="IY:AUTO:0001" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
     </transit>
+    <transit systemName="IZ:AUTO:0002" userName="South-West-CW">
+      <systemName>IZ:AUTO:0002</systemName>
+      <userName>South-West-CW</userName>
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+    </transit>
   </transits>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
@@ -689,7 +695,7 @@
     </signalmastlogic>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Aug 26 12:25:03 EDT 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test Layout" x="552" y="211" windowheight="596" windowwidth="1170" panelheight="430" panelwidth="950" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="Test Layout" x="253" y="64" windowheight="596" windowwidth="1170" panelheight="430" panelwidth="950" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
     <layoutTrackDrawingOptions name="Test Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
       <mainBallastColor>#000000</mainBallastColor>
       <mainBallastWidth>0</mainBallastWidth>
@@ -1066,14 +1072,31 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Sep 01 09:39:56 EDT 2020</date>
+      <date>Fri Sep 11 10:34:34 EDT 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
+      <type>Load OK</type>
+      <date>Fri Sep 11 10:35:22 EDT 2020</date>
+      <filename>/home/sg/devl/jmri/JMRI-Pugwash1/JMRI/java/test/jmri/jmrit/dispatcher/DispatcherSMLStoppingLayout3.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Tue Sep 01 09:39:56 EDT 2020</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Sep 01 09:59:08 EDT 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
       <type>Store</type>
-      <date>Tue Sep 01 09:59:08 EDT 2020</date>
+      <date>Fri Sep 11 13:08:33 EDT 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.2ish+sg+2020-09-01T12:28:10Z+R2834207 on Tue Sep 01 09:59:08 EDT 2020-->
+  <!--Written by JMRI version 4.21.2ish+sg+2020-09-11T14:28:43Z+Rd65433a on Fri Sep 11 13:08:33 EDT 2020-->
 </layout-config>

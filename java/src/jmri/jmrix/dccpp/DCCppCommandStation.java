@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,10 +25,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * get from the layout.
      *
      */
-    private String baseStationType;
-    private String codeBuildDate;
+    @Nonnull private String stationType = "Unknown";
+    @Nonnull private String build       = "Unknown";
+    @Nonnull private String version     = "0.0.0";
     private DCCppRegisterManager rmgr = null;
-    private int maxNumSlots = 0;
+    private int maxNumSlots = DCCppConstants.MAX_MAIN_REGISTERS; //default to register size
 
     public DCCppCommandStation() {
         super();
@@ -37,20 +40,56 @@ public class DCCppCommandStation implements jmri.CommandStation {
         adaptermemo = memo;
     }
 
-    public void setBaseStationType(String s) {
- baseStationType = s;
+    public void setStationType(String s) {
+        if (!stationType.equals(s)) {
+            log.info("Station Type set to '{}'", s);
+            stationType = s;            
+        }
     }
     
-    public String getBaseStationType() {
- return baseStationType;
+    /**
+     * Returns the Station Type of the connected Command Station
+     * it is populated by response from the CS, initially "Unknown" 
+     * @return StationType
+     */
+    public String getStationType() {
+        return stationType;
     }
 
-    public void setCodeBuildDate(String s) {
- codeBuildDate = s;
+    public void setBuild(String s) {
+        if (!build.equals(s)) {
+            log.info("Build set to '{}'", s);
+            build = s;            
+        }
     }
 
-    public String getCodeBuildDate() {
- return codeBuildDate;
+    /**
+     * Returns the Build of the connected Command Station
+     * it is populated by response from the CS, initially "Unknown" 
+     * @return Build
+     */
+    public String getBuild() {
+        return build;
+    }
+
+    public void setVersion(String s) {
+        if (!version.equals(s)) {
+            if (jmri.Version.isCanonicalVersion(s)) {
+                log.info("Version set to '{}'", s);
+                version = s;
+            } else {
+                log.warn("'{}' is not a canonical version, version not changed", s);
+            }
+        }
+    }
+
+    /**
+     * Returns the canonical version of the connected Command Station
+     * it is populated by response from the CS, so initially '0.0.0' 
+     * @return Version
+     */
+    public String getVersion() {
+        return version;
     }
 
     /**
@@ -70,41 +109,39 @@ public class DCCppCommandStation implements jmri.CommandStation {
         // Changes from v1.1: space between "DCC++" and "BASE", and "BUILD" is removed.
         // V1.0/V1.1/V1.2 Simplified
         // String syntax = "iDCC\\+\\+\\s?(.*):\\s?(?:BUILD)? (.*)";
-        
-        baseStationType = l.getStatusVersionString();
-        codeBuildDate = l.getStatusBuildDateString();
+
+        setStationType(l.getStationType());
+        setBuild(l.getBuildString());
+        setVersion(l.getVersion());
     }
 
     protected void setCommandStationMaxNumSlots(DCCppReply l) {
-        if (maxNumSlots != 0) {
-            log.error("Command Station maxNumSlots already initialized");
+        int newNumSlots = l.getValueInt(1);
+        if (newNumSlots < maxNumSlots) {
+            log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
             return;
         }
-        maxNumSlots = l.getValueInt(1);
-        log.debug("maxNumSlots set to {}", maxNumSlots);
+        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
+        maxNumSlots = newNumSlots;
     }
-    protected void setCommandStationMaxNumSlots(int n) {
-        if (maxNumSlots != 0) {
-            log.error("Command Station maxNumSlots already initialized");
+    protected void setCommandStationMaxNumSlots(int newNumSlots) {
+        if (newNumSlots < maxNumSlots) {
+            log.warn("Command Station maxNumSlots cannot be reduced from {} to {}", maxNumSlots, newNumSlots);
             return;
         }
-        maxNumSlots = n;
-        log.debug("maxNumSlots set to {}", maxNumSlots);
+        log.info("changing maxNumSlots from {} to {}", maxNumSlots, newNumSlots);
+        maxNumSlots = newNumSlots;
     }
     protected int getCommandStationMaxNumSlots() {
-        if (maxNumSlots <= 0) {
-            log.error("Command Station maxNumSlots not initialized yet");
-        }
         return maxNumSlots;
     }
 
     /**
      * Provide the version string returned during the initial check.
-     * This function is not yet implemented...
      * @return version string.
      */
     public String getVersionString() {
-        return(baseStationType + ": BUILD " + codeBuildDate);
+        return(stationType + ": BUILD " + build);
     }
 
     /**
@@ -118,6 +155,20 @@ public class DCCppCommandStation implements jmri.CommandStation {
      */
     public boolean isOpsModePossible() {
         return true;
+    }
+
+    /**
+     * Does this command station require JMRI to send periodic function refresh packets?
+     * @return true if required, false if not
+     */
+    public boolean isFunctionRefreshRequired() {
+        boolean ret = true;
+        try {
+            //command stations starting with 3 handle their own function refresh
+            ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
     }
 
     // A few utility functions

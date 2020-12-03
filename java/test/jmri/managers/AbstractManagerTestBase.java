@@ -7,6 +7,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 
+import jmri.util.JUnitAppender;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -125,10 +127,35 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
 
     @Test
     public void testMakeSystemName() {
-        String s = l.makeSystemName("1");
+        String s = l.makeSystemName(getASystemNameWithNoPrefix());
         Assert.assertNotNull(s);
         Assert.assertFalse(s.isEmpty());
     }
+    
+    @Test
+    public void testMakeSystemNameWithPrefix() {
+        String s = l.makeSystemName(l.getSystemNamePrefix()+getASystemNameWithNoPrefix());
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+    
+    @Test
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {
+        
+        Assert.assertThrows(jmri.NamedBean.BadSystemNameException.class, () -> l.makeSystemName("$:"));
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for " + l.getBeanTypeHandled() + ": ");
+        
+    } 
+    
+    @Test
+    public void testMakeSystemNameWithPrefixNotASystemName() {
+        
+        Assert.assertThrows(jmri.NamedBean.BadSystemNameException.class, () -> l.makeSystemName(l.getSystemNamePrefix()+"$:"));
+        JUnitAppender.assertErrorMessageStartsWith("Invalid system name for " + l.getBeanTypeHandled() + ": ");
+        
+    }
+    
+    
 
     @Test
     public void testAutoSystemNames() {
@@ -151,6 +178,10 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertEquals(sysPrefix + ":AUTO:0102", m.getAutoSystemName());
         m.updateAutoNumber("12" + ":AUT:0203"); // Bad system name prefix
         Assert.assertEquals(sysPrefix + ":AUTO:0103", m.getAutoSystemName());
+    }
+    
+    protected String getASystemNameWithNoPrefix() {
+        return "1";
     }
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);

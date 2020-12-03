@@ -110,7 +110,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // and add listeners back in
         addPropertyChangeTrains();
     }
-    
+
     private synchronized Train getTrainByRow(int row) {
         return sysList.get(row);
     }
@@ -127,8 +127,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         initTable();
     }
 
-    // Train frame table column widths (13), starts with id column and ends with edit
-    private final int[] _tableColumnWidths = {50, 50, 50, 72, 100, 140, 50, 50, 120, 120, 120, 120, 120, 90, 70};
+    // Train frame table column widths (13), starts with id column and ends with
+    // edit
+    private final int[] _tableColumnWidths = { 50, 50, 50, 72, 100, 140, 50, 50, 120, 120, 120, 120, 120, 90, 70 };
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -138,12 +139,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
+        ButtonRenderer buttonRenderer2 = new ButtonRenderer(); // for tool tips
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(ACTION_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(ACTION_COLUMN).setCellEditor(buttonEditor);
-        tcm.getColumn(BUILD_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(BUILD_COLUMN).setCellRenderer(buttonRenderer2);
         tcm.getColumn(BUILD_COLUMN).setCellEditor(buttonEditor);
         _table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
 
@@ -156,7 +158,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // turn off column
         updateColumnVisible();
     }
-    
+
     private void updateColumnVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ID_COLUMN), _sort == SORTBYID);
@@ -315,10 +317,17 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             case BUILD_COLUMN: {
                 if (train.isBuilt()) {
                     if (Setup.isGenerateCsvManifestEnabled() && trainManager.isOpenFileEnabled()) {
+                        setToolTip(MessageFormat.format(Bundle.getMessage("OpenTrainTip"),
+                                new Object[] { train.getName() }), row, col);
                         return Bundle.getMessage("OpenFile");
-                    } else if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
+                    }
+                    if (Setup.isGenerateCsvManifestEnabled() && trainManager.isRunFileEnabled()) {
+                        setToolTip(MessageFormat.format(Bundle.getMessage("RunTrainTip"), new Object[] { train.getName() }),
+                                row, col);
                         return Bundle.getMessage("RunFile");
-                    } else if (trainManager.isPrintPreviewEnabled()) {
+                    }
+                    setToolTip(Bundle.getMessage("PrintTrainTip"), row, col);
+                    if (trainManager.isPrintPreviewEnabled()) {
                         return Bundle.getMessage("Preview");
                     } else if (train.isPrinted()) {
                         return Bundle.getMessage("Printed");
@@ -326,13 +335,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                         return Bundle.getMessage("Print");
                     }
                 }
+                setToolTip(MessageFormat.format(Bundle.getMessage("BuildTrainTip"), new Object[] { train.getName() }),
+                        row, col);
                 return Bundle.getMessage("Build");
             }
             case ACTION_COLUMN: {
                 if (train.getBuildFailed()) {
                     return Bundle.getMessage("Report");
                 }
-                if (train.getCurrentLocation() == train.getTrainTerminatesRouteLocation() &&
+                if (train.getCurrentRouteLocation() == train.getTrainTerminatesRouteLocation() &&
                         trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
                     return Bundle.getMessage("Terminate");
                 }
@@ -343,6 +354,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             default:
                 return "unknown " + col; // NOI18N
         }
+    }
+
+    private void setToolTip(String text, int row, int col) {
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        ButtonRenderer buttonRenderer = (ButtonRenderer) tcm.getColumnByModelIndex(col).getCellRenderer();
+        buttonRenderer.setToolTipText(text);
     }
 
     private String getModifiedString(int number, boolean all, boolean accept) {
@@ -429,9 +446,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                     log.debug("Manifest file for train ({}) not found", train.getName());
                     int result = JOptionPane.showConfirmDialog(null,
                             MessageFormat.format(Bundle.getMessage("TrainManifestFileMissing"),
-                                    new Object[]{train.getName()}),
-                            Bundle.getMessage("TrainManifestFileError"),
-                            JOptionPane.YES_NO_OPTION);
+                                    new Object[] { train.getName() }),
+                            Bundle.getMessage("TrainManifestFileError"), JOptionPane.YES_NO_OPTION);
                     if (result == JOptionPane.YES_OPTION) {
                         train.setModified(true);
                         if (!train.printManifestIfBuilt()) {
@@ -458,27 +474,29 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             // check to see if departure track was reused
             if (checkDepartureTrack(train)) {
                 log.debug("Train is departing staging that already has inbound cars");
-                JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("StagingTrackUsed"),
-                        new Object[]{train.getDepartureTrack().getName()}), Bundle.getMessage("CanNotResetTrain"),
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        MessageFormat.format(Bundle.getMessage("StagingTrackUsed"),
+                                new Object[] { train.getDepartureTrack().getName() }),
+                        Bundle.getMessage("CanNotResetTrain"), JOptionPane.INFORMATION_MESSAGE);
             } else if (!train.reset()) {
-                JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-                        new Object[]{train.getTrainTerminatesName()}), Bundle.getMessage("CanNotResetTrain"),
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
+                                new Object[] { train.getTrainTerminatesName() }),
+                        Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
             }
         } else if (!train.isBuilt()) {
-            JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"),
-                    new Object[]{train.getName()}), Bundle.getMessage("CanNotPerformAction"),
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"), new Object[] { train.getName() }),
+                    Bundle.getMessage("CanNotPerformAction"), JOptionPane.INFORMATION_MESSAGE);
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
             log.debug("Move train ({})", train.getName());
             train.move();
         } else if (train.isBuilt() && trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.TERMINATE)) {
             log.debug("Terminate train ({})", train.getName());
-            int status = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                    new Object[]{train.getName(), train.getDescription()}),
-                    MessageFormat.format(Bundle
-                            .getMessage("DoYouWantToTermiate"), new Object[]{train.getName()}),
+            int status = JOptionPane.showConfirmDialog(null,
+                    MessageFormat.format(Bundle.getMessage("TerminateTrain"),
+                            new Object[] { train.getName(), train.getDescription() }),
+                    MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"), new Object[] { train.getName() }),
                     JOptionPane.YES_NO_OPTION);
             if (status == JOptionPane.YES_OPTION) {
                 train.terminate();
@@ -502,8 +520,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 train.getDepartureTrack().getDropRS() > 0);
     }
 
-    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable =
-            new Hashtable<>();
+    private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<>();
 
     private void launchConductor(Train train) {
         // use invokeLater so new window appears on top
@@ -523,8 +540,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change {} old: {} new: {}",
-                    e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
+            log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(Train.ROADS_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Train.LOADS_CHANGED_PROPERTY)) {
@@ -583,12 +599,12 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     class MyTableCellRenderer extends DefaultTableCellRenderer {
 
         @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             if (!isSelected) {
                 int modelRow = table.convertRowIndexToModel(row);
-                //    log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
+                // log.debug("View row: {} Column: {} Model row: {}", row, column, modelRow);
                 Color background = getRowColor(modelRow);
                 component.setBackground(background);
                 component.setForeground(getForegroundColor(background));
@@ -596,7 +612,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             return component;
         }
 
-        Color[] darkColors = {Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA};
+        Color[] darkColors = { Color.BLACK, Color.BLUE, Color.GRAY, Color.RED, Color.MAGENTA };
 
         /**
          * Dark colors need white lettering

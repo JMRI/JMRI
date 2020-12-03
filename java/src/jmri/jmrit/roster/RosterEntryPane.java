@@ -1,10 +1,6 @@
 package jmri.jmrit.roster;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.text.DateFormat;
@@ -12,22 +8,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Display and edit a RosterEntry.
@@ -50,7 +42,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextField owner = new JTextField(30);
     DccLocoAddressSelector addrSel = new DccLocoAddressSelector();
 
-    JTextArea comment = new JTextArea(3, 30);
+    JTextArea comment = new JTextArea(3, 50);
     //JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     //Without this the field will shrink to minimum size any time the scroll bars become needed and
     //the scroll bars are inside, not outside the field area, obscuring their contents.
@@ -60,7 +52,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JLabel dateUpdated = new JLabel();
     JLabel decoderModel = new JLabel();
     JLabel decoderFamily = new JLabel();
-    JTextArea decoderComment = new JTextArea(3, 30);
+    JTextArea decoderComment = new JTextArea(3, 50);
     JScrollPane decoderCommentScroller = new JScrollPane(decoderComment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
     Component pane = null;
@@ -437,7 +429,11 @@ public class RosterEntryPane extends javax.swing.JPanel {
     public void setDccAddress(String a) {
         DccLocoAddress addr = addrSel.getAddress();
         LocoAddress.Protocol protocol = addr.getProtocol();
-        addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        try {
+            addrSel.setAddress(new DccLocoAddress(Integer.parseInt(a), protocol));
+        } catch (NumberFormatException e) {
+            log.error("Can't set DccAddress to {}", a);
+        }
     }
 
     public void setDccAddressLong(boolean m) {

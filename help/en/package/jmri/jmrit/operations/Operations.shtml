@@ -25,35 +25,31 @@
    <div id="mainContent">
 
    <h1>JMRI: OperationsPro&trade;</h1>
-			The JMRI Operations program allows you to create computer generated
-			train Manifests for your railroad. A train
-			<a href="#PrintingManifests">Manifest</a> details the work that a
-			crew will perform during an operations session. The Manifest provides
-			a list of car pick up and set outs and shows where the cars are
-			located and where they should be eventually positioned on the
-			railroad. The program allows you to enter a roster of
-			<a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>,
-			define <a href="#Locations">locations</a> (stations) on the railroad,
-			and <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to
-			travel. The car roster includes information about the car, including
-			road, number, type of car, color, length, weight, load, date built,
-			and owner. Trains are assigned routes that define locations or
-			stations where cars can be picked up or set out. Features include the
-			ability to control what car types, roads, and car loads a location or
-			industry can service, the available track space for a location, and
-			the maximum length the train can be between any two locations in the
-			train's route.
+   The JMRI Operations program allows you to create computer generated train Manifests for your
+   railroad. A train
+   <a href="#PrintingManifests">Manifest</a> details the work that a crew will perform during an
+   operations session. The Manifest provides a list of car pick up and set outs and shows where the
+   cars are located and where they should be eventually positioned on the railroad. The program
+   allows you to enter a roster of
+   <a href="#Cars">cars</a> and <a href="#Locomotives">locomotives</a>, define <a
+    href="#Locations">locations</a> (stations) on the railroad, and
+   <a href="#Routes">routes</a> for <a href="#Trains">trains</a> to travel. The car roster includes
+   information about the car, including road, number, type of car, color, length, weight, load, date
+   built, and owner. Trains are assigned routes that define locations or stations where cars can be
+   picked up or set out. Features include the ability to control what car types, roads, and car
+   loads a location or industry can service, the available track space for a location, and the
+   maximum length the train can be between any two locations in the train's route.
 
-			<p>
-    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used to service
-    industries, and can optionally have
-    <a href="#Schedules">schedules</a> assigned to them which allows for very fine control over car movement and loads.
-    Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates
-    Manifests for each train and switch lists for any location. A
-    <a href="#SwitchList">switch list</a> for a location shows the work for all of the trains that will visit that
-    location. The program can also place
-    <a href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be taught to move in
-    the panel along with the train from location to location.
+   <p>
+    Locations can have <a href="#Sidings">spurs</a>, <a href="#Yards">yards</a>, <a href="#Staging">staging</a>
+    and <a href="#Interchange">classification/interchange</a> tracks. Spurs are used to service
+    industries, and can optionally have <a href="#Schedules">schedules</a> assigned to them which
+    allows for very fine and realistic control over car movement and loads. Trains can be configured to require a
+    caboose or car with Flashing Rear End Device (FRED). The program generates Manifests for each
+    train and switch lists for any location. A <a href="#SwitchList">switch list</a> for a location
+    shows the work for all of the trains that will visit that location. The program can also place <a
+     href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be
+    taught to move in the panel along with the train from location to location.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
@@ -103,7 +99,13 @@
 
           <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
 
-          <li><a href="#Options">Options</a></li>
+          <li><a href="#Options">Options</a>
+           <ul>
+            <li><a href="#SaveTrainManifests">Save Train Manifests</a></li>
+            <li><a href="#EnableValueFields">Enable Value Fields</a></li>
+            <li><a href="#EnableIdentificationTagFields">Enable RFID Fields</a></li>
+            <li><a href="#EnableVirtualSoundDecoder">Enable physical locations for Virtual Sound Decoder</a></li>
+           </ul></li>
          </ul></li>
 
         <li><a href="#PrintOptions">Manifest Print Options</a>
@@ -631,16 +633,18 @@
    </p>
 
    <p>
-    Now you're ready to create your first train by pressing the <a href="#TrainEdit">Add</a> button
-    at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the route you
-    created for your first train. Leave all of the train checkboxes alone which means the train will
-    service all car and locomotive types. Leave the <a href="#TrainRequires">Optional Train
-     Requirements</a> for locomotives and caboose area alone for now. Save the train, close the window,
-    and return to the Trains window. Press the <a href="#BuildingTrains">Build</a> button for the
-    train. It should build. Now pressing the "Print" or "Preview" button will produce a Manifest for
-    your train. Review the Manifest and you should see that the train serviced all car types. If you
-    examine the <a href="#Cars">Cars</a> window you can see that cars are now assigned to your
-    train.
+    Now you're ready to create your first train by pressing the
+    <a href="#TrainEdit">Add</a> button at the bottom left of the
+    <a href="#Trains">Trains</a> window. Be sure to select the route you created for your first
+    train. Leave all of the train checkboxes alone which means the train will service all car and
+    locomotive types. Leave the
+    <a href="#TrainRequires">Optional Train Requirements</a> for locomotives and caboose area alone
+    for now. Save the train, close the window, and return to the Trains window. Press the
+    <a href="#BuildingTrains">Build</a> button for the train. It should build. Now pressing the
+    "Print" or "Preview" button will produce a Manifest for your train depending on the state of "Preview"
+    checkbox at the bottom of the "Trains" window. Review the Manifest and you should see that the
+    train serviced all car types. If you examine the
+    <a href="#Cars">Cars</a> window you can see that cars are now assigned to your train.
    </p>
 
    <p>
@@ -1172,6 +1176,22 @@
    would select the track with the least amount of use when determining the track to arrive on. Note
    that the program will only prompt you if there are two or more tracks available in staging that
    meet the train's requirements. <a name="CarRouting" id="CarRouting"></a>
+   
+   <a name="TryNormalMode" id="TryNormalMode"></a>
+   <h4>Try Normal Mode if Build Failure from Staging</h4>
+
+   When using <a href="#BuildOptions">aggressive</a> mode to build a train, the program will first
+   try and pull cars from all of the train's locations to free up space for cars departing staging.
+   Sometimes this causes the length of the train to exceed the maximum length requirements of the
+   <a href="#EditRoute">route</a>, causing a build failure. If this option is selected, and the
+   build fails, the program will automatically try to build the train in
+   <a href="#BuildOptions">normal</a> mode. In Normal mode cars from staging are placed along the
+   train's route before pulling cars from location, the exact opposite of aggressive mode.
+
+   <p>
+    You can also request to build a specific train in normal mode, see <a href="#TrainBuildOptions">Train
+     Build Options</a>.
+   </p>
 
    <h3>Car Routing Options</h3>
 
@@ -1653,6 +1673,7 @@
    <a name="Options" id="Options"></a>
    <h3>Options</h3>
 
+   <a name="SaveTrainManifests" id="SaveTrainManifests"></a>
    <h4>Save Train Manifests</h4>
    When the option "Save Train Manifests" is selected, OperationsPro&trade; will save the current train
    Manifest before creating a new one. The program will store the old Manifests in a directory
@@ -1667,17 +1688,27 @@
     in a directory called "switchListBackups" located in the "operations" directory. A separate
     directory is created for each location's switch list that you create.</p>
 
-   <h4>Enable Value Fields and Identification Tag Fields</h4>
-
-   <p>There are two other options, "Enable Value Fields" and "Identification Fields". You can
-    use these fields to enter the value or cost of your rolling stock and the IDTag of your rolling
-    stock. You can rename the value fields if you wish and use them for other purposes.</p>
-
+   <a name="EnableValueFields" id="EnableValueFields"></a>
+   <h4>Enable Value Fields</h4>
+   You can use the value field to enter the value or cost of your rolling stock. You can rename the
+   value field if you wish and use it for other purposes.
+   
+   <a name="EnableIdentificationTagFields" id="EnableIdentificationTagFields"></a>
+   <h4>Enable Identification Tag Fields</h4>
+   You can enable the assignment of reporters and tags for your locations and rolling stock.
+   Reporters can be assigned to locations and tracks. When this option is enabled, the Cars and
+   Locomotives windows will display the last location and time the rolling stock was detected. The
+   edit car and locomotive windows allow you to select an
+   <a href="../../../../html/tools/IdTags.shtml">ID tag</a> that has been entered into JMRI. The
+   edit location and track windows allow you to select
+   <a href="../../../../html/tools/Reporters.shtml">Reporters</a> that you want to associate with
+   them. You can rename the RFID field if you wish and use it for other purposes. 
+   
+   <a name="EnableVirtualSoundDecoder" id="EnableVirtualSoundDecoder"></a>
    <h4>Enable physical locations for Virtual Sound Decoder</h4>
-
-   <p>If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
-    locations by enabling this option.</p>
-
+   If you're using Virtual Sound Decoder, you can enter the physical coordinates of your locations
+   by enabling this option. 
+   
    <a name="PrintOptions" id="PrintOptions"></a>
    <h2>Manifest Print Options</h2>
    You can modify the how OperationsPro&trade; prints the train Manifests and the location switch
@@ -2616,6 +2647,13 @@
      href="#TrackDestinations">Track Destinations</a> from the "Tools" menu.
    </p>
 
+   <p>
+    The <a href="#BuildReports">build report</a> will provide a list of cars on the C/I track that
+    were previously set out by a train using the same route, or aren't allowed to be pulled due to
+    restrictions that you've added. The build report uses the term "Excluded" when detailing which
+    cars can't be pulled from the C/I track.
+   </p>
+
    <p>Given the complexity of this type of track, it is strongly recommended that you not use
     classification/interchange tracks until you get comfortable with how the program builds trains
     and you've read and can understand the train build reports.</p>
@@ -2986,20 +3024,25 @@
    three "door" tracks, and set the minimum track length for the two end doors to 44'. Now the program can only steal
    space from the center door. Placing a 50' boxcar at either end door, prevents the program from placing a car at the
    center door. If a 40' boxcar is first placed at the center door, only 40' cars are then allowed at the end doors.
-   
+
    <a name="AlternateTrack" id="AlternateTrack"></a>
    <h4>Alternate Track or "Off Spot"</h4>
-   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur or the edit
-   schedule windows. The program when it finds a spur full will send cars to the track you specify as the alternate
-   track. The alternate track feature can be used to create an "Off Spot" track for your cars. Once you specify a track
-   as an alternate, only cars destined for the spur will be placed on the alternate track. You can also use the same
-   alternate track for several spurs.
+   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
+   or the edit schedule windows. The program when it finds a spur full will send cars to the track
+   you specify as the alternate track. The alternate track feature can be used to create an "Off
+   Spot" track for your cars. Once you specify a track as an alternate, only cars destined for the
+   spur will be placed on the alternate track. You can also use the same alternate track for several
+   spurs. Normally the alternate track is a
+   <a href="#Yards">yard</a> track type, but you can also use an
+   <a href="#Interchange">interchange</a>, or <a href="#Sidings">spur</a> type track if you want
+   more control over the car's movement or load.
 
    <p>
-    Normally during the train build process, the program will check the alternate track for cars after assigning cars
-    from the spur to the train being built. This way cars on the alternate are used to keep the spur full. Note that the
-    <a href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the alternate to the
-    spur, so it is recommended that you don't use both features for a spur.
+    During the train build process in <a href="#BuildOptions">aggressive</a> mode, the program will
+    check the alternate track for cars after assigning cars from the spur to the train being built.
+    This way cars on the alternate are used to keep the spur full. Note that the <a
+     href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the
+    alternate to the spur, so it is recommended that you don't use both features for a spur.
    </p>
 
    <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /
@@ -4096,13 +4139,16 @@
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
     that hasn't moved.</p>
 
-   <p>There are several checkboxes along the bottom of the Trains window. The "Show All" when
-    selected shows all trains in your roster. When deselected, only trains that have the "Build"
-    checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
-    whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
-    checkbox when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was built by the program. Use
-    the "Print" or "Preview" button for a built train to see the <a href="#BuildReports">build report</a>. The program always
-    provides a "Report" button under the "Action" column for a train that fails to build.</p>
+   <p>
+    There are several checkboxes along the bottom of the Trains window. The "Show All" when selected
+    shows all trains in your roster. When deselected, only trains that have the "Build" checkbox
+    selected are shown. The "Messages" checkbox when selected will present a dialog box whenever a
+    train build failure occurs explaining why the train didn't build. The "Build Report" checkbox
+    when selected provides a <a href="#BuildReports">Build Report</a> detailing how the train was
+    built by the program. Use the "Print" or "Preview" button for a built train to see the <a
+     href="#BuildReports">build report</a>. The program always provides a "Report" button under the
+    "Action" column for a train that fails to build.
+   </p>
 
    <p>The "Preview" checkbox when selected, allows you to preview rather than printing your
     train's Manifest or <a href="#BuildReports">build report</a>.</p>
@@ -4250,6 +4296,12 @@
    train departs staging. In normal mode, all of the cars in staging are set out first, where in
    aggressive mode, the cars in staging are set out last. Selecting this option when you have build
    failures out of staging, it could fix the failure.
+
+   <p>
+    You can also configure the program to always try building a train in normal mode when there's a
+    build failure in a aggressive mode when departing staging. See <a href="#TryNormalMode">Try
+     Normal Mode if Build Failure from Staging</a>.
+   </p>
 
    <h4>Send all car pick ups to terminal</h4>
    You can also request that all car pick ups along the train's route are sent to the last location
@@ -5133,14 +5185,16 @@
 
    <a name="BuildingTrains" id="BuildingTrains"></a>
    <h2>Building Trains</h2>
-   To build one train, press the "Build" button in the row for the desired train in the <a
-    href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train is
-   built. If you want to review how the train was built, select the "Build Reports" checkbox before
+   To build one train, press the "Build" button in the row for the desired train in the
+   <a href="#Trains">Trains</a> window. The button will become "Print" or "Preview" after the train
+   is built depending on the state of the "Preview" checkbox located at the bottom of the "Trains"
+   window. If you want to review how the train was built, select the "Build Reports" checkbox before
    pressing the "Print" or "Preview" button for the desired train. If the "Preview" checkbox is
-   selected, the program will generate the <a href="#BuildReports">Build Report</a> and Manifest and present them in preview
-   windows. If you want to build several trains without having to press individual buttons for each
-   train, select the trains that you want built and press the "Build" button found at the bottom of
-   the trains window. The program will then build Manifests for all of the selected trains.
+   selected, the program will generate the
+   <a href="#BuildReports">Build Report</a> and Manifest and present them in preview windows. If you
+   want to build several trains without having to press individual buttons for each train, select
+   the trains that you want built and press the "Build" button found at the bottom of the trains
+   window. The program will then build Manifests for all of the selected trains.
 
    <p>If a train fails to build, the "Action" button will change its text to "Report". Pressing
     "Report" will print or preview the <a href="#BuildReports">build report</a> for this train. Whenever a train fails to build,
@@ -5183,12 +5237,13 @@
    <h2>Build Reports</h2>
    If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
    bottom of the train window, and then press the "Print" or "Preview" button for that train. The
-   program will then provide the train Manifest and build report for your viewing.
+   program will then provide the train Manifest and build report for your viewing. You can also access
+   a train build report from the Edit Trains window under Tools.
 
    <p>You can also find a copy of the train build report file in the "operations" directory in a
     subdirectory called "buildstatus". Each train build report has its own file with the .txt
-    extension and the name of the train as part of the file name. You can if you wish use a text
-    editor to view the train build report file.</p>
+    extension and the name of the train as part of the file name. You can if you wish use a 
+    <a href="#BuildReportDetails">text editor</a> to view the train build report file.</p>
 
    <p>
     When a train build fails for any reason, the train action button becomes "Report" which allows
@@ -5238,17 +5293,19 @@
    <a name="ReadingBuildReport" id="ReadingBuildReport"></a>
 
    <h3>Reading the Build Report</h3>
-   OperationsPro&trade; when building a train creates a <a href="#BuildReports">Build Report</a> and saves it to a file.
-   Normally you would access the build report from the <a href="#BuildingTrains">Trains</a> window
-   or from the edit train "Tools" menu. The train build report text files can be found in the
-   operations-&gt;buildstatus directory. The build report shows the steps the operations program
-   goes through while building a train. The first page provides the route the train will travel and
-   the number of car moves requested for each location. The report then shows the car type and
-   locomotive types that the train will service. By reading the various messages in the report you
-   can get an idea of steps the operations program goes through to build a train. When there's an
-   issue that the operation's build can't resolve, the build will fail. To understand why a build
-   failed, go to the last page of the build report and by working backwards from the last line, you
-   should be able to understand why a train failed to build.
+   OperationsPro&trade; when building a train creates a
+   <a href="#BuildReports">Build Report</a> and saves it to a file. Normally you would access the
+   build report from the
+   <a href="#BuildingTrains">Trains</a> window or from the edit train "Tools" menu. The train build
+   report text files can be found in the operations-&gt;buildstatus directory. The build report
+   shows the steps the operations program goes through while building a train. The first page
+   provides the route the train will travel and the number of car moves requested for each location.
+   The report then shows the car type and locomotive types that the train will service. By reading
+   the various messages in the report you can get an idea of steps the operations program goes
+   through to build a train. When there's an issue that the operation's build can't resolve, the
+   build will fail. To understand why a build failed, go to the last page of the build report and by
+   working backwards from the last line, you should be able to understand why a train failed to
+   build.
 
    <p>
     You can if you wish use a text editor instead of the print preview window. A text editor allows

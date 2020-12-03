@@ -10,11 +10,24 @@ from javax.swing import JOptionPane
 # from   java.lang      import Runnable
 # from   javax.swing    import *
 
+###########################################################################
+###########################################################################
+# Progress Bar
+###########################################################################
+
+from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
+                    JScrollPane, JTextArea, JTextField, WindowConstants
+
+###########################################################################
+
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     loglevel = 0
 
-    def __init__(self, filename_icon, filename_run):
+    def __init__(self):
+        pass
+        
+    def run_transits(self, filename_icon, filename_run):
         if self.loglevel > 0: print "will store new panel in filename" , filename_run
         self.msg = "About to create all transits and train info files\nrequired for dispatcher operation"
         self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
@@ -25,11 +38,11 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         elif myAnswer == JOptionPane.NO_OPTION:
             msg = 'Stopping'
             JOptionPane.showMessageDialog(None, 'Stopping', "Fix Error" , JOptionPane.WARNING_MESSAGE)
-            return False
+            return 
         elif myAnswer == JOptionPane.CANCEL_OPTION:
             msg = 'Stopping'
             JOptionPane.showMessageDialog(None, 'Stopping', "Have a cup of Tea", JOptionPane.WARNING_MESSAGE)
-            return False
+            return 
         elif myAnswer == JOptionPane.CLOSED_OPTION:
             if self.loglevel > 0: print "You closed the window. How rude!"
         self.process_panels()
@@ -221,8 +234,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             return signal_masts[0]
         
     def produce_transits(self):
-
-        
+                
         max_no_transits = 20000       #always produce transists useful for testing
         t = []
         
@@ -232,7 +244,21 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         i = -1
         
         if self.loglevel > 0: print "g-",g.g_express
-        
+
+        no_of_edges = 0
+        for e in g.g_express.edgeSet():
+            no_of_edges += 1
+            
+        progress = 20
+            
+        interval_percent = int((100.0-progress)/8.0)
+        print "interval" , interval_percent, "progress", progress, "no_of_edges", no_of_edges
+        interval_count = int(no_of_edges/8)
+        interval_count_total = interval_count
+
+        dpg=DisplayProgress_global()
+        dpg.Update(str(progress)+ "% complete")
+
                            
         for e in g.g_express.edgeSet():
             if i > max_no_transits:                                                                                                     
@@ -240,6 +266,14 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 pass
             else:
                 i+=1
+                if  i > interval_count_total:
+                    interval_count_total = interval_count_total + interval_count
+                    progress = int(progress + interval_percent)
+                    print progress, i
+                    p = int(min(progress, 100))
+                    print "p" , p
+                    dpg.Update(str(progress)+ "% complete")
+                
                 if self.loglevel > 0: print "creating",i
                 filename_fwd = self.get_filename(e, "fwd")
                 filename_rvs = self.get_filename(e, "rvs")
@@ -302,7 +336,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 except:
                     filename = self.get_filename(e, "rvs")
                     if self.loglevel > 0: print "transit for" , filename, "not produced (duplicate)"
-       
+        dpg.killLabel()
         # for frame in self.frame_list:
             # self.closeframe(frame)
     def get_existing_transit(self, e):
@@ -770,28 +804,23 @@ class ClearTransits(CreateTransits):
             if self.loglevel > 0: print "deleting Transit ", transit.getUserName()
             TransitManager.deleteTransit(transit)
             
+           
+class DisplayProgress:
 
-                   
-        
-# **************************************************
-# Main Program
-# **************************************************        
 
-#if __name__ == "__builtin__":
-    # global g
-    # g = None
-    # g = StationGraph() 
-    # #instanceList = []   # List of file based instances 
-    # t = Transits() 
-    # t.start()    
-    # # instanceList.append(transits)        
-    # # #if instanceList[idx].setup(None):     # Compile the train actions
-    # # instanceList[-1].start()
+    def __init__(self):
+        #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
+        self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(300, 50), locationRelativeTo=None)
+
+        self.frame1.setVisible(True)
     
+    def Update(self,msg):
+        self.frame1.setTitle(msg)
+        
+    def killLabel(self):
+        self.frame1.setVisible(False)
+        self.frame1 = None
 
-if __name__ == '__main__':
-    g = StationGraph()
-    instanceList = []   # List of file based instances       
-    instanceList.append(Transits())        
-    #if instanceList[idx].setup(None):     # Compile the train actions
-    instanceList[-1].start()
+
+
+

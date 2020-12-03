@@ -64,7 +64,7 @@ public final class DCCppConstants {
     public static final char TRACK_POWER_OFF        = '0'; // Track power OFF
     public static final char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public static final char READ_CS_STATUS         = 's'; // Read status from command station
-    public static final char READ_CS_MAXNUMSLOTS    = '#'; // Read max number of slots supported by CS
+    public static final char READ_MAXNUMSLOTS       = '#'; // Read max number of slots supported by CS
 //    public static final char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
     public static final char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public static final char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
@@ -132,7 +132,7 @@ public final class DCCppConstants {
     public static final String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
     public static final String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
     public static final String ENTER_DIAG_MODE_REGEX = "\\s*D\\s*";
-    public static final String READ_CS_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
+    public static final String READ_MAXNUMSLOTS_REGEX = "\\s*#\\s*";
 
     // Reply Regexes
     public static final String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
@@ -160,6 +160,7 @@ public final class DCCppConstants {
 //    public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)"; // V1.0 / V1.1
     public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*):(?:\\sBUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String STATUS_REPLY_ESP32_REGEX = "iDCC\\+\\+.*ESP32.*: V-([\\d\\.]+)\\s+/\\s+(.*)"; // V1.0
+    public static final String STATUS_REPLY_DCCEX_REGEX = "i(DCC-EX) V-([0-9\\\\.]*).*G-(.*)"; 
     //public static final String STATUS_REPLY_REGEX = "i(DCC\\+\\+\\s?.*):\\s?(?:BUILD)? (.*)"; // V1.0 / V1.1 / V1.2
     public static final String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
     public static final String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";

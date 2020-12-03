@@ -61,12 +61,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
     @Nonnull
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
@@ -210,8 +212,14 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return NameValidity.VALID;
     }
 
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+        return curAddress;
+    }
+    
+    @Override
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, boolean ignoreInitialExisting) throws JmriException {
         return curAddress;
     }
 

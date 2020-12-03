@@ -2,8 +2,10 @@ package jmri.jmrit.beantable.oblock;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
+import jmri.util.gui.GuiLafPreferencesManager;
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,12 +21,14 @@ public class BlockPortalTableModelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TableFrames f = new TableFrames();
         BlockPortalTableModel t = new BlockPortalTableModel(new OBlockTableModel(f));
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        // use _tabbed interface
+        InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
     }
 
     @AfterEach

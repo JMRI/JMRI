@@ -5,11 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
+
 import javax.annotation.*;
 import javax.swing.*;
 import javax.swing.event.*;
+
 import jmri.util.MathUtil;
-import org.slf4j.*;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
@@ -306,7 +307,8 @@ final public class LayoutEditorChecks {
         log.debug("docheckUnConnectedTracksMenuItem({})", menuItemName);
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
-            Rectangle2D trackBounds = layoutTrack.getBounds();
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            Rectangle2D trackBounds = layoutTrackView.getBounds();
             layoutEditor.setSelectionRect(trackBounds);
 
             // setSelectionRect calls createSelectionGroups...
@@ -369,7 +371,8 @@ final public class LayoutEditorChecks {
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(menuItemName);
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
@@ -437,7 +440,8 @@ final public class LayoutEditorChecks {
             Rectangle2D bounds = null;
             for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
                 if (trackNameSet.contains(layoutTrack.getName())) {
-                    Rectangle2D trackBounds = layoutTrack.getBounds();
+                    LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+                    Rectangle2D trackBounds = layoutTrackView.getBounds();
                     if (bounds == null) {
                         bounds = trackBounds.getBounds2D();
                     } else {
@@ -482,24 +486,26 @@ final public class LayoutEditorChecks {
             if (pp.getType() == PositionablePoint.PointType.ANCHOR) {
                 // adjacent track segments must be defined...
                 TrackSegment ts1 = pp.getConnect1();
+                TrackSegmentView ts1v = layoutEditor.getTrackSegmentView(ts1);
                 TrackSegment ts2 = pp.getConnect2();
+                TrackSegmentView ts2v = layoutEditor.getTrackSegmentView(ts2);
                 if ((ts1 != null) && (ts2 != null)) {
                     // can't be an arc, circle or bezier...
-                    if (!ts1.isArc() && !ts1.isCircle() && !ts1.isBezier()
-                            && !ts2.isArc() && !ts2.isCircle() && !ts2.isBezier()) {
+                    if (!ts1v.isArc() && !ts1v.isCircle() && !ts1v.isBezier()
+                            && !ts2v.isArc() && !ts2v.isCircle() && !ts2v.isBezier()) {
                         // must be in same block...
                         String blockName1 = ts1.getBlockName();
                         String blockName2 = ts2.getBlockName();
                         if (blockName1.equals(blockName2)) {
-                            // if length of ts1 is zero...
-                            Rectangle2D bounds1 = ts1.getBounds();
+                            // if length of ts1v is zero...
+                            Rectangle2D bounds1 = ts1v.getBounds();
                             double length1 = Math.hypot(bounds1.getWidth(), bounds1.getHeight());
                             if (length1 < 1.0) {
                                 aatzlts.add(pp);
                                 continue;   // so we don't get added again
                             }
-                            // if length of ts2 is zero...
-                            Rectangle2D bounds = ts2.getBounds();
+                            // if length of ts2v is zero...
+                            Rectangle2D bounds = ts2v.getBounds();
                             double length = Math.hypot(bounds.getWidth(), bounds.getHeight());
                             if (length < 1.0) {
                                 aatzlts.add(pp);
@@ -509,17 +515,19 @@ final public class LayoutEditorChecks {
                             if (ts1.isMainline() != ts2.isMainline()) {
                                 continue;   // skip it
                             }
+                            TrackSegmentView tsv1 = layoutEditor.getTrackSegmentView(ts1);
+                            TrackSegmentView tsv2 = layoutEditor.getTrackSegmentView(ts2);
                             // if track segments isHidden's don't match
-                            if (ts1.isHidden() != ts2.isHidden()) {
+                            if (tsv1.isHidden() != tsv2.isHidden()) {
                                 continue;   // skip it
                             }
                             // if either track segment has decorations
-                            if (ts1.hasDecorations() || ts2.hasDecorations()) {
+                            if (tsv1.hasDecorations() || tsv2.hasDecorations()) {
                                 continue;   // skip it
                             }
                             // if adjacent tracks are collinear...
-                            double dir1 = ts1.getDirectionRAD();
-                            double dir2 = ts2.getDirectionRAD();
+                            double dir1 = tsv1.getDirectionRAD();
+                            double dir2 = tsv2.getDirectionRAD();
                             double diffRAD = MathUtil.absDiffAngleRAD(dir1, dir2);
                             if (MathUtil.equals(diffRAD, 0.0)
                                     || MathUtil.equals(diffRAD, Math.PI)) {
@@ -561,14 +569,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckUnnecessaryAnchorsMenuItem({})", anchorName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(anchorName);
+
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutTrack.showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -588,34 +598,31 @@ final public class LayoutEditorChecks {
         checkLinearBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
 
         // check all TrackSegments
-        List<TrackSegment> linearBezierTrackSegments = new ArrayList<>();
-        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
+        List<TrackSegmentView> linearBezierTrackSegmentViews = new ArrayList<>();
+        for (TrackSegmentView tsv : layoutEditor.getTrackSegmentViews()) {
             // has to be a bezier
-            if (ts.isBezier()) {
-//                if (ts.getName().equals("T104")) {
-//                    log.debug("T104");
-//                }
-// adjacent connections must be defined...
-                LayoutTrack c1 = ts.getConnect1();
-                LayoutTrack c2 = ts.getConnect2();
+            if (tsv.isBezier()) {
+                // adjacent connections must be defined...
+                LayoutTrack c1 = tsv.getConnect1();
+                LayoutTrack c2 = tsv.getConnect2();
                 if ((c1 != null) && (c2 != null)) {
                     // if length is zero...
-                    Point2D end1 = LayoutEditor.getCoords(ts.getConnect1(), ts.getType1());
-                    Point2D end2 = LayoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+                    Point2D end1 = layoutEditor.getCoords(tsv.getConnect1(), tsv.getType1());
+                    Point2D end2 = layoutEditor.getCoords(tsv.getConnect2(), tsv.getType2());
                     if (MathUtil.distance(end1, end2) <= 4.0) {
-                        linearBezierTrackSegments.add(ts);
+                        linearBezierTrackSegmentViews.add(tsv);
                         continue;   // so we don't get added again
                     }
                     // if control points are collinear...
-                    boolean good = true; //assume success (optimist!)
-                    for (Point2D cp : ts.getBezierControlPoints()) {
+                    boolean good = true;
+                    for (Point2D cp : tsv.getBezierControlPoints()) {
                         if (Math.abs(MathUtil.distance(end1, end2, cp)) > 1.0) {
                             good = false;
                             break;
                         }
                     }
                     if (good) {
-                        linearBezierTrackSegments.add(ts);
+                        linearBezierTrackSegmentViews.add(tsv);
 //                        ts.setBezier(false);
                     }
                 }   // c1 & c2 aren't null
@@ -625,12 +632,12 @@ final public class LayoutEditorChecks {
         // clear the "in progress..." menu item
         checkLinearBezierTrackSegmentsMenu.removeAll();
         // if we didn't find any...
-        if (linearBezierTrackSegments.size() == 0) {
+        if (linearBezierTrackSegmentViews.size() == 0) {
             checkLinearBezierTrackSegmentsMenu.add(checkNoResultsMenuItem);
         } else {
             // for each linear bezier track segment we found
-            for (TrackSegment ts : linearBezierTrackSegments) {
-                String name = ts.getName();
+            for (TrackSegmentView tsv : linearBezierTrackSegmentViews) {
+                String name = tsv.getName();
                 JMenuItem jmi = new JMenuItem(name);
                 checkLinearBezierTrackSegmentsMenu.add(jmi);
                 jmi.addActionListener((ActionEvent event) -> doCheckLinearBezierTrackSegmentsMenuItem(name));
@@ -652,14 +659,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckLinearBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutTrack.showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -679,26 +688,26 @@ final public class LayoutEditorChecks {
         checkFixedRadiusBezierTrackSegmentsMenu.add(checkInProgressMenuItem);
 
         // check all TrackSegments
-        List<TrackSegment> linearBezierTrackSegments = new ArrayList<>();
-        for (TrackSegment ts : layoutEditor.getTrackSegments()) {
+        List<TrackSegmentView> linearBezierTrackSegmentViews = new ArrayList<>();
+        for (TrackSegmentView tsv : layoutEditor.getTrackSegmentViews()) {
             // has to be a bezier
-            if (ts.isBezier()) {
+            if (tsv.isBezier()) {
                 // adjacent connections must be defined...
-                LayoutTrack c1 = ts.getConnect1();
-                LayoutTrack c2 = ts.getConnect2();
+                LayoutTrack c1 = tsv.getConnect1();
+                LayoutTrack c2 = tsv.getConnect2();
                 if ((c1 != null) && (c2 != null)) {
-                    Point2D end1 = LayoutEditor.getCoords(c1, ts.getType1());
-                    Point2D end2 = LayoutEditor.getCoords(c2, ts.getType2());
+                    Point2D end1 = layoutEditor.getCoords(c1, tsv.getType1());
+                    Point2D end2 = layoutEditor.getCoords(c2, tsv.getType2());
                     double chordLength = MathUtil.distance(end1, end2);
                     if (chordLength <= 4.0) {
                         continue;   //skip short segments
                     }
 
                     //get first and last control points
-                    int cnt = ts.getNumberOfBezierControlPoints();
+                    int cnt = tsv.getNumberOfBezierControlPoints();
                     if (cnt > 0) {
-                        Point2D cp0 = ts.getBezierControlPoint(0);
-                        Point2D cpN = ts.getBezierControlPoint(cnt - 1);
+                        Point2D cp0 = tsv.getBezierControlPoint(0);
+                        Point2D cpN = tsv.getBezierControlPoint(cnt - 1);
                         //calculate orthoginal points
                         Point2D op1 = MathUtil.add(end1, MathUtil.orthogonal(MathUtil.subtract(cp0, end1)));
                         Point2D op2 = MathUtil.subtract(end2, MathUtil.orthogonal(MathUtil.subtract(cpN, end2)));
@@ -715,8 +724,8 @@ final public class LayoutEditorChecks {
                                 boolean good = true; //assume success (optimist!)
 
                                 for (int idx = 0; idx < cnt - 1; idx++) {
-                                    Point2D cp1 = ts.getBezierControlPoint(idx);
-                                    Point2D cp2 = ts.getBezierControlPoint(idx + 1);
+                                    Point2D cp1 = tsv.getBezierControlPoint(idx);
+                                    Point2D cp2 = tsv.getBezierControlPoint(idx + 1);
                                     Point2D mp = MathUtil.midPoint(cp1, cp2);
                                     double rM = MathUtil.distance(ip, mp);
                                     if (Math.abs(r1 - rM) > 1.0) {
@@ -732,8 +741,8 @@ final public class LayoutEditorChecks {
                                     }
                                 }
                                 if (good) {
-                                    linearBezierTrackSegments.add(ts);
-                                    ts.setCircle(true);
+                                    linearBezierTrackSegmentViews.add(tsv);
+                                    tsv.setCircle(true);
                                 }
                             } else {
                                 log.error("checkFixedRadiusBezierTrackSegments(): unequal radius");
@@ -751,8 +760,8 @@ final public class LayoutEditorChecks {
             checkFixedRadiusBezierTrackSegmentsMenu.add(checkNoResultsMenuItem);
         } else {
             // for each linear bezier track segment we found
-            for (TrackSegment ts : linearBezierTrackSegments) {
-                String name = ts.getName();
+            for (TrackSegmentView tsv : linearBezierTrackSegmentViews) {
+                String name = tsv.getName();
                 JMenuItem jmi = new JMenuItem(name);
                 checkFixedRadiusBezierTrackSegmentsMenu.add(jmi);
                 jmi.addActionListener((ActionEvent event) -> doCheckFixedRadiusBezierTrackSegmentsMenuItem(name));
@@ -774,14 +783,16 @@ final public class LayoutEditorChecks {
         log.debug("doCheckFixedRadiusBezierTrackSegmentsMenuItem({})", trackSegmentName);
 
         LayoutTrack layoutTrack = layoutEditor.getFinder().findObjectByName(trackSegmentName);
+        
         if (layoutTrack != null) {
-            layoutEditor.setSelectionRect(layoutTrack.getBounds());
+            LayoutTrackView layoutTrackView = layoutEditor.getLayoutTrackView(layoutTrack);
+            layoutEditor.setSelectionRect(layoutTrackView.getBounds());
             // setSelectionRect calls createSelectionGroups...
             // so we have to clear it before amending to it
             layoutEditor.clearSelectionGroups();
             layoutEditor.amendSelectionGroup(layoutTrack);
             // show its popup menu
-            layoutTrack.showPopup();
+            layoutTrackView.showPopup();
         } else {
             layoutEditor.clearSelectionGroups();
         }
@@ -804,6 +815,5 @@ final public class LayoutEditorChecks {
         return results;
     }   // getCheckMarkedMenuItemNames
 
-    private final static Logger log
-            = LoggerFactory.getLogger(LayoutEditorChecks.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorChecks.class);
 }

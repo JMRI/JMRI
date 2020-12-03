@@ -48,7 +48,7 @@ public class DCCppLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(String systemName, String userName) {
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
         if (bitNum == 0) {
@@ -89,14 +89,6 @@ public class DCCppLightManager extends AbstractLightManager {
             return 0;
         }
         return Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean validSystemNameConfig(@Nonnull String systemName) {
-        return (true);
     }
 
     /**

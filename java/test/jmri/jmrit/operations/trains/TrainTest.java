@@ -225,7 +225,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setCurrentLocation(rl1test);
         Assert.assertEquals("Train New Route Current Name", "TESTNEWROUTECURRNAME", train1
                 .getCurrentLocationName());
-        rl1test = train1.getCurrentLocation();
+        rl1test = train1.getCurrentRouteLocation();
         Assert.assertEquals("Train New Route Current Name by Route Location", "TESTNEWROUTECURRNAME", rl1test
                 .getName());
     }
@@ -1021,12 +1021,12 @@ public class TrainTest extends OperationsTestCase {
 
         // request helper engines to improve test coverage
         t1.setSecondLegOptions(Train.HELPER_ENGINES);
-        t1.setSecondLegStartLocation(rl1);
-        t1.setSecondLegEndLocation(rl2);
+        t1.setSecondLegStartRouteLocation(rl1);
+        t1.setSecondLegEndRouteLocation(rl2);
 
         t1.setThirdLegOptions(Train.HELPER_ENGINES);
-        t1.setThirdLegStartLocation(rl3);
-        t1.setThirdLegEndLocation(rl4);
+        t1.setThirdLegStartRouteLocation(rl3);
+        t1.setThirdLegEndRouteLocation(rl4);
 
         Assert.assertTrue(t1.build());
         Assert.assertTrue("train built 1", t1.isBuilt());
@@ -2604,29 +2604,29 @@ public class TrainTest extends OperationsTestCase {
         // move and terminate
         Assert.assertEquals("Check train 1 departure location name", "Old Westford", train1
                 .getCurrentLocationName());
-        Assert.assertEquals("Check train 1 departure location", r1l1, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 departure location", r1l1, train1.getCurrentRouteLocation());
         train1.move(); // #1
         Assert.assertEquals("Check train 1 location name", "Old Chelmsford", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", r1l2, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", r1l2, train1.getCurrentRouteLocation());
         train1.move(); // #2
         Assert.assertEquals("Check train 1 location name", "Old Bedford", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", r1l3, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", r1l3, train1.getCurrentRouteLocation());
         train1.move(); // #3 terminate
         Assert.assertEquals("Check train 1 location name", "", train1.getCurrentLocationName());
-        Assert.assertEquals("Check train 1 location", null, train1.getCurrentLocation());
+        Assert.assertEquals("Check train 1 location", null, train1.getCurrentRouteLocation());
 
         Assert.assertEquals("Check train 2 departure location name", "Old Westford", train2
                 .getCurrentLocationName());
-        Assert.assertEquals("Check train 2 departure location", r1l1, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 departure location", r1l1, train2.getCurrentRouteLocation());
         train2.move(); // #1
         Assert.assertEquals("Check train 2 location name", "Old Chelmsford", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", r1l2, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", r1l2, train2.getCurrentRouteLocation());
         train2.move(); // #2
         Assert.assertEquals("Check train 2 location name", "Old Bedford", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", r1l3, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", r1l3, train2.getCurrentRouteLocation());
         train2.move(); // #3 terminate
         Assert.assertEquals("Check train 2 location name", "", train2.getCurrentLocationName());
-        Assert.assertEquals("Check train 2 location", null, train2.getCurrentLocation());
+        Assert.assertEquals("Check train 2 location", null, train2.getCurrentRouteLocation());
 
         r1l1.setMaxCarMoves(2);
         r1l2.setMaxCarMoves(6);

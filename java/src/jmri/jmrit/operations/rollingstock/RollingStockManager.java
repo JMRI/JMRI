@@ -138,23 +138,6 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
     }
 
     /**
-     * Change the ID of a RollingStock.
-     * 
-     * @param rs     the rolling stock to change
-     * @param road   the new road name for the rolling stock
-     * @param number the new number for the rolling stock
-     * @deprecated since 4.15.6 without direct replacement; the ID of a
-     * RollingStock is automatically synchronized with changes to the road and
-     * number of the RollingStock
-     */
-    @Deprecated
-    public void changeId(T rs, String road, String number) {
-        _hashTable.remove(rs.getId());
-        rs._id = RollingStock.createId(road, number);
-        register(rs);
-    }
-
-    /**
      * Remove all RollingStock from roster
      */
     public void deleteAll() {

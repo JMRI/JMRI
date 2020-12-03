@@ -767,16 +767,16 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         newTrain.setSecondLegEngineRoad(train.getSecondLegEngineRoad());
         newTrain.setSecondLegOptions(train.getSecondLegOptions());
         newTrain.setSecondLegCabooseRoad(train.getSecondLegCabooseRoad());
-        newTrain.setSecondLegStartLocation(train.getSecondLegStartLocation());
-        newTrain.setSecondLegEndLocation(train.getSecondLegEndLocation());
+        newTrain.setSecondLegStartRouteLocation(train.getSecondLegStartRouteLocation());
+        newTrain.setSecondLegEndRouteLocation(train.getSecondLegEndRouteLocation());
         // third leg
         newTrain.setThirdLegNumberEngines(train.getThirdLegNumberEngines());
         newTrain.setThirdLegEngineModel(train.getThirdLegEngineModel());
         newTrain.setThirdLegEngineRoad(train.getThirdLegEngineRoad());
         newTrain.setThirdLegOptions(train.getThirdLegOptions());
         newTrain.setThirdLegCabooseRoad(train.getThirdLegCabooseRoad());
-        newTrain.setThirdLegStartLocation(train.getThirdLegStartLocation());
-        newTrain.setThirdLegEndLocation(train.getThirdLegEndLocation());
+        newTrain.setThirdLegStartRouteLocation(train.getThirdLegStartRouteLocation());
+        newTrain.setThirdLegEndRouteLocation(train.getThirdLegEndRouteLocation());
         // scripts
         for (String scriptName : train.getBuildScripts()) {
             newTrain.addBuildScript(scriptName);

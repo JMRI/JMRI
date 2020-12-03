@@ -24,12 +24,12 @@ public class LayoutTurnoutEditorTest extends LayoutTrackEditorTest {
         new LayoutTurnoutEditor(null);
     }
  
-    protected void turnoutTestSequence(LayoutTurnoutEditor editor, LayoutTurnout turnout) {
+    protected void turnoutTestSequence(LayoutTurnoutEditor editor, LayoutTurnoutView turnoutView) {
         createTurnouts();
         createBlocks();
 
         // Edit the rh turnout
-        editor.editLayoutTrack(turnout);
+        editor.editLayoutTrack(turnoutView);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout

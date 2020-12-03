@@ -17,6 +17,11 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     public String getSystemName(int i) {
         return "DS0:" + i;
     }
+    
+    @Override
+    protected String getASystemNameWithNoPrefix() {
+        return "0:1";
+    }
 
     @Override
     @Test

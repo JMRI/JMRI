@@ -1,0 +1,29 @@
+@startuml
+
+class CtcManager
+note left: User name change listeners\nDelete Veto listeners\nProvide notification of CTC events\nProvide access to CTC data\nWhere Used interface
+class CtcManagerXml
+note bottom: Load/Store within Panel XML
+class ProgramProperties
+note bottom: Used only by the Editor.
+class OtherData << (D, orchid) >>
+class CTCSerialData
+note left: Primary data manager.\nIt has a list of CodeButtonHandlerData objects.\nIt has a reference to OtherData.
+class CodeButtonHandlerData  << (D, orchid) >>
+note left: The data classes have very little code.\nAccess is via direct variable reference.
+class CallOnData  << (D, orchid) >>
+class TrafficLockingData  << (D, orchid) >>
+
+CtcManager -- CTCSerialData
+CtcManager -- ProgramProperties
+
+CtcManager .. CtcManagerXml
+CtcManagerXml .. CTCSerialData
+CtcManagerXml .. ProgramProperties
+
+CTCSerialData --> CodeButtonHandlerData
+CodeButtonHandlerData --> CallOnData
+CodeButtonHandlerData --> TrafficLockingData
+CTCSerialData -- OtherData
+
+@enduml

@@ -38,7 +38,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
                 CSVFormat.DEFAULT)) {
             // build header
             printHeader(fileOut);
-            printRailroadName(fileOut, Setup.getRailroadName());
+            printRailroadName(fileOut,
+                    train.getRailroadName().isEmpty() ? Setup.getRailroadName() : train.getRailroadName());
             printTrainName(fileOut, train.getName());
             printTrainDescription(fileOut, train.getDescription());
             printPrinterName(fileOut, locationManager.getLocationByName(train.getTrainDepartsName()).getDefaultPrinterName());

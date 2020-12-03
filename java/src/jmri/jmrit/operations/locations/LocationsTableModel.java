@@ -10,13 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumnModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -28,6 +29,7 @@ import jmri.util.table.ButtonRenderer;
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
     LocationManager locationManager; // There is only one manager
+    protected JTable _table;
 
     // Define the columns
     public static final int ID_COLUMN = 0;
@@ -39,8 +41,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public static final int ROLLINGSTOCK_COLUMN = 6;
     public static final int PICKUPS_COLUMN = 7;
     public static final int DROPS_COLUMN = 8;
-    public static final int ACTION_COLUMN = 9;
-    public static final int EDIT_COLUMN = 10;
+    public static final int REPORTER_COLUMN = 9;
+    public static final int ACTION_COLUMN = 10;
+    public static final int EDIT_COLUMN = 11;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -80,8 +83,12 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     List<Location> locationsList = null;
 
     void initTable(LocationsTableFrame frame, JTable table) {
+        _table = table;
+        // Use XTableColumnModel so we can control which columns are visible
+        XTableColumnModel tcm = new XTableColumnModel();
+        table.setColumnModel(tcm);
+        table.createDefaultColumnsFromModel();
         // Install the button handlers
-        TableColumnModel tcm = table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
         tcm.getColumn(ACTION_COLUMN).setCellRenderer(buttonRenderer);
@@ -110,8 +117,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(ACTION_COLUMN).setPreferredWidth(
                 Math.max(80, new JLabel(Bundle.getMessage("Yardmaster")).getPreferredSize().width + 40));
         table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(80);
-
+        
         frame.loadTableDetails(table);
+        setColumnsVisible();
+    }
+    
+    protected void setColumnsVisible() {
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(REPORTER_COLUMN), Setup.isRfidEnabled() && locationManager.hasReporters());
     }
 
     @Override
@@ -145,6 +158,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Pickups");
             case DROPS_COLUMN:
                 return Bundle.getMessage("Drop");
+            case REPORTER_COLUMN:
+                return Bundle.getMessage("Reporters");
             case ACTION_COLUMN:
                 return Bundle.getMessage("Action");
             case EDIT_COLUMN:
@@ -160,6 +175,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             case ID_COLUMN:
             case NAME_COLUMN:
             case TRACK_COLUMN:
+            case REPORTER_COLUMN:
                 return String.class;
             case NUMBER_COLUMN:
             case LENGTH_COLUMN:
@@ -215,6 +231,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                 return location.getPickupRS();
             case DROPS_COLUMN:
                 return location.getDropRS();
+            case REPORTER_COLUMN:
+                return location.getReporterName();
             case ACTION_COLUMN:
                 return Bundle.getMessage("Yardmaster");
             case EDIT_COLUMN:
@@ -301,6 +319,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+            }
+            if (e.getPropertyName().equals(Location.LOCATION_REPORTER_PROPERTY)) {
+                setColumnsVisible();
             }
         }
     }

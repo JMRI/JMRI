@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the {@link SplitVariableValue} class.
  *
- * @todo need a check of the MIXED state model for long address
+ * TODO need a check of the MIXED state model for long address
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2019
  */
@@ -105,7 +105,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreate() {
-    }// mask is ignored by splitAddre
+    }// mask is ignored by splitAddress tests
 
     @Override
     @Test
@@ -115,17 +115,17 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
     public void testVariableCvWrite() {
-    }    // due to multi-cv nature of SplitAddr
+    } // due to multi-cv nature of splitAddress tests
 
     @Override
     @Test
@@ -1077,6 +1077,44 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("set CV" + cv[6].number(), 0x00, cv[6].getValue());
         Assert.assertEquals("set CV" + cv[7].number(), 0x00, cv[7].getValue());
 
+    }
+
+    @Test
+    @Override
+    public void testVariableValueTwinMask() {
+        String name = "Masked Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "2,4,8";
+        String mask = "VXXXXXXX XXXXVVVV"; // last mask also applied to CV8
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = "";
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String extra1 = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal, v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+
+        Assert.assertEquals("mask at start", "VXXXXXXX XXXXVVVV", var.getMask());
+        Assert.assertEquals("mask 2", "XXXXVVVV", var.getMask(1));
+        Assert.assertEquals("mask 3", "XXXXVVVV", var.getMask(2));
+
+        var.simplifyMask(); // no effect on mask returned
+        Assert.assertEquals("mask after simplify", "VXXXXXXX XXXXVVVV", var.getMask());
     }
 
     @BeforeEach

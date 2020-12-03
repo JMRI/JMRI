@@ -11,10 +11,11 @@ import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.util.*;
-import org.slf4j.*;
 
 /*
 * This is an intermediate component used to put the Layout Editor
@@ -124,8 +125,7 @@ class LayoutEditorComponent extends JComponent {
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
-        Point2D startPt = new Point2D.Double();
-        Point2D stopPt = new Point2D.Double();
+        Point2D startPt, stopPt;
         BasicStroke narrow = new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         BasicStroke wide = new BasicStroke(2.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 
@@ -134,8 +134,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(minX, y);
-            stopPt.setLocation(maxX, y);
+            startPt = new Point2D.Double(minX, y);
+            stopPt = new Point2D.Double(maxX, y);
 
             if ((y % wideMod) < wideMin) {
                 g2.setStroke(wide);
@@ -148,8 +148,8 @@ class LayoutEditorComponent extends JComponent {
 
         // draw vertical lines
         for (int x = minX; x <= maxX; x += layoutEditor.gContext.getGridSize()) {
-            startPt.setLocation(x, minY);
-            stopPt.setLocation(x, maxY);
+            startPt = new Point2D.Double(x, minY);
+            stopPt = new Point2D.Double(x, maxY);
 
             if ((x % wideMod) < wideMin) {
                 g2.setStroke(wide);
@@ -366,7 +366,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getSideBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
@@ -396,7 +396,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getMainBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
@@ -506,13 +506,14 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             for (LayoutTrack lt : layoutEditor.getLayoutTracks()) {
                 if (lt != layoutEditor.beginTrack) {
+                    LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
                     if (lt == layoutEditor.foundTrack) {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                         g2.setColor(connectColor);
-                        lt.highlightUnconnected(g2, layoutEditor.foundHitPointType);
+                        ltv.highlightUnconnected(g2, layoutEditor.foundHitPointType);
                         g2.setColor(highlightColor);
                     } else {
-                        lt.highlightUnconnected(g2);
+                        ltv.highlightUnconnected(g2);
                     }
                 }
             }
@@ -607,14 +608,15 @@ class LayoutEditorComponent extends JComponent {
         g.setColor(new Color(204, 207, 88));
         g.setStroke(new BasicStroke(2.0f));
 
-        layoutEditor._positionableSelection.forEach((c) -> g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight()));
+        layoutEditor.getPositionalSelection().forEach((c) -> g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight()));
 
         layoutEditor._layoutTrackSelection.stream().map((lt) -> {
-            Rectangle2D r = lt.getBounds();
+            LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
+            Rectangle2D r = ltv.getBounds();
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, lt.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 
@@ -623,7 +625,7 @@ class LayoutEditorComponent extends JComponent {
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 

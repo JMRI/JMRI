@@ -163,8 +163,8 @@ public class TrainBuilder extends TrainCommon {
         determineEngineRequirements(); // determine how many engines need to be assigned to train
         showTrainRequirements(); // show how many engines, caboose, car with FRED and changes in the route
         showTrainServices(); // show which roads, owners, built dates, engine types that the train will service
-        determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train
         getAndRemoveEnginesFromList(); // get a list of available engines
+        determineIfTrainTerminatesIntoStaging(); // find a terminus track in staging for this train 
         determineIfTrainDepartsStagingAndAddEngines(); // assign engines to train if departing staging
         addEngines(); // 2nd and 3rd engine swaps in a train's route
         showTrainCarTypes(); // show car types that this train will service
@@ -617,12 +617,12 @@ public class TrainBuilder extends TrainCommon {
         if ((_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildCabooseChange"),
-                    new Object[]{_train.getSecondLegStartLocation()}));
+                    new Object[]{_train.getSecondLegStartRouteLocation()}));
         }
         if ((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildCabooseChange"),
-                    new Object[]{_train.getThirdLegStartLocation()}));
+                    new Object[]{_train.getThirdLegStartRouteLocation()}));
         }
         if (_train.isFredNeeded()) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresFRED"), new Object[]{
@@ -736,13 +736,13 @@ public class TrainBuilder extends TrainCommon {
 
         // Adjust where the locos will terminate
         if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                _train.getSecondLegStartLocation() != null) {
-            engineTerminatesFirstLeg = _train.getSecondLegStartLocation();
+                _train.getSecondLegStartRouteLocation() != null) {
+            engineTerminatesFirstLeg = _train.getSecondLegStartRouteLocation();
         }
         if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                _train.getThirdLegStartLocation() != null) {
+                _train.getThirdLegStartRouteLocation() != null) {
             if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
-                engineTerminatesFirstLeg = _train.getThirdLegStartLocation();
+                engineTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
             }
         }
 
@@ -807,25 +807,27 @@ public class TrainBuilder extends TrainCommon {
 
         // Adjust where the locos will terminate
         if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                _train.getSecondLegStartLocation() != null) {
-            engineTerminatesFirstLeg = _train.getSecondLegStartLocation();
+                _train.getSecondLegStartRouteLocation() != null) {
+            engineTerminatesFirstLeg = _train.getSecondLegStartRouteLocation();
         }
         if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                _train.getThirdLegStartLocation() != null) {
-            engineTerminatesSecondLeg = _train.getThirdLegStartLocation();
+                _train.getThirdLegStartRouteLocation() != null) {
+            engineTerminatesSecondLeg = _train.getThirdLegStartRouteLocation();
             // No engine or caboose change at first leg?
             if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) != Train.CHANGE_ENGINES) {
-                engineTerminatesFirstLeg = _train.getThirdLegStartLocation();
+                engineTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
             }
         }
 
         // load engines for this train
-        if (_train.getLeadEngine() == null &&
-                !getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(), _train
-                        .getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
-            throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
-                    new Object[]{_reqNumEngines, _train.getTrainDepartsName(),
-                            engineTerminatesFirstLeg.getName()}));
+        if (_train.getLeadEngine() == null) {
+            addLine(_buildReport, THREE, BLANK_LINE);
+            if (!getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(),
+                    _train.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
+                throw new BuildFailedException(
+                        MessageFormat.format(Bundle.getMessage("buildErrorEngines"), new Object[] { _reqNumEngines,
+                                _train.getTrainDepartsName(), engineTerminatesFirstLeg.getName() }));
+            }
         }
 
         // First engine change in route?
@@ -835,12 +837,12 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_train.getSecondLegStartLocationName(), _train.getSecondLegNumberEngines(),
                             _train.getSecondLegEngineModel(), _train.getSecondLegEngineRoad()}));
             if (getEngines(Integer.parseInt(_train.getSecondLegNumberEngines()), _train.getSecondLegEngineModel(),
-                    _train.getSecondLegEngineRoad(), _train.getSecondLegStartLocation(), engineTerminatesSecondLeg)) {
+                    _train.getSecondLegEngineRoad(), _train.getSecondLegStartRouteLocation(), engineTerminatesSecondLeg)) {
                 _secondLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
                         new Object[]{Integer.parseInt(_train.getSecondLegNumberEngines()),
-                                _train.getSecondLegStartLocation(), engineTerminatesSecondLeg}));
+                                _train.getSecondLegStartRouteLocation(), engineTerminatesSecondLeg}));
             }
         }
         // Second engine change in route?
@@ -850,13 +852,13 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{_train.getThirdLegStartLocationName(), _train.getThirdLegNumberEngines(),
                             _train.getThirdLegEngineModel(), _train.getThirdLegEngineRoad()}));
             if (getEngines(Integer.parseInt(_train.getThirdLegNumberEngines()), _train.getThirdLegEngineModel(), _train
-                    .getThirdLegEngineRoad(), _train.getThirdLegStartLocation(),
+                    .getThirdLegEngineRoad(), _train.getThirdLegStartRouteLocation(),
                     _train.getTrainTerminatesRouteLocation())) {
                 _thirdLeadEngine = _lastEngine;
             } else {
                 throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorEngines"),
                         new Object[]{Integer.parseInt(_train.getThirdLegNumberEngines()),
-                                _train.getThirdLegStartLocation(), _train.getTrainTerminatesRouteLocation()}));
+                                _train.getThirdLegStartRouteLocation(), _train.getTrainTerminatesRouteLocation()}));
             }
         }
         if (_reqNumEngines > 0 && (!_train.isBuildConsistEnabled() || Setup.getHorsePowerPerTon() == 0)) {
@@ -893,30 +895,30 @@ public class TrainBuilder extends TrainCommon {
         // determine if there are any caboose changes
         if ((_train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
-            cabooseOrFredTerminatesFirstLeg = _train.getSecondLegStartLocation();
+            cabooseOrFredTerminatesFirstLeg = _train.getSecondLegStartRouteLocation();
         } else if ((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
-            cabooseOrFredTerminatesFirstLeg = _train.getThirdLegStartLocation();
+            cabooseOrFredTerminatesFirstLeg = _train.getThirdLegStartRouteLocation();
         }
         if ((_train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
                 (_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
-            cabooseOrFredTerminatesSecondLeg = _train.getThirdLegStartLocation();
+            cabooseOrFredTerminatesSecondLeg = _train.getThirdLegStartRouteLocation();
         }
 
         // Do caboose changes in reverse order in case there isn't enough track space
         // second caboose change?
         if ((_train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE &&
-                _train.getThirdLegStartLocation() != null &&
+                _train.getThirdLegStartRouteLocation() != null &&
                 _train.getTrainTerminatesRouteLocation() != null) {
-            getCaboose(_train.getThirdLegCabooseRoad(), _thirdLeadEngine, _train.getThirdLegStartLocation(), _train
+            getCaboose(_train.getThirdLegCabooseRoad(), _thirdLeadEngine, _train.getThirdLegStartRouteLocation(), _train
                     .getTrainTerminatesRouteLocation(), true);
         }
 
         // first caboose change?
         if ((_train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE &&
-                _train.getSecondLegStartLocation() != null &&
+                _train.getSecondLegStartRouteLocation() != null &&
                 cabooseOrFredTerminatesSecondLeg != null) {
-            getCaboose(_train.getSecondLegCabooseRoad(), _secondLeadEngine, _train.getSecondLegStartLocation(),
+            getCaboose(_train.getSecondLegCabooseRoad(), _secondLeadEngine, _train.getSecondLegStartRouteLocation(),
                     cabooseOrFredTerminatesSecondLeg, true);
         }
 
@@ -3544,14 +3546,16 @@ public class TrainBuilder extends TrainCommon {
                 locationsNotServiced.add(track.getLocation());
                 continue;
             }
-            ScheduleItem si = getScheduleItem(car, track);
-            if (si == null) {
-                continue; // no match
-            } // only use tracks serviced by this train?
+            // only use tracks serviced by this train?
             if (car.getTrack().isAddCustomLoadsEnabled() &&
                     _train.getRoute().getLastLocationByName(track.getLocation().getName()) == null) {
                 continue;
             }
+            // only the first match in a schedule is used for a spur
+            ScheduleItem si = getScheduleItem(car, track);
+            if (si == null) {
+                continue; // no match
+            } 
             // need to set car load so testDestination will work properly
             String oldCarLoad = car.getLoadName(); // should be the default empty
             car.setLoadName(si.getReceiveLoadName());
@@ -3576,9 +3580,9 @@ public class TrainBuilder extends TrainCommon {
                 car.setLoadName(oldCarLoad);
                 continue;
             }
+            // try routing car
             car.setFinalDestination(track.getLocation());
             car.setFinalDestinationTrack(track);
-            // try routing car
             if (router.setDestination(car, _train, _buildReport) && car.getDestination() != null) {
                 // return car with this custom load and destination
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCreateNewLoadForCar"),
@@ -4562,12 +4566,19 @@ public class TrainBuilder extends TrainCommon {
                             car.getFinalDestination() == null &&
                             testTrack.getScheduleId().equals(Track.NONE) &&
                             car.getTrack() != testTrack.getAlternateTrack() &&
-                            checkTrainCanDrop(car, testTrack.getAlternateTrack()) &&
-                            car.testDestination(testDestination, testTrack.getAlternateTrack()).equals(Track.OKAY)) {
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("buildTrackFullHasAlternate"),
-                                new Object[]{testDestination.getName(),
-                                        testTrack.getName(), testTrack.getAlternateTrack().getName()}));
+                            checkTrainCanDrop(car, testTrack.getAlternateTrack())) {
+                        addLine(_buildReport, SEVEN,
+                                MessageFormat.format(Bundle.getMessage("buildTrackFullHasAlternate"),
+                                        new Object[] { testDestination.getName(), testTrack.getName(),
+                                                testTrack.getAlternateTrack().getName() }));
+                        status = car.testDestination(testDestination, testTrack.getAlternateTrack());
+                        if (!status.equals(Track.OKAY)) {
+                            addLine(_buildReport, SEVEN,
+                                    MessageFormat.format(Bundle.getMessage("buildCanNotDropCarBecause"),
+                                            new Object[] { car.toString(), testTrack.getAlternateTrack().getName(),
+                                                    status, testTrack.getAlternateTrack().getTrackTypeName() }));
+                            continue;
+                        }
                         finalDestinationTrackTemp = testTrack;
                         trackTemp = testTrack.getAlternateTrack(); // send car to alternate track
                         break;
@@ -5025,16 +5036,16 @@ public class TrainBuilder extends TrainCommon {
             boolean helper = false;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
-                        rl == _train.getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartRouteLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train.getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartRouteLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
-                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
+                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndRouteLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train.getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndRouteLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5044,9 +5055,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train.getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartRouteLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train.getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartRouteLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     break; // done
                 }
@@ -5168,16 +5179,16 @@ public class TrainBuilder extends TrainCommon {
             boolean helper = false;
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES &&
-                        rl == _train.getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartRouteLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train.getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartRouteLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = true;
                 }
-                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation()) ||
+                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndRouteLocation()) ||
                         (_train.getThirdLegOptions() == Train.HELPER_ENGINES &&
-                                rl == _train.getThirdLegEndLocation())) {
+                                rl == _train.getThirdLegEndRouteLocation())) {
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
                             new Object[]{rl.getName()}));
                     helper = false;
@@ -5187,9 +5198,9 @@ public class TrainBuilder extends TrainCommon {
                 }
                 // check for a change of engines in the train's route
                 if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                        rl == _train.getSecondLegStartLocation()) ||
+                        rl == _train.getSecondLegStartRouteLocation()) ||
                         ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                                rl == _train.getThirdLegStartLocation())) {
+                                rl == _train.getThirdLegStartRouteLocation())) {
                     log.debug("Loco change at ({})", rl.getName());
                     addLocos(hpAvailable, extraHpNeeded, rlNeedHp, rlStart, rl);
                     addLine(_buildReport, THREE, BLANK_LINE);
@@ -5262,11 +5273,11 @@ public class TrainBuilder extends TrainCommon {
         String model = _train.getEngineModel();
         String road = _train.getEngineRoad();
         if ((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                rl == _train.getSecondLegStartLocation()) {
+                rl == _train.getSecondLegStartRouteLocation()) {
             model = _train.getSecondLegEngineModel();
             road = _train.getSecondLegEngineRoad();
         } else if ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES &&
-                rl == _train.getThirdLegStartLocation()) {
+                rl == _train.getThirdLegStartRouteLocation()) {
             model = _train.getThirdLegEngineModel();
             road = _train.getThirdLegEngineRoad();
         }

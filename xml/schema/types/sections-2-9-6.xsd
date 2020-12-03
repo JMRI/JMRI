@@ -30,7 +30,7 @@
     <xs:complexType name="SectionPropertyType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing a single property within a sections element's properties element.
+          Define the XML structure for storing a single property within a sections element's properties element.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.configurexml.SectionManagerXml</jmri:usingclass>
@@ -65,7 +65,7 @@
     <xs:complexType name="SectionManagerType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SectionManager implementation.
+          Define the XML structure for storing the contents of a SectionManager implementation.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="true">jmri.configurexml.SectionManagerXml</jmri:usingclass>

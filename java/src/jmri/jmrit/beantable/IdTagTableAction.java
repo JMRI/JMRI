@@ -52,9 +52,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
      */
     @Override
     public void setManager(@Nonnull Manager<IdTag> t) {
-        if(tagManager!=null){
-            tagManager.removePropertyChangeListener(this);
-        }
+        tagManager.removePropertyChangeListener(this);
         if (t instanceof IdTagManager) {
             tagManager = (IdTagManager) t;
             if (m != null) {
@@ -62,9 +60,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> implements Prop
             }
         }
         // if t is not an instance of IdTagManager, tagManager may not change.
-        if(tagManager!=null){
-            tagManager.addPropertyChangeListener(this);
-        }
+        tagManager.addPropertyChangeListener(this);
     }
 
     public IdTagTableAction() {
