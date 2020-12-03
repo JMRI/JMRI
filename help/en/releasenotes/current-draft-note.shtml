@@ -105,7 +105,7 @@
                             and the "Basic Settings" tab.</li>
                     </ul>
                 </li>
-                <li>Update slot status after a Dispatch</li>
+                <li>Keep slot status in line with CS after setting COMMON or true slot moves</li>
                 <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
                     Termination!)" for Digitrax PR4.
             </ul>
