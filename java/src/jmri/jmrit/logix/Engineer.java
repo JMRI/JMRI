@@ -755,6 +755,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
     }
 
     @Override
+    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Sensor change on another thread is expected even when Engineer (this) has not done any modifing")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) 
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
@@ -1015,8 +1016,8 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             long rampTime = 0;      // accumulating time doing the ramp
             float rampDist = 0;     // accumulating distance of ramp
             float rampLen = _rampData.getRampLength();
-            float prevScriptSpeed = _normalSpeed;
             float scriptSpeed = _normalSpeed;
+            float prevScriptSpeed = scriptSpeed;
             float distToCmd = _currentCommand.getTrackSpeed() * _currentCommand.getTime();   // distance to next command
 
             int commandIndexLimit = getCommandIndexLimit(_endBlockIdx, _idxCurrentCommand);

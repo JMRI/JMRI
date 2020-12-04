@@ -1117,7 +1117,6 @@ public class WarrantFrame extends WarrantRoute {
         _startTime = System.currentTimeMillis();
         _speed = 0.0f;
         
-//        _warrant.getSpeedUtil().getValidSpeedProfile(this);
         _warrant.addPropertyChangeListener(this);
 
         msg = _warrant.setRunMode(Warrant.MODE_LEARN, _speedUtil.getDccAddress(), _learnThrottle,
@@ -1131,6 +1130,7 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void runTrain() {
+        _warrant.setSpeedUtil(_speedUtil);  // transfer SpeedUtil to warrant
         String msg = null;
         if (isRunning()) {
             msg = Bundle.getMessage("CannotRun", _warrant.getDisplayName(),

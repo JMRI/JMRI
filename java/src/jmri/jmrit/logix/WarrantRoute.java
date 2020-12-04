@@ -251,7 +251,6 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
 
         String id = _speedUtil.getRosterId();
         if (Roster.getDefault().getEntryForId(id) == null) {
-            RosterEntry rosterEntry = _speedUtil.getRosterEntry();
             DccLocoAddress dccAddr = _speedUtil.getDccAddress();
             String rosterId = JOptionPane.showInputDialog(this,
                     Bundle.getMessage("makeRosterEntry", _speedUtil.getAddress()),
@@ -261,7 +260,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
                 log.debug("Create roster entry {}", rosterId);
             }
             if (rosterId != null) {
-                rosterEntry = new RosterEntry();
+                RosterEntry rosterEntry = new RosterEntry();
                 Roster.getDefault().addEntry(rosterEntry);
                 rosterEntry.setId(rosterId);
                 rosterEntry.setDccAddress(String.valueOf(dccAddr.getNumber()));
@@ -304,17 +303,20 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
 
-        RosterEntry re = Roster.getDefault().getEntryForId(id);
-        RosterSpeedProfile speedProfile = null;
-        if (re != null) {
-            speedProfile = re.getSpeedProfile();
-            if (speedProfile != null ){
-                spPanel.add(MergePrompt.makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
-                spPanel.add(Box.createGlue());
+        RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
+        if (speedProfile.hasForwardSpeeds() && speedProfile.hasReverseSpeeds()) {
+            RosterEntry re = Roster.getDefault().getEntryForId(id);
+            if (re != null) {
+                RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
+                if (rosterSpeedProfile != null ){
+                    spPanel.add(MergePrompt.makeSpeedProfilePanel("rosterSpeedProfile", rosterSpeedProfile,  false, null));
+                    spPanel.add(Box.createGlue());
+                }
             }
+        } else {
+            return null;
         }
 
-        speedProfile = _speedUtil.getMergeProfile();
         Map<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(speedProfile);
         spPanel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, anomaly));
         spPanel.add(Box.createGlue());

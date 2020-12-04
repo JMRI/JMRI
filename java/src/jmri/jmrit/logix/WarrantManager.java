@@ -378,10 +378,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         }
         RosterEntry rosterEntry = Roster.getDefault().getEntryForId(id);
         if (rosterEntry == null) {
-            rosterEntry = Roster.getDefault().entryFromTitle(id);
-        }
-        if (rosterEntry == null) {
-            mergeProfile = new RosterSpeedProfile(rosterEntry);
+            mergeProfile = new RosterSpeedProfile(null);
             _mergeProfiles.put(id, mergeProfile);
             return mergeProfile;
         }

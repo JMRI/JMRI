@@ -104,7 +104,7 @@ public class SpeedUtil {
             RosterEntry re = Roster.getDefault().getEntryForId(id);
             if (re != null) {
                 _rosterEntry = re;
-                setDccAddress(Integer.valueOf(re.getDccAddress()), re.getProtocolAsString());
+                setDccAddress(Integer.parseInt(re.getDccAddress()), re.getProtocolAsString());
                 _rosterId = id;
             }
         }
