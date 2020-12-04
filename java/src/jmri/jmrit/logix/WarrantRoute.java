@@ -304,7 +304,7 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         spPanel.add(Box.createGlue());
 
         RosterSpeedProfile speedProfile = _speedUtil.getMergeProfile();
-        if (speedProfile.hasForwardSpeeds() && speedProfile.hasReverseSpeeds()) {
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
             RosterEntry re = Roster.getDefault().getEntryForId(id);
             if (re != null) {
                 RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();

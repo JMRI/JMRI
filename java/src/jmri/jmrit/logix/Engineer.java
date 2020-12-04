@@ -1017,7 +1017,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
             float rampDist = 0;     // accumulating distance of ramp
             float rampLen = _rampData.getRampLength();
             float scriptSpeed = _normalSpeed;
-            float prevScriptSpeed = scriptSpeed;
             float distToCmd = _currentCommand.getTrackSpeed() * _currentCommand.getTime();   // distance to next command
 
             int commandIndexLimit = getCommandIndexLimit(_endBlockIdx, _idxCurrentCommand);
@@ -1047,6 +1046,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         // during ramp up the script may have non-speed commands that should be executed.
                         ListIterator<Float> iter = _rampData.speedIterator(true);
                         float prevSpeed = iter.next().floatValue();   // skip repeat of current speed
+                        float prevScriptSpeed;
 
                         while (iter.hasNext()) { // do ramp up
                             if (stop) {
@@ -1112,6 +1112,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         }
                         ListIterator<Float> iter = _rampData.speedIterator(false);
                         float prevSpeed = iter.previous().floatValue();   // skip repeat of current throttle setting
+                        float prevScriptSpeed;
  
                         while (iter.hasPrevious()) {
                             if (stop) {
@@ -1123,7 +1124,7 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                                 if ( _warrant._idxCurrentOrder > _endBlockIdx) {
                                     // loco overran end block.  Set end speed and leave ramp
                                     speed = endSpeed;
-                                    break;
+                                    stop = true;
                                 } else if ( _warrant._idxCurrentOrder < _endBlockIdx && 
                                         _endSpeedType.equals(Warrant.Stop) && Math.abs(speed - endSpeed) <.001f) {
                                     // At last speed change to set throttle to 0.0, but train has not 
