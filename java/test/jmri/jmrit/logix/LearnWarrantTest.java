@@ -8,6 +8,8 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -127,9 +129,6 @@ public class LearnWarrantTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
-/*        warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant("Learning");
-        List<ThrottleSetting> commands = warrant.getThrottleCommands();
-        Assert.assertEquals("12 ThrottleCommands", 12, commands.size());*/
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         assertThat(tableFrame).withFailMessage("Warrant Table save").isNotNull();
@@ -216,7 +215,15 @@ public class LearnWarrantTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<Runnable> rlist = sm.getRunnables();
+            while (!rlist.isEmpty()) {
+                if (rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                    sm.deregister((ShutDownTask)rlist.get(0));
+                }
+            }
+        }
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.tearDown();
     }
