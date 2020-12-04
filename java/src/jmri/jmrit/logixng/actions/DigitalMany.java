@@ -98,7 +98,7 @@ public class DigitalMany extends AbstractDigitalAction
             }
         }
         
-        checkFreeSocket();
+//        checkFreeSocket();
         
         disableCheckForUnconnectedSocket = false;
     }

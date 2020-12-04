@@ -4,16 +4,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalActionSocket;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 
 /**
@@ -242,6 +233,138 @@ public class Sequence extends AbstractDigitalAction
         return _expressionEntries.size() + _actionEntries.size();
     }
 
+    private void checkFreeSocket() {
+        boolean hasFreeSocket = false;
+        
+        for (ActionEntry entry : _actionEntries) {
+            hasFreeSocket |= !entry._socket.isConnected();
+        }
+        for (ExpressionEntry entry : _expressionEntries) {
+            hasFreeSocket |= !entry._socket.isConnected();
+        }
+        if (!hasFreeSocket) {
+            FemaleDigitalActionSocket actionSocket =
+                    InstanceManager.getDefault(DigitalActionManager.class)
+                            .createFemaleSocket(this, this, getNewActionSocketName());
+            _actionEntries.add(new ActionEntry(actionSocket));
+            
+            FemaleDigitalExpressionSocket exprSocket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class)
+                            .createFemaleSocket(this, this, getNewExpressionSocketName());
+            _expressionEntries.add(new ExpressionEntry(exprSocket));
+            
+            List<FemaleSocket> list = new ArrayList<>();
+            list.add(actionSocket);
+            list.add(exprSocket);
+            firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                // Possible if not the three static sockets,
+                // the socket is not connected and the next socket is not connected
+                return (index >= NUM_STATIC_EXPRESSIONS)
+                        && (index+2 < getChildCount())
+                        && !getChild(index).isConnected()
+                        && !getChild(index+1).isConnected();
+            case InsertBefore:
+                // Possible if not the three static sockets
+                return index >= NUM_STATIC_EXPRESSIONS;
+            case InsertAfter:
+                return true;    // Always possible
+            case MoveUp:
+                return index > NUM_STATIC_EXPRESSIONS+2;   // Possible if not the three static sockets and the first two sockets after that
+            case MoveDown:
+                return index+2 < getChildCount();   // Possible if not last two sockets
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
+    private void insertNewSocket(int index) {
+        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2;
+        int expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS + 1;
+        
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+            expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS;
+            actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + 1;
+        }
+        
+        FemaleDigitalActionSocket actionSocket =
+                InstanceManager.getDefault(DigitalActionManager.class)
+                        .createFemaleSocket(this, this, getNewActionSocketName());
+        _actionEntries.add(actionIndex, new ActionEntry(actionSocket));
+        
+        FemaleDigitalExpressionSocket exprSocket =
+                InstanceManager.getDefault(DigitalExpressionManager.class)
+                        .createFemaleSocket(this, this, getNewExpressionSocketName());
+        _expressionEntries.add(expressionIndex, new ExpressionEntry(exprSocket));
+        
+        List<FemaleSocket> addList = new ArrayList<>();
+        addList.add(actionSocket);
+        addList.add(exprSocket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
+    private void removeSocket(int index) {
+        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2;
+        int expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS + 1;
+        
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+            expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS;
+            actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + 1;
+        }
+        
+        List<FemaleSocket> removeList = new ArrayList<>();
+        removeList.add(_actionEntries.remove(index)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
+    }
+    
+    private void moveSocketDown(int index) {
+        ActionEntry temp = _actionEntries.get(index);
+        _actionEntries.set(index, _actionEntries.get(index+1));
+        _actionEntries.set(index+1, temp);
+        
+        List<FemaleSocket> list = new ArrayList<>();
+        list.add(_actionEntries.get(index)._socket);
+        list.add(_actionEntries.get(index)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void doSocketOperation(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                if (index+1 >= getChildCount()) throw new UnsupportedOperationException("Cannot remove only the last socket");
+                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                if (getChild(index+1).isConnected()) throw new UnsupportedOperationException("Socket below is connected");
+                removeSocket(index);
+                break;
+            case InsertBefore:
+                insertNewSocket(index);
+                break;
+            case InsertAfter:
+                insertNewSocket(index+1);
+                break;
+            case MoveUp:
+                if (index < NUM_STATIC_EXPRESSIONS) throw new UnsupportedOperationException("cannot move up static sockets");
+                if (index <= NUM_STATIC_EXPRESSIONS+1) throw new UnsupportedOperationException("cannot move up first two children");
+                moveSocketDown(index-1);
+                break;
+            case MoveDown:
+                if (index+2 >= getChildCount()) throw new UnsupportedOperationException("cannot move down last two children");
+                moveSocketDown(index);
+                break;
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
     @Override
     public void connected(FemaleSocket socket) {
         for (ExpressionEntry entry : _expressionEntries) {
@@ -256,6 +379,8 @@ public class Sequence extends AbstractDigitalAction
                         socket.getConnectedSocket().getSystemName();
             }
         }
+        
+        checkFreeSocket();
     }
 
     @Override
