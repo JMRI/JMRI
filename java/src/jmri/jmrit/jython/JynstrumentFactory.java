@@ -84,7 +84,7 @@ public class JynstrumentFactory {
             log.debug("Not a directory, trying parent");
             return null;
         }
-        if (! path.toLowerCase().startsWith(".jyn", path.length() - 4)) {
+        if (! path.toLowerCase().endsWith(".jyn")) {
             log.debug("Not an instrument (folder name not ending with .jyn) (got {})", path);
             return null;
         }
