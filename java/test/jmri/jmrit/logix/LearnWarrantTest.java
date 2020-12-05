@@ -8,8 +8,8 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
+//import jmri.ShutDownManager;
+//import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -215,6 +215,8 @@ public class LearnWarrantTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        /*
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<Runnable> rlist = sm.getRunnables();
@@ -224,8 +226,7 @@ public class LearnWarrantTest {
                     rlist = sm.getRunnables();
                 }
             }
-        }
-        InstanceManager.getDefault(WarrantManager.class).dispose();
+        }*/
         JUnitUtil.tearDown();
     }
 

@@ -1,8 +1,6 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
-import java.util.List;
-
 import jmri.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
@@ -356,6 +354,8 @@ public class LinkedWarrantTest {
         _sensorMgr.dispose();
         _sensorMgr = null;
         
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        /*
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<Runnable> rlist = sm.getRunnables();
@@ -366,6 +366,7 @@ public class LinkedWarrantTest {
                 }
             }
         }
+        */
         JUnitUtil.tearDown();
     }
 }
