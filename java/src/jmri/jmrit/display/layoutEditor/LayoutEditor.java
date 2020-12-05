@@ -148,6 +148,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private JCheckBoxMenuItem drawLayoutTracksLabelCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
@@ -273,10 +274,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean snapToGridOnMove = false;
     private boolean snapToGridInvert = false;
 
-    public boolean antialiasingOn = false;
-    public boolean highlightSelectedBlockFlag = false;
+    private boolean antialiasingOn = false;
+    private boolean drawLayoutTracksLabel = false;
+    private boolean highlightSelectedBlockFlag = false;
 
-    public boolean turnoutCirclesWithoutEditMode = false;
+    private boolean turnoutCirclesWithoutEditMode = false;
     private boolean tooltipsWithoutEditMode = false;
     private boolean tooltipsInEditMode = true;
 
@@ -440,6 +442,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
 
                 setAntialiasingOn(prefsAntialiasingOn);
+
+                boolean prefsDrawLayoutTracksLabel = prefsMgr.getSimplePreferenceState(windowFrameRef + ".drawLayoutTracksLabel");
+                // log.debug("{}.drawLayoutTracksLabel is {}", windowFrameRef, prefsDrawLayoutTracksLabel);
+                setDrawLayoutTracksLabel(prefsDrawLayoutTracksLabel);
 
                 boolean prefsHighlightSelectedBlockFlag
                         = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
@@ -995,6 +1001,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             redrawPanel();
         });
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
+
+        //
+        // drawLayoutTracksLabel
+        //
+        drawLayoutTracksLabelCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DrawLayoutTracksLabel"));
+        optionMenu.add(drawLayoutTracksLabelCheckBoxMenuItem);
+        drawLayoutTracksLabelCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksMnemonic")));
+        drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
+        drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            drawLayoutTracksLabel = drawLayoutTracksLabelCheckBoxMenuItem.isSelected();
+            redrawPanel();
+        });
+        drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
 
         //
         // edit title
@@ -7034,6 +7054,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return antialiasingOn;
     }
 
+    public boolean isDrawLayoutTracksLabel() {
+        return drawLayoutTracksLabel;
+    }
+
     // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getHighlightSelectedBlock() {
         return highlightSelectedBlockFlag;
@@ -7318,6 +7342,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             }
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn));
+        }
+    }
+
+    /**
+     *
+     * @param state true to set anti-aliasing flag on, else false.
+     */
+    public void setDrawLayoutTracksLabel(boolean state) {
+        if (drawLayoutTracksLabel != state) {
+            drawLayoutTracksLabel = state;
+
+            // this may not be set up yet...
+            if (drawLayoutTracksLabelCheckBoxMenuItem != null) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
+
+            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".drawLayoutTracksLabel", drawLayoutTracksLabel));
         }
     }
 

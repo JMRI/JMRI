@@ -53,7 +53,7 @@ class LayoutEditorComponent extends JComponent {
                 }
             }
             // Optional antialising, to eliminate (reduce) staircase on diagonal lines
-            if (layoutEditor.antialiasingOn) {
+            if (layoutEditor.getAntialiasingOn()) {
                 g2.setRenderingHints(antialiasing);
             }
 
@@ -97,8 +97,10 @@ class LayoutEditorComponent extends JComponent {
                 drawTrackSegmentInProgress(g2);
                 drawShapeInProgress(g2);
 
-                drawLayoutTracksText(g2);
-            } else if (layoutEditor.turnoutCirclesWithoutEditMode) {
+                if (layoutEditor.isDrawLayoutTracksLabel()) {
+                    drawLayoutTracksLabel(g2);
+                }
+            } else if (layoutEditor.getTurnoutCircles()) {
                 if (layoutEditor.allControlling()) {
                     drawTurnoutControls(g2);
                 }
@@ -628,8 +630,8 @@ class LayoutEditorComponent extends JComponent {
         g.setStroke(stroke);
     }
 
-    private void drawLayoutTracksText(Graphics2D g) {
-        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 10));
+    private void drawLayoutTracksLabel(Graphics2D g) {
+        g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
         g.setColor(Color.red);
         for (LayoutTrackView layoutTrackView : layoutEditor.getLayoutTrackViews()) {
             layoutTrackView.drawLayoutTrackText(g);
