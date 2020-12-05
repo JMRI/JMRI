@@ -58,7 +58,7 @@ public class AbstractDigitalExpressionTest {
         JUnitUtil.tearDown();
     }
     
-    
+/*    
     // The purpose of this class is to test the method
     // AbstractDigitalAction.getNewSocketName(). We want
     // to test that the method throws an exception if no
@@ -187,5 +187,5 @@ public class AbstractDigitalExpressionTest {
         }
     
     }
-    
+*/    
 }
