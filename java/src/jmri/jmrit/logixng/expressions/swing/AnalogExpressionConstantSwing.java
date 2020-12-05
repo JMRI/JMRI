@@ -64,7 +64,11 @@ public class AnalogExpressionConstantSwing extends AbstractAnalogExpressionSwing
         
         AnalogExpressionConstant expression = (AnalogExpressionConstant)object;
         
-        expression.setValue(Double.parseDouble(_constant.getText()));
+        if (!_constant.getText().isEmpty()) {
+            expression.setValue(Double.parseDouble(_constant.getText()));
+        } else {
+            expression.setValue(0.0);
+        }
     }
     
     /** {@inheritDoc} */

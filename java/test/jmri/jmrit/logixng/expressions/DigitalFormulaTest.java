@@ -7,16 +7,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
+import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.expressions.DigitalFormula.SocketData;
+import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
-import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.util.parser.ParserException;
 
 /**
  * Test Formula
@@ -25,6 +25,7 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  */
 public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
 
+    private final String _manager = "";
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private DigitalFormula expressionFormula;
@@ -158,22 +159,22 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQDE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQDE554"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
+        expressionSystemNames.add(new SocketData("ZH12", null, _manager));   // This is null by purpose
+        expressionSystemNames.add(new SocketData("Hello", "IQDE554", _manager));
         // IQDE61232 doesn't exist by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQDE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQDE3"));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", _manager));
+        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", _manager));
         
-        jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, actionSystemNames);
+        jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData socketData = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -187,9 +188,9 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         jmri.util.JUnitAppender.assertMessage("cannot load digital expression IQDE61232");
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData socketData = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -217,21 +218,21 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE61232", null)));
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQDE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", "IQDE99"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQDE554"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQDE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQDE3"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
+        expressionSystemNames.add(new SocketData("ZH12", "IQDE99", _manager));
+        expressionSystemNames.add(new SocketData("Hello", "IQDE554", _manager));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", _manager));
+        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", _manager));
         
-        DigitalFormula expression = new DigitalFormula("IQDE321", null, actionSystemNames);
+        DigitalFormula expression = new DigitalFormula("IQDE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData socketData = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -243,9 +244,9 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         expression.setup();
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData socketData = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+socketData._socketName,
+                    socketData._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -271,10 +272,10 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     // Test calling setActionSystemNames() twice
     @Test
     public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQDE52"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
         
-        jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, actionSystemNames);
+        jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, expressionSystemNames);
         
         java.lang.reflect.Method method =
                 expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});

@@ -102,11 +102,11 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalMany.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionListenOnBeans.class);
-        classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalCallModule.class);
         classes.add(jmri.jmrit.logixng.actions.Logix.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);

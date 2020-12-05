@@ -9,6 +9,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
+import jmri.jmrit.logixng.expressions.StringFormula.SocketData;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -28,6 +29,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 //    private static final boolean EXPECT_SUCCESS = true;
 //    private static final boolean EXPECT_FAILURE = false;
 
+    private final String _manager = "";
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private StringFormula expressionFormula;
@@ -159,22 +161,22 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         maleSockets.add(null);  // This is null by purpose
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", null));   // This is null by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSE554"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
+        expressionSystemNames.add(new SocketData("ZH12", null, _manager));   // This is null by purpose
+        expressionSystemNames.add(new SocketData("Hello", "IQSE554", _manager));
         // IQSE61232 doesn't exist by purpose
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", _manager));
+        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", _manager));
         
-        StringFormula expression = new StringFormula("IQSE321", null, actionSystemNames);
+        StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData entry = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry._socketName,
+                    entry._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -188,9 +190,9 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         jmri.util.JUnitAppender.assertMessage("cannot load string expression IQSE61232");
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData entry = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry._socketName,
+                    entry._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -218,21 +220,21 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE61232", null)));
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
         
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("ZH12", "IQSE99"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Hello", "IQSE554"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("SomethingElse", "IQSE61232"));
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("Yes123", "IQSE3"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
+        expressionSystemNames.add(new SocketData("ZH12", "IQSE99", _manager));
+        expressionSystemNames.add(new SocketData("Hello", "IQSE554", _manager));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", _manager));
+        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", _manager));
         
-        StringFormula expression = new StringFormula("IQSE321", null, actionSystemNames);
+        StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
         Assert.assertEquals("expression has 5 female sockets", 5, expression.getChildCount());
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData entry = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry._socketName,
+                    entry._socketName, expression.getChild(i).getName());
             Assert.assertEquals("expression female socket is of correct class",
                     "jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket$GenericSocket",
                     expression.getChild(i).getClass().getName());
@@ -244,9 +246,9 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         expression.setup();
         
         for (int i=0; i < 5; i++) {
-            Map.Entry<String,String> entry = actionSystemNames.get(i);
-            Assert.assertEquals("expression female socket name is "+entry.getKey(),
-                    entry.getKey(), expression.getChild(i).getName());
+            SocketData entry = expressionSystemNames.get(i);
+            Assert.assertEquals("expression female socket name is "+entry._socketName,
+                    entry._socketName, expression.getChild(i).getName());
             
             if (maleSockets.get(i) != null) {
                 Assert.assertTrue("expression female socket is connected",
@@ -272,10 +274,10 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     // Test calling setActionSystemNames() twice
     @Test
     public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
-        List<Map.Entry<String, String>> actionSystemNames = new ArrayList<>();
-        actionSystemNames.add(new java.util.HashMap.SimpleEntry<>("XYZ123", "IQSE52"));
+        List<SocketData> expressionSystemNames = new ArrayList<>();
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
         
-        StringFormula expression = new StringFormula("IQSE321", null, actionSystemNames);
+        StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         
         java.lang.reflect.Method method =
                 expression.getClass().getDeclaredMethod("setExpressionSystemNames", new Class<?>[]{List.class});

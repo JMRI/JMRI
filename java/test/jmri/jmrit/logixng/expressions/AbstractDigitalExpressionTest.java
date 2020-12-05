@@ -25,7 +25,7 @@ import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
  * Test AbstractDigitalExpression
  */
 public class AbstractDigitalExpressionTest {
-
+/*
     // This method is CPU intensive so we don't want to run it for every expression.
     @Test
     public void testGetNewSocketName() {
@@ -42,7 +42,7 @@ public class AbstractDigitalExpressionTest {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-
+*/
     // The minimal setup for log4J
     @Before
     public void setUp() {
