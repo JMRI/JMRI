@@ -207,7 +207,7 @@ public class DigitalManyTest extends AbstractDigitalActionTestBase {
         // Try run setup() again. That should not cause any problems.
         action.setup();
         
-        Assert.assertEquals("action has 6 female sockets", 6, action.getChildCount());
+        Assert.assertEquals("action has 5 female sockets", 5, action.getChildCount());
     }
     
     // Test calling setActionSystemNames() twice
