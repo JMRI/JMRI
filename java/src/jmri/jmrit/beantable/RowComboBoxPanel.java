@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table cell editor abstract class with a custom ComboBox per row as the editing component.
  * <p>
- * Used as TableCellRenderer from JTable, declared in ConfigValueColumn()
+ * Used as TableCellRenderer in SignalMast JTable, declared in ConfigValueColumn()
  * Based on: http://alvinalexander.com/java/jwarehouse/netbeans-src/monitor/src/org/netbeans/modules/web/monitor/client/ComboBoxTableCellEditor.java.shtml
  * @author Egbert Broerse 2016
  * @since 4.7.1
@@ -173,6 +173,8 @@ public abstract class RowComboBoxPanel
         //the user selected another row (or initially no row was selected)
         this.editor.removeAll();  // remove the combobox from the panel
         JComboBox<?> editorbox = getEditorBox(table.convertRowIndexToModel(row));
+        editorbox.putClientProperty("JComponent.sizeVariant", "small");
+        editorbox.putClientProperty("JComboBox.buttonType", "square");
         log.debug("getEditorComponent>notSelected (row={}, value={}; me = {}))", row, value, this.toString());
         if (value != null) {
             editorbox.setSelectedItem(value); // display current Value
@@ -240,6 +242,8 @@ public abstract class RowComboBoxPanel
         this.renderer.removeAll();  //remove the combobox from the panel
         JComboBox<String> renderbox = new JComboBox<>(); // create a fake comboBox with the current Value (Aspect of mast/Appearance of the Head) in this row
         log.debug("RCBP getRendererComponent (row={}, value={})", row, value);
+        renderbox.putClientProperty("JComponent.sizeVariant", "small");
+        renderbox.putClientProperty("JComboBox.buttonType", "square");
         if (value != null) {
             renderbox.addItem(value.toString()); // display (only) the current Value
         } else {

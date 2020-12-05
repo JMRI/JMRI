@@ -78,7 +78,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
     }
 
     @Test
-    public void testWhereused() {
+    public void testWhereUsed() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LogixTableAction lgxTable = (LogixTableAction) a;
 

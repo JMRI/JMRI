@@ -363,7 +363,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getSideBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
@@ -393,7 +393,7 @@ class LayoutEditorComponent extends JComponent {
             g2.setStroke(blockLineStroke);
         } else {
             blockLineStroke = new BasicStroke(
-                    ltdo.getMainBlockLineWidth(),
+                    blockLineWidth,
                     BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
             g2.setStroke(new BasicStroke(
                     blockLineWidth,
@@ -613,7 +613,7 @@ class LayoutEditorComponent extends JComponent {
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ltv.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 
@@ -622,7 +622,7 @@ class LayoutEditorComponent extends JComponent {
             if (r.isEmpty()) {
                 r = MathUtil.inset(r, -4.0);
             }
-            r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
+            //r = MathUtil.centerRectangleOnPoint(r, ls.getCoordsCenter());
             return r;
         }).forEachOrdered(g::draw);
 

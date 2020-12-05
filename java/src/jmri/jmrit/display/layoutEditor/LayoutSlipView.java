@@ -21,7 +21,7 @@ import jmri.util.MathUtil;
  * MVC View component for the LayoutSlip class.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutSlipView extends LayoutTurnoutView {
 
@@ -32,8 +32,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
      * @param rot rotation.
      * @param layoutEditor the layout editor.
      */
-    public LayoutSlipView(@Nonnull LayoutSlip slip, 
-            Point2D c, double rot, 
+    public LayoutSlipView(@Nonnull LayoutSlip slip,
+            Point2D c, double rot,
             @Nonnull LayoutEditor layoutEditor) {
         super(slip, c, rot, layoutEditor);
         this.slip = slip;
@@ -46,10 +46,10 @@ public class LayoutSlipView extends LayoutTurnoutView {
         pointD = MathUtil.subtract(getCoordsCenter(), dispB);
 
         rotateCoords(rot);
-        
+
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutSlipEditor(layoutEditor);
     }
-        
+
     final private LayoutSlip slip;
 
     public int currentState = UNKNOWN;
@@ -424,15 +424,15 @@ public class LayoutSlipView extends LayoutTurnoutView {
             }
 
             // if there are any track connections
-            if ((connectA != null) || (connectB != null)
-                    || (connectC != null) || (connectD != null)) {
+            if ((getConnectA() != null) || (getConnectB() != null)
+                    || (getConnectC() != null) || (getConnectD() != null)) {
                 JMenu connectionsMenu = new JMenu(Bundle.getMessage("Connections")); // there is no pane opening (which is what ... implies)
-                if (connectA != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + connectA.getName()) {
+                if (getConnectA() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "A") + getConnectA().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectA.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectA().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -442,12 +442,12 @@ public class LayoutSlipView extends LayoutTurnoutView {
                         }
                     });
                 }
-                if (connectB != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + connectB.getName()) {
+                if (getConnectB() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "B") + getConnectB().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectB.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectB().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -457,12 +457,12 @@ public class LayoutSlipView extends LayoutTurnoutView {
                         }
                     });
                 }
-                if (connectC != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + connectC.getName()) {
+                if (getConnectC() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "C") + getConnectC().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectC.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectC().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -472,12 +472,12 @@ public class LayoutSlipView extends LayoutTurnoutView {
                         }
                     });
                 }
-                if (connectD != null) {
-                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + connectD.getName()) {
+                if (getConnectD() != null) {
+                    connectionsMenu.add(new AbstractAction(Bundle.getMessage("MakeLabel", "D") + getConnectD().getName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             LayoutEditorFindItems lf = layoutEditor.getFinder();
-                            LayoutTrack lt = lf.findObjectByName(connectD.getName());
+                            LayoutTrack lt = lf.findObjectByName(getConnectD().getName());
                             // this shouldn't ever be null... however...
                             if (lt != null) {
                                 LayoutTrackView ltv = layoutEditor.getLayoutTrackView(lt);
@@ -532,8 +532,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
                     }
                 }
             });
-            if ((connectA == null) && (connectB == null)
-                    && (connectC == null) && (connectD == null)) {
+            if ((getConnectA() == null) && (getConnectB() == null)
+                    && (getConnectC() == null) && (getConnectD() == null)) {
                 JMenuItem rotateItem = new JMenuItem(Bundle.getMessage("Rotate") + "...");
                 popup.add(rotateItem);
                 rotateItem.addActionListener(
@@ -1269,8 +1269,8 @@ public class LayoutSlipView extends LayoutTurnoutView {
             @CheckForNull LayoutBlock prevLayoutBlock,
             @CheckForNull LayoutBlock nextLayoutBlock,
             boolean suppress) {
-            
-        return slip.getConnectivityStateForLayoutBlocks(thisLayoutBlock, 
+
+        return slip.getConnectivityStateForLayoutBlocks(thisLayoutBlock,
                                                         prevLayoutBlock, nextLayoutBlock,
                                                         suppress);
     }
@@ -1289,7 +1289,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
     @Override
     @Nonnull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        return slip.getLayoutConnectivity(); 
+        return slip.getLayoutConnectivity();
     }
 
     /**
@@ -1297,7 +1297,7 @@ public class LayoutSlipView extends LayoutTurnoutView {
      */
     @Override
     public List<HitPointType> checkForFreeConnections() {
-        return slip.checkForFreeConnections(); 
+        return slip.checkForFreeConnections();
     }
 
     // NOTE: LayoutSlip uses the checkForNonContiguousBlocks

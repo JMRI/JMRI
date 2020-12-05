@@ -23,15 +23,19 @@ public class PR4AdapterTest {
         PR4Adapter t = new PR4Adapter();
         String[] cmdStns = t.commandStationOptions();
         boolean foundPR4StandaloneProgrammer = false;
+        boolean foundPR4StandaloneLocoNet = false;
         for (int i=0; i < cmdStns.length; i++) {
-            Assert.assertNotEquals("should not find 'Stand-alone LocoNet", 
-                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName(), cmdStns[i]);
             if (cmdStns[i].equals(LnCommandStationType.COMMAND_STATION_PR4_ALONE.getName())) {
                 foundPR4StandaloneProgrammer = true;
             }
+            if (cmdStns[i].compareTo(
+                    LnCommandStationType.COMMAND_STATION_STANDALONE.getName().toString() +
+                    " (using external LocoNet Data Termination!)") == 0) {
+                foundPR4StandaloneLocoNet = true;
+            }
         }
         Assert.assertTrue("Found PR4 in standalone programmer mode", foundPR4StandaloneProgrammer);
-            
+        Assert.assertTrue("Should have found 'Stand-alone LocoNet but did not!", foundPR4StandaloneLocoNet);            
     }
 
     @BeforeEach

@@ -10,7 +10,7 @@ import jmri.*;
 import jmri.jmrit.signalling.SignallingGuiTools;
 
 /**
- * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout. 
+ * LayoutTurnout is the abstract base for classes representing various types of turnout on the layout.
  * A LayoutTurnout is an
  * extension of the standard Turnout object with drawing and connectivity
  * information added.
@@ -59,7 +59,7 @@ import jmri.jmrit.signalling.SignallingGuiTools;
  *             //\\
  *        D ==**==**== C
  * </pre>
- * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in 
+ * (The {@link LayoutSlip} track objects follow a different pattern. They put A-D in
  * different places and have AD and BC as the normal-continuance parallel paths)
  * <p>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
@@ -97,12 +97,12 @@ import jmri.jmrit.signalling.SignallingGuiTools;
  * Double Crossover. Each connection point can have up to three SignalHeads and one SignalMast.
  * <p>
  * A LayoutWye may be linked to another LayoutTurnout to form a turnout
- * pair. 
+ * pair.
  *<br>
  * Throat-To-Throat Turnouts - Two turnouts connected closely at their
  * throats, so closely that signals are not appropriate at the their throats.
  * This is the situation when two RH, LH, or WYE turnouts are used to model a
- * double slip. 
+ * double slip.
  *<br>
  * 3-Way Turnout - Two turnouts modeling a 3-way turnout, where the
  * throat of the second turnout is closely connected to the continuing track of
@@ -118,7 +118,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     protected LayoutTurnout(@Nonnull String id,
             @Nonnull LayoutEditor models, TurnoutType t) {
         super(id, models);
-        
+
         type = t;
     }
 
@@ -139,8 +139,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * @param models main layout editor.
      * @param v version.
      */
-    public LayoutTurnout(@Nonnull String id, TurnoutType t, 
-            @Nonnull LayoutEditor models, 
+    public LayoutTurnout(@Nonnull String id, TurnoutType t,
+            @Nonnull LayoutEditor models,
             int v) {
         super(id, models);
 
@@ -207,7 +207,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
      * @return boolean true if this is a crossover
      */
     public boolean isTurnoutTypeXover() {
-        return hasEnteringDoubleTrack(getTurnoutType());
+        return isTurnoutTypeXover(getTurnoutType());
     }
 
     /**
@@ -279,7 +279,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         THROAT_TO_THROAT  // this turnout is one of two throat-to-throat
         // turnouts - no signals at throat
     }
-    
+
     // operational instance variables (not saved between sessions)
     public static final int UNKNOWN = Turnout.UNKNOWN;
     public static final int INCONSISTENT = Turnout.INCONSISTENT;
@@ -302,7 +302,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<Turnout> secondNamedTurnout = null;
 
     private java.beans.PropertyChangeListener mTurnoutListener = null;
-    
+
     // persistent instances variables (saved between sessions)
     // these should be the system or user name of an existing physical turnout
     @Nonnull private String turnoutName = ""; // "" means none, never null
@@ -366,7 +366,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     public LinkType linkType = LinkType.NO_LINK;
 
     private final boolean useBlockSpeed = false;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -1177,7 +1177,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
     /**
      * Perhaps confusingly, this returns an actual Turnout reference
      * or null for the turnout associated with this is LayoutTurnout.
-     * This is different from {@link #setTurnout(String)}, which 
+     * This is different from {@link #setTurnout(String)}, which
      * takes a name (system or user) or an empty string.
      * @return Null if no Turnout set
      */
@@ -1206,9 +1206,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Perhaps confusingly, this takes a Turnout name (system or user) 
+     * Perhaps confusingly, this takes a Turnout name (system or user)
      * to locate and set the turnout associated with this is LayoutTurnout.
-     * This is different from {@link #getTurnout()}, which returns an 
+     * This is different from {@link #getTurnout()}, which returns an
      * actual Turnout reference or null.
      * @param tName provide empty string for none; never null
      */
@@ -2355,9 +2355,9 @@ abstract public class LayoutTurnout extends LayoutTrack {
             return;
 
         }
-        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled() 
+        if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()
                 && InstanceManager.getDefault(jmri.SignalMastLogicManager.class).isSignalMastUsed(signalMast)) {
-                
+
             SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
@@ -2637,7 +2637,7 @@ abstract public class LayoutTurnout extends LayoutTrack {
         LayoutConnectivity lc = null;
 
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
-        
+
         log.trace("    type: {}", type);
         log.trace("     lbA: {}", lbA);
         log.trace("     lbB: {}", lbB);
@@ -2654,8 +2654,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbA, lbB);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
 
-                    // The following line needed to change, because it uses location of 
-                    // the points on the TurnoutView itself. Change to 
+                    // The following line needed to change, because it uses location of
+                    // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsB()));
                     lc.setDirection( models.computeDirectionAB(this) );
@@ -2671,8 +2671,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbA, lbC);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
 
-                    // The following line needed to change, because it uses location of 
-                    // the points on the TurnoutView itself. Change to 
+                    // The following line needed to change, because it uses location of
+                    // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
                     lc.setDirection( models.computeDirectionAC(this) );
@@ -2688,8 +2688,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbC, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
 
-                    // The following line needed to change, because it uses location of 
-                    // the points on the TurnoutView itself. Change to 
+                    // The following line needed to change, because it uses location of
+                    // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsC(), getCoordsD()));
                     lc.setDirection( models.computeDirectionCD(this) );
@@ -2705,8 +2705,8 @@ abstract public class LayoutTurnout extends LayoutTrack {
                     lc = new LayoutConnectivity(lbB, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
 
-                    // The following line needed to change, because it uses location of 
-                    // the points on the TurnoutView itself. Change to 
+                    // The following line needed to change, because it uses location of
+                    // the points on the TurnoutView itself. Change to
                     // direction from connections.
                     //lc.setDirection(Path.computeDirection(getCoordsB(), getCoordsD()));
                     lc.setDirection( models.computeDirectionBD(this) );

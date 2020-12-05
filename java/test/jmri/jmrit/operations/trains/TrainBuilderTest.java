@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -5500,7 +5501,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 460, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 461, in.lines().count());
         
 
 
@@ -5538,7 +5539,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 251, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 252, in.lines().count());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 
@@ -5591,7 +5592,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 376, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 377, in.lines().count());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 

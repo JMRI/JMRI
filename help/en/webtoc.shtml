@@ -134,6 +134,12 @@
 
   
 <li>
+<a href="html/hardware/can/cbus/index.shtml">CBUS </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="html/hardware/cmri/CMRI.shtml">C/MRI </a>
 <ul></ul>
 </li>
@@ -248,7 +254,7 @@
 
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG CBUS </a>
+<a href="html/hardware/merg/index.shtml">MERG </a>
 <ul></ul>
 </li>
 
@@ -357,6 +363,12 @@
   
 <li>
 <a href="html/hardware/sprog/SPROG.shtml">SPROG </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/hardware/sproggen5/index.shtml">SPROG Generation 5 </a>
 <ul></ul>
 </li>
 
@@ -2086,62 +2098,67 @@
 </li>
   
 <li>
-<a href="html/hardware/can/cbus/index.shtml">MERG (CBUS) </a>
+<a href="html/hardware/merg/index.shtml">MERG </a>
 <ul>
    
+<li>CBUS Tools <ul>
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
-<a href="html/hardware/can/cbus/Names.shtml">Naming Events </a>
+<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
 <ul></ul>
 </li>
 
-   
-<li>
-<a href="html/hardware/can/cbus/Details.shtml">Connection Details </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/hardware/can/index.shtml">CAN Networks </a>
-<ul></ul>
-</li>
-
-   
+    
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
 <ul></ul>
 </li>
 
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
+<ul></ul>
+</li>
+
+   
+</ul>
+</li>
   
 </ul>
 </li>
@@ -2348,19 +2365,13 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Update </a>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
 <ul></ul>
 </li>
 
    
 <li>
 <a href="package/jmri/jmrix/sprog/packetgen/SprogPacketGenFrame.shtml">Send Packet </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrix/sprog/sprogmon/SprogMonFrame.shtml">Traffic Monitor </a>
 <ul></ul>
 </li>
 
@@ -2376,6 +2387,93 @@
 <ul></ul>
 </li>
 
+   
+<li>
+<a href="package/jmri/jmrix/sprog/update/SprogIIUpdateFrame.shtml">Update SPROG II </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>SPROG Generation 5 <ul>
+   
+<li>SPROG Generation 5 Tools <ul>
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSimpleModeSwitcherFrame.shtml">Pi-SPROG 3 Mode Switcher </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/modeswitcher/SprogCbusSprog3PlusModeSwitcherFrame.shtml">Pi-SPROG/SPROG 3 Plus Mode Switcher </a>
+<ul></ul>
+</li>
+
+   
+</ul>
+</li>
+   
+<li>CBUS Tools <ul>
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/eventtable/EventTablePane.shtml">Event Table Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="html/hardware/can/cbus/CbusMeters.shtml">Voltage / Current Meter </a>
+<ul></ul>
+</li>
+
+   
+</ul>
+</li>
   
 </ul>
 </li>
