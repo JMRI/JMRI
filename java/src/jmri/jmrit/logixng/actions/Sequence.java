@@ -275,7 +275,7 @@ public class Sequence extends AbstractDigitalAction
         int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
         
         // Does index points to an expression socket instead of an action socket?
-        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) != 0) {
             expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
             actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
         }
@@ -300,7 +300,7 @@ public class Sequence extends AbstractDigitalAction
         int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 1;
         int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS + 1;
         
-        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) != 0) {
             expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
             actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
         }
@@ -316,7 +316,7 @@ public class Sequence extends AbstractDigitalAction
         int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
         
         // Does index points to an expression socket instead of an action socket?
-        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) != 0) {
             expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
             actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
         }
