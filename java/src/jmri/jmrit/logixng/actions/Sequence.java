@@ -129,56 +129,41 @@ public class Sequence extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        System.out.format("Sequence.execute()%n");
-        
         if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
             _isRunning = false;
-            System.out.format("Sequence.execute(): stop%n");
             return;
         }
         
         if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
-            System.out.format("Sequence.execute(): start%n");
             _isRunning = true;
         }
         
         if (_expressionEntries.get(EXPRESSION_RESET)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_RESET)._socket.evaluate()) {
-            System.out.format("Sequence.execute(): reset%n");
             _currentStep = -1;
         }
         
         if (!_isRunning) return;
         
-        System.out.format("Sequence.execute(): AA _currentStep: %d%n", _currentStep);
-        
         if (_currentStep == -1) {
             _currentStep = 0;
             FemaleDigitalActionSocket socket =
                     _actionEntries.get(_currentStep)._socket;
-            System.out.format("Sequence.execute(): action connected: %b%n", socket.isConnected());
             if (socket.isConnected()) socket.execute();
         }
-        
-        System.out.format("Sequence.execute(): BB _currentStep: %d%n", _currentStep);
         
         FemaleDigitalExpressionSocket exprSocket =
                 _expressionEntries.get(_currentStep + NUM_STATIC_EXPRESSIONS)._socket;
         if (exprSocket.isConnected() && exprSocket.evaluate()) {
             _currentStep++;
             if (_currentStep >= _actionEntries.size()) {
-                System.out.format("Sequence.execute(): start over%n");
-//                _runContinuously
                 _currentStep = 0;
             }
             
-            System.out.format("Sequence.execute(): next step: _currentStep: %d%n", _currentStep);
-            
             FemaleDigitalActionSocket actionSocket =
                     _actionEntries.get(_currentStep)._socket;
-            System.out.format("Sequence.execute(): action connected: %b%n", actionSocket.isConnected());
             if (exprSocket.isConnected()) actionSocket.execute();
         }
     }
@@ -277,7 +262,7 @@ public class Sequence extends AbstractDigitalAction
             case InsertAfter:
                 return true;    // Always possible
             case MoveUp:
-                return index > NUM_STATIC_EXPRESSIONS+2;   // Possible if not the three static sockets and the first two sockets after that
+                return index >= NUM_STATIC_EXPRESSIONS+2;   // Possible if not the three static sockets and the first two sockets after that
             case MoveDown:
                 return index+2 < getChildCount();   // Possible if not last two sockets
             default:
@@ -286,12 +271,13 @@ public class Sequence extends AbstractDigitalAction
     }
     
     private void insertNewSocket(int index) {
-        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2;
-        int expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS + 1;
+        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 1;
+        int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
         
+        // Does index points to an expression socket instead of an action socket?
         if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
-            expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS;
-            actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + 1;
+            expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
+            actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
         }
         
         FemaleDigitalActionSocket actionSocket =
@@ -311,27 +297,43 @@ public class Sequence extends AbstractDigitalAction
     }
     
     private void removeSocket(int index) {
-        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2;
-        int expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS + 1;
+        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 1;
+        int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS + 1;
         
         if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
-            expressionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + NUM_STATIC_EXPRESSIONS;
-            actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 2 + 1;
+            expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
+            actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
         }
         
         List<FemaleSocket> removeList = new ArrayList<>();
-        removeList.add(_actionEntries.remove(index)._socket);
+        removeList.add(_actionEntries.remove(actionIndex)._socket);
+        removeList.add(_expressionEntries.remove(expressionIndex)._socket);
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
     }
     
     private void moveSocketDown(int index) {
-        ActionEntry temp = _actionEntries.get(index);
-        _actionEntries.set(index, _actionEntries.get(index+1));
-        _actionEntries.set(index+1, temp);
+        int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 1;
+        int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
+        
+        // Does index points to an expression socket instead of an action socket?
+        if (((index-NUM_STATIC_EXPRESSIONS) % 2) == 1) {
+            expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
+            actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
+        }
+        
+        ActionEntry actionTemp = _actionEntries.get(actionIndex);
+        _actionEntries.set(actionIndex, _actionEntries.get(actionIndex+1));
+        _actionEntries.set(actionIndex+1, actionTemp);
+        
+        ExpressionEntry exprTemp = _expressionEntries.get(expressionIndex);
+        _expressionEntries.set(expressionIndex, _expressionEntries.get(expressionIndex+1));
+        _expressionEntries.set(expressionIndex+1, exprTemp);
         
         List<FemaleSocket> list = new ArrayList<>();
-        list.add(_actionEntries.get(index)._socket);
-        list.add(_actionEntries.get(index)._socket);
+        list.add(_actionEntries.get(actionIndex)._socket);
+        list.add(_actionEntries.get(actionIndex+1)._socket);
+        list.add(_expressionEntries.get(expressionIndex)._socket);
+        list.add(_expressionEntries.get(expressionIndex+1)._socket);
         firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
     }
     
@@ -354,7 +356,7 @@ public class Sequence extends AbstractDigitalAction
             case MoveUp:
                 if (index < NUM_STATIC_EXPRESSIONS) throw new UnsupportedOperationException("cannot move up static sockets");
                 if (index <= NUM_STATIC_EXPRESSIONS+1) throw new UnsupportedOperationException("cannot move up first two children");
-                moveSocketDown(index-1);
+                moveSocketDown(index-2);
                 break;
             case MoveDown:
                 if (index+2 >= getChildCount()) throw new UnsupportedOperationException("cannot move down last two children");

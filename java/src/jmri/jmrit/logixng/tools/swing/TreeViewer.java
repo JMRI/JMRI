@@ -137,6 +137,18 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
         _rootVisible = rootVisible;
     }
     
+    /**
+     * Get the path for the item base.
+     * 
+     * @param base the item to look for
+     * @param list a list of the female sockets that makes up the path
+     */
+    protected void getPath(Base base, List<FemaleSocket> list) {
+        for (Base b = base; b != null; b = b.getParent()) {
+            if (b instanceof FemaleSocket) list.add(0, (FemaleSocket)b);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -159,16 +171,26 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
                 }
             }
             
+//            tree.addTreeWillExpandListener(tel);
+//            tree.addTreeExpansionListener(tel);
+//            tree.expandPath(path);
+//            tree.expandRow(row);
+//            tree.getPathForRow(row)
+//            tree.isCollapsed(row)
+//            tree.isCollapsed(path)
+//            tree.isExpanded(path)
+//            tree.isExpanded(row)
+//            tree.isVisible(path)
+//            tree.makeVisible(path);
+            
             // Update the tree
             Base b = (Base)evt.getSource();
-            FemaleSocket.FemaleSocketAndRow socketAndRow = new FemaleSocket.FemaleSocketAndRow();
-            _femaleRootSocket.getFemaleSocketAndRow(b, socketAndRow);
             
-            FemaleSocket femaleSocket = socketAndRow._socket;
-            int row = socketAndRow._row;
-            if (!_rootVisible) row--;
-            TreePath path = tree.getPathForRow(row);
-            updateTree(femaleSocket, path);
+            List<FemaleSocket> list = new ArrayList<>();
+            getPath(b, list);
+            
+            FemaleSocket femaleSocket = list.get(list.size()-1);
+            updateTree(femaleSocket, list.toArray());
         }
         
         
@@ -177,9 +199,9 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             if (! (evt.getNewValue() instanceof List)) throw new RuntimeException("New value is not a list");
             for (FemaleSocket socket : (List<FemaleSocket>)evt.getNewValue()) {
                 // Update the tree
-                int row = femaleSocketTreeModel.getRow(socket);
-                TreePath path = tree.getPathForRow(row);
-                updateTree(socket, path);
+                List<FemaleSocket> list = new ArrayList<>();
+                getPath(socket, list);
+                updateTree(socket, list.toArray());
             }
         }
         
@@ -188,17 +210,17 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
                 || Base.PROPERTY_SOCKET_DISCONNECTED.equals(evt.getPropertyName())) {
             
             FemaleSocket femaleSocket = ((FemaleSocket)evt.getSource());
-            int row = femaleSocketTreeModel.getRow(femaleSocket);
-            TreePath path = tree.getPathForRow(row);
-            updateTree(femaleSocket, path);
+            List<FemaleSocket> list = new ArrayList<>();
+            getPath(femaleSocket, list);
+            updateTree(femaleSocket, list.toArray());
         }
     }
     
-    protected void updateTree(FemaleSocket currentFemaleSocket, TreePath currentPath) {
+    protected void updateTree(FemaleSocket currentFemaleSocket, Object[] currentPath) {
         for (TreeModelListener l : femaleSocketTreeModel.listeners) {
             TreeModelEvent tme = new TreeModelEvent(
                     currentFemaleSocket,
-                    currentPath.getPath()
+                    currentPath
             );
             l.treeNodesChanged(tme);
         }
@@ -292,31 +314,6 @@ public class TreeViewer extends JmriJFrame implements PropertyChangeListener {
             listeners.remove(l);
         }
 
-        public int getRow(Base base) {
-            SearchTreeData data = new SearchTreeData();
-            try {
-                base.forEntireTree((Base b) -> {
-                    if (base == b) throw new FoundException();
-                    data.row++;
-                });
-            } catch (FoundException e) {
-                return data.row;
-            }
-            throw new IllegalArgumentException("Item "+base.toString()+" not found in tree");
-        }
-
-//        private void notifyListeners() {
-//            for (TreeModelListener l : listeners) {
-//                l.treeNodesChanged(e);
-//            }
-//        }
-
-        private static class SearchTreeData {
-            int row = 0;
-        }
-        
-        private static class FoundException extends RuntimeException {}
-        
     }
     
     

@@ -209,7 +209,7 @@ public class DigitalMany extends AbstractDigitalAction
         
         List<FemaleSocket> list = new ArrayList<>();
         list.add(_actionEntries.get(index)._socket);
-        list.add(_actionEntries.get(index)._socket);
+        list.add(_actionEntries.get(index+1)._socket);
         firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
     }
     

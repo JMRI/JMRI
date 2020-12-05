@@ -1009,7 +1009,7 @@ public class TreeEditor extends TreeViewer {
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         clipboard.add(_currentFemaleSocket.getConnectedSocket());
                         _currentFemaleSocket.disconnect();
-                        updateTree(_currentFemaleSocket, _currentPath);
+                        updateTree(_currentFemaleSocket, _currentPath.getPath());
                         _femaleRootSocket.registerListeners();
                     } else {
                         log.error("_currentFemaleSocket is not connected");
@@ -1045,7 +1045,7 @@ public class TreeEditor extends TreeViewer {
                                 InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
                         try {
                             _currentFemaleSocket.connect(clipboard.fetchTopItem());
-                            updateTree(_currentFemaleSocket, _currentPath);
+                            updateTree(_currentFemaleSocket, _currentPath.getPath());
                         } catch (SocketAlreadyConnectedException ex) {
                             log.error("item cannot be connected", ex);
                         }
@@ -1272,7 +1272,7 @@ public class TreeEditor extends TreeViewer {
             } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                 log.error("Exception while deleting bean", e);
             }
-            updateTree(_currentFemaleSocket, _currentPath);
+            updateTree(_currentFemaleSocket, _currentPath.getPath());
         }
     }
     
