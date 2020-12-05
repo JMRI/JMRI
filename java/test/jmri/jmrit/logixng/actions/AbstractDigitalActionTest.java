@@ -6,9 +6,9 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
+import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;

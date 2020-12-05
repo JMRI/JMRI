@@ -6,6 +6,8 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -13,19 +15,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
-
 /**
  * Test AbstractDigitalExpression
  */
 public class AbstractDigitalExpressionTest {
-/*
+
     // This method is CPU intensive so we don't want to run it for every expression.
     @Test
     public void testGetNewSocketName() {
@@ -42,7 +36,7 @@ public class AbstractDigitalExpressionTest {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-*/
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -58,7 +52,7 @@ public class AbstractDigitalExpressionTest {
         JUnitUtil.tearDown();
     }
     
-/*    
+    
     // The purpose of this class is to test the method
     // AbstractDigitalAction.getNewSocketName(). We want
     // to test that the method throws an exception if no
@@ -109,7 +103,7 @@ public class AbstractDigitalExpressionTest {
 
         @Override
         public int getChildCount() {
-            return Integer.MAX_VALUE;
+            return 10001;   // One more that the max loop in AbstractDigitalAction.getNewSocketName
         }
 
         @Override
@@ -187,5 +181,5 @@ public class AbstractDigitalExpressionTest {
         }
     
     }
-*/    
+    
 }
