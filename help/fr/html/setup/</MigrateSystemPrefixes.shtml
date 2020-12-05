@@ -1,0 +1,114 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="fr">
+<head>
+<!-- translated on 2020-12-05 -->
+  <title>JMRI Setup - Migrating System Prefixes</title>
+  <meta name="keywords" content=
+  "java model railroad JMRI install Dropbox">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+ 
+ <h1>Installation de JMRI : Migration des Pr&#233;fixes Syst&#232;me </h1>
+
+      <a href="../doc/Technical/Names.shtml">Noms Syst&#232;mes d'IRMJ</a>
+      sont cens&#233;s avoir un 
+      <a href="../doc/Technical/Names.shtml#format">format sp&#233;cifique</a>
+      qui commence par un "pr&#233;fixe syst&#232;me" compos&#233; d'un seul
+      lettre, &#233;ventuellement suivie de chiffres.
+      Malheureusement, pendant un certain temps,  JMRI n'a pas appliqu&#233; cette r&#232;gle correctement, et 
+      dans quelques cas, JMRI s'est mis en place avec des pr&#233;fixes contenant plusieurs lettres.   Cela peut entra&#238;ner des 
+      probl&#232;mes &#224; long terme, nous incitons donc les gens &#224; migrer leurs configurations et leurs fichiers de panneaux au bon format.
+      
+      
+      <h2 id="if">Est-ce que cela m'affecte ?</h2>
+      Vous pouvez v&#233;rifier si cela pose un probl&#232;me pour votre installation de plusieurs fa&#231;ons :
+      <ul>
+      <li>Ouvrir les pr&#233;f&#233;rences, et regarder chacun des volets "Connexion".  Si le pr&#233;fixe de connexion 
+            a une lettre ou une seule lettre plus des chiffres, cela ne vous concerne pas.
+            Si elle comporte plus d'une lettre, vous devez proc&#233;der &#224; cette migration.
+            (Avec 
+            <a href="/releasenotes/jmri4.13.4.shtml">JMRI 4.13.4</a>
+            ou plus tard, le fond sera color&#233; en rouge 
+            et l'info-bulle indiquera "Ceci est un pr&#233;fixe h&#233;rit&#233; qui devrait &#234;tre migr&#233;, demandez sur JMRIusers" si le pr&#233;fixe doit &#234;tre migr&#233;)
+      <li>V&#233;rifiez le journal du syst&#232;me apr&#232;s avoir ex&#233;cut&#233; et quitt&#233; le programme pour voir s'il y a un  message d'avertissement concernant "Les noms de syst&#232;mes suivants doivent &#234;tre migr&#233;s..."
+            S'il est l&#224;, vous devriez faire cette migration.
+      </ul>
+      
+      <h2 id="do">Comment r&#233;soudre le probl&#232;me</h2>
+      
+      Pour rem&#233;dier &#224; ce probl&#232;me, vous mettez &#224; jour vos fichiers de configuration et de panneau pour
+      utiliser de nouveaux pr&#233;fixes.
+      <p>
+      Si vous rencontrez des probl&#232;mes, veuillez
+      demander de l'aide sur le 
+      <a href="https://groups.io/g/jmriusers">Groupe d'utilisateurs de JMRI</a>.  
+      Il y a l&#224; des personnes qui se feront un plaisir de faire les modifications de fichiers n&#233;cessaires.
+        Si votre ordinateur est connect&#233; &#224; l'Internet, vous pouvez t&#233;l&#233;charger votre configuration telle qu'elle est d&#233;crite sur
+            <a href="../../package/jmri/jmrit/mailreport/Report.shtml">cette page</a>.
+            Cela permettra aux utilisateurs de jmriusers de voir exactement ce dont ils ont besoin.
+      
+      
+      <ul>
+      <li>Premi&#232;rement, vous devriez utiliser 
+            <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
+            ou plus tard. Si vous utilisez un veuillez mettre &#224; jour au moins &#224; la version 
+            <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
+            et de r&#233;gler les probl&#232;mes &#233;ventuels.
+      <li>Suivant, d&#233;terminez le nouveau pr&#233;fixe de votre connexion :
+            <ul>
+            <li>DCCPP pour DCC++ devrait &#234;tre remplac&#233; par D
+            <li>DP pour DCC4PC devrait &#234;tre chang&#233; en D
+            <li>DX pour Anya DX devrait &#234;tre remplac&#233; par D
+            <li>MC pour Marklin CS2 devrait &#234;tre chang&#233; en M
+            <li>MR pour MRC devrait &#234;tre chang&#233; en M
+            <li>PI pour la framboise Pi devrait &#234;tre chang&#233; en P
+            <li>TM pour TMCC devrait &#234;tre remplac&#233; par T
+            </ul>
+            Toutefois, si vous avez d&#233;j&#224; un lien avec cette lettre, vous devrez en choisir une autre.  La lettre
+            est arbitraire, alors choisissez simplement celui qui vous semble logique.
+        <li> Faites une sauvegarde de tous vos fichiers.  Peut-&#234;tre plus d'un.
+            Et assurez-vous qu'ils soient utilisables au cas o&#250; vous auriez besoin de les restaurer !
+        <li>Prenez tous vos fichiers de panel, et modifiez-les pour changer le pr&#233;fixe
+            de toutes les r&#233;f&#233;rences. Pour vous aider, la derni&#232;re fois que vous avez lanc&#233; JMRI, il a mis une liste de noms de r&#233;f&#233;rences dans le journal vers la fin,
+            et un fichier "legacy_bean_names.csv" similaire a &#233;t&#233; &#233;crit dans votre r&#233;pertoire de fichiers d'utilisateurs.
+            Vous pouvez rechercher chacun de ces noms de r&#233;f&#233;rence &#224; tour de r&#244;le et le remplacer par le nouveau pr&#233;fixe.
+        <li>D&#233;marrez JMRI, ouvrez les Pr&#233;f&#233;rences du panneau de connexion, 
+            changer le pr&#233;fixe de votre connexion, Sauvegarder et red&#233;marrer.
+       </ul>
+      
+      <h2 id="not">Que se passe-t-il si je ne fais pas ce changement ?</h2>
+      
+      Si vous ne faites pas ce changement, votre installation JMRI existante continuera de fonctionner correctement.
+      <p>
+      Si/quand vous mettez &#224; jour les versions plus r&#233;centes de JMRI :
+      <ul>
+      <li>Lorsque vous effectuez une mise &#224; jour vers JMRI 4.15.3 ou une version ult&#233;rieure, vous recevrez des messages vous invitant &#224; corriger ce probl&#232;me chaque fois que vous lancerez JMRI.
+      <li>Si vous mettez &#224; jour vers JMRI 4.17.1 ou plus tard (&#233;t&#233; 2019) sans corriger cela, vous ne pourrez pas utiliser votre configuration existante ou les fichiers du panneau.
+      </ul>
+      Nous sommes d&#233;sol&#233;s pour ce d&#233;sagr&#233;ment, mais nous devons vraiment r&#233;gler ce probl&#232;me.
+      Donner aux gens un d&#233;lai de plus de 18 mois semble suffisant
+      
+     <!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html> 
+      
