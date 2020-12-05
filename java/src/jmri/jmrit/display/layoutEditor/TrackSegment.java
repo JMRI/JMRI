@@ -841,8 +841,22 @@ public class TrackSegment extends LayoutTrack {
             Point2D centre = tsv.getCentre();
             double startAdjDEG = tsv.getStartAdj();
             double tmpAngleDEG = tsv.getTmpAngle();
+
+            log.warn(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
+                    tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
+
             double distance = 2.0 * radius * Math.PI * tmpAngleDEG / 360.0;
             if (distanceOnTrack < distance) {  // it's on this track
+                Point2D p1 = models.getCoords(getConnect1(), getType1());
+                Point2D p2 = models.getCoords(getConnect2(), getType2());
+
+                double angle1DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(centre, p1));
+                double angle2DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(p2, centre));
+
+                log.warn(String.format("p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
+                log.warn(String.format("p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
+                
+                //log.warn(String.format("startAdjDEG: %.0f, tmpAngleDEG: %.0f", startAdjDEG, tmpAngleDEG));
                 double dirDeltaDEG = 90.0;
                 double ratio = distanceOnTrack / distance;
                 boolean isFlipped = tsv.isFlip();
@@ -859,8 +873,9 @@ public class TrackSegment extends LayoutTrack {
                 }
 
                 // Compute location
-                Point2D loc = new Point2D.Double(centre.getX() + radius, centre.getY());
-                loc = MathUtil.rotateDEG(loc, centre, startAdjDEG + tmpAngleDEG);
+                Point2D delta = new Point2D.Double(radius, 0);
+                delta = MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG);
+                Point2D loc = MathUtil.add(centre, delta);
                 navigator.setLocation(loc);
                 navigator.setDirectionDEG(startAdjDEG + tmpAngleDEG + dirDeltaDEG);
                 navigator.setDistance(0);

@@ -8684,7 +8684,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         newNavigator.setName(getUniqueNavName());
         navigators.add(newNavigator);
         if (!navTimer.isRunning()) {
-            log.error("Navigation timer starting");
+            log.warn("Navigation timer starting");
             setNavStartTime(System.currentTimeMillis());
             navTimer.start();
         }
@@ -8693,7 +8693,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void removeNavigator(@Nonnull LENavigator navigator) {
         navigators.remove(navigator);
         if (navigators.isEmpty()) {
-            log.error("Navigation timer stoping");
+            log.warn("Navigation timer stoping");
             navTimer.stop();
         }
     }
