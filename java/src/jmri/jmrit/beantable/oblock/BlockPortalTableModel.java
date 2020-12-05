@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
@@ -14,7 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * GUI to define OBlocks
+ * GUI to define Portal-Block-Portal combos for OBlocks.
+ * No differences between _desktop and _tabbed code, so _tabbed not stored.
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -51,10 +52,10 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     public int getRowCount() {
         int count = 0;
         List<OBlock> list = _oBlockModel.getBeanList();
-        for (int i = 0; i < list.size(); i++) {
-            count += list.get(i).getPortals().size();
+        for (OBlock oBlock : list) {
+            count += oBlock.getPortals().size();
         }
-        return count;
+        return count; // no temprow for edit, so no need for -1 for _tabbed
     }
 
     @Override
@@ -78,8 +79,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
         List<OBlock> list = _oBlockModel.getBeanList();
         if (list.size() > 0) {
             int count = 0;
-            int idx = 0;  //accumulated row count
-            OBlock block = null;
+            int idx = 0; // accumulated row count
+            OBlock block;
             OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);
             Arrays.sort(array, new NamedBeanUserNameComparator<>());
@@ -123,7 +124,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     }
 
     public int getPreferredWidth(int col) {
-        return new JTextField(15).getPreferredSize().width;
+        return new JTextField(20).getPreferredSize().width;
     }
 
     @Override
@@ -136,4 +137,5 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class);
+
 }

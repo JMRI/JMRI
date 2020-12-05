@@ -133,18 +133,21 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Set value from a String value.
      * <p>
      * The current implementation is a stand-in. Note that e.g. Speed Tables
-     * don't use a single Int, so will just be skipped. The solution to that is
-     * to overload this in complicated variable types.
+     * don't use a single Int. The solution to that is to override this in
+     * complicated variable types.
+     * <p>
+     * Since variable values can now be non-integer (text, long, hex etc.) we
+     * need a universally-usable method for setting values, such as default
+     * values in decoder definitions.
+     * <p>
+     * We don't want to have this method failing silently. Subclasses that need
+     * silent failure will need to override this method.
      *
      * @param value the String value to set
      */
     public void setValue(String value) {
-        try {
-            int val = Integer.parseInt(value);
-            setIntValue(val);
-        } catch (NumberFormatException e) {
-            log.debug("skipping set of non-integer value \"{}\"", value);
-        }
+        int val = Integer.parseInt(value);
+        setIntValue(val);
     }
 
     /**
@@ -420,8 +423,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Extending classes should override to return a single mask in case
-     * a list of masks was provided and the class only uses one.
+     * Extending classes should override to return a single mask in case a list
+     * of masks was provided and the class only uses one.
      *
      * @return the CV bitmask in the form XXXVVVXX
      */
@@ -520,7 +523,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     public boolean isToRead() {
         if (_cvMap.get(getCvNum()) != null) { // skip displayed variables without a CV
             return _cvMap.get(getCvNum()).isToRead();
-            }
+        }
         return false;
     }
 
@@ -608,8 +611,9 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     private boolean _busy = false;
 
     /**
-     * In case a set of masks was provided, at end of Ctor pick the first mask for
-     * implementing classes that use just one. Call not required if mask is ignored.
+     * In case a set of masks was provided, at end of Ctor pick the first mask
+     * for implementing classes that use just one. Call not required if mask is
+     * ignored.
      */
     protected void simplifyMask() {
         if (_mask != null && _mask.contains(" ")) {

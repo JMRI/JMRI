@@ -63,6 +63,7 @@ abstract public class LayoutTrackView {
     final protected LayoutEditor layoutEditor;
 
     // Accessor Methods
+
     @Nonnull
     final public String getId() {  // temporary Id vs name; is one for the View?
         return layoutTrack.getId();
@@ -124,7 +125,7 @@ abstract public class LayoutTrackView {
 
     /**
      * Set new decorations
-     * <p>
+     *
      * This is a complete replacement of the decorations, not an appending.
      *
      * @param decorations A map from strings ("arrow", "bridge", "bumper",..) to
@@ -426,8 +427,8 @@ abstract public class LayoutTrackView {
      * @since 7.4.3
      */
     abstract protected HitPointType findHitPointType(@Nonnull Point2D hitPoint,
-            boolean useRectangles,
-            boolean requireUnconnected);
+                                                    boolean useRectangles,
+                                                    boolean requireUnconnected);
 
     // optional useRectangles & requireUnconnected parameters default to false
     final protected HitPointType findHitPointType(@Nonnull Point2D p) {

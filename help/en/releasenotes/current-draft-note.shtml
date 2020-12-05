@@ -19,6 +19,16 @@
                 <li></li>
             </ul>
 
+        <h4>CBUS</h4>
+            <ul>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
+                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
+                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
+                <li>Refer to MERG section of this not for changes in JMRI support for MERG hardware.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
+            </ul>
+
         <h4>C/MRI</h4>
             <ul>
                 <li>CMRI SerialSensor updated to support multiple Character system name prefixes.</li>
@@ -84,6 +94,19 @@
                     interrogation mechanism now implements a minimum delay from
                     the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
+                <li>The "DS64 Configuration Tool" was updated:
+                    <ul>
+                        <li>to correctly perform the "Factory Reset" operation
+                            without encountering a "Java Exception";</li>
+                        <li>to correctly perform the "Factory Reset" operation to
+                            the correct DS64 as specified in the "Unit Address" field;</li>
+                        <li>to correctly manage the values shown on the "OpSw Values"
+                            tab and maintain value coherency between the "OpSw Values" tab
+                            and the "Basic Settings" tab.</li>
+                    </ul>
+                </li>
+                <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
+                    Termination!)" for Digitrax PR4.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -96,11 +119,11 @@
                 <li></li>
             </ul>
 
-        <h4>MERG CBUS</h4>
+        <h4>MERG </h4>
             <ul>
-                <li>CBUS RFID Reporters now act similar to other JMRI Reporters, ie with a timeout following the report.</li>
-                <li>CBUS Reporters can set a Sensor to follow the active IDTag status, set via CBUS Reporter Table.</li>
-                <li>CBUS Reporters will default to classic RFID ( 5 byte unique tags ), with option for in-development CANRC522 / CANRCOM format, set via CBUS Reporter Table.</li>
+                <li>CBUS now has its own trademark and is referred to as CBUS, not 'MERG CBUS'.</li>
+                <li>Refer to CBUS section of this not for changes in JMRI support for CBUS.</li>
+                <li>Restructured help pages to reflect split between MERG specific hardware and hardware agnostic CBUS features.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -108,6 +131,15 @@
                 <li>Added support for creating ranges of Turnouts and Lights.<br>
                 Sensor, Turnout and Light Address ranges do not have to be fully numeric,
                 and will be incremented using the final number in an address.</li>
+                <li>Added support for changing the default quality of service and
+                retention policy for transmissions.  See the
+                <a href="http://jmri.org/jython/SetMqttOptions.py">jython/SetMqttOptions.py</a>
+                script for an example.</li>
+                <li>Fix a nasty threading bug in the MQTT Light support that can
+                cause a JMRI lockup on the first access after adding a Light.</li>
+
+                <li>Update the Paho MQTT library from version 0.4.0 to 1.2.5 (current)</li>
+                <li>Better handling of wildcards in topic subscriptions</li>
             </ul>
 
         <h4>MRC</h4>
@@ -146,11 +178,12 @@
                 <li></li>
             </ul>
 
-        <h4>SPROG</h4>
+        <h4>SPROG DCC </h4>
             <ul>
                 <li>EStop for 28 Step mode is now sent correctly</li>
 		<li>Updated programming mode switcher for Pi-SPROG 3</li>
 		<li>Added mode switcher for SPROG 3 Plus</li>
+		<li>Added help content for new generation 5 hardware</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -407,9 +440,9 @@
         <ul>
 	        <li>The Layout Editor code has been substantially restructured in this release.
 	            If you have scripts that reference the jmri.jmrit.display.layoutEditor package
-	            please check them carefully, as new classes have been created and 
+	            please check them carefully, as new classes have been created and
 	            some methods have moved.  Panel files containing Layout Editor panels
-	            that are stored (written out) by this release may not be readable 
+	            that are stored (written out) by this release may not be readable
 	            by earlier releases; this release should load older files just fine.
 	        </li>
         </ul>
@@ -447,13 +480,16 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway 
+	    - Unified Control Place - JOP style.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
                 <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
                   panels. See OBlocks and JSON.</li>
+                <li>OBlock and associated tables can be edited like the 'standard' tables (see
+                  <a href="#TLae">OBlocks</a>).</li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -490,6 +526,9 @@
         <ul>
           <li>Increased address validation for multiple hardware types.</li>
           <li>Access to OBlocks in Web Server via JSON messages was added.</li>
+          <li>Occupancy Blocks, Portals and Paths used in Warrants can be edited in an optional table style
+            like that used in the 'standard' tables (Turnouts, Lights etc). The information is stored in the exact
+            same way, so you may change the UI as desired (see Preferences &gt; Display. Restart required)</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -597,19 +636,17 @@
             <li></li>
         </ul>
 
-    <h3>Web Server</h3>
-    <ul>
-      <ul>
-        <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
-        <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
-          Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
-        <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
-          items control layout is selected in the Editor Options menu).</li>
-        <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
-          panels.</li>
-        <li>OBlocks access was added as a JSON Servlet to allow this.</li>
-      </ul>
-    </ul>
+   <h3>Web Server</h3>
+        <ul>
+            <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
+            <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
+              Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
+            <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
+              items control layout is selected in the Editor Options menu).</li>
+            <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
+              panels.</li>
+            <li>OBlocks access was added as a JSON Servlet to allow this.</li>
+        </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>

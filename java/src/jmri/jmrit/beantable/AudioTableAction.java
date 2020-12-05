@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -66,7 +67,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
         if (!InstanceManager.getOptionalDefault(AudioManager.class).isPresent()) {
             setEnabled(false);
         }
-
     }
 
     /**
@@ -77,10 +77,11 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     }
 
     @Override
-    public void addToFrame(BeanTableFrame f) {
+    public void addToFrame(@Nonnull BeanTableFrame<Audio> f) {
         JButton addBufferButton = new JButton(Bundle.getMessage("ButtonAddAudioBuffer"));
         atp.addToBottomBox(addBufferButton);
         addBufferButton.addActionListener(this::addBufferPressed);
+
         JButton addSourceButton = new JButton(Bundle.getMessage("ButtonAddAudioSource"));
         atp.addToBottomBox(addSourceButton);
         addSourceButton.addActionListener(this::addSourcePressed);
@@ -133,6 +134,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public JPanel getPanel() {
         createModel();
+
         return atp;
     }
 
@@ -171,7 +173,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     }
 
     @Override
-    public void setMenuBar(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame<Audio> f) {
         JMenuBar menuBar = f.getJMenuBar();
         MenuElement[] subElements;
         JMenu fileMenu = null;

@@ -2,8 +2,6 @@ package apps.gui3.dp3;
 
 import apps.AppsBase;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -53,10 +51,12 @@ public class DecoderPro3Test {
 
         };
         assertThat(a).isNotNull();
-        // shutdown the application
-        AppsBase.handleQuit();
+        
         // remove a frame opened by DecoderPro3
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
+        // shutdown the application
+        AppsBase.handleQuit();
+        
     }
 
     @BeforeEach
@@ -68,7 +68,8 @@ public class DecoderPro3Test {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
+        // eventually want to test ShutDownTasks?
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

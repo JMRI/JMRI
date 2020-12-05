@@ -71,6 +71,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public JCheckBox mouseEvent;
     private JComboBox<Integer> fontSizeComboBox;
     public JCheckBox graphicStateDisplay;
+    public JCheckBox tabbedOblockEditor;
     public JCheckBox editorUseOldLocSizeDisplay;
 
     public GuiLafConfigPane() {
@@ -83,6 +84,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         doClickSelection(p = new JPanel());
         add(p);
         doGraphicState(p = new JPanel());
+        add(p);
+        doTabbedOblockEditor(p = new JPanel());
         add(p);
         doEditorUseOldLocSize(p = new JPanel());
         add(p);
@@ -101,12 +104,23 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     void doGraphicState(JPanel panel) {
         panel.setLayout(new FlowLayout());
-        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
+        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUITabbedOblockEditor"));
         graphicStateDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState());
+        graphicStateDisplay.setToolTipText(ConfigBundle.getMessage("GUIToolTipTabbedEdit"));
         graphicStateDisplay.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
         panel.add(graphicStateDisplay);
+    }
+
+    void doTabbedOblockEditor(JPanel panel) {
+        panel.setLayout(new FlowLayout());
+        tabbedOblockEditor = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
+        tabbedOblockEditor.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed());
+        tabbedOblockEditor.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor.isSelected());
+        });
+        panel.add(tabbedOblockEditor);
     }
 
     void doEditorUseOldLocSize(JPanel panel) {
