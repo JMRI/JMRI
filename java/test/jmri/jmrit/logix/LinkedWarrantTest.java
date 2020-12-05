@@ -367,16 +367,8 @@ public class LinkedWarrantTest {
             for ( ShutDownTask t : list) {
                 sm.deregister(t);
             }
-            /*
-            List<Runnable> rlist = sm.getRunnables();
-            while (!rlist.isEmpty()) {
-                if (rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
-                    sm.deregister((ShutDownTask)rlist.get(0));
-                    rlist = sm.getRunnables();
-                }
-            }
-            */
         }
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 }

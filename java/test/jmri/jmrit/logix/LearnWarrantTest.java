@@ -230,6 +230,7 @@ public class LearnWarrantTest {
                 sm.deregister(t);
             }
         }
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 
