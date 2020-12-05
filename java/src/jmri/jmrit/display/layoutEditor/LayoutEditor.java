@@ -988,7 +988,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); // NOI18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected()));
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        });
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
@@ -997,7 +999,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         antialiasingOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AntialiasingOn"));
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
         antialiasingOnCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            antialiasingOn = antialiasingOnCheckBoxMenuItem.isSelected();
+            setAntialiasingOn(antialiasingOnCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
@@ -1011,7 +1013,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
         drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            drawLayoutTracksLabel = drawLayoutTracksLabelCheckBoxMenuItem.isSelected();
+            setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
         drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
