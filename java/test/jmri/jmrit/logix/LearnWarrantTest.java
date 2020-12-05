@@ -221,6 +221,7 @@ public class LearnWarrantTest {
             while (!rlist.isEmpty()) {
                 if (rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
                     sm.deregister((ShutDownTask)rlist.get(0));
+                    rlist = sm.getRunnables();
                 }
             }
         }
