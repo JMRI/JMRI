@@ -25,11 +25,10 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String COLOR = Bundle.getMessage("Color");
-    public static final String LENGTH = Bundle.getMessage("Length");
     public static final String OWNER = Bundle.getMessage("Owner");
     public static final String CONSIST = Bundle.getMessage("Consist");
 
-    public EngineAttributeEditFrame() {
+    public EngineAttributeEditFrame(){
     }
 
 //    public String _attribute; // track which attribute is being edited
@@ -80,11 +79,8 @@ public class EngineAttributeEditFrame extends RollingStockAttributeEditFrame {
             InstanceManager.getDefault(EngineTypes.class).addName(addItem);
         }
         if (_attribute.equals(LENGTH)) {
-            String length = convertLength(addItem);
-            if (!length.equals(FAILED)) {
-                InstanceManager.getDefault(EngineLengths.class).addName(length);
-                comboBox.setSelectedItem(length);
-            }
+            InstanceManager.getDefault(EngineLengths.class).addName(addItem);
+            comboBox.setSelectedItem(addItem);
         }
         if (_attribute.equals(CONSIST)) {
             engineManager.newConsist(addItem);
