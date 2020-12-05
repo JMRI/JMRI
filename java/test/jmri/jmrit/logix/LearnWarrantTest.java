@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.ConfigureManager;
@@ -8,6 +9,8 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 //import jmri.ShutDownManager;
 //import jmri.ShutDownTask;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -215,18 +218,18 @@ public class LearnWarrantTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
-        /*
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            List<ShutDownTask> list = new ArrayList<>();
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-            List<Runnable> rlist = sm.getRunnables();
-            while (!rlist.isEmpty()) {
-                if (rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
-                    sm.deregister((ShutDownTask)rlist.get(0));
-                    rlist = sm.getRunnables();
+            for (Runnable r : sm.getRunnables()) {
+                if (r instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                    list.add((ShutDownTask)r);
                 }
             }
-        }*/
+            for ( ShutDownTask t : list) {
+                sm.deregister(t);
+            }
+        }
         JUnitUtil.tearDown();
     }
 
