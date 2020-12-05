@@ -269,9 +269,10 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         }
     }
     
-    public boolean isRoadRestricted() {
+    public boolean isBuiltRestricted() {
         for (Train train : getList()) {
-            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+            if (!train.getBuiltStartYear().equals(Train.NONE) ||
+                    !train.getBuiltEndYear().equals(Train.NONE)) {
                 return true;
             }
         }
@@ -281,6 +282,24 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
     public boolean isLoadRestricted() {
         for (Train train : getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isRoadRestricted() {
+        for (Train train : getList()) {
+            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isOwnerRestricted() {
+        for (Train train : getList()) {
+            if (!train.getOwnerOption().equals(Train.ALL_OWNERS)) {
                 return true;
             }
         }
