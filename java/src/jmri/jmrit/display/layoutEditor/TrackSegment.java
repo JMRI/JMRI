@@ -852,29 +852,74 @@ public class TrackSegment extends LayoutTrack {
 
                 double angle1DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(centre, p1));
                 double angle2DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(p2, centre));
+                double angleDeltaDEG = Math.signum(angle1DEG - angle2DEG) * Math.abs(tmpAngleDEG);
 
-                log.warn(String.format("p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
-                log.warn(String.format("p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
-                
+                log.warn(String.format("    p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
+                log.warn(String.format("    p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
+                log.warn(String.format("    angleDelta: %.0f", angleDeltaDEG));
+
                 //log.warn(String.format("startAdjDEG: %.0f, tmpAngleDEG: %.0f", startAdjDEG, tmpAngleDEG));
                 double dirDeltaDEG = 90.0;
                 double ratio = distanceOnTrack / distance;
-                boolean isFlipped = tsv.isFlip();
-                if (isFlipped ^ connect1.equals(navigator.getLastTrack())) {
-                    //if entering from this end...
-                    tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-                } else if (isFlipped ^ connect2.equals(navigator.getLastTrack())) {
-                    //if entering from the other end...
-                    tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
+//                boolean isFlipped = tsv.isFlip();
+                Point2D delta = new Point2D.Double(radius, 0);
+                Point2D p1p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG));
+                Point2D p2p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG));
+
+                if (Math.abs(MathUtil.wrapPM180(angle1DEG - startAdjDEG)) < 1) {
+                    // entering from this end...
+                    if (Math.abs(MathUtil.wrapPM180(angle2DEG - (startAdjDEG + tmpAngleDEG))) < 1) {
+                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
+                    } else {
+                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
+                    }
+                } else if (Math.abs(MathUtil.wrapPM180(angle1DEG - (startAdjDEG + tmpAngleDEG))) < 1) {
+                    // entering from the other end...
+                    if (Math.abs(MathUtil.wrapPM180(angle2DEG - startAdjDEG)) < 1) {
+                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
+                    } else {
+                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
+                    }
                     dirDeltaDEG = -90.0;
                 } else {    // OOPS! we're lost!
                     result = super.navigate(navigator);   // call super to STOP
                     tmpAngleDEG = 0.0;
                 }
 
+//                if (connect1.equals(navigator.getLastTrack())) {
+//                    //if entering from this end...
+//                    tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
+//                } else if (connect2.equals(navigator.getLastTrack())) {
+//                    //if entering from the other end...
+//                    tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
+//                    dirDeltaDEG = -90.0;
+//                } else {    // OOPS! we're lost!
+//                    result = super.navigate(navigator);   // call super to STOP
+//                    tmpAngleDEG = 0.0;
+//                }
+//                if (MathUtil.distance(p1, p1p) < 1) {
+//                    startAdjDEG = angle1DEG;
+//                    if (MathUtil.distance(p2, p2p) < 1) {
+//                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
+//                    } else {
+//                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
+//                    }
+//                } else if (MathUtil.distance(p1, p2p) < 1) {
+//                    startAdjDEG = angle2DEG;
+//                    if (MathUtil.distance(p2, p1p) < 1) {
+//                        tmpAngleDEG = MathUtil.lerp(-tmpAngleDEG, 0.0, ratio);
+//                    } else {
+//                        tmpAngleDEG = MathUtil.lerp(0.0, -tmpAngleDEG, ratio);
+//                    }
+//                } else {
+//                    result = super.navigate(navigator);   // call super to STOP
+//                    tmpAngleDEG = 0.0;
+//                }
                 // Compute location
-                Point2D delta = new Point2D.Double(radius, 0);
                 delta = MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG);
+                if (!tsv.isCircle()) {
+                    delta = MathUtil.multiply(delta, radius2D.getX() / ratio, radius2D.getY() / ratio);
+                }
                 Point2D loc = MathUtil.add(centre, delta);
                 navigator.setLocation(loc);
                 navigator.setDirectionDEG(startAdjDEG + tmpAngleDEG + dirDeltaDEG);
