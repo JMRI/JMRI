@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalExpression_FormulaType">
+    <xs:complexType name="LogixNG_StringExpression_FormulaType">
       <xs:annotation>
         <xs:documentation>
           Define the XML stucture for storing the contents of a Formula class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.expressions.configurexml.FormulaXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.string.expressions.configurexml.FormulaXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 
@@ -58,7 +58,6 @@
               </xs:element>
 
               <xs:element name="formula" type="xs:string" />
-
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

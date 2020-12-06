@@ -153,6 +153,7 @@ public class Sequence extends AbstractDigitalAction
         
         if (_currentStep == -1) {
             _currentStep = 0;
+            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
             FemaleDigitalActionSocket socket =
                     _actionEntries.get(_currentStep)._socket;
             if (socket.isConnected()) socket.execute();
