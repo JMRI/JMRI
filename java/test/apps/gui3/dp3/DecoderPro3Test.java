@@ -32,7 +32,7 @@ public class DecoderPro3Test {
 
             @Override
             protected void configureProfile() {
-                JUnitUtil.resetInstanceManager();
+//                JUnitUtil.resetInstanceManager();
             }
 
             @Override
@@ -68,6 +68,7 @@ public class DecoderPro3Test {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
     }
