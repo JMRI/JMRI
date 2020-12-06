@@ -131,6 +131,7 @@ public class LearnWarrantTest {
         JUnitUtil.waitFor(() -> oBlockOccupiedOrAllocated(block4), "Train 111 occupies last block ");
         new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for script to complete
 
+        frame._userNameBox.setText("SavedIt");
         pressButton(jfo, Bundle.getMessage("ButtonSave"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
