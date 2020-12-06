@@ -1,13 +1,14 @@
 package apps.gui3.dp3;
 
-import apps.AppsBase;
+import static org.assertj.core.api.Assertions.assertThat;
 
-import jmri.util.JUnitUtil;
-
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import apps.AppsBase;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -30,7 +31,7 @@ public class DecoderPro3Test {
 
             @Override
             protected void configureProfile() {
-                JUnitUtil.resetInstanceManager();
+//                JUnitUtil.resetInstanceManager();
             }
 
             @Override
@@ -55,7 +56,7 @@ public class DecoderPro3Test {
         // remove a frame opened by DecoderPro3
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
         // shutdown the application
-        AppsBase.handleQuit();
+//        AppsBase.handleQuit();
         
     }
 
@@ -63,6 +64,7 @@ public class DecoderPro3Test {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetApplication();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
