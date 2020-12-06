@@ -26,6 +26,7 @@ public class Sequence extends AbstractDigitalAction
     private boolean _isRunning = false;
     private boolean _startImmediately = false;
     private boolean _runContinuously = false;
+    private boolean disableCheckForUnconnectedSocket = false;
     
     public Sequence(String sys, String user) {
         super(sys, user);
@@ -132,17 +133,20 @@ public class Sequence extends AbstractDigitalAction
         if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
             _isRunning = false;
+            System.out.format("Stop: _currentStep: %d%n", _currentStep);
             return;
         }
         
         if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
             _isRunning = true;
+            System.out.format("Start: _currentStep: %d%n", _currentStep);
         }
         
         if (_expressionEntries.get(EXPRESSION_RESET)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_RESET)._socket.evaluate()) {
             _currentStep = -1;
+            System.out.format("Reset: _currentStep: %d%n", _currentStep);
         }
         
         if (!_isRunning) return;
@@ -158,8 +162,10 @@ public class Sequence extends AbstractDigitalAction
                 _expressionEntries.get(_currentStep + NUM_STATIC_EXPRESSIONS)._socket;
         if (exprSocket.isConnected() && exprSocket.evaluate()) {
             _currentStep++;
+            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
             if (_currentStep >= _actionEntries.size()) {
                 _currentStep = 0;
+                System.out.format("_currentStep set to 0: %d%n", _currentStep);
             }
             
             FemaleDigitalActionSocket actionSocket =
@@ -217,7 +223,7 @@ public class Sequence extends AbstractDigitalAction
     public int getChildCount() {
         return _expressionEntries.size() + _actionEntries.size();
     }
-
+/*
     private void checkFreeSocket() {
         boolean hasFreeSocket = false;
         
@@ -244,7 +250,7 @@ public class Sequence extends AbstractDigitalAction
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
-    
+*/    
     /** {@inheritDoc} */
     @Override
     public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
@@ -253,7 +259,7 @@ public class Sequence extends AbstractDigitalAction
                 // Possible if not the three static sockets,
                 // the socket is not connected and the next socket is not connected
                 return (index >= NUM_STATIC_EXPRESSIONS)
-                        && (index+2 < getChildCount())
+                        && (index+1 < getChildCount())
                         && !getChild(index).isConnected()
                         && !getChild(index+1).isConnected();
             case InsertBefore:
@@ -298,12 +304,7 @@ public class Sequence extends AbstractDigitalAction
     
     private void removeSocket(int index) {
         int actionIndex = (index-NUM_STATIC_EXPRESSIONS) >> 1;
-        int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS + 1;
-        
-        if (((index-NUM_STATIC_EXPRESSIONS) % 2) != 0) {
-            expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
-            actionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + 1;
-        }
+        int expressionIndex = ((index-NUM_STATIC_EXPRESSIONS) >> 1) + NUM_STATIC_EXPRESSIONS;
         
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_actionEntries.remove(actionIndex)._socket);
@@ -369,6 +370,8 @@ public class Sequence extends AbstractDigitalAction
     
     @Override
     public void connected(FemaleSocket socket) {
+        if (disableCheckForUnconnectedSocket) return;
+        
         for (ExpressionEntry entry : _expressionEntries) {
             if (socket == entry._socket) {
                 entry._socketSystemName =
@@ -382,7 +385,7 @@ public class Sequence extends AbstractDigitalAction
             }
         }
         
-        checkFreeSocket();
+//        checkFreeSocket();
     }
 
     @Override
@@ -469,6 +472,9 @@ public class Sequence extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
+        // We don't want to check for unconnected sockets while setup sockets
+        disableCheckForUnconnectedSocket = true;
+        
         for (ExpressionEntry ee : _expressionEntries) {
             try {
                 if ( !ee._socket.isConnected()
@@ -526,6 +532,8 @@ public class Sequence extends AbstractDigitalAction
                 throw new RuntimeException("socket is already connected");
             }
         }
+        
+        disableCheckForUnconnectedSocket = false;
     }
     
     /** {@inheritDoc} */

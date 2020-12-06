@@ -98,6 +98,7 @@ public class DefaultMaleDigitalActionSocket
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteAction", e), e, log);
         }
+        
         InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .getSymbolTable().removeSymbols(_localVariables);

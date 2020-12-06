@@ -111,15 +111,25 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
             return ((AnalogExpressionDebugConfig)_debugConfig)._result;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
+        double result = 0.0;
         try {
-            return internalEvaluate();
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
+            result = internalEvaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
-            return 0.0;
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
-            return 0.0;
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
+        
+        return result;
     }
     
     @Override

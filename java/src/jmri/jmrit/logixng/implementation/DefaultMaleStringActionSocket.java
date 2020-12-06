@@ -11,7 +11,9 @@ import jmri.jmrit.logixng.Category;
 
 import javax.annotation.Nonnull;
 
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.Bundle;
 /**
  * Every StringActionBean has an DefaultMaleStringActionSocket as its parent.
  * 
@@ -86,13 +88,22 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
             return;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
         try {
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
             _action.setValue(value);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

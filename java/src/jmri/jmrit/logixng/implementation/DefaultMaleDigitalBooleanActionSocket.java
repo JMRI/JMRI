@@ -81,13 +81,22 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
             return;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
         try {
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
             _action.execute(hasChangedToTrue);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e), e, log);
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionExecuteBooleanAction", e), e, log);
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

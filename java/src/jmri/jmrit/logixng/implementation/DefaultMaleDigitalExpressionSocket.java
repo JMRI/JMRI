@@ -96,7 +96,12 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             return lastEvaluationResult;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
         try {
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
             lastEvaluationResult = _expression.evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
@@ -105,6 +110,10 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             handleError(this, Bundle.getMessage("ExceptionEvaluateExpression", e), e, log);
             return false;
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
         
         return lastEvaluationResult;
     }

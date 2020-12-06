@@ -97,13 +97,22 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
             return;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
         try {
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
             internalSetValue(value);
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionSetValue", e), e, log);
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
     }
 
     @Override

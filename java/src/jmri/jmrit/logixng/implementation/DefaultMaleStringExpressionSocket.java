@@ -96,15 +96,25 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
             return ((StringExpressionDebugConfig)_debugConfig)._result;
         }
         
+        int currentStackPos = InstanceManager.getDefault(LogixNG_Manager.class).getStack().getCount();
+        
+        String result = "";
         try {
-            return _expression.evaluate();
+            InstanceManager.getDefault(LogixNG_Manager.class)
+                    .getSymbolTable().createSymbols(_localVariables);
+            
+            result = _expression.evaluate();
         } catch (JmriException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
-            return "";
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e), e, log);
-            return "";
         }
+        
+        InstanceManager.getDefault(LogixNG_Manager.class).getStack().setCount(currentStackPos);
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .getSymbolTable().removeSymbols(_localVariables);
+        
+        return result;
     }
     
     @Override
