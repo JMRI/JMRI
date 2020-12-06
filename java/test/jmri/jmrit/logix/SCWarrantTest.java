@@ -68,7 +68,7 @@ public class SCWarrantTest extends WarrantTest {
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
         warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
 
-        warrant.getSpeedUtil().setDccAddress("999(L)");
+        warrant.getSpeedUtil().setAddress("999(L)");
         warrant.setBlockOrders(orders);
         warrant.setRoute(false, orders);
         warrant.checkStartBlock();

@@ -209,14 +209,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
     }
      
     protected String checkAddressInUse(Warrant warrant) {
-        String address = warrant.getSpeedUtil().getAddress();
+        jmri.DccLocoAddress address = warrant.getSpeedUtil().getDccAddress();
 
         if (address ==null) {
             return Bundle.getMessage("NoLoco");
         }
         for (Warrant w :_warList) {
             if (w._runMode != Warrant.MODE_NONE) {
-                if (address.equals(w.getSpeedUtil().getAddress())) {
+                if (address.equals(w.getSpeedUtil().getDccAddress())) {
                     return Bundle.getMessage("AddressInUse", address, w.getDisplayName(), w.getTrainName());
                 }
             }
@@ -476,7 +476,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         case ADDRESS_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
                 String addr = (String) value;
-                if (!w.getSpeedUtil().setDccAddress(addr)) {
+                if (!w.getSpeedUtil().setAddress(addr)) {
                     msg = Bundle.getMessage("BadDccAddress", addr);                
                 }
             } else {
@@ -640,6 +640,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel<Warrant>
         SpeedUtil copySU = w.getSpeedUtil();
         SpeedUtil su = warrant.getSpeedUtil();
         copySU.setDccAddress(su.getDccAddress());
+        copySU.setRosterId(su.getRosterId());
         return w;
     }
 
