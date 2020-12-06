@@ -36,7 +36,7 @@ public class DefaultFemaleGenericExpressionSocket
             FemaleSocketListener listener,
             String name) {
         
-        super(parent, null, name);
+        super(parent, listener, name);
         
         _socketType = socketType;
         _currentSocketType = socketType;

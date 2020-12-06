@@ -27,6 +27,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
         if (!validateName(name)) {
             throw new IllegalArgumentException("the name is not valid: " + name);
         }
+        if (listener == null) throw new IllegalArgumentException("FemaleSocketListener is null");
         _parent = parent;
         _listener = listener;
         _name = name;
@@ -164,6 +165,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
             throw new IllegalArgumentException("the name is not valid: " + name);
         }
         _name = name;
+        _listener.socketNameChanged(this);
     }
 
     /** {@inheritDoc} */

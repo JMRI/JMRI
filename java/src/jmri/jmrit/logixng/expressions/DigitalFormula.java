@@ -119,6 +119,14 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         return _formula;
     }
     
+    private void parseFormula() {
+        try {
+            setFormula(_formula);
+        } catch (ParserException e) {
+            log.error("Unexpected exception when parsing the formula", e);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -174,6 +182,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             _expressionEntries.add(new ExpressionEntry(socket));
             addList.add(socket);
         }
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
     
@@ -202,6 +211,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             _expressionEntries.add(new ExpressionEntry(socket));
             addList.add(socket);
         }
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
 
@@ -218,6 +228,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             
             List<FemaleSocket> list = new ArrayList<>();
             list.add(socket);
+            parseFormula();
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
         }
     }
@@ -248,12 +259,14 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         
         List<FemaleSocket> addList = new ArrayList<>();
         addList.add(socket);
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
     private void removeSocket(int index) {
         List<FemaleSocket> removeList = new ArrayList<>();
         removeList.add(_expressionEntries.remove(index)._socket);
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
     }
     
@@ -265,6 +278,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
         List<FemaleSocket> list = new ArrayList<>();
         list.add(_expressionEntries.get(index)._socket);
         list.add(_expressionEntries.get(index)._socket);
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
     }
     
@@ -321,6 +335,12 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     
     /** {@inheritDoc} */
     @Override
+    public void socketNameChanged(FemaleSocket socket) {
+        parseFormula();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void setup() {
         // We don't want to check for unconnected sockets while setup sockets
         _disableCheckForUnconnectedSocket = true;
@@ -355,6 +375,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             }
         }
         
+        parseFormula();
         checkFreeSocket();
         
         _disableCheckForUnconnectedSocket = false;

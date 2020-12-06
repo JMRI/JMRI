@@ -19,4 +19,12 @@ public interface FemaleSocketListener {
      */
     public void disconnected(FemaleSocket socket);
 
+    /**
+     * The socket name is changed.
+     * @param socket the socket
+     */
+    public default void socketNameChanged(FemaleSocket socket) {
+        // Do nothing
+    }
+
 }

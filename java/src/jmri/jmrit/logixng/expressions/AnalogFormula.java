@@ -119,6 +119,14 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
         return _formula;
     }
     
+    private void parseFormula() {
+        try {
+            setFormula(_formula);
+        } catch (ParserException e) {
+            log.error("Unexpected exception when parsing the formula", e);
+        }
+    }
+    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -174,6 +182,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             _expressionEntries.add(new ExpressionEntry(socket));
             addList.add(socket);
         }
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, addList);
     }
     
@@ -202,6 +211,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             _expressionEntries.add(new ExpressionEntry(socket));
             addList.add(socket);
         }
+        parseFormula();
         firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
     }
     
@@ -218,7 +228,84 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             
             List<FemaleSocket> list = new ArrayList<>();
             list.add(socket);
+            parseFormula();
             firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, list);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:        // Possible if socket is not connected
+                return ! getChild(index).isConnected();
+            case InsertBefore:
+                return true;    // Always possible
+            case InsertAfter:
+                return true;    // Always possible
+            case MoveUp:
+                return index > 0;   // Possible if not first socket
+            case MoveDown:
+                return index+1 < getChildCount();   // Possible if not last socket
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
+    private void insertNewSocket(int index) {
+        FemaleGenericExpressionSocket socket =
+                createFemaleSocket(this, this, getNewSocketName());
+        _expressionEntries.add(index, new ExpressionEntry(socket));
+        
+        List<FemaleSocket> addList = new ArrayList<>();
+        addList.add(socket);
+        parseFormula();
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
+    private void removeSocket(int index) {
+        List<FemaleSocket> removeList = new ArrayList<>();
+        removeList.add(_expressionEntries.remove(index)._socket);
+        parseFormula();
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
+    }
+    
+    private void moveSocketDown(int index) {
+        ExpressionEntry temp = _expressionEntries.get(index);
+        _expressionEntries.set(index, _expressionEntries.get(index+1));
+        _expressionEntries.set(index+1, temp);
+        
+        List<FemaleSocket> list = new ArrayList<>();
+        list.add(_expressionEntries.get(index)._socket);
+        list.add(_expressionEntries.get(index)._socket);
+        parseFormula();
+        firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void doSocketOperation(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                removeSocket(index);
+                break;
+            case InsertBefore:
+                insertNewSocket(index);
+                break;
+            case InsertAfter:
+                insertNewSocket(index+1);
+                break;
+            case MoveUp:
+                if (index == 0) throw new UnsupportedOperationException("cannot move up first child");
+                moveSocketDown(index-1);
+                break;
+            case MoveDown:
+                if (index+1 == getChildCount()) throw new UnsupportedOperationException("cannot move down last child");
+                moveSocketDown(index);
+                break;
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
     }
     
@@ -247,6 +334,12 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
                 break;
             }
         }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void socketNameChanged(FemaleSocket socket) {
+        parseFormula();
     }
     
     /** {@inheritDoc} */
@@ -285,6 +378,7 @@ public class AnalogFormula extends AbstractAnalogExpression implements FemaleSoc
             }
         }
         
+        parseFormula();
         checkFreeSocket();
         
         _disableCheckForUnconnectedSocket = false;

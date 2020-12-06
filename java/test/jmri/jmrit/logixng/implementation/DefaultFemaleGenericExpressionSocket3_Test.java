@@ -20,6 +20,8 @@ import org.junit.Test;
  */
 public class DefaultFemaleGenericExpressionSocket3_Test {
 
+    private FemaleSocketListener _listener;
+    
     @Test
     public void testEvaluateGeneric() throws JmriException {
         DefaultFemaleGenericExpressionSocket socket;
@@ -37,7 +39,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         MaleSocket stringMaleSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         internalGenericSocket = socket.getGenericSocket();
         
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
@@ -56,7 +58,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         internalGenericSocket = socket.getGenericSocket();
         
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
@@ -72,7 +74,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         internalGenericSocket = socket.getGenericSocket();
         
         Assert.assertEquals("evaluateGeneric() returns correct value", null, socket.evaluateGeneric());
@@ -107,7 +109,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         MaleSocket stringMaleSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertFalse("evaluateBoolean() returns false", socket.evaluateBoolean());
         
         socket.connect(analogMaleSocket);
@@ -120,7 +122,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertFalse("evaluateBoolean() returns false", socket.evaluateBoolean());
         
         socket.connect(digitalMaleSocket);
@@ -131,7 +133,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertFalse("evaluateBoolean() returns false", socket.evaluateBoolean());
         
         socket.connect(stringMaleSocket);
@@ -160,7 +162,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         MaleSocket stringMaleSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertTrue("evaluateBoolean() returns 0.0", 0.0 == socket.evaluateDouble());
         
         socket.connect(analogMaleSocket);
@@ -173,7 +175,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertTrue("evaluateDouble() returns 0.0", 0.0 == socket.evaluateDouble());
         
         socket.connect(digitalMaleSocket);
@@ -184,7 +186,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertTrue("evaluateDouble() returns 0.0", 0.0 == socket.evaluateDouble());
         
         socket.connect(stringMaleSocket);
@@ -213,7 +215,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         MaleSocket stringMaleSocket =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpression);
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertEquals("evaluateString() returns empty string", "", socket.evaluateString());
         
         socket.connect(analogMaleSocket);
@@ -226,7 +228,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertEquals("evaluateString() returns empty string", "", socket.evaluateString());
         
         socket.connect(digitalMaleSocket);
@@ -237,7 +239,7 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         socket.disconnect();
         
         
-        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, null, "E");
+        socket = new DefaultFemaleGenericExpressionSocket(SocketType.GENERIC, null, _listener, "E");
         Assert.assertEquals("evaluateString() returns empty string", "", socket.evaluateString());
         
         socket.connect(stringMaleSocket);
@@ -263,6 +265,18 @@ public class DefaultFemaleGenericExpressionSocket3_Test {
         
         InstanceManager.getDefault(LogixNG_Manager.class)
                 .setSymbolTable(new DefaultSymbolTable());
+        
+        _listener = new FemaleSocketListener(){
+            @Override
+            public void connected(FemaleSocket socket) {
+                // Do nothing
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+                // Do nothing
+            }
+        };
     }
 
     @After

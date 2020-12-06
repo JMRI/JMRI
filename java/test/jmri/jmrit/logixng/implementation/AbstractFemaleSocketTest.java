@@ -23,6 +23,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
  * @author Daniel Bergqvist 2020
  */
 public class AbstractFemaleSocketTest {
+    
+    private FemaleSocketListener _listener;
 /*
     @Test
     public void testPropertyChangeListeners() {
@@ -86,7 +88,7 @@ public class AbstractFemaleSocketTest {
     @Test
     public void testIsActive() {
         MyBase base = new MyBase();
-        MyFemaleSocket socket = new MyFemaleSocket(base, null, "A1");
+        MyFemaleSocket socket = new MyFemaleSocket(base, _listener, "A1");
         
         // Check isActive when parent is not null
         
@@ -124,7 +126,7 @@ public class AbstractFemaleSocketTest {
     @Test
     public void testUnsupportedMethods() {
         MyBase base = new MyBase();
-        MyFemaleSocket socket = new MyFemaleSocket(base, null, "A1");
+        MyFemaleSocket socket = new MyFemaleSocket(base, _listener, "A1");
         
         PropertyChangeListener l = (PropertyChangeEvent evt) -> {};
         
@@ -195,10 +197,22 @@ public class AbstractFemaleSocketTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        _listener = new FemaleSocketListener(){
+            @Override
+            public void connected(FemaleSocket socket) {
+                // Do nothing
+            }
+
+            @Override
+            public void disconnected(FemaleSocket socket) {
+                // Do nothing
+            }
+        };
     }
 
     @AfterEach
     public void tearDown() {
+        _listener = null;
         JUnitUtil.tearDown();
     }
     
