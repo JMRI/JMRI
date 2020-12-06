@@ -38,17 +38,17 @@ public class DecoderPro3Test {
             @Override
             protected void installConfigurationManager() {
                 JUnitUtil.initConfigureManager();
-                JUnitUtil.initDefaultUserMessagePreferences();
+//                JUnitUtil.initDefaultUserMessagePreferences();
             }
 
             @Override
             protected void installManagers() {
-                JUnitUtil.initInternalTurnoutManager();
-                JUnitUtil.initInternalLightManager();
-                JUnitUtil.initInternalSensorManager();
-                JUnitUtil.initRouteManager();
-                JUnitUtil.initMemoryManager();
-                JUnitUtil.initDebugThrottleManager();
+//                JUnitUtil.initInternalTurnoutManager();
+//                JUnitUtil.initInternalLightManager();
+//                JUnitUtil.initInternalSensorManager();
+//                JUnitUtil.initRouteManager();
+//                JUnitUtil.initMemoryManager();
+//                JUnitUtil.initDebugThrottleManager();
             }
 
         };
