@@ -8,14 +8,14 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 
 /**
  *
- * @author Randall Wood Copyright 2020
+ * @author Egbert Broerse Copyright 2020
  */
-public class Sv2Action extends LnNamedPaneAction {
+public class Sv2DiscoverAction extends LnNamedPaneAction {
 
-    public Sv2Action() {
-        super(Bundle.getMessage("MenuItemLocoNetMonitor"),
+    public Sv2DiscoverAction() {
+        super(Bundle.getMessage("MenuItemDiscoverSv2"),
                 new JmriJFrameInterface(),
-                LocoMonPane.class.getName(),
+                Sv2DiscoverPane.class.getName(),
                 InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
     }
 
