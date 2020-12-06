@@ -133,27 +133,27 @@ public class Sequence extends AbstractDigitalAction
         if (_expressionEntries.get(EXPRESSION_STOP)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_STOP)._socket.evaluate()) {
             _isRunning = false;
-            System.out.format("Stop: _currentStep: %d%n", _currentStep);
+//            System.out.format("Stop: _currentStep: %d%n", _currentStep);
             return;
         }
         
         if (_expressionEntries.get(EXPRESSION_START)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_START)._socket.evaluate()) {
             _isRunning = true;
-            System.out.format("Start: _currentStep: %d%n", _currentStep);
+//            System.out.format("Start: _currentStep: %d%n", _currentStep);
         }
         
         if (_expressionEntries.get(EXPRESSION_RESET)._socket.isConnected()
                 && _expressionEntries.get(EXPRESSION_RESET)._socket.evaluate()) {
             _currentStep = -1;
-            System.out.format("Reset: _currentStep: %d%n", _currentStep);
+//            System.out.format("Reset: _currentStep: %d%n", _currentStep);
         }
         
         if (!_isRunning) return;
         
         if (_currentStep == -1) {
             _currentStep = 0;
-            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
+//            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
             FemaleDigitalActionSocket socket =
                     _actionEntries.get(_currentStep)._socket;
             if (socket.isConnected()) socket.execute();
@@ -163,10 +163,10 @@ public class Sequence extends AbstractDigitalAction
                 _expressionEntries.get(_currentStep + NUM_STATIC_EXPRESSIONS)._socket;
         if (exprSocket.isConnected() && exprSocket.evaluate()) {
             _currentStep++;
-            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
+//            System.out.format("_currentStep: %d, size: %d%n", _currentStep, _actionEntries.size());
             if (_currentStep >= _actionEntries.size()) {
                 _currentStep = 0;
-                System.out.format("_currentStep set to 0: %d%n", _currentStep);
+//                System.out.format("_currentStep set to 0: %d%n", _currentStep);
             }
             
             FemaleDigitalActionSocket actionSocket =

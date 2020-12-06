@@ -70,8 +70,22 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws CalculateException {
-            return Math.random();
+        public Object calculate(List<ExpressionNode> parameterList) throws CalculateException, JmriException {
+            double min;
+            double max;
+            switch (parameterList.size()) {
+                case 0:
+                    return Math.random();
+                case 1:
+                    max = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
+                    return Math.random() * max;
+                case 2:
+                    min = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
+                    max = TypeConversionUtil.convertToDouble(parameterList.get(1).calculate(), false);
+                    return min + Math.random() * (max-min);
+                default:
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+            }
         }
         
     }

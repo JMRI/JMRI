@@ -5,15 +5,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.*;
 
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
+import jmri.*;
+import jmri.jmrit.logixng.*;
 
 import javax.annotation.Nonnull;
 
-import jmri.*;
-import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.Bundle;
 /**
  * Every StringActionBean has an DefaultMaleStringActionSocket as its parent.
  * 
