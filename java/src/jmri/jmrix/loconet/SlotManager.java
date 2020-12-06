@@ -816,9 +816,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param delay - delay in msecs.
      */
     protected void sendReadSlotDelayed(int slotNo, long delay) {
-        java.util.TimerTask meterTask = null;
-        meterTask = new java.util.TimerTask() {
+        java.util.TimerTask meterTask = new java.util.TimerTask() {
             int slotNumber = slotNo;
+
             @Override
             public void run() {
                 try {
