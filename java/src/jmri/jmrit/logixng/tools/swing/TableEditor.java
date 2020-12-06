@@ -224,12 +224,12 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
 //            });
             reorderButton.setToolTipText(Bundle.getMessage("ReorderButtonHint"));  // NOI18N
             // ConditionalNG panel buttons - Calculate
-            JButton calculateButton = new JButton(Bundle.getMessage("CalculateButton"));  // NOI18N
-            panel42.add(calculateButton);
-//            calculateButton.addActionListener((e) -> {
-//                calculatePressed(e);
+            JButton executeButton = new JButton(Bundle.getMessage("ExecuteButton"));  // NOI18N
+            panel42.add(executeButton);
+//            executeButton.addActionListener((e) -> {
+//                executePressed(e);
 //            });
-            calculateButton.setToolTipText(Bundle.getMessage("CalculateButtonHint"));  // NOI18N
+            executeButton.setToolTipText(Bundle.getMessage("ExecuteButtonHint"));  // NOI18N
             panel4.add(panel42);
             Border panel4Border = BorderFactory.createEtchedBorder();
             panel4.setBorder(panel4Border);
@@ -325,11 +325,11 @@ public final class TableEditor implements AbstractLogixNGEditor<NamedTable> {
     }
 
     /*.*
-     * Responds to the Calculate Button in the Edit NamedTable window.
+     * Responds to the Execute Button in the Edit NamedTable window.
      *
      * @param e The event heard
      *./
-    void calculatePressed(ActionEvent e) {
+    void executePressed(ActionEvent e) {
         if (checkEditConditionalNG()) {
             return;
         }

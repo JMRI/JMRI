@@ -223,12 +223,12 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             });
             reorderButton.setToolTipText(Bundle.getMessage("ReorderButtonHint"));  // NOI18N
             // ConditionalNG panel buttons - Calculate
-            JButton calculateButton = new JButton(Bundle.getMessage("CalculateButton"));  // NOI18N
-            panel42.add(calculateButton);
-            calculateButton.addActionListener((e) -> {
-                calculatePressed(e);
+            JButton executeButton = new JButton(Bundle.getMessage("ExecuteButton"));  // NOI18N
+            panel42.add(executeButton);
+            executeButton.addActionListener((e) -> {
+                executePressed(e);
             });
-            calculateButton.setToolTipText(Bundle.getMessage("CalculateButtonHint"));  // NOI18N
+            executeButton.setToolTipText(Bundle.getMessage("ExecuteButtonHint"));  // NOI18N
             panel4.add(panel42);
             Border panel4Border = BorderFactory.createEtchedBorder();
             panel4.setBorder(panel4Border);
@@ -328,25 +328,23 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      *
      * @param e The event heard
      */
-    void calculatePressed(ActionEvent e) {
+    void executePressed(ActionEvent e) {
         if (checkEditConditionalNG()) {
             return;
         }
-        // are there ConditionalNGs to calculate?
+        // are there ConditionalNGs to execute?
         if (_numConditionalNGs > 0) {
             // There are conditionals to calculate
             for (int i = 0; i < _numConditionalNGs; i++) {
                 ConditionalNG c = _curLogixNG.getConditionalNG(i);
                 if (c == null) {
-                    log.error("Invalid conditional system name when calculating"); // NOI18N
+                    log.error("Invalid conditional system name when executing"); // NOI18N
                 } else {
                     c.execute();
-                    // calculate without taking any action
-//                    c.calculate(false, null);
                 }
             }
             // force the table to update
-            conditionalNGTableModel.fireTableDataChanged();
+//            conditionalNGTableModel.fireTableDataChanged();
         }
     }
 
