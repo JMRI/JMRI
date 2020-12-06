@@ -1,0 +1,182 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- translate on 2020-12-06 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Setup - Sharing Files with GitHub</title>
+  <meta name="keywords" content=
+  "java model railroad JMRI install Dropbox">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>Installation de JMRI : Partage de fichiers avec GitHub</h1>
+
+      <p><a href="https://www.github.com">GitHub</a>
+      est un service gratuit qui vous permet de partagez des fichiers entre 
+      plusieurs ordinateurs sur un r&#233;seau en stockant une copie commune dans un d&#233;p&#244;t Git.
+      Apr&#232;s vous &#234;tre inscrit sur GitHub et avoir configur&#233; votre machine(s) 
+      locale(s), vous pouvez configurer JMRI pour l'utiliser pour partager 
+      des Inventaires, des fichiers de configuration r&#233;seau et d'autres 
+      informations entre plusieurs ordinateurs.</p>
+      <p>Note : Si vous n'&#234;tes pas familier avec Git et GitHub, vous feriez 
+      peut-&#234;tre mieux d'utiliser <a href="Dropbox.shtml">Dropbox</a> pour 
+      partager des fichiers entre ordinateurs.  Git et GitHub sont un syst&#232;me 
+      complet de contr&#244;le de version des logiciels, ce qui les rend plus complexes 
+      que la quasi automatisation de Dropbox.  Git et Github vous permettent 
+      de contr&#244;ler les modifications, d'avoir plusieurs versions sur des 
+      branches et, en g&#233;n&#233;ral, de g&#233;rer vos configurations JMRI de tr&#232;s
+       pr&#232;s ; mais si vous voulez juste partager des fichiers, Dropbox 
+       peut &#234;tre plus facile.
+      
+      <p> L'utilisation de Git pr&#233;sente quelques avantages:</p>
+
+      <ul>
+        <li>En utilisation normale, Git conservera l'historique complet 
+        de vos fichiers en local afin que vous puissiez toujours revenir 
+        &#224; une configuration ant&#233;rieure.</li>
+
+        <li>Git fournit tous les outils puissants pour g&#233;rer les mises &#224; 
+        jour lorsque vous effectuez des modifications sur plusieurs ordinateurs, 
+        c'est-&#224;-dire l'ordinateur principal et quelques ordinateurs portables pratiques.
+        <li>Git peut &#234;tre utilis&#233; avec une connexion r&#233;seau de type "sneaker" 
+        en poussant/tirant une copie d'un d&#233;p&#244;t sur une cl&#233; USB.
+      </ul>
+      <p> L'approche suivante devrait &#233;galement fonctionner avec d'autres 
+      services de synchronisation de fichiers bas&#233;s sur le cloud tels que
+       <a href= "https://www.google.com.au/drive/" target="_blank">Google Drive</a> 
+       et <a href= "https://onedrive.live.com" target=
+      "_blank">OneDrive</a>. Cependant, la solution <a href= "https://www.dropbox.com" 
+      target="_blank">Dropbox</a> est bien test&#233;e, ayant &#233;t&#233; utilis&#233;e par 
+      un certain nombre de d&#233;veloppeurs et d'utilisateurs de JMRI depuis un certain temps.</p>
+
+
+      <h3>&#233;tape 1</h3>
+
+      <p>Pour mettre en place un emplacement partag&#233; du fichier utilisateur sur le web:</p>
+
+      <ul>
+        <li>Cr&#233;er un dossier JMRI sous le contr&#244;le de Git sur le premier 
+        ordinateur. Si vous voulez utiliser GitHub, les &#233;tapes sont les suivantes :
+        <ul>
+            <li><a href="https://github.com/join">Cr&#233;ez un compte GitHub</a> si vous n'en avez pas.
+            <li>Cr&#233;ez un nouveau d&#233;p&#244;t sur GitHub en utilisant le bouton "New" dans le panneau "Repositories".
+            <li>Cliquez sur le bouton nomm&#233; "(downarrow) Code" et copiez l'URL de votre d&#233;p&#244;t.
+            <li>Sur votre ordinateur, dans le r&#233;pertoire o&#250; vous voulez contenir vos fichiers JMRI, cochez ce d&#233;p&#244;t avec (par exemple) :
+<pre>
+            clone de git https://github.com/myaccountname/JMRI.git
+</pre>
+        </ul>
+        </li>
+        <li>Si vous avez d&#233;j&#224; cr&#233;&#233; des &#233;l&#233;ments (entr&#233;es de la liste, panneaux, etc.), 
+        allez dans l'Aide&#8209;&gt;Locations et appuyez sur OpenUser Files Location.<br>
+        <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682" 
+        height= "139"></a><br>Cela ouvrira une fen&#234;tre sur votre bureau montrant 
+        un r&#233;pertoire. Rappelez-vous o&#250; il se trouve, parce que vous d&#233;placerez 
+        les &#233;l&#233;ments &#224; partir de l&#224; plus tard.</li>
+
+        <li>Rester sur l'aide&#8209;&gt; fen&#234;tre Locations, v&#233;rifier si l'emplacement 
+        de votre liste est diff&#233;rent de l'emplacement des fichiers utilisateurs. 
+        Si c'est le cas, cliquez sur Ouvrir l'emplacement de la liste pour 
+        ouvrir une fen&#234;tre sur cet emplacement.  Vous y copierez des fichiers plus tard.<br>
+        <a href="images/Help_Locations_Roster.png"><img src=
+        "images/Help_Locations_Roster.png" width="682" height=
+        "139"></a></li>
+
+        <li>
+        Pr&#233;f&#233;rences&#8209&gt; Roster&#8209 &gt; Roster&#8209&gt; ; Roster 
+        Location&#8209 &gt; Reset. N'entrez pas d'emplacement de liste.
+        De cette fa&#231;on, il suivra le r&#233;glage de l'emplacement des fichiers utilisateur.
+        <a href="images/Roster_Reset.png"><img src=
+        "images/Roster_Reset.png" width="416" height=
+        "159"></a></li>
+        <li>Pr&#233;f&#233;rences&#8209;&gt; Emplacement des fichiers&#8209;&gt; Emplacement 
+        des fichiers utilisateur et le d&#233;finir dans le dossier JMRI que 
+        vous avez cr&#233;&#233; dans Dropbox.<br>
+        <a href="images/Locations_Files.png"><img src=
+        "images/Locations_Files.png" width="418" height=
+        "157"></a></li>
+
+        <li> Relancez JMRI et utilisez l'Aide &#8209; Localisation pour 
+        vous assurer que tout est correctement modifi&#233;.</li>
+
+
+
+        <li>Si vous avez d&#233;j&#224; cr&#233;&#233; des fichiers des types list&#233;s &#224; ce lien (voir <a href=
+        "../../package/apps/TabbedPreferences.shtml#FileLocations"
+        target="_blank">cette page</a> pour obtenir de l'aide), les d&#233;placer 
+        de l'ancien endroit &#224; votre nouvel endroit. Par exemple, vos dossiers 
+        dans la fen&#234;tre Fichiers utilisateur que nous avons ouverte &#224; la 
+        premi&#232;re &#233;tape doit &#234;tre d&#233;plac&#233; vers le nouvel emplacement des 
+        fichiers utilisateurs que vous venez de cr&#233;er.</li>
+        
+        <li>Utilisez "git add", "git commit" pour d&#233;placer tous ces fichiers 
+        sous le contr&#244;le de Git.
+        <li>Enfin, "git push" pour pousser le contenu vers GitHub.
+            
+      </ul>
+
+      <h3>&#233;tape 2</h3>
+
+      <p>Les seules &#233;tapes &#224; effectuer sur les ordinateurs suivants
+      sont:</p>
+
+      <ul>
+        <li> "git clone" avec l'URL de la liste pour faire votre t&#233;l&#233;chargement 
+        initial du d&#233;p&#244;t ("git pull" apr&#232;s cela)
+        <li>Preferences &#8209;&gt; Roster &#8209;&gt; Roster
+        &#8209; Roster Location &#8209; Reset. N'entrez pas dans Roster Location. 
+        De cette fa&#231;on, il suivra l'emplacement des fichiers utilisateur.
+        <li>Preferences &#8209;&gt; Locations &#8209;&gt; Emplacement des 
+        fichiers de l'utilisateur et le d&#233;finir dans le dossier JMRI que 
+        vous avez cr&#233;&#233; dans Dropbox.</li>
+        
+        <h2>Sneaker Net</h2>
+        
+        Tout d'abord, copiez le r&#233;pertoire <u> complet</u> d'un de vos 
+        ordinateurs sur la cl&#233; USB.  Ce sera un ma&#238;tre que vous d&#233;placerez.   
+        (Vous pouvez aussi directement "cloner" sur la cl&#233; USB).
+        
+        <p>
+        Ensuite, &#224; partir des pr&#233;f&#233;rences JMRI de votre ordinateur, le 
+        r&#233;pertoire Git, vous pouvez mettre la cl&#233; USB &#224; jour avec votre r&#233;pertoire avec
+<pre>
+            commit -m "commentaire vraiment lucide" .
+            git push /path/to/USB/directory
+</pre>
+
+        <p>
+        De m&#234;me, vous pouvez obtenir le contenu de la cl&#233; USB avec
+<pre>
+            git pull /path/to/USB/directory
+</pre>
+
+T       
+        
+      </ul><!--#include virtual="/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
+
+
