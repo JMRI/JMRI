@@ -1,0 +1,2654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>21</minor>
+    <test>3</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_1_1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_1</systemName>
+      <userName>Turnout</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_2</systemName>
+      <userName>Ship</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_3</systemName>
+      <userName>Crane</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_11</systemName>
+      <userName>Start</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_12</systemName>
+      <userName>Stop</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_13</systemName>
+      <userName>Reset</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_21</systemName>
+      <userName>Crane has unloaded coal</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_22</systemName>
+      <userName>Car has unloaded coal to ship</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_7_99</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_99_1</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_1_1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_7_1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_99_1</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="6:24 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+    <memory value="76.0">
+      <systemName>IM_7_1</systemName>
+      <userName>Commanded Crane Angle</userName>
+    </memory>
+    <memory value="76">
+      <systemName>IM_7_2</systemName>
+      <userName>Actual Crane Angle</userName>
+    </memory>
+    <memory value="100.0">
+      <systemName>IM_7_3</systemName>
+      <userName>Commanded Crane Arm</userName>
+    </memory>
+    <memory value="100">
+      <systemName>IM_7_4</systemName>
+      <userName>Actual Crane Arm</userName>
+    </memory>
+    <memory value="0.0">
+      <systemName>IM_7_5</systemName>
+      <userName>Commanded Crane Bucket</userName>
+    </memory>
+    <memory value="100">
+      <systemName>IM_7_6</systemName>
+      <userName>Actual Crane Bucket</userName>
+    </memory>
+    <memory>
+      <systemName>IM_7_11</systemName>
+      <userName>Place to pick up coal</userName>
+    </memory>
+    <memory value="11">
+      <systemName>IM_91</systemName>
+    </memory>
+    <memory value="11">
+      <systemName>IM_92</systemName>
+    </memory>
+    <memory value="">
+      <systemName>IM_99_99</systemName>
+    </memory>
+    <memory value="0.0">
+      <systemName>IM_100</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH1</systemName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH2</systemName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH3</systemName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH4</systemName>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0001)</systemName>
+      <userName>Mast1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0002)</systemName>
+      <userName>Mast2</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Nov 09 00:32:35 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
+    <logixng enabled="yes">
+      <systemName>IQ:AUTO:0001</systemName>
+      <userName>Tutorial LogixNG</userName>
+      <conditionalngs>
+        <conditionalNG_SystemName>IQC:AUTO:0001</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0002</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0003</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0004</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0005</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0006</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0007</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0008</conditionalNG_SystemName>
+      </conditionalngs>
+    </logixng>
+    <clipboard>
+      <many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
+        <socket>
+          <socketName>X9</socketName>
+        </socket>
+        <socket>
+          <socketName>X8</socketName>
+          <systemName>IQDA:AUTO:0054</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X7</socketName>
+          <systemName>IQDB:AUTO:0001</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalBooleanActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X6</socketName>
+          <systemName>IQDA:AUTO:0042</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X4</socketName>
+          <systemName>IQDA:AUTO:0047</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X2</socketName>
+          <systemName>IQDA:AUTO:0043</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X5</socketName>
+          <systemName>IQDA:AUTO:0031</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X3</socketName>
+          <systemName>IQDE:AUTO:0009</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>X1</socketName>
+          <systemName>IQDA:AUTO:0027</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultDigitalActionManager</manager>
+        </socket>
+      </many>
+    </clipboard>
+  </logixngs>
+  <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0001</systemName>
+      <userName>1. Basics</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0001</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0002</systemName>
+      <userName>99. Adding a new action/expression</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0005</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0003</systemName>
+      <userName>10. Timers</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0012</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0004</systemName>
+      <userName>Formula</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0026</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0005</systemName>
+      <userName>Signals</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0033</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0006</systemName>
+      <userName>Sequence - web page</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0039</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0007</systemName>
+      <userName>Test Sequence</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0061</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0008</systemName>
+      <userName>Test Formula</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0068</systemName>
+      </socket>
+    </conditionalng>
+  </logixngConditionalNGs>
+  <logixngDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0001</systemName>
+      <sensor>IS_1_1</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-loconet-slot-usage class="jmri.jmrix.loconet.logixng.configurexml.ExpressionSlotUsageXml">
+      <systemName>IQDE:AUTO:0003</systemName>
+      <systemConnection>L</systemConnection>
+      <advanced>no</advanced>
+      <has_hasNot>HasNot</has_hasNot>
+      <simpleState>Free</simpleState>
+      <advancedStates />
+      <compare>GreaterThanOrEqual</compare>
+      <number>17</number>
+      <percentPieces>Pieces</percentPieces>
+      <totalSlots>20</totalSlots>
+      <maleSocket />
+    </expression-loconet-slot-usage>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0004</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0005</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <true class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
+      <systemName>IQDE:AUTO:0005</systemName>
+      <maleSocket />
+    </true>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0006</systemName>
+      <sensor>IS_10_1</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0007</systemName>
+      <sensor>IS_10_2</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0008</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0006</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0009</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0010</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0010</systemName>
+      <sensor>IS_10_1</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-signalhead class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSignalHeadXml">
+      <systemName>IQDE:AUTO:0011</systemName>
+      <signalHead>IH1</signalHead>
+      <queryType>Appearance</queryType>
+      <apperance>1</apperance>
+      <maleSocket />
+    </expression-signalhead>
+    <or class="jmri.jmrit.logixng.expressions.configurexml.OrXml">
+      <systemName>IQDE:AUTO:0012</systemName>
+      <expressions>
+        <socket>
+          <socketName>E1</socketName>
+          <systemName>IQDE:AUTO:0011</systemName>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+          <systemName>IQDE:AUTO:0013</systemName>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+        </socket>
+      </expressions>
+      <maleSocket />
+    </or>
+    <expression-signalhead class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSignalHeadXml">
+      <systemName>IQDE:AUTO:0013</systemName>
+      <signalHead>IH1</signalHead>
+      <queryType>Appearance</queryType>
+      <apperance>2</apperance>
+      <maleSocket />
+    </expression-signalhead>
+    <expression-signalmast class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSignalMastXml">
+      <systemName>IQDE:AUTO:0014</systemName>
+      <signalMast>Mast1</signalMast>
+      <queryType>NotAspect</queryType>
+      <aspect>Stop</aspect>
+      <maleSocket />
+    </expression-signalmast>
+    <and class="jmri.jmrit.logixng.expressions.configurexml.AndXml">
+      <systemName>IQDE:AUTO:0015</systemName>
+      <expressions>
+        <socket>
+          <socketName>E1</socketName>
+          <systemName>IQDE:AUTO:0016</systemName>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+          <systemName>IQDE:AUTO:0017</systemName>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+          <systemName>IQDE:AUTO:0018</systemName>
+        </socket>
+        <socket>
+          <socketName>E4</socketName>
+        </socket>
+      </expressions>
+      <maleSocket />
+    </and>
+    <expression-turnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
+      <systemName>IQDE:AUTO:0016</systemName>
+      <turnout>IT_10_3</turnout>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </expression-turnout>
+    <expression-signalmast class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSignalMastXml">
+      <systemName>IQDE:AUTO:0017</systemName>
+      <signalMast>Mast2</signalMast>
+      <queryType>Aspect</queryType>
+      <aspect>Clear</aspect>
+      <maleSocket />
+    </expression-signalmast>
+    <expression-turnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
+      <systemName>IQDE:AUTO:0018</systemName>
+      <turnout>IT_10_4</turnout>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </expression-turnout>
+    <expression-turnout class="jmri.jmrit.logixng.expressions.configurexml.ExpressionTurnoutXml">
+      <systemName>IQDE:AUTO:0019</systemName>
+      <turnout>IT_10_3</turnout>
+      <is_isNot>Is</is_isNot>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </expression-turnout>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0020</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0035</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <false class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
+      <systemName>IQDE:AUTO:0022</systemName>
+      <maleSocket />
+    </false>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0023</systemName>
+      <sensor>Crane</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <false class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
+      <systemName>IQDE:AUTO:0025</systemName>
+      <maleSocket />
+    </false>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0026</systemName>
+      <sensor>Turnout</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0027</systemName>
+      <sensor>Ship</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0028</systemName>
+      <sensor>Turnout</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <true class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
+      <systemName>IQDE:AUTO:0029</systemName>
+      <maleSocket />
+    </true>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0034</systemName>
+      <expressions>
+        <socket>
+          <socketName>Arm</socketName>
+          <systemName>IQAE:AUTO:0019</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>Bucket</socketName>
+          <systemName>IQAE:AUTO:0020</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>(Arm &gt; 90) &amp;&amp; (Bucket &lt; 5)</formula>
+      <maleSocket />
+    </formula>
+    <false class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
+      <systemName>IQDE:AUTO:0035</systemName>
+      <maleSocket />
+    </false>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0036</systemName>
+      <expressions>
+        <socket>
+          <socketName>Angle</socketName>
+          <systemName>IQAE:AUTO:0021</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>Pos</socketName>
+          <systemName>IQAE:AUTO:0039</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+        </socket>
+      </expressions>
+      <formula>(Angle &gt;= (Pos-1)) &amp;&amp; (Angle &lt;= (Pos+1))</formula>
+      <maleSocket />
+    </formula>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0037</systemName>
+      <expressions>
+        <socket>
+          <socketName>Arm</socketName>
+          <systemName>IQAE:AUTO:0026</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>Arm &lt; 5</formula>
+      <maleSocket />
+    </formula>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0038</systemName>
+      <expressions>
+        <socket>
+          <socketName>Bucket</socketName>
+          <systemName>IQAE:AUTO:0023</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>Bucket &lt; 5</formula>
+      <maleSocket />
+    </formula>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0039</systemName>
+      <expressions>
+        <socket>
+          <socketName>Bucket</socketName>
+          <systemName>IQAE:AUTO:0022</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>Bucket &gt; 95</formula>
+      <maleSocket />
+    </formula>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0040</systemName>
+      <expressions>
+        <socket>
+          <socketName>Arm</socketName>
+          <systemName>IQAE:AUTO:0025</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>Arm &gt; 95</formula>
+      <maleSocket />
+    </formula>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0041</systemName>
+      <expressions>
+        <socket>
+          <socketName>Angle</socketName>
+          <systemName>IQAE:AUTO:0024</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>(Angle &gt;= 71) &amp;&amp; (Angle &lt;= 81)</formula>
+      <maleSocket />
+    </formula>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0042</systemName>
+      <sensor>Start</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0043</systemName>
+      <sensor>Stop</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0044</systemName>
+      <sensor>Reset</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0045</systemName>
+      <sensor>Start</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0046</systemName>
+      <sensor>Stop</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0047</systemName>
+      <sensor>Reset</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0048</systemName>
+      <expressions>
+        <socket>
+          <socketName>M4</socketName>
+          <systemName>IQAE:AUTO:0027</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>M6</socketName>
+          <systemName>IQAE:AUTO:0028</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+        </socket>
+      </expressions>
+      <formula>(M4 &gt; 90) &amp;&amp; (M6 &gt; 90)</formula>
+      <maleSocket />
+    </formula>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0049</systemName>
+      <sensor>Crane</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.DigitalFormulaXml">
+      <systemName>IQDE:AUTO:0050</systemName>
+      <expressions>
+        <socket>
+          <socketName>Bucket</socketName>
+          <systemName>IQAE:AUTO:0030</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+        </socket>
+      </expressions>
+      <formula>Bucket &lt; 5</formula>
+      <maleSocket />
+    </formula>
+    <true class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
+      <systemName>IQDE:AUTO:0051</systemName>
+      <maleSocket />
+    </true>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0052</systemName>
+      <sensor>Crane has unloaded coal</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <false class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
+      <systemName>IQDE:AUTO:0053</systemName>
+      <maleSocket />
+    </false>
+    <true class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
+      <systemName>IQDE:AUTO:0055</systemName>
+      <maleSocket />
+    </true>
+    <false class="jmri.jmrit.logixng.expressions.configurexml.FalseXml">
+      <systemName>IQDE:AUTO:0056</systemName>
+      <maleSocket />
+    </false>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0057</systemName>
+      <sensor>Ship</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <true class="jmri.jmrit.logixng.expressions.configurexml.TrueXml">
+      <systemName>IQDE:AUTO:0058</systemName>
+      <maleSocket />
+    </true>
+    <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0059</systemName>
+      <sensor>Car has unloaded coal to ship</sensor>
+      <is_isNot>Is</is_isNot>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </expression-sensor>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0060</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0057</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0061</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0044</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+    <trigger-once class="jmri.jmrit.logixng.expressions.configurexml.TriggerOnceXml">
+      <systemName>IQDE:AUTO:0062</systemName>
+      <socket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0047</systemName>
+      </socket>
+      <maleSocket />
+    </trigger-once>
+  </logixngDigitalExpressions>
+  <logixngDigitalActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXml">
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0001</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0001</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0002</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket>
+        <localVariable>
+          <name>A1</name>
+          <type>Formula</type>
+          <data>"Geh"</data>
+        </localVariable>
+        <localVariable>
+          <name>Hej</name>
+          <type>Reference</type>
+          <data>re</data>
+        </localVariable>
+        <localVariable>
+          <name>SVen</name>
+          <type>LocalVariable</type>
+          <data>A1</data>
+        </localVariable>
+      </maleSocket>
+    </if-then-else>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0002</systemName>
+      <turnout>IT_1_1</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0005</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0009</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0007</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0007</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0003</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0011</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0009</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0004</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0010</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <action-loconet-update-slots class="jmri.jmrix.loconet.logixng.configurexml.ActionUpdateSlotsXml">
+      <systemName>IQDA:AUTO:0010</systemName>
+      <systemConnection>L</systemConnection>
+      <maleSocket />
+    </action-loconet-update-slots>
+    <action-loconet-clear-slots class="jmri.jmrix.loconet.logixng.configurexml.ActionClearSlotsXml">
+      <systemName>IQDA:AUTO:0011</systemName>
+      <systemConnection>L</systemConnection>
+      <maleSocket />
+    </action-loconet-clear-slots>
+    <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
+      <systemName>IQDA:AUTO:0012</systemName>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+          <systemName>IQDE:AUTO:0008</systemName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+          <systemName>IQDE:AUTO:0007</systemName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0013</systemName>
+        </socket>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0014</systemName>
+        </socket>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A3</socketName>
+          <systemName>IQDA:AUTO:0015</systemName>
+        </socket>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A4</socketName>
+          <systemName>IQDA:AUTO:0016</systemName>
+        </socket>
+      </actions>
+      <startImmediately>yes</startImmediately>
+      <runContinuously>yes</runContinuously>
+      <unit>MilliSeconds</unit>
+      <maleSocket />
+    </action-timer>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0013</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0017</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0030</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0014</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0019</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0032</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0015</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0021</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0022</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0016</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0023</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0024</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0017</systemName>
+      <turnout>IT_10_1</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0018</systemName>
+      <turnout>IT_10_2</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0019</systemName>
+      <turnout>IT_10_2</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0020</systemName>
+      <turnout>IT_10_3</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0021</systemName>
+      <turnout>IT_10_3</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0022</systemName>
+      <turnout>IT_10_4</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0023</systemName>
+      <turnout>IT_10_4</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0024</systemName>
+      <turnout>IT_10_1</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0026</systemName>
+      <expressionSystemName>IQAE:AUTO:0002</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0002</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0027</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0028</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0029</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0028</systemName>
+      <turnout>IT_10_2</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0029</systemName>
+      <turnout>IT_10_3</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0030</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0012</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0018</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0031</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0032</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0014</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0020</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0033</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0034</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0036</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0034</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0015</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0035</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <action-signalmast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
+      <systemName>IQDA:AUTO:0035</systemName>
+      <signalMast>Mast2</signalMast>
+      <operationType>Aspect</operationType>
+      <aspect>Clear</aspect>
+      <maleSocket />
+    </action-signalmast>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0036</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0019</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0037</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+        <systemName>IQDA:AUTO:0038</systemName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <action-signalhead class="jmri.jmrit.logixng.actions.configurexml.ActionSignalHeadXml">
+      <systemName>IQDA:AUTO:0037</systemName>
+      <signalHead>IH2</signalHead>
+      <operationType>Appearance</operationType>
+      <apperance>16</apperance>
+      <maleSocket />
+    </action-signalhead>
+    <action-signalmast class="jmri.jmrit.logixng.actions.configurexml.ActionSignalMastXml">
+      <systemName>IQDA:AUTO:0038</systemName>
+      <signalMast>Mast2</signalMast>
+      <operationType>Aspect</operationType>
+      <aspect>Medium Clear</aspect>
+      <maleSocket />
+    </action-signalmast>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0039</systemName>
+      <actions>
+        <socket>
+          <socketName>A4</socketName>
+          <systemName>IQDA:AUTO:0046</systemName>
+        </socket>
+        <socket>
+          <socketName>A5</socketName>
+          <systemName>IQDA:AUTO:0076</systemName>
+        </socket>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0048</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0057</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0040</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+        <systemName>IQDE:AUTO:0020</systemName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0041</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <web-browser class="jmri.jmrit.logixng.actions.configurexml.WebBrowserXml">
+      <systemName>IQDA:AUTO:0041</systemName>
+      <expressionSystemName>IQSE:AUTO:0005</expressionSystemName>
+      <maleSocket />
+    </web-browser>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0042</systemName>
+      <sensor>IS_99_1</sensor>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
+      <systemName>IQDA:AUTO:0043</systemName>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0044</systemName>
+        </socket>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0045</systemName>
+        </socket>
+      </actions>
+      <startImmediately>yes</startImmediately>
+      <runContinuously>yes</runContinuously>
+      <unit>MilliSeconds</unit>
+      <maleSocket />
+    </action-timer>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0044</systemName>
+      <sensor>IS_99_1</sensor>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0045</systemName>
+      <sensor>IS_99_1</sensor>
+      <sensorState>Inactive</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
+      <systemName>IQDA:AUTO:0046</systemName>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <delay>1000</delay>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0040</systemName>
+        </socket>
+      </actions>
+      <startImmediately>yes</startImmediately>
+      <runContinuously>no</runContinuously>
+      <unit>MilliSeconds</unit>
+      <maleSocket />
+    </action-timer>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0047</systemName>
+      <sensor>IS_99_1</sensor>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
+      <systemName>IQDA:AUTO:0048</systemName>
+      <comment>Run train</comment>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+          <systemName>IQDE:AUTO:0042</systemName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+          <systemName>IQDE:AUTO:0043</systemName>
+        </socket>
+        <socket>
+          <socketName>Reset</socketName>
+          <systemName>IQDE:AUTO:0061</systemName>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+          <systemName>IQDE:AUTO:0023</systemName>
+        </socket>
+        <socket>
+          <socketName>E5</socketName>
+          <systemName>IQDE:AUTO:0052</systemName>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+          <systemName>IQDE:AUTO:0026</systemName>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+          <systemName>IQDE:AUTO:0027</systemName>
+        </socket>
+        <socket>
+          <socketName>E6</socketName>
+          <systemName>IQDE:AUTO:0059</systemName>
+        </socket>
+        <socket>
+          <socketName>E4</socketName>
+          <systemName>IQDE:AUTO:0028</systemName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0050</systemName>
+        </socket>
+        <socket>
+          <socketName>A5</socketName>
+          <systemName>IQDA:AUTO:0072</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0073</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+          <systemName>IQDA:AUTO:0052</systemName>
+        </socket>
+        <socket>
+          <socketName>A6</socketName>
+          <systemName>IQDA:AUTO:0078</systemName>
+        </socket>
+        <socket>
+          <socketName>A4</socketName>
+          <systemName>IQDA:AUTO:0079</systemName>
+        </socket>
+      </actions>
+      <startImmediately>yes</startImmediately>
+      <runContinuously>yes</runContinuously>
+      <maleSocket />
+    </sequence>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0049</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0003</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0004</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0022</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0050</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0051</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0049</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0051</systemName>
+      <turnout>IT_7_1</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0052</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0053</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0055</systemName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0053</systemName>
+      <turnout>IT_7_1</turnout>
+      <turnoutState>Closed</turnoutState>
+      <maleSocket />
+    </action-turnout>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0054</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0005</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0006</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0025</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0055</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0007</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0008</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0056</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0056</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0009</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0010</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0029</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
+      <systemName>IQDA:AUTO:0057</systemName>
+      <comment>Control crane</comment>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+          <systemName>IQDE:AUTO:0045</systemName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+          <systemName>IQDE:AUTO:0046</systemName>
+        </socket>
+        <socket>
+          <socketName>Reset</socketName>
+          <systemName>IQDE:AUTO:0062</systemName>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+          <systemName>IQDE:AUTO:0034</systemName>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+          <systemName>IQDE:AUTO:0036</systemName>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+          <systemName>IQDE:AUTO:0037</systemName>
+        </socket>
+        <socket>
+          <socketName>E4</socketName>
+          <systemName>IQDE:AUTO:0038</systemName>
+        </socket>
+        <socket>
+          <socketName>E5</socketName>
+          <systemName>IQDE:AUTO:0039</systemName>
+        </socket>
+        <socket>
+          <socketName>E6</socketName>
+          <systemName>IQDE:AUTO:0040</systemName>
+        </socket>
+        <socket>
+          <socketName>E7</socketName>
+          <systemName>IQDE:AUTO:0041</systemName>
+        </socket>
+        <socket>
+          <socketName>E8</socketName>
+          <systemName>IQDE:AUTO:0049</systemName>
+        </socket>
+        <socket>
+          <socketName>E9</socketName>
+          <systemName>IQDE:AUTO:0050</systemName>
+        </socket>
+        <socket>
+          <socketName>E10</socketName>
+          <systemName>IQDE:AUTO:0051</systemName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0059</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0082</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+          <systemName>IQDA:AUTO:0063</systemName>
+        </socket>
+        <socket>
+          <socketName>A4</socketName>
+          <systemName>IQDA:AUTO:0064</systemName>
+        </socket>
+        <socket>
+          <socketName>A5</socketName>
+          <systemName>IQDA:AUTO:0065</systemName>
+        </socket>
+        <socket>
+          <socketName>A6</socketName>
+          <systemName>IQDA:AUTO:0066</systemName>
+        </socket>
+        <socket>
+          <socketName>A7</socketName>
+          <systemName>IQDA:AUTO:0067</systemName>
+        </socket>
+        <socket>
+          <socketName>A8</socketName>
+        </socket>
+        <socket>
+          <socketName>A9</socketName>
+          <systemName>IQDA:AUTO:0070</systemName>
+        </socket>
+        <socket>
+          <socketName>A10</socketName>
+          <systemName>IQDA:AUTO:0071</systemName>
+        </socket>
+      </actions>
+      <startImmediately>yes</startImmediately>
+      <runContinuously>yes</runContinuously>
+      <maleSocket />
+    </sequence>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0058</systemName>
+      <comment>Lift crane arm</comment>
+      <expressionSystemName>IQAE:AUTO:0011</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0003</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0059</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0058</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0060</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0060</systemName>
+      <comment>Open crane bucket</comment>
+      <expressionSystemName>IQAE:AUTO:0012</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0004</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
+      <systemName>IQDA:AUTO:0061</systemName>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+        </socket>
+        <socket>
+          <socketName>Reset</socketName>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+        </socket>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+        </socket>
+        <socket>
+          <socketName>A1</socketName>
+        </socket>
+      </actions>
+      <startImmediately>no</startImmediately>
+      <runContinuously>no</runContinuously>
+      <maleSocket />
+    </sequence>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0063</systemName>
+      <expressionSystemName>IQAE:AUTO:0014</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0006</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0064</systemName>
+      <expressionSystemName>IQAE:AUTO:0015</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0007</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0065</systemName>
+      <expressionSystemName>IQAE:AUTO:0016</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0008</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0066</systemName>
+      <expressionSystemName>IQAE:AUTO:0017</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0009</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0067</systemName>
+      <expressionSystemName>IQAE:AUTO:0018</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0010</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
+      <systemName>IQDA:AUTO:0068</systemName>
+      <maleSocket />
+    </logix>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0069</systemName>
+      <sensor>IS_7_99</sensor>
+      <sensorState>Toggle</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0070</systemName>
+      <expressionSystemName>IQAE:AUTO:0029</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0011</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0071</systemName>
+      <sensor>Crane has unloaded coal</sensor>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0072</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0031</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0032</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0053</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0073</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0074</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0075</systemName>
+        </socket>
+        <socket>
+          <socketName>A3</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0074</systemName>
+      <sensor>Crane has unloaded coal</sensor>
+      <sensorState>Inactive</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0075</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0033</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0034</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0055</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <action-timer class="jmri.jmrit.logixng.actions.configurexml.ActionTimerXml">
+      <systemName>IQDA:AUTO:0076</systemName>
+      <expressions>
+        <socket>
+          <socketName>Start</socketName>
+          <systemName>IQDE:AUTO:0060</systemName>
+        </socket>
+        <socket>
+          <socketName>Stop</socketName>
+        </socket>
+      </expressions>
+      <actions>
+        <socket>
+          <delay>2000</delay>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0077</systemName>
+        </socket>
+      </actions>
+      <startImmediately>no</startImmediately>
+      <runContinuously>no</runContinuously>
+      <unit>MilliSeconds</unit>
+      <maleSocket />
+    </action-timer>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0077</systemName>
+      <sensor>Car has unloaded coal to ship</sensor>
+      <sensorState>Active</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0078</systemName>
+      <locoAddressSocket>
+        <socketName>E1</socketName>
+        <systemName>IQAE:AUTO:0035</systemName>
+      </locoAddressSocket>
+      <locoSpeedSocket>
+        <socketName>E2</socketName>
+        <systemName>IQAE:AUTO:0036</systemName>
+      </locoSpeedSocket>
+      <locoDirectionSocket>
+        <socketName>E2</socketName>
+        <systemName>IQDE:AUTO:0058</systemName>
+      </locoDirectionSocket>
+      <maleSocket />
+    </throttle>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0079</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0080</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0056</systemName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0080</systemName>
+      <sensor>Car has unloaded coal to ship</sensor>
+      <sensorState>Inactive</sensorState>
+      <maleSocket />
+    </action-sensor>
+    <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
+      <systemName>IQDA:AUTO:0082</systemName>
+      <expressionSystemName>IQAE:AUTO:0037</expressionSystemName>
+      <actionSystemName>IQAA:AUTO:0005</actionSystemName>
+      <maleSocket />
+    </do-analog-action>
+  </logixngDigitalActions>
+  <logixngDigitalBooleanActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalBooleanActionManagerXml">
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanManyXml">
+      <systemName>IQDB:AUTO:0001</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+  </logixngDigitalBooleanActions>
+  <logixngAnalogExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogExpressionManagerXml">
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0001</systemName>
+      <memory>IM_91</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.AnalogFormulaXml">
+      <systemName>IQAE:AUTO:0002</systemName>
+      <expressions>
+        <socket>
+          <socketName>E1</socketName>
+          <systemName>IQAE:AUTO:0001</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E2</socketName>
+          <systemName>IQSE:AUTO:0004</systemName>
+          <manager>jmri.jmrit.logixng.implementation.DefaultStringExpressionManager</manager>
+        </socket>
+        <socket>
+          <socketName>E3</socketName>
+        </socket>
+      </expressions>
+      <formula>E1 &gt; E2</formula>
+      <maleSocket />
+    </formula>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0003</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0004</systemName>
+      <value>1.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0005</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0006</systemName>
+      <value>1.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0007</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0008</systemName>
+      <value>1.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0009</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0010</systemName>
+      <value>1.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0011</systemName>
+      <value>100.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0012</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0014</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0015</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0016</systemName>
+      <value>100.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0017</systemName>
+      <value>100.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0018</systemName>
+      <value>76.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0019</systemName>
+      <memory>Actual Crane Arm</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0020</systemName>
+      <memory>Actual Crane Bucket</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0021</systemName>
+      <memory>Actual Crane Angle</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0022</systemName>
+      <memory>Actual Crane Bucket</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0023</systemName>
+      <memory>Actual Crane Bucket</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0024</systemName>
+      <memory>Actual Crane Angle</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0025</systemName>
+      <memory>Actual Crane Arm</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0026</systemName>
+      <memory>Actual Crane Arm</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0027</systemName>
+      <memory>Actual Crane Arm</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0028</systemName>
+      <memory>Actual Crane Bucket</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0029</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0030</systemName>
+      <memory>Actual Crane Bucket</memory>
+      <maleSocket />
+    </analog-expression-memory>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0031</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0032</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0033</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0034</systemName>
+      <value>1.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0035</systemName>
+      <value>21.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <analog-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionConstantXml">
+      <systemName>IQAE:AUTO:0036</systemName>
+      <value>0.0</value>
+      <maleSocket />
+    </analog-expression-constant>
+    <formula class="jmri.jmrit.logixng.expressions.configurexml.AnalogFormulaXml">
+      <systemName>IQAE:AUTO:0037</systemName>
+      <expressions>
+        <socket>
+          <socketName>E1</socketName>
+        </socket>
+      </expressions>
+      <formula>random(24, 46)</formula>
+      <maleSocket />
+    </formula>
+    <analog-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.AnalogExpressionMemoryXml">
+      <systemName>IQAE:AUTO:0039</systemName>
+      <memory>Commanded Crane Angle</memory>
+      <maleSocket />
+    </analog-expression-memory>
+  </logixngAnalogExpressions>
+  <logixngAnalogActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultAnalogActionManagerXml">
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0001</systemName>
+      <memory>IM_100</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0002</systemName>
+      <memory>IM_100</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0003</systemName>
+      <memory>Commanded Crane Arm</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0004</systemName>
+      <memory>Commanded Crane Bucket</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0005</systemName>
+      <memory>Commanded Crane Angle</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0006</systemName>
+      <memory>Commanded Crane Arm</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0007</systemName>
+      <memory>Commanded Crane Bucket</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0008</systemName>
+      <memory>Commanded Crane Bucket</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0009</systemName>
+      <memory>Commanded Crane Arm</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0010</systemName>
+      <memory>Commanded Crane Angle</memory>
+      <maleSocket />
+    </analog-action-memory>
+    <analog-action-memory class="jmri.jmrit.logixng.actions.configurexml.AnalogActionMemoryXml">
+      <systemName>IQAA:AUTO:0011</systemName>
+      <memory>Commanded Crane Bucket</memory>
+      <maleSocket />
+    </analog-action-memory>
+  </logixngAnalogActions>
+  <logixngStringExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultStringExpressionManagerXml">
+    <string-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml">
+      <systemName>IQSE:AUTO:0001</systemName>
+      <memory>IM_92</memory>
+      <maleSocket />
+    </string-expression-memory>
+    <string-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml">
+      <systemName>IQSE:AUTO:0003</systemName>
+      <memory>IM_92</memory>
+      <maleSocket />
+    </string-expression-memory>
+    <string-expression-memory class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionMemoryXml">
+      <systemName>IQSE:AUTO:0004</systemName>
+      <memory>IM_92</memory>
+      <maleSocket />
+    </string-expression-memory>
+    <string-expression-constant class="jmri.jmrit.logixng.expressions.configurexml.StringExpressionConstantXml">
+      <systemName>IQSE:AUTO:0005</systemName>
+      <value>http://localhost:12080/panel/Panel/Daniel</value>
+      <maleSocket />
+    </string-expression-constant>
+  </logixngStringExpressions>
+  <logixngStringActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultStringActionManagerXml" />
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Daniel" x="945" y="61" height="528" width="702" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <sensoricon sensor="IS_1_1" x="37" y="22" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <turnouticon turnout="IT_1_1" x="85" y="8" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_1" x="63" y="164" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_3" x="212" y="164" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_2" x="137" y="164" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_4" x="286" y="164" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <positionablelabel x="323" y="188" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="248" y="164" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="249" y="188" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="175" y="188" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="99" y="164" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="100" y="188" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="26" y="188" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <sensoricon sensor="IS_10_1" x="23" y="162" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_2" x="22" y="206" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <memoryicon memory="IM_100" x="123" y="351" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryInputIcon colWidth="3" memory="IM_91" x="108" y="297" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryInputIcon colWidth="7" memory="IM_92" x="196" y="300" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <signalheadicon signalhead="IH1" x="175" y="173" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalheadicon signalhead="IH2" x="174" y="200" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <signalmasticon signalmast="Mast1" x="246" y="135" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast2" x="245" y="198" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalheadicon signalhead="IH3" x="330" y="201" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+      <icons>
+        <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </held>
+        <dark url="program:resources/icons/smallschematics/searchlights/left-dark-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </dark>
+        <red url="program:resources/icons/smallschematics/searchlights/left-red-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </red>
+        <yellow url="program:resources/icons/smallschematics/searchlights/left-yellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </yellow>
+        <green url="program:resources/icons/smallschematics/searchlights/left-green-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </green>
+        <flashred url="program:resources/icons/smallschematics/searchlights/left-flashred-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashred>
+        <flashyellow url="program:resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashyellow>
+        <flashgreen url="program:resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </flashgreen>
+      </icons>
+      <iconmaps />
+    </signalheadicon>
+    <sensoricon sensor="IS_99_1" x="604" y="384" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="461" y="382" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Sequence" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+  </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Chapter 7 - Sequence" x="1217" y="457" height="580" width="702" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <memoryicon memory="Commanded Crane Angle" x="345" y="76" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
+    <positionablelabel x="333" y="46" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Commanded" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="425" y="46" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Actual" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="208" y="77" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Crane angle left - right" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="202" y="112" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Crane bucket up - down" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <turnouticon turnout="IT_7_1" x="347" y="192" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>2</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <positionablelabel x="272" y="201" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Turnout" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <memoryInputIcon colWidth="3" memory="Actual Crane Angle" x="427" y="74" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryicon memory="Commanded Crane Arm" x="346" y="110" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
+    <memoryInputIcon colWidth="3" memory="Actual Crane Arm" x="428" y="108" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <memoryicon memory="Commanded Crane Bucket" x="346" y="149" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
+    <memoryInputIcon colWidth="3" memory="Actual Crane Bucket" x="427" y="147" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" fontname="Dialog.plain" size="12" style="0" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
+    <positionablelabel x="187" y="151" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Crane bucket open - close" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="Turnout" x="347" y="246" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Ship" x="348" y="277" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Crane" x="347" y="308" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="236" y="242" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Sensor at turnout" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="243" y="304" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Sensor at crane" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="252" y="273" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Sensor at ship" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="463" y="259" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Start sequence" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="465" y="285" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Stop sequence" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="458" y="311" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Reset sequence" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="Start" x="561" y="262" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Stop" x="563" y="289" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Reset" x="564" y="315" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <memoryicon memory="Commanded Crane Angle" x="529" y="77" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Commanded Crane Arm" x="513" y="105" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="Commanded Crane Bucket" x="512" y="143" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <positionablelabel x="199" y="337" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Crane has unloaded coal" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="Crane has unloaded coal" x="348" y="341" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="175" y="368" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" text="Car has unloaded coal to ship" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="Car has unloaded coal to ship" x="350" y="371" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Dec 06 18:23:42 CET 2020</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Dec 06 18:23:48 CET 2020</date>
+      <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Sun Dec 06 13:10:43 CET 2020</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Dec 06 13:10:48 CET 2020</date>
+          <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Sun Dec 06 12:58:31 CET 2020</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Sun Dec 06 12:58:39 CET 2020</date>
+              <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Sun Dec 06 12:41:33 CET 2020</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Sun Dec 06 12:41:42 CET 2020</date>
+                  <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Sun Dec 06 07:54:44 CET 2020</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Sun Dec 06 07:54:49 CET 2020</date>
+                      <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Sun Dec 06 06:18:47 CET 2020</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Sun Dec 06 06:18:52 CET 2020</date>
+                          <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Sun Dec 06 07:50:28 CET 2020</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Sun Dec 06 08:43:53 CET 2020</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Sun Dec 06 12:44:19 CET 2020</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Sun Dec 06 13:06:51 CET 2020</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Dec 06 13:15:51 CET 2020</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Dec 06 18:25:00 CET 2020</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-06T17:23:24Z+RUNKNOWN on Sun Dec 06 18:25:00 CET 2020-->
+</layout-config>
