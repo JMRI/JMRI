@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -30,7 +30,7 @@ public class SetupExcelProgramSwitchListFrameActionTest extends OperationsTestCa
         SetupExcelProgramSwitchListFrameAction sepfa = new SetupExcelProgramSwitchListFrameAction();
         Assert.assertNotNull("exists", sepfa);
         
-        sepfa.actionPerformed(new ActionEvent(this, 0, null));
+        sepfa.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         
         JmriJFrame excelFrame = JmriJFrame.getFrame(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList"));
         Assert.assertNotNull("frame exists", excelFrame);
