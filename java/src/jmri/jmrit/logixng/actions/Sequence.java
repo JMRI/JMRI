@@ -267,11 +267,13 @@ public class Sequence extends AbstractDigitalAction
                 // Possible if not the three static sockets
                 return index >= NUM_STATIC_EXPRESSIONS;
             case InsertAfter:
-                return true;    // Always possible
+                // Possible if not the static sockets, except the last one
+                return index >= NUM_STATIC_EXPRESSIONS-1;
             case MoveUp:
                 return index >= NUM_STATIC_EXPRESSIONS+2;   // Possible if not the three static sockets and the first two sockets after that
             case MoveDown:
-                return index+2 < getChildCount();   // Possible if not last two sockets
+                // Possible if not the static sockets and if not last three sockets
+                return (index >= NUM_STATIC_EXPRESSIONS) && (index+3 < getChildCount());
             default:
                 throw new UnsupportedOperationException("Oper is unknown" + oper.name());
         }
