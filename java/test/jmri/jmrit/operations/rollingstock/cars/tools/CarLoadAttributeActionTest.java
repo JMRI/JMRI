@@ -4,8 +4,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
@@ -33,7 +33,7 @@ public class CarLoadAttributeActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists", a);
         
         Assert.assertFalse("toggle state", clef.showQuanity);
-        a.actionPerformed(new ActionEvent(this, 0, null));
+        a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         Assert.assertTrue("toggle state", clef.showQuanity);
 
         JmriJFrame f = JmriJFrame.getFrame("Edit Boxcar Loads");

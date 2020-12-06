@@ -1,21 +1,23 @@
 package jmri.jmrit.display.switchboardEditor;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JMenuOperator;
+
 import jmri.*;
 import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.jmrit.display.EditorFrameOperator;
-
 import jmri.util.ColorUtil;
 import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of SwitchboardEditor
@@ -106,7 +108,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEdi
         e.setSwitchShape("symbol");
         Assert.assertEquals("Switch shape set to 'symbol'", "symbol", e.getSwitchShape());
         ((TurnoutManager) e.getManager('T')).provideTurnout("IT9"); // connect to item 1
-        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, 1, "test")); // to item 2
+        e.getSwitch("IT8").okAddPressed(new ActionEvent(e, ActionEvent.ACTION_PERFORMED, "test")); // to item 2
         e.setHideUnconnected(true); // speed up redraw
         e.updatePressed(); // rebuild for new Turnouts + symbol shape
         Assert.assertEquals("2 connected switches shown", 2, e.getTotal());
