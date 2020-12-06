@@ -332,11 +332,13 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
                                 .equals(ee._socketSystemName)) {
 
                     String socketSystemName = ee._socketSystemName;
+                    String manager = ee._manager;
                     ee._socket.disconnect();
                     if (socketSystemName != null) {
-                        MaleSocket maleSocket =
-                                InstanceManager.getDefault(DigitalExpressionManager.class)
-                                        .getBySystemName(socketSystemName);
+                        Manager<? extends MaleSocket> m =
+                                InstanceManager.getDefault(LogixNG_Manager.class)
+                                        .getManager(manager);
+                        MaleSocket maleSocket = m.getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
