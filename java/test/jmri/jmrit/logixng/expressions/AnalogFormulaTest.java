@@ -9,6 +9,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.actions.DoAnalogAction;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
@@ -732,6 +733,9 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

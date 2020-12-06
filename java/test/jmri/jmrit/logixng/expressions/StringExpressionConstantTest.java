@@ -9,6 +9,7 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -268,6 +269,9 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

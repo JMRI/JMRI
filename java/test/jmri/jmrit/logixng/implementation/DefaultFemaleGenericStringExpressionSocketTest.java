@@ -163,6 +163,9 @@ public class DefaultFemaleGenericStringExpressionSocketTest extends FemaleSocket
                 };
         
         _femaleSocket  = femaleGenericSocket.getStringSocket();
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

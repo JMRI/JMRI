@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -131,6 +132,9 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

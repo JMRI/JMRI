@@ -11,6 +11,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -334,6 +335,9 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

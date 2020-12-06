@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.managers.DefaultShutDownManager;
 import jmri.util.*;
 
@@ -147,6 +148,9 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
     
     @After

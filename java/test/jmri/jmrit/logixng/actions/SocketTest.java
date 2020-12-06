@@ -1,8 +1,9 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.FemaleSocketListener;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -45,6 +46,9 @@ public class SocketTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

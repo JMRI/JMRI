@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -272,6 +273,9 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         logixNG.setEnabled(true);
         
         InstanceManager.getDefault(LogixNG_Manager.class).activateAllLogixNGs();
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

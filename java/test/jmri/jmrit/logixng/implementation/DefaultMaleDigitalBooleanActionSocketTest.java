@@ -172,6 +172,9 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
                 InstanceManager.getDefault(DigitalBooleanActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

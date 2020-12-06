@@ -10,6 +10,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.expressions.DigitalFormula.SocketData;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitUtil;
 
@@ -25,7 +26,6 @@ import org.junit.Test;
  */
 public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
 
-    private final String _manager = "";
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private DigitalFormula expressionFormula;
@@ -151,6 +151,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtorAndSetup1() {
         DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE52", null)));
@@ -160,12 +161,12 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE3", null)));
         
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
-        expressionSystemNames.add(new SocketData("ZH12", null, _manager));   // This is null by purpose
-        expressionSystemNames.add(new SocketData("Hello", "IQDE554", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", managerName));
+        expressionSystemNames.add(new SocketData("ZH12", null, managerName));   // This is null by purpose
+        expressionSystemNames.add(new SocketData("Hello", "IQDE554", managerName));
         // IQDE61232 doesn't exist by purpose
-        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", _manager));
-        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", _manager));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", managerName));
+        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", managerName));
         
         jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
@@ -210,6 +211,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtorAndSetup2() {
         DigitalExpressionManager m = InstanceManager.getDefault(DigitalExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE52", null)));
@@ -219,11 +221,11 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         maleSockets.add(m.registerExpression(new ExpressionMemory("IQDE3", null)));
         
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
-        expressionSystemNames.add(new SocketData("ZH12", "IQDE99", _manager));
-        expressionSystemNames.add(new SocketData("Hello", "IQDE554", _manager));
-        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", _manager));
-        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", managerName));
+        expressionSystemNames.add(new SocketData("ZH12", "IQDE99", managerName));
+        expressionSystemNames.add(new SocketData("Hello", "IQDE554", managerName));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQDE61232", managerName));
+        expressionSystemNames.add(new SocketData("Yes123", "IQDE3", managerName));
         
         DigitalFormula expression = new DigitalFormula("IQDE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
@@ -273,7 +275,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQDE52", ""));
         
         jmri.jmrit.logixng.expressions.DigitalFormula expression = new jmri.jmrit.logixng.expressions.DigitalFormula("IQDE321", null, expressionSystemNames);
         
@@ -732,6 +734,9 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 
 /**
  * Test TriggerOnce
@@ -322,6 +323,9 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

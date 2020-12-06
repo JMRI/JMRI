@@ -169,6 +169,9 @@ public class DefaultMaleStringExpressionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(StringExpressionManager.class)
                         .registerExpression(actionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

@@ -200,6 +200,9 @@ public class DefaultMaleAnalogActionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(AnalogActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

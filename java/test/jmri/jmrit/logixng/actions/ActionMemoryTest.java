@@ -11,6 +11,7 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -329,6 +330,9 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

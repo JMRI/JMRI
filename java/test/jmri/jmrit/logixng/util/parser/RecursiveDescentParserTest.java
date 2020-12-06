@@ -8,6 +8,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.script.ScriptException;
 
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -340,6 +343,9 @@ public class RecursiveDescentParserTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

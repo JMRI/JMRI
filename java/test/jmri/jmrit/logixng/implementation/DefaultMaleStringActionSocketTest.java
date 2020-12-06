@@ -172,6 +172,9 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(StringActionManager.class)
                         .registerAction(actionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach

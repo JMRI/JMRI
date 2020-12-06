@@ -29,6 +29,7 @@ import jmri.jmrit.logixng.StringAction;
 import jmri.jmrit.logixng.StringExpression;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -474,6 +475,9 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(true);
         maleSocket.setEnabled(true);
         logixNG.setParentForAllChildren();
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

@@ -136,6 +136,9 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
                 flag.set(true);
             }
         }, "E1");
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

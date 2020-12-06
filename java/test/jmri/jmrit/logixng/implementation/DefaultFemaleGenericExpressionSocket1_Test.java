@@ -670,6 +670,9 @@ public class DefaultFemaleGenericExpressionSocket1_Test extends FemaleSocketTest
             }
         }, "E");
         _femaleSocket = _femaleGenericSocket;
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

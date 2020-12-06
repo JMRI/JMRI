@@ -320,6 +320,9 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         
         _logixNG.setParentForAllChildren();
         _logixNG.setEnabled(false);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

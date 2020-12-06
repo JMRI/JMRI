@@ -10,6 +10,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.DoStringAction;
 import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.jmrit.logixng.expressions.StringFormula.SocketData;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -29,7 +30,6 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
 //    private static final boolean EXPECT_SUCCESS = true;
 //    private static final boolean EXPECT_FAILURE = false;
 
-    private final String _manager = "";
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
     private StringFormula expressionFormula;
@@ -153,6 +153,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Test
     public void testCtorAndSetup1() {
         StringExpressionManager m = InstanceManager.getDefault(StringExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE52", null)));
@@ -162,12 +163,12 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
         
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
-        expressionSystemNames.add(new SocketData("ZH12", null, _manager));   // This is null by purpose
-        expressionSystemNames.add(new SocketData("Hello", "IQSE554", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", managerName));
+        expressionSystemNames.add(new SocketData("ZH12", null, managerName));   // This is null by purpose
+        expressionSystemNames.add(new SocketData("Hello", "IQSE554", managerName));
         // IQSE61232 doesn't exist by purpose
-        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", _manager));
-        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", _manager));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", managerName));
+        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", managerName));
         
         StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
@@ -212,6 +213,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Test
     public void testCtorAndSetup2() {
         StringExpressionManager m = InstanceManager.getDefault(StringExpressionManager.class);
+        String managerName = m.getClass().getName();
         
         List<MaleSocket> maleSockets = new ArrayList<>();
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE52", null)));
@@ -221,11 +223,11 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         maleSockets.add(m.registerExpression(new StringExpressionMemory("IQSE3", null)));
         
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
-        expressionSystemNames.add(new SocketData("ZH12", "IQSE99", _manager));
-        expressionSystemNames.add(new SocketData("Hello", "IQSE554", _manager));
-        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", _manager));
-        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", managerName));
+        expressionSystemNames.add(new SocketData("ZH12", "IQSE99", managerName));
+        expressionSystemNames.add(new SocketData("Hello", "IQSE554", managerName));
+        expressionSystemNames.add(new SocketData("SomethingElse", "IQSE61232", managerName));
+        expressionSystemNames.add(new SocketData("Yes123", "IQSE3", managerName));
         
         StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         Assert.assertNotNull("exists", expression);
@@ -275,7 +277,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Test
     public void testCtorAndSetup3() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException {
         List<SocketData> expressionSystemNames = new ArrayList<>();
-        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", _manager));
+        expressionSystemNames.add(new SocketData("XYZ123", "IQSE52", ""));
         
         StringFormula expression = new StringFormula("IQSE321", null, expressionSystemNames);
         
@@ -736,6 +738,9 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
         
         logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @After

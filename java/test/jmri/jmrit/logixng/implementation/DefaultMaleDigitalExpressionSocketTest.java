@@ -167,6 +167,9 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
                 InstanceManager.getDefault(DigitalExpressionManager.class)
                         .registerExpression(expressionB);
         Assert.assertNotNull("exists", maleSocketB);
+        
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .setSymbolTable(new DefaultSymbolTable());
     }
 
     @AfterEach
