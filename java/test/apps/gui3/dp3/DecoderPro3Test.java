@@ -69,10 +69,15 @@ public class DecoderPro3Test {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetApplication();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.clearShutDownManager();
     }
-
+    
     @AfterEach
     public void tearDown() {
         // eventually want to test ShutDownTasks?
