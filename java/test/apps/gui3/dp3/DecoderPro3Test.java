@@ -9,6 +9,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import apps.AppsBase;
 import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
 
 /**
  *
@@ -31,7 +32,7 @@ public class DecoderPro3Test {
 
             @Override
             protected void configureProfile() {
-//                JUnitUtil.resetInstanceManager();
+                JUnitUtil.resetInstanceManager();
             }
 
             @Override
@@ -53,6 +54,10 @@ public class DecoderPro3Test {
         };
         assertThat(a).isNotNull();
         
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return JmriJFrame.getFrame("DecoderPro Wizard") != null;
+        }, "wait for frame to appear");
+        
         // remove a frame opened by DecoderPro3
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
         // shutdown the application
@@ -64,7 +69,6 @@ public class DecoderPro3Test {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetApplication();
-        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
     }
 
