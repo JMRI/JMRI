@@ -397,8 +397,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             last_section.addAction(transit_action)
             transit_action=self.transit_action_turn_on(sensor_name)
             last_section.addAction(transit_action)
-            transit_action=self.transit_action_turn_off_delay(sensor_name, 30000)  # delay 30 secs before turning off sensor. This is a failsafe if/when the sensor fails to turnoff whenthe train stops
-            last_section.addAction(transit_action)
             
         except jmri.JmriException as ex:
             if self.loglevel > 0: print(ex),
@@ -521,24 +519,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         #mStringWhen = sWhen;
         #mStringWhat = sWhat;
         return TransitSectionAction 
-        
-    def transit_action_turn_off_delay(self, sensor_name, delay):
-        when = jmri.TransitSectionAction.ENTRY
-        what = jmri.TransitSectionAction.SETSENSORINACTIVE
-        swhat = sensor_name
-        delay = 20000
-        TransitSectionAction = TransitSectionAction = jmri.TransitSectionAction(when, what) 
-        TransitSectionAction.setStringWhat(swhat)
-        TransitSectionAction.setDataWhen(delay)
-        
-        #mWhen = when;
-        #mWhat = what;
-        #mDataWhen = dataWhen;
-        #mDataWhat1 = dataWhat1;
-        #mDataWhat2 = dataWhat2;
-        #mStringWhen = sWhen;
-        #mStringWhat = sWhat;
-        return TransitSectionAction
 
     # **************************************************
     # new produce TrainInfo file routines
@@ -829,7 +809,7 @@ class DisplayProgress:
 
 
     def __init__(self):
-        #labels don't seem to work. This is the only thing I could get to work. Improvements welcome
+        #labels don't seem to work. This is the onlt thing I could get to work. Improvements welcome
         self.frame1 = JFrame('Hello, World!', defaultCloseOperation=JFrame.DISPOSE_ON_CLOSE, size=(300, 50), locationRelativeTo=None)
 
         self.frame1.setVisible(True)

@@ -59,7 +59,7 @@ class processXML():
     
         JOptionPane.showMessageDialog(None, "Performing some prelimiary checks to ensure the trains run correctly\nAll errors will need to be fixed for Dispatcher to run correctly\nSome errors will cause the panel to be set up incorrectly in this stage", 'Checks', JOptionPane.WARNING_MESSAGE)
     
-        # check allblockshave sensors
+        # check all blocks have sensors
         if self.check_all_blocks_have_sensors() == False:
             self.msg = self.msg + "\n***********************\n Do you wish to continue\n***********************"
             myAnswer = JOptionPane.showConfirmDialog(None, self.msg)
@@ -903,75 +903,143 @@ class processXML():
         #icon_coordinates = [600,30]   #my best guess
         label_offset = [25,0]
         icon_offset = [0,20]
-        inset = [5,5]
+        indent = [5,5]
+        unindent = [-5,5]
+        indentALot = [150,0]
+        unindentALot = [-150,0]
         
         large_icon_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/large_icon.xml')
         label_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/label.xml')        
         
         icon_sensor_name = "startDispatcherSensor"
         self.doc_start_icon = ElementTree(file=large_icon_xml)
-        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_start_icon)
-        
-        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
-              
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_start_icon)       
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]              
         icon_label = "Run Dispatcher System"
         self.doc_start_label = ElementTree(file=label_xml)
         self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_start_label)
         
-        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
-        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]        
         icon_sensor_name = "stopMasterSensor"
         self.doc_stop_icon = ElementTree(file=large_icon_xml)
-        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_stop_icon)
-        
-        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
-              
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_stop_icon)        
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]              
         icon_label = "Stop Dispatcher System"
         self.doc_stop_label = ElementTree(file=label_xml)
         self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_stop_label)
         
-        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
-        
-        # the following icons need to have the dispatcher System working, so inset
-        icon_coordinates = [a + b for a, b in zip(icon_coordinates, inset)]         
+        # the following icons need to have the dispatcher System working, so indent
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, indent)]  
 
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]       
         icon_sensor_name = "Express"
         self.doc_Express_icon = ElementTree(file=large_icon_xml)
-        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_Express_icon)
-        
-        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
-               
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_Express_icon)        
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]               
         icon_label = "Express Train (no stopping)"
         self.doc_Express_label = ElementTree(file=label_xml)
         self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_Express_label)
         
-        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
-        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]       
         icon_sensor_name = "newTrainSensor"  
         self.doc_new_train_icon = ElementTree(file=large_icon_xml)
-        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_new_train_icon)
-        
-        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)] 
-        
-        icon_label = "Setup Train in Siding"
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_new_train_icon)       
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]         
+        icon_label = "Setup Train in Section"
         self.doc_new_train_label = ElementTree(file=label_xml)
         self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_new_train_label)
         
-
-        
-        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
-        
-        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]        
         icon_sensor_name = "soundSensor"
         self.doc_sound_icon = ElementTree(file=large_icon_xml)
-        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_sound_icon)
-        
-        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
-              
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_sound_icon)        
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]              
         icon_label = "Enable Announcements"
         self.doc_sound_label = ElementTree(file=label_xml)
         self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_sound_label)
+         
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]       
+        icon_sensor_name = "simulateSensor"
+        self.doc_simulate_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_simulate_icon)   
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "Simulate Dispatched Trains"
+        self.doc_simulate_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_simulate_label)
         
+        # unindent
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, unindent)]
+        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]       
+        icon_sensor_name = "setDispatchSensor"
+        self.doc_set_dispatch_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_set_dispatch_icon)                 
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)] 
+        icon_label = "Setup Dispatch"
+        self.doc_set_dispatch_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_set_dispatch_label)
+        
+        # indent for two buttons on a line
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, indentALot)]
+        icon_sensor_name = "setRouteSensor"
+        self.doc_set_route_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_set_route_icon)
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "Setup Route"
+        self.doc_set_route_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_set_route_label)
+        
+        # unindent for one buttons on a line
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, unindentALot)]
+        # indent
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, indent)] 
+        # next icon
+        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        icon_sensor_name = "editRoutesSensor"
+        self.doc_edit_routes_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_edit_routes_icon)
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "View/Edit Routes"
+        self.doc_edit_routes_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_edit_routes_label)
+        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        icon_sensor_name = "viewScheduledSensor"
+        self.doc_view_scheduled_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_view_scheduled_icon)
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)] 
+        icon_label = "View/Edit Scheduled Trains"
+        self.doc_view_scheduled_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_view_scheduled_label)
+                       
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        icon_sensor_name = "schedulerStartTimeSensor"
+        self.doc_set_scheduler_time_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_set_scheduler_time_icon)
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "Set Scheduler Start Time"
+        self.doc_set_scheduler_time_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_set_scheduler_time_label)        
+        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)]
+        icon_sensor_name = "showClockSensor"
+        self.doc_show_clock_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_show_clock_icon)   
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]
+        icon_label = "Show Analog Clock"
+        self.doc_show_clock_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_show_clock_label)        
+        
+        icon_coordinates = [a + b for a, b in zip(icon_coordinates, icon_offset)] 
+        icon_sensor_name = "startSchedulerSensor"
+        self.doc_start_scheduler_icon = ElementTree(file=large_icon_xml)
+        self.set_up_large_icon_code(icon_sensor_name, icon_coordinates, self.doc_start_scheduler_icon) 
+        icon_coordinates_label = [a + b for a, b in zip(icon_coordinates, label_offset)]        
+        icon_label = "Start Scheduler"
+        self.doc_start_scheduler_label = ElementTree(file=label_xml)
+        self.set_up_label_code(icon_label, icon_coordinates_label, self.doc_start_scheduler_label)
+                
         
     def set_up_logix_code(self):
         logix_xml = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/sensorsAndIcons/logix.xml')
@@ -1069,12 +1137,28 @@ class processXML():
         self.doc = self.insert_icon_code(self.doc, self.doc_start_icon)
         self.doc = self.insert_icon_code(self.doc, self.doc_stop_icon)
         self.doc = self.insert_icon_code(self.doc, self.doc_sound_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_simulate_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_view_scheduled_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_set_scheduler_time_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_start_scheduler_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_set_route_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_set_dispatch_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_show_clock_icon)
+        self.doc = self.insert_icon_code(self.doc, self.doc_edit_routes_icon)          
         
         self.doc = self.insert_label_code(self.doc, self.doc_Express_label)
         self.doc = self.insert_label_code(self.doc, self.doc_new_train_label)
         self.doc = self.insert_label_code(self.doc, self.doc_start_label)
         self.doc = self.insert_label_code(self.doc, self.doc_stop_label)
         self.doc = self.insert_label_code(self.doc, self.doc_sound_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_simulate_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_view_scheduled_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_set_scheduler_time_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_start_scheduler_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_set_route_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_set_dispatch_label)
+        self.doc = self.insert_label_code(self.doc, self.doc_show_clock_label) 
+        self.doc = self.insert_label_code(self.doc, self.doc_edit_routes_label) 
         
     def insert_logixandconditionals(self):
         if self.loglevel > 0: print "insert_logix"
@@ -1247,7 +1331,64 @@ class processXML():
             for child in element.getchildren():
                 if child.tag == "systemName": child.text = "IS" + str(96000+5) #hopefully IS96xxx will not be used
                 if child.tag == "userName": child.text = "soundSensor" 
-                 
+                
+        self.doc_simulate_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_simulate_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+6) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "simulateSensor"
+
+        self.doc_view_scheduled_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_view_scheduled_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+7) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "viewScheduledSensor"
+ 
+
+        self.doc_set_scheduler_time_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_set_scheduler_time_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+8) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "schedulerStartTimeSensor" 
+
+        self.doc_start_scheduler_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_start_scheduler_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+9) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "startSchedulerSensor" 
+
+        self.doc_set_route_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_set_route_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+10) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "setRouteSensor"
+
+        self.doc_set_dispatch_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_set_dispatch_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+11) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "setDispatchSensor"
+
+        self.doc_show_clock_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_show_clock_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+12) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "showClockSensor"  
+
+
+        self.doc_edit_route_sensor = ElementTree(file=sensor_xml)
+        iter=self.doc_edit_route_sensor.getiterator('sensor')
+        for element in iter:
+            for child in element.getchildren():
+                if child.tag == "systemName": child.text = "IS" + str(96000+13) #hopefully IS96xxx will not be used
+                if child.tag == "userName": child.text = "editRoutesSensor"                
         
     # **************************************************
     # Insert XML code for Sensors, from stored values
@@ -1289,16 +1430,31 @@ class processXML():
         self.doc = self.insert_sensor_code(self.doc, self.doc_moveInProgress)       
 
     def insert_control_sensor_codes(self):
-        # express_sensor icon
+        # express_sensor
         self.doc = self.insert_sensor_code(self.doc, self.doc_express_sensor)
-        # new_train_sensor icon
+        # new_train_sensor
         self.doc = self.insert_sensor_code(self.doc, self.doc_new_train_sensor)
-        #stop_sensor icon
+        #stop_sensor
         self.doc = self.insert_sensor_code(self.doc, self.doc_stop_sensor) 
-        #start_sensor icon
+        #start_sensor
         self.doc = self.insert_sensor_code(self.doc, self.doc_start_sensor) 
-        #sound icon
-        self.doc = self.insert_sensor_code(self.doc, self.doc_sound_sensor) 
+        #sound_sensor
+        self.doc = self.insert_sensor_code(self.doc, self.doc_sound_sensor)
+        #simulate_sensor
+        self.doc = self.insert_sensor_code(self.doc, self.doc_simulate_sensor)
+        #view_scheduled_sensor
+        self.doc = self.insert_sensor_code(self.doc, self.doc_view_scheduled_sensor)
+        #set_scheduler_time_sensor
+        self.doc = self.insert_sensor_code(self.doc, self.doc_set_scheduler_time_sensor)
+        #start_scheduler_sensor
+        self.doc = self.insert_sensor_code(self.doc, self.doc_start_scheduler_sensor)
+        
+        self.doc = self.insert_sensor_code(self.doc, self.doc_set_route_sensor)
+        self.doc = self.insert_sensor_code(self.doc, self.doc_set_dispatch_sensor)
+        
+        self.doc = self.insert_sensor_code(self.doc, self.doc_show_clock_sensor)
+        self.doc = self.insert_sensor_code(self.doc, self.doc_edit_route_sensor)
+
         
 
     def set_up_all_sensors(self, block_name, index):

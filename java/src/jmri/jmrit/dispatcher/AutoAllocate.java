@@ -2,14 +2,17 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Section;
+import static jmri.Section.OCCUPIED;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitSection;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LevelXing;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -102,7 +105,7 @@ public class AutoAllocate {
         copyAndSortARs(list);
         removeCompletePlans();
         for (int i = 0; i < orderedRequests.size(); i++) {
-            try {
+            //try {
                 okToAllocate = false;
                 AllocationRequest ar = orderedRequests.get(i);
                 if (ar == null) {
@@ -297,10 +300,10 @@ public class AutoAllocate {
                         }
                     }
                 }
-            } catch (RuntimeException e) {
-                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}", e.toString());
-                continue;
-            }
+//            } catch (RuntimeException e) {
+//                log.warn("scanAllocationRequestList - maybe the allocationrequest was removed due to a terminating train??{}", e.toString());
+//                continue;
+//            }
         }
     }
 
@@ -1267,9 +1270,21 @@ public class AutoAllocate {
         }
         if (seq == 0) {
             if (at.getMode() != ActiveTrain.MANUAL) {
-                log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.",
-                        at.getTrainName());
-                at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
+                // Active train may be starting outside the transit. 
+                // if that is the case no sequence number in the transit would be found
+                // if this is not the case whe need to halt the train to avoid runaway
+                List<Block> entryBlocksList = at.getTransit().getEntryBlocksList();
+                boolean occupied = false;
+                for (Block b : entryBlocksList){
+                    if (b.getState() == OCCUPIED) {
+                        occupied = true;
+                    }
+                }
+                if (!occupied ){
+                    log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.",
+                            at.getTrainName());
+                    at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
+                }
             } else {
                 log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());
             }

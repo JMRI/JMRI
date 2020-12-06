@@ -295,7 +295,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @OverridingMethodsMustInvokeSuper
-    protected void firePropertyChange(String p, Object old, Object n) {
+    public void firePropertyChange(String p, Object old, Object n) {
         pcs.firePropertyChange(p, old, n);
     }
 

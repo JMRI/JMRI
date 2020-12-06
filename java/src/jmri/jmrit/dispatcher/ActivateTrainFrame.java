@@ -95,7 +95,7 @@ public class ActivateTrainFrame {
     private final JComboBox<String> destinationBlockBox = new JComboBox<>();
     private List<Block> destinationBlockBoxList = new ArrayList<>();
     private List<Integer> destinationBlockSeqList = new ArrayList<>();
-    private JButton addNewTrainButton = null;
+    public JButton addNewTrainButton = null;
     private JButton loadButton = null;
     private JButton saveButton = null;
     private JButton deleteButton = null;
@@ -628,7 +628,7 @@ public class ActivateTrainFrame {
      * then (if no errors) creating an ActiveTrain and (optionally) an
      * AutoActiveTrain
      */
-    private void addNewTrain(ActionEvent e) {
+    public void addNewTrain(ActionEvent e) {
         // get information
         if (selectedTransit == null) {
             // no transits available
@@ -1101,7 +1101,7 @@ public class ActivateTrainFrame {
         }
     }
 
-    private void trainInfoToDialog(TrainInfo info) {
+    public void trainInfoToDialog(TrainInfo info) {
         if (!setComboBox(transitSelectBox, info.getTransitName())) {
             log.warn("Transit {} from file not in Transit menu", info.getTransitName());
             JOptionPane.showMessageDialog(initiateFrame,

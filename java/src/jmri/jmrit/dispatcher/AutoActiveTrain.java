@@ -707,6 +707,8 @@ public class AutoActiveTrain implements ThrottleListener {
             Block nB = _nextBlock;
             if (as == null) {
                 as = _currentAllocatedSection;
+            }else{
+               _currentAllocatedSection = as;         //added bill fitch as set speed by signal crashing will null _currentAllocatedSection 
             }
             // get signal mast at current block change, if there is no signal mast we will proceed with no change in speed
             // unless forceSpeedChange is true, such as beginning, resets of transit.

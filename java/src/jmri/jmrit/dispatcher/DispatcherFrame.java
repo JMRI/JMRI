@@ -178,7 +178,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     public int loadTrainFromTrainInfo(String traininfoFileName, String overRideType, String overRideValue) {
         //read xml data from selected filename and move it into trainfo
-        try {
+//        try {
             // maybe called from jthon protect our selves
             TrainInfoFile tif = new TrainInfoFile();
             TrainInfo info = null;
@@ -192,10 +192,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 return -3;
             }
             return loadTrainFromTrainInfo(info, overRideType, overRideValue);
-        } catch (RuntimeException ex) {
-            log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex);
-            return -9;
-        }
+//        } catch (RuntimeException ex) {
+//            log.error("Unexpected, uncaught exception loading traininfofile [{}]", traininfoFileName, ex);
+//            return -9;
+//        }
     }
 
     /**

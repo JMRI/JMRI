@@ -1,175 +1,20 @@
+# Script to automatically Generate a Network graph of a layout
+# Used to create a path between stations on layout
+#
+# Author: Bill Fitch, copyright 2020
+# Part of the JMRI distribution
   
 import sys
 import jmri
 import os
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
-##http://www.java2s.com/Code/Jar/j/Downloadjgraphtjar.htm
+
+#Jgrapht reference
+#http://www.java2s.com/Code/Jar/j/Downloadjgraphtjar.htm
+
 from org.jgrapht.graph import DefaultEdge
 from org.jgrapht.graph import DirectedMultigraph
-
-
-# Definitions stored for future reference
-# from org.jgrapht import DirectedGraph
-# #from org.jgrapht.EdgeFactory import EdgeFactory
-# from org.jgrapht import Graph
-# from org.jgrapht import GraphHelper
-# from org.jgrapht import GraphMapping
-# from org.jgrapht import GraphPath
-# from org.jgrapht import Graphs
-# from org.jgrapht import ListenableGraph
-# from org.jgrapht import UndirectedGraph
-# from org.jgrapht import VertexFactory
-# from org.jgrapht import WeightedGraph
-# from org.jgrapht.alg import AbstractPathElement
-# from org.jgrapht.alg import AbstractPathElementList
-# from org.jgrapht.alg import BellmanFordIterator
-# from org.jgrapht.alg import BellmanFordPathElement
-# from org.jgrapht.alg import BellmanFordShortestPath
-# from org.jgrapht.alg import BiconnectivityInspector
-# from org.jgrapht.alg import BlockCutpointGraph
-# from org.jgrapht.alg import BronKerboschCliqueFinder
-# from org.jgrapht.alg import ConnectivityInspector
-# from org.jgrapht.alg import CycleDetector
-# from org.jgrapht.alg import DijkstraShortestPath
-# from org.jgrapht.alg import DirectedNeighborIndex
-# from org.jgrapht.alg import KShortestPaths
-# from org.jgrapht.alg import KShortestPathsIterator
-# from org.jgrapht.alg import NeighborIndex
-# from org.jgrapht.alg import RankingPathElement
-# from org.jgrapht.alg import RankingPathElementList
-# from org.jgrapht.alg import StrongConnectivityInspector
-# from org.jgrapht.alg import TransitiveClosure
-# from org.jgrapht.alg import VertexCovers
-# from org.jgrapht.alg.util import VertexDegreeComparator
-# from org.jgrapht.demo import HelloJGraphT
-# #from org.jgrapht.demo import JGraphAdapterDemo
-# from org.jgrapht.demo import PerformanceDemo
-# from org.jgrapht.event import ConnectedComponentTraversalEvent
-# from org.jgrapht.event import EdgeTraversalEvent
-# from org.jgrapht.event import GraphChangeEvent
-# from org.jgrapht.event import GraphEdgeChangeEvent
-# from org.jgrapht.event import GraphListener
-# from org.jgrapht.event import GraphVertexChangeEvent
-# from org.jgrapht.event import TraversalListener
-# from org.jgrapht.event import TraversalListenerAdapter
-# from org.jgrapht.event import VertexSetListener
-# from org.jgrapht.event import VertexTraversalEvent
-# from org.jgrapht.experimental import GraphReader
-# from org.jgrapht.experimental import GraphSquare
-# from org.jgrapht.experimental import GraphTests
-# from org.jgrapht.experimental import PartiteRandomGraphGenerator
-# from org.jgrapht.experimental import RandomGraphHelper
-# from org.jgrapht.experimental import UniformRandomGraphGenerator
-# from org.jgrapht.experimental.alg import ApproximationAlgorithm
-# from org.jgrapht.experimental.alg import ExactAlgorithm
-# from org.jgrapht.experimental.alg import IntArrayGraphAlgorithm
-# from org.jgrapht.experimental.alg.color import BrownBacktrackColoring
-# from org.jgrapht.experimental.alg.color import GreedyColoring
-# from org.jgrapht.experimental.equivalence import EquivalenceComparator
-# from org.jgrapht.experimental.equivalence import EquivalenceComparatorChain
-# from org.jgrapht.experimental.equivalence import EquivalenceComparatorChainBase
-# from org.jgrapht.experimental.equivalence import EquivalenceSet
-# from org.jgrapht.experimental.equivalence import EquivalenceSetCreator
-# from org.jgrapht.experimental.equivalence import UniformEquivalenceComparator
-# from org.jgrapht.experimental.isomorphism import AbstractExhaustiveIsomorphismInspector
-# from org.jgrapht.experimental.isomorphism import AdaptiveIsomorphismInspectorFactory
-# from org.jgrapht.experimental.isomorphism import EquivalenceIsomorphismInspector
-# from org.jgrapht.experimental.isomorphism import GraphIsomorphismInspector
-# from org.jgrapht.experimental.isomorphism import GraphOrdering
-# from org.jgrapht.experimental.isomorphism import IsomorphismRelation
-# from org.jgrapht.experimental.isomorphism import PermutationIsomorphismInspector
-# from org.jgrapht.experimental.isomorphism import VertexDegreeEquivalenceComparator
-# from org.jgrapht.experimental.permutation import ArrayPermutationsIter
-# from org.jgrapht.experimental.permutation import CollectionPermutationIter
-# from org.jgrapht.experimental.permutation import CompoundPermutationIter
-# from org.jgrapht.experimental.permutation import IntegerPermutationIter
-# from org.jgrapht.experimental.permutation import PermutationFactory
-# #from org.jgrapht.experimental.touchgraph import SimpleTouchgraphApplet
-# #from org.jgrapht.experimental.touchgraph import TouchgraphConverter
-# #from org.jgrapht.experimental.touchgraph import TouchgraphPanel
-# from org.jgrapht.ext import DOTExporter
-# from org.jgrapht.ext import EdgeNameProvider
-# from org.jgrapht.ext import GmlExporter
-# from org.jgrapht.ext import GraphMLExporter
-# from org.jgrapht.ext import IntegerEdgeNameProvider
-# from org.jgrapht.ext import IntegerNameProvider
-# #from org.jgrapht.ext import JGraphModelAdapter
-# from org.jgrapht.ext import MatrixExporter
-# from org.jgrapht.ext import StringEdgeNameProvider
-# from org.jgrapht.ext import StringNameProvider
-# from org.jgrapht.ext import VertexNameProvider
-# from org.jgrapht.ext import VisioExporter
-# from org.jgrapht.generate import EmptyGraphGenerator
-# from org.jgrapht.generate import GraphGenerator
-# from org.jgrapht.generate import LinearGraphGenerator
-# from org.jgrapht.generate import RandomGraphGenerator
-# from org.jgrapht.generate import RingGraphGenerator
-# from org.jgrapht.generate import WheelGraphGenerator
-# from org.jgrapht.graph import AbstractBaseGraph
-# from org.jgrapht.graph import AbstractGraph
-# from org.jgrapht.graph import AsUndirectedGraph
-# from org.jgrapht.graph import AsUnweightedDirectedGraph
-# from org.jgrapht.graph import AsUnweightedGraph
-# from org.jgrapht.graph import AsWeightedGraph
-# #from org.jgrapht import graphBasedEdgeFactory
-# #from org.jgrapht import graphBasedVertexFactory
-# from org.jgrapht.graph import DefaultDirectedGraph
-# from org.jgrapht.graph import DefaultDirectedWeightedGraph
-# from org.jgrapht.graph import DefaultEdge
-# from org.jgrapht.graph import DefaultGraphMapping
-# from org.jgrapht.graph import DefaultListenableGraph
-# from org.jgrapht.graph import DefaultWeightedEdge
-# from org.jgrapht.graph import DirectedMaskSubgraph
-# from org.jgrapht.graph import DirectedMultigraph
-# from org.jgrapht.graph import DirectedPseudograph
-# from org.jgrapht.graph import DirectedSubgraph
-# from org.jgrapht.graph import DirectedWeightedMultigraph
-# from org.jgrapht.graph import DirectedWeightedSubgraph
-# from org.jgrapht.graph import EdgeReversedGraph
-# from org.jgrapht.graph import EdgeSetFactory
-# from org.jgrapht.graph import GraphDelegator
-# from org.jgrapht.graph import IntrusiveEdge
-# from org.jgrapht.graph import ListenableDirectedGraph
-# from org.jgrapht.graph import ListenableDirectedWeightedGraph
-# from org.jgrapht.graph import ListenableUndirectedGraph
-# from org.jgrapht.graph import ListenableUndirectedWeightedGraph
-# from org.jgrapht.graph import MaskEdgeSet
-# from org.jgrapht.graph import MaskFunctor
-# from org.jgrapht.graph import MaskSubgraph
-# from org.jgrapht.graph import MaskVertexSet
-# from org.jgrapht.graph import Multigraph
-# from org.jgrapht.graph import ParanoidGraph
-# from org.jgrapht.graph import Pseudograph
-# from org.jgrapht.graph import SimpleDirectedGraph
-# from org.jgrapht.graph import SimpleDirectedWeightedGraph
-# from org.jgrapht.graph import SimpleGraph
-# from org.jgrapht.graph import SimpleWeightedGraph
-# from org.jgrapht.graph import Subgraph
-# from org.jgrapht.graph import UndirectedMaskSubgraph
-# from org.jgrapht.graph import UndirectedSubgraph
-# from org.jgrapht.graph import UndirectedWeightedSubgraph
-# from org.jgrapht.graph import UnmodifiableDirectedGraph
-# from org.jgrapht.graph import UnmodifiableGraph
-# from org.jgrapht.graph import UnmodifiableUndirectedGraph
-# from org.jgrapht.graph import WeightedMultigraph
-# from org.jgrapht.graph import WeightedPseudograph
-# from org.jgrapht.traverse import AbstractGraphIterator
-# from org.jgrapht.traverse import BreadthFirstIterator
-# from org.jgrapht.traverse import ClosestFirstIterator
-# from org.jgrapht.traverse import CrossComponentIterator
-# from org.jgrapht.traverse import DepthFirstIterator
-# from org.jgrapht.traverse import GraphIterator
-# from org.jgrapht.traverse import TopologicalOrderIterator
-# from org.jgrapht.util import ArrayUnenforcedSet
-# from org.jgrapht.util import FibonacciHeap
-# from org.jgrapht.util import FibonacciHeapNode
-# from org.jgrapht.util import MathUtil
-# from org.jgrapht.util import ModifiableInteger
-# from org.jgrapht.util import PrefetchIterator
-# from org.jgrapht.util import TypeUtil
-
-
 
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
 

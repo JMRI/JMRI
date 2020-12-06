@@ -12,5 +12,7 @@ import jmri
 
 # 2) Read the help accessed from the menu to get an idea of what the system does
 
+# Author:  Bill Fitch copyright (c) 2020
+
 RunDispatcherSystem = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/DispatcherSystem.py')
 execfile(RunDispatcherSystem)
