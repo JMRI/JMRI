@@ -74,8 +74,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LONG_TIMEOUT = 180000;  // Fleischmann command stations take forever
         SHORT_TIMEOUT = 8000;   // DCS240 reads
         
-        slotMap = Arrays.asList(new SlotMapEntry(0,127));
-
         loadSlots();
 
         // listen to the LocoNet
@@ -100,8 +98,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     protected void loadSlots() {
         // initialize slot array
-        for (int i = 0; i < numSlots; i++) {
-            _slots[i] = new LocoNetSlot(i,getLoconetProtocol());
+        for (SlotMapEntry item : slotMap) {
+            for (int slotIx = item.getFrom(); slotIx <= item.getTo() ; slotIx++) {
+                _slots[slotIx] = new LocoNetSlot(slotIx,getLoconetProtocol(),item.getSlotType());
+            }
         }
     }
 
@@ -1009,18 +1009,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         commandStationType = value;
         mCanRead = value.getCanRead();
         mProgEndSequence = value.getProgPowersOff();
-        if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS240)) {
-            numSlots = SLOTS_DCS240;
-            slotMap = Arrays.asList((new SlotMapEntry(0,432,SlotType.SYSTEM)));
-        } else if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS052)) {
-            numSlots = SLOTS_DCS240;
-            slotMap = Arrays.asList(new SlotMapEntry(0,21),new SlotMapEntry(121,127),new SlotMapEntry(248,256),new SlotMapEntry(376,386));
-        } else if (getCommandStationType().equals(LnCommandStationType.COMMAND_STATION_DCS210)) {
-            numSlots = SLOTS_DCS240;
-            slotMap = Arrays.asList(new SlotMapEntry(0,120),new SlotMapEntry(121,127),new SlotMapEntry(248,256),new SlotMapEntry(376,386));
-        } else {
-            numSlots = SLOTS_OTHER;
-        }
+        slotMap = commandStationType.getSlotMap();
     }
 
     LocoNetThrottledTransmitter throttledTransmitter = null;

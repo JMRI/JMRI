@@ -106,8 +106,8 @@ public enum LnCommandStationType {
             IdleSupport.NO_OPC_IDLE_SUPPORT,
             MultiMeterSupport.SUPPORTS_MULTIMETER_FUNCTION,
             LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION,
-            CommandStationFracType.CLOCK15BIT),
-            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM)
+            CommandStationFracType.CLOCK15BIT,
+            Arrays.asList(new SlotMapEntry(0,0,SlotType.SYSTEM),new SlotMapEntry(1,120,SlotType.LOCO),new SlotMapEntry(121,127,SlotType.SYSTEM))
             ),
     COMMAND_STATION_DB150("DB150 (Empire Builder)", // NOI18N
             ReadsFromServiceModeTrack.NO_SVC_MODE_READS,
@@ -237,6 +237,9 @@ public enum LnCommandStationType {
         this.supportsIdle = supportsIdle;
         this.supportsMultiMeter = supportMultiMeter;
         this.supportsLocoReset = supportsLocoReset;
+        this.csClockFracType = csClockFracType;
+        this.slotMap = slotMap;
+        
     }
 
     final String name;
@@ -247,6 +250,8 @@ public enum LnCommandStationType {
     final IdleSupport supportsIdle;
     final MultiMeterSupport supportsMultiMeter;
     final LocoResetSupport supportsLocoReset;
+    final CommandStationFracType csClockFracType;
+    final List<SlotMapEntry> slotMap;
 
     public String getName() {
         return name;
@@ -376,6 +381,26 @@ public enum LnCommandStationType {
     public boolean getSupportsLocoReset() {
 
         return supportsLocoReset == LocoResetSupport.SUPPORTS_LOCO_RESET_FUNCTION;
+    }
+
+    /**
+     * Returns CS Slot Map.
+     *
+     * @return true if command station supports OPC_RE_LOCO_RESET message
+     */
+    public List<SlotMapEntry> getSlotMap() {
+
+        return slotMap;
+    }
+
+    /**
+     * Returns CS Clock fraction Type
+     *
+     * @return the FracType
+     */
+    public CommandStationFracType getCsClockFracType() {
+
+        return csClockFracType;
     }
 
     protected enum ReadsFromServiceModeTrack {

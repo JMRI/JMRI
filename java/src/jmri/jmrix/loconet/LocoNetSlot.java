@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -41,15 +43,7 @@ public class LocoNetSlot {
      * @param slotNum  slot number to be assigned to the new LocoNetSlot object
      */
     public LocoNetSlot(int slotNum) {
-        slot = slotNum;
-        loconetProtocol = LnConstants.LOCONETPROTOCOL_UNKNOWN;
-        if ((slot == 0) || (slot > 120 && slot < 128)
-                || (slot > 247 && slot < 257)
-                || (slot > 375 && slot < 385)) {
-            systemSlot = true;
-        } else {
-            systemSlot = false;
-        }
+        LocoNetSlot(slotNum, LnConstants.LOCONETPROTOCOL_UNKNOWN);
     }
 
     /**
@@ -65,11 +59,25 @@ public class LocoNetSlot {
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
-            systemSlot = true;
+            slotType = SlotType.SYSTEM;
         } else {
-            systemSlot = false;
+            slotType = SlotType.LOCO;
         }
     }
+    
+    /**
+     * Create a slot , initialize slotnum, protocol and slot type
+     * <p>
+     * @param slotNum - slot number to be assigned to the new LocoNetSlot object
+     * @param inLoconetProtocol - can be 0 = unknown, 1 = version 1.1, 2 = Expandedslot
+     * @param inSlotType - SLotType enum
+     */
+    public LocoNetSlot(int slotNum, int inLoconetProtocol, SlotType inSlotType) {
+        slot = slotNum;
+        loconetProtocol = inLoconetProtocol;
+        slotType = inSlotType;
+    }
+
 
     /**
      * Creates a slot object based on the contents of a LocoNet message.
@@ -96,9 +104,9 @@ public class LocoNetSlot {
         if ((slot == 0) || (slot > 120 && slot < 128)
                 || (slot > 247 && slot < 257)
                 || (slot > 375 && slot < 385)) {
-            systemSlot = true;
+            slotType = SlotType.SYSTEM;
         } else {
-            systemSlot = false;
+            slotType = SlotType.LOCO;
         }
         setSlot(l);
     }
@@ -119,7 +127,7 @@ public class LocoNetSlot {
  * @return true if this is a systems slot else false
  */
     public boolean isSystemSlot() {
-         return systemSlot;
+         return slotType == SlotType.SYSTEM;
      }
 
     /**
@@ -1352,7 +1360,7 @@ public class LocoNetSlot {
     // data values to echo slot contents
     final private int slot;   // <SLOT#> is the number of the slot that was read.
     private int loconetProtocol; // protocol used by the slot.
-    final private boolean systemSlot; // is it a system slot
+    private SlotType slotType; // system, loco, unknown
     private int stat; // <STAT> is the status of the slot
     private int addr; // full address of the loco, made from
     //    <ADDR> is the low 7 (0-6) bits of the Loco address
