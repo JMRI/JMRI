@@ -424,6 +424,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         // slot specific message?
         int i = findSlotFromMessage(m);
         if (i != -1) {
+            getMoreDetailsForSlot(m, i);
             forwardMessageToSlot(m, i);
             respondToAddrRequest(m, i);
             programmerOpMessage(m, i);
@@ -833,38 +834,52 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * If it is a slot move message then for
-     *  null moves, do nothing (handled elsewhere)
-     *  for dispatch moves read dispatched slot
-     *  for all others read both slots
-     *
+     * If it is a slot being sent COMMON,
+     *  after a delay, get the new status of the slot
+     * If it is a true slot move, not dispatch or null
+     *  after a delay, get the new status of the from slot, which varies by CS.
+     *  the to slot should come in the reply.
      * @param m a LocoNet message
-     * @param slotOne the slot to which it is directed
+     * @param i the slot to which it is directed
      */
-    protected void getMoreDetailsForSlotMove(LocoNetMessage m, int slotOne) {
-        // is called any time a LocoNet message is received. Note that we do
-        // _NOT_ know why a given message happens!
-
-        // if this is OPC_MOVE_SLOT
-        if ((m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) ||
-                ((m.getOpCode() == LnConstants.OPC_EXP_SLOT_MOVE) && ((m.getElement(3) & 0b01111100) == 0x00))) {
+    protected void getMoreDetailsForSlot(LocoNetMessage m, int i) {
+        // is called any time a LocoNet message is received.
+        // sets up delayed slot read to update our effected slots to match the CS
+        if (m.getOpCode() == LnConstants.OPC_SLOT_STAT1 &&
+                ((m.getElement(2) & LnConstants.LOCOSTAT_MASK) == LnConstants.LOCO_COMMON ) ) {
+            // Changing a slot to common. Depending on a CS and its OpSw, and throttle speed 
+            // it could have its status changed a number of ways.
+            sendReadSlotDelayed(i,100);
+        } else if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
+            // if a true move get the new from slot status
+            // the to slot status is sent in the reply
             int slotTwo;
-            if (m.getOpCode() == LnConstants.OPC_MOVE_SLOTS) {
-                slotTwo = m.getElement(2);
-            } else {
-                slotTwo = ((m.getElement(3) & 0x03) * 128) + m.getElement(4);
+            slotTwo = m.getElement(2);
+            if (i != 0 && slotTwo != 0) {
+                sendReadSlotDelayed(i,100);
             }
-            if (slotOne != 0 && slotTwo == 0) {
-                // dispatch, update the slot
-                sendReadSlot(slotOne);
-            } else if (slotOne == slotTwo) {
-                // null move ignore
-            } else {
-                // update both slots (does this ever happen)
-                sendReadSlot(slotOne);
-                sendReadSlot(slotTwo);
+       }
+    }
+
+    /**
+     * Scedule a delayed slot read.
+     * @param slotNo - the slot.
+     * @param delay - delay in msecs.
+     */
+    protected void sendReadSlotDelayed(int slotNo, long delay) {
+        java.util.TimerTask meterTask = new java.util.TimerTask() {
+            int slotNumber = slotNo;
+
+            @Override
+            public void run() {
+                try {
+                    sendReadSlot(slotNumber);
+                } catch (Exception e) {
+                    log.error("Exception occurred sendReadSlotDelayed:", e);
+                }
             }
-        }
+        };
+        jmri.util.TimerUtil.schedule(meterTask, delay);
     }
 
     /**

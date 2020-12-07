@@ -818,7 +818,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
 
         // Release throttle connections
         if (slot != null) {
-            if (slot.slotStatus() != LnConstants.LOCO_COMMON) {
+            if (slot.slotStatus() == LnConstants.LOCO_IN_USE  ) {
                 // Digitrax throttles do not set the slot speed to zero, so do
                 // not do so here.
 

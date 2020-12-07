@@ -593,7 +593,7 @@ public class SCWarrant extends Warrant {
      * Make sure to free up additional resources for a running SCWarrant.
      */
     @Override
-    public synchronized void stopWarrant(boolean abort) {
+    public synchronized void stopWarrant(boolean abort, boolean turnOffFunctions) {
         if (_nextSignal != null) {
             _nextSignal.removePropertyChangeListener(this);
             _nextSignal = null;
@@ -798,7 +798,7 @@ public class SCWarrant extends Warrant {
                 } else {
                     _throttle.setSpeedSetting(SPEED_STOP);
                 }
-                stopWarrant(false);
+                stopWarrant(false, false);
             }
         }
 

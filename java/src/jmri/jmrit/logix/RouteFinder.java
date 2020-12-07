@@ -155,7 +155,8 @@ public class RouteFinder implements Runnable {
                         }
                     }
                     String exitName = path.getOppositePortalName(pName);
-                    BlockOrder nOrder = new BlockOrder((OBlock) path.getBlock(), path.getName(), pName, exitName);
+                    OBlock pathBlock = (OBlock) path.getBlock();
+                    BlockOrder nOrder = new BlockOrder(pathBlock, path.getName(), pName, exitName);
                     RouteNode child = new RouteNode(nOrder, node.needsViaAncestor());
                     _tree.insertNodeInto(child, node, node.getChildCount());
                     if (_viaBlock != null && _viaBlock.equals(nextBlock)) {

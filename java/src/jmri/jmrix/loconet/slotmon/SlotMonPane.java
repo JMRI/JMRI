@@ -129,6 +129,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         setColumnToHoldEStopButton(slotTable, slotTable.convertColumnIndexToView(SlotMonDataModel.ESTOPCOLUMN));
 
         // add listener object so checkboxes function
+
+        refreshAllButton.addActionListener((ActionEvent e) -> {
+            slotModel.refreshSlots();
+        });
+
         showUnusedCheckBox.addActionListener((ActionEvent e) -> {
             filter();
         });
@@ -172,6 +177,7 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
 
+        pane1.add(refreshAllButton);
         pane1.add(showUnusedCheckBox);
         pane1.add(showCommonCheckBox);
         pane1.add(showFreeCheckBoxe);
