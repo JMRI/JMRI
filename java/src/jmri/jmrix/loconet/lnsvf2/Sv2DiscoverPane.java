@@ -21,25 +21,25 @@ import java.util.HashMap;
  * @author Paul Bender Copyright (C) 2013
  * @author Egbert Broerse Copyright (C) 2020
  */
-public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener, LnPanelInterface {
+public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
     private LocoNetSystemConnectionMemo memo;
     protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
-    //protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
+    protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
 
-    protected JTable assignmentTable = null;
+    protected JTable moduleTable = null;
     protected javax.swing.table.TableModel assignmentListModel = null;
 
-    protected JPanel assignmentPanel = null;
+    protected JPanel tablePanel = null;
     protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
     protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
-    protected JTextField result = new JTextField();
+    protected JTextArea result = new JTextArea(6,30);
     protected String reply;
 
     protected javax.swing.JPanel panel2 = new JPanel();
     protected javax.swing.JPanel panel2a = new JPanel();
-    private HashMap<Integer, Sv2Module> modules;
+    private HashMap<Integer, Sv2Module> modules = null;
     private boolean discoveryRunning = false;
 
     /**
@@ -59,16 +59,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
 
     @Override
     public String getTitle() {
-        String uName = "";
-        if (memo != null) {
-            uName = memo.getUserName();
-            if (!"LocoNet".equals(uName)) { // NOI18N
-                uName = uName + ": ";
-            } else {
-                uName = "";
-            }
-        }
-        return uName + Bundle.getMessage("MenuItemDiscoverSv2");
+        return Bundle.getMessage("MenuItemDiscoverSv2");
     }
 
     @Override
@@ -89,17 +80,17 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(initAddressPanel());
 
-        // Set up the pin assignment table
-        assignmentPanel = new JPanel();
-        assignmentPanel.setLayout(new BoxLayout(assignmentPanel, BoxLayout.Y_AXIS));
-        assignmentListModel = new Sv2ModulesTableModel();
-        assignmentTable = new JTable(assignmentListModel);
-        assignmentTable.setRowSelectionAllowed(false);
-        assignmentTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
-        JScrollPane assignmentScrollPane = new JScrollPane(assignmentTable);
-        assignmentPanel.add(assignmentScrollPane, BorderLayout.CENTER);
+        // Set up the SV2 modules table
+        tablePanel = new JPanel();
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+        assignmentListModel = new Sv2ModulesTableModel(this);
+        moduleTable = new JTable(assignmentListModel);
+        moduleTable.setRowSelectionAllowed(false);
+        moduleTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
+        JScrollPane tableScrollPane = new JScrollPane(moduleTable);
+        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
-        add(assignmentPanel);
+        add(tablePanel);
 
         add(initNotesPanel());
         add(initButtonPanel());
@@ -114,10 +105,8 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
-        panel11.add(new JLabel("Modules Found"));//Bundle.getMessage("LabelNodeSelection") + " "));
+        panel11.add(new JLabel(Bundle.getMessage("ModulesFoundLabel")));
 
-        result.setSize(300, 400);
-        panel11.add(result);
         panel1.add(panel11);
         return panel1;
     }
@@ -131,6 +120,10 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
         JPanel panel31 = new JPanel();
         panel31.setLayout(new FlowLayout());
+
+        JScrollPane resultScrollPane = new JScrollPane(result);
+        panel31.add(resultScrollPane);
+
         statusText1.setText("help?");
         statusText1.setVisible(true);
         panel31.add(statusText1);
@@ -146,22 +139,20 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
      * Initialize the Button panel.
      */
     protected JPanel initButtonPanel(){
-
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
-        discoverButton.setText(Bundle.getMessage("ButtonDiscover"));
-        discoverButton.setVisible(true);
-        //discoverButton.setToolTipText(Bundle.getMessage("TipAddButton"));
+        discoverButton.setToolTipText(Bundle.getMessage("TipDiscoverButton"));
         discoverButton.addActionListener(e -> discoverButtonActionPerformed());
         discoverButton.setEnabled(!discoveryRunning);
         panel4.add(discoverButton);
-
+        doneButton.addActionListener(e -> doneButtonActionPerformed());
+        panel4.add(doneButton);
         return panel4;
     }
 
     /**
-     * Handle Discover button
+     * Handle Discover button.
      */
     public void discoverButtonActionPerformed() {
         if (discoveryRunning) {
@@ -181,14 +172,9 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     }
 
     /**
-     * Handle Done button
+     * Handle Done button.
      */
     public void doneButtonActionPerformed() {
-        setVisible(false);
-        if (memo != null && memo.getLnTrafficController() != null) {
-            // disconnect from the LnTrafficController if still there
-            memo.getLnTrafficController().removeLocoNetListener(~0, this); // normally detached after Discovery message arrived
-        }
         dispose();
     }
 
@@ -198,11 +184,9 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         String raw = l.toString();
         // format the message text, expect it to provide consistent \n after each line
         String formatted = l.toMonitorString(memo.getSystemPrefix());
-
         // copy the formatted data
-        reply += formatted + "\n" + raw;
-        // got a LocoNet message, see if Discovery respo
-        // nse
+        reply += formatted + raw + "\n";
+        // got a LocoNet message, see if it's a Discovery response
         if (LnSv2MessageContents.extractMessageType(l) == LnSv2MessageContents.Sv2Command.SV2_DISCOVER_DEVICE_REPORT) {
             // it's a Discovery message, decode contents
             // get SV2 message from a LocoNet packet:
@@ -210,19 +194,19 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
             int section1 = contents.getSv2ManufacturerID();
             int section2 = contents.getSv2DeveloperID();
             int section3 = contents.getSv2ProductID();
-            //int section4 = contents.getSv2Address();
+            int section4 = contents.getSv2SerialNum();
 
+            reply += "LNSV2 manuf:" + section1 + " devel: " + section2 + " product:" + section3 + " serial:" + section4 + " address: ?";
+            // store replies
+            modules.put(counter++, new Sv2Module(new int[]{section1, section2, section3, section4, 0}));
 
-            reply = "LNSV2 manuf:" + section1 + " devel: " + section2 + " product:" + section3 + " address: ?";//+ section4;
-
-            modules.put(counter++, new Sv2Module(new int[]{section1, section2, section3, 0})); // store replies
+            // TODO query to get module address
+            // for each module, ask address
+            //        for (module : modules.entrySet()) {
+            //            LocoNetMessage q = new createSv2DeviceDiscoveryReply();
+            //            //int section4 = contents.getSv2Address();
+            //        }
         }
-        // TODO query to get module address
-        // for each module, ask address
-//        for (module : modules.entrySet()) {
-//            LocoNetMessage q = new createSv2DeviceDiscoveryReply();
-//
-//        }
 
         discoveryFinished(null);
     }
@@ -241,7 +225,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
             result.setText(reply);
         }
 
-        memo.getLnTrafficController().removeLocoNetListener(~0, this); // TODO detach after Discovery completed
+        memo.getLnTrafficController().removeLocoNetListener(~0, this);
         discoveryRunning = false;
         discoverButton.setEnabled(true);
     }
@@ -249,26 +233,58 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     @Override
     public void dispose() {
         if (memo != null && memo.getLnTrafficController() != null) {
-            // disconnect from the LnTrafficController
-            memo.getLnTrafficController().removeLocoNetListener(~0, this); // TODO detach after Discovery completed
+            // disconnect from the LnTrafficController, normally attached/detached after Discovery completed
+            memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
         // and unwind swing
         super.dispose();
     }
 
-    int counter = 0;
+    protected Sv2Module getModule(int i) {
+        if (i <= modules.size()) {
+            return modules.get(i);
+        } else {
+            return null;
+        }
+    }
 
-    class Sv2Module {
+    private int counter = 0;
+
+    /**
+     * Store elements received on LNSV2 QueryAll reply message.
+     */
+    static class Sv2Module {
         private final int manufacturer;
+        private final int developer;
         private final int type;
         private final int serialNum;
-        private final int address;
+        private int address;
 
         Sv2Module(int[] response) {
             manufacturer = response[0];
-            type = response[1];
-            serialNum = response[2];
-            address = response[3];
+            developer = response[1];
+            type = response[2];
+            serialNum = response[3];
+            address = response[4];
+        }
+
+        void setAddress(int addr) {
+            address = addr;
+        }
+        int getAddress() {
+            return address;
+        }
+        int getManufacturer() {
+            return manufacturer;
+        }
+        int getDeveloper() {
+            return developer;
+        }
+        int getType() {
+            return type;
+        }
+        int getSerialNum() {
+            return serialNum;
         }
 
     }

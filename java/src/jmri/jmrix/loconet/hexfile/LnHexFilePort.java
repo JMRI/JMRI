@@ -98,10 +98,9 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
     @Override
     public void run() { // invoked in a new thread
         log.info("LocoNet Simulator Started"); // NOI18N
-        m = null;
-        LocoNetMessage reply;
+        message = null;
         while (true) {
-            while (sFile == null && m == null) {
+            while (sFile == null && message == null) {
                 // Wait for a file to be available. We have nothing else to do, so we can sleep
                 // until we are interrupted
                 try {
@@ -120,12 +119,13 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
             // process the input file into the output side of pipe
             _running = true;
             try {
-                if (m != null) {
+                if (message != null) {
                     log.debug("Simulator received a message");
-                    reply = generateReply(m);
+                    LocoNetMessage reply = generateReply(message);
                     if (reply != null) {
                         int len = reply.getOpCode();
                         for (int i = 0; i < len; i++) {
+                            log.debug("byte {} of SV2 message", i);
                             // parse as hex into integer, then convert to byte
                             int ival = reply.getElement(i);
                             // send each byte to the output pipe (input to consumer)
@@ -314,16 +314,47 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
         setTurnoutHandling(value);
     }
 
-    LocoNetMessage m;
+    LocoNetMessage message;
 
     @Override
-    public synchronized void message(LocoNetMessage l) { // store 1 LocoNet message
-        m = l;
+    public synchronized void message(LocoNetMessage m) {
+        log.debug("LnMessage stored");
+        message = m; // store 1 LocoNet message
     }
 
+    private boolean simReply = false;
+
+    /**
+     * Set/turn off responding to LocoNet messages to simulate devices.
+     * @param state new state for simReplies
+     */
+    public void setSimReply(boolean state) {
+        simReply = state;
+    }
+
+    /**
+     * Small set of hardware replies to send in simulator in response to specific messages.
+     * Supported types:
+     * <ul>
+     *     <li>LNSV rev2 board (@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents)</li>
+     * </ul>
+     * @param m message heard on connection thread
+     * @return fitting reply message
+     */
     LocoNetMessage generateReply(LocoNetMessage m) {
-        if (LnSv2MessageContents.isSupportedSv2Message(m)) {
-            return new LocoNetMessage(4);
+        if (simReply && LnSv2MessageContents.isSupportedSv2Message(m)) {
+            log.debug("generate reply for SV2 message");
+            LnSv2MessageContents c = new LnSv2MessageContents(m);
+            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (no address)
+                log.debug("generate LNSV2 query reply message");
+                int dest = 1; // keep it simple, don't fetch src from m
+                int myId = 44;
+                int mf = 2;
+                int dev = 9;
+                int type = 3055;
+                int serial = 111;
+                return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+            }
         }
         return null;
     }
