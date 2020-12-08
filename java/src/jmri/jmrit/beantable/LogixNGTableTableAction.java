@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.Box;
@@ -79,6 +80,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     JRadioButton _typeExternalTable = new JRadioButton("External CSV table");
     JRadioButton _typeInternalTable = new JRadioButton("Internal table stored in the panel file");
     ButtonGroup _buttonGroup = new ButtonGroup();
+    JTextField _csvFileName = new JTextField(50);
     
     /**
      * Create a LogixNGTableAction instance.
@@ -133,16 +135,14 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     @Override
     protected NamedTable createBean(String systemName, String userName) {
         if (_typeExternalTable.isSelected()) {
-            // Let the user select which CSV file to load.
-            // The user may specify if the file should be in program folder,
-            // user folder, or anywhere else. How?
+            return InstanceManager.getDefault(NamedTableManager.class)
+                    .newCSVTable(systemName, userName, _csvFileName.getText());
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
         } else {
             log.error("No table type selected");
             throw new RuntimeException("No table type selected");
         }
-        
         
 //        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -174,7 +174,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         addLogixNGFrame.setLocation(50, 30);
         Container contentPane = addLogixNGFrame.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-
+        
         JPanel p;
         p = new JPanel();
         p.setLayout(new FlowLayout());
@@ -190,6 +190,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         c.gridy = 1;
         p.add(_userNameLabel, c);
         _userNameLabel.setLabelFor(_addUserName);
+        c.gridy = 2;
+        p.add(new JLabel(Bundle.getMessage("LogixNG_CsvFileName")), c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -198,6 +200,10 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         p.add(_systemName, c);
         c.gridy = 1;
         p.add(_addUserName, c);
+        c.gridy = 2;
+        c.gridwidth = 2;
+        p.add(_csvFileName, c);
+        c.gridwidth = 1;
         c.gridx = 2;
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -208,7 +214,8 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         
         _buttonGroup.add(_typeExternalTable);
         _buttonGroup.add(_typeInternalTable);
-        _typeInternalTable.setSelected(true);
+        _typeExternalTable.setSelected(true);
+        _typeInternalTable.setEnabled(false);
         
         _addUserName.setToolTipText(Bundle.getMessage("LogixNGUserNameHint"));    // NOI18N
         _systemName.setToolTipText(Bundle.getMessage("LogixNGSystemNameHint"));   // NOI18N

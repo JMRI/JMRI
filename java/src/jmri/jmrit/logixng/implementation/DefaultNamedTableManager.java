@@ -7,14 +7,11 @@ import java.text.DecimalFormat;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
-
-import org.openide.util.Exceptions;
 
 /**
  * Class providing the basic logic of the NamedTable_Manager interface.
@@ -83,7 +80,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         }
         try {
             // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, new File(fileName));
+            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, FileUtil.getFile(fileName));
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);

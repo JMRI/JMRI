@@ -77,7 +77,7 @@ We have a turnout on the layout:
 
 We need three sensors to detect where the train are on the layout:
 <ul>
-<li>IS_7_1 - Sensor left of the turnout</li>
+<li>IS_7_1 - Sensor at the turnout</li>
 <li>IS_7_2 - Sensor at the ship</li>
 <li>IS_7_3 - Sensor at the crane</li>
 </ul>
@@ -99,18 +99,21 @@ We also need to control the loco. We do it by opening a new throttle in JMRI and
 <li>Throttle with address 21 - Controls the steam engine</li>
 </ul>
 
+We need a sensor to communicate between the crane and the train, and a sensor for the timer that unloads the car:
+<ul>
+<li>IS_7_21 - Crane has unloaded coal to car</li>
+<li>IS_7_22 - Car has unloaded coal to ship</li>
+</ul>
+
 We also has three sensors to control the LogixNG that runs this layout. We will use these three sensors later.
 <ul>
-<li>IS_7_1 - Start layout</li>
-<li>IS_7_2 - Stop layout</li>
-<li>IS_7_3 - Reset layout</li>
+<li>IS_7_11 - Start sequence</li>
+<li>IS_7_12 - Stop sequence</li>
+<li>IS_7_13 - Reset sequence</li>
 </ul>
 
 
 <h3>Some rules when running this layout</h3>
-
-
-<h3>Some things to note:</h3>
 
 The crane will not rotate left-right unless the bucket is in its top position. So if the crane doesn't rotate, make
 sure that the bucket is lifted to its upmost position.
@@ -136,11 +139,14 @@ executes the third action, and so on.
 Sequence may auto start or be started by the Start expression, depending on how the user has configured Sequence. And
 when the last expression has returned true, Sequence may start over and run the sequence again, if the user has
 configured Sequence to do so.
-
-
-
-
 <p>
+For this layout, we use two Sequence. The first runs the train and the second runs the crane. Note that we can have
+both in the same ConditionalNG.
+
+
+
+<h3>Using the random function</h3>
+
 One problem remains. When we run the automation, the crane will always dig coal from the same spot. It will result in
 that the coal on that spot runs out, while there is plenty of coal close to that spot. To fix this, we want the crane
 to pick a random spot within an interval and dig at that random spot. To do this, we use the expression Formula and the
