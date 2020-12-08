@@ -52,10 +52,11 @@ public interface NamedTableManager extends Manager<NamedTable> {
     
     /**
      * Load a table from a CSV text.
+     * @param fileName the file name of the CSV table
      * @param text the CSV text
      * @return the loaded table
      */
-    public NamedTable loadTableFromCSV(@Nonnull String text)
+    public NamedTable loadTableFromCSV(@Nonnull String fileName, @Nonnull String text)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
     
     /**

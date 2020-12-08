@@ -297,9 +297,9 @@ public class ReferenceUtilTest {
                 "Sensors\tTurnout 111\tIT203\tIT303\tIT403" + _nl +
                 "Lights\tIT104\tIT204\tIT304\tIT404" + _nl;
         
-        yardTable = _tableManager.loadTableFromCSV(yardTableData);
-        _tableManager.loadTableFromCSV(turnoutTableData);
-        _tableManager.loadTableFromCSV(otherYardTableData);
+        yardTable = _tableManager.loadTableFromCSV("filename.csv", yardTableData);
+        _tableManager.loadTableFromCSV("filename.csv", turnoutTableData);
+        _tableManager.loadTableFromCSV("filename.csv", otherYardTableData);
     }
     
     // The minimal setup for log4J

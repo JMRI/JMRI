@@ -950,6 +950,9 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
         // Create a new bean edit view, add the listener.
         if (_editMode == EditMode.TREEEDIT) {
             _editor = getEditor(f, m, sName);
+            
+            if (_editor == null) return;    // Editor not implemented yet for LogixNG Tables
+            
             _inEditMode = true;
             
             _editor.addEditorEventListener((data) -> {

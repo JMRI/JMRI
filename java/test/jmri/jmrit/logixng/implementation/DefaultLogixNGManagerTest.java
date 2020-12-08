@@ -28,13 +28,6 @@ public class DefaultLogixNGManagerTest {
         Assert.assertEquals("getSystemPrefix() is correct", "I", manager.getSystemPrefix());
         Assert.assertEquals("typeLetter() is correct", 'Q', manager.typeLetter());
         
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        Assert.assertEquals("getXMLOrder() is correct", Manager.LOGIXNGS, manager.getXMLOrder());
-        
         Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNG"), manager.getBeanTypeHandled(false));
         Assert.assertEquals("bean type is correct", Bundle.getMessage("BeanNameLogixNGs"), manager.getBeanTypeHandled(true));
     }

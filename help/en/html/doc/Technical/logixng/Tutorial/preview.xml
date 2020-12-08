@@ -91,7 +91,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="6:24 PM">
+    <memory value="8:49 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -2551,104 +2551,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Dec 06 18:23:42 CET 2020</date>
+      <date>Tue Dec 08 08:21:55 CET 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Dec 06 18:23:48 CET 2020</date>
+      <date>Tue Dec 08 08:22:03 CET 2020</date>
       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Dec 06 13:10:43 CET 2020</date>
+          <date>Sun Dec 06 18:23:42 CET 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Dec 06 13:10:48 CET 2020</date>
+          <date>Sun Dec 06 18:23:48 CET 2020</date>
           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Dec 06 12:58:31 CET 2020</date>
+              <date>Sun Dec 06 13:10:43 CET 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Dec 06 12:58:39 CET 2020</date>
+              <date>Sun Dec 06 13:10:48 CET 2020</date>
               <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Dec 06 12:41:33 CET 2020</date>
+                  <date>Sun Dec 06 12:58:31 CET 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Dec 06 12:41:42 CET 2020</date>
+                  <date>Sun Dec 06 12:58:39 CET 2020</date>
                   <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Dec 06 07:54:44 CET 2020</date>
+                      <date>Sun Dec 06 12:41:33 CET 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Dec 06 07:54:49 CET 2020</date>
+                      <date>Sun Dec 06 12:41:42 CET 2020</date>
                       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Dec 06 06:18:47 CET 2020</date>
+                          <date>Sun Dec 06 07:54:44 CET 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Dec 06 06:18:52 CET 2020</date>
+                          <date>Sun Dec 06 07:54:49 CET 2020</date>
                           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Dec 06 07:50:28 CET 2020</date>
+                          <date>Sun Dec 06 08:43:53 CET 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Dec 06 08:43:53 CET 2020</date>
+                      <date>Sun Dec 06 12:44:19 CET 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Dec 06 12:44:19 CET 2020</date>
+                  <date>Sun Dec 06 13:06:51 CET 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Dec 06 13:06:51 CET 2020</date>
+              <date>Sun Dec 06 13:15:51 CET 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Dec 06 13:15:51 CET 2020</date>
+          <date>Sun Dec 06 18:25:00 CET 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Dec 06 18:25:00 CET 2020</date>
+      <date>Tue Dec 08 08:49:09 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-06T17:23:24Z+RUNKNOWN on Sun Dec 06 18:25:00 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-08T07:20:00Z+RUNKNOWN on Tue Dec 08 08:49:09 CET 2020-->
 </layout-config>

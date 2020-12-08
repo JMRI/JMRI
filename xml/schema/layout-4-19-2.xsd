@@ -356,6 +356,8 @@ signals - obsolete, EMPTY, never used
 
         <xs:element name="logixngs"                      type="LogixNG_ManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngConditionalNGs"         type="LogixNG_ConditionalNGManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngModules"                type="LogixNG_ModuleManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngTables"                 type="LogixNG_TableManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngAnalogActions"          type="LogixNG_AnalogActionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngAnalogExpressions"      type="LogixNG_AnalogExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixngDigitalActions"         type="LogixNG_DigitalActionManagerType" minOccurs="0" maxOccurs="unbounded" />
