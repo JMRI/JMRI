@@ -105,6 +105,7 @@
                             and the "Basic Settings" tab.</li>
                     </ul>
                 </li>
+                <li>Keep slot status in line with CS after setting COMMON or true slot moves</li>
                 <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
                     Termination!)" for Digitrax PR4.</li>
             </ul>
@@ -603,7 +604,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix issue where Jynstrument would not start correctly <a href="https://groups.io/g/jmriusers/topic/78674589">(user group message)</a>.</li>
+            <li>Added a throttle frame Jynstrument that hides throttle window menubar and toolbar and switches to semitransparent mode (and vice versa) (idea from <a href="https://groups.io/g/jmriusers/topic/76582490">this user message</a>).</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -621,7 +623,40 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>The table of throttle commands shown when creating or editing warrants has been changed:
+            	<ul>
+            		<li>The <b>Command</b> column is now a drop down combo box. This will allow the
+            			command names to be translated into languages other than English.</li>
+            	    <li>The <b>Value</b> column is a drop down combo box for throttle commands
+            	    	other than "Speed" or "Run Warrant". Again, done to permit translation
+            	    	into other languages.</li>
+            	</ul>
+            </li>
+            <li>The algorithm for executing speed changes due to track conditions for warrants
+                has been modified and is better able to restore the scripted speeds once the
+                track speed restrictions are lifted.</li>
+            <li>The constant used to approximate track speed of trains has been changed to 
+            	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
+            	on roster entries having Speed Profiles.</li>
+            <li>The Address column of the Warrant Table list and the Address fields of the
+            	NXWarrant or Create Warrant windows
+            	now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
+            <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
+            	non-speed script commands are executed at approximately the same elapsed times as  
+            	were written in the script.</li>
+ 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile  
+            	is built that can be seen by  pressing the <b>View Profile</b> button in the
+            	edit warrant window. These profiles can be merged into the existing profiles
+            	for the Roster entry used by the loco of the warrant when the layout session 
+            	is closed. (Recall that Warrant Preferences has 3 options for this merging.)</li>
+            <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
+            	settings and commands are edited. This button updates the <b>Speed</b> column to
+            	list the track speeds (mm/sec) for the current Speed Profile measurements of
+            	the locomotive address entered in the 'Engine Consist' box.</li>           	
+            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of 
+            	speed profiles are fixed.</li>          	
+			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths 
+            	are also added to the imported OPaths.</li>
         </ul>
 
    <h3>Web Access</h3>

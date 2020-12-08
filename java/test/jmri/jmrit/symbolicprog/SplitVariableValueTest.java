@@ -9,14 +9,16 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
 import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link SplitVariableValue} class.
@@ -1018,7 +1020,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
                 highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
         Assert.assertNotNull("makeVar returned null", var);
 
-        ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), 0, name);
+        ActionEvent actionEvent = new ActionEvent(var.getCommonRep(), ActionEvent.ACTION_PERFORMED, name);
         FocusEvent focusEvent = new FocusEvent(var.getCommonRep(), 0, true);
         CvValue[] cv = var.usesCVs();
 

@@ -736,8 +736,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             t.setSpeedSetting(0.0f);
             if (!profile) {
                 // there are only the 2 fields on screen to be updated after a test
-                speedStepTestFwd.setText(re.getSpeedProfile().convertMMSToScaleSpeedWithUnits(testSpeedFwd));
-                speedStepTestRev.setText(re.getSpeedProfile().convertMMSToScaleSpeedWithUnits(testSpeedRev));
+                speedStepTestFwd.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedFwd));
+                speedStepTestRev.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedRev));
             }
             releaseThrottle();
             //updateSpeedProfileWithResults();
