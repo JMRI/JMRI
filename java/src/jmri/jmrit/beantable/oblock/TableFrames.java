@@ -431,6 +431,9 @@ public class TableFrames implements InternalFrameListener {
                     if (opa.getFromPortal() == null) {
                         opa.setFromPortal(port);
                     }
+                    for (BeanSetting bs : pa.getSettings()) {
+                        opa.addSetting(bs);
+                    }
                     if ((opa.getToPortal() == null) && (prevPortal != null)) {
                         opa.setToPortal(prevPortal);
                         // leaves ToPortal in previously (first) created OPath n-1 empty
