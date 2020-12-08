@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
 public class DecoderPro3Test {
 
     @Test
-    @Disabled("Fails consistently on travis GUI tests")
+    @Disabled("Fails consistently on Jenkins and travis GUI tests")
     public void testCtor() {
         String[] args = {"DecoderProConfig3.xml"};
         AppsBase a = new DecoderPro3(args) {
@@ -34,23 +34,23 @@ public class DecoderPro3Test {
 
             @Override
             protected void configureProfile() {
-//                JUnitUtil.resetInstanceManager();
+                JUnitUtil.resetInstanceManager();
             }
 
             @Override
             protected void installConfigurationManager() {
                 JUnitUtil.initConfigureManager();
-//                JUnitUtil.initDefaultUserMessagePreferences();
+                JUnitUtil.initDefaultUserMessagePreferences();
             }
 
             @Override
             protected void installManagers() {
-//                JUnitUtil.initInternalTurnoutManager();
-//                JUnitUtil.initInternalLightManager();
-//                JUnitUtil.initInternalSensorManager();
-//                JUnitUtil.initRouteManager();
-//                JUnitUtil.initMemoryManager();
-//                JUnitUtil.initDebugThrottleManager();
+                JUnitUtil.initInternalTurnoutManager();
+                JUnitUtil.initInternalLightManager();
+                JUnitUtil.initInternalSensorManager();
+                JUnitUtil.initRouteManager();
+                JUnitUtil.initMemoryManager();
+                JUnitUtil.initDebugThrottleManager();
             }
 
         };
@@ -63,6 +63,7 @@ public class DecoderPro3Test {
         // remove a frame opened by DecoderPro3
         JUnitUtil.disposeFrame("DecoderPro Wizard", false, false);
         // shutdown the application
+        // the following line terminates the Junit testing early
 //        AppsBase.handleQuit();
         
     }
@@ -70,14 +71,15 @@ public class DecoderPro3Test {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-        JUnitUtil.initRosterConfigManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.clearShutDownManager();
+        // 12/07/2020 tried to improve initialization of test without any luck DAB
+//        JUnitUtil.resetInstanceManager();
+//        JUnitUtil.resetProfileManager();
+//        JUnitUtil.initRosterConfigManager();
+//        JUnitUtil.initInternalTurnoutManager();
+//        JUnitUtil.initInternalLightManager();
+//        JUnitUtil.initInternalSensorManager();
+//        JUnitUtil.initDebugThrottleManager();
+//        JUnitUtil.clearShutDownManager();
     }
     
     @AfterEach
