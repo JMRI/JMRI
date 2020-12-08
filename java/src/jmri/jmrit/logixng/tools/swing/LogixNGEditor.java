@@ -1,16 +1,13 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.EventListener;
-import java.util.HashMap;
+import java.beans.PropertyVetoException;
+import java.text.MessageFormat;
+import java.util.*;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
@@ -19,14 +16,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.tree.TreePath;
 
-import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
+import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.BeanTableFrame;
 import jmri.jmrit.logixng.*;
-import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -181,6 +178,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             uNameColumn.setPreferredWidth(260);
             TableColumn buttonColumn = conditionalColumnModel
                     .getColumn(ConditionalNGTableModel.BUTTON_COLUMN);
+            TableColumn buttonDeleteColumn = conditionalColumnModel
+                    .getColumn(ConditionalNGTableModel.BUTTON_DELETE_COLUMN);
 
             // install button renderer and editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -192,6 +191,9 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             buttonColumn.setMinWidth(testButton.getPreferredSize().width);
             buttonColumn.setMaxWidth(testButton.getPreferredSize().width);
             buttonColumn.setResizable(false);
+            buttonDeleteColumn.setMinWidth(testButton.getPreferredSize().width);
+            buttonDeleteColumn.setMaxWidth(testButton.getPreferredSize().width);
+            buttonDeleteColumn.setResizable(false);
 
             JScrollPane conditionalTableScrollPane = new JScrollPane(conditionalTable);
             Dimension dim = conditionalTable.getPreferredSize();
@@ -709,6 +711,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         public static final int BUTTON_COLUMN = 2;
 
+        public static final int BUTTON_DELETE_COLUMN = 3;
+
         public ConditionalNGTableModel() {
             super();
             updateConditionalNGListeners();
@@ -763,7 +767,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
 
         @Override
         public Class<?> getColumnClass(int c) {
-            if (c == BUTTON_COLUMN) {
+            if ((c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN)) {
                 return JButton.class;
             }
             return String.class;
@@ -782,7 +786,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
         @Override
         public boolean isCellEditable(int r, int c) {
             if (!_inReorderMode) {
-                return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN));
+                return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN) || (c == BUTTON_DELETE_COLUMN));
             } else if (c == BUTTON_COLUMN) {
                 if (r >= _nextInOrder) {
                     return (true);
@@ -800,8 +804,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return Bundle.getMessage("ColumnUserName");  // NOI18N
                 case BUTTON_COLUMN:
                     return ""; // no label
+                case BUTTON_DELETE_COLUMN:
+                    return ""; // no label
                 default:
-                    return "";
+                    throw new IllegalArgumentException("Unknown column");
             }
         }
 
@@ -815,8 +821,10 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return new JTextField(17).getPreferredSize().width;
                 case BUTTON_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
+                case BUTTON_DELETE_COLUMN:
+                    return new JTextField(6).getPreferredSize().width;
                 default:
-                    return new JTextField(5).getPreferredSize().width;
+                    throw new IllegalArgumentException("Unknown column");
             }
         }
 
@@ -837,6 +845,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     } else {
                         return Integer.toString(rx + 1);
                     }
+                case BUTTON_DELETE_COLUMN:
+                    return Bundle.getMessage("ButtonDelete");  // NOI18N
                 case SNAME_COLUMN:
                     return _curLogixNG.getConditionalNG(rx);
                 case UNAME_COLUMN: {
@@ -848,71 +858,94 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
                     return "";
                 }
                 default:
-                    return Bundle.getMessage("BeanStateUnknown");  // NOI18N
+                    throw new IllegalArgumentException("Unknown column");
             }
         }
 
-        @Override
-        public void setValueAt(Object value, int row, int col) {
-            int rx = row;
-            if ((rx > _numConditionalNGs) || (_curLogixNG == null)) {
-                return;
-            }
-            if (col == BUTTON_COLUMN) {
-                if (_inReorderMode) {
-                    swapConditionalNG(row);
-                } else {
-                    // Use separate Runnable so window is created on top
-                    class WindowMaker implements Runnable {
+        private void buttomColumnClicked(int row, int col) {
+            if (_inReorderMode) {
+                swapConditionalNG(row);
+            } else {
+                // Use separate Runnable so window is created on top
+                class WindowMaker implements Runnable {
 
-                        int row;
+                    int row;
 
-                        WindowMaker(int r) {
-                            row = r;
-                        }
-
-                        @Override
-                        public void run() {
-                            editConditionalNGPressed(row);
-                        }
+                    WindowMaker(int r) {
+                        row = r;
                     }
-                    WindowMaker t = new WindowMaker(rx);
-                    javax.swing.SwingUtilities.invokeLater(t);
+
+                    @Override
+                    public void run() {
+                        editConditionalNGPressed(row);
+                    }
                 }
-            } else if (col == UNAME_COLUMN) {
-                String uName = (String) value;
-                ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(uName);
-                if (cn == null) {
-                    ConditionalNG cdl = _curLogixNG.getConditionalNG(rx);
-                    cdl.setUserName(uName.trim()); // N11N
-                    fireTableRowsUpdated(rx, rx);
+                WindowMaker t = new WindowMaker(row);
+                javax.swing.SwingUtilities.invokeLater(t);
+            }
+        }
+        
+        private void deleteConditionalNG(int row) {
+            DeleteBeanWorker worker = new DeleteBeanWorker(_curLogixNG.getConditionalNG(row), row);
+            worker.execute();
+        }
+        
+        private void changeUserName(Object value, int row) {
+            String uName = (String) value;
+            ConditionalNG cn = _curLogixNG.getConditionalNGByUserName(uName);
+            if (cn == null) {
+                ConditionalNG cdl = _curLogixNG.getConditionalNG(row);
+                cdl.setUserName(uName.trim()); // N11N
+                fireTableRowsUpdated(row, row);
 /*
-                    // Update any conditional references
-                    ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalNGManager.class).getWhereUsed(sName);
-                    if (refList != null) {
-                        for (String ref : refList) {
-                            ConditionalNG cRef = _conditionalManager.getBySystemName(ref);
-                            List<ConditionalNGVariable> varList = cRef.getCopyOfStateVariables();
-                            for (ConditionalNGVariable var : varList) {
-                                // Find the affected conditional variable
-                                if (var.getName().equals(sName)) {
-                                    if (uName.length() > 0) {
-                                        var.setGuiName(uName);
-                                    } else {
-                                        var.setGuiName(sName);
-                                    }
+                // Update any conditional references
+                ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalNGManager.class).getWhereUsed(sName);
+                if (refList != null) {
+                    for (String ref : refList) {
+                        ConditionalNG cRef = _conditionalManager.getBySystemName(ref);
+                        List<ConditionalNGVariable> varList = cRef.getCopyOfStateVariables();
+                        for (ConditionalNGVariable var : varList) {
+                            // Find the affected conditional variable
+                            if (var.getName().equals(sName)) {
+                                if (uName.length() > 0) {
+                                    var.setGuiName(uName);
+                                } else {
+                                    var.setGuiName(sName);
                                 }
                             }
-                            cRef.setStateVariables(varList);
                         }
-                    }
-*/
-                } else {
-                    // Duplicate user name
-                    if (cn != _curLogixNG.getConditionalNG(rx)) {
-                        messageDuplicateConditionalNGUserName(cn.getSystemName());
+                        cRef.setStateVariables(varList);
                     }
                 }
+*/
+            } else {
+                // Duplicate user name
+                if (cn != _curLogixNG.getConditionalNG(row)) {
+                    messageDuplicateConditionalNGUserName(cn.getSystemName());
+                }
+            }
+        }
+        
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            if ((row > _numConditionalNGs) || (_curLogixNG == null)) {
+                return;
+            }
+            switch (col) {
+                case BUTTON_COLUMN:
+                    buttomColumnClicked(row, col);
+                    break;
+                case BUTTON_DELETE_COLUMN:
+                    deleteConditionalNG(row);
+                    break;
+                case SNAME_COLUMN:
+                    throw new IllegalArgumentException("System name cannot be changed");
+                case UNAME_COLUMN: {
+                    changeUserName(value, row);
+                    break;
+                }
+                default:
+                    throw new IllegalArgumentException("Unknown column");
             }
         }
     }
@@ -1024,5 +1057,195 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
             });
         }
     }
-
+    
+    
+    // This class is copied from BeanTableDataModel
+    private class DeleteBeanWorker extends SwingWorker<Void, Void> {
+        
+        private final ConditionalNG _conditionalNG;
+        private final int _row;
+        MaleSocket _maleSocket;
+        boolean _hasDeleted = false;
+        
+        public DeleteBeanWorker(ConditionalNG conditionalNG, int row) {
+            _conditionalNG = conditionalNG;
+            _row = row;
+            _maleSocket = _conditionalNG.getFemaleSocket().getConnectedSocket();
+        }
+        
+        public int getDisplayDeleteMsg() {
+            return InstanceManager.getDefault(UserPreferencesManager.class).getMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse");
+        }
+        
+        public void setDisplayDeleteMsg(int boo) {
+            InstanceManager.getDefault(UserPreferencesManager.class).setMultipleChoiceOption(TreeEditor.class.getName(), "deleteInUse", boo);
+        }
+        
+        private void findAllChilds(FemaleSocket femaleSocket, List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
+            if (!femaleSocket.isConnected()) return;
+            MaleSocket maleSocket = femaleSocket.getConnectedSocket();
+            sockets.add(new HashMap.SimpleEntry<>(femaleSocket, maleSocket));
+            for (int i=0; i < maleSocket.getChildCount(); i++) {
+                findAllChilds(maleSocket.getChild(i), sockets);
+            }
+        }
+        
+        public void doDelete(List<Map.Entry<FemaleSocket, MaleSocket>> sockets) {
+            try {
+                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                    FemaleSocket femaleSocket = entry.getKey();
+                    femaleSocket.disconnect();
+                    
+                    MaleSocket maleSocket = entry.getValue();
+                    maleSocket.getManager().deleteBean(maleSocket, "DoDelete");
+                }
+                _curLogixNG.deleteConditionalNG(_curLogixNG.getConditionalNG(_row));
+                InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "DoDelete");  // NOI18N
+                conditionalNGTableModel.fireTableRowsDeleted(_row, _row);
+                _numConditionalNGs--;
+                _showReminder = true;
+                _hasDeleted = true;
+            } catch (PropertyVetoException e) {
+                //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
+                log.error(e.getMessage());
+            }
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public Void doInBackground() {
+            _conditionalNG.getFemaleSocket().unregisterListeners();
+            
+            List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();
+            
+            findAllChilds(_conditionalNG.getFemaleSocket(), sockets);
+            
+            StringBuilder message = new StringBuilder();
+            try {
+                InstanceManager.getDefault(ConditionalNG_Manager.class).deleteBean(_conditionalNG, "CanDelete");  // NOI18N
+                for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                    entry.getValue().getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
+                }
+            } catch (PropertyVetoException e) {
+                if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    log.warn(e.getMessage());
+                    message.append(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("VetoDeleteBean", ((NamedBean)_maleSocket.getObject()).getBeanType(), ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME), e.getMessage()));
+                    JOptionPane.showMessageDialog(null, message.toString(),
+                            jmri.jmrit.logixng.tools.swing.Bundle.getMessage("WarningTitle"),
+                            JOptionPane.ERROR_MESSAGE);
+                    return null;
+                }
+                message.append(e.getMessage());
+            }
+            int count = _maleSocket.getListenerRefs().size();
+            log.debug("Delete with {}", count);
+            if (getDisplayDeleteMsg() == 0x02 && message.toString().isEmpty()) {
+                doDelete(sockets);
+            } else {
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("WarningTitle"));
+                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+                if (count > 0) { // warn of listeners attached before delete
+                    
+                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    JLabel question = new JLabel(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt, ((NamedBean)_maleSocket.getObject()).getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)));
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                    
+                    ArrayList<String> listenerRefs = new ArrayList<>();
+                    
+                    for (Map.Entry<FemaleSocket, MaleSocket> entry : sockets) {
+                        listenerRefs.addAll(entry.getValue().getListenerRefs());
+                    }
+                    
+                    if (listenerRefs.size() > 0) {
+                        ArrayList<String> listeners = new ArrayList<>();
+                        for (int i = 0; i < listenerRefs.size(); i++) {
+                            if (!listeners.contains(listenerRefs.get(i))) {
+                                listeners.add(listenerRefs.get(i));
+                            }
+                        }
+                        
+                        message.append("<br>");
+                        message.append(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ReminderInUse", count));
+                        message.append("<ul>");
+                        for (int i = 0; i < listeners.size(); i++) {
+                            message.append("<li>");
+                            message.append(listeners.get(i));
+                            message.append("</li>");
+                        }
+                        message.append("</ul>");
+                        
+                        JEditorPane pane = new JEditorPane();
+                        pane.setContentType("text/html");
+                        pane.setText("<html>" + message.toString() + "</html>");
+                        pane.setEditable(false);
+                        JScrollPane jScrollPane = new JScrollPane(pane);
+                        container.add(jScrollPane);
+                    }
+                } else {
+                    String prompt = _maleSocket.getChildCount() > 0 ? "DeleteWithChildrenPrompt" : "DeletePrompt";
+                    String msg = MessageFormat.format(jmri.jmrit.logixng.tools.swing.Bundle.getMessage(prompt),
+                            new Object[]{_maleSocket.getSystemName()});
+                    JLabel question = new JLabel(msg);
+                    question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    container.add(question);
+                }
+                
+                final JCheckBox remember = new JCheckBox(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
+                JButton yesButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonYes"));
+                JButton noButton = new JButton(jmri.jmrit.logixng.tools.swing.Bundle.getMessage("ButtonNo"));
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener((ActionEvent e) -> {
+                    //there is no point in remembering this the user will never be
+                    //able to delete a bean!
+                    dialog.dispose();
+                });
+                
+                yesButton.addActionListener((ActionEvent e) -> {
+                    if (remember.isSelected()) {
+                        setDisplayDeleteMsg(0x02);
+                    }
+                    doDelete(sockets);
+                    dialog.dispose();
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width) / 2 - dialog.getWidth() / 2, (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            }
+            if (!_hasDeleted && _conditionalNG.getFemaleSocket().isActive()) _conditionalNG.getFemaleSocket().registerListeners();
+            return null;
+        }
+        
+        /**
+         * {@inheritDoc} Minimal implementation to catch and log errors
+         */
+        @Override
+        protected void done() {
+            try {
+                get();  // called to get errors
+            } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                log.error("Exception while deleting bean", e);
+            }
+        }
+    }
+    
 }
