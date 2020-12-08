@@ -91,7 +91,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="8:49 AM">
+    <memory value="6:43 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -113,7 +113,7 @@
       <systemName>IM_7_4</systemName>
       <userName>Actual Crane Arm</userName>
     </memory>
-    <memory value="0.0">
+    <memory value="100.0">
       <systemName>IM_7_5</systemName>
       <userName>Commanded Crane Bucket</userName>
     </memory>
@@ -179,8 +179,6 @@
         <conditionalNG_SystemName>IQC:AUTO:0004</conditionalNG_SystemName>
         <conditionalNG_SystemName>IQC:AUTO:0005</conditionalNG_SystemName>
         <conditionalNG_SystemName>IQC:AUTO:0006</conditionalNG_SystemName>
-        <conditionalNG_SystemName>IQC:AUTO:0007</conditionalNG_SystemName>
-        <conditionalNG_SystemName>IQC:AUTO:0008</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
     <clipboard>
@@ -231,6 +229,7 @@
       </many>
     </clipboard>
   </logixngs>
+  <logixngModules class="jmri.jmrit.logixng.implementation.configurexml.DefaultModuleManagerXml" />
   <logixngConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
     <conditionalng enabled="yes">
       <systemName>IQC:AUTO:0001</systemName>
@@ -280,23 +279,13 @@
         <systemName>IQDA:AUTO:0039</systemName>
       </socket>
     </conditionalng>
-    <conditionalng enabled="yes">
-      <systemName>IQC:AUTO:0007</systemName>
-      <userName>Test Sequence</userName>
-      <socket>
-        <socketName>A</socketName>
-        <systemName>IQDA:AUTO:0061</systemName>
-      </socket>
-    </conditionalng>
-    <conditionalng enabled="yes">
-      <systemName>IQC:AUTO:0008</systemName>
-      <userName>Test Formula</userName>
-      <socket>
-        <socketName>A</socketName>
-        <systemName>IQDA:AUTO:0068</systemName>
-      </socket>
-    </conditionalng>
   </logixngConditionalNGs>
+  <logixngTables class="jmri.jmrit.logixng.implementation.configurexml.DefaultNamedTableManagerXml">
+    <csv-table class="jmri.jmrit.logixng.implementation.configurexml.DefaultCsvNamedTableXml">
+      <systemName>IQT:AUTO:0001</systemName>
+      <fileName>C:\Users\daniel\JMRI\PreviewLogixNG.jmri\turnout_and_signals.csv</fileName>
+    </csv-table>
+  </logixngTables>
   <logixngDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
     <expression-sensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
       <systemName>IQDE:AUTO:0001</systemName>
@@ -1597,43 +1586,6 @@
       <actionSystemName>IQAA:AUTO:0004</actionSystemName>
       <maleSocket />
     </do-analog-action>
-    <sequence class="jmri.jmrit.logixng.actions.configurexml.SequenceXml">
-      <systemName>IQDA:AUTO:0061</systemName>
-      <expressions>
-        <socket>
-          <socketName>Start</socketName>
-        </socket>
-        <socket>
-          <socketName>Stop</socketName>
-        </socket>
-        <socket>
-          <socketName>Reset</socketName>
-        </socket>
-        <socket>
-          <socketName>E3</socketName>
-        </socket>
-        <socket>
-          <socketName>E2</socketName>
-        </socket>
-        <socket>
-          <socketName>E1</socketName>
-        </socket>
-      </expressions>
-      <actions>
-        <socket>
-          <socketName>A3</socketName>
-        </socket>
-        <socket>
-          <socketName>A2</socketName>
-        </socket>
-        <socket>
-          <socketName>A1</socketName>
-        </socket>
-      </actions>
-      <startImmediately>no</startImmediately>
-      <runContinuously>no</runContinuously>
-      <maleSocket />
-    </sequence>
     <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
       <systemName>IQDA:AUTO:0063</systemName>
       <expressionSystemName>IQAE:AUTO:0014</expressionSystemName>
@@ -1664,10 +1616,6 @@
       <actionSystemName>IQAA:AUTO:0010</actionSystemName>
       <maleSocket />
     </do-analog-action>
-    <logix class="jmri.jmrit.logixng.actions.configurexml.LogixXml">
-      <systemName>IQDA:AUTO:0068</systemName>
-      <maleSocket />
-    </logix>
     <action-sensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
       <systemName>IQDA:AUTO:0069</systemName>
       <sensor>IS_7_99</sensor>
@@ -2551,104 +2499,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Dec 08 08:21:55 CET 2020</date>
+      <date>Tue Dec 08 18:38:18 CET 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Dec 08 08:22:03 CET 2020</date>
+      <date>Tue Dec 08 18:38:23 CET 2020</date>
       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Dec 06 18:23:42 CET 2020</date>
+          <date>Tue Dec 08 12:23:00 CET 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Dec 06 18:23:48 CET 2020</date>
+          <date>Tue Dec 08 12:23:06 CET 2020</date>
           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Dec 06 13:10:43 CET 2020</date>
+              <date>Tue Dec 08 08:21:55 CET 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Dec 06 13:10:48 CET 2020</date>
+              <date>Tue Dec 08 08:22:03 CET 2020</date>
               <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Dec 06 12:58:31 CET 2020</date>
+                  <date>Sun Dec 06 18:23:42 CET 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Dec 06 12:58:39 CET 2020</date>
+                  <date>Sun Dec 06 18:23:48 CET 2020</date>
                   <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Dec 06 12:41:33 CET 2020</date>
+                      <date>Sun Dec 06 13:10:43 CET 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Dec 06 12:41:42 CET 2020</date>
+                      <date>Sun Dec 06 13:10:48 CET 2020</date>
                       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Dec 06 07:54:44 CET 2020</date>
+                          <date>Sun Dec 06 12:58:31 CET 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Dec 06 07:54:49 CET 2020</date>
+                          <date>Sun Dec 06 12:58:39 CET 2020</date>
                           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Dec 06 08:43:53 CET 2020</date>
+                          <date>Sun Dec 06 13:06:51 CET 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Dec 06 12:44:19 CET 2020</date>
+                      <date>Sun Dec 06 13:15:51 CET 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Dec 06 13:06:51 CET 2020</date>
+                  <date>Sun Dec 06 18:25:00 CET 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Dec 06 13:15:51 CET 2020</date>
+              <date>Tue Dec 08 08:49:09 CET 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Dec 06 18:25:00 CET 2020</date>
+          <date>Tue Dec 08 12:37:08 CET 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Dec 08 08:49:09 CET 2020</date>
+      <date>Tue Dec 08 18:43:38 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-08T07:20:00Z+RUNKNOWN on Tue Dec 08 08:49:09 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-08T17:38:03Z+RUNKNOWN on Tue Dec 08 18:43:38 CET 2020-->
 </layout-config>
