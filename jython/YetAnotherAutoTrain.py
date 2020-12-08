@@ -127,7 +127,7 @@
 #                      trainList.  The file is located in the yaat directory in the user files location.  The filename is
 #                      TrainList.txt.  This file is optional.
 #      Embedded: The actions are added to a Python list.  Each action is enclosed in single or double quotes
-#                and end with a co  mma at the end of the line.  The embedded method requires a unique block
+#                and end with a comma at the end of the line.  The embedded method requires a unique block
 #                of code at the end of the script for each embedded action list.
 
 import io
