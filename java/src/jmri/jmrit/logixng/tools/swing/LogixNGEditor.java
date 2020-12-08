@@ -1115,7 +1115,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
          * {@inheritDoc}
          */
         @Override
-        public Void doInBackground() {
+        public void doInBackground() {
             _conditionalNG.getFemaleSocket().unregisterListeners();
             
             List<Map.Entry<FemaleSocket, MaleSocket>> sockets = new ArrayList<>();

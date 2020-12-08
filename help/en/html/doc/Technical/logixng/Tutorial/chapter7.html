@@ -41,7 +41,7 @@ transports the coal to a harbour and drops the coal into a ship.
 
 <img src="images/chapter7_crane.png"><br>
 The above image shows the crane in four different positions. The left crane has an empty bucket and the arm
-that holds the bucket is in its up position. This demo uses an arrow on the crane's cabin that shows if the crane is
+that holds the bucket is in its up position. This demo uses an arrow on the crane's cabin to show if the crane is
 up or down. When the arm is up, the arrow points to the bucket. When the arm is down, the arrow points away from the
 bucket. The middle left crane has also an empty bucket but the arm that holds the bucket is in its down position. The
 middle right crane has a filled bucket and its arm in the up position. The right crane has the bucket open, while the
@@ -53,8 +53,8 @@ other three cranes have the bucket closed.
 The above image shows the steam engine and a coal car. On this image, the car is loaded with coal. Right to the train
 is the turnout that lets the train go either to the harbour or to the coal yard.
 <p>
-North of the track is the harbour with the ship that gets loaded with coal. And next to the crane is the coal yard
-there the crane picks up coal to put in the car.
+Outside of this image, north of the track is the harbour with the ship that gets loaded with coal. And next to the crane
+is the coal yard there the crane picks up coal to put in the car.
 <p>
 The red circles between the rails are sensors that goes active when the engine or the car is above it.
 <p>
@@ -77,9 +77,9 @@ We have a turnout on the layout:
 
 We need three sensors to detect where the train are on the layout:
 <ul>
-<li>IS_7_1 - Start layout</li>
-<li>IS_7_1 - Stop layout</li>
-<li>IS_7_1 - Reset layout</li>
+<li>IS_7_1 - Sensor left of the turnout</li>
+<li>IS_7_2 - Sensor at the ship</li>
+<li>IS_7_3 - Sensor at the crane</li>
 </ul>
 
 And we need six memories to control the three axis of the crane. The memories with odd numbers are used for JMRI to
@@ -99,6 +99,13 @@ We also need to control the loco. We do it by opening a new throttle in JMRI and
 <li>Throttle with address 21 - Controls the steam engine</li>
 </ul>
 
+We also has three sensors to control the LogixNG that runs this layout. We will use these three sensors later.
+<ul>
+<li>IS_7_1 - Start layout</li>
+<li>IS_7_2 - Stop layout</li>
+<li>IS_7_3 - Reset layout</li>
+</ul>
+
 
 <h3>Some rules when running this layout</h3>
 
@@ -110,13 +117,26 @@ sure that the bucket is lifted to its upmost position.
 <p>
 The bucket will not be loaded unless the bucket is opened, moved down to the bottom position and then closed.
 <p>
-The car will not be loaded unless the bucket of the crane is filled and opened above the car.
+The car will not be loaded unless the bucket of the crane is filled and then opened above the car.
 
 
 
 
 
 <h2>Now, lets automate this layout using LogixNG.</h2>
+
+To run this layout, we need to be able to do one step at a time. Do thing A, wait for condition B, do thing C, wait
+for condition D, and so on. For this purpose, we can use the action Sequence. It has three predefined expressions:
+Start, Stop and Reset, and then a set of actions and expressions that follows these three expressions.
+<p>
+Sequence executes the first action and then waits for the first expression to return true. Once that happens, Sequence
+executes the second action and then waits for the second expression to return true. Once that happens, Sequence
+executes the third action, and so on.
+<p>
+Sequence may auto start or be started by the Start expression, depending on how the user has configured Sequence. And
+when the last expression has returned true, Sequence may start over and run the sequence again, if the user has
+configured Sequence to do so.
+
 
 
 
