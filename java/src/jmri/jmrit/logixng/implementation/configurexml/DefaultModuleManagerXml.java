@@ -47,7 +47,6 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(table);
                     if (e != null) {
-                        e.addContent(storeMaleSocket((MaleSocket)table));
                         expressions.addContent(e);
                     }
                 } catch (RuntimeException e) {
