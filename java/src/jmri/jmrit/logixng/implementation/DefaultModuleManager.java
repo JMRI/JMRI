@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.PrintWriter;
+import java.util.Locale;
+
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.jmrit.logixng.*;
@@ -155,6 +158,22 @@ public class DefaultModuleManager extends AbstractManager<Module>
         throw new UnsupportedOperationException("Not supported yet.");
     }
 */    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(PrintWriter writer, String indent) {
+        printTree(Locale.getDefault(), writer, indent);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        for (Module module : getNamedBeanSet()) {
+            module.printTree(locale, writer, indent, "");
+            writer.println();
+        }
+        InstanceManager.getDefault(ModuleManager.class);
+    }
+    
     static volatile DefaultModuleManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe

@@ -202,6 +202,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             logixNG.printTree(locale, writer, indent, "");
             writer.println();
         }
+        InstanceManager.getDefault(ModuleManager.class).printTree(locale, writer, indent);
+        InstanceManager.getDefault(NamedTableManager.class).printTree(locale, writer, indent);
     }
     
     

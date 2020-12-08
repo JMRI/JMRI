@@ -42,10 +42,9 @@ public class DefaultModuleManagerXml extends AbstractManagerXml {
         setStoreElementClass(expressions);
         DefaultModuleManager tm = (DefaultModuleManager) o;
         if (tm != null) {
-            for (Module table:  tm.getNamedBeanSet()) {
-                log.debug("expression system name is " + table.getSystemName());  // NOI18N
+            for (Module module:  tm.getNamedBeanSet()) {
                 try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(table);
+                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(module);
                     if (e != null) {
                         expressions.addContent(e);
                     }

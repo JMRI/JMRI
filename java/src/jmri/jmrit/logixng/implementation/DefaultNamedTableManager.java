@@ -2,14 +2,16 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InvokeOnGuiThread;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.Bundle;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -17,7 +19,7 @@ import jmri.util.*;
  * Class providing the basic logic of the NamedTable_Manager interface.
  * 
  * @author Dave Duchamp       Copyright (C) 2007
- * @author Daniel Bergqvist   Copyright (C) 2018
+ * @author Daniel Bergqvist   Copyright (C) 2020
  */
 public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         implements NamedTableManager {
@@ -216,6 +218,37 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         x.dispose();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(PrintWriter writer, String indent) {
+        printTree(Locale.getDefault(), writer, indent);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void printTree(Locale locale, PrintWriter writer, String indent) {
+        for (NamedTable namedTable : getNamedBeanSet()) {
+            writer.append(indent);
+            if (namedTable instanceof DefaultCsvNamedTable) {
+                DefaultCsvNamedTable csvTable = (DefaultCsvNamedTable)namedTable;
+                writer.append(String.format(
+                        "Named table: System name: %s, User name: %s, File name: %s, Num rows: %d, Num columns: %d",
+                        csvTable.getSystemName(), csvTable.getUserName(),
+                        csvTable.getFileName(), csvTable.numRows(), csvTable.numColumns()+(int)(Math.random()*100)));
+            } if (namedTable != null) {
+                writer.append(String.format(
+                        "Named table: System name: %s, User name: %s, Num rows: %d, Num columns: %d",
+                        namedTable.getSystemName(), namedTable.getUserName(),
+                        namedTable.numRows(), namedTable.numColumns()));
+            } else {
+                throw new NullPointerException("namedTable is null");
+            }
+            writer.println();
+            writer.println();
+        }
+        InstanceManager.getDefault(NamedTableManager.class);
+    }
+    
     static volatile DefaultNamedTableManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe

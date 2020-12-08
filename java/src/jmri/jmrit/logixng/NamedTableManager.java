@@ -1,11 +1,12 @@
 package jmri.jmrit.logixng;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.util.Locale;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.Manager;
-import jmri.NamedBean;
+
+import jmri.*;
 
 /**
  * A manager for a NamedTable
@@ -121,5 +122,22 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param x the NamedTable to delete
      */
     void deleteNamedTable(NamedTable x);
+
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(PrintWriter writer, String indent);
+    
+    /**
+     * Print the tree to a stream.
+     * 
+     * @param locale The locale to be used
+     * @param writer the stream to print the tree to
+     * @param indent the indentation of each level
+     */
+    public void printTree(Locale locale, PrintWriter writer, String indent);
 
 }
