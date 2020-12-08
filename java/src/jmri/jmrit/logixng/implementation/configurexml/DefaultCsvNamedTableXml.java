@@ -31,9 +31,10 @@ public class DefaultCsvNamedTableXml extends jmri.managers.configurexml.Abstract
         Element element = new Element("csv-table");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        element.addContent(new Element("fileName").addContent(p.getFileName()));
         
         storeCommon(p, element);
+        
+        element.addContent(new Element("fileName").addContent(p.getFileName()));
         
         return element;
     }

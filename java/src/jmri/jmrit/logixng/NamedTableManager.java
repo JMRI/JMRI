@@ -54,6 +54,15 @@ public interface NamedTableManager extends Manager<NamedTable> {
     /**
      * Load a table from a CSV text.
      * @param fileName the file name of the CSV table
+     * @return the loaded table
+     * @throws java.io.IOException if an I/O exception occurs
+     */
+    public NamedTable loadTableFromCSV(@Nonnull String fileName)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
+    
+    /**
+     * Load a table from a CSV text.
+     * @param fileName the file name of the CSV table
      * @param text the CSV text
      * @return the loaded table
      */

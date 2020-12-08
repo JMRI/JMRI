@@ -11,7 +11,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.Bundle;
 import jmri.managers.AbstractManager;
 import jmri.util.*;
 
@@ -82,7 +81,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         }
         try {
             // NamedTable does not exist, create a new NamedTable
-            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, FileUtil.getFile(fileName));
+            x = AbstractNamedTable.loadTableFromCSV_File(systemName, userName, fileName);
         } catch (IOException ex) {
 //            Exceptions.printStackTrace(ex);
             log.error("Cannot load table due to I/O error", ex);
@@ -141,6 +140,15 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         // Check that NamedTable does not already exist
         // NamedTable does not exist, create a new NamedTable
         return new DefaultAnonymousTable(numRows, numColumns);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public NamedTable loadTableFromCSV(@Nonnull String fileName)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+        return AbstractNamedTable.loadTableFromCSV_File(fileName);
     }
     
     /**
@@ -234,7 +242,7 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
                 writer.append(String.format(
                         "Named table: System name: %s, User name: %s, File name: %s, Num rows: %d, Num columns: %d",
                         csvTable.getSystemName(), csvTable.getUserName(),
-                        csvTable.getFileName(), csvTable.numRows(), csvTable.numColumns()+(int)(Math.random()*100)));
+                        csvTable.getFileName(), csvTable.numRows(), csvTable.numColumns()));
             } if (namedTable != null) {
                 writer.append(String.format(
                         "Named table: System name: %s, User name: %s, Num rows: %d, Num columns: %d",

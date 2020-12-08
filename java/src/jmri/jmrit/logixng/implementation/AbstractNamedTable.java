@@ -7,8 +7,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
@@ -19,6 +21,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
+import jmri.util.FileUtil;
 
 /**
  * The default implementation of a NamedTable
@@ -154,11 +157,29 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
     }
     
     @Nonnull
+    public static NamedTable loadTableFromCSV_File(@Nonnull String fileName)
+            throws BadUserNameException, BadSystemNameException, IOException {
+        
+        List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
+        return loadFromCSV(null, null, fileName, lines);
+    }
+    
+    @Nonnull
     public static NamedTable loadTableFromCSV_File(@Nonnull File file)
             throws BadUserNameException, BadSystemNameException, IOException {
         
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         return loadFromCSV(null, null, file.getPath(), lines);
+    }
+    
+    @Nonnull
+    public static NamedTable loadTableFromCSV_File(
+            @Nonnull String systemName, @CheckForNull String userName,
+            @Nonnull String fileName)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+        
+        List<String> lines = Files.readAllLines(FileUtil.getFile(fileName).toPath(), StandardCharsets.UTF_8);
+        return loadFromCSV(systemName, userName, fileName, lines);
     }
     
     @Nonnull

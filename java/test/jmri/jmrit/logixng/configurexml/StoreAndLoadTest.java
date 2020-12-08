@@ -118,6 +118,12 @@ public class StoreAndLoadTest {
         StringExpressionManager stringExpressionManager = InstanceManager.getDefault(StringExpressionManager.class);
         
         
+        // Load table turnout_and_signals.csv
+        jmri.jmrit.logixng.NamedTable csvTable =
+                InstanceManager.getDefault(NamedTableManager.class)
+                        .loadTableFromCSV("program:java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv");
+        Assert.assertNotNull(csvTable);
+        
         // Create module IQM1
         jmri.jmrit.logixng.Module module =
                 InstanceManager.getDefault(ModuleManager.class).createModule("IQM1", null);
