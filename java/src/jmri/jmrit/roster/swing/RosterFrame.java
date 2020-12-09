@@ -123,7 +123,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected JmriAbstractAction newWindowAction;
 
     public RosterFrame() {
-        this("Roster");
+        this(Bundle.getMessage("RosterTitle"));
     }
 
     public RosterFrame(String name) {
