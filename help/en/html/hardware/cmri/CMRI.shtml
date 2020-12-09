@@ -10,7 +10,6 @@
   <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
  <!--#include virtual="/Style.shtml" -->
 
-
 </head>
 
 <body>
@@ -22,12 +21,12 @@
       <h1>Hardware Support: Chubb Computer/Model Railroad Interface (C/MRI)</h1><a name="contents" id="contents"></a>
       
         <ul class="snav"> <!-- Pull out links to items on PanelPro CMRI Menu --> 
-          <li><a href="#L268">Configure Nodes</a></li>
-          <li><a href="#L568">Network Manager</a></li>
-          <li><a href="#L597">Metrics</a></li>
-          <li><a href="#L580">Monitor</a></li>
-          <li><a href="#L609">List I/O Bit Assignments</a></li>
-          <li><a href="#L624">Run Diagnostic</a></li>
+          <li><a href="#L215">Establish Connection</a></li>
+          <li><a href="#L258">Manage Nodes</a></li>
+          <li><a href="#L391">I/O Bits</a></li>
+          <li><a href="#L450">Create Objects</a></li>
+          <li><a href="#L562">Network Management Tools</a></li>
+          <li><a href="#L624">Diagnostics</a></li>
           <li><a href="#L106">Full TOC</a></li>
 
 	</ul>
@@ -125,7 +124,11 @@
     <li><a href="#L562">CMRInet Network Management Tools</a>
       <ul>
         <li><a href="#L568">CMRInet Manager</a></li>
-        <li><a href="#L580">CMRInet Packet Monitor</a></li>
+        <li><a href="#L580">CMRInet Monitor</a>
+         <ul>
+           <li><a href="#L590">Interpreting Hexadecimal in C/MRI Monitor Output</a></li>
+         </ul>
+        </li>
         <li><a href="#L597">CMRInet Network Metrics</a></li>
         <li><a href="#L609">Listing C/MRI Bit Assignments</a></li>
       </ul>
@@ -266,6 +269,7 @@
         <li>Chubb C/MRI SMINI</li>
         <li>Chubb C/MRI SUSIC</li>
         <li>Model Railroad Control Systems (MRCS) CPNODE</li>
+        <li>Model Railroad Control Systems (MRCS) CPMEGA</li>
      </ul>
 
 
@@ -305,7 +309,7 @@
   "C" is the default <strong>Connection Prefix</strong> for C/MRI.  That is, C/MRI objects will automatically use that
   prefix in their system name.  For example, a C/MRI sensor will have a system name beginning with "CS"
   ("S" for sensor). The default can be changed if necessary. If you have more than one
-  C/MRI connection, you must have different connection prefixes for each, such as "C2", "C3", etc.
+  C/MRI connection, you must use different connection prefixes for each, such as "C2", "C3", etc.
   </p>
 
   <p>Click on <strong>Additional Connection Settings</strong>, select the
@@ -635,6 +639,8 @@
   assigned, JMRI will refuse to associate a new object with that bit.  Input bits are only associated with Sensors. Output
   bits are associated either with Turnouts or Lights, but a particular bit can only be associated with one at a time.
   When a new Turnout or Light is created, JMRI checks that the specified output bit is available for assignment.
+  
+  <p>Assigned and unassigned bits can be viewed using the <a href="#L609">List I/O Bit Assignments</a> tool.</p>
 
 
 
@@ -741,6 +747,11 @@
   For example, C2S10024 is a JMRI Sensor, associated with the 24th input bit on Node 10
   of C/MRI connection C2. CT8001 is a JMRI Turnout for the 1st output port on Node 8 of C/MRI connection C.
   </p>
+
+  <p>When adding a C/MRI object to a JMRI table, only node address and bit number are entered.  Connection prefix and port type are
+  prefixed automatically.</p>
+  
+  <p>More information on System Names within JMRI can be found <a href="../../doc/Technical/Names.shtml"> here</a>.</p>
 
   <a name="L447" id="L447"></a>
   <h4>Alternate Numbering Scheme for C/MRI System Names</h4>
@@ -980,8 +991,7 @@
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
 
-<!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
-
+<!-- +++++++++++++++ TABLE BELOW VISIBLE IN VERSIONS OF THIS PAGE BEFORE 2020-12-08.  ORIGINAL STILL AVAILABLE AS REFERENCED BELOW +++++++++++++++++
   <h2>C/MRI Entry Format Summary</h2>
   <p>Here's a summary, split up for outputs (eg. Turnouts) and
     inputs (eg. Sensors):</p>
@@ -1048,11 +1058,12 @@
     <td>127B999</td>
   </tr>
   </tbody></table>
+
+ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
+
   <!-- this table is an excerpt from the table in the help/en/html/doc/Technical/Names.shtml
   based on information from the Hardware help pages
   by Egbert Broerse @silverailscolo July 2017 -->
-
-    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
 <!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
 
@@ -1065,11 +1076,11 @@
   
   <p>
   Tools are found under a pulldown menu on the PanelPro and DecoderPro menu bar with the name of 
-  the C/MRI node.  In the example below, two C/MRI nodes have been defined so two separate pulldown
+  the C/MRI connection.  In the example below, two C/MRI connections have been defined so two separate pulldown
   menus are listed.
   </p>
   
-  <p><img alt="CMRI Tools on the Menu Bar" src="images/panelpromenubar-rel4-21-3.png" width="485" height="129"></p>
+  <p><img alt="CMRI Tools on the Menu Bar" src="images/panelpromenubar-rel4-21-3.png" width="488" height="235"></p>
 
 
   <a name="L568" id="L568"></a>
@@ -1090,7 +1101,8 @@
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
-  <a name="L580" id="L580"></a><h3>CMRInet Packet Monitor</h3>
+  <a name="L580" id="L580"></a>
+  <h3>CMRInet Monitor</h3>
 
   <p>CMRInet protocol messages can be viewed by selecting <strong>C/MRI
   Monitor</strong> from the <strong>C/MRI</strong> menu in main PanelPro window.
@@ -1117,10 +1129,13 @@
 
   <p><img alt="Monitor Menu" src="images/menu_Monitor.png" width="672" height="217"></p>
 
-  <p>The following screen shows polling with responses for nodes 20 and 21. </p>
+  <p>The following screen shows polling with responses for nodes 20 and 21. [See the section <a href="#L590">
+  below </a>for help in interpreting hexadecimal output.]</p>
 
   <p><img alt="Monitor" src="images/cmrinetmonitor-pollresponse.png" width="997"
   height="480"></p>
+  
+  <p></p>
 
   <p>There are display option checkboxes which provide additional information
   and formatting for the messages.</p>
@@ -1133,7 +1148,7 @@
   Each byte is displayed as a separate hexadecimal number.</p>
 
 
-  <p><img alt="Monitor Timestamp" src="images/cmrinetmonitor-pollresponsetimestamp.png"
+  <p><img alt="Monitor Poll Timestamp" src="images/cmrinetmonitor-pollresponsetimestamp.png"
   width="1040" height="559"></p>
 
   <p>Here are examples of the Initialization messages for each of the node
@@ -1175,7 +1190,7 @@
   <p style="margin-left:2em;"><strong>timestamp</strong>s as hh:mm:ss:mss,
   <strong>raw data</strong> in hexadecimal, <strong>data message</strong></p>
 
-  <p><img alt="" src="images/cmrinetmonitor-timestampraw.png" width="997" height="480"></p>
+  <p><img alt="Monitor Timestamp" src="images/cmrinetmonitor-timestampraw.png" width="997" height="480"></p>
 
   <p>CMRInet messages can be filtered from display by clicking the
   <strong>Filter Packets</strong> button. The packet filter window lets you
@@ -1188,9 +1203,59 @@
   <p><img alt="Network Packet Filer" src="images/cmrinetworkpacketfilter.png" width="700" height="455"></p>
 
 
-    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>
 
-  <a name="L597" id="L597"></a><h3>CMRInet Network Metrics</h3>
+  <a name="L590" id="L590"></a>
+  <h4>Interpreting Hexadecimal in C/MRI Monitor Output</h4>
+
+  <p>
+  The CMRI Monitor is a useful debugging tool for advanced JMRI users as it shows all data sent to and received from each 
+  connected CMRI node. Data is displayed in hexadecimal format (each digit representing 4 bits with hexadecimal values from 0 to F) so
+  two digits represent a single byte (if the high order bits are all zero, then only a single digit is displayed).
+  </p>
+  
+  <p><a href="https://en.wikipedia.org/wiki/Hexadecimal" target="_blank">Hexadecimal numbers</a> are used in displaying computer 
+  values based on assigning values in terms of powers of 2. Bits are numbered from 0 to 7 within a single byte where bit 7 is the leftmost
+  and bit 0 is the rightmost bit displayed (if bits 4-7 are 0, only one hexadecimal digit will be shown).</p>
+
+  <p><strong>Be aware:</strong> JMRI numbers C/MRI bits starting at 1 rather than 0 which may cause some confusion in interpreting the 
+  C/MRI Monitor output versus the C/MRI bit assignments. Some devices receiving C/MRI transmission from JMRI, such as the arduino, are 
+  programmed to assume bit numbering that starts at zero which is a further source of possible confusion.
+  </p>
+
+  <p>To help in interpreting C/MRI Monitor output, here are several examples showing what would be displayed with the corresponding bits
+  set to 1. The examples represents a C/MRI node with 24 bits (three bytes) of either input or output:
+
+  <p style="margin-left:2em;">
+  C/MRI bits 8, 16, 24 set to 1 display as 80 80 80 (computer bits 7, 15, 23)<br>
+  C/MRI bits 7, 15, 23 set to 1 display as 40 40 40 (computer bits 6, 14, 22)<br>
+  C/MRI bits 6, 14, 22 set to 1 display as 20 20 20 (computer bits 5, 13, 21)<br>
+  C/MRI bits 5, 13, 21 set to 1 display as 10 10 10 (computer bits 4, 12, 20)
+  </p>  
+
+  <p style="margin-left:2em;">
+  C/MRI bits 4, 12, 20 set to 1 display as 8 8 8 (computer bits 3, 11, 19)<br>
+  C/MRI bits 3, 11, 19 set to 1 display as 4 4 4 (computer bits 2, 10, 18)<br> 
+  C/MRI bits 2, 10, 18 set to 1 display as 10 2 2 2 (computer bits 1, 9, 17) (an "escape" character is put in the string as a "10" if the first byte is a 2)<br>
+  C/MRI bits 1,  9, 17 set to 1 display as 1 1 1 (computer bits 0, 8, 16)
+  </p>
+
+  <p>If multiple bits are set to 1 within the same byte, then output appears as in these examples:</p>
+
+  <p style="margin-left:2em;">
+  C/MRI bits 1, 2, 3, 4 set to 1 display as F  (computer bits 0, 1, 2, 3)<br>
+  C/MRI bits 2, 4, 8    set to 1 display as 8A (computer bits 1, 3, 7)<br>
+  C/MRI bits 3, 4       set to 1 display as C  (computer bits 2, 3)<br>
+  C/MRI bits 3, 4, 6, 7 set to 1 display as 6C (computer bits 2, 3, 5, 6)<br>
+  C/MRI bits 6, 8       set to 1 display as A0 (computer bits 5, 7)
+  </p>
+  
+
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>
+
+
+  <a name="L597" id="L597"></a>
+  <h3>CMRInet Network Metrics</h3>
 
   <p>Anytime the CMRInet is active, a network metrics collector is running in
   the background. The metrics collected are errors and performance or
@@ -1205,34 +1270,38 @@
   reset to zero by clicking the <strong>Reset All</strong> button. Metric data
   can be saved to a text file by clicking on the <strong>Save Metrics</strong>
   button. A file create dialog window will open, enter a file name for the
-  metric data. &lt;PHOTO-CMRInet Metrics&gt;</p>
+  metric data.</p>
 
   <p><img alt="Network Metrics" src="images/cmrinetworkmetrics.png" width="925" height="480"></p>
 
 
 
-  <a name="L609" id="L609"></a><h3>Listing C/MRI Bit Assignments</h3>
+  <a name="L609" id="L609"></a>
+  <h3>Listing C/MRI Bit Assignments</h3>
   
   <p>For each node, you can view a summary list of C/MRI bits that are in use
   and those that are available.</p>
 
-  <p>Select <strong>List Assignments</strong> in the C/MRI main menu or from
-  the Select column in the Node Configuration Manager to bring up Bit
-  Assignments window.</p>
+  <p>From the PanelPro main menu, select <strong>C/MRI&rArr;List Assignments</strong>, or <strong>C/MRI&rArr;Configure Nodes</strong> and 
+  then <strong>Select&rArr;Bit Assignments</strong> for each node, to bring up up the Bit Assignments window.  Click "Show Input Bits" or
+  "Show Output Bits" depending on which you are interested in.</p>
+  
   <p><img alt="List Assignments" src="images/menu_List_Assignments.png" width="672" height="217"></p>
 
-  <p>List Assignments is useful for checking that you have configured the
-  correct numbers of input and output bits and the correct node address for
-  each node. The Assignment Table contains a line for each configured input or
-  output bit. Each line also contains an address column showing what address to
-  use for that bit in JMRI's C/MRI system names. Printing blank assignment
-  lists for each node provides a convenient paper form for use in setting up
-  your input/output bit assignments. The Comment field information is also
-  displayed.</p>
+  <p>
+  List Assignments is useful for checking that you have assigned the correct input and output bits to each Sensor (input) and
+  Turnout or Light (outputs). Each line in the Assignment Table also contains an "address" column showing the node address and bit
+  number as used in the JMRI system name for each C/MRI object. Printing blank assignment lists for each node provides a convenient
+  paper form for use in setting up your input/output bit assignments. The Comment field information for the sensor, turnout, or light
+  is also displayed.
+  </p>
 
   <p><img alt="List Bit Assign" src="images/listbitassignment.png" width="773" height="726"></p>
 
-    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
+    <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>    
+
+
+    
 
 <!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
 
@@ -1249,9 +1318,9 @@
   code.  An integrated test card (IOTEST) from MRCS provides compatible test hardware 
   support.
   </p>
-  <p>By opening the C/MRI Monitor, the test message traffic can be viewed.</p>  
-  <p><img alt="" src="images/menu_diagnostics.png" width="672" height="217"></p>  
-  <p><img alt="" src="images/diagmain.png" width="698" height="612"></p>
+  <p>Test message traffic can be viewed by opening the <strong>C/MRI Monitor</strong>.</p>  
+  <p><img alt="Diagnostics Menu" src="images/menu_diagnostics.png" width="672" height="217"></p>  
+  <p><img alt="Diagnostics Main" src="images/diagmain.png" width="698" height="612"></p>
   <p>The C/MRI Diagnostics window has five sections.</p>
   <p><b>Test Node</b> provides a popup menu for the selection of the node to be tested. 
   The menu only displays the addresses of configured nodes for the connection.  Node type
