@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html lang="en">
 <head>
@@ -109,14 +108,17 @@
           <ul>
             <li><a href="#L447">Alternate Numbering Scheme for C/MRI System Names</a></li>
           </ul>
-          </li>
+         </li>
        </ul>
     </li>
-    <li>Creating JMRI Objects with C/MRI
+    <li><a href="#L450">Creating JMRI Objects to Use With C/MRI</a>
        <ul>
          <li><a href="#L459">Creating a Sensor Input</a></li>
-         <li><a href="#L484">Creating a Turnout Output</a></li>
-         <li><a href="#L519">Turnout Control Options</a></li>
+         <li><a href="#L484">Creating a Turnout Output</a>
+          <ul>
+            <li><a href="#L519">Turnout Control Options</a></li>
+          </ul>
+         </li> 
          <li><a href="#L547">Creating a Light Output</a></li>
        </ul>
     </li>
@@ -147,7 +149,6 @@
   <a name="intro" id="intro"></a>
   <a name="L170" id="L170"></a>
   <h2>Introduction to C/MRI on JMRI</h2>
-  <p><img alt="" src="images/splashscreen.png" width="727" height="391"></p>
 
   <p>
   C/MRI is an object control system of digital input and output lines that can connect a computer to
@@ -202,10 +203,9 @@
   
   <!-- FOURTH TYPE OF NODE IN PULLDOWN MENU: CPMEGA TBD 2020/12/08 -->
 
-  <p>There are three types of C/MRI nodes; USIC/SUSIC, SMINI, and cpNode. The
-  USIC/SUSIC and SMINI are Classic nodes. The cpNode and other Open Source/DIY
-  offerings, which comply with the CMRInet protocol, are referred to as Open
-  Source Nodes (OSN).</p>
+  <p>There are three types of C/MRI nodes; USIC/SUSIC, SMINI, and cpNode [more may be added in the future].
+  The USIC/SUSIC and SMINI are Classic nodes. The cpNode and other Open Source/DIY offerings, which comply
+  with the CMRInet protocol, are referred to as Open Source Nodes (OSN).</p>
 
   <p>The SUSIC (Super Universal Serial Interface Card) and USIC (Universal
   Serial Interface Card) are serial controller boards for a large digital I/O
@@ -384,8 +384,8 @@
 
   <p>
   Each node has a unique node address in the range of 0 to 127. Two nodes on the same C/MRI system connection
-  may not have the same node number. However, nodes on different connections may have the same node number as
-  these are managed totally separately.
+  may not have the same node number. However, nodes on different connections may have the same node address 
+  since each connection describes a totally separate CMRInet network.
   </p>
 
   <p>
@@ -534,7 +534,7 @@
   <p>Open the Node Configuration Window from either the Preferences window or
   from the PanelPro main menu, select <strong>C/MRI&rArr;Configure Nodes</strong>.</p>
 
-  <p><img alt="" src="images/addnodecpnode.png" width="654" height="780"></p>
+  <p><img alt="Add CPNODE" src="images/addnodecpnode.png" width="654" height="780"></p>
 
   <p>Select <strong>CPNODE</strong> from the Node Type popup menu.</p>
    
@@ -573,8 +573,17 @@
   <a name="L353" id="L353"></a>
   <h3>Creating a CPMEGA Node Definition</h3>
 
-  <p>TBD</p>
+  <p>
+  CPMega is an updated Version of the CPNode supporting the arduino Mega.  It allows 56 bits of onboard I/O and 
+  is compatible with I2C expansion boards for a total of up to 184 bits bit per Node.
+  </p>
+  
+  <p>
+  A separate area within the setup window is used to specify the "onboard" bits.  Other than that, this is set up
+  like a CPNODE.
+  </p>
 
+  <p><img alt="Add CPMega" src="images/addnodecpmega.png" width="819" height="668"></p>
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
@@ -620,15 +629,22 @@
   of Sensors, Turnouts, and Lights is done by adding entries into the
   appropriate data table. Tables are accessed by selecting from the PanelPro
   main screen <strong>Tools&rArr;Tables&rArr;{table name}</strong></p>
+  
+  <p>
+  A specific input or output bit may be assigned to only one object at a time. If the requested C/MRI bit has already been
+  assigned, JMRI will refuse to associate a new object with that bit.  Input bits are only associated with Sensors. Output
+  bits are associated either with Turnouts or Lights, but a particular bit can only be associated with one at a time.
+  When a new Turnout or Light is created, JMRI checks that the specified output bit is available for assignment.
+
 
 
   <a name="L395" id="L395"></a><h3>Inputs - Sensor Table</h3>
   <p>Sensors provide input to JMRI about conditions on the layout; a button is
   pushed, a block is occupied, etc.
   <strong>When you see a "Sensor" reference, think "input bit" or "input
-  port".</strong>
+  port".</strong></p>
 
-  A Sensor may be created in a number of ways, including automatically. All
+  <p>A Sensor may be created in a number of ways, including automatically. All
   JMRI Sensors which have been created may be viewed in the JMRI Sensor Table,
   which is accessed by selecting <strong>Sensor Table</strong> in the Tools
   menu in the main PanelPro window.</p>
@@ -642,17 +658,17 @@
 
 
   <a name="L405" id="L405"></a><h3>Outputs - Turnout Table</h3>
-  <p>JMRI refers to C/MRI output bits as Turnouts. Turnouts are on/off switches
-  that JMRI can change to control things on the layout.
-  <strong>When you see a "Turnout" reference, think "output bit" or "output
-  port".</strong>
-  For historical reasons, C/MRI output bits used to control signal aspects
+  <p>Turnouts are basically on/off switches that JMRI can change to control things on the layout.
+  C/MRI output bits are associated with Turnouts so <strong>when you see a "Turnout" reference, think "output
+  bit" or "output port".</strong></p>
+  
+  <p>For historical reasons, C/MRI output bits used to control signal aspects
   are referred to as 'Turnouts', even if the output bits are used to control
   signal mast LEDs or lamps.
   NOTE: Always use 'Turnouts' for C/MRI outputs used to control Turnouts
-  (track switches) and for C/MRI outputs used to operate signals.
+  (track switches) and for C/MRI outputs used to operate signals.</p>
 
-  Before you can refer to a Turnout within JMRI, the Turnout must be
+  <p>Before you can refer to a Turnout within JMRI, the Turnout must be
   "created". A new Turnout is created by clicking "Add" at the bottom of that
   table. A new Turnout is created in the Turnout table as illustrated below.
   Creating a Turnout to refer to a specific C/MRI output bit, is called
@@ -667,18 +683,17 @@
   <a name="L419" id="L419"></a>
   <h3>Outputs - Light Table</h3>
   
-  <p>Similarly, a new Light may be created via the JMRI Light Table
-	<strong>When you see a "Light" reference, think "output bit" or "output
-  port".</strong>
+  <p>Similarly, Lights are controlled by C/MRI output bits.	<strong>When you see a "Light" reference, think "output
+  bit" or "output port".</strong>  Lights can be created via the Light Table.</p>
 
-  The JMRI Light Table is accessed by selecting Lights in the Tools &gt;
+  <p>The JMRI Light Table is accessed by selecting Lights in the Tools &gt;
   Tables menu. All JMRI Lights that have been created are listed in the JMRI
   Light Table. Turnouts and Lights are different methods of referring to C/MRI
   outputs from within JMRI. Each method has different setup and control
   options. JMRI refers to C/MRI output bits as Turnouts or Lights. Lights are
-  on/off switches that JMRI can change to control things on the layout.
+  on/off switches that JMRI can change to control things on the layout.</p>
 
-  The JMRI Light Table is accessed by selecting Lights in the Tools &gt;
+  <p>The JMRI Light Table is accessed by selecting Lights in the Tools &gt;
   Tables menu. All JMRI Lights that have been created are listed in the JMRI
   Light Table. Creating a Turnout or a Light to refer to a specific C/MRI
   output bit, is called "assigning" that output bit. Each Light or Turnout is
@@ -702,36 +717,30 @@
   <a name="L001" id="L001"></a>
   <h3>Forming a JMRI System Name For a C/MRI Bit</h3>
   
-  <p>C/MRI System Names are formed using the following format:<br><br>
-  <strong>C[C]pn[nn]bbb</strong> <br><br>
-  where C[C] is the one or two character &lt;connection prefix&gt;, p is the
-  &lt;port type&gt;, n[nn] is the one, two, or three digit &lt;node number&gt; 
-  and bbb is the &lt;bit number&gt;.
+  <p>System Names, which represent physical C/MRI hardware inputs or outputs, have four components:</p>
+  
+  <p style="margin-left:2em;"><strong>c[c]pn[nn]bbb</strong> </p>
 
-  <p>System Names, which represent physical C/MRI hardware inputs or outputs,
-  start with the connection prefix, "C". This assigns the System name to an
-  established CMRInet connection.</p>
-
-  The next character in the System Name is the type of physical entity the
-  bit or port is connected. Sensors are designated with a "<strong>S"</strong>,
-  Turnouts with a "<strong>T"</strong>, and Lights with an
-  "<strong>L</strong>".
-
-  <p>Next, is the node address as a decimal value, in the range of 0-127. While
+  <p>where:</p>
+  
+  <ul>
+    <li><em>c[c]</em> is the one or two character <strong>Connection prefix</strong> of the C/MRI Connection. If there is only a single 
+  C/MRI connection, this is typically the default of "C". If more than one C/MRI connections is defined,
+  each will have a different connection prefix of one or two characters.</li> 
+    <li><em>p</em> is the <strong>Port type</strong> which specifies what type of JMRI object is to be associated with this C/MRI bit. 
+  Sensors are designated with a "<strong>S"</strong>, Turnouts with a "<strong>T"</strong>, and Lights with an "<strong>L</strong>".</li> 
+    <li><em>n[nn]</em> is the one, two, or three digit <strong>node address</strong>, a decimal value in the range of 0-127. While
   a node address of zero does not need to be inserted, it is preferred to
   include it for readability. Also, assigning node addresses greater than 9
-  makes the System Name more readable.</p>
-
-  <p>The last field is the physical bit position in the data stream, and
-  sequentially numbered in the range of 1-999. For example, CS10024 is a C/MRI
-  Sensor, for the 24th input bit on Node 10. CT8001 is the a C/MRI Turnout for
-  the 1st output port on Node 8.</p>
-
-  <p>Note: An alternate numbering scheme is available if a node has more than
-  1000 bits (input or output). See the "<a href="#L447">Alternate Form For System Names</a>"
-  section. For cross-user compatibility, it is recommended to use the 1-999 style for
-  the numbering scheme.</p>
-
+  makes the System Name more readable.</li> 
+    <li><em>bbb</em> is the <strong>bit number</strong>, the physical bit position in the C/MRI data stream, numbered in the range of
+  1-999 [for larger bit numbers, see <a href="#L447">Alternate Form For System Names</a> below].</li>
+  </ul>
+ 
+  <p>
+  For example, C2S10024 is a JMRI Sensor, associated with the 24th input bit on Node 10
+  of C/MRI connection C2. CT8001 is a JMRI Turnout for the 1st output port on Node 8 of C/MRI connection C.
+  </p>
 
   <a name="L447" id="L447"></a>
   <h4>Alternate Numbering Scheme for C/MRI System Names</h4>
@@ -746,16 +755,19 @@
   <p>The alternate numbering scheme is similar to the main numbering scheme,
   except the node address and bit number are separated by a "B", and both node
   address and bit number can range to any value supported by C/MRI. The format
-  is: <strong>CpnBbbb</strong> where C is the &lt;connection prefix&gt;, p is
-  the &lt;port type&gt;, n is the &lt;node number&gt;, "B" is the separator for
-  the node number and the bit number, and bbb is the &lt;bit number&gt;.</p>
+  is thus:</p>
 
-  <p>For example, CS10B24 is a C/MRI Sensor, for the 24th input bit on Node 10.
-  CT2B1009 is the a C/MRI Turnout for the 1009th output port on Node 2.</p>
+  <p style="margin-left:2em;"><strong>c[c]pn[nn]Bbbbb</strong></p>
+  
+  <p> where "B" is the separator between the node number and the bit number, which can now go up to 2048
+  (depending on how the C/MRI node is defined to JMRI).</p>
+
+  <p>For example, C2S10B24 is a C/MRI Sensor, for the 24th input bit on Node 10 on C/MRI connection C2.
+  CT2B1009 is the a C/MRI Turnout for the 1009th output port on Node 2 on C/MRI connection C.</p>
 
   <p>Users may use either numbering scheme interchangeably for line numbers up
   to 999, but must use the alternate numbering scheme for line numbers greater
-  than 999. For ease in communicating with other users, using the main
+  than 999. For ease in communicating with other users, the main
   numbering scheme is recommended unless bits greater than 999 need to be
   addressed.</p>
 
@@ -763,163 +775,147 @@
 
 <!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
 
+  <a name="L450" id="L450"></a>
+  <h2>Creating JMRI Objects to Use With C/MRI</h2>
+  
+  <p>
+    </p>
+
   <a name="L459" id="L459"></a>
-  <h2>Creating a Sensor Input</h2>
+  <h3>Creating a Sensor Input</h3>
   
   <p>To create a sensor input, open the Sensor table by selecting
   <strong>Tools&rArr;Tables&rArr;Sensors</strong> in the
-  main PanelPro menu.</p>
+  main PanelPro menu.  Select "Add" and Select the name of the C/MRI connection from the pulldown list.
+  [See also <a href="../../tools/Sensors.shtml">the Sensors Documentation</a>.]</p>
 
-  <p><img alt="" src="images/sensortable.png" width="1130" height="707"></p>
+  <p><img alt="Sensor Table" src="images/sensortable.png" width="1130" height="707"></p>
 
-  <p>Each C/MRI Sensor is assigned a "System Name". A System Name is the
-  physical data bit or port on the node.</p>
+  <p>Creating a Sensor to refer to a specific C/MRI input bit on a specific node is called "assigning" that input bit.
+  Each input bit may be assigned only once, i.e., two different Sensors may not refer to the same C/MRI input bit on
+  the same node. Enter the node address and the bit number in the <strong>Hardware Address</strong> field using
+  the numbering scheme discussed <a href="#L001">above.</a>  Do not enter the C/MRI Connection Prefix or the Port type
+  ("S") as those will be prefixed automatically. </p>
 
-  <p>A C/MRI Sensor System Name is in the format: CSnbbb, where: "C" designates
-  a C/MRI system bit, "S" means the bit is a C/MRI Sensor, "n" is the node
-  address, and "bbb" is the address or position of the bit in the input data
-  stream.</p>
+  <p>Sensors have two hardware states: a Sensor is "active" when the input bit is 1 and "inactive" when
+  its input bit is zero.</p>
 
-  <p>A new Sensor may be created via the Sensor Table. Creating a Sensor to
-  refer to a specific C/MRI input bit, is called "assigning" that input bit.
-  Each input bit may be assigned only once, i.e., two different Sensors may not
-  refer to the same C/MRI input bit.</p>
-
-  <p>Sensors have two hardware states; Active for On and Inactive for Off. A
-  Sensor is "active" when the input bit is On (grounded) and "inactive" when
-  its input bit is Off.</p>
-
-  <p>A sensor can have a User Name assigned, and it is recommended that this be
-  done. A User Name is a descriptive tag, which can be used by other functions
-  and tables within JMRI as the reference to the actual physical bit.</p>
-
-  <p>There needs to be one unique sensor defined for every active input bit in
-  the node.</p>
+  <p>Some types of C/MRI hardware may require sensors to be defined for every bit on every active node. This is not, 
+  however, a JMRI requirement.</p>
 
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
-<!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
-
-  <a name="L484" id="L484"></a><h2>Creating a Turnout Output</h2>
+  <a name="L484" id="L484"></a>
+  <h3>Creating a Turnout Output</h3>
+  
+  <p>Turnouts and Lights are different methods of referring to C/MRI outputs
+  from within JMRI. Each method has different control options. Always use
+  'Turnouts' for C/MRI outputs used to control Turnouts (track switches) and
+  for C/MRI outputs used to operate signals.</p>
+  
   <p>To create a turnout output, open the Turnout table by selecting
   <strong>Tools&rArr;Tables&rArr;Turnouts</strong> in the main PanelPro
-  menu.</p>
+  menu.  Select "Add" and Select the name of the C/MRI connection from the pulldown list.
+  [See also <a href="../../tools/Turnouts.shtml">the Turnout Documentation</a>.]</p>
 
-  <p><img alt="" src="images/turnouttable.png" width="1123" height="910"></p>
+  <p><img alt="Turnout Table" src="images/turnouttable.png" width="1123" height="910"></p>
 
-  <p>Each C/MRI Turnout is assigned a "System Name". A System Name is the
-  physical data bit or port on the node.</p>
+  <p>Creating a Turnout to refer to a specific C/MRI output bit on a specific node is called "assigning" that output bit.
+  Each output bit may be assigned only once, i.e., two different Turnouts or Lights may not refer to the same C/MRI output bit on
+  the same node. Enter the node address and the bit number in the <strong>Hardware Address</strong> field using
+  the numbering scheme discussed <a href="#L001">above.</a>  Do not enter the C/MRI Connection Prefix or the Port type
+  ("T") as those will be prefixed automatically. </p>
 
-  <p>A C/MRI Turnout System Name is in the format: CTnbbb, where: "C"
-  designates a C/MRI system bit, "T" means the bit is a C/MRI turnout, "n" is the
-  node address, and "bbb" is the address or position of the bit in the output
-  data stream.</p>
+  <p>
+  Note that some C/MRI Turnout control options use two output bits, the
+  addressed one and the next one (<a href="#L519">see next section</a>), and
+  that both output bits must be unassigned for successful creation of a new
+  Turnout controlled by two output bits.</p>
 
-  <p>A new Turnout may be created via the Turnout Table as illustrated below.
-  Creating a Turnout to refer to a specific C/MRI output bit, is called
-  "assigning" that input bit. Each output bit may be assigned only once, i.e.,
-  two different Turnouts may not refer to the same C/MRI output bit.</p>
-
-  <p>Turnout bits have two hardware states; Thrown for On and Closed for Off.
+  <p>Turnout bits have two hardware states; THROWN for On and CLOSED for Off.
   These names are in place for historical reasons. When connected to actual
   switches, Closed can be "Normal" or the straight route and thrown can be
   interpreted as "Reverse" or the diverging route.</p>
 
-  <p>A turnout can have a User Name assigned, and it is recommended that this
-  be done. A User Name is a descriptive tag, which can be used by other
-  functions and tables within JMRI as the reference to the actual physical bit.
-  This is most useful when assigning output ports which drive signal LEDs or
-  lamps.</p>
-
-  <p>When turnout bits are used to control signal LEDs or lamps, one turnout
+  <p>When turnout bits are used on the C/MRI hardware to control signal LEDs or lamps, one turnout
   (output) bit would be assigned to the connection wire to the LED or lamp.
   Multi-color (aspect) signal heads would have one output port assigned to each
   active color LED. When defining signal heads, the defined turnout name for
   the color is used to associate the LED control wires. See the example on
   defining signal heads.</p>
 
-  <p>There needs to be one unique turnout defined for every active output bit
-  in the node.</p>
-
-  <p>Turnouts and Lights are different methods of referring to C/MRI outputs
-  from within JMRI. Each method has different control options. Always use
-  'Turnouts' for C/MRI outputs used to control Turnouts (track switches) and
-  for C/MRI outputs used to operate signals.</p>
-
-  <p>For historical reasons, C/MRI output bits used to control signal aspects
-  are referred to as 'Turnouts', even if the output bits are used to control
-  Lighted signals. Use 'Lights' to refer to C/MRI output bits used for fascia
-  panel Lights, for Lights in scenery (structure Lighting, street Lights,
-  etc.), and for special purposes where the control options for Lights suit
-  your needs. </p>
-
-  <p>Before you can refer to a Turnout or a Light within JMRI, the Turnout or
-  Light must be "created".</p>
-
-  <p>A Turnout may be created in a number of ways, including automatically. All
-  JMRI Turnouts that have been created may be viewed in the JMRI Turnout table,
-  accessed by selecting <strong>Tools&rArr;Tables&rArr;Turnouts</strong> in the main PanelPro
-  menu.</p>
-
-  <p>A new Turnout may be created via the Turnout table by clicking "Add" at
-  the bottom of the table. Similarly, a new Light may be created via the JMRI
-  Light Table by clicking "Add" at the bottom of that table. The JMRI Light
-  Table is accessed by selecting <strong>Tools&rArr;Tables&rArr;Lights</strong> in the
-  main PanelPro menu. All JMRI Lights that have been created are listed in the
-  JMRI Light Table. Creating a Turnout or a Light to refer to a specific C/MRI
-  output bit is called "assigning" that output bit. Each Light or Turnout is
-  linked to a specific output line via the address part of the System Name.</p>
-
-  <p>A specific output bit may be referred to as a Turnout or a Light, but not
-  both. Each output bit may be assigned only once. When a new C/MRI Turnout or
-  a new C/MRI Light is created, JMRI checks that the specified output bit is
-  available for assignment. If the requested C/MRI output bit is in use by a
-  Turnout or a Light, JMRI will refuse to create the new Turnout or new Light.
-  Note that some C/MRI Turnout control options use two output bits, the
-  addressed one and the next one (<a href="#L519">see next paragraph</a>), and
-  that both output bits must be unassigned for successful creation of a new
-  Turnout controlled by two output bits.</p>
+  <p>Some types of C/MRI hardware may require turnouts to be defined for every bit on every active node. This is not,
+  however, a JMRI requirement.</p>
 
 
-  <a name="L519" id="L519"></a><h3>Turnout Control Options</h3>
+  <a name="L519" id="L519"></a>
+  <h4>Turnout Control Options</h4>
 
   <p>Turnouts (switches) may be controlled using one or two output bits. When a
   Turnout is created using the Add option in the Turnout Table, the user is
   asked whether the Turnout is to be controlled using one or two output
-  bits.</p>
+  bits and whether these should be "steady-state" or "pulsed." The way JMRI responds in each case for C/MRI turnouts
+  is described in the following paragraphs.</p>
+  
+  <p class="noted">
+  The way JMRI responds for turnouts defined with other hardware control systems may be different than for C/MRI.  If you
+  are not using C/MRI hardware or protocols, please refer to <a href="../index.shtml"> the Hardware </a> help pages for
+  your particular hardware or protocol.
+  </p>
 
-  <p><img alt="" src="images/turnoutnumbits.png" width="665" height="247"></p>
+  <p><img alt="Turnout Control Bits" src="images/turnoutnumbits.png" width="665" height="247"></p>
 
-  <p>If "Use 1 bit" control is selected, the user must select either 'steady
-  state' or 'pulsed' control.</p>
+  <p>With one bit control, THROWN and CLOSED states are controlled by the same bit (see below for how).  With two bits, one bit is "On" for
+  THROWN and the other bit is "On" for CLOSED.  If both bits are "On" or "Off," nothing is sent to C/MRI.  "Steady state" output means the
+  C/MRI bit or bits will be sent once by JMRI. "Pulsed" means that an "On" will be sent when a change in state is requested and then
+  an "Off" one second later, i.e. a pulse is sent.  This behavior is particularly important to understand if you are programming a 
+  microcontroller to accept and respond to C/MRI transmissions.
+  </p>
 
-  <p><img alt="" src="images/turnoutoutputtype.png" width="603" height="247"></p>
+  <p><img alt="Turnout Output Type" src="images/turnoutoutputtype.png" width="603" height="247"></p>
 
-  <p>If 'steady state' is selected, then that output bit is set "Off" for
-  CLOSED ('normal' in C/MRI manuals) or "On" for THROWN ('reverse' in C/MRI
-  manuals). When setting the output bit, JMRI compares the requested state to
-  the state indicated by the current value of the output bit. If these states
-  are different, then the output bit is set as indicated above. If these states
-  are the same, that state is compared to the state indicated by Turnout
-  Feedback. If the states are the same, no action is taken since the Turnout is
-  already in the requested state. If the states are different, the Turnout was
-  probably changed by some means separate from JMRI. To ensure the Turnout is
-  actually set to the requested state, the output bit is first changed to match
-  the state indicated by the Turnout Feedback, then one second later it is
-  changed again to match the requested state. This guarantees a change of state
-  for those Turnout control devices that require a change in state to actually
-  move the Turnout.</p>
+  <p>There are four possible combinations of number of bits and output selection:
+  
+  <dl>
+      <dt>[1 bit, steady-state]</dt>
+          <dd>
+            <p class="dl">
+            The one output bit is set "Off" for CLOSED (C/MRI manuals call this 'normal') or "On" for THROWN ('reverse'). When setting
+  the output bit, JMRI compares the <em>requested state</em> to the state indicated by the current value of
+  the output bit. If these states are different, then the output bit is set and transmitted as indicated above. If these states are the 
+  same, that state is compared to the state indicated by <em>Turnout Feedback</em>. If the states are the same, no transmission take place
+  since the Turnout is already in the requested state. If the states are different, the Turnout was probably changed by some means separate
+  from JMRI.</p>
 
-  <p>If "Use 1 bit" option is used with "Pulsed Output" control, the output bit
+           <p class="dl">To ensure the Turnout is actually set to the requested state, the output bit is sent twice as follows:</p>
+  
+           <ul>
+               <li>first, it is changed to match the state indicated by the Turnout Feedback,</li>
+               <li>then one second later, it is changed again to match the requested state.</li>
+           </ul>
+
+           <p class= "dl">  This approach guarantees that a requested change of state causes an actual move in the Turnout for those Turnout
+  control devices that require a change in state to force the move.</p>
+          </dd>
+          
+     <dt>[1 bit, pulsed]</dt>
+          <dd>
+            <p class="dl">
+            If "Use 1 bit" option is used with "Pulsed Output" control, the output bit
   is "Off" when nothing is happening. When CLOSED or THROWN is requested, this
-  request is compared to the known state of the Turnout (which follows Turnout
+  request is compared to the <em>known state</em> of the Turnout (which follows Turnout
   Feedback). If the known state indicates the Turnout is already in the
   requested state, nothing is done. If the known state is different from the
   requested state, then the bit is 'pulsed'. A 'pulse' consists of the bit
-  being turned "On" for one second, then returned to the "Off" position.</p>
+  being turned "On" and transmitted.  One second later, the bit is set "Off" and another transmission occurs.
+            </p>
+          </dd>
 
-  <p>If "Use 2 bits" control is selected, the bit referenced in the Turnout
+     <dt>[2 bit, steady-state]</dt>
+          <dd>
+            <p class="dl">
+              If "Use 2 bits" control is selected, the bit referenced in the Turnout
   system name and the next bit in sequence are used to control the Turnout. For
   example, if CT33 has two-output-bit control, the 33rd and 34th bits are used
   to control the Turnout. If two-output-bit control is selected, the user must
@@ -928,9 +924,14 @@
   controlled according to the recommendation in Chubb's C/MRI User's Manual,
   Version 3.0, page 3-12. With steady state control, for CLOSED, the first bit
   is set "Off" and the second bit is set "On"; for THROWN, the bits states are
-  reversed, i.e., the first bit is set "On" and the second bit is set "Off".</p>
+  reversed, i.e., the first bit is set "On" and the second bit is set "Off".
+            </p>
+          </dd>
 
-  <p>If "Use 2 bits" control with "Pulse Output" control is requested, both
+     <dt>[2 bit, pulsed]</dt>
+          <dd>
+            <p class="dl">
+            If "Use 2 bits" control with "Pulse Output" control is requested, both
   bits are "Off" when nothing is happening. When CLOSED or THROWN is requested,
   this request is compared to the known state of the Turnout (which follows
   Turnout Feedback). If the known state indicates the Turnout is already in the
@@ -938,9 +939,13 @@
   requested state, then the first bit is pulsed if CLOSED is requested, or the
   second bit is pulsed if THROWN is requested. In either case, a 'pulse'
   consists of the bit being turned "On" for one second, then returned to the
-  "Off" position.</p>
-
-  <p>Note that to have two-output-bit control, a Turnout must be created using
+  "Off" position.
+            </p>
+          </dd>
+          
+  </dl>
+  
+  <p>Note that Turnouts using two-output-bit control can only be created using
   the "Add" button in the Turnout Table.</p>
 
   <p>Finally, the "inverted" option can be selected. This controls how the
@@ -955,22 +960,22 @@
 
       <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
-<!-- +++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++++++ +++++++++++++ -->
 
-  <a name="L547" id="L547"></a><h2>Creating a Light Output</h2>
+  <a name="L547" id="L547"></a>
+  <h3>Creating a Light Output</h3>
 
   <p>To create a Lights output, open the Light table by selecting <strong>Tools&rArr;
-  Tables&rArr;Lights</strong> in the main PanelPro menu.</p>
+  Tables&rArr;Lights</strong> in the main PanelPro menu.  Select "Add" and Select the name of the C/MRI 
+  connection from the pulldown list. [See also <a href="../../tools/Lights.shtml">the Lights Documentation</a>.]</p>
 
-  <p><img alt="" src="images/lightstable.png" width="1123" height="505"></p>
 
-  <p>Each C/MRI Light is assigned a "System Name". A System Name is the
-  physical data bit or port on the node.</p>
+  <p><img alt="Light Table" src="images/lightstable.png" width="1123" height="505"></p>
 
-  <p>A C/MRI Light System Name is in the format: CHnbbb, where: "C" designates
-  a C/MRI system bit, "T" means the bit is a C/MRI turnout, "n" is the node
-  address, and "bbb" is the address or position of the bit in the output data
-  stream.</p>
+  <p>Creating a Light to refer to a specific C/MRI output bit on a specific node is called "assigning" that output bit.
+  Each output bit may be assigned only once, i.e., two different Turnouts or Lights may not refer to the same C/MRI output bit on
+  the same node. Enter the node address and the bit number in the <strong>Hardware Address</strong> field using
+  the numbering scheme discussed <a href="#L001">above.</a>  Do not enter the C/MRI Connection Prefix or the Port type
+  ("L") as those will be prefixed automatically. </p>
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
@@ -1078,9 +1083,9 @@
   <strong>Enabled</strong> check box for the node. The <strong>Status</strong>
   column shows the real time state of the node.</p>
 
-  <p><img alt="" src="images/menu_Network_Manager.png" width="699" height="219"></p>
+  <p><img alt="Network Manager Menu" src="images/menu_Network_Manager.png" width="699" height="219"></p>
 
-  <p><img alt="" src="images/cmrinetnetworkmanager.png" width="830" height="580"></p>
+  <p><img alt="Network Manager" src="images/cmrinetnetworkmanager.png" width="830" height="580"></p>
 
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
@@ -1110,11 +1115,11 @@
   <strong>Stop Logging</strong> will stop the data capture and close the log
   file.</p>
 
-  <p><img alt="" src="images/menu_Monitor.png" width="672" height="217"></p>
+  <p><img alt="Monitor Menu" src="images/menu_Monitor.png" width="672" height="217"></p>
 
   <p>The following screen shows polling with responses for nodes 20 and 21. </p>
 
-  <p><img alt="" src="images/cmrinetmonitor-pollresponse.png" width="997"
+  <p><img alt="Monitor" src="images/cmrinetmonitor-pollresponse.png" width="997"
   height="480"></p>
 
   <p>There are display option checkboxes which provide additional information
@@ -1128,15 +1133,15 @@
   Each byte is displayed as a separate hexadecimal number.</p>
 
 
-  <p><img alt="" src="images/cmrinetmonitor-pollresponsetimestamp.png"
+  <p><img alt="Monitor Timestamp" src="images/cmrinetmonitor-pollresponsetimestamp.png"
   width="1040" height="559"></p>
 
   <p>Here are examples of the Initialization messages for each of the node
   types.</p>
 
-  <p><img alt="" src="images/cmrinetinit-USICSUSIC.png" width="426" height="255"></p>
+  <p><img alt="Init USIC" src="images/cmrinetinit-USICSUSIC.png" width="426" height="255"></p>
 
-  <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427" height="169"></p>
+  <p><img alt="Init SMINI" src="images/cmrinetinit-SMINI.png" width="427" height="169"></p>
 
   <p>The following screen shows the node initialization message sequence for
   node 20, followed by the node coming on line and responding to polls. The
@@ -1147,7 +1152,7 @@
   OB are the output data bytes as hexadecimal values. Polls are seen
   followed by the poll/response sequence.</p>
 
-  <p><img alt="" src="images/cmrinetmonitor-pollinitialization.png"
+  <p><img alt="Monitor Poll Init" src="images/cmrinetmonitor-pollinitialization.png"
   width="904" height="559"></p>
 
   <p>If a node goes off line and stops responding to polls, JMRI will initiate
@@ -1156,13 +1161,13 @@
   poll/init/transmit message sequence is repeated until the node comes back on
   line.</p>
 
-  <p><img alt="" src="images/cmrinetmonitor-polltimeoutinit.png" width="1018"
+  <p><img alt="Monitor Poll Timeout" src="images/cmrinetmonitor-polltimeoutinit.png" width="1018"
   height="561"></p>
 
   <p>The following screen shows a poll to node 20, followed by a response, then
   output bytes sent to the node.</p>
   
-  <p><img alt="" src="images/cmrinetmonitor-transmitmessage.png" width="1040" height="586"></p>
+  <p><img alt="Monitor Transmit" src="images/cmrinetmonitor-transmitmessage.png" width="1040" height="586"></p>
 
   <p>The following screen shows all of the display options enabled. The order
   of options is:</p>
@@ -1180,7 +1185,7 @@
   Poll</strong> button will stop network polling. Clicking <strong>Resume
   Polling</strong> will restart polling.</p>
 
-  <p><img alt="" src="images/cmrinetworkpacketfilter.png" width="700" height="455"></p>
+  <p><img alt="Network Packet Filer" src="images/cmrinetworkpacketfilter.png" width="700" height="455"></p>
 
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
@@ -1193,7 +1198,7 @@
   <strong>C/MRI Network Metrics</strong> from the <strong>C/MRI</strong> menu in main
   PanelPro window</p>
 
-  <p><img alt="" src="images/menu_Network_Metrics.png" width="702" height="219"></p>
+  <p><img alt="Network Metrics Menu" src="images/menu_Network_Metrics.png" width="702" height="219"></p>
 
   <p>Each of the Error and Data Metric values can be reset to zero by clicking
   the appropriate <strong>Reset</strong> button. All of the metrics can be
@@ -1202,7 +1207,7 @@
   button. A file create dialog window will open, enter a file name for the
   metric data. &lt;PHOTO-CMRInet Metrics&gt;</p>
 
-  <p><img alt="" src="images/cmrinetworkmetrics.png" width="925" height="480"></p>
+  <p><img alt="Network Metrics" src="images/cmrinetworkmetrics.png" width="925" height="480"></p>
 
 
 
@@ -1214,7 +1219,7 @@
   <p>Select <strong>List Assignments</strong> in the C/MRI main menu or from
   the Select column in the Node Configuration Manager to bring up Bit
   Assignments window.</p>
-  <p><img alt="" src="images/menu_List_Assignments.png" width="672" height="217"></p>
+  <p><img alt="List Assignments" src="images/menu_List_Assignments.png" width="672" height="217"></p>
 
   <p>List Assignments is useful for checking that you have configured the
   correct numbers of input and output bits and the correct node address for
@@ -1225,7 +1230,7 @@
   your input/output bit assignments. The Comment field information is also
   displayed.</p>
 
-  <p><img alt="" src="images/listbitassignment.png" width="773" height="726"></p>
+  <p><img alt="List Bit Assign" src="images/listbitassignment.png" width="773" height="726"></p>
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
