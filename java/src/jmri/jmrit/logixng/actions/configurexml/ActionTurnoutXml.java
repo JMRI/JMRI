@@ -76,9 +76,15 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
                 h.setAddressing(NamedBeanAddressing.valueOf(addressing.getTextTrim()));
             }
             
-            h.setReference(shared.getChild("reference").getTextTrim());
-            h.setLocalVariable(shared.getChild("localVariable").getTextTrim());
-            h.setFormula(shared.getChild("formula").getTextTrim());
+            if (shared.getChild("reference") != null) {
+                h.setReference(shared.getChild("reference").getTextTrim());
+            }
+            if (shared.getChild("localVariable") != null) {
+                h.setLocalVariable(shared.getChild("localVariable").getTextTrim());
+            }
+            if (shared.getChild("formula") != null) {
+                h.setFormula(shared.getChild("formula").getTextTrim());
+            }
         } catch (ParserException e) {
             throw new JmriConfigureXmlException(e);
         }

@@ -102,6 +102,28 @@ copy, but since actions and expressions build a tree, a copy can be of many acti
 
 <h2>1. Basics</h2>
 
+LogixNG has two basic building blocks: Actions and Expressions. Actions do something, for example throw a turnout or
+sets a signal mast. Expressions ask something, for example if a sensor is active or if a signal head has a particular
+appearance. The actions and expressions forms a tree and a complex logix can be built.
+
+<h3>Categories</h3>
+
+To get some kind of structure of the types of actions and expressions, LogixNG has a number of categories. Then you
+create a new action or expression, you first select the category and then the action/expression. Currently, the
+categories are:
+
+<ul>
+<li>Item - Actions and expressions related to items on the layout, for example turnouts and signal masts</li>
+<li>Common - The most important actions and expressions that are not in the category Item</li>
+<li>LocoNet - Actions and expressions related to LocoNet</li>
+<li>Other - Other actions and expressions</li>
+<li>Extravaganza - Things seldom used, included mostly for fun, but maybe useful in some cases.</li>
+</ul>
+
+These categories may not be optimal and it would probably be good to have a discussion on the jmri developers mailing
+list about these. It's easy to change them, add more categories and to move an action or expression from one category
+to another.
+
 <h3>Create an action: ActionTurnout</h3>
 
 One thing one notices when creating an action or expression is that LogixNG is much more powerful than Logix. For now,
