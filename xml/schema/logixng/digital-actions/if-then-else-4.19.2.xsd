@@ -47,7 +47,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="thenSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="thenSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
@@ -55,7 +55,7 @@
                   </xs:sequence>
                 </xs:complexType>
               </xs:element>
-              <xs:element name="elseSocket" minOccurs="1" maxOccurs="unbounded">
+              <xs:element name="elseSocket" minOccurs="1" maxOccurs="1">
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>

@@ -17,9 +17,6 @@ import jmri.jmrit.logixng.MaleSocket;
  */
 public class IfThenElseXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public IfThenElseXml() {
-    }
-
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *

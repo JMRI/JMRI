@@ -98,7 +98,7 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
             }
         }
         
-        checkFreeSocket();
+//        checkFreeSocket();
         
         disableCheckForUnconnectedSocket = false;
     }
@@ -166,6 +166,80 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
         }
     }
     
+    /** {@inheritDoc} */
+    @Override
+    public boolean isSocketOperationAllowed(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:        // Possible if socket is not connected
+                return ! getChild(index).isConnected();
+            case InsertBefore:
+                return true;    // Always possible
+            case InsertAfter:
+                return true;    // Always possible
+            case MoveUp:
+                return index > 0;   // Possible if not first socket
+            case MoveDown:
+                return index+1 < getChildCount();   // Possible if not last socket
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
+    private void insertNewSocket(int index) {
+        FemaleDigitalBooleanActionSocket socket =
+                InstanceManager.getDefault(DigitalBooleanActionManager.class)
+                        .createFemaleSocket(this, this, getNewSocketName());
+        _actionEntries.add(index, new ActionEntry(socket));
+        
+        List<FemaleSocket> addList = new ArrayList<>();
+        addList.add(socket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, null, addList);
+    }
+    
+    private void removeSocket(int index) {
+        List<FemaleSocket> removeList = new ArrayList<>();
+        removeList.add(_actionEntries.remove(index)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_COUNT, removeList, null);
+    }
+    
+    private void moveSocketDown(int index) {
+        ActionEntry temp = _actionEntries.get(index);
+        _actionEntries.set(index, _actionEntries.get(index+1));
+        _actionEntries.set(index+1, temp);
+        
+        List<FemaleSocket> list = new ArrayList<>();
+        list.add(_actionEntries.get(index)._socket);
+        list.add(_actionEntries.get(index+1)._socket);
+        firePropertyChange(Base.PROPERTY_CHILD_REORDER, null, list);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void doSocketOperation(int index, FemaleSocketOperation oper) {
+        switch (oper) {
+            case Remove:
+                if (getChild(index).isConnected()) throw new UnsupportedOperationException("Socket is connected");
+                removeSocket(index);
+                break;
+            case InsertBefore:
+                insertNewSocket(index);
+                break;
+            case InsertAfter:
+                insertNewSocket(index+1);
+                break;
+            case MoveUp:
+                if (index == 0) throw new UnsupportedOperationException("cannot move up first child");
+                moveSocketDown(index-1);
+                break;
+            case MoveDown:
+                if (index+1 == getChildCount()) throw new UnsupportedOperationException("cannot move down last child");
+                moveSocketDown(index);
+                break;
+            default:
+                throw new UnsupportedOperationException("Oper is unknown" + oper.name());
+        }
+    }
+    
     @Override
     public void connected(FemaleSocket socket) {
         if (disableCheckForUnconnectedSocket) return;
@@ -200,22 +274,6 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
         return Bundle.getMessage(locale, "Many_Long");
     }
     
-    
-    private static class ActionEntry {
-        private String _socketSystemName;
-        private final FemaleDigitalBooleanActionSocket _socket;
-        
-        private ActionEntry(FemaleDigitalBooleanActionSocket socket, String socketSystemName) {
-            _socketSystemName = socketSystemName;
-            _socket = socket;
-        }
-        
-        private ActionEntry(FemaleDigitalBooleanActionSocket socket) {
-            this._socket = socket;
-        }
-        
-    }
-
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
@@ -233,6 +291,22 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
     public void disposeMe() {
     }
     
+    
+    private static class ActionEntry {
+        private String _socketSystemName;
+        private final FemaleDigitalBooleanActionSocket _socket;
+        
+        private ActionEntry(FemaleDigitalBooleanActionSocket socket, String socketSystemName) {
+            _socketSystemName = socketSystemName;
+            _socket = socket;
+        }
+        
+        private ActionEntry(FemaleDigitalBooleanActionSocket socket) {
+            this._socket = socket;
+        }
+        
+    }
+
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanMany.class);
 

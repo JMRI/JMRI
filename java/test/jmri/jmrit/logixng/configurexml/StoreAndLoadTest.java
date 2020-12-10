@@ -318,31 +318,33 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
-        //================================================================================
-        //================================================================================
-        //================================================================================
-        //================================================================================
-        //================================================================================
-        //================================================================================
-        //================================================================================
-        //================================================================================
-/*        
-        jmri.jmrit.logixng.actions.Many booleanMany =
-                new jmri.jmrit.logixng.actions.Many(digitalBooleanActionManager.getAutoSystemName(), null);
+        
+        
+        
+        DigitalBooleanMany booleanMany =
+                new DigitalBooleanMany(digitalBooleanActionManager.getAutoSystemName(), null);
         maleSocket = digitalBooleanActionManager.registerAction(booleanMany);
         logix.getChild(1).connect(maleSocket);
         
-        
-        OnChange onChange =
-                new OnChange(digitalBooleanActionManager.getAutoSystemName(), null, OnChange.Trigger.CHANGE);
-        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        DigitalBooleanMany booleanMany2 =
+                new DigitalBooleanMany(digitalBooleanActionManager.getAutoSystemName(), null);
+        booleanMany2.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(booleanMany2);
         booleanMany.getChild(0).connect(maleSocket);
         
-        onChange = new OnChange(digitalBooleanActionManager.getAutoSystemName(), null, OnChange.Trigger.CHANGE_TO_FALSE);
-        onChange.setComment("A comment");
+        
+        DigitalBooleanOnChange onChange =
+                new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
+                        null, DigitalBooleanOnChange.Trigger.CHANGE);
         maleSocket = digitalBooleanActionManager.registerAction(onChange);
         booleanMany.getChild(1).connect(maleSocket);
-*/        
+        
+        onChange = new DigitalBooleanOnChange(digitalBooleanActionManager.getAutoSystemName(),
+                null, DigitalBooleanOnChange.Trigger.CHANGE_TO_FALSE);
+        onChange.setComment("A comment");
+        maleSocket = digitalBooleanActionManager.registerAction(onChange);
+        booleanMany.getChild(2).connect(maleSocket);
+        
         
         
         

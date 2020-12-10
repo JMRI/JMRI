@@ -24,13 +24,13 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
         CHANGE,
     }
 
-    private String _actionSocketSystemName;
-    private final FemaleDigitalActionSocket _actionSocket;
+    private String _socketSystemName;
+    private final FemaleDigitalActionSocket _socket;
     Trigger _trigger = Trigger.CHANGE;
     
     public DigitalBooleanOnChange(String sys, String user, Trigger trigger) {
         super(sys, user);
-        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
+        _socket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
         _trigger = trigger;
     }
@@ -61,23 +61,23 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     /** {@inheritDoc} */
     @Override
     public void execute(boolean hasChangedToTrue) throws JmriException {
-        if (_actionSocket.isConnected()) {
+        if (_socket.isConnected()) {
             switch (_trigger) {
                 case CHANGE_TO_TRUE:
                     // Call execute() if change to true
                     if (hasChangedToTrue) {
-                        _actionSocket.execute();
+                        _socket.execute();
                     }
                     break;
                 case CHANGE_TO_FALSE:
                     // Call execute() if change to false
                     if (!hasChangedToTrue) {
-                        _actionSocket.execute();
+                        _socket.execute();
                     }
                     break;
                 case CHANGE:
                     // Always call execute()
-                    _actionSocket.execute();
+                    _socket.execute();
                     break;
                 default:
                     throw new UnsupportedOperationException("_whichChange has unknown value: "+_trigger);
@@ -105,7 +105,7 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
-                return _actionSocket;
+                return _socket;
                 
             default:
                 throw new IllegalArgumentException(
@@ -120,8 +120,8 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
 
     @Override
     public void connected(FemaleSocket socket) {
-        if (socket == _actionSocket) {
-            _actionSocketSystemName = socket.getConnectedSocket().getSystemName();
+        if (socket == _socket) {
+            _socketSystemName = socket.getConnectedSocket().getSystemName();
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -129,8 +129,8 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        if (socket == _actionSocket) {
-            _actionSocketSystemName = null;
+        if (socket == _socket) {
+            _socketSystemName = null;
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
@@ -158,42 +158,42 @@ public class DigitalBooleanOnChange extends AbstractDigitalBooleanAction
         }
     }
 
-    public FemaleDigitalActionSocket getActionSocket() {
-        return _actionSocket;
+    public FemaleDigitalActionSocket getSocket() {
+        return _socket;
     }
 
-    public String getActionSocketSystemName() {
-        return _actionSocketSystemName;
+    public String getSocketSystemName() {
+        return _socketSystemName;
     }
 
     public void setActionSocketSystemName(String systemName) {
-        _actionSocketSystemName = systemName;
+        _socketSystemName = systemName;
     }
 
     /** {@inheritDoc} */
     @Override
     public void setup() {
         try {
-            if ( !_actionSocket.isConnected()
-                    || !_actionSocket.getConnectedSocket().getSystemName()
-                            .equals(_actionSocketSystemName)) {
+            if ( !_socket.isConnected()
+                    || !_socket.getConnectedSocket().getSystemName()
+                            .equals(_socketSystemName)) {
                 
-                String socketSystemName = _actionSocketSystemName;
-                _actionSocket.disconnect();
+                String socketSystemName = _socketSystemName;
+                _socket.disconnect();
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
                                     .getBySystemName(socketSystemName);
-                    _actionSocket.disconnect();
+                    _socket.disconnect();
                     if (maleSocket != null) {
-                        _actionSocket.connect(maleSocket);
+                        _socket.connect(maleSocket);
                         maleSocket.setup();
                     } else {
                         log.error("cannot load digital action " + socketSystemName);
                     }
                 }
             } else {
-                _actionSocket.getConnectedSocket().setup();
+                _socket.getConnectedSocket().setup();
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.

@@ -5,6 +5,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.Logix;
 
 import org.jdom2.Element;
@@ -17,9 +18,6 @@ import org.jdom2.Element;
  */
 public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public LogixXml() {
-    }
-    
     /**
      * Default implementation for storing the contents of a SE8cSignalHead
      *
@@ -36,12 +34,32 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
         
         storeCommon(p, element);
 
-//        NamedBeanHandle light = p.getLight();
-//        if (light != null) {
-//            element.addContent(new Element("light").addContent(light.getName()));
-//        }
-        
-//        element.addContent(new Element("lightState").addContent(p.getLightState().name()));
+        Element e2 = new Element("expressionSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getExpressionSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getExpressionSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+
+        e2 = new Element("actionSocket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
+        socket = p.getActionSocket().getConnectedSocket();
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getActionSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
 
         return element;
     }
@@ -54,13 +72,20 @@ public class LogixXml extends jmri.managers.configurexml.AbstractNamedBeanManage
 
         loadCommon(h, shared);
 
-//        Element lightName = shared.getChild("light");
-//        if (lightName != null) {
-//            Light t = InstanceManager.getDefault(LightManager.class).getLight(lightName.getTextTrim());
-//            if (t != null) h.setLight(t);
-//            else h.removeLight();
-//        }
-
+        Element socketName = shared.getChild("expressionSocket").getChild("socketName");
+        h.getChild(0).setName(socketName.getTextTrim());
+        Element socketSystemName = shared.getChild("expressionSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setExpressionSocketSystemName(socketSystemName.getTextTrim());
+        }
+        
+        socketName = shared.getChild("actionSocket").getChild("socketName");
+        h.getChild(1).setName(socketName.getTextTrim());
+        socketSystemName = shared.getChild("actionSocket").getChild("systemName");
+        if (socketSystemName != null) {
+            h.setActionSocketSystemName(socketSystemName.getTextTrim());
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

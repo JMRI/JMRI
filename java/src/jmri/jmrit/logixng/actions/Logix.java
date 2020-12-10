@@ -150,7 +150,7 @@ public class Logix extends AbstractDigitalAction
                 _actionSocket.getName());
     }
     
-    public FemaleDigitalExpressionSocket getIfExpressionSocket() {
+    public FemaleDigitalExpressionSocket getExpressionSocket() {
         return _expressionSocket;
     }
     

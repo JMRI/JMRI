@@ -38,13 +38,13 @@ public class DigitalBooleanOnChangeXml extends jmri.managers.configurexml.Abstra
         element.setAttribute("trigger", p.getTrigger().name());
         
         Element e2 = new Element("socket");
-        e2.addContent(new Element("socketName").addContent(p.getChild(1).getName()));
-        MaleSocket socket = p.getActionSocket().getConnectedSocket();
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getSocket().getConnectedSocket();
         String socketSystemName;
         if (socket != null) {
             socketSystemName = socket.getSystemName();
         } else {
-            socketSystemName = p.getActionSocketSystemName();
+            socketSystemName = p.getSocketSystemName();
         }
         if (socketSystemName != null) {
             e2.addContent(new Element("systemName").addContent(socketSystemName));
