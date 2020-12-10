@@ -65,10 +65,10 @@ named beans in the template yard. Track 1 is the main track.
 <li>Sensor track 3 (only used for the South yard)</li>
 </ul>
 
-LogixNG has support for CSV tables, comma separated tables. These files are created by a spreadsheet software, for
-example Open Office or MicroSoft Excel, and then exported as a CSV file. We can create a CSV file with a table of the
-yards and their named beans. For example, you can let each column represent each yard and let each row represent each
-named bean.
+LogixNG has support for CSV tables, comma separated tables, but LogixNG needs the tables to be TAB-separated. These
+files can created by a spreadsheet software, for example Open Office or MicroSoft Excel, and then exported as a CSV
+file. We can create a CSV file with a table of the yards and their named beans. For example, you can let each column
+represent each yard and let each row represent each named bean.
 <p>
 <table border="1" cellspacing="0" cellpadding="2">
 <tr><td></td><td>North yard</td><td>West yard</td><td>East yard</td><td>South yard</td></tr>
@@ -82,7 +82,16 @@ named bean.
 <tr><td>Sensor track 2</td><td>IS_10_2</td><td>IS_10_4</td><td>IS_10_6</td><td>IT_10_8</td></tr>
 <tr><td>Sensor track 3</td><td></td><td></td><td></td><td>IT_10_9</td></tr>
 </table>
+<h4>Important</h4>
+
+The CSV files LogixNG uses must be separated with tab, not comma. In OpenOffice Calc, select {Tab} as the field
+delimiter.
 <p>
+You must not use single or double quotes in the CSV table. OpenOffice Calc uses different single quote characters at
+the beginning of a word and at the end of a word, and if you store a csv file with these, you might end up with non
+readable characters in the csv file. OpenOffice Calc also writes non readable characters for double qoute characters
+to the csv file.
+
 
 <h3>Using the "Table: For each" action</h2>
 
