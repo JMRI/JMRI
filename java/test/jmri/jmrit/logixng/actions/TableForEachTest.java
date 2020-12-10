@@ -222,8 +222,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testExecute()
-            throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException,
-            JmriException, NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+            throws IOException {
         
         _maleSocket.addLocalVariable("MyVariable", SymbolTable.InitialValueType.None, null);
         
@@ -240,17 +239,13 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);
         
-        String str = String.join(", ", _cells);
-        System.out.format("String: \"%s\"%n", str);
-/*        
-        Assert.assertTrue("turnout is closed", Turnout.CLOSED == turnout.getState());
-        _tableForEach.execute();
-        Assert.assertTrue("turnout is closed", Turnout.CLOSED == turnout.getState());
-        // The timer should now trig after 100 milliseconds
-        JUnitUtil.waitFor(()->{return Turnout.THROWN == turnout.getState();}, "timer has not triggered");
-        Assert.assertTrue("turnout is thrown", Turnout.THROWN == turnout.getState());
-*/        
-        _logixNG.setEnabled(false);
+        Assert.assertEquals("The turnout controls three signals." +
+                " ::: Signal before show Clear if turnout is closed, or Approach if the turnout is thrown." +
+                " ::: Signal straight show Clear if the turnout is closed, or Stop if the turnout is thrown." +
+                " ::: Signal diverge show Approach if the turnout is thrown, or Stop if the turnout is closed." +
+                " ::: IT1 ::: IH1 ::: IT1 ::: IT3 ::: IH1 ::: IH6 ::: IH4 ::: IH6" +
+                " ::: IT1 ::: IH1 ::: IH3 ::: IH4 ::: IH6 ::: IT1 ::: IT3",
+                String.join(" ::: ", _cells));
     }
     
     @Test

@@ -36,7 +36,11 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         
         storeCommon(p, element);
 
-        element.setAttribute("tableRowOrColumn", p.getTableRowOrColumn().name());
+        element.addContent(new Element("localVariable").addContent(p.getLocalVariableName()));
+        if (p.getTable() != null) {
+            element.addContent(new Element("table").addContent(p.getTable().getName()));
+        }
+        element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
         
         Element e2 = new Element("socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
@@ -58,15 +62,15 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
     @Override
     public boolean load(Element shared, Element perNode) {
         
-        Attribute typeAttribute = shared.getAttribute("tableRowOrColumn");
-        TableForEach.TableRowOrColumn tableRowOrColumn = TableForEach.TableRowOrColumn.valueOf(typeAttribute.getValue());
-        
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         TableForEach h = new TableForEach(sys, uname);
         
         loadCommon(h, shared);
         
+        Element tableRowOrColumnElement = shared.getChild("tableRowOrColumn");
+        TableForEach.TableRowOrColumn tableRowOrColumn =
+                TableForEach.TableRowOrColumn.valueOf(tableRowOrColumnElement.getTextTrim());
         h.setTableRowOrColumn(tableRowOrColumn);
         
         Element socketName = shared.getChild("socket").getChild("socketName");

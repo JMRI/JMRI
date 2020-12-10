@@ -13,42 +13,8 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
-import jmri.jmrit.logixng.actions.ActionScript;
-import jmri.jmrit.logixng.actions.ActionListenOnBeans;
-import jmri.jmrit.logixng.actions.ActionLocalVariable;
-import jmri.jmrit.logixng.actions.ActionMemory;
-import jmri.jmrit.logixng.actions.DigitalCallModule;
-import jmri.jmrit.logixng.actions.ActionLight;
-import jmri.jmrit.logixng.actions.ActionSensor;
-import jmri.jmrit.logixng.actions.ActionThrottle;
-import jmri.jmrit.logixng.actions.ActionTimer;
-import jmri.jmrit.logixng.actions.ActionTurnout;
-import jmri.jmrit.logixng.actions.DoAnalogAction;
-import jmri.jmrit.logixng.actions.DoStringAction;
-import jmri.jmrit.logixng.actions.IfThenElse;
-import jmri.jmrit.logixng.actions.ShutdownComputer;
-import jmri.jmrit.logixng.expressions.AnalogExpressionMemory;
-import jmri.jmrit.logixng.expressions.ExpressionReference;
-import jmri.jmrit.logixng.expressions.ExpressionEntryExit;
-import jmri.jmrit.logixng.expressions.ExpressionSignalMast;
-import jmri.jmrit.logixng.expressions.Or;
-import jmri.jmrit.logixng.expressions.ExpressionClock;
-import jmri.jmrit.logixng.expressions.Hold;
-import jmri.jmrit.logixng.expressions.TriggerOnce;
-import jmri.jmrit.logixng.expressions.Antecedent;
-import jmri.jmrit.logixng.expressions.ExpressionWarrant;
-import jmri.jmrit.logixng.expressions.ExpressionOBlock;
-import jmri.jmrit.logixng.expressions.And;
-import jmri.jmrit.logixng.expressions.ExpressionScript;
-import jmri.jmrit.logixng.expressions.ExpressionLocalVariable;
-import jmri.jmrit.logixng.expressions.ExpressionTurnout;
-import jmri.jmrit.logixng.expressions.ExpressionConditional;
-import jmri.jmrit.logixng.expressions.ExpressionSensor;
-import jmri.jmrit.logixng.expressions.ExpressionLight;
-import jmri.jmrit.logixng.expressions.ExpressionMemory;
-import jmri.jmrit.logixng.expressions.True;
-import jmri.jmrit.logixng.expressions.False;
-import jmri.jmrit.logixng.expressions.ExpressionSignalHead;
+import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.expressions.*;
 import jmri.util.*;
 
 import org.junit.*;
@@ -136,7 +102,7 @@ public class StoreAndLoadTest {
         module.setRootSocketType(InstanceManager.getDefault(FemaleSocketManager.class)
                 .getSocketTypeByType("DefaultFemaleDigitalActionSocket"));
         
-        jmri.jmrit.logixng.actions.DigitalMany many901 = new jmri.jmrit.logixng.actions.DigitalMany("IQDA901", null);
+        DigitalMany many901 = new DigitalMany("IQDA901", null);
         MaleSocket manySocket901 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(many901);
         module.getRootSocket().connect(manySocket901);
@@ -165,7 +131,7 @@ public class StoreAndLoadTest {
         
         FemaleSocket femaleRootSocket = conditionalNG.getFemaleSocket();
         MaleDigitalActionSocket actionManySocket =
-                digitalActionManager.registerAction(new jmri.jmrit.logixng.actions.DigitalMany(
+                digitalActionManager.registerAction(new DigitalMany(
                                         digitalActionManager.getAutoSystemName(), null));
         femaleRootSocket.connect(actionManySocket);
         femaleRootSocket.setLock(Base.Lock.HARD_LOCK);
@@ -381,12 +347,11 @@ public class StoreAndLoadTest {
         
         
         
-        jmri.jmrit.logixng.actions.DigitalMany many =
-                new jmri.jmrit.logixng.actions.DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         actionManySocket.getChild(index++).connect(maleSocket);
         
-        many = new jmri.jmrit.logixng.actions.DigitalMany(digitalActionManager.getAutoSystemName(), null);
+        many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         many.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(many);
         actionManySocket.getChild(index++).connect(maleSocket);
@@ -403,6 +368,23 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        
+        
+        TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
+        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        maleSocket = digitalActionManager.registerAction(tableForEach);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
+        tableForEach.setComment("A comment");
+        tableForEach.setLocalVariableName("MyLocalVariable");
+        tableForEach.setTable(csvTable);
+        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Row);
+        maleSocket = digitalActionManager.registerAction(tableForEach);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        maleSocket.getChild(0).connect(
+                digitalActionManager.registerAction(
+                        new DigitalMany(digitalActionManager.getAutoSystemName(), null)));
         
         
         actionThrottle = new ActionThrottle(digitalActionManager.getAutoSystemName(), null);

@@ -90,13 +90,6 @@ public class TableForEach extends AbstractDigitalAction
                 }
             }
         }
-        
-//    private NamedBeanHandle<NamedTable> _tableHandle;
-//    private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
-//    private String _rowOrColumnName;
-//    private String _localVariableName;
-//    private String _socketSystemName;
-//    private final FemaleDigitalActionSocket _socket;
     }
 
     public void setTable(@Nonnull String tableName) {
