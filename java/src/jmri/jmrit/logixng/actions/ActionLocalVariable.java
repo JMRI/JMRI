@@ -214,13 +214,16 @@ public class ActionLocalVariable extends AbstractDigitalAction implements Vetoab
                             }
                             symbolTable.setValue(_variableName, _expressionNode.calculate());
                         } catch (JmriException e) {
+                            // Throw exception
                             ref.set(e);
                         }
                     }
                     break;
                     
                 default:
-                    throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name());
+                    // Throw exception
+                    ref.set(new JmriException(
+                            new IllegalArgumentException("_memoryOperation has invalid value: {}" + _variableOperation.name())));
             }
         });
         

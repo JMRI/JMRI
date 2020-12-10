@@ -3,19 +3,19 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ReferenceUtil;
+import jmri.jmrit.logixng.util.parser.*;
+import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.util.ThreadingUtil;
+import jmri.util.TypeConversionUtil;
 
 /**
  * This action sets the state of a turnout.
@@ -24,8 +24,13 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
 
+    private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
+    private String _reference = "";
+    private String _localVariable = "";
+    private String _formula = "";
+    private ExpressionNode _expressionNode;
     
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -88,6 +93,54 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return _turnoutState;
     }
     
+    public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _addressing = addressing;
+        parseFormula();
+    }
+    
+    public NamedBeanAddressing getAddressing() {
+        return _addressing;
+    }
+    
+    public void setReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _reference = reference;
+    }
+    
+    public String getReference() {
+        return _reference;
+    }
+    
+    public void setLocalVariable(@Nonnull String localVariable) {
+        _localVariable = localVariable;
+    }
+    
+    public String getLocalVariable() {
+        return _localVariable;
+    }
+    
+    public void setFormula(@Nonnull String formula) throws ParserException {
+        _formula = formula;
+        parseFormula();
+    }
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
+    private void parseFormula() throws ParserException {
+        if (_addressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _expressionNode = parser.parseExpression(_formula);
+        } else {
+            _expressionNode = null;
+        }
+    }
+    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
@@ -120,19 +173,44 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
-        if (_turnoutHandle == null) return;
+    public void execute() throws JmriException {
+        Turnout turnout;
         
-        final Turnout t = _turnoutHandle.getBean();
+        switch (_addressing) {
+            case Direct:
+                turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
+                break;
+            case Reference:
+                String ref = ReferenceUtil.getReference(_reference);
+                turnout = InstanceManager.getDefault(TurnoutManager.class)
+                        .getNamedBean(ref);
+                break;
+            case LocalVariable:
+                turnout = InstanceManager.getDefault(TurnoutManager.class)
+                        .getNamedBean(_localVariable);
+                break;
+            case Formula:
+                turnout = _expressionNode != null ?
+                        InstanceManager.getDefault(TurnoutManager.class)
+                                .getNamedBean(TypeConversionUtil
+                                        .convertToString(_expressionNode.calculate(), false))
+                        : null;
+                break;
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+        }
+        
+        if (turnout == null) return;
+        
         ThreadingUtil.runOnLayout(() -> {
             if (_turnoutState == TurnoutState.Toggle) {
-                if (t.getCommandedState() == Turnout.CLOSED) {
-                    t.setCommandedState(Turnout.THROWN);
+                if (turnout.getCommandedState() == Turnout.CLOSED) {
+                    turnout.setCommandedState(Turnout.THROWN);
                 } else {
-                    t.setCommandedState(Turnout.CLOSED);
+                    turnout.setCommandedState(Turnout.CLOSED);
                 }
             } else {
-                t.setCommandedState(_turnoutState.getID());
+                turnout.setCommandedState(_turnoutState.getID());
             }
         });
     }
