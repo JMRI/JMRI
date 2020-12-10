@@ -446,6 +446,8 @@
 
  <indexitem text="OBlock (Occupancy Block, Warrants) " target="package.jmri.jmrit.logix.OBlockTable"/>
 
+ <indexitem text="OBlock (using tabbed interface) " target="package.jmri.jmrit.beantable.OBlockTable"/>
+
  <indexitem text="OPath (Occupancy Path, Warrants) " target="package.jmri.jmrit.logix.OBlockEdit"/>
 
  <indexitem text="Occupancy Sensor " target="html.tools.Sensors"/>
@@ -817,6 +819,8 @@
  <indexitem text="XPressNet (Lenz) - Hardware, Connection, Tools " target="html.hardware.XPressNet.index"/>
 
  <indexitem text="XTrackCAD/Reader " target="html.apps.index_addapp"/>
+
+ <indexitem text="YAAT - YetAnotherAutoTrain.py " target="html.scripts.yaat.YAAT"/>
 
  <indexitem text="Zimo - Hardware, Connection, Tools " target="html.hardware.zimo.Zimo"/>
 

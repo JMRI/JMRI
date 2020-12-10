@@ -459,7 +459,6 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.addMouseListener(popupListener);
         this.persistTable(table);
         thistable = table;
-
     }
     
     private JTable thistable;
@@ -671,7 +670,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
      * Updates the visibility settings of the property columns.
      *
      * @param table   the JTable object for the current display.
-     * @param visible true to make the proeprty columns visible, false to hide.
+     * @param visible true to make the property columns visible, false to hide.
      */
     public void setPropertyColumnsVisible(JTable table, boolean visible) {
         XTableColumnModel columnModel = (XTableColumnModel) table.getColumnModel();

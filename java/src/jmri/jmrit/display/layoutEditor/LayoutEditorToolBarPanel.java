@@ -1,23 +1,26 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.awt.event.KeyEvent.KEY_PRESSED;
+
 import static jmri.jmrit.display.layoutEditor.LayoutEditor.setupComboBox;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
+import java.awt.geom.Point2D;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
+
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.MathUtil;
+
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -126,13 +129,14 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     protected MultiSensorIconFrame multiSensorFrame = null;
 
-    protected JLabel xLabel = new JLabel("00");
-    protected JLabel yLabel = new JLabel("00");
-
     protected JPanel zoomPanel = new JPanel();
     protected JLabel zoomLabel = new JLabel("x1");
 
     protected JPanel locationPanel = new JPanel();
+    protected JPopupMenu locationPopupMenu = new JPopupMenu();
+
+    protected JLabel xLabel = new JLabel("00");
+    protected JLabel yLabel = new JLabel("00");
 
     protected JPanel blockPropertiesPanel = null;
 
@@ -142,13 +146,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     /**
      * Constructor for LayoutEditorToolBarPanel.
-     *
+     * <p>
      * Note an unusual design feature: Since this calls the
-     * {@link #setupComponents()} and {@link #layoutComponents()}
-     * non-final methods in the constructor, any subclass
-     * reimplementing those must provide versions that
-     * will work before the subclasses own initializers and constructor
-     * is run.
+     * {@link #setupComponents()} and {@link #layoutComponents()} non-final
+     * methods in the constructor, any subclass reimplementing those must
+     * provide versions that will work before the subclasses own initializers
+     * and constructor is run.
      *
      * @param layoutEditor the layout editor that this is for
      */
@@ -359,6 +362,29 @@ public class LayoutEditorToolBarPanel extends JPanel {
         locationPanel.add(yLabel);
         locationPanel.add(new JLabel("}    "));
 
+        locationPanel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                if (me.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+                if (me.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                }
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                if (me.isPopupTrigger()) {
+                    locationPopupMenu.show(locationPanel, me.getX(), me.getY());
+                }
+            }
+        });
+
         // second row of edit tool bar items
         levelXingButton.setToolTipText(Bundle.getMessage("LevelCrossingToolTip"));
         trackButton.setToolTipText(Bundle.getMessage("TrackSegmentToolTip"));
@@ -386,7 +412,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         // change the block name
         blockIDComboBox.addActionListener((ActionEvent event) -> {
             //use the "Extra" color to highlight the selected block
-            if (layoutEditor.highlightSelectedBlockFlag) {
+            if (layoutEditor.getHighlightSelectedBlock()) {
                 layoutEditor.highlightBlockInComboBox(blockIDComboBox);
             }
             String newName = blockIDComboBox.getSelectedItemDisplayName();
@@ -432,7 +458,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockContentsComboBox.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
         blockContentsComboBox.addActionListener((ActionEvent event) -> {
             // use the "Extra" color to highlight the selected block
-            if (layoutEditor.highlightSelectedBlockFlag) {
+            if (layoutEditor.getHighlightSelectedBlock()) {
                 layoutEditor.highlightBlockInComboBox(blockContentsComboBox);
             }
         });
@@ -530,6 +556,124 @@ public class LayoutEditorToolBarPanel extends JPanel {
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
+    }
+
+    /*=========================*\
+    |* toolbar location format *|
+    \*=========================*/
+    public enum LocationFormat {
+        ePIXELS,
+        eMETRIC_CM,
+        eENGLISH_FEET_INCHES;
+
+        LocationFormat() {
+        }
+    }
+
+    private LocationFormat locationFormat = LocationFormat.ePIXELS;
+
+    public LocationFormat getLocationFormat() {
+        return locationFormat;
+    }
+
+    public void setLocationFormat(LocationFormat locationFormat) {
+        if (this.locationFormat != locationFormat) {
+            switch (locationFormat) {
+                default:
+                case ePIXELS: {
+                    Dimension coordSize = new JLabel("10000").getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+                    break;
+                }
+                case eMETRIC_CM: {
+                    Dimension coordSize = new JLabel(getMetricCMText(10005)).getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+
+                    layoutEditor.gContext.setGridSize(10);
+                    layoutEditor.gContext.setGridSize2nd(10);
+                    break;
+                }
+                case eENGLISH_FEET_INCHES: {
+                    Dimension coordSize = new JLabel(getEnglishFeetInchesText(100008)).getPreferredSize();
+                    xLabel.setPreferredSize(coordSize);
+                    yLabel.setPreferredSize(coordSize);
+
+                    layoutEditor.gContext.setGridSize(16);
+                    layoutEditor.gContext.setGridSize2nd(12);
+                    break;
+                }
+            }
+            this.locationFormat = locationFormat;
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+                String windowFrameRef = layoutEditor.getWindowFrameRef();
+                prefsMgr.setProperty(windowFrameRef, "LocationFormat", locationFormat.name());
+            });
+            setLocationText(lastLocation);
+        }
+    }
+
+    private Point2D lastLocation = MathUtil.zeroPoint2D();
+
+    public void setLocationText(Point2D p) {
+        int x = (int) p.getX();
+        int y = (int) p.getY();
+
+        // default behaviour is pixels
+        String xText = Integer.toString(x);
+        String yText = Integer.toString(y);
+
+        if (locationFormat.equals(LocationFormat.eENGLISH_FEET_INCHES)) {
+            xText = getEnglishFeetInchesText(x);
+            yText = getEnglishFeetInchesText(y);
+        } else if (locationFormat.equals(LocationFormat.eMETRIC_CM)) {
+            xText = getMetricCMText(x);
+            yText = getMetricCMText(y);
+        }
+        xLabel.setText(xText);
+        yLabel.setText(yText);
+        lastLocation = p;
+    }
+
+    private String getEnglishFeetInchesText(int v) {
+        String result = "";
+
+        int denom = 16; // 16 pixels per inch
+        int ipf = 12;   // 12 inches per foot
+
+        int feet = v / (ipf * denom);
+        int inches = (v / denom) % ipf;
+
+        int numer = v % denom;
+        int gcd = MathUtil.gcd(numer, denom);
+
+        numer /= gcd;
+        denom /= gcd;
+
+        if (feet > 0) {
+            result = String.format("%d'", feet);
+        }
+
+        boolean inchesFlag = false;
+        if ((v == 0) || (inches > 0)) {
+            result += String.format(" %d", inches);
+            inchesFlag = true;
+        }
+
+        if (numer > 0) {
+            result += String.format(" %d/%d", numer, denom);
+            inchesFlag = true;
+        }
+        if (inchesFlag) {
+            result += "\"";
+        }
+
+        return result;
+    }
+
+    private String getMetricCMText(int v) {
+        return String.format("%d.%d cm", v / 10, v % 10);
     }
 
     /**

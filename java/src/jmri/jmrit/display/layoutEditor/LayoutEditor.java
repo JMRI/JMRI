@@ -32,6 +32,7 @@ import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
@@ -145,9 +146,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private JRadioButtonMenuItem tooltipInEditMenuItem = null;
     private JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
+    private JCheckBoxMenuItem pixelsCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Pixels"));
+    private JCheckBoxMenuItem metricCMCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("MetricCM"));
+    private JCheckBoxMenuItem englishFeetInchesCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EnglishFeetInches"));
+
     private JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
     private JCheckBoxMenuItem antialiasingOnCheckBoxMenuItem = null;
+    private JCheckBoxMenuItem drawLayoutTracksLabelCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutCirclesOnCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutDrawUnselectedLegCheckBoxMenuItem = null;
     private JCheckBoxMenuItem turnoutFillControlCirclesCheckBoxMenuItem = null;
@@ -278,10 +284,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private boolean snapToGridOnMove = false;
     private boolean snapToGridInvert = false;
 
-    public boolean antialiasingOn = false;
-    public boolean highlightSelectedBlockFlag = false;
+    private boolean antialiasingOn = false;
+    private boolean drawLayoutTracksLabel = false;
+    private boolean highlightSelectedBlockFlag = false;
 
-    public boolean turnoutCirclesWithoutEditMode = false;
+    private boolean turnoutCirclesWithoutEditMode = false;
     private boolean tooltipsWithoutEditMode = false;
     private boolean tooltipsInEditMode = true;
 
@@ -308,6 +315,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     // A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     private HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
 
+    /*==============*\
+    |* Toolbar side *|
+    \*==============*/
     private enum ToolBarSide {
         eTOP("top"),
         eLEFT("left"),
@@ -423,8 +433,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 Object prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarSide");
                 // log.debug("{}.toolBarSide is {}", windowFrameRef, prefsProp);
-                if (prefsProp
-                        != null) {
+                if (prefsProp != null) {
                     ToolBarSide newToolBarSide = ToolBarSide.getName((String) prefsProp);
                     setToolBarSide(newToolBarSide);
                 }
@@ -445,6 +454,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // log.debug("{}.antialiasingOn is {}", windowFrameRef, prefsAntialiasingOn);
 
                 setAntialiasingOn(prefsAntialiasingOn);
+
+                boolean prefsDrawLayoutTracksLabel = prefsMgr.getSimplePreferenceState(windowFrameRef + ".drawLayoutTracksLabel");
+                // log.debug("{}.drawLayoutTracksLabel is {}", windowFrameRef, prefsDrawLayoutTracksLabel);
+                setDrawLayoutTracksLabel(prefsDrawLayoutTracksLabel);
 
                 boolean prefsHighlightSelectedBlockFlag
                         = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
@@ -987,7 +1000,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         //
         useDirectTurnoutControlCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("UseDirectTurnoutControl")); // NOI18N
         optionMenu.add(useDirectTurnoutControlCheckBoxMenuItem);
-        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected()));
+        useDirectTurnoutControlCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDirectTurnoutControl(useDirectTurnoutControlCheckBoxMenuItem.isSelected());
+        });
         useDirectTurnoutControlCheckBoxMenuItem.setSelected(useDirectTurnoutControl);
 
         //
@@ -996,10 +1011,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         antialiasingOnCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("AntialiasingOn"));
         optionMenu.add(antialiasingOnCheckBoxMenuItem);
         antialiasingOnCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            antialiasingOn = antialiasingOnCheckBoxMenuItem.isSelected();
+            setAntialiasingOn(antialiasingOnCheckBoxMenuItem.isSelected());
             redrawPanel();
         });
         antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
+
+        //
+        // drawLayoutTracksLabel
+        //
+        drawLayoutTracksLabelCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DrawLayoutTracksLabel"));
+        optionMenu.add(drawLayoutTracksLabelCheckBoxMenuItem);
+        drawLayoutTracksLabelCheckBoxMenuItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksMnemonic")));
+        drawLayoutTracksLabelCheckBoxMenuItem.setAccelerator(KeyStroke.getKeyStroke(
+                stringsToVTCodes.get(Bundle.getMessage("DrawLayoutTracksAccelerator")), primary_modifier));
+        drawLayoutTracksLabelCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            setDrawLayoutTracksLabel(drawLayoutTracksLabelCheckBoxMenuItem.isSelected());
+            redrawPanel();
+        });
+        drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
 
         //
         // edit title
@@ -1078,7 +1107,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             optionMenu.add(locationItem);
             locationItem.addActionListener((ActionEvent event) -> {
                 setCurrentPositionAndSize();
-                log.debug("Bounds:{}, {}, {}, {}, {}, {}", gContext.getUpperLeftX(), gContext.getUpperLeftY(), gContext.getWindowWidth(), gContext.getWindowHeight(), gContext.getLayoutWidth(), gContext.getLayoutHeight());
+                log.debug("Bounds:{}, {}, {}, {}, {}, {}",
+                        gContext.getUpperLeftX(), gContext.getUpperLeftY(),
+                        gContext.getWindowWidth(), gContext.getWindowHeight(),
+                        gContext.getLayoutWidth(), gContext.getLayoutHeight());
             });
         }
 
@@ -1136,6 +1168,46 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             setDirty();
             redrawPanel();
         });
+
+        //
+        // location coordinates format menu
+        //
+        JMenu locationMenu = new JMenu(Bundle.getMessage("LocationMenuTitle")); // used for location format SubMenu
+        optionMenu.add(locationMenu);
+
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
+            String windowFrameRef = getWindowFrameRef();
+            Object prefsProp = prefsMgr.getProperty(windowFrameRef, "LocationFormat");
+            // log.debug("{}.LocationFormat is {}", windowFrameRef, prefsProp);
+            if (prefsProp != null) {
+                getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.valueOf((String) prefsProp));
+            }
+        });
+
+        // pixels (jmri classic)
+        locationMenu.add(pixelsCheckBoxMenuItem);
+        pixelsCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.ePIXELS);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+
+        // metric cm's
+        locationMenu.add(metricCMCheckBoxMenuItem);
+        metricCMCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.eMETRIC_CM);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+
+        // english feet/inches/16th's
+        locationMenu.add(englishFeetInchesCheckBoxMenuItem);
+        englishFeetInchesCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
+            getLayoutEditorToolBarPanel().setLocationFormat(LocationFormat.eENGLISH_FEET_INCHES);
+            selectLocationFormatCheckBoxMenuItem();
+            redrawPanel();
+        });
+        selectLocationFormatCheckBoxMenuItem();
 
         //
         // grid menu
@@ -1364,6 +1436,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
 
         return optionMenu;
+    }
+
+    private void selectLocationFormatCheckBoxMenuItem() {
+        pixelsCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.ePIXELS);
+        metricCMCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.eMETRIC_CM);
+        englishFeetInchesCheckBoxMenuItem.setSelected(getLayoutEditorToolBarPanel().getLocationFormat() == LocationFormat.eENGLISH_FEET_INCHES);
     }
 
     /*============================================*\
@@ -1841,8 +1919,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             yLoc = (int) (mouseLoc.getY() / theZoom);
             dLoc = new Point2D.Double(xLoc, yLoc);
 
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         adjustClip();
     }
@@ -2790,8 +2867,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (isEditable()) {
             boolean prevSelectionActive = selectionActive;
             selectionActive = false;
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             if (event.isPopupTrigger()) {
                 if (isMetaDown(event) || event.isAltDown()) {
@@ -3314,8 +3390,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
 
             // released the mouse with shift down... see what we're adding
             if (!event.isPopupTrigger() && !isMetaDown(event) && event.isShiftDown()) {
@@ -3327,8 +3402,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if (leToolBarPanel.turnoutRHButton.isSelected()) {
@@ -4512,8 +4586,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         snapToGridInvert = event.isAltDown();
 
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         List<Positionable> selections = getSelectedItems(event);
         Positionable selection = null;
@@ -4565,8 +4638,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // process this mouse dragged event
         if (isEditable()) {
-            leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-            leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+            leToolBarPanel.setLocationText(dLoc);
         }
         currentPoint = MathUtil.add(dLoc, startDelta);
         // don't allow negative placement, objects could become unreachable
@@ -4589,8 +4661,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     currentPoint = MathUtil.granulize(currentPoint, gContext.getGridSize());
                     xLoc = (int) currentPoint.getX();
                     yLoc = (int) currentPoint.getY();
-                    leToolBarPanel.xLabel.setText(Integer.toString(xLoc));
-                    leToolBarPanel.yLabel.setText(Integer.toString(yLoc));
+                    leToolBarPanel.setLocationText(currentPoint);
                 }
 
                 if ((_positionableSelection.size() > 0)
@@ -7044,6 +7115,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         return antialiasingOn;
     }
 
+    public boolean isDrawLayoutTracksLabel() {
+        return drawLayoutTracksLabel;
+    }
+
     // TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
     public boolean getHighlightSelectedBlock() {
         return highlightSelectedBlockFlag;
@@ -7328,6 +7403,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
             }
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn));
+        }
+    }
+
+    /**
+     *
+     * @param state true to set anti-aliasing flag on, else false.
+     */
+    public void setDrawLayoutTracksLabel(boolean state) {
+        if (drawLayoutTracksLabel != state) {
+            drawLayoutTracksLabel = state;
+
+            // this may not be set up yet...
+            if (drawLayoutTracksLabelCheckBoxMenuItem != null) {
+                drawLayoutTracksLabelCheckBoxMenuItem.setSelected(drawLayoutTracksLabel);
+
+            }
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".drawLayoutTracksLabel", drawLayoutTracksLabel));
         }
     }
 

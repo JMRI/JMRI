@@ -94,6 +94,20 @@
                     interrogation mechanism now implements a minimum delay from
                     the last Sensor Report, Turnout Report or Interrogate Query
                     message before sending the next Interrogate Query message.</li>
+                <li>The "DS64 Configuration Tool" was updated:
+                    <ul>
+                        <li>to correctly perform the "Factory Reset" operation
+                            without encountering a "Java Exception";</li>
+                        <li>to correctly perform the "Factory Reset" operation to
+                            the correct DS64 as specified in the "Unit Address" field;</li>
+                        <li>to correctly manage the values shown on the "OpSw Values"
+                            tab and maintain value coherency between the "OpSw Values" tab
+                            and the "Basic Settings" tab.</li>
+                    </ul>
+                </li>
+                <li>Keep slot status in line with CS after setting COMMON or true slot moves</li>
+                <li>Allow selection of "Stand-alone LocoNet (with external LocoNet Data
+                    Termination!)" for Digitrax PR4.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -118,6 +132,15 @@
                 <li>Added support for creating ranges of Turnouts and Lights.<br>
                 Sensor, Turnout and Light Address ranges do not have to be fully numeric,
                 and will be incremented using the final number in an address.</li>
+                <li>Added support for changing the default quality of service and
+                retention policy for transmissions.  See the
+                <a href="http://jmri.org/jython/SetMqttOptions.py">jython/SetMqttOptions.py</a>
+                script for an example.</li>
+                <li>Fix a nasty threading bug in the MQTT Light support that can
+                cause a JMRI lockup on the first access after adding a Light.</li>
+
+                <li>Update the Paho MQTT library from version 0.4.0 to 1.2.5 (current)</li>
+                <li>Better handling of wildcards in topic subscriptions</li>
             </ul>
 
         <h4>MRC</h4>
@@ -418,9 +441,9 @@
         <ul>
 	        <li>The Layout Editor code has been substantially restructured in this release.
 	            If you have scripts that reference the jmri.jmrit.display.layoutEditor package
-	            please check them carefully, as new classes have been created and 
+	            please check them carefully, as new classes have been created and
 	            some methods have moved.  Panel files containing Layout Editor panels
-	            that are stored (written out) by this release may not be readable 
+	            that are stored (written out) by this release may not be readable
 	            by earlier releases; this release should load older files just fine.
 	        </li>
         </ul>
@@ -458,13 +481,16 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway 
+	    - Unified Control Place - JOP style.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
             <ul>
                 <li>Circuit Builder track colors (Allocated, Not In Use, ...) are now supported on Web Server
                   panels. See OBlocks and JSON.</li>
+                <li>OBlock and associated tables can be edited like the 'standard' tables (see
+                  <a href="#TLae">OBlocks</a>).</li>
             </ul>
         <h4>Palette</h4>
             <a id="CPE-P" name="CPE-P"></a>
@@ -501,6 +527,9 @@
         <ul>
           <li>Increased address validation for multiple hardware types.</li>
           <li>Access to OBlocks in Web Server via JSON messages was added.</li>
+          <li>Occupancy Blocks, Portals and Paths used in Warrants can be edited in an optional table style
+            like that used in the 'standard' tables (Turnouts, Lights etc). The information is stored in the exact
+            same way, so you may change the UI as desired (see Preferences &gt; Display. Restart required)</li>
         </ul>
 
     <h3>Scripting</h3>
@@ -568,7 +597,8 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Fix issue where Jynstrument would not start correctly <a href="https://groups.io/g/jmriusers/topic/78674589">(user group message)</a>.</li>
+            <li>Added a throttle frame Jynstrument that hides throttle window menubar and toolbar and switches to semitransparent mode (and vice versa) (idea from <a href="https://groups.io/g/jmriusers/topic/76582490">this user message</a>).</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -586,7 +616,40 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>The table of throttle commands shown when creating or editing warrants has been changed:
+            	<ul>
+            		<li>The <b>Command</b> column is now a drop down combo box. This will allow the
+            			command names to be translated into languages other than English.</li>
+            	    <li>The <b>Value</b> column is a drop down combo box for throttle commands
+            	    	other than "Speed" or "Run Warrant". Again, done to permit translation
+            	    	into other languages.</li>
+            	</ul>
+            </li>
+            <li>The algorithm for executing speed changes due to track conditions for warrants
+                has been modified and is better able to restore the scripted speeds once the
+                track speed restrictions are lifted.</li>
+            <li>The constant used to approximate track speed of trains has been changed to 
+            	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
+            	on roster entries having Speed Profiles.</li>
+            <li>The Address column of the Warrant Table list and the Address fields of the
+            	NXWarrant or Create Warrant windows
+            	now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
+            <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
+            	non-speed script commands are executed at approximately the same elapsed times as  
+            	were written in the script.</li>
+ 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile  
+            	is built that can be seen by  pressing the <b>View Profile</b> button in the
+            	edit warrant window. These profiles can be merged into the existing profiles
+            	for the Roster entry used by the loco of the warrant when the layout session 
+            	is closed. (Recall that Warrant Preferences has 3 options for this merging.)</li>
+            <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
+            	settings and commands are edited. This button updates the <b>Speed</b> column to
+            	list the track speeds (mm/sec) for the current Speed Profile measurements of
+            	the locomotive address entered in the 'Engine Consist' box.</li>           	
+            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of 
+            	speed profiles are fixed.</li>          	
+			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths 
+            	are also added to the imported OPaths.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -608,19 +671,17 @@
             <li></li>
         </ul>
 
-    <h3>Web Server</h3>
-    <ul>
-      <ul>
-        <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
-        <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
-          Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
-        <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
-          items control layout is selected in the Editor Options menu).</li>
-        <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
-          panels.</li>
-        <li>OBlocks access was added as a JSON Servlet to allow this.</li>
-      </ul>
-    </ul>
+   <h3>Web Server</h3>
+        <ul>
+            <li>Switchboard panels on Web Server support all graphic shapes and colors set in the Editor.</li>
+            <li>Switchboard "switch" icons fill the whole screen on mobile devices (you can turn this off in Switchboard
+              Editor by deselecting "Automatically set optimum grid" in the Options menu.</li>
+            <li>Switchboard panels for Lights allow to switch all lights on or off (also in Web Server when Panel
+              items control layout is selected in the Editor Options menu).</li>
+            <li>Control Panel track colors (Allocated, Not In Use, ...) are now fully supported on Web Server
+              panels.</li>
+            <li>OBlocks access was added as a JSON Servlet to allow this.</li>
+        </ul>
 
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>

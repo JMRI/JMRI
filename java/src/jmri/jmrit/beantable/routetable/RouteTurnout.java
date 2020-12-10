@@ -15,7 +15,7 @@ import static jmri.jmrit.beantable.routetable.AbstractRouteAddEditFrame.*;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  * @author Egbert Broerse Copyright (C) 2016
- * @author Paul Bender Colyright (C) 2020
+ * @author Paul Bender Copyright (C) 2020
  */
 class RouteTurnout extends RouteElement {
 

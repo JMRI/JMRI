@@ -32,9 +32,10 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     public DCCppSensorManager(DCCppSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getDCCppTrafficController();
+        // set up listener
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
+        // request list of sensors
         DCCppMessage msg = DCCppMessage.makeSensorListMsg();
-        // then Send the version request to the controller
         tc.sendDCCppMessage(msg, this);
     }
 

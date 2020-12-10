@@ -7,6 +7,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -24,7 +25,9 @@ import jmri.jmrit.logix.ThrottleSetting.Command;
 import jmri.jmrit.logix.ThrottleSetting.ValueType;
 import jmri.JmriException;
 import jmri.SpeedStepMode;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterSpeedProfile;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +56,11 @@ public class NXFrame extends WarrantRoute {
 
     private static final String WARNING_TITLE = "WarningTitle";
     private static final String ZERO_PATH_LENGTH = "zeroPathLength";
+    private static final String LABEL_MPH = Bundle.getMessage("mph");
+    private static final String LABEL_KPH = Bundle.getMessage("kph");
+    private static final String LABEL_CM = Bundle.getMessage("cm");
+    private static final String LABEL_IN = Bundle.getMessage("in");
+    
     private float _scale = 87.1f;
     private float _maxThrottle = 0.75f;
     private float _startDist;   // mm start distance to portal
@@ -77,7 +85,7 @@ public class NXFrame extends WarrantRoute {
     private final JCheckBox _addTracker = new JCheckBox();
     private final JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     private final JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
-
+    
     private JPanel _routePanel = new JPanel();
     private JPanel _autoRunPanel;
     private final JPanel __trainHolder = new JPanel();
@@ -86,6 +94,7 @@ public class NXFrame extends WarrantRoute {
     
     protected NXFrame() {
         super();
+        
         init();
     }
     
@@ -110,6 +119,28 @@ public class NXFrame extends WarrantRoute {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.add(_routePanel);
         getContentPane().add(mainPanel);
+        
+        int interpretation = WarrantPreferences.getDefault().getInterpretation() ;
+        if (interpretation == SignalSpeedMap.SPEED_KMPH) {
+            _speedUnits.setText(LABEL_KPH);
+            _originUnits.setText(LABEL_CM);
+            _destUnits.setText(LABEL_CM);
+        } else {
+            _speedUnits.setText(LABEL_MPH);
+            _originUnits.setText(LABEL_IN);
+            _destUnits.setText(LABEL_IN);            
+        }
+        
+        float prefMaxThrottle = WarrantPreferences.getDefault().getThrottleScale() ;
+        _maxThrottleBox.setText(NumberFormat.getNumberInstance().format(prefMaxThrottle));
+        
+        float prefNormalScale = 0.0f;
+        WarrantPreferences wp = WarrantPreferences.getDefault();
+        if (wp == null) {
+            log.warn("WarrantPreferences.getDefault() == null. (why?) Seems to happen from time to time");
+            prefNormalScale = 100.0f;
+        }
+        _maxSpeedBox.setText(NumberFormat.getNumberInstance().format(prefNormalScale));
         
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -206,7 +237,7 @@ public class NXFrame extends WarrantRoute {
 
     private void maxThrottleEventAction() {
         boolean isForward = _forward.isSelected();
-        RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+        RosterSpeedProfile profile = _speedUtil.getMergeProfile();
         if (profile != null) {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
@@ -217,7 +248,7 @@ public class NXFrame extends WarrantRoute {
                 return;
             }
             float speed = profile.getSpeed(num, isForward);
-            if (_speedUnits.getText().equals("Mph")) {
+            if (_speedUnits.getText().equals(LABEL_MPH)) {
                 _maxSpeedBox.setText(formatter.format(speed * _scale * .0022369363f));                        
             } else {
                 _maxSpeedBox.setText(formatter.format(speed * _scale * .0036f));                                               
@@ -231,12 +262,12 @@ public class NXFrame extends WarrantRoute {
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.PAGE_AXIS));
 
-        _speedUnits = getButton("Mph");
+        _speedUnits = getButton(LABEL_MPH);
         _maxThrottleBox.addActionListener((ActionEvent evt)-> maxThrottleEventAction());
 
         _maxSpeedBox.addActionListener((ActionEvent evt)-> {
             boolean isForward = _forward.isSelected();
-            RosterSpeedProfile profile = _speedUtil.getSpeedProfile();
+            RosterSpeedProfile profile = _speedUtil.getMergeProfile();
             if (profile != null) {
                 NumberFormat formatter = NumberFormat.getNumberInstance(); 
                 float num = 0;
@@ -246,7 +277,7 @@ public class NXFrame extends WarrantRoute {
                     _maxSpeedBox.setText("");
                     return;
                 }
-                if (_speedUnits.getText().equals("Mph")) {
+                if (_speedUnits.getText().equals(LABEL_MPH)) {
                     num = num * 447.04f / _scale;                        
                 } else {
                     num = num * 277.7778f / _scale;                        
@@ -267,21 +298,21 @@ public class NXFrame extends WarrantRoute {
             } catch (java.text.ParseException pe) {
                 return;
             }
-            if (_speedUnits.getText().equals("Mph")) {
-                _speedUnits.setText("Kmph");
+            if (_speedUnits.getText().equals(LABEL_MPH)) {
+                _speedUnits.setText(LABEL_KPH);
                 num = Math.round(num * 160.9344f);
                 _maxSpeedBox.setText(formatter.format(num / 100));
             } else {
                 num = Math.round(num * 62.137119f);
-                _speedUnits.setText("Mph");
+                _speedUnits.setText(LABEL_MPH);
                 _maxSpeedBox.setText(formatter.format(num / 100));
             }
         });
         p1.add(makeTextBoxPanel(false, _maxThrottleBox, "MaxSpeed", null));
         p1.add(makeTextAndButtonPanel(_maxSpeedBox, _speedUnits, "scaleSpeed", "ToolTipScaleSpeed"));
 
-        _originUnits = getButton("In");
-        _destUnits = getButton("In");
+        _originUnits = getButton(LABEL_IN);
+        _destUnits = getButton(LABEL_IN);
         
         _originUnits.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
@@ -291,17 +322,17 @@ public class NXFrame extends WarrantRoute {
             } catch (java.text.ParseException pe) {
                 // errors reported later
             }
-            if (_originUnits.getText().equals("In")) {
-                _originUnits.setText("Cm");
+            if (_originUnits.getText().equals(LABEL_IN)) {
+                _originUnits.setText(LABEL_CM);
                 num = Math.round(num * 254f);
                 _originDist.setText(formatter.format(num / 100));
             } else {
                 num = Math.round(num * 100f / 2.54f);
-                _originUnits.setText("In");
+                _originUnits.setText(LABEL_IN);
                 _originDist.setText(formatter.format(num / 100));
             }
         });
-        _destUnits.setActionCommand("In");
+        _destUnits.setActionCommand(LABEL_IN);
         _destUnits.addActionListener((ActionEvent evt)-> {
             NumberFormat formatter = NumberFormat.getNumberInstance(); 
             float num = 0;
@@ -310,11 +341,11 @@ public class NXFrame extends WarrantRoute {
             } catch (java.text.ParseException pe) {
                 // errors reported later
             }
-            if (_destUnits.getText().equals("In")) {
-                _destUnits.setText("Cm");
+            if (_destUnits.getText().equals(LABEL_IN)) {
+                _destUnits.setText(LABEL_CM);
                 _destDist.setText(formatter.format(num * 2.54f));
             } else {
-                _destUnits.setText("In");
+                _destUnits.setText(LABEL_IN);
                 _destDist.setText(formatter.format(num / 2.54f));
             }
         });
@@ -384,14 +415,14 @@ public class NXFrame extends WarrantRoute {
         _startDist = getPathLength(_orders.get(0)) / 2;
         _stopDist = getPathLength(_orders.get(_orders.size()-1)) / 2;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
-        if (_originUnits.getText().equals("In")) {
+        if (_originUnits.getText().equals(LABEL_IN)) {
             float num = Math.round(_startDist * 100 / 25.4f);
             _originDist.setText(formatter.format(num / 100f));
         } else {
             float num = Math.round(_startDist * 100);
             _originDist.setText(formatter.format(num / 1000f));
         }
-        if (_destUnits.getText().equals("In")) {
+        if (_destUnits.getText().equals(LABEL_IN)) {
             float num = Math.round(_stopDist * 100 / 25.4f);
             _destDist.setText(formatter.format(num / 100f));
         } else {
@@ -411,7 +442,7 @@ public class NXFrame extends WarrantRoute {
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        log.debug("propertyChange \"{}\" old= {} new= {} source= {}",property,
+        log.trace("propertyChange \"{}\" old= {} new= {} source= {}",property,
                                             e.getOldValue(),e.getNewValue(),
                                             e.getSource().getClass().getName());
         if (property.equals("DnDrop")) {
@@ -559,16 +590,16 @@ public class NXFrame extends WarrantRoute {
         }
 
         try {
-            _startDist = checkDistance(_originUnits.getText().equals("In"), oDist, _orders.get(0));
+            _startDist = checkDistance(_originUnits.getText().equals(LABEL_IN), oDist, _orders.get(0));
         } catch (JmriException je) {
-            displayDistance(_destUnits.getText().equals("In"), oDist, _originDist, _orders.get(0));
+            displayDistance(_destUnits.getText().equals(LABEL_IN), oDist, _originDist, _orders.get(0));
             return je.getMessage();
         }
 
         try {
-            _stopDist = checkDistance(_destUnits.getText().equals("In"), dDist, _orders.get(_orders.size()-1));
+            _stopDist = checkDistance(_destUnits.getText().equals(LABEL_IN), dDist, _orders.get(_orders.size()-1));
         } catch (JmriException je) {
-            displayDistance(_destUnits.getText().equals("In"), dDist, _destDist, _orders.get(_orders.size()-1));
+            displayDistance(_destUnits.getText().equals(LABEL_IN), dDist, _destDist, _orders.get(_orders.size()-1));
             return je.getMessage();
         }
 
@@ -577,7 +608,10 @@ public class NXFrame extends WarrantRoute {
         }
         _maxThrottle = maxSpeed;
 
-        setAddress();
+        String msg = setAddress();
+        if (msg != null) {
+            return msg;
+        }
 
         int time = (Integer)_timeIncre.getValue();
         _speedUtil.setRampTimeIncrement(time);
@@ -923,7 +957,7 @@ public class NXFrame extends WarrantRoute {
         // distance in block where down ramp is started
         blkDistance += remMaxSpeedDist;
         // time to start down ramp
-        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist) + timeInterval;
+        speedTime = _speedUtil.getTimeForDistance(curThrottle, remMaxSpeedDist);
 
         if (log.isDebugEnabled()) {
             log.debug("Begin Ramp Down at block \"{}\" blockLen={}, at distance= {} curDistance = {} remTotal= {} curThrottle= {} ({})",

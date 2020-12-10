@@ -122,7 +122,7 @@ public class NXFrameTest {
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
 
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
@@ -184,7 +184,7 @@ public class NXFrameTest {
         nxFrame._speedUtil.setRampThrottleIncrement(0.05f);     
         nxFrame._speedUtil.setRampTimeIncrement(100);
         nxFrame.setMaxSpeed(0.6f);
-        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame._speedUtil.setAddress("666");
         nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
