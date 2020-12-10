@@ -57,6 +57,27 @@
       <systemName>IS_10_2</systemName>
     </sensor>
     <sensor inverted="false">
+      <systemName>IS_10_3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS_10_9</systemName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>IS_99_1</systemName>
     </sensor>
   </sensors>
@@ -87,11 +108,26 @@
       <systemName>IT_10_4</systemName>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_8</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT_10_9</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT_99_1</systemName>
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="6:43 PM">
+    <memory value="9:32 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -113,7 +149,7 @@
       <systemName>IM_7_4</systemName>
       <userName>Actual Crane Arm</userName>
     </memory>
-    <memory value="100.0">
+    <memory value="0.0">
       <systemName>IM_7_5</systemName>
       <userName>Commanded Crane Bucket</userName>
     </memory>
@@ -163,6 +199,177 @@
       <userName>Mast2</userName>
       <unlit allowed="no" />
     </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0003)</systemName>
+      <userName>Mast_10_1</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Clear</disabledAspect>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0004)</systemName>
+      <userName>Mast_10_2</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0005)</systemName>
+      <userName>Mast_10_3</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0006)</systemName>
+      <userName>Mast_10_4</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0007)</systemName>
+      <userName>Mast_10_5</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0008)</systemName>
+      <userName>Mast_10_6</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0009)</systemName>
+      <userName>Mast_10_7</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0010)</systemName>
+      <userName>Mast_10_8</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+        <disabledAspect>Clear</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0011)</systemName>
+      <userName>Mast_10_9</userName>
+      <unlit allowed="no" />
+      <disabledAspects>
+        <disabledAspect>Clear</disabledAspect>
+        <disabledAspect>Approach Medium</disabledAspect>
+        <disabledAspect>Medium Clear</disabledAspect>
+        <disabledAspect>Medium Approach Slow</disabledAspect>
+        <disabledAspect>Approach Slow</disabledAspect>
+        <disabledAspect>Approach</disabledAspect>
+        <disabledAspect>Medium Approach</disabledAspect>
+        <disabledAspect>Permissive</disabledAspect>
+        <disabledAspect>Permissive Medium</disabledAspect>
+        <disabledAspect>Restricting</disabledAspect>
+        <disabledAspect>Stop and Proceed</disabledAspect>
+        <disabledAspect>Stop and Proceed Medium</disabledAspect>
+      </disabledAspects>
+    </virtualsignalmast>
   </signalmasts>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
@@ -179,6 +386,7 @@
         <conditionalNG_SystemName>IQC:AUTO:0004</conditionalNG_SystemName>
         <conditionalNG_SystemName>IQC:AUTO:0005</conditionalNG_SystemName>
         <conditionalNG_SystemName>IQC:AUTO:0006</conditionalNG_SystemName>
+        <conditionalNG_SystemName>IQC:AUTO:0007</conditionalNG_SystemName>
       </conditionalngs>
     </logixng>
     <clipboard>
@@ -249,7 +457,7 @@
     </conditionalng>
     <conditionalng enabled="yes">
       <systemName>IQC:AUTO:0003</systemName>
-      <userName>10. Timers</userName>
+      <userName>4. Timers (was 10)</userName>
       <socket>
         <socketName>A</socketName>
         <systemName>IQDA:AUTO:0012</systemName>
@@ -257,7 +465,7 @@
     </conditionalng>
     <conditionalng enabled="yes">
       <systemName>IQC:AUTO:0004</systemName>
-      <userName>Formula</userName>
+      <userName>6. Formula</userName>
       <socket>
         <socketName>A</socketName>
         <systemName>IQDA:AUTO:0026</systemName>
@@ -273,10 +481,18 @@
     </conditionalng>
     <conditionalng enabled="yes">
       <systemName>IQC:AUTO:0006</systemName>
-      <userName>Sequence - web page</userName>
+      <userName>7. Sequence - web page</userName>
       <socket>
         <socketName>A</socketName>
         <systemName>IQDA:AUTO:0039</systemName>
+      </socket>
+    </conditionalng>
+    <conditionalng enabled="yes">
+      <systemName>IQC:AUTO:0007</systemName>
+      <userName>10. Tables</userName>
+      <socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0083</systemName>
       </socket>
     </conditionalng>
   </logixngConditionalNGs>
@@ -781,11 +997,6 @@
           <data>"Geh"</data>
         </localVariable>
         <localVariable>
-          <name>Hej</name>
-          <type>Reference</type>
-          <data>re</data>
-        </localVariable>
-        <localVariable>
           <name>SVen</name>
           <type>LocalVariable</type>
           <data>A1</data>
@@ -796,6 +1007,10 @@
       <systemName>IQDA:AUTO:0002</systemName>
       <turnout>IT_1_1</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
@@ -966,48 +1181,80 @@
       <systemName>IQDA:AUTO:0017</systemName>
       <turnout>IT_10_1</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0018</systemName>
       <turnout>IT_10_2</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0019</systemName>
       <turnout>IT_10_2</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0020</systemName>
       <turnout>IT_10_3</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0021</systemName>
       <turnout>IT_10_3</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0022</systemName>
       <turnout>IT_10_4</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0023</systemName>
       <turnout>IT_10_4</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0024</systemName>
       <turnout>IT_10_1</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <do-analog-action class="jmri.jmrit.logixng.actions.configurexml.DoAnalogActionXml">
@@ -1037,12 +1284,20 @@
       <systemName>IQDA:AUTO:0028</systemName>
       <turnout>IT_10_2</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
       <systemName>IQDA:AUTO:0029</systemName>
       <turnout>IT_10_3</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
@@ -1383,6 +1638,10 @@
       <systemName>IQDA:AUTO:0051</systemName>
       <turnout>IT_7_1</turnout>
       <turnoutState>Thrown</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
@@ -1403,6 +1662,10 @@
       <systemName>IQDA:AUTO:0053</systemName>
       <turnout>IT_7_1</turnout>
       <turnoutState>Closed</turnoutState>
+      <addressing>Direct</addressing>
+      <reference />
+      <localVariable />
+      <formula />
       <maleSocket />
     </action-turnout>
     <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
@@ -1760,6 +2023,54 @@
       <actionSystemName>IQAA:AUTO:0005</actionSystemName>
       <maleSocket />
     </do-analog-action>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0083</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0085</systemName>
+        </socket>
+        <socket>
+          <socketName>A2</socketName>
+        </socket>
+      </actions>
+      <maleSocket />
+    </many>
+    <table-for-each class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
+      <systemName>IQDA:AUTO:0084</systemName>
+      <localVariable />
+      <table>IQT:AUTO:0001</table>
+      <tableRowOrColumn>Column</tableRowOrColumn>
+      <socket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0086</systemName>
+      </socket>
+      <maleSocket />
+    </table-for-each>
+    <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
+      <systemName>IQDA:AUTO:0085</systemName>
+      <ifSocket>
+        <socketName>E</socketName>
+      </ifSocket>
+      <thenSocket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0084</systemName>
+      </thenSocket>
+      <elseSocket>
+        <socketName>A2</socketName>
+      </elseSocket>
+      <maleSocket />
+    </if-then-else>
+    <action-turnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0086</systemName>
+      <turnout>IT_10_1</turnout>
+      <turnoutState>Thrown</turnoutState>
+      <addressing>LocalVariable</addressing>
+      <reference>{IM1}</reference>
+      <localVariable>index</localVariable>
+      <formula>"IT"+index</formula>
+      <maleSocket />
+    </action-turnout>
   </logixngDigitalActions>
   <logixngDigitalBooleanActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalBooleanActionManagerXml">
     <many class="jmri.jmrit.logixng.actions.configurexml.DigitalBooleanManyXml">
@@ -2496,107 +2807,540 @@
       <iconmaps />
     </sensoricon>
   </paneleditor>
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Chapter 10 - Tables" x="794" y="215" height="527" width="702" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both" redBackground="255" greenBackground="255" blueBackground="255">
+    <turnouticon turnout="IT_10_1" x="82" y="42" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_3" x="72" y="121" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_5" x="78" y="234" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_7" x="81" y="351" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_9" x="119" y="327" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_2" x="198" y="43" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_4" x="186" y="121" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_6" x="193" y="234" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <turnouticon turnout="IT_10_8" x="234" y="351" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" tristate="false" momentary="false" directControl="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
+      <icons>
+        <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </closed>
+        <thrown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </thrown>
+        <unknown url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </unknown>
+        <inconsistent url="program:resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </inconsistent>
+      </icons>
+      <iconmaps />
+    </turnouticon>
+    <positionablelabel x="114" y="258" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="116" y="234" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="147" y="145" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="148" y="121" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="110" y="144" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="111" y="121" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="159" y="66" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="122" y="66" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="159" y="42" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="121" y="42" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="155" y="375" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="118" y="375" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="196" y="351" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="157" y="351" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="153" y="258" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="154" y="234" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="224" y="145" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="157" y="327" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="194" y="375" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="34" y="145" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="234" y="67" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="43" y="66" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="231" y="259" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="43" y="376" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="41" y="259" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="271" y="375" level="3" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/smallschematics/tracksegments/block.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <positionablelabel x="133" y="12" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="North yard" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="121" y="101" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="West yard" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="129" y="212" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="East yard" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="145" y="301" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="South yard" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <signalmasticon signalmast="Mast_10_1" x="20" y="33" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_2" x="229" y="75" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_3" x="22" y="115" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_4" x="226" y="152" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_5" x="28" y="231" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_6" x="228" y="268" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_7" x="28" y="351" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="90" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_8" x="267" y="383" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <signalmasticon signalmast="Mast_10_9" x="68" y="311" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="45" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml" />
+    <sensoricon sensor="IS_10_1" x="154" y="65" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_2" x="154" y="41" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_3" x="144" y="143" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_9" x="170" y="326" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_8" x="171" y="350" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_7" x="171" y="374" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_6" x="148" y="233" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_5" x="148" y="257" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="IS_10_4" x="146" y="120" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+  </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Dec 08 18:38:18 CET 2020</date>
+      <date>Thu Dec 10 21:29:11 CET 2020</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Dec 08 18:38:23 CET 2020</date>
+      <date>Thu Dec 10 21:29:21 CET 2020</date>
       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Tue Dec 08 12:23:00 CET 2020</date>
+          <date>Thu Dec 10 19:18:50 CET 2020</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Tue Dec 08 12:23:06 CET 2020</date>
+          <date>Thu Dec 10 19:18:58 CET 2020</date>
           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Tue Dec 08 08:21:55 CET 2020</date>
+              <date>Thu Dec 10 15:48:44 CET 2020</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Tue Dec 08 08:22:03 CET 2020</date>
+              <date>Thu Dec 10 15:48:50 CET 2020</date>
               <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Dec 06 18:23:42 CET 2020</date>
+                  <date>Thu Dec 10 09:22:35 CET 2020</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Dec 06 18:23:48 CET 2020</date>
+                  <date>Thu Dec 10 09:22:41 CET 2020</date>
                   <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Dec 06 13:10:43 CET 2020</date>
+                      <date>Thu Dec 10 09:21:20 CET 2020</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Dec 06 13:10:48 CET 2020</date>
+                      <date>Thu Dec 10 09:21:28 CET 2020</date>
                       <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Dec 06 12:58:31 CET 2020</date>
+                          <date>Thu Dec 10 09:10:35 CET 2020</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Dec 06 12:58:39 CET 2020</date>
+                          <date>Thu Dec 10 09:10:46 CET 2020</date>
                           <filename>/C:/Users/daniel/JMRI/PreviewLogixNG.jmri/preview.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Dec 06 13:06:51 CET 2020</date>
+                          <date>Thu Dec 10 09:13:50 CET 2020</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Dec 06 13:15:51 CET 2020</date>
+                      <date>Thu Dec 10 09:22:12 CET 2020</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Dec 06 18:25:00 CET 2020</date>
+                  <date>Thu Dec 10 09:23:14 CET 2020</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Tue Dec 08 08:49:09 CET 2020</date>
+              <date>Thu Dec 10 15:53:09 CET 2020</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Tue Dec 08 12:37:08 CET 2020</date>
+          <date>Thu Dec 10 19:20:28 CET 2020</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Dec 08 18:43:38 CET 2020</date>
+      <date>Thu Dec 10 21:32:34 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-08T17:38:03Z+RUNKNOWN on Tue Dec 08 18:43:38 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-10T20:28:53Z+RUNKNOWN on Thu Dec 10 21:32:34 CET 2020-->
 </layout-config>
