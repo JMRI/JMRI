@@ -29,7 +29,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     ConditionalNG _conditionalNG;
     TableForEach _tableForEach;
     MaleSocket _maleSocket;
-    private List<String> _cells = new ArrayList<>();
+    private final List<String> _cells = new ArrayList<>();
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -52,7 +52,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Table: For each%n" +
+                "Table: For each row in table \"\" set variable \"\" and execute action A1%n" +
                 "   ! A1%n" +
                 "      MyAction%n");
     }
@@ -63,7 +63,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Table: For each%n" +
+                "         Table: For each row in table \"\" set variable \"\" and execute action A1%n" +
                 "            ! A1%n" +
                 "               MyAction%n");
     }
@@ -217,7 +217,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each row in table \"\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
     
     @Test
@@ -387,7 +387,6 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         public void execute() throws JmriException {
             SymbolTable symbolTable =
                     InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
-            System.out.format("Cell: %s%n", symbolTable.getValue("MyVariable"));
             _cells.add(symbolTable.getValue("MyVariable").toString());
         }
         

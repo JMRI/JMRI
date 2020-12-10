@@ -90,20 +90,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ActionTurnout action = new ActionTurnout(systemName, userName);
-        try {
-            if (!turnoutBeanPanel.isEmpty()) {
-                Turnout turnout = turnoutBeanPanel.getNamedBean();
-                if (turnout != null) {
-                    NamedBeanHandle<Turnout> handle
-                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                    action.setTurnout(handle);
-                }
-            }
-            action.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());
-        } catch (JmriException ex) {
-            log.error("Cannot get NamedBeanHandle for turnout", ex);
-        }
+        updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
     
@@ -115,12 +102,14 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
         ActionTurnout action = (ActionTurnout)object;
         try {
-            Turnout turnout = turnoutBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Turnout> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                action.setTurnout(handle);
+            if (!turnoutBeanPanel.isEmpty()) {
+                Turnout turnout = turnoutBeanPanel.getNamedBean();
+                if (turnout != null) {
+                    NamedBeanHandle<Turnout> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
+                    action.setTurnout(handle);
+                }
             }
             action.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {

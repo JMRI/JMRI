@@ -80,6 +80,16 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
             h.setSocketSystemName(socketSystemName.getTextTrim());
         }
         
+        Element tableName = shared.getChild("table");
+        if (tableName != null) {
+            h.setTable(tableName.getTextTrim());
+        }
+        
+        Element localVariable = shared.getChild("localVariable");
+        if (localVariable != null) {
+            h.setLocalVariableName(localVariable.getTextTrim());
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

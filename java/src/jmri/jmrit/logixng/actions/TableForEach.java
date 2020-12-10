@@ -19,8 +19,8 @@ public class TableForEach extends AbstractDigitalAction
 
     private NamedBeanHandle<NamedTable> _tableHandle;
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
-    private String _rowOrColumnName;
-    private String _variableName;
+    private String _rowOrColumnName = "";
+    private String _variableName = "";
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
     
@@ -219,6 +219,9 @@ public class TableForEach extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "TableForEach_Long",
+                _tableRowOrColumn.toStringLowerCase(),
+                getTable() != null ? getTable().getName() : "",
+                _variableName,
                 _socket.getName());
     }
 
@@ -282,18 +285,26 @@ public class TableForEach extends AbstractDigitalAction
 
 
     public enum TableRowOrColumn {
-        Row(Bundle.getMessage("TableForEach_TableRowOrColumn_Row")),
-        Column(Bundle.getMessage("TableForEach_TableRowOrColumn_Column"));
+        Row(Bundle.getMessage("TableForEach_TableRowOrColumn_Row"),
+            Bundle.getMessage("TableForEach_TableRowOrColumn_Row_lowercase")),
+        Column(Bundle.getMessage("TableForEach_TableRowOrColumn_Column"),
+            Bundle.getMessage("TableForEach_TableRowOrColumn_Column_lowercase"));
         
         private final String _text;
+        private final String _textLowerCase;
         
-        private TableRowOrColumn(String text) {
+        private TableRowOrColumn(String text, String textLowerCase) {
             this._text = text;
+            this._textLowerCase = textLowerCase;
         }
         
         @Override
         public String toString() {
             return _text;
+        }
+        
+        public String toStringLowerCase() {
+            return _textLowerCase;
         }
         
     }
