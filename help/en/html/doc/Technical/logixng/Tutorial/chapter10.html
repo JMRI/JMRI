@@ -17,6 +17,9 @@
 <h1>LogixNG Tutorial - Chapter 10</h1>
 
 <h2>Tables - working with templates</h2>
+<p>
+<img src="images/chapter10_the_yards.png">
+<p>
 
 The panel "Chapter 10 - Tables" has four yards:
 <ul>
@@ -34,29 +37,32 @@ track is occupied or not and each turnout has a signal mast. The rules for these
 <li>If the track that the turnout is pointing to is the main line, the mast should show "Slow Clear".</li>
 <li>If the track that the turnout is pointing to is not the main line, the mast should show "Slow Approach".</li>
 </ul>
-(These examples may not be prototypical, but the purpose is to show how to setup the rules in LogixNG).
+These rules and the placement of the signals may be not be prototypical, but the purpose of this example is to show how
+to setup the rules in LogixNG.
 
 <p>
 
 <h2>How to create one ConditionalNG that controls all four yards?</h2>
 
-Lets create an imaginary template yard. It will have three turnouts, three signals and two sensors.
+Lets create an imaginary template yard. It will have three turnouts, three signals and three sensors.
 <p>
 <img src="images/chapter10_template_yard.png">
 <p>
 
 First we need to give the named beans on the template yard unique names. In this example, we have these names for the
-named beans in the template yard:
+named beans in the template yard. Track 1 is the main track.
 <ul>
 <li>Left turnout</li>
 <li>Middle turnout (only used for the South yard)</li>
 <li>Right turnout</li>
+<p>
 <li>Left mast</li>
 <li>Middle mast (only used for the South yard)</li>
 <li>Right mast</li>
+<p>
 <li>Sensor track 1</li>
 <li>Sensor track 2</li>
-<li>Sensor track 3</li>
+<li>Sensor track 3 (only used for the South yard)</li>
 </ul>
 
 LogixNG has support for CSV tables, comma separated tables. These files are created by a spreadsheet software, for
@@ -141,6 +147,10 @@ In this case, we use "Reference" to check if "Middle turnout" is a valid turnout
 with "Middle turnout", "Middle mast" and "Sensor track 3".
 <p>
 
+<h3>Note</h3>
+
+Note that a reference can point to another reference that points to a bean. This means that we can have a table that
+points to another table that points to the bean.
 
 </td>
 </tr>
