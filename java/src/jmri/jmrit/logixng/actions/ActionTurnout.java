@@ -246,7 +246,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 return Bundle.getMessage(locale, "Turnout_Long_Reference", _reference, _turnoutState._text);
                 
             case LocalVariable:
-                return Bundle.getMessage(locale, "Turnout_Long_LocalVariable", _reference, _turnoutState._text);
+                return Bundle.getMessage(locale, "Turnout_Long_LocalVariable", _localVariable, _turnoutState._text);
                 
             case Formula:
                 return Bundle.getMessage(locale, "Turnout_Long_Formula", _formula, _turnoutState._text);
