@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -238,9 +239,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
-     * 
+     *
      * SYSNAMECOL returns the actual Bean, NOT the System Name.
-     * 
+     *
      * {@inheritDoc}
      */
     @Override
@@ -283,7 +284,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return value;
         }
     }
-    
+
     public void comboBoxAction(ActionEvent e) {
         log.debug("Combobox change");
         if (thistable != null && thistable.getCellEditor() != null) {
@@ -396,7 +397,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 if (value instanceof JComboBox) {
                     value = ((JComboBox<?>) value).getSelectedItem();
-                }                
+                }
                 NamedBean b = getBySystemName(sysNameList.get(row));
                 b.setProperty(desc.propertyKey, value);
         }
@@ -435,7 +436,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public void configureTable(JTable table) {
         // Property columns will be invisible at start.
         setPropertyColumnsVisible(table, false);
-        
+
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -459,8 +460,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         table.addMouseListener(popupListener);
         this.persistTable(table);
         thistable = table;
+
+        // setup dynamic tooltips for the comment column
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setToolTipText("");
+        table.getColumnModel().getColumn(COMMENTCOL).setCellRenderer(renderer);
     }
-    
+
     private JTable thistable;
 
     protected void configValueColumn(JTable table) {
@@ -637,7 +643,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public JTable makeJTable(@Nonnull String name, @Nonnull TableModel model, @CheckForNull RowSorter<? extends TableModel> sorter) {
         Objects.requireNonNull(name, "the table name must be nonnull");
         Objects.requireNonNull(model, "the table model must be nonnull");
-        return this.configureJTable(name, new JTable(model), sorter);
+        JTable table = new JTable(model) {
+
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realRowIndex = convertRowIndexToModel(rowIndex);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+                return getCellToolTip(realRowIndex, realColumnIndex);
+            }
+        };
+        return this.configureJTable(name, table, sorter);
     }
 
     /**
@@ -711,6 +729,12 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem = new JMenuItem(Bundle.getMessage("Move"));
         menuItem.addActionListener((ActionEvent e1) -> {
             moveBean(rowindex, 0);
+        });
+        popupMenu.add(menuItem);
+
+        menuItem = new JMenuItem(Bundle.getMessage("EditComment"));
+        menuItem.addActionListener((ActionEvent e1) -> {
+            editComment(rowindex, 0);
         });
         popupMenu.add(menuItem);
 
@@ -897,6 +921,41 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                             getMasterClassName(), "remindSaveReLoad");
         }
     }
+
+    public void editComment(int row, int column) {
+        T nBean = getBySystemName(sysNameList.get(row));
+        JTextArea commentField = new JTextArea(5, 50);
+        JScrollPane commentFieldScroller = new JScrollPane(commentField);
+        commentField.setText(nBean.getComment());
+        Object[] editCommentOption = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonUpdate")};
+        int retval = JOptionPane.showOptionDialog(null,
+                commentFieldScroller, Bundle.getMessage("EditComment"),
+                0, JOptionPane.INFORMATION_MESSAGE, null,
+                editCommentOption, editCommentOption[1]);
+        if (retval != 1) {
+            return;
+        }
+        nBean.setComment(commentField.getText());
+   }
+
+    String getCellToolTip(int row, int col) {
+        String tip = "";
+        if (col == COMMENTCOL) {
+            T nBean = getBySystemName(sysNameList.get(row));
+            if (nBean != null) {
+                String comment = nBean.getComment();
+                if (comment != null && !comment.isEmpty()) {
+                    StringBuilder sb = new StringBuilder("<html>");
+                    sb.append(comment.replaceAll(System.getProperty("line.separator"), "<br>"));
+                    sb.append("</html>");
+                    tip = sb.toString();
+                }
+            }
+        }
+        return tip;
+    }
+
+
 
     protected void showTableHeaderPopup(MouseEvent e, JTable table) {
         JPopupMenu popupMenu = new JPopupMenu();

@@ -481,7 +481,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway 
+            <li>Icons of tracks indicators and signals in the style of the &#268;SD Czechoslovak State Railway
 	    - Unified Control Place - JOP style.</li>
         </ul>
         <h4>Circuit Builder</h4>
@@ -628,27 +628,27 @@
             <li>The algorithm for executing speed changes due to track conditions for warrants
                 has been modified and is better able to restore the scripted speeds once the
                 track speed restrictions are lifted.</li>
-            <li>The constant used to approximate track speed of trains has been changed to 
+            <li>The constant used to approximate track speed of trains has been changed to
             	yield a scale speed of 100mph at full throttle. This change has <b>no effect</b>
             	on roster entries having Speed Profiles.</li>
             <li>The Address column of the Warrant Table list and the Address fields of the
             	NXWarrant or Create Warrant windows
             	now accept throttle protocol names and addresses of Markin and ESU ECoS.</li>
-            <li>When scripted speeds are overridden due to signals or obstructions ahead, the  
-            	non-speed script commands are executed at approximately the same elapsed times as  
+            <li>When scripted speeds are overridden due to signals or obstructions ahead, the
+            	non-speed script commands are executed at approximately the same elapsed times as
             	were written in the script.</li>
- 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile  
+ 			<li>Track speeds of running warrants are recorded automatically and a SpeedProfile
             	is built that can be seen by  pressing the <b>View Profile</b> button in the
             	edit warrant window. These profiles can be merged into the existing profiles
-            	for the Roster entry used by the loco of the warrant when the layout session 
+            	for the Roster entry used by the loco of the warrant when the layout session
             	is closed. (Recall that Warrant Preferences has 3 options for this merging.)</li>
             <li>An <b>Update Track Speeds</b> button is added to the window where warrant throttle
             	settings and commands are edited. This button updates the <b>Speed</b> column to
             	list the track speeds (mm/sec) for the current Speed Profile measurements of
-            	the locomotive address entered in the 'Engine Consist' box.</li>           	
-            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of 
-            	speed profiles are fixed.</li>          	
-			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths 
+            	the locomotive address entered in the 'Engine Consist' box.</li>
+            <li>Bugs introduced during the past year to the 'Wait Sensor' command and merging of
+            	speed profiles are fixed.</li>
+			<li>When OBlocks are imported from LayoutEditor blocks, the turnout settings of paths
             	are also added to the imported OPaths.</li>
         </ul>
 
@@ -725,5 +725,12 @@
                 action required, but developers need to be online the first time
                 they build using Maven.</li>
             <li>The (English) phrasing in a couple of messages was updated for consistency.</li>
-            <li></li>
+            <li>YetAnotherAutoTrain.py (YAAT) has been updated to version 2.2.  This version
+            includes support for compiling train definitions for faster startup.  It also includes
+            the ability to create extensions to the command language.  A Help document has been
+            added to the JMRI Help pages.</li>
+            <li>The Comments columns in Tools &rArr; Tables have support for multi-line comments.
+            The <strong>Edit Comment</strong> option has been added to the right click pop-up
+            menu that is normally used to move user names.  A tooltip will be displayed with
+            the comment content.</li>
         </ul>
