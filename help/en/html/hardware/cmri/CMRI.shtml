@@ -135,7 +135,13 @@
     </li>  
     <li><a href="#L624">Diagnostics</a>
       <ul>
-        <li><a href="#L632">CMRInet Network Connections</a></li>
+         <li><a href="#L625">Output Test</a></li>
+         <li><a href="#L626">Loopback Test</a></li>
+         <li><a href="#L627">Send Commands</a></li>
+      </ul>
+    </li>
+    <li><a href="#L632">CMRInet Network Connections</a>
+      <ul>
         <li><a href="#L652">Using An Ethernet Network Connection</a></li>
         <li><a href="#L662">Running JMRI when disconnected from your C/MRI system</a></li>
       </ul>  
@@ -1350,7 +1356,7 @@
   Invert box flips the state of the bits.  This is useful for output cards which drive 
   Common Anode (sinking) devices.
   </p>
-  <p><img alt="" src="images/diagoutputtest.png" width="698" height="612"></p>
+  <p><img alt="Output test" src="images/diagoutputtest.png" width="698" height="612"></p>
 
   <a name="L626" id="L626"></a>
   <h3>Loopback Test</h3>
@@ -1362,7 +1368,7 @@
   Observation Delay and Filtering Delay adds time delay intervals to the write and read 
   operations.  Invert works the same as in the Output Test.
   </p>
-  <p><img alt="" src="images/diagloopback.png" width="698" height="612"></p>
+  <p><img alt="Loopback" src="images/diagloopback.png" width="698" height="612"></p>
   
   <a name="L627" id="L627"></a>
   <h3>Send Commands</h3>
@@ -1376,7 +1382,7 @@
   number.  The bytes need to be entered as hexadecimal values separated by a space.  
   The maximum number of bytes written is the defined by size of the card (1, 3, 4).  
   Invert works the same as in the Output Test.</p>
-  <p><img alt="" src="images/diagsendcommands.png" width="698" height="612"></p>
+  <p><img alt="Send commands" src="images/diagsendcommands.png" width="698" height="612"></p>
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
@@ -1504,7 +1510,7 @@
   only Yellow (Approach) and Red (Stop) as it is assumed these are low speed
   routes.</p>
 
-  <p><img alt="" src="images/example-ruckersection.png" width="627" height="399"></p>
+  <p><img alt="Rucker section" src="images/example-ruckersection.png" width="627" height="399"></p>
 
   <p>Sensors are the block occupancy detectors and two fascia toggle switches
   controlling the turnouts. The detectors will present an Active state when a
@@ -1530,7 +1536,7 @@
   communicating with the Master and that the port assignments match the actual
   connected device.</p>
 
-  <p><img alt="" src="images/example-sensortable.png" width="1153" height="449"></p>
+  <p><img alt="Sensor Table" src="images/example-sensortable.png" width="1153" height="449"></p>
 
   <p>Outputs are defined in the Turnout table. As described earlier, the name
   "turnout" is historical. Again, just think of turnouts as the output ports.
@@ -1540,7 +1546,7 @@
   the Cmd button will toggle the turnout from Closed to Thrown. This capability
   can be used to test connections and proper operation of output devices.</p>
 
-  <p><img alt="" src="images/example-turnouttable.png" width="1158" height="970"></p>
+  <p><img alt="Turnout Table" src="images/example-turnouttable.png" width="1158" height="970"></p>
 
   <p>There are two output ports assigned to turnout controller bits. The
   turnout control bits are assigned to Card 0, ports A0 through C7, and Card 1
@@ -1557,9 +1563,9 @@
   for signal 80LA (SG80LA-G) is connected to SMINI node 15, turnout, bit 10,
   Card 0, port B1.</p>
 
-  <p><img alt="" src="images/example-addsignalhead.png" width="345" height="501"></p>
-  <p><img alt="" src="images/example-signalmasttable.png" width="1234"></p>
-  <p><img alt="" src="images/example-addsignalmast.png" width="495" height="492"></p>
+  <p><img alt="Add signal head" src="images/example-addsignalhead.png" width="345" height="501"></p>
+  <p><img alt="Signal mast table" src="images/example-signalmasttable.png" width="1234"></p>
+  <p><img alt="Add signal mast" src="images/example-addsignalmast.png" width="495" height="492"></p>
 
     <p><a href="#top"><i><small>[Go to top of page]</small></i></a></p>     
 
