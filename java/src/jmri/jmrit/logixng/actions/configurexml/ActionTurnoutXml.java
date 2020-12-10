@@ -3,7 +3,9 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.NamedBeanAddressing;
 import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.logixng.util.parser.ParserException;
 
 import org.jdom2.Element;
 
@@ -40,6 +42,10 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         }
         
         element.addContent(new Element("turnoutState").addContent(p.getTurnoutState().name()));
+        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
+        element.addContent(new Element("reference").addContent(p.getReference()));
+        element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
+        element.addContent(new Element("formula").addContent(p.getFormula()));
 
         return element;
     }
@@ -49,21 +55,34 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
         ActionTurnout h = new ActionTurnout(sys, uname);
-
+        
         loadCommon(h, shared);
-
+        
         Element turnoutName = shared.getChild("turnout");
         if (turnoutName != null) {
             Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName.getTextTrim());
             if (t != null) h.setTurnout(t);
             else h.removeTurnout();
         }
-
+        
         Element turnoutState = shared.getChild("turnoutState");
         if (turnoutState != null) {
             h.setTurnoutState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
         }
-
+        
+        try {
+            Element addressing = shared.getChild("addressing");
+            if (addressing != null) {
+                h.setAddressing(NamedBeanAddressing.valueOf(addressing.getTextTrim()));
+            }
+            
+            h.setReference(shared.getChild("reference").getTextTrim());
+            h.setLocalVariable(shared.getChild("localVariable").getTextTrim());
+            h.setFormula(shared.getChild("formula").getTextTrim());
+        } catch (ParserException e) {
+            throw new JmriConfigureXmlException(e);
+        }
+        
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }

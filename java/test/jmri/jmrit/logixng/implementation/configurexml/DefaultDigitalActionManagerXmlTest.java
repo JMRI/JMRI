@@ -48,6 +48,9 @@ public class DefaultDigitalActionManagerXmlTest {
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA1"));
         e2.addContent(new Element("maleSocket"));
+        e2.addContent(new Element("reference"));
+        e2.addContent(new Element("localVariable"));
+        e2.addContent(new Element("formula"));
         b.loadActions(e);
         
         e = new Element("logixngDigitalExpressions");
@@ -56,6 +59,9 @@ public class DefaultDigitalActionManagerXmlTest {
         e.addContent(e2);
         e2.addContent(new Element("systemName").addContent("IQDA2"));
         e2.addContent(new Element("maleSocket"));
+        e2.addContent(new Element("reference"));
+        e2.addContent(new Element("localVariable"));
+        e2.addContent(new Element("formula"));
         b.loadActions(e);
         
         // Test trying to load a class with private constructor

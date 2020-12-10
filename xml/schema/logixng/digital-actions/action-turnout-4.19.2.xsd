@@ -52,6 +52,11 @@
                 </xs:simpleType>
               </xs:element>
 
+              <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="1" maxOccurs="1" />
+              <xs:element name="reference" type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="localVariable" type="xs:string" minOccurs="1" maxOccurs="1" />
+              <xs:element name="formula" type="xs:string" minOccurs="1" maxOccurs="1" />
+
 <!--              <xs:element name="enabled" type="yesNoType" /> -->
 
               <xs:element name="maleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>

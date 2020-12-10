@@ -32,4 +32,13 @@
       </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="LogixNG_Addressing_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Direct"/>
+        <xs:enumeration value="Reference"/>
+        <xs:enumeration value="LocalVariable"/>
+        <xs:enumeration value="Formula"/>
+      </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>

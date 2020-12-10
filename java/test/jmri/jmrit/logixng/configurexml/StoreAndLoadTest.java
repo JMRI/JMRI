@@ -261,6 +261,43 @@ public class StoreAndLoadTest {
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
         actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setAddressing(NamedBeanAddressing.Direct);
+        actionTurnout.setFormula("\"IT\"+index");
+        actionTurnout.setLocalVariable("index");
+        actionTurnout.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
+        actionTurnout.setFormula("\"IT\"+index");
+        actionTurnout.setLocalVariable("index");
+        actionTurnout.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setAddressing(NamedBeanAddressing.Formula);
+        actionTurnout.setFormula("\"IT\"+index");
+        actionTurnout.setLocalVariable("index");
+        actionTurnout.setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionTurnout);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionTurnout.setComment("A comment");
+        actionTurnout.setTurnout(turnout1);
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setFormula("\"IT\"+index");
+        actionTurnout.setLocalVariable("index");
+        actionTurnout.setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionTurnout);
         actionManySocket.getChild(index++).connect(maleSocket);
         

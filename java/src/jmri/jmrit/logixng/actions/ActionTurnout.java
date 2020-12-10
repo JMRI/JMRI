@@ -232,13 +232,28 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
     @Override
     public String getLongDescription(Locale locale) {
-        String turnoutName;
-        if (_turnoutHandle != null) {
-            turnoutName = _turnoutHandle.getBean().getDisplayName();
-        } else {
-            turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
+        switch (_addressing) {
+            case Direct:
+                String turnoutName;
+                if (_turnoutHandle != null) {
+                    turnoutName = _turnoutHandle.getBean().getDisplayName();
+                } else {
+                    turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
+                }
+                return Bundle.getMessage(locale, "Turnout_Long_Direct", turnoutName, _turnoutState._text);
+                
+            case Reference:
+                return Bundle.getMessage(locale, "Turnout_Long_Reference", _reference, _turnoutState._text);
+                
+            case LocalVariable:
+                return Bundle.getMessage(locale, "Turnout_Long_LocalVariable", _reference, _turnoutState._text);
+                
+            case Formula:
+                return Bundle.getMessage(locale, "Turnout_Long_Formula", _formula, _turnoutState._text);
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
-        return Bundle.getMessage(locale, "Turnout_Long", turnoutName, _turnoutState._text);
     }
     
     /** {@inheritDoc} */
