@@ -176,19 +176,27 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     public void execute() throws JmriException {
         Turnout turnout;
         
+//        System.out.format("ActionTurnout.execute: %s%n", getLongDescription());
+        
         switch (_addressing) {
             case Direct:
                 turnout = _turnoutHandle != null ? _turnoutHandle.getBean() : null;
                 break;
+                
             case Reference:
                 String ref = ReferenceUtil.getReference(_reference);
                 turnout = InstanceManager.getDefault(TurnoutManager.class)
                         .getNamedBean(ref);
                 break;
+                
             case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
                 turnout = InstanceManager.getDefault(TurnoutManager.class)
-                        .getNamedBean(_localVariable);
+                        .getNamedBean(TypeConversionUtil
+                                .convertToString(symbolTable.getValue(_localVariable), false));
                 break;
+                
             case Formula:
                 turnout = _expressionNode != null ?
                         InstanceManager.getDefault(TurnoutManager.class)
@@ -196,11 +204,17 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                                         .convertToString(_expressionNode.calculate(), false))
                         : null;
                 break;
+                
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
         
-        if (turnout == null) return;
+//        System.out.format("ActionTurnout.execute: turnout: %s%n", turnout);
+        
+        if (turnout == null) {
+            log.error("turnout is null");
+            return;
+        }
         
         ThreadingUtil.runOnLayout(() -> {
             if (_turnoutState == TurnoutState.Toggle) {

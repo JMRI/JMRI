@@ -88,8 +88,10 @@ public class TableForEach extends AbstractDigitalAction
             for (int column=1; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(0, column);
+//                System.out.format("Row header: %s%n", header);
                 if ((header != null) && (!header.toString().isEmpty())) {
                     symbolTable.setValue(_variableName, table.getCell(row, column));
+//                    System.out.format("Variable: %s, value: %s%n", _variableName, table.getCell(row, column));
                     _socket.execute();
                 }
             }
@@ -98,8 +100,10 @@ public class TableForEach extends AbstractDigitalAction
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
                 Object header = table.getCell(row, 0);
+//                System.out.format("Column header: %s%n", header);
                 if ((header != null) && (!header.toString().isEmpty())) {
                     symbolTable.setValue(_variableName, table.getCell(row, column));
+//                    System.out.format("Variable: %s, value: %s%n", _variableName, table.getCell(row, column));
                     _socket.execute();
                 }
             }
