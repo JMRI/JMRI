@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="8:33 PM">
+    <memory value="1:05 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Dec 10 20:33:44 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Dec 11 01:05:05 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -2258,10 +2258,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </socket>
         <socket>
           <socketName>A41</socketName>
-          <systemName>IQDA:AUTO:0043</systemName>
+          <systemName>IQDA:AUTO:0044</systemName>
         </socket>
         <socket>
           <socketName>A42</socketName>
+          <systemName>IQDA:AUTO:0045</systemName>
+        </socket>
+        <socket>
+          <socketName>A43</socketName>
         </socket>
       </actions>
       <maleSocket>
@@ -3593,6 +3597,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <table-for-each class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0039</systemName>
       <localVariable />
+      <rowOrColumnName />
       <tableRowOrColumn>Column</tableRowOrColumn>
       <socket>
         <socketName>A1</socketName>
@@ -3630,6 +3635,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <comment>A comment</comment>
       <localVariable>MyLocalVariable</localVariable>
       <table>Turnout and signal</table>
+      <rowOrColumnName>North yard</rowOrColumnName>
       <tableRowOrColumn>Row</tableRowOrColumn>
       <socket>
         <socketName>A1</socketName>
@@ -3698,8 +3704,82 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
       </maleSocket>
     </many>
-    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+    <table-for-each class="jmri.jmrit.logixng.actions.configurexml.TableForEachXml">
       <systemName>IQDA:AUTO:0042</systemName>
+      <comment>A comment</comment>
+      <localVariable>MyLocalVariable</localVariable>
+      <table>Turnout and signal</table>
+      <rowOrColumnName>Second turnout</rowOrColumnName>
+      <tableRowOrColumn>Column</tableRowOrColumn>
+      <socket>
+        <socketName>A1</socketName>
+        <systemName>IQDA:AUTO:0043</systemName>
+      </socket>
+      <maleSocket>
+        <localVariable>
+          <name>A1</name>
+          <type>None</type>
+          <data />
+        </localVariable>
+        <localVariable>
+          <name>A2</name>
+          <type>LocalVariable</type>
+          <data>index</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>Memory</type>
+          <data>IM2</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>Reference</type>
+          <data>{IM3}</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
+          <type>Formula</type>
+          <data>index * 2</data>
+        </localVariable>
+      </maleSocket>
+    </table-for-each>
+    <many class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0043</systemName>
+      <actions>
+        <socket>
+          <socketName>A1</socketName>
+        </socket>
+      </actions>
+      <maleSocket>
+        <localVariable>
+          <name>A1</name>
+          <type>None</type>
+          <data />
+        </localVariable>
+        <localVariable>
+          <name>A2</name>
+          <type>LocalVariable</type>
+          <data>index</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>Memory</type>
+          <data>IM2</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>Reference</type>
+          <data>{IM3}</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
+          <type>Formula</type>
+          <data>index * 2</data>
+        </localVariable>
+      </maleSocket>
+    </many>
+    <throttle class="jmri.jmrit.logixng.actions.configurexml.ActionThrottleXml">
+      <systemName>IQDA:AUTO:0044</systemName>
       <comment>A comment</comment>
       <locoAddressSocket>
         <socketName>E1</socketName>
@@ -3742,7 +3822,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       </maleSocket>
     </throttle>
     <if-then-else class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
-      <systemName>IQDA:AUTO:0043</systemName>
+      <systemName>IQDA:AUTO:0045</systemName>
       <comment>A comment</comment>
       <ifSocket>
         <socketName>E</socketName>
@@ -4003,9 +4083,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Thu Dec 10 20:33:57 CET 2020</date>
+      <date>Fri Dec 11 01:05:19 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-10T19:33:27Z+RUNKNOWN on Thu Dec 10 20:33:57 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-11T00:02:03Z+RUNKNOWN on Fri Dec 11 01:05:19 CET 2020-->
 </layout-config>

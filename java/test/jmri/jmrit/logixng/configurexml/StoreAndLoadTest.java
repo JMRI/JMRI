@@ -419,6 +419,19 @@ public class StoreAndLoadTest {
         tableForEach.setLocalVariableName("MyLocalVariable");
         tableForEach.setTable(csvTable);
         tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Row);
+        tableForEach.setRowOrColumnName("North yard");
+        maleSocket = digitalActionManager.registerAction(tableForEach);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        maleSocket.getChild(0).connect(
+                digitalActionManager.registerAction(
+                        new DigitalMany(digitalActionManager.getAutoSystemName(), null)));
+        
+        tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
+        tableForEach.setComment("A comment");
+        tableForEach.setLocalVariableName("MyLocalVariable");
+        tableForEach.setTable(csvTable);
+        tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
+        tableForEach.setRowOrColumnName("Second turnout");
         maleSocket = digitalActionManager.registerAction(tableForEach);
         actionManySocket.getChild(index++).connect(maleSocket);
         maleSocket.getChild(0).connect(

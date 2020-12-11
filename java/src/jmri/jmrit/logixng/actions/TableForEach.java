@@ -58,9 +58,25 @@ public class TableForEach extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
-        if (_tableHandle == null) return;
-        if (_variableName == null) return;
-        if (!_socket.isConnected()) return;
+        
+//        System.out.format("TableForEach.execute: %s%n", getLongDescription());
+        
+        if (_tableHandle == null) {
+            log.error("tableHandle is null");
+            return;
+        }
+        if (_rowOrColumnName.isEmpty()) {
+            log.error("rowOrColumnName is empty string");
+            return;
+        }
+        if (_variableName == null) {
+            log.error("variableName is null");
+            return;
+        }
+        if (!_socket.isConnected()) {
+            log.error("socket is not connected");
+            return;
+        }
         
         SymbolTable symbolTable =
                 InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
@@ -68,22 +84,20 @@ public class TableForEach extends AbstractDigitalAction
         NamedTable table = _tableHandle.getBean();
         
         if (_tableRowOrColumn == TableRowOrColumn.Row) {
-            int row = 1;
-            if (_rowOrColumnName != null) row = table.getRowNumber(_rowOrColumnName);
+            int row = table.getRowNumber(_rowOrColumnName);
             for (int column=1; column <= table.numColumns(); column++) {
                 // If the header is null or empty, treat the row as a comment
-                Object header = table.getCell(1, column);
+                Object header = table.getCell(0, column);
                 if ((header != null) && (!header.toString().isEmpty())) {
                     symbolTable.setValue(_variableName, table.getCell(row, column));
                     _socket.execute();
                 }
             }
         } else {
-            int column = 1;
-            if (_rowOrColumnName != null) column = table.getRowNumber(_rowOrColumnName);
+            int column = table.getRowNumber(_rowOrColumnName);
             for (int row=1; row <= table.numRows(); row++) {
                 // If the header is null or empty, treat the row as a comment
-                Object header = table.getCell(row, 1);
+                Object header = table.getCell(row, 0);
                 if ((header != null) && (!header.toString().isEmpty())) {
                     symbolTable.setValue(_variableName, table.getCell(row, column));
                     _socket.execute();
@@ -139,7 +153,7 @@ public class TableForEach extends AbstractDigitalAction
      * Set tableRowOrColumn.
      * @param tableRowOrColumn tableRowOrColumn
      */
-    public void setTableRowOrColumn(TableRowOrColumn tableRowOrColumn) {
+    public void setTableRowOrColumn(@Nonnull TableRowOrColumn tableRowOrColumn) {
         _tableRowOrColumn = tableRowOrColumn;
     }
     
@@ -155,9 +169,9 @@ public class TableForEach extends AbstractDigitalAction
      * Set name of row or column
      * @param rowOrColumnName name of row or column
      */
-    public void setRowOrColumnName(String rowOrColumnName) {
-        if ((rowOrColumnName != null) && rowOrColumnName.isEmpty()) _rowOrColumnName = null;
-        else _rowOrColumnName = rowOrColumnName;
+    public void setRowOrColumnName(@Nonnull String rowOrColumnName) {
+        if (rowOrColumnName == null) throw new RuntimeException("Daniel");
+        _rowOrColumnName = rowOrColumnName;
     }
     
     /**
@@ -220,6 +234,8 @@ public class TableForEach extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "TableForEach_Long",
                 _tableRowOrColumn.toStringLowerCase(),
+                _tableRowOrColumn.getOpposite().toStringLowerCase(),
+                _rowOrColumnName,
                 getTable() != null ? getTable().getName() : "",
                 _variableName,
                 _socket.getName());
@@ -307,6 +323,10 @@ public class TableForEach extends AbstractDigitalAction
             return _textLowerCase;
         }
         
+        public TableRowOrColumn getOpposite() {
+            if (this == Row) return Column;
+            else return Row;
+        }
     }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableForEach.class);

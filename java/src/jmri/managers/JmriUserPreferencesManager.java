@@ -1060,7 +1060,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (this.allowSave) {
             if (!windowDetails.isEmpty()) {
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
-                for (Entry<String, WindowLocations> entry : windowDetails.entrySet()) {
+                Set<Entry<String, WindowLocations>> entries = windowDetails.entrySet();
+                for (Entry<String, WindowLocations> entry : entries) {
                     Element window = new Element("window");
                     window.setAttribute(CLASS, entry.getKey());
                     if (entry.getValue().getSaveLocation()) {

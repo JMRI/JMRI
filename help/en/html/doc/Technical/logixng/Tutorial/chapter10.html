@@ -71,9 +71,10 @@ file. We can create a CSV file with a table of the yards and their named beans. 
 represent each yard and let each row represent each named bean.
 <p>
 <table border="1" cellspacing="0" cellpadding="2">
+<tr><td></td><td>&nbsp;</td><td></td><td></td><td></td></tr>
 <tr><td></td><td>North yard</td><td>West yard</td><td>East yard</td><td>South yard</td></tr>
 <tr><td>Left turnout</td><td>IT_10_1</td><td>IT_10_3</td><td>IT_10_5</td><td>IT_10_7</td></tr>
-<tr><td>Middle turnout</td><td></td><td></td><td></td><td>IT_10_7</td></tr>
+<tr><td>Middle turnout</td><td></td><td></td><td></td><td>IT_10_9</td></tr>
 <tr><td>Right turnout</td><td>IT_10_2</td><td>IT_10_4</td><td>IT_10_6</td><td>IT_10_8</td></tr>
 <tr><td>Left mast</td><td>Mast_10_1</td><td>Mast_10_3</td><td>Mast_10_5</td><td>Mast_10_7</td></tr>
 <tr><td>Middle mast</td><td></td><td></td><td></td><td>Mast_10_9</td></tr>
@@ -84,6 +85,10 @@ represent each yard and let each row represent each named bean.
 </table>
 <h4>Important</h4>
 
+<b>The first row in the table has special meaning. Leave the first row empty for now.</b>
+<p>
+The second row has the headers for the columns. The first column has the headers for the rows.
+<p>
 The CSV files LogixNG uses must be separated with tab, not comma. In OpenOffice Calc, select {Tab} as the field
 delimiter.
 <p>
@@ -126,6 +131,7 @@ column, leave the first row on that column empty. If the first cell on a row or 
 Example:
 <p>
 <table border="1" cellspacing="0" cellpadding="2">
+<tr><td></td><td>&nbsp;</td><td></td><td></td><td></td></tr>
 <tr><td></td><td>North yard</td><td>West yard</td><td>East yard</td><td>South yard</td></tr>
 <tr><td></td><td>&nbsp;</td><td></td><td></td><td></td></tr>
 <tr><td></td><td colspan="2">We have a couple of turnouts</td><td></td><td></td></tr>

@@ -40,6 +40,7 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         if (p.getTable() != null) {
             element.addContent(new Element("table").addContent(p.getTable().getName()));
         }
+        element.addContent(new Element("rowOrColumnName").addContent(p.getRowOrColumnName()));
         element.addContent(new Element("tableRowOrColumn").addContent(p.getTableRowOrColumn().name()));
         
         Element e2 = new Element("socket");
@@ -83,6 +84,11 @@ public class TableForEachXml extends jmri.managers.configurexml.AbstractNamedBea
         Element tableName = shared.getChild("table");
         if (tableName != null) {
             h.setTable(tableName.getTextTrim());
+        }
+        
+        Element rowOrColumnName = shared.getChild("rowOrColumnName");
+        if (rowOrColumnName != null) {
+            h.setRowOrColumnName(rowOrColumnName.getTextTrim());
         }
         
         Element localVariable = shared.getChild("localVariable");

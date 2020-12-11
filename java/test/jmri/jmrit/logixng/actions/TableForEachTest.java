@@ -9,6 +9,7 @@ import java.util.Map;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
@@ -52,7 +53,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Table: For each row in table \"\" set variable \"\" and execute action A1%n" +
+                "Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1%n" +
                 "   ! A1%n" +
                 "      MyAction%n");
     }
@@ -63,7 +64,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! A%n" +
-                "         Table: For each row in table \"\" set variable \"\" and execute action A1%n" +
+                "         Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1%n" +
                 "            ! A1%n" +
                 "               MyAction%n");
     }
@@ -217,7 +218,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each row in table \"\" set variable \"\" and execute action A1", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each row of column \"\" in table \"\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
     
     @Test
@@ -235,16 +236,13 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
         
         _tableForEach.setTable(csvTable);
         _tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
-        _tableForEach.setRowOrColumnName(null);
+        _tableForEach.setRowOrColumnName("1");
         _tableForEach.setLocalVariableName("MyVariable");
         _logixNG.setEnabled(true);
         
-        Assert.assertEquals("The turnout controls three signals." +
-                " ::: Signal before show Clear if turnout is closed, or Approach if the turnout is thrown." +
-                " ::: Signal straight show Clear if the turnout is closed, or Stop if the turnout is thrown." +
-                " ::: Signal diverge show Approach if the turnout is thrown, or Stop if the turnout is closed." +
-                " ::: IT1 ::: IH1 ::: IT1 ::: IT3 ::: IH1 ::: IH6 ::: IH4 ::: IH6" +
-                " ::: IT1 ::: IH1 ::: IH3 ::: IH4 ::: IH6 ::: IT1 ::: IT3",
+        Assert.assertEquals("IT1 :::  ::: IH1 :::  :::  ::: IT1 ::: IT3 ::: IH1" +
+                " ::: IH6 :::  ::: IH4 ::: IH6 ::: IT1 ::: IH1 ::: IH3 ::: IH4" +
+                " ::: IH6 ::: IT1 ::: IT3 :::  :::  ::: ",
                 String.join(" ::: ", _cells));
     }
     
@@ -304,6 +302,7 @@ public class TableForEachTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        JUnitAppender.suppressErrorMessage("tableHandle is null");
         _logixNG.setEnabled(false);
         JUnitUtil.tearDown();
         _category = null;
