@@ -71,6 +71,8 @@ public class DecoderPro3Test {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetApplication();
+        JUnitUtil.resetProfileManager();
         // 12/07/2020 tried to improve initialization of test without any luck DAB
 //        JUnitUtil.resetInstanceManager();
 //        JUnitUtil.resetProfileManager();
@@ -81,7 +83,7 @@ public class DecoderPro3Test {
 //        JUnitUtil.initDebugThrottleManager();
 //        JUnitUtil.clearShutDownManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         // eventually want to test ShutDownTasks?
