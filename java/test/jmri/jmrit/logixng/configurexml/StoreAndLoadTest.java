@@ -409,6 +409,19 @@ public class StoreAndLoadTest {
         
         
         
+        For actionFor =
+                new For(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionFor = new For(digitalActionManager.getAutoSystemName(), null);
+        actionFor.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionFor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        
+        
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);
         tableForEach.setTableRowOrColumn(TableForEach.TableRowOrColumn.Column);
         maleSocket = digitalActionManager.registerAction(tableForEach);

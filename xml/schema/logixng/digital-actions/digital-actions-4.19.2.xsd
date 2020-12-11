@@ -40,6 +40,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/call-module-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-analog-action-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/do-string-action-4.19.2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/for-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/if-then-else-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/logix-4.19.2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/many-4.19.2.xsd"/>
@@ -78,6 +79,7 @@
             <xs:element name="call-module"       type="LogixNG_DigitalAction_CallModuleType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="do-analog-action"  type="LogixNG_DigitalAction_DoAnalogActionType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="do-string-action"  type="LogixNG_DigitalAction_DoStringActionType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="for"               type="LogixNG_DigitalAction_ForType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="if-then-else"      type="LogixNG_DigitalAction_IfThenElseType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="logix"             type="LogixNG_DigitalAction_LogixType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="many"              type="LogixNG_DigitalAction_ManyType" minOccurs="0" maxOccurs="unbounded" />

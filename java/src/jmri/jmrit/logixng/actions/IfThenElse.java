@@ -107,39 +107,6 @@ public class IfThenElse extends AbstractDigitalAction
         }
     }
 
-    /*.*
-     * Continue execution of this Action.
-     * This method is called if Type == TRIGGER_ACTION, the previous call to
-     * one of the execute???() methods returned True and the expression is
-     * still True.
-     * 
-     * @return true if this action is not finished.
-     *./
-    @Override
-    public boolean executeContinue() {
-        _isExpressionCompleted.set(true);
-        switch (_type) {
-            case TRIGGER_ACTION:
-                _lastActionResult = _thenActionSocket.executeContinue();
-                break;
-                
-            case CONTINOUS_ACTION:
-                boolean exprResult = _ifExpressionSocket.evaluate(_isExpressionCompleted);
-                if (exprResult) {
-                    _lastActionResult = _thenActionSocket.executeContinue();
-                } else {
-                    _thenActionSocket.abort();
-                    _lastActionResult = false;
-                }
-                break;
-                
-            default:
-                throw new RuntimeException(String.format("Unknown type '%s'", _type.name()));
-        }
-        
-        return _lastActionResult || !_isExpressionCompleted.get();
-    }
-*/
     /**
      * Get the type.
      * @return the type
