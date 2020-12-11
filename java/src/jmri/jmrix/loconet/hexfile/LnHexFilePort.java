@@ -98,7 +98,6 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
     @Override
     public void run() { // invoked in a new thread
         log.info("LocoNet Simulator Started"); // NOI18N
-        message = null;
         while (true) {
             while (sFile == null && message == null) {
                 // Wait for a file to be available. We have nothing else to do, so we can sleep
@@ -123,17 +122,18 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                     log.debug("Simulator received a message");
                     LocoNetMessage reply = generateReply(message);
                     if (reply != null) {
-                        int len = reply.getOpCode();
-                        for (int i = 0; i < len; i++) {
-                            log.debug("byte {} of SV2 message", i);
-                            // parse as hex into integer, then convert to byte
-                            int ival = reply.getElement(i);
-                            // send each byte to the output pipe (input to consumer)
-                            byte bval = (byte) ival;
-                            outpipe.writeByte(bval);
-                        }
-                        // flush the pipe so other threads can see the message
-                        outpipe.flush();
+                        getSystemConnectionMemo().getLnTrafficController().sendLocoNetMessage(reply);
+//                        int len = reply.getOpCode();
+//                        for (int i = 0; i < len; i++) {
+//                            log.debug("byte {} of SV2 message", i);
+//                            // parse as hex into integer, then convert to byte
+//                            int ival = reply.getElement(i);
+//                            // send each byte to the output pipe (input to consumer)
+//                            byte bval = (byte) ival;
+//                            outpipe.writeByte(bval);
+//                        }
+//                        // flush the pipe so other threads can see the message
+//                        outpipe.flush();
                     }
                     // ready
                 } else { // must be a new file
@@ -150,7 +150,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         int len = s.length();
                         for (int i = 0; i < len; i += 3) {
                             // parse as hex into integer, then convert to byte
-                            int ival = Integer.valueOf(s.substring(i, i + 2), 16).intValue();
+                            int ival = Integer.valueOf(s.substring(i, i + 2), 16);
                             // send each byte to the output pipe (input to consumer)
                             byte bval = (byte) ival;
                             outpipe.writeByte(bval);
@@ -163,10 +163,10 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
                         Thread.sleep(delay);
                     }
                     // here we're done processing the file
-                    log.info("LnHexFDilePort.run: normal finish to file"); // NOI18N
+                    log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
                 }
             } catch (InterruptedException e) {
-                if (sFile != null) { // changed in another thread before the interrupt
+                if (sFile != null || message != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file"); // NOI18N
                     // swallow the exception since we have handled its intent
                 } else {
@@ -325,7 +325,7 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
     private boolean simReply = false;
 
     /**
-     * Set/turn off responding to LocoNet messages to simulate devices.
+     * Turn on/off replying to LocoNet messages to simulate devices.
      * @param state new state for simReplies
      */
     public void setSimReply(boolean state) {
@@ -345,12 +345,12 @@ public class LnHexFilePort extends LnPortController implements LocoNetListener, 
         if (simReply && LnSv2MessageContents.isSupportedSv2Message(m)) {
             log.debug("generate reply for SV2 message");
             LnSv2MessageContents c = new LnSv2MessageContents(m);
-            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (no address)
+            if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (contents includes no address)
                 log.debug("generate LNSV2 query reply message");
                 int dest = 1; // keep it simple, don't fetch src from m
-                int myId = 44;
-                int mf = 2;
-                int dev = 9;
+                int myId = 44; // just a random value
+                int mf = 129; // Digitrax
+                int dev = 0;
                 int type = 3055;
                 int serial = 111;
                 return LnSv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);

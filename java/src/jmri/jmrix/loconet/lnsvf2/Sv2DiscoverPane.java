@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.lnsvf2;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.swing.LnPanelInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,21 +23,23 @@ import java.util.HashMap;
 public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
     private LocoNetSystemConnectionMemo memo;
-    protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
-    protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
-
+    protected JButton discoverButton = new JButton(Bundle.getMessage("ButtonDiscoverAll"));
+    protected JButton identifyByTypeButton = new JButton(Bundle.getMessage("ButtonDiscoverByType"));
+    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+    protected JTextField typeField = new JTextField(4);
     protected JTable moduleTable = null;
-    protected javax.swing.table.TableModel assignmentListModel = null;
+    protected javax.swing.table.TableModel moduleTableModel = null;
 
     protected JPanel tablePanel = null;
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
+    protected JLabel TypeFieldLabel = new JLabel(Bundle.getMessage("LabelType"));
     protected JTextArea result = new JTextArea(6,30);
     protected String reply;
 
-    protected javax.swing.JPanel panel2 = new JPanel();
-    protected javax.swing.JPanel panel2a = new JPanel();
+    protected JPanel panel2 = new JPanel();
+    protected JPanel panel2a = new JPanel();
     private HashMap<Integer, Sv2Module> modules = null;
     private boolean discoveryRunning = false;
 
@@ -83,8 +84,8 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         // Set up the SV2 modules table
         tablePanel = new JPanel();
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        assignmentListModel = new Sv2ModulesTableModel(this);
-        moduleTable = new JTable(assignmentListModel);
+        moduleTableModel = new Sv2ModulesTableModel(this);
+        moduleTable = new JTable(moduleTableModel);
         moduleTable.setRowSelectionAllowed(false);
         moduleTable.setPreferredScrollableViewportSize(new java.awt.Dimension(300, 350));
         JScrollPane tableScrollPane = new JScrollPane(moduleTable);
@@ -93,6 +94,11 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         add(tablePanel);
 
         add(initNotesPanel());
+
+        statusText1.setText("help?");
+        statusText1.setVisible(true);
+        add(statusText1);
+
         add(initButtonPanel());
     }
 
@@ -114,7 +120,7 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     /*
      * Initialize the notes panel.
      */
-    protected JPanel initNotesPanel(){
+    protected JPanel initNotesPanel() {
         // Set up the notes panel
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
@@ -124,9 +130,6 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         JScrollPane resultScrollPane = new JScrollPane(result);
         panel31.add(resultScrollPane);
 
-        statusText1.setText("help?");
-        statusText1.setVisible(true);
-        panel31.add(statusText1);
         panel3.add(panel31);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, "xxx");
@@ -138,14 +141,24 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     /*
      * Initialize the Button panel.
      */
-    protected JPanel initButtonPanel(){
+    protected JPanel initButtonPanel() {
         // Set up buttons
         JPanel panel4 = new JPanel();
         panel4.setLayout(new FlowLayout());
         discoverButton.setToolTipText(Bundle.getMessage("TipDiscoverButton"));
-        discoverButton.addActionListener(e -> discoverButtonActionPerformed());
+        discoverButton.addActionListener(e -> discoverButtonActionPerformed(false));
         discoverButton.setEnabled(!discoveryRunning);
         panel4.add(discoverButton);
+
+        panel4.add(TypeFieldLabel);
+        // entry field (decimal)
+        panel4.add(typeField);
+
+        identifyByTypeButton.setToolTipText(Bundle.getMessage("TipIdentifyByTypeButton"));
+        identifyByTypeButton.addActionListener(e -> discoverButtonActionPerformed(true));
+        identifyByTypeButton.setEnabled(!discoveryRunning);
+        panel4.add(identifyByTypeButton);
+
         doneButton.addActionListener(e -> doneButtonActionPerformed());
         panel4.add(doneButton);
         return panel4;
@@ -154,11 +167,12 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
     /**
      * Handle Discover button.
      */
-    public void discoverButtonActionPerformed() {
+    public void discoverButtonActionPerformed(boolean typed) {
+        // provide user feedback
+        statusText1.setText(Bundle.getMessage("FeedBackDiscover"));
         if (discoveryRunning) {
            log.debug("Discovery process already running");
            discoverButton.setEnabled(false);
-           statusText1.setText(Bundle.getMessage("FeedBackDiscover"));
            return;
         }
         discoveryRunning = true;
@@ -166,9 +180,22 @@ public class Sv2DiscoverPane extends jmri.jmrix.loconet.swing.LnPanel implements
         // add listener
         memo.getLnTrafficController().addLocoNetListener(~0, this);
         // send DiscoveryMessage on LocoNet
-        memo.getLnTrafficController().sendLocoNetMessage(LnSv2MessageContents.createSvDiscoverQueryMessage());
-        // provide user feedback
-        statusText1.setText(Bundle.getMessage("FeedBackDiscover"));
+        if (!typed) {
+            memo.getLnTrafficController().sendLocoNetMessage(LnSv2MessageContents.createSvDiscoverQueryMessage());
+        } else if (typeField.getText() != null) {
+            try {
+                int type = Integer.parseInt(typeField.getText());
+                memo.getLnTrafficController().sendLocoNetMessage(LnSv2MessageContents.createSv2Message(
+                        1, LnSv2MessageContents.Sv2Command.SV2_IDENTIFY_DEVICES_BY_TYPE.cmd, type,
+                        0, 0, 0, 0, 0));
+            } catch (NumberFormatException e) {
+                log.error("invalid entry must be number");
+            }
+        }
+        // stop and inform user
+        statusText1.setText(Bundle.getMessage("FeedBackEnterType"));
+        discoveryRunning = false;
+        discoverButton.setEnabled(true);
     }
 
     /**

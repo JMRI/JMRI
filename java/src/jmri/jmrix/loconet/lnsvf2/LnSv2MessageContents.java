@@ -52,7 +52,7 @@ public class LnSv2MessageContents {
     public final static int SV2_SVD3_ELEMENT_INDEX = 13;
     public final static int SV2_SVD4_ELEMENT_INDEX = 14;
     
-//  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
+    //  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
     public final static int SV2_SRC_ELEMENT_MASK = 0x7f;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
@@ -69,7 +69,7 @@ public class LnSv2MessageContents {
     public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_MASK = 0x7F;
     public final static int SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_VALUE = 0x02;
 
-// helpers for decoding SV_CMD
+    // helpers for decoding SV_CMD
     public final static int SV_CMD_WRITE_ONE = 0x01;
     public final static int SV_CMD_WRITE_ONE_REPLY = 0x41; // reply to SV_CMD_WRITE_ONE
     
@@ -97,7 +97,7 @@ public class LnSv2MessageContents {
     public final static int SV_CMD_RECONFIGURE_REQUEST = 0x0F;
     public final static int SV_CMD_RECONFIGURE_REPLY = 0x4F;   // reply to SV_CMD_RECONFIGURE_REQUEST
 
-// LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
+    // LocoNet "SV 2 format" helper definitions: SV_CMD "reply" bit
     public final static int SV2_SV_CMD_REPLY_BIT_NUBMER = 0x6;
     public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUBMER);
 
@@ -161,8 +161,8 @@ public class LnSv2MessageContents {
     }
 
     /**
-     * Check a LocoNet message to determine if it is a valid SV Programming Format 
-     *      2 message.
+     * Check a LocoNet message to determine if it is a valid SV Programming Format 2
+     *      message.
      *
      * @param m  LocoNet message to check
      * @return true if LocoNet message m is a supported SV Programming Format 2
@@ -749,7 +749,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * Create a LocoNet message for the reply for an SV2 "Change Address"
      * message where the device requires a reconfigure.
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
@@ -764,7 +764,7 @@ public class LnSv2MessageContents {
     }
 
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Change Address" 
+     * Create a LocoNet message for the reply for an SV2 "Change Address"
      * message where the device requires a reconfigure.
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
@@ -785,7 +785,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Creates a LocoNet message for the reply for an SV2 "Reconfigure Reply"
+     * Create a LocoNet message for the reply for an SV2 "Reconfigure Reply"
      * 
      * @param ida  IDA value, for the SRC field of the OPC_PEER_XFER
      * @param newDestAddr  the "new" SV2 destination address
@@ -807,7 +807,7 @@ public class LnSv2MessageContents {
      * 
      * @param m  the preceding LocoNet message
      * @param svValues  array containing the SV values; only one value is used 
-     *          when m contains a SV_QUERY_ONE, else contains 4 values.
+     *          when m contains an SV_QUERY_ONE, else contains 4 values.
      * @return  LocoNet message containing the reply, or null if preceding
      *          message isn't a query
      */
@@ -936,8 +936,8 @@ public class LnSv2MessageContents {
         SV2_DEVICE_TYPE_REPORT (0x48),
         SV2_CHANGE_DEVICE_ADDRESS_REPLY (0x49),
         SV2_RECONFIGURE_DEVICE_REPLY (0x4f);
-        
-        private int cmd;
+
+        public int cmd;
         
         Sv2Command(int cmd) {
             this.cmd = cmd;
