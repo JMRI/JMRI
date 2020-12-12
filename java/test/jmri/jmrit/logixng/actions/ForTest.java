@@ -32,7 +32,6 @@ public class ForTest extends AbstractDigitalActionTestBase {
     ConditionalNG _conditionalNG;
     For _for;
     MaleSocket _maleSocket;
-    private final List<String> _cells = new ArrayList<>();
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -244,6 +243,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
             throws IOException, SocketAlreadyConnectedException, ParserException {
         
         Memory result = InstanceManager.getDefault(MemoryManager.class).provide("IM_RESULT");
+//        Memory debug = InstanceManager.getDefault(MemoryManager.class).provide("IM_DEBUG");
         DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
         DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
         
@@ -255,10 +255,13 @@ public class ForTest extends AbstractDigitalActionTestBase {
         
         // Calculate the first 10 fibonacci numbers
         _maleSocket.addLocalVariable("n", SymbolTable.InitialValueType.None, null);         // n
+        _maleSocket.addLocalVariable("fn_2", SymbolTable.InitialValueType.None, null);      // f(n-2)
         _maleSocket.addLocalVariable("fn_1", SymbolTable.InitialValueType.None, null);      // f(n-1)
         _maleSocket.addLocalVariable("fn", SymbolTable.InitialValueType.None, null);        // f(n)
         _maleSocket.addLocalVariable("N", SymbolTable.InitialValueType.Formula, "10");      // N
         _maleSocket.addLocalVariable("result", SymbolTable.InitialValueType.None, null);    // result
+        
+//        _maleSocket.addLocalVariable("debug", SymbolTable.InitialValueType.None, null);
         
         MaleSocket m1 = digitalActionManager.registerAction(
                 new DigitalMany(digitalActionManager.getAutoSystemName(), null));
@@ -270,13 +273,13 @@ public class ForTest extends AbstractDigitalActionTestBase {
         m1.getChild(0).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn_1");
+        lv.setVariable("fn_2");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("1");
+        lv.setData("0");
         m1.getChild(1).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
-        lv.setVariable("fn");
+        lv.setVariable("fn_1");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         lv.setData("1");
         m1.getChild(2).connect(digitalActionManager.registerAction(lv));
@@ -284,14 +287,20 @@ public class ForTest extends AbstractDigitalActionTestBase {
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         lv.setVariable("result");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
-        lv.setData("1, 1");
+        lv.setData("0, 1");
         m1.getChild(3).connect(digitalActionManager.registerAction(lv));
-        
+/*        
+        lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        lv.setVariable("debug");
+        lv.setVariableOperation(ActionLocalVariable.VariableOperation.SetToString);
+        lv.setData("");
+        m1.getChild(4).connect(digitalActionManager.registerAction(lv));
+*/        
         _for.getChild(0).connect(m1);
         
         
         DigitalFormula formula = new DigitalFormula(digitalExpressionManager.getAutoSystemName(), null);
-        formula.setFormula("n <= N");
+        formula.setFormula("n < N");
         _for.getChild(1).connect(digitalExpressionManager.registerExpression(formula));
         
         
@@ -308,21 +317,45 @@ public class ForTest extends AbstractDigitalActionTestBase {
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         lv.setVariable("fn");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("fn + fn_1");
+        lv.setData("fn_1 + fn_2");
         m1.getChild(0).connect(digitalActionManager.registerAction(lv));
+        
+        lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        lv.setVariable("fn_2");
+        lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        lv.setData("fn_1");
+        m1.getChild(1).connect(digitalActionManager.registerAction(lv));
+        
+        lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        lv.setVariable("fn_1");
+        lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        lv.setData("fn");
+        m1.getChild(2).connect(digitalActionManager.registerAction(lv));
         
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         lv.setVariable("result");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
         lv.setData("result + \", \" + str(fn)");
-        m1.getChild(1).connect(digitalActionManager.registerAction(lv));
+        m1.getChild(3).connect(digitalActionManager.registerAction(lv));
         
         ActionMemory lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
         lm.setMemory("IM_RESULT");
         lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
         lm.setData("result");
-        m1.getChild(2).connect(digitalActionManager.registerAction(lm));
+        m1.getChild(4).connect(digitalActionManager.registerAction(lm));
+/*        
+        lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        lv.setVariable("debug");
+        lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
+        lv.setData("debug + format(\"N: %d, n: %d, fn_2: %d, fn_1: %d, fn: %d, result: %s%n\", N, n, fn_2, fn_1, fn, result)");
+        m1.getChild(5).connect(digitalActionManager.registerAction(lv));
         
+        lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        lm.setMemory("IM_DEBUG");
+        lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
+        lm.setData("debug");
+        m1.getChild(6).connect(digitalActionManager.registerAction(lm));
+*/        
         _for.getChild(3).connect(m1);
         
         
@@ -338,12 +371,11 @@ public class ForTest extends AbstractDigitalActionTestBase {
 //        System.out.format("result: %s%n", symbolTable.getValue("result"));
         System.out.format("result: %s%n", result.getValue());
         
+//        System.out.format("%n%n%ndebug: %s%n", debug.getValue());
         
-        
-//        Assert.assertEquals("IT1 :::  ::: IH1 :::  :::  ::: IT1 ::: IT3 ::: IH1" +
-//                " ::: IH6 :::  ::: IH4 ::: IH6 ::: IT1 ::: IH1 ::: IH3 ::: IH4" +
-//                " ::: IH6 ::: IT1 ::: IT3 :::  :::  ::: ",
-//                String.join(" ::: ", _cells));
+        // The memory "result" should have a list of the first 10 fibonacci numbers
+        Assert.assertEquals("0, 1, 1, 2, 3, 5, 8, 13, 21, 34",
+                result.getValue());
     }
     
     @Test
