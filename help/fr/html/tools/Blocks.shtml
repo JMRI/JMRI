@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
-<!-- UpDated by Blorec Herv&#233; 2016-08-28-->
+<!-- UpDated by Blorec Herv&#233; 2020-12-12-->
 <head>
   <title>
  	JMRI: Blocks Documentation
@@ -62,15 +62,11 @@ un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
  
 <h4>Commandes du Tableau Canton</h4>
 		<ul>
-		<li>Au dessous du tableau Canton, vous trouverez le bouton <b>Ajouter...</b></li>
+		<li>Au dessous du tableau Canton, vous trouverez le bouton <b>Ajouter...</b>pour ajouter de nouveau Canton</li>
 		<li>Le menu <b> Chemins</b> contient un &#233;l&#233;ment Effacer Chemins...</li>
 		<li>Le menu <b>Vitesse</b> vous permet de d&#233;finir l'&#233;chelle du syst&#233;me par d&#233;faut </li>
 
 <a name="addBlock"></a><h3>Ajouter un nouveau Canton</h3>
-<p>Pour ajouter un nouveau Canton suivre cette <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">proc&#233;dure</a></p>
-
-<h3>Modification d'un Canton Existant</h3>
-<p>Pour v&#233;rifier et ou modifier les propri&#233;t&#233;s d'un Canton, suivre cette <a href="../../package/jmri/jmrit/beantable/BlockEdit.shtml">proc&#233;dure</a></p>
 
 <h3>Sauvegarde des Cantons sur le disque</h3>
 <p>Les Cantons sont sauvegard&#233;s dans votre fichier de configuration du r&#233;seau, avec les Aiguillages, 
