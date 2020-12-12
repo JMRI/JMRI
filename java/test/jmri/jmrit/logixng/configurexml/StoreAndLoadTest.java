@@ -333,6 +333,17 @@ public class StoreAndLoadTest {
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
+        For actionFor =
+                new For(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionFor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        actionFor = new For(digitalActionManager.getAutoSystemName(), null);
+        actionFor.setComment("A comment");
+        maleSocket = digitalActionManager.registerAction(actionFor);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
         IfThenElse ifThenElse = new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.CONTINOUS_ACTION);
         maleSocket = digitalActionManager.registerAction(ifThenElse);
         actionManySocket.getChild(index++).connect(maleSocket);
@@ -353,9 +364,6 @@ public class StoreAndLoadTest {
         logix.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(logix);
         actionManySocket.getChild(index++).connect(maleSocket);
-        
-        
-        
         
         
         DigitalBooleanMany booleanMany =
@@ -383,9 +391,6 @@ public class StoreAndLoadTest {
         booleanMany.getChild(2).connect(maleSocket);
         
         
-        
-        
-        
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         actionManySocket.getChild(index++).connect(maleSocket);
@@ -393,6 +398,21 @@ public class StoreAndLoadTest {
         many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         many.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(many);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        
+        Sequence sequence =
+                new Sequence(digitalActionManager.getAutoSystemName(), null);
+        sequence.setRunContinuously(false);
+        sequence.setStartImmediately(true);
+        maleSocket = digitalActionManager.registerAction(sequence);
+        actionManySocket.getChild(index++).connect(maleSocket);
+        
+        sequence = new Sequence(digitalActionManager.getAutoSystemName(), null);
+        sequence.setComment("A comment");
+        sequence.setRunContinuously(true);
+        sequence.setStartImmediately(false);
+        maleSocket = digitalActionManager.registerAction(sequence);
         actionManySocket.getChild(index++).connect(maleSocket);
         
         
@@ -405,21 +425,6 @@ public class StoreAndLoadTest {
         shutdownComputer.setComment("A comment");
         maleSocket = digitalActionManager.registerAction(shutdownComputer);
         actionManySocket.getChild(index++).connect(maleSocket);
-        
-        
-        
-        
-        For actionFor =
-                new For(digitalActionManager.getAutoSystemName(), null);
-        maleSocket = digitalActionManager.registerAction(actionFor);
-        actionManySocket.getChild(index++).connect(maleSocket);
-        
-        actionFor = new For(digitalActionManager.getAutoSystemName(), null);
-        actionFor.setComment("A comment");
-        maleSocket = digitalActionManager.registerAction(actionFor);
-        actionManySocket.getChild(index++).connect(maleSocket);
-        
-        
         
         
         TableForEach tableForEach = new TableForEach(digitalActionManager.getAutoSystemName(), null);

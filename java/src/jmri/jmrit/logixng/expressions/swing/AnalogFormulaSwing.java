@@ -74,7 +74,7 @@ public class AnalogFormulaSwing extends AbstractAnalogExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Formula_Short");
+        return Bundle.getMessage("AnalogFormula_Short");
     }
     
     @Override

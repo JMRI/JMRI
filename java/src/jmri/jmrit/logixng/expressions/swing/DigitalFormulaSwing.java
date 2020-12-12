@@ -74,7 +74,7 @@ public class DigitalFormulaSwing extends AbstractDigitalExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Formula_Short");
+        return Bundle.getMessage("DigitalFormula_Short");
     }
     
     @Override

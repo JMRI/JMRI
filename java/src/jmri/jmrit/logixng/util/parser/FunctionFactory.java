@@ -3,7 +3,7 @@ package jmri.jmrit.logixng.util.parser;
 import java.util.Set;
 
 /**
- * Factory class for DigitalExpression classes.
+ * Factory class for Function classes.
  * 
  * @author Daniel Bergqvist Copyright 2018
  */

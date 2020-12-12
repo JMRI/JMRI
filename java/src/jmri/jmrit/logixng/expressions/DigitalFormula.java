@@ -188,15 +188,15 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
     
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Formula_Short");
+        return Bundle.getMessage(locale, "DigitalFormula_Short");
     }
     
     @Override
     public String getLongDescription(Locale locale) {
         if (_formula.isEmpty()) {
-            return Bundle.getMessage(locale, "Formula_Long_Empty");
+            return Bundle.getMessage(locale, "DigitalFormula_Long_Empty");
         } else {
-            return Bundle.getMessage(locale, "Formula_Long", _formula);
+            return Bundle.getMessage(locale, "DigitalFormula_Long", _formula);
         }
     }
     

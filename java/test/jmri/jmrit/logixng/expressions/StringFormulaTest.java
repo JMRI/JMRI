@@ -60,7 +60,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Formula: E1%n" +
+                "String Formula: E1%n" +
                 "   ?* E1%n" +
                 "      Get string constant \"Something\"%n" +
                 "   ?* E2%n" +
@@ -75,7 +75,7 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
                 "      ! A%n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
-                "               Formula: E1%n" +
+                "               String Formula: E1%n" +
                 "                  ?* E1%n" +
                 "                     Get string constant \"Something\"%n" +
                 "                  ?* E2%n" +
@@ -431,8 +431,8 @@ public class StringFormulaTest extends AbstractStringExpressionTestBase {
     @Test
     public void testDescription() {
         StringFormula expression = new StringFormula("IQSE321", null);
-        Assert.assertEquals("strings matches", "Formula", expression.getShortDescription());
-        Assert.assertEquals("strings matches", "Formula: empty", expression.getLongDescription());
+        Assert.assertEquals("strings matches", "String Formula", expression.getShortDescription());
+        Assert.assertEquals("strings matches", "String Formula: empty", expression.getLongDescription());
     }
     
     @Test

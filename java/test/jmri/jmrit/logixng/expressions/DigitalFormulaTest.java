@@ -56,7 +56,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Formula: E1%n" +
+                "Digital Formula: E1%n" +
                 "   ?* E1%n" +
                 "      Always true%n" +
                 "   ?* E2%n" +
@@ -71,7 +71,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
                 "      ! A%n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Formula: E1%n" +
+                "               Digital Formula: E1%n" +
                 "                  ?* E1%n" +
                 "                     Always true%n" +
                 "                  ?* E2%n" +
@@ -429,8 +429,8 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testDescription() {
         DigitalFormula expression = new DigitalFormula("IQDE321", null);
-        Assert.assertEquals("strings matches", "Formula", expression.getShortDescription());
-        Assert.assertEquals("strings matches", "Formula: empty", expression.getLongDescription());
+        Assert.assertEquals("strings matches", "Digital Formula", expression.getShortDescription());
+        Assert.assertEquals("strings matches", "Digital Formula: empty", expression.getLongDescription());
     }
     
     @Test

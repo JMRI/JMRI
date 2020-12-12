@@ -55,7 +55,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Formula: E1%n" +
+                "Analog Formula: E1%n" +
                 "   ?* E1%n" +
                 "      Get analog constant 1%n" +
                 "   ?* E2%n" +
@@ -70,7 +70,7 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
                 "      ! A%n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
-                "               Formula: E1%n" +
+                "               Analog Formula: E1%n" +
                 "                  ?* E1%n" +
                 "                     Get analog constant 1%n" +
                 "                  ?* E2%n" +
@@ -426,8 +426,8 @@ public class AnalogFormulaTest extends AbstractAnalogExpressionTestBase {
     @Test
     public void testDescription() {
         AnalogFormula expression = new AnalogFormula("IQAE321", null);
-        Assert.assertEquals("strings matches", "Formula", expression.getShortDescription());
-        Assert.assertEquals("strings matches", "Formula: empty", expression.getLongDescription());
+        Assert.assertEquals("strings matches", "Analog Formula", expression.getShortDescription());
+        Assert.assertEquals("strings matches", "Analog Formula: empty", expression.getLongDescription());
     }
     
     @Test

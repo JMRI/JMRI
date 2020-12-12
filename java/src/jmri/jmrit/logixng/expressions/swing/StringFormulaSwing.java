@@ -74,7 +74,7 @@ public class StringFormulaSwing extends AbstractStringExpressionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("Formula_Short");
+        return Bundle.getMessage("StringFormula_Short");
     }
     
     @Override
