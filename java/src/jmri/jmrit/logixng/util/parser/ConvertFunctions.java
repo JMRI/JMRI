@@ -18,6 +18,11 @@ import org.openide.util.lookup.ServiceProvider;
 public class ConvertFunctions implements FunctionFactory {
 
     @Override
+    public String getModule() {
+        return "Convert";
+    }
+    
+    @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new IntFunction());
@@ -28,12 +33,17 @@ public class ConvertFunctions implements FunctionFactory {
     
     
     public static class IntFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "int";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() != 1) {
@@ -42,15 +52,25 @@ public class ConvertFunctions implements FunctionFactory {
             return (int) TypeConversionUtil.convertToLong(parameterList.get(0).calculate());
         }
         
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.int");
+        }
+        
     }
     
     public static class StrFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new ConvertFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "str";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             switch (parameterList.size()) {
@@ -62,6 +82,11 @@ public class ConvertFunctions implements FunctionFactory {
                 default:
                     throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Convert.str");
         }
         
     }

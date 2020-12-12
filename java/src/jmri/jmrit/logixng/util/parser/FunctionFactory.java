@@ -10,6 +10,13 @@ import java.util.Set;
 public interface FunctionFactory {
 
     /**
+     * Get the module of the functions in this factory, for example "Math" or
+     * "Conversion".
+     * @return the module name
+     */
+    public String getModule();
+    
+    /**
      * Get a set of classes that implements the Function interface.
      * 
      * @return a set of functions

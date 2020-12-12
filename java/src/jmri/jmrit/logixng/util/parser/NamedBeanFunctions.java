@@ -20,6 +20,11 @@ import org.openide.util.lookup.ServiceProvider;
 public class NamedBeanFunctions implements FunctionFactory {
 
     @Override
+    public String getModule() {
+        return "NamedBean";
+    }
+    
+    @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new ReadMemoryFunction());
@@ -35,12 +40,17 @@ public class NamedBeanFunctions implements FunctionFactory {
      * be evaluated to a String.
      */
     public static class ReadMemoryFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new NamedBeanFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "readMemory";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() != 1) {
@@ -58,6 +68,11 @@ public class NamedBeanFunctions implements FunctionFactory {
             return m.getValue();
         }
         
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("NamedBean.readMemory_Descr");
+        }
+        
     }
     
     /**
@@ -69,12 +84,17 @@ public class NamedBeanFunctions implements FunctionFactory {
      * be evaluated to a String.
      */
     public static class EvaluateMemoryFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new NamedBeanFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "evaluateMemory";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() != 1) {
@@ -101,6 +121,11 @@ public class NamedBeanFunctions implements FunctionFactory {
             RecursiveDescentParser parser = new RecursiveDescentParser(variables);
             ExpressionNode expressionNode = parser.parseExpression(s);
             return expressionNode.calculate();
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("NamedBean.evaluateMemory_Descr");
         }
         
     }

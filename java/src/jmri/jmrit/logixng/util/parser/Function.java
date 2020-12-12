@@ -11,8 +11,30 @@ import jmri.JmriException;
  */
 public interface Function {
 
+    /**
+     * Get the module of the function, for example "Math" or "Conversion".
+     * @return the module name
+     */
+    public String getModule();
+    
+    /**
+     * Get name of the function, for example "sin" or "int"
+     * @return the name
+     */
     public String getName();
     
+    /**
+     * Calculate the function
+     * @param parameterList a list of parameters for the function
+     * @return the result
+     * @throws JmriException in case of an error
+     */
     public Object calculate(List<ExpressionNode> parameterList) throws JmriException;
+    
+    /**
+     * Get the description of the function in Markdown format
+     * @return the description
+     */
+    public String getDescription();
     
 }

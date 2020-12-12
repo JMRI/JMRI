@@ -18,6 +18,11 @@ import org.openide.util.lookup.ServiceProvider;
 public class MathFunctions implements FunctionFactory {
 
     @Override
+    public String getModule() {
+        return "Math";
+    }
+    
+    @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new RandomFunction());
@@ -28,12 +33,17 @@ public class MathFunctions implements FunctionFactory {
     
     
     public static class RandomFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new MathFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "random";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws CalculateException, JmriException {
             double min;
@@ -53,15 +63,25 @@ public class MathFunctions implements FunctionFactory {
             }
         }
         
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Math.random_Descr");
+        }
+        
     }
     
     public static class SinFunction implements Function {
-
+        
+        @Override
+        public String getModule() {
+            return new MathFunctions().getModule();
+        }
+        
         @Override
         public String getName() {
             return "sin";
         }
-
+        
         @Override
         public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
             if (parameterList.size() == 1) {
@@ -102,6 +122,11 @@ public class MathFunctions implements FunctionFactory {
                 }
             }
             throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters1", getName()));
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("Math.sin_Descr");
         }
         
     }

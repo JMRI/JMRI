@@ -19,6 +19,11 @@ import org.openide.util.lookup.ServiceProvider;
 public class StringFunctions implements FunctionFactory {
 
     @Override
+    public String getModule() {
+        return "String";
+    }
+    
+    @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
         functionClasses.add(new FormatFunction());
@@ -28,6 +33,11 @@ public class StringFunctions implements FunctionFactory {
     
     
     public static class FormatFunction implements Function {
+        
+        @Override
+        public String getModule() {
+            return new StringFunctions().getModule();
+        }
         
         @Override
         public String getName() {
@@ -48,6 +58,11 @@ public class StringFunctions implements FunctionFactory {
             }
             
             return String.format(formatStr, list.toArray());
+        }
+        
+        @Override
+        public String getDescription() {
+            return Bundle.getMessage("String.format_Descr");
         }
         
     }
