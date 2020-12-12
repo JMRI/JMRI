@@ -3,13 +3,7 @@ package jmri.jmrit.logixng.actions;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitAppender;
@@ -224,6 +218,110 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
+    }
+    
+    @Test
+    public void testIndirectAddressing() throws JmriException {
+        
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        m1.setValue("IT102");
+        
+        Assert.assertTrue(conditionalNG.isActive());
+        Turnout t1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT101");
+        Turnout t2 = InstanceManager.getDefault(TurnoutManager.class).provide("IT102");
+        Turnout t3 = InstanceManager.getDefault(TurnoutManager.class).provide("IT103");
+        Turnout t4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT104");
+        Turnout t5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT105");
+        
+        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.setTurnout(t1.getSystemName());
+        actionTurnout.setReference("{IM1}");    // Points to "IT102"
+        actionTurnout.setLocalVariable("myTurnout");
+        actionTurnout.setFormula("\"IT10\" + str(index)");
+        _baseMaleSocket.addLocalVariable("refTurnout", SymbolTable.InitialValueType.String, "IT103");
+        _baseMaleSocket.addLocalVariable("myTurnout", SymbolTable.InitialValueType.String, "IT104");
+        _baseMaleSocket.addLocalVariable("index", SymbolTable.InitialValueType.Integer, "5");
+        
+        // Test direct addressing
+        actionTurnout.setAddressing(NamedBeanAddressing.Direct);
+        t1.setState(Turnout.CLOSED);
+        t2.setState(Turnout.CLOSED);
+        t3.setState(Turnout.CLOSED);
+        t4.setState(Turnout.CLOSED);
+        t5.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, t1.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t2.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
+        
+        // Test reference by memory addressing
+        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        t1.setState(Turnout.CLOSED);
+        t2.setState(Turnout.CLOSED);
+        t3.setState(Turnout.CLOSED);
+        t4.setState(Turnout.CLOSED);
+        t5.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, t1.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, t2.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
+        
+        // Test reference by local variable addressing
+        actionTurnout.setReference("{refTurnout}");    // Points to "IT103"
+        actionTurnout.setAddressing(NamedBeanAddressing.Reference);
+        t1.setState(Turnout.CLOSED);
+        t2.setState(Turnout.CLOSED);
+        t3.setState(Turnout.CLOSED);
+        t4.setState(Turnout.CLOSED);
+        t5.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, t1.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t2.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, t3.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
+        
+        // Test local variable addressing
+        actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
+        t1.setState(Turnout.CLOSED);
+        t2.setState(Turnout.CLOSED);
+        t3.setState(Turnout.CLOSED);
+        t4.setState(Turnout.CLOSED);
+        t5.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, t1.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t2.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, t4.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t5.getCommandedState());
+        
+        // Test formula addressing
+        actionTurnout.setAddressing(NamedBeanAddressing.Formula);
+        t1.setState(Turnout.CLOSED);
+        t2.setState(Turnout.CLOSED);
+        t3.setState(Turnout.CLOSED);
+        t4.setState(Turnout.CLOSED);
+        t5.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, t1.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t2.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
+        Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
+        Assert.assertEquals(Turnout.THROWN, t5.getCommandedState());
     }
     
     @Test

@@ -47,6 +47,9 @@
                       <xs:simpleType>
                         <xs:restriction base="xs:token">
                           <xs:enumeration value="None"/>
+                          <xs:enumeration value="Integer"/>
+                          <xs:enumeration value="FloatingNumber"/>
+                          <xs:enumeration value="String"/>
                           <xs:enumeration value="LocalVariable"/>
                           <xs:enumeration value="Memory"/>
                           <xs:enumeration value="Reference"/>

@@ -1106,6 +1106,9 @@ public class StoreAndLoadTest {
     
     private static final String[] initValues = new String[]{
         "",             // None
+        "32",           // Integer
+        "41.429",       // FloatingNumber
+        "My string",    // String
         "index",        // LocalVariable
         "IM2",          // Memory
         "{IM3}",        // Reference

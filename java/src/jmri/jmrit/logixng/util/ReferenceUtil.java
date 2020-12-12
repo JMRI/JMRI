@@ -2,11 +2,12 @@ package jmri.jmrit.logixng.util;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.*;
+import jmri.util.TypeConversionUtil;
 
 /**
  * Utility methods to handle references
@@ -137,6 +138,13 @@ public class ReferenceUtil {
         
 //        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
         if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
+            
+            SymbolTable symbolTable =
+                    InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+            
+            if ((symbolTable != null) && symbolTable.hasValue(leftValue)) {
+                return TypeConversionUtil.convertToString(symbolTable.getValue(leftValue), false);
+            }
             MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
             Memory m = memoryManager.getNamedBean(leftValue);
             if (m != null) {

@@ -26,6 +26,13 @@ public interface SymbolTable {
     public Object getValue(String name);
     
     /**
+     * Is the symbol in the symbol table?
+     * @param name the name
+     * @return true if the symbol exists, false otherwise
+     */
+    public boolean hasValue(String name);
+    
+    /**
      * Set the value of a symbol
      * @param name the name
      * @param value the value
@@ -62,6 +69,9 @@ public interface SymbolTable {
     public enum InitialValueType {
         
         None(Bundle.getMessage("InitialValueType_None")),
+        Integer(Bundle.getMessage("InitialValueType_Integer")),
+        FloatingNumber(Bundle.getMessage("InitialValueType_FloatingNumber")),
+        String(Bundle.getMessage("InitialValueType_String")),
         LocalVariable(Bundle.getMessage("InitialValueType_LocalVariable")),
         Memory(Bundle.getMessage("InitialValueType_Memory")),
         Reference(Bundle.getMessage("InitialValueType_Reference")),

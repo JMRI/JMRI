@@ -73,7 +73,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="11:27 AM">
+    <memory value="11:52 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -109,7 +109,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Dec 12 11:27:45 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Dec 12 23:52:03 CET 2020" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <logixngs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <logixng enabled="no">
       <systemName>IQ:AUTO:0001</systemName>
@@ -182,21 +182,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -221,21 +236,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -449,21 +479,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -485,21 +530,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -522,21 +582,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -556,21 +631,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -591,21 +681,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -623,21 +728,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -657,21 +777,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -688,21 +823,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -720,21 +870,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -752,21 +917,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -786,21 +966,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -820,21 +1015,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -855,21 +1065,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -892,21 +1117,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -926,21 +1166,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -962,21 +1217,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -999,21 +1269,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1031,21 +1316,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1065,21 +1365,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1098,21 +1413,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1132,21 +1462,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1162,21 +1507,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1193,21 +1553,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1225,21 +1600,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1259,21 +1649,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1291,21 +1696,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1325,21 +1745,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1359,21 +1794,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1393,21 +1843,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1425,21 +1890,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1459,21 +1939,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1493,21 +1988,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1527,21 +2037,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1559,21 +2084,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1593,21 +2133,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1624,21 +2179,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1656,21 +2226,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1686,21 +2271,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1717,21 +2317,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1753,21 +2368,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1790,21 +2420,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1826,21 +2471,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1863,21 +2523,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1898,21 +2573,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1934,21 +2624,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -1967,21 +2672,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2001,21 +2721,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2031,21 +2766,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2062,21 +2812,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2292,21 +3057,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2323,21 +3103,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2356,21 +3151,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2386,21 +3196,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2417,21 +3242,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2449,21 +3289,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2483,21 +3338,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2515,21 +3385,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2550,21 +3435,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2584,21 +3484,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2614,21 +3529,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2645,21 +3575,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2676,21 +3621,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2709,21 +3669,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2748,21 +3723,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2788,21 +3778,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2835,21 +3840,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2883,21 +3903,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2939,21 +3974,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -2974,21 +4024,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3011,21 +4076,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3048,21 +4128,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3085,21 +4180,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3122,21 +4232,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3152,21 +4277,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3183,21 +4323,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3213,21 +4368,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3244,21 +4414,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3274,21 +4459,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3305,21 +4505,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3347,21 +4562,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3390,21 +4620,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3429,21 +4674,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3469,21 +4729,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3505,21 +4780,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3543,21 +4833,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3578,21 +4883,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3614,21 +4934,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3665,21 +5000,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3717,21 +5067,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3747,21 +5112,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3778,21 +5158,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3814,21 +5209,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3853,21 +5263,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3888,21 +5313,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3927,21 +5367,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -3962,21 +5417,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4005,21 +5475,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4046,21 +5531,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4095,21 +5595,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4131,21 +5646,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4164,21 +5694,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4198,21 +5743,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4230,21 +5790,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4260,21 +5835,36 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
         </localVariable>
         <localVariable>
           <name>A2</name>
+          <type>Integer</type>
+          <data>32</data>
+        </localVariable>
+        <localVariable>
+          <name>A3</name>
+          <type>FloatingNumber</type>
+          <data>41.429</data>
+        </localVariable>
+        <localVariable>
+          <name>A4</name>
+          <type>String</type>
+          <data>My string</data>
+        </localVariable>
+        <localVariable>
+          <name>A5</name>
           <type>LocalVariable</type>
           <data>index</data>
         </localVariable>
         <localVariable>
-          <name>A3</name>
+          <name>A6</name>
           <type>Memory</type>
           <data>IM2</data>
         </localVariable>
         <localVariable>
-          <name>A4</name>
+          <name>A7</name>
           <type>Reference</type>
           <data>{IM3}</data>
         </localVariable>
         <localVariable>
-          <name>A5</name>
+          <name>A8</name>
           <type>Formula</type>
           <data>index * 2</data>
         </localVariable>
@@ -4287,9 +5877,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Dec 12 11:27:59 CET 2020</date>
+      <date>Sat Dec 12 23:52:16 CET 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-12T10:26:21Z+RUNKNOWN on Sat Dec 12 11:27:59 CET 2020-->
+  <!--Written by JMRI version 4.21.3ish+daniel+2020-12-12T22:51:46Z+RUNKNOWN on Sat Dec 12 23:52:16 CET 2020-->
 </layout-config>

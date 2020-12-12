@@ -57,6 +57,12 @@ public class DefaultSymbolTable implements SymbolTable {
     
     /** {@inheritDoc} */
     @Override
+    public boolean hasValue(String name) {
+        return _symbols.containsKey(name);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void setValue(String name, Object value) {
         _stack.setValueAtIndex(_firstSymbolIndex + _symbols.get(name).getIndex(), value);
     }
@@ -103,6 +109,18 @@ public class DefaultSymbolTable implements SymbolTable {
             
             switch (variable.getInitalValueType()) {
                 case None:
+                    break;
+                    
+                case Integer:
+                    initialValue = Long.parseLong(variable.getInitialValueData());
+                    break;
+                    
+                case FloatingNumber:
+                    initialValue = Double.parseDouble(variable.getInitialValueData());
+                    break;
+                    
+                case String:
+                    initialValue = variable.getInitialValueData();
                     break;
                     
                 case LocalVariable:
