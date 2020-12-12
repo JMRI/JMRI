@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
- * a DCC++ Command Station, on a DCC++ network.
+ * DCC++ Command Station, on a DCC++ network.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Portions by Paul Bender Copyright (C) 2003
@@ -48,10 +48,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
     
     /**
-     * Returns the Station Type of the connected Command Station
+     * Get the Station Type of the connected Command Station
      * it is populated by response from the CS, initially "Unknown" 
      * @return StationType
      */
+    @Nonnull
     public String getStationType() {
         return stationType;
     }
@@ -64,10 +65,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Returns the Build of the connected Command Station
+     * Get the Build of the connected Command Station
      * it is populated by response from the CS, initially "Unknown" 
      * @return Build
      */
+    @Nonnull
     public String getBuild() {
         return build;
     }
@@ -84,16 +86,17 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Returns the canonical version of the connected Command Station
+     * Get the canonical version of the connected Command Station
      * it is populated by response from the CS, so initially '0.0.0' 
      * @return Version
      */
+    @Nonnull
     public String getVersion() {
         return version;
     }
 
     /**
-     * Parses the DCC++ CS status response to pull out the base station version
+     * Parse the DCC++ CS status response to pull out the base station version
      * and software version.
      * @param l status response to query.
      */
@@ -222,7 +225,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission.
      */
     @Override
-    public boolean sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(@Nonnull byte [] packet, int repeats) {
 
         if (_tc == null) {
             log.error("Send Packet Called without setting traffic controller");
@@ -233,6 +236,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
         //  DCC++ BaseStation code appends its own error-correction byte.
         // So we have to omit the JMRI-generated one.
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length - 1, packet);
+        assert msg != null;
         log.debug("sendPacket:'{}'", msg.toString());
 
         for (int i = 0; i < repeats; i++) {
@@ -276,6 +280,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         if (adaptermemo == null) {
             return "D";
@@ -311,4 +316,3 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private final static Logger log = LoggerFactory.getLogger(DCCppCommandStation.class);
 
 }
-
