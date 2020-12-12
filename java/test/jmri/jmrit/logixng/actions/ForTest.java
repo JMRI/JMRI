@@ -243,6 +243,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
     public void testExecute()
             throws IOException, SocketAlreadyConnectedException, ParserException {
         
+        Memory result = InstanceManager.getDefault(MemoryManager.class).provide("IM_RESULT");
         DigitalActionManager digitalActionManager = InstanceManager.getDefault(DigitalActionManager.class);
         DigitalExpressionManager digitalExpressionManager = InstanceManager.getDefault(DigitalExpressionManager.class);
         
@@ -313,22 +314,29 @@ public class ForTest extends AbstractDigitalActionTestBase {
         lv = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         lv.setVariable("result");
         lv.setVariableOperation(ActionLocalVariable.VariableOperation.CalculateFormula);
-        lv.setData("result + \", \" + fn");
+        lv.setData("result + \", \" + str(fn)");
         m1.getChild(1).connect(digitalActionManager.registerAction(lv));
+        
+        ActionMemory lm = new ActionMemory(digitalActionManager.getAutoSystemName(), null);
+        lm.setMemory("IM_RESULT");
+        lm.setMemoryOperation(ActionMemory.MemoryOperation.CopyVariableToMemory);
+        lm.setData("result");
+        m1.getChild(2).connect(digitalActionManager.registerAction(lm));
         
         _for.getChild(3).connect(m1);
         
         
         _logixNG.setEnabled(true);
         
-        SymbolTable symbolTable =
-                InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+//        SymbolTable symbolTable =
+//                InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
         
-        System.out.format("N: %s%n", symbolTable.getValue("N"));
-        System.out.format("n: %s%n", symbolTable.getValue("n"));
-        System.out.format("fn_1: %s%n", symbolTable.getValue("fn_1"));
-        System.out.format("fn: %s%n", symbolTable.getValue("fn"));
-        System.out.format("result: %s%n", symbolTable.getValue("result"));
+//        System.out.format("N: %s%n", symbolTable.getValue("N"));
+//        System.out.format("n: %s%n", symbolTable.getValue("n"));
+//        System.out.format("fn_1: %s%n", symbolTable.getValue("fn_1"));
+//        System.out.format("fn: %s%n", symbolTable.getValue("fn"));
+//        System.out.format("result: %s%n", symbolTable.getValue("result"));
+        System.out.format("result: %s%n", result.getValue());
         
         
         

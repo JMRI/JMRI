@@ -20,47 +20,12 @@ public class MathFunctions implements FunctionFactory {
     @Override
     public Set<Function> getFunctions() {
         Set<Function> functionClasses = new HashSet<>();
-        functionClasses.add(new IntFunction());
         functionClasses.add(new RandomFunction());
         functionClasses.add(new SinFunction());
         return functionClasses;
     }
     
     
-    
-    public static class IntFunction implements Function {
-
-        @Override
-        public String getName() {
-            return "int";
-        }
-
-        @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
-            }
-            return (int) TypeConversionUtil.convertToLong(parameterList.get(0).calculate());
-        }
-        
-    }
-    
-    public static class LongFunction implements Function {
-
-        @Override
-        public String getName() {
-            return "long";
-        }
-
-        @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws JmriException {
-            if (parameterList.size() != 1) {
-                throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
-            }
-            return TypeConversionUtil.convertToLong(parameterList.get(0).calculate());
-        }
-        
-    }
     
     public static class RandomFunction implements Function {
 
