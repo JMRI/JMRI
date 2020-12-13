@@ -237,8 +237,8 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                         .convertToString(symbolTable.getValue(_localVariable), false);
                 
             case Formula:
-                return _expressionNode != null
-                        ? TypeConversionUtil.convertToString(_expressionNode.calculate(), false)
+                return _stateExpressionNode != null
+                        ? TypeConversionUtil.convertToString(_stateExpressionNode.calculate(), false)
                         : null;
                 
             default:
