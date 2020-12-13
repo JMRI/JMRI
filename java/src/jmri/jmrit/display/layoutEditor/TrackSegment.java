@@ -836,93 +836,70 @@ public class TrackSegment extends LayoutTrack {
         double distanceOnTrack = navigator.getDistance() + navigator.getDistanceOnTrack();
         if (tsv.isArc()) {
             tsv.calculateTrackSegmentAngle();
-            Point2D radius2D = new Point2D.Double(tsv.getCW() / 2.0, tsv.getCH() / 2.0);
-            double radius = (radius2D.getX() + radius2D.getY()) / 2.0;
+            Point2D radius2D = new Point2D.Double(tsv.getCW() / 2, tsv.getCH() / 2);
+            double radius = (radius2D.getX() + radius2D.getY()) / 2;
             Point2D centre = tsv.getCentre();
+            /*
+             * Note: Angles go CCW from south to east to north to west, etc. 
+             * For JMRI angles subtract from 90 to get east, south, west, north
+             */
             double startAdjDEG = tsv.getStartAdj();
             double tmpAngleDEG = tsv.getTmpAngle();
 
             log.warn(String.format("Arc2D(%.0f, %.0f, %.0f, %.0f, %.0f, %.0f, Arc2D.OPEN); centre: {%.0f, %.0f}",
                     tsv.getCX(), tsv.getCY(), tsv.getCW(), tsv.getCH(), startAdjDEG, tmpAngleDEG, centre.getX(), centre.getY()));
 
-            double distance = 2.0 * radius * Math.PI * tmpAngleDEG / 360.0;
+            if (getName().equals("T3")) {
+                log.error("T3!");
+            }
+
+            double distance = 2 * radius * Math.PI * tmpAngleDEG / 360;
             if (distanceOnTrack < distance) {  // it's on this track
                 Point2D p1 = models.getCoords(getConnect1(), getType1());
                 Point2D p2 = models.getCoords(getConnect2(), getType2());
 
-                double angle1DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(centre, p1));
-                double angle2DEG = Math.toDegrees((Math.PI / 2) - MathUtil.computeAngleRAD(p2, centre));
-                double angleDeltaDEG = Math.signum(angle1DEG - angle2DEG) * Math.abs(tmpAngleDEG);
+                double angle1DEG = MathUtil.computeAngleDEG(p1, centre) - 90;
+                double angle2DEG = MathUtil.computeAngleDEG(p2, centre) - 90;
+                double angleDeltaDEG = angle2DEG - angle1DEG;
 
+                
+                if ((Math.abs(angleDeltaDEG) - Math.abs(tmpAngleDEG)) >= 1) {
+                    angleDeltaDEG -= Math.signum(angleDeltaDEG) * 360;
+                }
                 log.warn(String.format("    p1: {%.0f, %.0f} a1: %.0f", p1.getX(), p1.getY(), angle1DEG));
                 log.warn(String.format("    p2: {%.0f, %.0f} a2: %.0f", p2.getX(), p2.getY(), angle2DEG));
                 log.warn(String.format("    angleDelta: %.0f", angleDeltaDEG));
-
                 //log.warn(String.format("startAdjDEG: %.0f, tmpAngleDEG: %.0f", startAdjDEG, tmpAngleDEG));
-                double dirDeltaDEG = 90.0;
                 double ratio = distanceOnTrack / distance;
 //                boolean isFlipped = tsv.isFlip();
                 Point2D delta = new Point2D.Double(radius, 0);
-                Point2D p1p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG));
-                Point2D p2p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG));
+//                Point2D p1p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG));
+//                Point2D p2p = MathUtil.add(centre, MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG));
 
-                if (Math.abs(MathUtil.wrapPM180(angle1DEG - startAdjDEG)) < 1) {
+                double angleDEG = 0;
+                if (getConnect1().equals(navigator.getLastTrack())){
                     // entering from this end...
-                    if (Math.abs(MathUtil.wrapPM180(angle2DEG - (startAdjDEG + tmpAngleDEG))) < 1) {
-                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-                    } else {
-                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-                    }
-                } else if (Math.abs(MathUtil.wrapPM180(angle1DEG - (startAdjDEG + tmpAngleDEG))) < 1) {
+                    angleDEG = angle1DEG;
+                    angleDeltaDEG = MathUtil.lerp(0, angleDeltaDEG, ratio);
+                } else if (getConnect2().equals(navigator.getLastTrack())) {
                     // entering from the other end...
-                    if (Math.abs(MathUtil.wrapPM180(angle2DEG - startAdjDEG)) < 1) {
-                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
-                    } else {
-                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
-                    }
-                    dirDeltaDEG = -90.0;
+                    startAdjDEG += tmpAngleDEG;
+                    angleDEG = angle2DEG;
+                    angleDeltaDEG = MathUtil.lerp(0, -angleDeltaDEG, ratio);
                 } else {    // OOPS! we're lost!
                     result = super.navigate(navigator);   // call super to STOP
-                    tmpAngleDEG = 0.0;
+                    angleDeltaDEG = 0;
                 }
+                double dirDeltaDEG = Math.signum(angleDeltaDEG) * -90;
 
-//                if (connect1.equals(navigator.getLastTrack())) {
-//                    //if entering from this end...
-//                    tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-//                } else if (connect2.equals(navigator.getLastTrack())) {
-//                    //if entering from the other end...
-//                    tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
-//                    dirDeltaDEG = -90.0;
-//                } else {    // OOPS! we're lost!
-//                    result = super.navigate(navigator);   // call super to STOP
-//                    tmpAngleDEG = 0.0;
-//                }
-//                if (MathUtil.distance(p1, p1p) < 1) {
-//                    startAdjDEG = angle1DEG;
-//                    if (MathUtil.distance(p2, p2p) < 1) {
-//                        tmpAngleDEG = MathUtil.lerp(0.0, tmpAngleDEG, ratio);
-//                    } else {
-//                        tmpAngleDEG = MathUtil.lerp(tmpAngleDEG, 0.0, ratio);
-//                    }
-//                } else if (MathUtil.distance(p1, p2p) < 1) {
-//                    startAdjDEG = angle2DEG;
-//                    if (MathUtil.distance(p2, p1p) < 1) {
-//                        tmpAngleDEG = MathUtil.lerp(-tmpAngleDEG, 0.0, ratio);
-//                    } else {
-//                        tmpAngleDEG = MathUtil.lerp(0.0, -tmpAngleDEG, ratio);
-//                    }
-//                } else {
-//                    result = super.navigate(navigator);   // call super to STOP
-//                    tmpAngleDEG = 0.0;
-//                }
+                double newAngleDeg = -(angleDEG + angleDeltaDEG);
                 // Compute location
-                delta = MathUtil.rotateDEG(delta, startAdjDEG + tmpAngleDEG);
+                delta = MathUtil.rotateDEG(delta, newAngleDeg);
                 if (!tsv.isCircle()) {
                     delta = MathUtil.multiply(delta, radius2D.getX() / ratio, radius2D.getY() / ratio);
                 }
-                Point2D loc = MathUtil.add(centre, delta);
-                navigator.setLocation(loc);
-                navigator.setDirectionDEG(startAdjDEG + tmpAngleDEG + dirDeltaDEG);
+                navigator.setLocation(MathUtil.add(centre, delta));
+                navigator.setDirectionDEG(newAngleDeg + dirDeltaDEG);
                 navigator.setDistance(0);
             } else {    // it's not on this track
                 navigator.setDistance(distanceOnTrack - distance);

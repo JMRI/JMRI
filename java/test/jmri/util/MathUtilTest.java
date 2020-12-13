@@ -9,6 +9,8 @@ import java.awt.geom.Rectangle2D;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.python.modules.math;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of MathUtil
@@ -198,6 +200,13 @@ public class MathUtilTest {
                 MathUtil.computeAngleRAD(p1, p2), tolerance);
         Assert.assertEquals("MathUtil.computeAngleDEG(p1, p2)", -156.80372456087935,
                 MathUtil.computeAngleDEG(p1, p2), tolerance);
+
+        Point2D delta = new Point2D.Double(100, 0);
+        for (double angleDEG = 5; angleDEG < 360; angleDEG += 15) {
+            double deltaAngleDEG = MathUtil.wrap360(90 - MathUtil.computeAngleDEG(MathUtil.rotateDEG(delta, angleDEG)));
+            Assert.assertEquals(String.format("MathUtil.computeAngleDEG(MathUtil.rotateDEG(%.0f)", angleDEG),
+                    angleDEG, deltaAngleDEG, tolerance);
+        }
     }
 
     @Test
