@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
+import jmri.*;
 import jmri.util.JUnitUtil;
-import jmri.Turnout;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
@@ -72,6 +70,16 @@ public abstract class AbstractTurnoutTestBase {
         // initial known state when created must be UNKNOWN
         Assert.assertEquals("initial known state", Turnout.UNKNOWN, t.getKnownState());
         Assert.assertEquals("initial commanded state 2", Turnout.UNKNOWN, t.getState());
+    }
+
+    @Test
+    public void testGetState() {
+        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
+        Assert.assertEquals(DigitalIO.ON, t.getStateFromName("On"));
+        Assert.assertEquals(DigitalIO.OFF, t.getStateFromName("Off"));
+        Assert.assertEquals(Turnout.CLOSED, t.getStateFromName("Closed"));
+        Assert.assertEquals(Turnout.THROWN, t.getStateFromName("Thrown"));
     }
 
     @Test

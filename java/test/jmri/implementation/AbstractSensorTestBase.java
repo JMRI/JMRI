@@ -2,8 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.JmriException;
-import jmri.Sensor;
+import jmri.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -53,6 +52,16 @@ public abstract class AbstractSensorTestBase {
         // initial state when created must be UNKNOWN
         Assert.assertEquals("initial state 1", Sensor.UNKNOWN, t.getState());
         Assert.assertEquals("initial state 2", "Unknown", t.describeState(t.getState()));
+    }
+
+    @Test
+    public void testGetState() {
+        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
+        Assert.assertEquals(DigitalIO.ON, t.getStateFromName("On"));
+        Assert.assertEquals(DigitalIO.OFF, t.getStateFromName("Off"));
+        Assert.assertEquals(Sensor.ACTIVE, t.getStateFromName("Active"));
+        Assert.assertEquals(Sensor.INACTIVE, t.getStateFromName("Inactive"));
     }
 
     @Test

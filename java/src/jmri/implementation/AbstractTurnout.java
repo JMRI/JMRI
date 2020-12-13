@@ -8,19 +8,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.*;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanUsageReport;
-import jmri.PushbuttonPacket;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.Turnout;
-import jmri.TurnoutOperation;
-import jmri.TurnoutOperationManager;
-import jmri.TurnoutOperator;
+
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -316,6 +307,18 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             case THROWN: return Bundle.getMessage("TurnoutStateThrown");
             case CLOSED: return Bundle.getMessage("TurnoutStateClosed");
             default: return super.describeState(state);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStateFromName(String name) {
+        switch (name) {
+            case "On": return DigitalIO.ON;
+            case "Off": return DigitalIO.OFF;
+            case "Closed": return Turnout.CLOSED;
+            case "Thrown": return Turnout.THROWN;
+            default: return super.getStateFromName(name);
         }
     }
 

@@ -2,8 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
 
-import jmri.Light;
-import jmri.LightControl;
+import jmri.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
@@ -46,6 +45,14 @@ public abstract class AbstractLightTestBase {
     public void testCreate() {
         // initial state when created must be OFF
         Assert.assertEquals("initial commanded state", Light.OFF, t.getState());
+    }
+
+    @Test
+    public void testGetState() {
+        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
+        Assert.assertEquals(Light.ON, t.getStateFromName("On"));
+        Assert.assertEquals(Light.OFF, t.getStateFromName("Off"));
     }
 
     @Test

@@ -3,9 +3,7 @@ package jmri.implementation;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
-import jmri.Reporter;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,6 +140,18 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 return Bundle.getMessage("SensorStateInactive");
             default:
                 return super.describeState(state);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getStateFromName(String name) {
+        switch (name) {
+            case "On": return DigitalIO.ON;
+            case "Off": return DigitalIO.OFF;
+            case "Inactive": return Sensor.INACTIVE;
+            case "Active": return Sensor.ACTIVE;
+            default: return super.getStateFromName(name);
         }
     }
 
