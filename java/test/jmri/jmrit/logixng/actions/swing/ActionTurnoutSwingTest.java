@@ -64,7 +64,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IT1", action.getTurnout().getBean().getSystemName());
-        Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getState());
+        Assert.assertEquals(ActionTurnout.TurnoutState.Closed, action.getBeanState());
     }
     
     @Test
@@ -90,7 +90,7 @@ public class ActionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JButtonOperator(jdo, "OK").push();  // NOI18N
         
         Assert.assertEquals("IT99", action.getTurnout().getBean().getSystemName());
-        Assert.assertEquals(ActionTurnout.TurnoutState.Thrown, action.getState());
+        Assert.assertEquals(ActionTurnout.TurnoutState.Thrown, action.getBeanState());
     }
     
     // The minimal setup for log4J

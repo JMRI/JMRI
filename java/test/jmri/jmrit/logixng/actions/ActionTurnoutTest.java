@@ -413,7 +413,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         
         // Test formula addressing
-        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Formula);
         actionTurnout.setStateFormula("refVariable + myVariable");
         // Test Closed
         _baseMaleSocket.clearLocalVariables();

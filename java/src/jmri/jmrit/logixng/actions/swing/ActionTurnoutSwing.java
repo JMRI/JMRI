@@ -207,7 +207,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                     action.setTurnout(handle);
                 }
             }
-            action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for turnout", ex);
         }
@@ -221,11 +220,27 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutFormula) {
                 action.setAddressing(NamedBeanAddressing.Formula);
             } else {
-                throw new IllegalArgumentException("_tabbedPane has unknown selection");
+                throw new IllegalArgumentException("_tabbedPaneTurnout has unknown selection");
             }
             action.setReference(_turnoutReferenceTextField.getText());
             action.setLocalVariable(_turnoutLocalVariableTextField.getText());
             action.setFormula(_turnoutFormulaTextField.getText());
+            
+            if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
+                action.setStateAddressing(NamedBeanAddressing.Direct);
+            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
+                action.setStateAddressing(NamedBeanAddressing.Reference);
+            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateLocalVariable) {
+                action.setStateAddressing(NamedBeanAddressing.LocalVariable);
+            } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateFormula) {
+                action.setStateAddressing(NamedBeanAddressing.Formula);
+            } else {
+                throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
+            }
+            action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
+            action.setReference(_turnoutStateReferenceTextField.getText());
+            action.setLocalVariable(_turnoutStateLocalVariableTextField.getText());
+            action.setFormula(_turnoutStateFormulaTextField.getText());
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }

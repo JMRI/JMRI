@@ -228,13 +228,13 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         
         switch (_stateAddressing) {
             case Reference:
-                return ReferenceUtil.getReference(_reference);
+                return ReferenceUtil.getReference(_stateReference);
                 
             case LocalVariable:
                 SymbolTable symbolTable =
                         InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
                 return TypeConversionUtil
-                        .convertToString(symbolTable.getValue(_localVariable), false);
+                        .convertToString(symbolTable.getValue(_stateLocalVariable), false);
                 
             case Formula:
                 return _stateExpressionNode != null
@@ -242,7 +242,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                         : null;
                 
             default:
-                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+                throw new IllegalArgumentException("invalid _addressing state: " + _stateAddressing.name());
         }
     }
     
