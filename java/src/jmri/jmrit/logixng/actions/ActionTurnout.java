@@ -26,11 +26,16 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
     private NamedBeanAddressing _addressing = NamedBeanAddressing.Direct;
     private NamedBeanHandle<Turnout> _turnoutHandle;
-    private TurnoutState _turnoutState = TurnoutState.Thrown;
     private String _reference = "";
     private String _localVariable = "";
     private String _formula = "";
     private ExpressionNode _expressionNode;
+    private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
+    private TurnoutState _turnoutState = TurnoutState.Thrown;
+    private String _stateReference = "";
+    private String _stateLocalVariable = "";
+    private String _stateFormula = "";
+    private ExpressionNode _stateExpressionNode;
     
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -85,20 +90,12 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         return _turnoutHandle;
     }
     
-    public void setTurnoutState(TurnoutState state) {
-        _turnoutState = state;
-    }
-    
-    public TurnoutState getTurnoutState() {
-        return _turnoutState;
-    }
-    
     public void setAddressing(NamedBeanAddressing addressing) throws ParserException {
         _addressing = addressing;
         parseFormula();
     }
     
-    public NamedBeanAddressing getAddressing() {
+    public NamedBeanAddressing getTurnoutAddressing() {
         return _addressing;
     }
     
@@ -138,6 +135,62 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             _expressionNode = parser.parseExpression(_formula);
         } else {
             _expressionNode = null;
+        }
+    }
+    
+    public void setStateAddressing(NamedBeanAddressing addressing) throws ParserException {
+        _stateAddressing = addressing;
+        parseFormula();
+    }
+    
+    public NamedBeanAddressing getTurnoutStateAddressing() {
+        return _stateAddressing;
+    }
+    
+    public void setTurnoutState(TurnoutState state) {
+        _turnoutState = state;
+    }
+    
+    public TurnoutState getTurnoutState() {
+        return _turnoutState;
+    }
+    
+    public void setTurnoutStateReference(@Nonnull String reference) {
+        if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
+            throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
+        }
+        _stateReference = reference;
+    }
+    
+    public String getTurnoutStateReference() {
+        return _stateReference;
+    }
+    
+    public void setTurnoutStateLocalVariable(@Nonnull String localVariable) {
+        _stateLocalVariable = localVariable;
+    }
+    
+    public String getTurnoutStateLocalVariable() {
+        return _stateLocalVariable;
+    }
+    
+    public void setTurnoutStateFormula(@Nonnull String formula) throws ParserException {
+        _stateFormula = formula;
+        parseTurnoutStateFormula();
+    }
+    
+    public String getTurnoutStateFormula() {
+        return _stateFormula;
+    }
+    
+    private void parseTurnoutStateFormula() throws ParserException {
+        if (_stateAddressing == NamedBeanAddressing.Formula) {
+            Map<String, Variable> variables = new HashMap<>();
+            
+            RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+            _stateExpressionNode = parser.parseExpression(_stateFormula);
+        } else {
+            _stateExpressionNode = null;
         }
     }
     

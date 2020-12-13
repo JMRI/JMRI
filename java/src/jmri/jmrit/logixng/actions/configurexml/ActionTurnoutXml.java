@@ -42,7 +42,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         }
         
         element.addContent(new Element("turnoutState").addContent(p.getTurnoutState().name()));
-        element.addContent(new Element("addressing").addContent(p.getAddressing().name()));
+        element.addContent(new Element("addressing").addContent(p.getTurnoutAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
         element.addContent(new Element("formula").addContent(p.getFormula()));

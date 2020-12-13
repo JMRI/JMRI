@@ -26,7 +26,6 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
 
     private JTabbedPane _tabbedPaneTurnout;
     private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
-    private JComboBox<TurnoutState> stateComboBox;
     private JPanel _panelTurnoutDirect;
     private JPanel _panelTurnoutReference;
     private JPanel _panelTurnoutLocalVariable;
@@ -35,17 +34,23 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
     private JTextField _turnoutLocalVariableTextField;
     private JTextField _turnoutFormulaTextField;
     
+    private JTabbedPane _tabbedPaneTurnoutState;
+//    private BeanSelectCreatePanel<Turnout> turnoutStateBeanPanel;
+    private JComboBox<TurnoutState> stateComboBox;
+    private JPanel _panelTurnoutStateDirect;
+    private JPanel _panelTurnoutStateReference;
+    private JPanel _panelTurnoutStateLocalVariable;
+    private JPanel _panelTurnoutStateFormula;
+    private JTextField _turnoutStateReferenceTextField;
+    private JTextField _turnoutStateLocalVariableTextField;
+    private JTextField _turnoutStateFormulaTextField;
+    
     
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionTurnout action = (ActionTurnout)object;
         
         panel = new JPanel();
-        
-        stateComboBox = new JComboBox<>();
-        for (TurnoutState e : TurnoutState.values()) {
-            stateComboBox.addItem(e);
-        }
         
         _tabbedPaneTurnout = new JTabbedPane();
         _panelTurnoutDirect = new javax.swing.JPanel();
@@ -73,26 +78,70 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         _turnoutFormulaTextField.setColumns(30);
         _panelTurnoutFormula.add(_turnoutFormulaTextField);
         
+        
+        _tabbedPaneTurnoutState = new JTabbedPane();
+        _panelTurnoutStateDirect = new javax.swing.JPanel();
+        _panelTurnoutStateReference = new javax.swing.JPanel();
+        _panelTurnoutStateLocalVariable = new javax.swing.JPanel();
+        _panelTurnoutStateFormula = new javax.swing.JPanel();
+        
+        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Direct.toString(), _panelTurnoutStateDirect);
+        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Reference.toString(), _panelTurnoutStateReference);
+        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelTurnoutStateLocalVariable);
+        _tabbedPaneTurnoutState.addTab(NamedBeanAddressing.Formula.toString(), _panelTurnoutStateFormula);
+        
+        stateComboBox = new JComboBox<>();
+        for (TurnoutState e : TurnoutState.values()) {
+            stateComboBox.addItem(e);
+        }
+        
+//        turnoutStateBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(TurnoutManager.class), null);
+        _panelTurnoutStateDirect.add(stateComboBox);
+        
+        _turnoutStateReferenceTextField = new JTextField();
+        _turnoutStateReferenceTextField.setColumns(30);
+        _panelTurnoutStateReference.add(_turnoutStateReferenceTextField);
+        
+        _turnoutStateLocalVariableTextField = new JTextField();
+        _turnoutStateLocalVariableTextField.setColumns(30);
+        _panelTurnoutStateLocalVariable.add(_turnoutStateLocalVariableTextField);
+        
+        _turnoutStateFormulaTextField = new JTextField();
+        _turnoutStateFormulaTextField.setColumns(30);
+        _panelTurnoutStateFormula.add(_turnoutStateFormulaTextField);
+        
+        
         if (action != null) {
-            switch (action.getAddressing()) {
+            switch (action.getTurnoutAddressing()) {
                 case Direct: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutDirect); break;
                 case Reference: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutReference); break;
                 case LocalVariable: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutLocalVariable); break;
                 case Formula: _tabbedPaneTurnout.setSelectedComponent(_panelTurnoutFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getTurnoutAddressing().name());
             }
             if (action.getTurnout() != null) {
                 turnoutBeanPanel.setDefaultNamedBean(action.getTurnout().getBean());
             }
-            stateComboBox.setSelectedItem(action.getTurnoutState());
             _turnoutReferenceTextField.setText(action.getReference());
             _turnoutLocalVariableTextField.setText(action.getLocalVariable());
             _turnoutFormulaTextField.setText(action.getFormula());
+            
+            switch (action.getTurnoutStateAddressing()) {
+                case Direct: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateDirect); break;
+                case Reference: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateReference); break;
+                case LocalVariable: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateLocalVariable); break;
+                case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
+                default: throw new IllegalArgumentException("invalid _addressing state: " + action.getTurnoutAddressing().name());
+            }
+            stateComboBox.setSelectedItem(action.getTurnoutState());
+            _turnoutStateReferenceTextField.setText(action.getTurnoutStateReference());
+            _turnoutStateLocalVariableTextField.setText(action.getTurnoutStateLocalVariable());
+            _turnoutStateFormulaTextField.setText(action.getTurnoutStateFormula());
         }
         
         JComponent[] components = new JComponent[]{
             _tabbedPaneTurnout,
-            stateComboBox};
+            _tabbedPaneTurnoutState};
         
         List<JComponent> componentList = SwingConfiguratorInterface.parseMessage(Bundle.getMessage("SetTurnout"), components);
         
