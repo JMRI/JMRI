@@ -435,6 +435,19 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     }
 
     /**
+     * Get a state from a name
+     * @param name the name
+     * @return the state
+     */
+    public default int getState(String name) {
+        switch (name) {
+            case "Unknown": return NamedBean.UNKNOWN;
+            case "Inconsistent": return NamedBean.INCONSISTENT;
+            default: throw new IllegalArgumentException("Unknown state name: "+name);
+        }
+    }
+
+    /**
      * Code the validity (including just as a prefix) of a proposed name string.
      *
      * @since 4.9.5

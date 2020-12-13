@@ -3,6 +3,7 @@ package jmri.managers;
 import javax.annotation.Nonnull;
 import jmri.Manager;
 
+import jmri.DigitalIO;
 import jmri.Sensor;
 import jmri.SensorManager;
 
@@ -22,6 +23,18 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
     @Override
     protected AbstractManager<Sensor> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getState(String name) {
+        switch (name) {
+            case "On": return DigitalIO.ON;
+            case "Off": return DigitalIO.OFF;
+            case "Inactive": return Sensor.INACTIVE;
+            case "Active": return Sensor.ACTIVE;
+            default: return super.getState(name);
+        }
     }
 
     /**

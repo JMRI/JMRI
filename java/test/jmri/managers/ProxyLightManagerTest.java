@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.jmrix.internal.InternalLightManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
@@ -39,6 +40,15 @@ public class ProxyLightManagerTest {
     @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
+    }
+
+    @Test
+    public void testGetState() {
+        LightManager m = InstanceManager.getDefault(LightManager.class);
+        Assert.assertEquals(NamedBean.UNKNOWN, m.getState("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, m.getState("Inconsistent"));
+        Assert.assertEquals(Light.ON, m.getState("On"));
+        Assert.assertEquals(Light.OFF, m.getState("Off"));
     }
 
     @Test

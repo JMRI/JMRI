@@ -22,6 +22,18 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         super();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getState(String name) {
+        switch (name) {
+            case "On": return DigitalIO.ON;
+            case "Off": return DigitalIO.OFF;
+            case "Closed": return Turnout.CLOSED;
+            case "Thrown": return Turnout.THROWN;
+            default: return super.getState(name);
+        }
+    }
+
     @Override
     protected AbstractManager<Turnout> makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getTurnoutManager();
