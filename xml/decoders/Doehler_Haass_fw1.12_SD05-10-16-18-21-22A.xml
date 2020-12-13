@@ -324,5 +324,4 @@
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
 <!-- Pane(s) valid for some decoders only  -->
 <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
-
 </decoder-config>
