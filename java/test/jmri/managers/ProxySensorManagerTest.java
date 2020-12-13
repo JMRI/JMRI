@@ -27,6 +27,17 @@ public class ProxySensorManagerTest implements Manager.ManagerDataListener<Senso
     }
 
     @Test
+    public void testGetState() {
+        SensorManager m = InstanceManager.getDefault(SensorManager.class);
+        Assert.assertEquals(NamedBean.UNKNOWN, m.getState("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, m.getState("Inconsistent"));
+        Assert.assertEquals(DigitalIO.ON, m.getState("On"));
+        Assert.assertEquals(DigitalIO.OFF, m.getState("Off"));
+        Assert.assertEquals(Sensor.ACTIVE, m.getState("Active"));
+        Assert.assertEquals(Sensor.INACTIVE, m.getState("Inactive"));
+    }
+
+    @Test
     public void testPutGetJ() {
         // create
         Sensor tj = l.newSensor("JS1", "mine");

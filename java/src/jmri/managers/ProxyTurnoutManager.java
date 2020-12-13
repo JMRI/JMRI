@@ -36,6 +36,18 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         InstanceManager.getDefault(TurnoutOperationManager.class).loadOperationTypes();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getState(String name) {
+        switch (name) {
+            case "On": return DigitalIO.ON;
+            case "Off": return DigitalIO.OFF;
+            case "Closed": return Turnout.CLOSED;
+            case "Thrown": return Turnout.THROWN;
+            default: return super.getState(name);
+        }
+    }
+
     /**
      * Locate via user name, then system name if needed.
      *
