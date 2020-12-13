@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -1060,7 +1061,9 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         if (this.allowSave) {
             if (!windowDetails.isEmpty()) {
                 Element element = new Element(WINDOWS_ELEMENT, WINDOWS_NAMESPACE);
-                Set<Entry<String, WindowLocations>> entries = windowDetails.entrySet();
+                // Copy the entries before iterate over them since
+                // ConcurrentModificationException may happen otherwise
+                Set<Entry<String, WindowLocations>> entries = new HashSet(windowDetails.entrySet());
                 for (Entry<String, WindowLocations> entry : entries) {
                     Element window = new Element("window");
                     window.setAttribute(CLASS, entry.getKey());

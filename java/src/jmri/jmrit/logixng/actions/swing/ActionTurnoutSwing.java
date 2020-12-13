@@ -164,6 +164,15 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
         
         try {
+            if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
+                action.setStateReference(_turnoutStateReferenceTextField.getText());
+            }
+        } catch (IllegalArgumentException e) {
+            errorMessages.add(e.getMessage());
+            return false;
+        }
+        
+        try {
             action.setFormula(_turnoutFormulaTextField.getText());
             if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect) {
                 action.setAddressing(NamedBeanAddressing.Direct);
@@ -198,7 +207,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
         }
         ActionTurnout action = (ActionTurnout)object;
         try {
-            if (!turnoutBeanPanel.isEmpty()) {
+            if (!turnoutBeanPanel.isEmpty() && (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutDirect)) {
                 Turnout turnout = turnoutBeanPanel.getNamedBean();
                 if (turnout != null) {
                     NamedBeanHandle<Turnout> handle
@@ -215,32 +224,32 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                 action.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutReference) {
                 action.setAddressing(NamedBeanAddressing.Reference);
+                action.setReference(_turnoutReferenceTextField.getText());
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutLocalVariable) {
                 action.setAddressing(NamedBeanAddressing.LocalVariable);
+                action.setLocalVariable(_turnoutLocalVariableTextField.getText());
             } else if (_tabbedPaneTurnout.getSelectedComponent() == _panelTurnoutFormula) {
                 action.setAddressing(NamedBeanAddressing.Formula);
+                action.setFormula(_turnoutFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneTurnout has unknown selection");
             }
-            action.setReference(_turnoutReferenceTextField.getText());
-            action.setLocalVariable(_turnoutLocalVariableTextField.getText());
-            action.setFormula(_turnoutFormulaTextField.getText());
             
             if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateDirect) {
                 action.setStateAddressing(NamedBeanAddressing.Direct);
+                action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateReference) {
                 action.setStateAddressing(NamedBeanAddressing.Reference);
+                action.setStateReference(_turnoutStateReferenceTextField.getText());
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateLocalVariable) {
                 action.setStateAddressing(NamedBeanAddressing.LocalVariable);
+                action.setStateLocalVariable(_turnoutStateLocalVariableTextField.getText());
             } else if (_tabbedPaneTurnoutState.getSelectedComponent() == _panelTurnoutStateFormula) {
                 action.setStateAddressing(NamedBeanAddressing.Formula);
+                action.setStateFormula(_turnoutStateFormulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneTurnoutState has unknown selection");
             }
-            action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
-            action.setReference(_turnoutStateReferenceTextField.getText());
-            action.setLocalVariable(_turnoutStateLocalVariableTextField.getText());
-            action.setFormula(_turnoutStateFormulaTextField.getText());
         } catch (ParserException e) {
             throw new RuntimeException("ParserException: "+e.getMessage(), e);
         }

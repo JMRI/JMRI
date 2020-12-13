@@ -336,6 +336,9 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
 
     @Override
     public String getLongDescription(Locale locale) {
+        String namedBean;
+        String state;
+        
         switch (_addressing) {
             case Direct:
                 String turnoutName;
@@ -344,20 +347,47 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
                 } else {
                     turnoutName = Bundle.getMessage(locale, "BeanNotSelected");
                 }
-                return Bundle.getMessage(locale, "Turnout_Long_Direct", turnoutName, _turnoutState._text);
+                namedBean = Bundle.getMessage(locale, "AddressByDirect", turnoutName);
+                break;
                 
             case Reference:
-                return Bundle.getMessage(locale, "Turnout_Long_Reference", _reference, _turnoutState._text);
+                namedBean = Bundle.getMessage(locale, "AddressByReference", _reference);
+                break;
                 
             case LocalVariable:
-                return Bundle.getMessage(locale, "Turnout_Long_LocalVariable", _localVariable, _turnoutState._text);
+                namedBean = Bundle.getMessage(locale, "AddressByLocalVariable", _localVariable);
+                break;
                 
             case Formula:
-                return Bundle.getMessage(locale, "Turnout_Long_Formula", _formula, _turnoutState._text);
+                namedBean = Bundle.getMessage(locale, "AddressByFormula", _formula);
+                break;
                 
             default:
                 throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
         }
+        
+        switch (_stateAddressing) {
+            case Direct:
+                state = Bundle.getMessage(locale, "AddressByDirect", _turnoutState._text);
+                break;
+                
+            case Reference:
+                state = Bundle.getMessage(locale, "AddressByReference", _stateReference);
+                break;
+                
+            case LocalVariable:
+                state = Bundle.getMessage(locale, "AddressByLocalVariable", _stateLocalVariable);
+                break;
+                
+            case Formula:
+                state = Bundle.getMessage(locale, "AddressByFormula", _stateFormula);
+                break;
+                
+            default:
+                throw new IllegalArgumentException("invalid _stateAddressing state: " + _stateAddressing.name());
+        }
+        
+        return Bundle.getMessage(locale, "Turnout_Long", namedBean, state);
     }
     
     /** {@inheritDoc} */
