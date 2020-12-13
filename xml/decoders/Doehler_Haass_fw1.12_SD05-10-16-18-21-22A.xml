@@ -262,7 +262,7 @@
     <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_analogModeFunction.xml"/>
     <!-- Railcom feedback  -->
-    <!--<xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>-->
+    <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv28-29_railcom_base.xml"/>
     <!-- SECTION 5    - Extra Railcom feedback options as of fw3.06 -->
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv135-136_144_railcom_fw3.06.xml"/>
     <!-- Motorola support -->
