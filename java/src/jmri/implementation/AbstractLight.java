@@ -76,6 +76,16 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected boolean mEnabled = true;
     protected int mState = OFF;
 
+    /** {@inheritDoc} */
+    @Override
+    public int getStateFromName(String name) {
+        switch (name) {
+            case "On": return Light.ON;
+            case "Off": return Light.OFF;
+            default: return super.getStateFromName(name);
+        }
+    }
+
     @Override
     @Nonnull
     public String describeState(int state) {

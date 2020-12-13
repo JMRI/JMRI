@@ -40,17 +40,6 @@ public class ProxyTurnoutManagerTest {
     }
 
     @Test
-    public void testGetState() {
-        TurnoutManager m = InstanceManager.getDefault(TurnoutManager.class);
-        Assert.assertEquals(NamedBean.UNKNOWN, m.getState("Unknown"));
-        Assert.assertEquals(NamedBean.INCONSISTENT, m.getState("Inconsistent"));
-        Assert.assertEquals(DigitalIO.ON, m.getState("On"));
-        Assert.assertEquals(DigitalIO.OFF, m.getState("Off"));
-        Assert.assertEquals(Turnout.CLOSED, m.getState("Closed"));
-        Assert.assertEquals(Turnout.THROWN, m.getState("Thrown"));
-    }
-
-    @Test
     public void testPutGet() {
         // create
         Turnout t = l.newTurnout(getSystemName(getNumToTest1()), "mine");

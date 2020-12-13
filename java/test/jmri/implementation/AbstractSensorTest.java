@@ -28,6 +28,16 @@ public class AbstractSensorTest extends AbstractSensorTestBase {
     public void checkStatusRequestMsgSent() {}
 
     @Test
+    public void testGetState() {
+        Assert.assertEquals(NamedBean.UNKNOWN, t.getStateFromName("Unknown"));
+        Assert.assertEquals(NamedBean.INCONSISTENT, t.getStateFromName("Inconsistent"));
+        Assert.assertEquals(DigitalIO.ON, t.getStateFromName("On"));
+        Assert.assertEquals(DigitalIO.OFF, t.getStateFromName("Off"));
+        Assert.assertEquals(Sensor.ACTIVE, t.getStateFromName("Active"));
+        Assert.assertEquals(Sensor.INACTIVE, t.getStateFromName("Inactive"));
+    }
+
+    @Test
     public void checkToString() {
         Sensor nb = new AbstractSensor("Foo", "Bar"){
             @Override

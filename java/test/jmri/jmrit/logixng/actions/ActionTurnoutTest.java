@@ -199,21 +199,21 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to closed
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.CLOSED);
         
         // Test to set turnout to toggle
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Toggle);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
         Assert.assertTrue("turnout is thrown",turnout.getCommandedState() == Turnout.THROWN);
         
         // Test to set turnout to toggle
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Toggle);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Toggle);
         // Execute the conditional
         conditionalNG.execute();
         // The action should now be executed so the turnout should be thrown
@@ -233,7 +233,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Turnout t4 = InstanceManager.getDefault(TurnoutManager.class).provide("IT104");
         Turnout t5 = InstanceManager.getDefault(TurnoutManager.class).provide("IT105");
         
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         actionTurnout.setTurnout(t1.getSystemName());
         actionTurnout.setReference("{IM1}");    // Points to "IT102"
         actionTurnout.setLocalVariable("myTurnout");
@@ -322,6 +322,117 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(Turnout.CLOSED, t3.getCommandedState());
         Assert.assertEquals(Turnout.CLOSED, t4.getCommandedState());
         Assert.assertEquals(Turnout.THROWN, t5.getCommandedState());
+    }
+    
+    @Test
+    public void testIndirectStateAddressing() throws JmriException {
+        
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        m1.setValue("IT102");
+        
+        Assert.assertTrue(conditionalNG.isActive());
+        
+        
+        // Test direct addressing
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Direct);
+        // Test Closed
+        turnout.setState(Turnout.THROWN);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
+        // Test Thrown
+        turnout.setState(Turnout.CLOSED);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
+        
+        
+        // Test reference by memory addressing
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setStateReference("{IM1}");
+        // Test Closed
+        m1.setValue("Closed");
+        turnout.setState(Turnout.THROWN);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
+        // Test Thrown
+        m1.setValue("Thrown");
+        turnout.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
+        
+        
+        // Test reference by local variable addressing
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setStateReference("{refVariable}");
+        // Test Closed
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Closed");
+        turnout.setState(Turnout.THROWN);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
+        // Test Thrown
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Thrown");
+        turnout.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
+        
+        
+        // Test local variable addressing
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setStateLocalVariable("myVariable");
+        // Test Closed
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Closed");
+        turnout.setState(Turnout.THROWN);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
+        // Test Thrown
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Thrown");
+        turnout.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
+        
+        
+        // Test formula addressing
+        actionTurnout.setStateAddressing(NamedBeanAddressing.Reference);
+        actionTurnout.setStateFormula("refVariable + myVariable");
+        // Test Closed
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Clo");
+        _baseMaleSocket.addLocalVariable("myVariable", SymbolTable.InitialValueType.String, "sed");
+        turnout.setState(Turnout.THROWN);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.CLOSED, turnout.getCommandedState());
+        // Test Thrown
+        _baseMaleSocket.clearLocalVariables();
+        _baseMaleSocket.addLocalVariable("refVariable", SymbolTable.InitialValueType.String, "Thro");
+        _baseMaleSocket.addLocalVariable("myVariable", SymbolTable.InitialValueType.String, "wn");
+        turnout.setState(Turnout.CLOSED);
+        // Execute the conditional
+        conditionalNG.execute();
+        // The action should now be executed so the correct turnout should be thrown
+        Assert.assertEquals(Turnout.THROWN, turnout.getCommandedState());
     }
     
     @Test
@@ -424,7 +535,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         actionTurnout = new ActionTurnout(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         actionTurnout.setTurnout(turnout);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         conditionalNG.getChild(0).connect(socket);
         
@@ -440,6 +551,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+//        JUnitAppender.clearBacklog();   // REMOVE THIS!!!!!!!
         JUnitUtil.tearDown();
     }
     

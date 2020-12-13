@@ -41,7 +41,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
             element.addContent(new Element("turnout").addContent(turnout.getName()));
         }
         
-        element.addContent(new Element("turnoutState").addContent(p.getTurnoutState().name()));
+        element.addContent(new Element("turnoutState").addContent(p.getBeanState().name()));
         element.addContent(new Element("addressing").addContent(p.getTurnoutAddressing().name()));
         element.addContent(new Element("reference").addContent(p.getReference()));
         element.addContent(new Element("localVariable").addContent(p.getLocalVariable()));
@@ -67,7 +67,7 @@ public class ActionTurnoutXml extends jmri.managers.configurexml.AbstractNamedBe
         
         Element turnoutState = shared.getChild("turnoutState");
         if (turnoutState != null) {
-            h.setTurnoutState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
+            h.setBeanState(ActionTurnout.TurnoutState.valueOf(turnoutState.getTextTrim()));
         }
         
         try {

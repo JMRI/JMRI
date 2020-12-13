@@ -228,7 +228,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         turnout.setState(Turnout.CLOSED);
         ActionTurnout actionTurnout = new ActionTurnout("IQDA2", null);
         actionTurnout.setTurnout(turnout);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Thrown);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Thrown);
         MaleSocket actionTurnoutSocket =
                 InstanceManager.getDefault(DigitalActionManager.class)
                         .registerAction(actionTurnout);

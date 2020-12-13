@@ -260,7 +260,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         actionTurnout.setAddressing(NamedBeanAddressing.Direct);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -271,7 +271,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         actionTurnout.setAddressing(NamedBeanAddressing.LocalVariable);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -282,7 +282,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         actionTurnout.setAddressing(NamedBeanAddressing.Formula);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");
@@ -293,7 +293,7 @@ public class StoreAndLoadTest {
         actionTurnout = new ActionTurnout(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         actionTurnout.setTurnout(turnout1);
-        actionTurnout.setTurnoutState(ActionTurnout.TurnoutState.Closed);
+        actionTurnout.setBeanState(ActionTurnout.TurnoutState.Closed);
         actionTurnout.setAddressing(NamedBeanAddressing.Reference);
         actionTurnout.setFormula("\"IT\"+index");
         actionTurnout.setLocalVariable("index");

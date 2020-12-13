@@ -51,7 +51,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         ActionTurnout copy = new ActionTurnout(sysName, userName);
         copy.setComment(getComment());
         if (_turnoutHandle != null) copy.setTurnout(_turnoutHandle);
-        copy.setTurnoutState(_turnoutState);
+        copy.setBeanState(_turnoutState);
         return manager.registerAction(copy);
     }
     
@@ -143,47 +143,47 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         parseFormula();
     }
     
-    public NamedBeanAddressing getTurnoutStateAddressing() {
+    public NamedBeanAddressing getStateAddressing() {
         return _stateAddressing;
     }
     
-    public void setTurnoutState(TurnoutState state) {
+    public void setBeanState(TurnoutState state) {
         _turnoutState = state;
     }
     
-    public TurnoutState getTurnoutState() {
+    public TurnoutState getBeanState() {
         return _turnoutState;
     }
     
-    public void setTurnoutStateReference(@Nonnull String reference) {
+    public void setStateReference(@Nonnull String reference) {
         if ((! reference.isEmpty()) && (! ReferenceUtil.isReference(reference))) {
             throw new IllegalArgumentException("The reference \"" + reference + "\" is not a valid reference");
         }
         _stateReference = reference;
     }
     
-    public String getTurnoutStateReference() {
+    public String getStateReference() {
         return _stateReference;
     }
     
-    public void setTurnoutStateLocalVariable(@Nonnull String localVariable) {
+    public void setStateLocalVariable(@Nonnull String localVariable) {
         _stateLocalVariable = localVariable;
     }
     
-    public String getTurnoutStateLocalVariable() {
+    public String getStateLocalVariable() {
         return _stateLocalVariable;
     }
     
-    public void setTurnoutStateFormula(@Nonnull String formula) throws ParserException {
+    public void setStateFormula(@Nonnull String formula) throws ParserException {
         _stateFormula = formula;
-        parseTurnoutStateFormula();
+        parseStateFormula();
     }
     
-    public String getTurnoutStateFormula() {
+    public String getStateFormula() {
         return _stateFormula;
     }
     
-    private void parseTurnoutStateFormula() throws ParserException {
+    private void parseStateFormula() throws ParserException {
         if (_stateAddressing == NamedBeanAddressing.Formula) {
             Map<String, Variable> variables = new HashMap<>();
             
@@ -222,6 +222,28 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     @Override
     public boolean isExternal() {
         return true;
+    }
+    
+    public String getNewState(@Nonnull Turnout t) throws JmriException {
+        
+        switch (_stateAddressing) {
+            case Reference:
+                return ReferenceUtil.getReference(_reference);
+                
+            case LocalVariable:
+                SymbolTable symbolTable =
+                        InstanceManager.getDefault(LogixNG_Manager.class).getSymbolTable();
+                return TypeConversionUtil
+                        .convertToString(symbolTable.getValue(_localVariable), false);
+                
+            case Formula:
+                return _expressionNode != null
+                        ? TypeConversionUtil.convertToString(_expressionNode.calculate(), false)
+                        : null;
+                
+            default:
+                throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
+        }
     }
     
     /** {@inheritDoc} */
@@ -269,15 +291,30 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
             return;
         }
         
+        String name = (_stateAddressing != NamedBeanAddressing.Direct)
+                ? getNewState(turnout) : null;
+        
         ThreadingUtil.runOnLayout(() -> {
-            if (_turnoutState == TurnoutState.Toggle) {
-                if (turnout.getCommandedState() == Turnout.CLOSED) {
-                    turnout.setCommandedState(Turnout.THROWN);
+            if ((_stateAddressing == NamedBeanAddressing.Direct)) {
+                if (_turnoutState == TurnoutState.Toggle) {
+                    if (turnout.getCommandedState() == Turnout.CLOSED) {
+                        turnout.setCommandedState(Turnout.THROWN);
+                    } else {
+                        turnout.setCommandedState(Turnout.CLOSED);
+                    }
                 } else {
-                    turnout.setCommandedState(Turnout.CLOSED);
+                    turnout.setCommandedState(_turnoutState.getID());
                 }
             } else {
-                turnout.setCommandedState(_turnoutState.getID());
+                if (_turnoutState == TurnoutState.Toggle) {
+                    if ("Toggle".equals(name)) {
+                        turnout.setCommandedState(Turnout.THROWN);
+                    } else {
+                        turnout.setCommandedState(Turnout.CLOSED);
+                    }
+                } else {
+                    turnout.setCommandedState(_turnoutHandle.getBean().getStateFromName(name));
+                }
             }
         });
     }

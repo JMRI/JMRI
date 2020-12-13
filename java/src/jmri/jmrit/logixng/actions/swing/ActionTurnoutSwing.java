@@ -126,17 +126,17 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
             _turnoutLocalVariableTextField.setText(action.getLocalVariable());
             _turnoutFormulaTextField.setText(action.getFormula());
             
-            switch (action.getTurnoutStateAddressing()) {
+            switch (action.getStateAddressing()) {
                 case Direct: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateDirect); break;
                 case Reference: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateReference); break;
                 case LocalVariable: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateLocalVariable); break;
                 case Formula: _tabbedPaneTurnoutState.setSelectedComponent(_panelTurnoutStateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getTurnoutAddressing().name());
             }
-            stateComboBox.setSelectedItem(action.getTurnoutState());
-            _turnoutStateReferenceTextField.setText(action.getTurnoutStateReference());
-            _turnoutStateLocalVariableTextField.setText(action.getTurnoutStateLocalVariable());
-            _turnoutStateFormulaTextField.setText(action.getTurnoutStateFormula());
+            stateComboBox.setSelectedItem(action.getState());
+            _turnoutStateReferenceTextField.setText(action.getStateReference());
+            _turnoutStateLocalVariableTextField.setText(action.getStateLocalVariable());
+            _turnoutStateFormulaTextField.setText(action.getStateFormula());
         }
         
         JComponent[] components = new JComponent[]{
@@ -207,7 +207,7 @@ public class ActionTurnoutSwing extends AbstractDigitalActionSwing {
                     action.setTurnout(handle);
                 }
             }
-            action.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());
+            action.setBeanState((TurnoutState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {
             log.error("Cannot get NamedBeanHandle for turnout", ex);
         }

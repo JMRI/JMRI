@@ -359,6 +359,19 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     public String describeState(int state);
 
     /**
+     * Get a state from a name
+     * @param name the name
+     * @return the state
+     */
+    public default int getStateFromName(String name) {
+        switch (name) {
+            case "Unknown": return NamedBean.UNKNOWN;
+            case "Inconsistent": return NamedBean.INCONSISTENT;
+            default: throw new IllegalArgumentException("Unknown state name: "+name);
+        }
+    }
+
+    /**
      * Get associated comment text.
      *
      * @return the comment or null

@@ -29,16 +29,6 @@ public class ProxyLightManager extends AbstractProvidingProxyManager<Light>
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getLightManager();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int getState(String name) {
-        switch (name) {
-            case "On": return Light.ON;
-            case "Off": return Light.OFF;
-            default: return super.getState(name);
-        }
-    }
-
     /**
      * Locate via user name, then system name if needed.
      *

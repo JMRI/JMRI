@@ -25,18 +25,6 @@ public class ProxySensorManager extends AbstractProvidingProxyManager<Sensor>
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getSensorManager();
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public int getState(String name) {
-        switch (name) {
-            case "On": return DigitalIO.ON;
-            case "Off": return DigitalIO.OFF;
-            case "Inactive": return Sensor.INACTIVE;
-            case "Active": return Sensor.ACTIVE;
-            default: return super.getState(name);
-        }
-    }
-
     /**
      * Locate via user name, then system name if needed.
      *

@@ -43,15 +43,6 @@ public class ProxyLightManagerTest {
     }
 
     @Test
-    public void testGetState() {
-        LightManager m = InstanceManager.getDefault(LightManager.class);
-        Assert.assertEquals(NamedBean.UNKNOWN, m.getState("Unknown"));
-        Assert.assertEquals(NamedBean.INCONSISTENT, m.getState("Inconsistent"));
-        Assert.assertEquals(Light.ON, m.getState("On"));
-        Assert.assertEquals(Light.OFF, m.getState("Off"));
-    }
-
-    @Test
     public void testLightPutGet() {
         // create
         Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
