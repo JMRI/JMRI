@@ -528,7 +528,7 @@ PFT1550681224&lt;;&gt;0.0
     may be an integer value (4) or a floating point value (4.0).  If this
     value is 0 (or 0.0), the clock is stopped.<br/>
     Updates are sent on each change in time or rate, and when clock stopped 
-    or started, so expect one message every fast clock second.</p>
+    or started, so expect one message every fast clock minute.</p>
 
     <a name="AlertandInfoMessage" id="AlertandInfoMessage"></a>
     <h3>Alert and Info Message</h3>
