@@ -667,7 +667,7 @@ public class CircuitBuilder {
                 // must have converted icons for paths
                 _editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
                 // A temporary path "TEST_PATH" is used to display the icons representing a path
-                _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
+                _currentBlock.allocatePath(EditCircuitPaths.TEST_PATH);
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane) _editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);

@@ -929,6 +929,12 @@
 
   
 <li>
+<a href="package/jmri/jmrit/beantable/OBlockTable.shtml">OBlock Tables (tabbed) </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/logix/OBlockTable.shtml">O(ccupancy)Block Table </a>
 <ul></ul>
 </li>
@@ -1713,7 +1719,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/logix/SCWarrant.html">SCWarrants </a>
+<a href="package/jmri/jmrit/logix/SCWarrant.shtml">SCWarrants </a>
 <ul></ul>
 </li>
 
@@ -2104,13 +2110,13 @@
 <li>CBUS Tools <ul>
     
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
+<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
+<a href="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console Tool </a>
 <ul></ul>
 </li>
 
@@ -2128,25 +2134,25 @@
 
     
 <li>
+<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
+<ul></ul>
+</li>
+
+    
+<li>
 <a href="package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml">Node Config Tool </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">Command Station Monitor </a>
+<a href="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Send Frame / Event Tool </a>
 <ul></ul>
 </li>
 
     
 <li>
 <a href="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml">Simulator </a>
-<ul></ul>
-</li>
-
-    
-<li>
-<a href="package/jmri/jmrix/can/cbus/swing/bootloader/CbusBootloaderPane.shtml">Firmware Update </a>
 <ul></ul>
 </li>
 
@@ -2365,7 +2371,7 @@
 <ul>
    
 <li>
-<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
+<a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
 <ul></ul>
 </li>
 
@@ -2383,7 +2389,7 @@
 
    
 <li>
-<a href="package/jmri/jmrix/sprog/console/SprogConsoleFrame.shtml">Console </a>
+<a href="package/jmri/jmrix/sprog/update/SprogVersionFrame.shtml">SPROG Version </a>
 <ul></ul>
 </li>
 

@@ -104,9 +104,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     void doGraphicState(JPanel panel) {
         panel.setLayout(new FlowLayout());
-        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUITabbedOblockEditor"));
+        graphicStateDisplay = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
         graphicStateDisplay.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState());
-        graphicStateDisplay.setToolTipText(ConfigBundle.getMessage("GUIToolTipTabbedEdit"));
         graphicStateDisplay.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setGraphicTableState(graphicStateDisplay.isSelected());
         });
@@ -115,8 +114,9 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
 
     void doTabbedOblockEditor(JPanel panel) {
         panel.setLayout(new FlowLayout());
-        tabbedOblockEditor = new JCheckBox(ConfigBundle.getMessage("GUIGraphicTableState"));
+        tabbedOblockEditor = new JCheckBox(ConfigBundle.getMessage("GUITabbedOblockEditor"));
         tabbedOblockEditor.setSelected(InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed());
+        tabbedOblockEditor.setToolTipText(ConfigBundle.getMessage("GUIToolTipTabbedEdit"));
         tabbedOblockEditor.addItemListener((ItemEvent e) -> {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(tabbedOblockEditor.isSelected());
         });

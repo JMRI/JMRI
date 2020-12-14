@@ -272,7 +272,7 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Check attribute", EngineAttributeEditFrame.ROAD, f.engineAttributeEditFrame._attribute);
         
         // test that the attribute edit frame gets disposed
-        f.buttonEditActionPerformed(new ActionEvent("null", 0, null));
+        f.buttonEditActionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
         Assert.assertFalse(f.engineAttributeEditFrame.isShowing());
 
         JUnitUtil.dispose(f.engineAttributeEditFrame);

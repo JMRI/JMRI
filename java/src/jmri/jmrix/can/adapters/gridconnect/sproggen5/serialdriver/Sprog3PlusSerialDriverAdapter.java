@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
 
     public Sprog3PlusSerialDriverAdapter() {
-        super("S");
+        super("S", purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_IN + purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT);
     }
 
     /**
@@ -60,7 +60,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public String[] validBaudRates() {
-        return new String[]{Bundle.getMessage("Baud115200")};
+        return new String[]{Bundle.getMessage("Baud460800")};
     }
 
     /**
@@ -68,7 +68,7 @@ public class Sprog3PlusSerialDriverAdapter extends GcSerialDriverAdapter {
      */
     @Override
     public int[] validBaudNumbers() {
-        return new int[]{115200};
+        return new int[]{460800};
     }
 
     @Override

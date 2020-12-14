@@ -2,10 +2,13 @@ package jmri.jmrit.display.controlPanelEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.util.List;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
 import jmri.SignalMastManager;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.Portal;
@@ -78,6 +81,13 @@ public class SignalPairTest {
             cpe.dispose();
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
+        if (InstanceManager.containsDefault(ShutDownManager.class)) {
+            ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+            List<Runnable> rlist = sm.getRunnables();
+            if (rlist.size() == 1 && rlist.get(0) instanceof jmri.jmrit.logix.WarrantShutdownTask) {
+                sm.deregister((ShutDownTask)rlist.get(0));
+            }
+        }
         JUnitUtil.tearDown();
     }
     private final static Logger log = LoggerFactory.getLogger(SignalPairTest.class);
